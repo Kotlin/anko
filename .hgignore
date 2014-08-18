@@ -1,0 +1,11 @@
+syntax: regexp
+^out$
+^lib/kotlinc$
+^.idea$
+^dsl_out$
+adslGenerator.iml
+.DS_Store
+
+syntax: glob
+*.jar
+*.class

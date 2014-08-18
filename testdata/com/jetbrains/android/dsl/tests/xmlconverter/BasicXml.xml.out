@@ -1,0 +1,53 @@
+import android.view.ViewGroup.LayoutParams.*
+import android.widget.*
+import com.example.adsl.*
+import kotlin.properties.Delegates
+
+class Foo(val act: android.app.Activity) {
+
+    val item_detail_container: FrameLayout by Delegates.notNull();
+    val textView1: TextView by Delegates.notNull();
+    val password: EditText by Delegates.notNull();
+    val textView2: TextView by Delegates.notNull();
+    val passwordConfirmation: EditText by Delegates.notNull();
+    val login: Button by Delegates.notNull();
+
+    {
+        act.UI {
+            item_detail_container = frameLayout {
+                id = R.id.item_detail_container
+                layoutParams(MATCH_PARENT, MATCH_PARENT)
+                linearLayout {
+                    orientation = vertical
+                    layoutParams(MATCH_PARENT, MATCH_PARENT)
+                    textView1 = textView(text = "Enter your password") {
+                        id = R.id.textView1
+                        layoutParams(WRAP_CONTENT, WRAP_CONTENT)
+                    }
+                    password = editText {
+                        id = R.id.password
+                        inputType = textPassword
+                        layoutParams(WRAP_CONTENT, MATCH_PARENT)
+                        requestFocus {
+                        }
+                    }
+                    textView2 = textView(text = "Repeat your password") {
+                        id = R.id.textView2
+                        layoutParams(WRAP_CONTENT, WRAP_CONTENT)
+                    }
+                    passwordConfirmation = editText {
+                        id = R.id.passwordConfirmation
+                        inputType = textPassword
+                        layoutParams(WRAP_CONTENT, MATCH_PARENT)
+                    }
+                    login = button(text = "Sign in") {
+                        id = R.id.login
+                        layoutParams(WRAP_CONTENT, MATCH_PARENT)
+                    }
+                }
+                scrollBar {
+                }
+            }
+        }
+    }
+}

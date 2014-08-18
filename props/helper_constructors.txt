@@ -1,0 +1,4 @@
+android.widget.Button: text
+android.widget.CheckBox: text
+android.widget.CheckBox: text, checked
+android.widget.TextView: text

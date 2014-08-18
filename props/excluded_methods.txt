@@ -1,0 +1,5 @@
+android.view.View#getTag
+android.view.View#getTouchables
+android.gesture.GestureOverlayView#getCurrentStroke
+android.inputmethodservice.KeyboardView#setShifted
+android.widget.AutoCompleteTextView#setAdapter
