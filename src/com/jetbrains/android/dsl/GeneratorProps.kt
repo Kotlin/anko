@@ -18,7 +18,7 @@ open class GeneratorProps() : BaseGeneratorProps() {
 			Subsystem.VIEWS -> File(outputDirectory + "Views.kt")
 			Subsystem.LISTENERS -> File(outputDirectory + "Listeners.kt")
 			Subsystem.LAYOUTS -> File(outputDirectory + "Layouts.kt")
-			Subsystem.LAYOUTS -> File(outputDirectory + "Helpers.kt")
+			Subsystem.HELPER -> File(outputDirectory + "Helpers.kt")
 			else -> throw RuntimeException("Unable to get output file for non-existing subsystem $subsystem")
 		}
 	}
