@@ -5,6 +5,8 @@
              dest="lib/asm-4.2.jar"/>
         <get src="http://repo1.maven.org/maven2/org/testng/testng/6.7/testng-6.7.jar"
              dest="lib/testng-6.7.jar"/>
+        <get src="http://repo1.maven.org/maven2/com/google/code/gson/gson/2.3/gson-2.3.jar"
+             dest="lib/gson-2.3.jar"/>
         <get src="http://repo1.maven.org/maven2/com/google/android/android/4.1.1.4/android-4.1.1.4.jar"
              dest="android.jar"/>
         <get src="https://github.com/JetBrains/kotlin/releases/download/build-0.8.11/kotlin-compiler-0.8.11.zip"

@@ -21,7 +21,7 @@ class Renderer(private val generator: Generator) {
 		generator.viewClasses.filter { !it.isAbstract() && it.hasSimpleConstructor() }.map { clazz ->
 			val className = cleanInternalName(clazz.name!!)
 			val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
-			"fun ViewManager.$funcName(init: $className.() -> Unit) = addView($className(dslContext), init, this)"
+			"fun ViewManager.$funcName(lp: android.view.ViewGroup.LayoutParams? = null, init: $className.() -> Unit = {}) = addView($className(dslContext), lp, init, this)"
 		}
 
 	//generate functions for making view groups (containers)
@@ -31,7 +31,7 @@ class Renderer(private val generator: Generator) {
 		generator.viewGroupClasses.filter { !it.isAbstract() }.map { clazz ->
 			val className = stripClassName(cleanInternalName(clazz.name!!))
 			val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
-			"fun ViewManager.$funcName(init: _$className.() -> Unit) = addView(_$className(dslContext), init, this)"
+			"fun ViewManager.$funcName(lp: android.view.ViewGroup.LayoutParams? = null, init: _$className.() -> Unit = {}) = addView(_$className(dslContext), lp, init, this)"
 		}
 
 	//helper constructors for views
@@ -131,10 +131,10 @@ class Renderer(private val generator: Generator) {
 					"${it.first}: $argumentType"
 				}.joinToString(", ")
 				val setters = collected.map { "${I}v.${it.second.name}(${it.first})" }
-				ret.add("fun ViewManager.$functionName($arguments, init: $viewClassName.() -> Unit): $viewClassName {\n"+
+				ret.add("fun ViewManager.$functionName($arguments, lp: android.view.ViewGroup.LayoutParams? = null, init: $viewClassName.() -> Unit = {}): $viewClassName {\n"+
 					"${I}val v = $viewClassName(dslContext)\n"+
 					setters.joinToString("\n")+"\n"+
-					"${I}return addView(v, init, this)\n"+
+					"${I}return addView(v, lp, init, this)\n"+
 					"}")
 			}
 		}
@@ -221,10 +221,11 @@ class Renderer(private val generator: Generator) {
 			val substituded = constructor.fmtLayoutParamsArgumentsInvoke()
 			val initArgumentName = "${decapitalize(lp.layout.cleanName())}Init"
 			val separator = if (arguments == "") "" else ","
-			return "${I}fun View.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = {}) {\n"+
+			return "${I}fun <T: View> T.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = {}): $layoutParamsClassName {\n"+
 				"${I2}val layoutParams = $layoutParamsClassName($substituded)\n"+
 				"${I2}layoutParams.$initArgumentName()\n" +
 				"${I2}this@layoutParams.setLayoutParams(layoutParams)\n"+
+				"${I2}return layoutParams\n"+
 				"${I}}"
 		}
 

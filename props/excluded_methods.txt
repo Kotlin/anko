@@ -1,4 +1,8 @@
 android.view.View#getTag
+android.view.View#getPaddingTop
+android.view.View#getPaddingLeft
+android.view.View#getPaddingRight
+android.view.View#getPaddingBottom
 android.view.View#getTouchables
 android.gesture.GestureOverlayView#getCurrentStroke
 android.inputmethodservice.KeyboardView#setShifted
