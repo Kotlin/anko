@@ -3,6 +3,7 @@ import android.view.ViewGroup
 import android.view.ViewManager
 import android.view.View
 import android.app.Activity
+import android.app.Fragment
 import java.util.HashMap
 
 private data class ViewProps(var listeners: HashMap<String, ListenerHelper>, var realTag: Any? = null)
@@ -24,17 +25,25 @@ var View.tag: Any?
 		} else setTag(tag)
 	}
 
-private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T {
+private fun <T: View> addView(v: T, lp: ViewGroup.LayoutParams?, init: T.() -> Unit, manager: ViewManager): T {
 	v.init()
 	val props = v.getTag() as? ViewProps
-	if (props!=null) {
+	if (props != null) {
 		props.listeners.values().forEach { it.apply() }
 		v.setTag(props.realTag)
 	}
-	when (manager) {
-		is ViewGroup -> manager.addView(v)
-		is UiHelper -> manager.addView(v)
-		else -> throw RuntimeException("Wrong parent: ${manager.getClass()!!.getName()}")
+	if (lp!=null) {
+		when (manager) {
+			is ViewGroup -> manager.addView(v, lp)
+			is UiHelper -> manager.addView(v, lp)
+			else -> throw RuntimeException("Wrong parent: ${manager.getClass()!!.getName()}")
+		}
+	} else {
+		when (manager) {
+			is ViewGroup -> manager.addView(v)
+			is UiHelper -> manager.addView(v)
+			else -> throw RuntimeException("Wrong parent: ${manager.getClass()!!.getName()}")
+		}
 	}
 	return v
 }
@@ -48,7 +57,7 @@ private val ViewManager.dslContext: Context
 		}
 	}
 
-class UiHelper(val ctx: Context): ViewManager {
+class UiHelper(val ctx: Context, private val setContentView: Boolean = true): ViewManager {
 	private var view: View? = null
 
 	fun toView() = view!!
@@ -56,11 +65,18 @@ class UiHelper(val ctx: Context): ViewManager {
 		addView(view)
 	}
 
+	fun setContentView(): Unit = when (ctx) {
+		is Activity -> ctx.setContentView(view)
+		else -> {}
+	}
+
 	fun addView(view: View) {
 		this.view = view
-		when (ctx) {
-			is Activity -> ctx.setContentView(view)
-			else -> {}
+		if (setContentView) {
+			when (ctx) {
+				is Activity -> ctx.setContentView(view)
+				else -> {}
+			}
 		}
 	}
 	override fun updateViewLayout(view: View, params: ViewGroup.LayoutParams) {
@@ -71,8 +87,16 @@ class UiHelper(val ctx: Context): ViewManager {
 	}
 }
 
-fun Context.UI(init: UiHelper.() -> Unit): UiHelper {
-	val dsl = UiHelper(this)
+fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
+	val dsl = UiHelper(this, setContentView)
 	dsl.init()
 	return dsl
 }
+
+fun Context.UI(init: UiHelper.() -> Unit): UiHelper {
+	val dsl = UiHelper(this, false)
+	dsl.init()
+	return dsl
+}
+
+fun Fragment.UI(init: UiHelper.() -> Unit) = getActivity()!!.UI(false, init)
