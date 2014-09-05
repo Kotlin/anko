@@ -32,7 +32,7 @@ public class PropertyTest extends BaseFunctionalTest {
     }
 
     @Test
-    public void testHelperConstructors() throws Exception {
+    public void testProperties() throws Exception {
         runFunctionalTest(testDataFile, Subsystem.PROPERTIES);
     }
 }

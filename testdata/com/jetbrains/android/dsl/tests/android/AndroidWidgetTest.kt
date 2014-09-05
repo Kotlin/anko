@@ -54,7 +54,6 @@ public open class MyActivity() : Activity() {
                 dialerFilter {}
                 tabHost {}
                 viewAnimator {}
-                mediaController {}
                 expandableListView {}
                 viewFlipper {}
 

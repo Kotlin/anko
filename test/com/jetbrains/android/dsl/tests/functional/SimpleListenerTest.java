@@ -34,7 +34,7 @@ public class SimpleListenerTest extends BaseFunctionalTest {
 	}
 
 	@Test
-	public void testLayouts() throws Exception {
+	public void testSimpleListeners() throws Exception {
 		runFunctionalTest(testDataFile, Subsystem.LISTENERS);
 	}
 }
