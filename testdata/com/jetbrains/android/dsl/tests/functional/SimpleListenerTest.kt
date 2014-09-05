@@ -10,7 +10,6 @@ fun android.view.View.onDrag(l: (android.view.View?, android.view.DragEvent?) ->
 fun android.view.View.onSystemUiVisibilityChange(l: (Int) -> Unit) = setOnSystemUiVisibilityChangeListener(l)
 fun android.view.ViewStub.onInflate(l: (android.view.ViewStub?, android.view.View?) -> Unit) = setOnInflateListener(l)
 fun android.widget.TextView.onEditorAction(l: (android.widget.TextView?, Int, android.view.KeyEvent?) -> Boolean) = setOnEditorActionListener(l)
-fun android.app.FragmentBreadCrumbs.onBreadCrumbClick(l: (android.app.FragmentManager.BackStackEntry?, Int) -> Boolean) = setOnBreadCrumbClickListener(l)
 fun android.widget.AdapterView<out android.widget.Adapter?>.onItemClick(l: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit) = setOnItemClickListener(l)
 fun android.widget.AdapterView<out android.widget.Adapter?>.onItemLongClick(l: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Boolean) = setOnItemLongClickListener(l)
 fun android.widget.AdapterView<out android.widget.Adapter?>.onClick(l: (android.view.View?) -> Unit) = setOnClickListener(l)
