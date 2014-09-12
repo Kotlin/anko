@@ -21,9 +21,8 @@ class Renderer(private val generator: Generator) {
 		generator.viewClasses.filter { !it.isAbstract() && it.hasSimpleConstructor() }.map { clazz ->
 			val className = cleanInternalName(clazz.name!!)
 			val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
-			"fun ViewManager.$funcName(init: $className.() -> Unit = {}) {\n"+
-				"${I}return addView($className(dslContext), init, this)\n"+
-			"}\n"
+			"fun ViewManager.$funcName(init: $className.() -> Unit = {}) =\n"+
+				"${I}addView($className(dslContext), init, this)\n"
 		}
 
 	//generate functions for making view groups (containers)
@@ -31,11 +30,11 @@ class Renderer(private val generator: Generator) {
 	//_LinearLayout is a child of LinearLayout class with helper layoutParams() methods
 	val viewGroups = if (!props.generateViewGroupExtensionMethods) listOf() else
 		generator.viewGroupClasses.filter { !it.isAbstract() }.map { clazz ->
+			val originalClassName = cleanInternalName(clazz.name!!)
 			val className = stripClassName(cleanInternalName(clazz.name!!))
 			val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
-			"fun ViewManager.$funcName(init: _$className.() -> Unit = {}) {\n"+
-				"${I}return addView(_$className(dslContext), init, this)\n"+
-			"}\n"
+			"fun ViewManager.$funcName(init: _$className.() -> Unit = {}) =\n"+
+				"${I}addView(_$className(dslContext), init, this): $originalClassName\n"
 		}
 
 	//helper constructors for views
@@ -225,7 +224,7 @@ class Renderer(private val generator: Generator) {
 			val substituded = constructor.fmtLayoutParamsArgumentsInvoke()
 			val initArgumentName = "${decapitalize(lp.layout.cleanName())}Init"
 			val separator = if (arguments == "") "" else ","
-			return "${I}fun View.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = {}) {\n"+
+			return "${I}fun <T: View> T.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = {}): T {\n"+
 				"${I2}val layoutParams = $layoutParamsClassName($substituded)\n"+
 				"${I2}layoutParams.$initArgumentName()\n" +
 				"${I2}this@layoutParams.setLayoutParams(layoutParams)\n"+

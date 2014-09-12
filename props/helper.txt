@@ -33,7 +33,7 @@ var View.tag: Any?
 		} else setTag(tag)
 	}
 
-private fun <T: View> addView(v: T, lp: ViewGroup.LayoutParams?, init: T.() -> Unit, manager: ViewManager): T {
+private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T {
 	v.setTag(ViewProps(hashMapOf(), defaultStyle, v.getTag()))
 	v.init()
 	val props = v.getTag() as? ViewProps
@@ -41,20 +41,23 @@ private fun <T: View> addView(v: T, lp: ViewGroup.LayoutParams?, init: T.() -> U
 		props.listeners.values().forEach { it.apply() }
 		v.setTag(props.realTag)
 	}
-	if (lp!=null) {
-		when (manager) {
-			is ViewGroup -> manager.addView(v, lp)
-			is UiHelper -> manager.addView(v, lp)
-			else -> throw RuntimeException("Wrong parent: ${manager.getClass()!!.getName()}")
-		}
-	} else {
-		when (manager) {
-			is ViewGroup -> manager.addView(v)
-			is UiHelper -> manager.addView(v)
-			else -> throw RuntimeException("Wrong parent: ${manager.getClass()!!.getName()}")
-		}
+	when (manager) {
+		is ViewGroup -> manager.addView(v)
+		is UiHelper -> manager.addView(v)
+		else -> throw RuntimeException("Wrong parent: ${manager.getClass()!!.getName()}")
 	}
 	return v
+}
+
+private fun applyStyle(v: View, style: (Any) -> Unit) {
+	style(v)
+	if (v is ViewGroup) {
+		val maxId = v.getChildCount()-1
+		for (i in 0..maxId) {
+			val maybeChild = v.getChildAt(i)
+			if (maybeChild!=null) style(maybeChild)
+		}
+	}
 }
 
 private fun applyStyle(v: View, style: (Any) -> Unit) {
