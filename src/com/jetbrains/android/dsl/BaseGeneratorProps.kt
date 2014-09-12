@@ -22,20 +22,20 @@ abstract class BaseGeneratorProps() {
 	open var generateComplexListenerClasses: Boolean = true
 	open var generateComplexListenerSetters: Boolean = true
 
-  abstract public fun getOutputFile(subsystem: Subsystem): File
+	abstract public fun getOutputFile(subsystem: Subsystem): File
 
 	abstract val indent: String
 
-  abstract val outputDirectory: String
-  abstract val outputPackage: String
+	abstract val outputDirectory: String
+	abstract val outputPackage: String
 
-  abstract val viewGroupBaseClass: String
-  abstract val viewBaseClass: String
+	abstract val viewGroupBaseClass: String
+	abstract val viewBaseClass: String
 
-  abstract val imports: HashMap<String, String>
+	abstract val imports: HashMap<String, String>
 
-  abstract val excludedClasses: Set<String>
-  abstract val excludedMethods: Set<String>
-  abstract val helperConstructors: Map<String, List<List<String>>>
+	abstract val excludedClasses: Set<String>
+	abstract val excludedMethods: Set<String>
+	abstract val helperConstructors: Map<String, List<List<String>>>
 	abstract val customMethodParameters: Map<String, String>
 }

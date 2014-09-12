@@ -22,13 +22,13 @@ public class BaseCompileTest extends Assert {
     @BeforeMethod
     public void setUp() throws Exception {
         assertTrue(new File(inputJarFile).exists());
-	    assertTrue(new File("props/imports_layouts.txt").exists());
-	    assertTrue(new File("props/imports_views.txt").exists());
-	    assertTrue(new File("props/custom_method_parameters.txt").exists());
-	    assertTrue(new File("props/excluded_classes.txt").exists());
-	    assertTrue(new File("props/excluded_methods.txt").exists());
-	    assertTrue(new File("props/helper_constructors.txt").exists());
-	    assertTrue(new File("props/helper.txt").exists());
+        assertTrue(new File("props/imports_layouts.txt").exists());
+        assertTrue(new File("props/imports_views.txt").exists());
+        assertTrue(new File("props/custom_method_parameters.txt").exists());
+        assertTrue(new File("props/excluded_classes.txt").exists());
+        assertTrue(new File("props/excluded_methods.txt").exists());
+        assertTrue(new File("props/helper_constructors.txt").exists());
+        assertTrue(new File("props/helper.txt").exists());
         assertTrue(new File(kotlincFilename).exists());
     }
 
@@ -38,7 +38,7 @@ public class BaseCompileTest extends Assert {
         DSLGenerator gen = new DSLGenerator(new String[] {inputJarFile}, settings);
         gen.run();
         String kotlincArgs[] = {
-		        kotlincFilename,
+            kotlincFilename,
                 "-jar", tmpJarFile,
                 "-classpath", inputJarFile,
                 testData.getPath()
