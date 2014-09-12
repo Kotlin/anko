@@ -13,14 +13,14 @@ private trait ListenerHelper {
 	fun apply()
 }
 
-fun View.style(style: (Any) -> Unit) {
+public fun View.style(style: (Any) -> Unit) {
 	var props = getTag() as? ViewProps
 	if (props!=null) {
 		props!!.style = style
 	} else setTag(ViewProps(hashMapOf(), style, getTag()))
 }
 
-var View.tag: Any?
+public var View.tag: Any?
 	get() = {
 		val tag = getTag()
 		val props = tag as? ViewProps
@@ -47,17 +47,6 @@ private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T
 		else -> throw RuntimeException("Wrong parent: ${manager.getClass()!!.getName()}")
 	}
 	return v
-}
-
-private fun applyStyle(v: View, style: (Any) -> Unit) {
-	style(v)
-	if (v is ViewGroup) {
-		val maxId = v.getChildCount()-1
-		for (i in 0..maxId) {
-			val maybeChild = v.getChildAt(i)
-			if (maybeChild!=null) style(maybeChild)
-		}
-	}
 }
 
 private fun applyStyle(v: View, style: (Any) -> Unit) {
@@ -110,16 +99,16 @@ class UiHelper(val ctx: Context, private val setContentView: Boolean = true): Vi
 	}
 }
 
-fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
+public fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
 	val dsl = UiHelper(this, setContentView)
 	dsl.init()
 	return dsl
 }
 
-fun Context.UI(init: UiHelper.() -> Unit): UiHelper {
+public fun Context.UI(init: UiHelper.() -> Unit): UiHelper {
 	val dsl = UiHelper(this, false)
 	dsl.init()
 	return dsl
 }
 
-fun Fragment.UI(init: UiHelper.() -> Unit) = getActivity()!!.UI(false, init)
+public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity()!!.UI(false, init)

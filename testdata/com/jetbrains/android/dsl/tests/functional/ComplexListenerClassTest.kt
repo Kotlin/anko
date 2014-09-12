@@ -1,4 +1,4 @@
-class __KeyboardView_setOnKeyboardActionListener_KeyboardView_OnKeyboardActionListener(val v: android.inputmethodservice.KeyboardView): ListenerHelper {
+public class __KeyboardView_setOnKeyboardActionListener_KeyboardView_OnKeyboardActionListener(val v: android.inputmethodservice.KeyboardView): ListenerHelper {
 	var _onPress: ((Int) -> Unit) = { p0 ->  }
 	var _onRelease: ((Int) -> Unit) = { p0 ->  }
 	var _onKey: ((Int, IntArray?) -> Unit) = { p0, p1 ->  }
@@ -21,7 +21,7 @@ class __KeyboardView_setOnKeyboardActionListener_KeyboardView_OnKeyboardActionLi
 		})
 	}
 }
-class __ViewGroup_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(val v: android.view.ViewGroup): ListenerHelper {
+public class __ViewGroup_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(val v: android.view.ViewGroup): ListenerHelper {
 	var _onChildViewAdded: ((android.view.View?, android.view.View?) -> Unit) = { p0, p1 ->  }
 	var _onChildViewRemoved: ((android.view.View?, android.view.View?) -> Unit) = { p0, p1 ->  }
 
@@ -32,7 +32,7 @@ class __ViewGroup_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListen
 		})
 	}
 }
-class __AdapterView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener(val v: android.widget.AdapterView<out android.widget.Adapter?>): ListenerHelper {
+public class __AdapterView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener(val v: android.widget.AdapterView<out android.widget.Adapter?>): ListenerHelper {
 	var _onItemSelected: ((android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit) = { p0, p1, p2, p3 ->  }
 	var _onNothingSelected: ((android.widget.AdapterView<*>?) -> Unit) = { p0 ->  }
 
@@ -43,7 +43,7 @@ class __AdapterView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener
 		})
 	}
 }
-class __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener(val v: android.widget.SlidingDrawer): ListenerHelper {
+public class __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener(val v: android.widget.SlidingDrawer): ListenerHelper {
 	var _onScrollStarted: (() -> Unit) = {  ->  }
 	var _onScrollEnded: (() -> Unit) = {  ->  }
 
@@ -54,7 +54,7 @@ class __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollList
 		})
 	}
 }
-class __AbsListView_setOnScrollListener_AbsListView_OnScrollListener(val v: android.widget.AbsListView): ListenerHelper {
+public class __AbsListView_setOnScrollListener_AbsListView_OnScrollListener(val v: android.widget.AbsListView): ListenerHelper {
 	var _onScrollStateChanged: ((android.widget.AbsListView?, Int) -> Unit) = { p0, p1 ->  }
 	var _onScroll: ((android.widget.AbsListView?, Int, Int, Int) -> Unit) = { p0, p1, p2, p3 ->  }
 
@@ -65,7 +65,7 @@ class __AbsListView_setOnScrollListener_AbsListView_OnScrollListener(val v: andr
 		})
 	}
 }
-class __RadioGroup_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(val v: android.widget.RadioGroup): ListenerHelper {
+public class __RadioGroup_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(val v: android.widget.RadioGroup): ListenerHelper {
 	var _onChildViewAdded: ((android.view.View?, android.view.View?) -> Unit) = { p0, p1 ->  }
 	var _onChildViewRemoved: ((android.view.View?, android.view.View?) -> Unit) = { p0, p1 ->  }
 
@@ -76,7 +76,7 @@ class __RadioGroup_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListe
 		})
 	}
 }
-class __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(val v: android.widget.TableLayout): ListenerHelper {
+public class __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(val v: android.widget.TableLayout): ListenerHelper {
 	var _onChildViewAdded: ((android.view.View?, android.view.View?) -> Unit) = { p0, p1 ->  }
 	var _onChildViewRemoved: ((android.view.View?, android.view.View?) -> Unit) = { p0, p1 ->  }
 
@@ -87,7 +87,7 @@ class __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeList
 		})
 	}
 }
-class __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(val v: android.widget.TableRow): ListenerHelper {
+public class __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(val v: android.widget.TableRow): ListenerHelper {
 	var _onChildViewAdded: ((android.view.View?, android.view.View?) -> Unit) = { p0, p1 ->  }
 	var _onChildViewRemoved: ((android.view.View?, android.view.View?) -> Unit) = { p0, p1 ->  }
 
@@ -98,7 +98,7 @@ class __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListene
 		})
 	}
 }
-class __SearchView_setOnQueryTextListener_SearchView_OnQueryTextListener(val v: android.widget.SearchView): ListenerHelper {
+public class __SearchView_setOnQueryTextListener_SearchView_OnQueryTextListener(val v: android.widget.SearchView): ListenerHelper {
 	var _onQueryTextSubmit: ((String?) -> Boolean) = { p0 -> false }
 	var _onQueryTextChange: ((String?) -> Boolean) = { p0 -> false }
 
@@ -109,7 +109,7 @@ class __SearchView_setOnQueryTextListener_SearchView_OnQueryTextListener(val v: 
 		})
 	}
 }
-class __SearchView_setOnSuggestionListener_SearchView_OnSuggestionListener(val v: android.widget.SearchView): ListenerHelper {
+public class __SearchView_setOnSuggestionListener_SearchView_OnSuggestionListener(val v: android.widget.SearchView): ListenerHelper {
 	var _onSuggestionSelect: ((Int) -> Boolean) = { p0 -> false }
 	var _onSuggestionClick: ((Int) -> Boolean) = { p0 -> false }
 
@@ -120,7 +120,7 @@ class __SearchView_setOnSuggestionListener_SearchView_OnSuggestionListener(val v
 		})
 	}
 }
-class __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener(val v: android.widget.AutoCompleteTextView): ListenerHelper {
+public class __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener(val v: android.widget.AutoCompleteTextView): ListenerHelper {
 	var _onItemSelected: ((android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit) = { p0, p1, p2, p3 ->  }
 	var _onNothingSelected: ((android.widget.AdapterView<*>?) -> Unit) = { p0 ->  }
 
@@ -131,7 +131,7 @@ class __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelecte
 		})
 	}
 }
-class __SeekBar_setOnSeekBarChangeListener_SeekBar_OnSeekBarChangeListener(val v: android.widget.SeekBar): ListenerHelper {
+public class __SeekBar_setOnSeekBarChangeListener_SeekBar_OnSeekBarChangeListener(val v: android.widget.SeekBar): ListenerHelper {
 	var _onProgressChanged: ((android.widget.SeekBar?, Int, Boolean) -> Unit) = { p0, p1, p2 ->  }
 	var _onStartTrackingTouch: ((android.widget.SeekBar?) -> Unit) = { p0 ->  }
 	var _onStopTrackingTouch: ((android.widget.SeekBar?) -> Unit) = { p0 ->  }

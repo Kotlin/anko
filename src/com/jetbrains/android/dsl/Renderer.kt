@@ -21,7 +21,7 @@ class Renderer(private val generator: Generator) {
 		generator.viewClasses.filter { !it.isAbstract() && it.hasSimpleConstructor() }.map { clazz ->
 			val className = cleanInternalName(clazz.name!!)
 			val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
-			"fun ViewManager.$funcName(init: $className.() -> Unit = {}) =\n"+
+			"public fun ViewManager.$funcName(init: $className.() -> Unit = {}): $className =\n"+
 				"${I}addView($className(dslContext), init, this)\n"
 		}
 
@@ -33,8 +33,8 @@ class Renderer(private val generator: Generator) {
 			val originalClassName = cleanInternalName(clazz.name!!)
 			val className = stripClassName(cleanInternalName(clazz.name!!))
 			val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
-			"fun ViewManager.$funcName(init: _$className.() -> Unit = {}) =\n"+
-				"${I}addView(_$className(dslContext), init, this): $originalClassName\n"
+			"public fun ViewManager.$funcName(init: _$className.() -> Unit = {}): $originalClassName =\n"+
+				"${I}addView(_$className(dslContext), init, this)\n"
 		}
 
 	//helper constructors for views
@@ -55,7 +55,7 @@ class Renderer(private val generator: Generator) {
 			val propType = if (bestSetter!=null) "var" else "val"
 			val returnType = getter.method.renderReturnType()
 			//val otherSetters = if (it.setters.size>1) it.setters.tail else listOf()
-			"$propType $className.${it.name}: $returnType\n"+
+			"public $propType $className.${it.name}: $returnType\n"+
 				"${I}get() = ${getter.method.name!!}()"+
 				(if (bestSetter!=null) {
 					val arg = if (returnType.endsWith("?")) "v!!" else "v"
@@ -93,7 +93,7 @@ class Renderer(private val generator: Generator) {
 		val obj = listener.setter.clazz.cleanInternalName()
 		val argumentTypes = listener.method.argumentTypes
 		val returnType = listener.method.returnType
-		return "fun $obj.${listener.method.name}(l: ($argumentTypes) -> $returnType) = ${listener.setter.method.name}(l)"
+		return "public fun $obj.${listener.method.name}(l: ($argumentTypes) -> $returnType): Unit = ${listener.setter.method.name}(l)"
 	}
 
 	fun genHelperConstructors(): List<String> {
@@ -134,7 +134,7 @@ class Renderer(private val generator: Generator) {
 					"${it.first}: $argumentType"
 				}.joinToString(", ")
 				val setters = collected.map { "${I}v.${it.second.name}(${it.first})" }
-				ret.add("fun ViewManager.$functionName($arguments, init: $viewClassName.() -> Unit = {}): $viewClassName {\n"+
+				ret.add("public fun ViewManager.$functionName($arguments, init: $viewClassName.() -> Unit = {}): $viewClassName {\n"+
 					"${I}val v = $viewClassName(dslContext)\n"+
 					setters.joinToString("\n")+"\n"+
 					"${I}return addView(v, init, this)\n"+
@@ -163,7 +163,7 @@ class Renderer(private val generator: Generator) {
 		fun renderExtensionMethods() = listener.methods.map { method ->
 			val varName = method.name.decapitalize()
 			val argumentType = "(${method.argumentTypes}) -> ${method.returnType}"
-			"fun $setterClass.${decapitalize(method.name)}(act: $argumentType) {\n"+
+			"public fun $setterClass.${decapitalize(method.name)}(act: $argumentType) {\n"+
 				"${I}val props = getTag() as? ViewProps\n"+
 				"${I}if (props!=null) {\n"+
 				"${I2}var l: $helperClassName? =\n"+
@@ -205,7 +205,7 @@ class Renderer(private val generator: Generator) {
 			"${I3}override fun ${method.name}($arguments) = _$varName($substitution)\n"
 		}
 
-		return "class $helperClassName(val v: $setterClass): ListenerHelper {\n"+
+		return "public class $helperClassName(val v: $setterClass): ListenerHelper {\n"+
 			fields.joinToString("")+"\n"+
 			"${I}override fun apply() {\n" +
 			"${I2}v.${listener.setter.method.name}(object: $listenerClassName {\n" +
@@ -224,15 +224,16 @@ class Renderer(private val generator: Generator) {
 			val substituded = constructor.fmtLayoutParamsArgumentsInvoke()
 			val initArgumentName = "${decapitalize(lp.layout.cleanName())}Init"
 			val separator = if (arguments == "") "" else ","
-			return "${I}fun <T: View> T.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = {}): T {\n"+
+			return "${I}public fun <T: View> T.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = {}): T {\n"+
 				"${I2}val layoutParams = $layoutParamsClassName($substituded)\n"+
 				"${I2}layoutParams.$initArgumentName()\n" +
 				"${I2}this@layoutParams.setLayoutParams(layoutParams)\n"+
+				"${I2}return this\n"+
 				"${I}}"
 		}
 
 		val layoutParamsFunc = lp.constructors.map { renderExtensionFunction(it) }
-		return "class $helperClassName(ctx: Context): $layoutClassName(ctx) {\n"+
+		return "public class $helperClassName(ctx: Context): $layoutClassName(ctx) {\n"+
 			layoutParamsFunc.joinToString("\n")+
 			"\n}"
 	}

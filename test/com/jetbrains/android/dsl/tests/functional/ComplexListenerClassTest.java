@@ -32,7 +32,7 @@ public class ComplexListenerClassTest extends BaseFunctionalTest {
 	}
 
 	@Test
-	public void testLayouts() throws Exception {
+	public void testComplexListeners() throws Exception {
 		runFunctionalTest(testDataFile, Subsystem.LISTENERS);
 	}
 }

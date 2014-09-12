@@ -1,4 +1,4 @@
-fun android.inputmethodservice.KeyboardView.onPress(act: (Int) -> Unit) {
+public fun android.inputmethodservice.KeyboardView.onPress(act: (Int) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __KeyboardView_setOnKeyboardActionListener_KeyboardView_OnKeyboardActionListener? =
@@ -10,7 +10,7 @@ fun android.inputmethodservice.KeyboardView.onPress(act: (Int) -> Unit) {
 		l!!._onPress = act
 	}
 }
-fun android.inputmethodservice.KeyboardView.onRelease(act: (Int) -> Unit) {
+public fun android.inputmethodservice.KeyboardView.onRelease(act: (Int) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __KeyboardView_setOnKeyboardActionListener_KeyboardView_OnKeyboardActionListener? =
@@ -22,7 +22,7 @@ fun android.inputmethodservice.KeyboardView.onRelease(act: (Int) -> Unit) {
 		l!!._onRelease = act
 	}
 }
-fun android.inputmethodservice.KeyboardView.onKey(act: (Int, IntArray?) -> Unit) {
+public fun android.inputmethodservice.KeyboardView.onKey(act: (Int, IntArray?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __KeyboardView_setOnKeyboardActionListener_KeyboardView_OnKeyboardActionListener? =
@@ -34,7 +34,7 @@ fun android.inputmethodservice.KeyboardView.onKey(act: (Int, IntArray?) -> Unit)
 		l!!._onKey = act
 	}
 }
-fun android.inputmethodservice.KeyboardView.onText(act: (CharSequence?) -> Unit) {
+public fun android.inputmethodservice.KeyboardView.onText(act: (CharSequence?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __KeyboardView_setOnKeyboardActionListener_KeyboardView_OnKeyboardActionListener? =
@@ -46,7 +46,7 @@ fun android.inputmethodservice.KeyboardView.onText(act: (CharSequence?) -> Unit)
 		l!!._onText = act
 	}
 }
-fun android.inputmethodservice.KeyboardView.swipeLeft(act: () -> Unit) {
+public fun android.inputmethodservice.KeyboardView.swipeLeft(act: () -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __KeyboardView_setOnKeyboardActionListener_KeyboardView_OnKeyboardActionListener? =
@@ -58,7 +58,7 @@ fun android.inputmethodservice.KeyboardView.swipeLeft(act: () -> Unit) {
 		l!!._swipeLeft = act
 	}
 }
-fun android.inputmethodservice.KeyboardView.swipeRight(act: () -> Unit) {
+public fun android.inputmethodservice.KeyboardView.swipeRight(act: () -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __KeyboardView_setOnKeyboardActionListener_KeyboardView_OnKeyboardActionListener? =
@@ -70,7 +70,7 @@ fun android.inputmethodservice.KeyboardView.swipeRight(act: () -> Unit) {
 		l!!._swipeRight = act
 	}
 }
-fun android.inputmethodservice.KeyboardView.swipeDown(act: () -> Unit) {
+public fun android.inputmethodservice.KeyboardView.swipeDown(act: () -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __KeyboardView_setOnKeyboardActionListener_KeyboardView_OnKeyboardActionListener? =
@@ -82,7 +82,7 @@ fun android.inputmethodservice.KeyboardView.swipeDown(act: () -> Unit) {
 		l!!._swipeDown = act
 	}
 }
-fun android.inputmethodservice.KeyboardView.swipeUp(act: () -> Unit) {
+public fun android.inputmethodservice.KeyboardView.swipeUp(act: () -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __KeyboardView_setOnKeyboardActionListener_KeyboardView_OnKeyboardActionListener? =
@@ -94,7 +94,7 @@ fun android.inputmethodservice.KeyboardView.swipeUp(act: () -> Unit) {
 		l!!._swipeUp = act
 	}
 }
-fun android.view.ViewGroup.onChildViewAdded(act: (android.view.View?, android.view.View?) -> Unit) {
+public fun android.view.ViewGroup.onChildViewAdded(act: (android.view.View?, android.view.View?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __ViewGroup_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
@@ -106,7 +106,7 @@ fun android.view.ViewGroup.onChildViewAdded(act: (android.view.View?, android.vi
 		l!!._onChildViewAdded = act
 	}
 }
-fun android.view.ViewGroup.onChildViewRemoved(act: (android.view.View?, android.view.View?) -> Unit) {
+public fun android.view.ViewGroup.onChildViewRemoved(act: (android.view.View?, android.view.View?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __ViewGroup_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
@@ -118,7 +118,7 @@ fun android.view.ViewGroup.onChildViewRemoved(act: (android.view.View?, android.
 		l!!._onChildViewRemoved = act
 	}
 }
-fun android.widget.AdapterView<out android.widget.Adapter?>.onItemSelected(act: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit) {
+public fun android.widget.AdapterView<out android.widget.Adapter?>.onItemSelected(act: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __AdapterView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener? =
@@ -130,7 +130,7 @@ fun android.widget.AdapterView<out android.widget.Adapter?>.onItemSelected(act: 
 		l!!._onItemSelected = act
 	}
 }
-fun android.widget.AdapterView<out android.widget.Adapter?>.onNothingSelected(act: (android.widget.AdapterView<*>?) -> Unit) {
+public fun android.widget.AdapterView<out android.widget.Adapter?>.onNothingSelected(act: (android.widget.AdapterView<*>?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __AdapterView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener? =
@@ -142,7 +142,7 @@ fun android.widget.AdapterView<out android.widget.Adapter?>.onNothingSelected(ac
 		l!!._onNothingSelected = act
 	}
 }
-fun android.widget.SlidingDrawer.onScrollStarted(act: () -> Unit) {
+public fun android.widget.SlidingDrawer.onScrollStarted(act: () -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener? =
@@ -154,7 +154,7 @@ fun android.widget.SlidingDrawer.onScrollStarted(act: () -> Unit) {
 		l!!._onScrollStarted = act
 	}
 }
-fun android.widget.SlidingDrawer.onScrollEnded(act: () -> Unit) {
+public fun android.widget.SlidingDrawer.onScrollEnded(act: () -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener? =
@@ -166,7 +166,7 @@ fun android.widget.SlidingDrawer.onScrollEnded(act: () -> Unit) {
 		l!!._onScrollEnded = act
 	}
 }
-fun android.widget.AbsListView.onScrollStateChanged(act: (android.widget.AbsListView?, Int) -> Unit) {
+public fun android.widget.AbsListView.onScrollStateChanged(act: (android.widget.AbsListView?, Int) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __AbsListView_setOnScrollListener_AbsListView_OnScrollListener? =
@@ -178,7 +178,7 @@ fun android.widget.AbsListView.onScrollStateChanged(act: (android.widget.AbsList
 		l!!._onScrollStateChanged = act
 	}
 }
-fun android.widget.AbsListView.onScroll(act: (android.widget.AbsListView?, Int, Int, Int) -> Unit) {
+public fun android.widget.AbsListView.onScroll(act: (android.widget.AbsListView?, Int, Int, Int) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __AbsListView_setOnScrollListener_AbsListView_OnScrollListener? =
@@ -190,7 +190,7 @@ fun android.widget.AbsListView.onScroll(act: (android.widget.AbsListView?, Int, 
 		l!!._onScroll = act
 	}
 }
-fun android.widget.RadioGroup.onChildViewAdded(act: (android.view.View?, android.view.View?) -> Unit) {
+public fun android.widget.RadioGroup.onChildViewAdded(act: (android.view.View?, android.view.View?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __RadioGroup_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
@@ -202,7 +202,7 @@ fun android.widget.RadioGroup.onChildViewAdded(act: (android.view.View?, android
 		l!!._onChildViewAdded = act
 	}
 }
-fun android.widget.RadioGroup.onChildViewRemoved(act: (android.view.View?, android.view.View?) -> Unit) {
+public fun android.widget.RadioGroup.onChildViewRemoved(act: (android.view.View?, android.view.View?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __RadioGroup_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
@@ -214,7 +214,7 @@ fun android.widget.RadioGroup.onChildViewRemoved(act: (android.view.View?, andro
 		l!!._onChildViewRemoved = act
 	}
 }
-fun android.widget.TableLayout.onChildViewAdded(act: (android.view.View?, android.view.View?) -> Unit) {
+public fun android.widget.TableLayout.onChildViewAdded(act: (android.view.View?, android.view.View?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
@@ -226,7 +226,7 @@ fun android.widget.TableLayout.onChildViewAdded(act: (android.view.View?, androi
 		l!!._onChildViewAdded = act
 	}
 }
-fun android.widget.TableLayout.onChildViewRemoved(act: (android.view.View?, android.view.View?) -> Unit) {
+public fun android.widget.TableLayout.onChildViewRemoved(act: (android.view.View?, android.view.View?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
@@ -238,7 +238,7 @@ fun android.widget.TableLayout.onChildViewRemoved(act: (android.view.View?, andr
 		l!!._onChildViewRemoved = act
 	}
 }
-fun android.widget.TableRow.onChildViewAdded(act: (android.view.View?, android.view.View?) -> Unit) {
+public fun android.widget.TableRow.onChildViewAdded(act: (android.view.View?, android.view.View?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
@@ -250,7 +250,7 @@ fun android.widget.TableRow.onChildViewAdded(act: (android.view.View?, android.v
 		l!!._onChildViewAdded = act
 	}
 }
-fun android.widget.TableRow.onChildViewRemoved(act: (android.view.View?, android.view.View?) -> Unit) {
+public fun android.widget.TableRow.onChildViewRemoved(act: (android.view.View?, android.view.View?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
@@ -262,7 +262,7 @@ fun android.widget.TableRow.onChildViewRemoved(act: (android.view.View?, android
 		l!!._onChildViewRemoved = act
 	}
 }
-fun android.widget.SearchView.onQueryTextSubmit(act: (String?) -> Boolean) {
+public fun android.widget.SearchView.onQueryTextSubmit(act: (String?) -> Boolean) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __SearchView_setOnQueryTextListener_SearchView_OnQueryTextListener? =
@@ -274,7 +274,7 @@ fun android.widget.SearchView.onQueryTextSubmit(act: (String?) -> Boolean) {
 		l!!._onQueryTextSubmit = act
 	}
 }
-fun android.widget.SearchView.onQueryTextChange(act: (String?) -> Boolean) {
+public fun android.widget.SearchView.onQueryTextChange(act: (String?) -> Boolean) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __SearchView_setOnQueryTextListener_SearchView_OnQueryTextListener? =
@@ -286,7 +286,7 @@ fun android.widget.SearchView.onQueryTextChange(act: (String?) -> Boolean) {
 		l!!._onQueryTextChange = act
 	}
 }
-fun android.widget.SearchView.onSuggestionSelect(act: (Int) -> Boolean) {
+public fun android.widget.SearchView.onSuggestionSelect(act: (Int) -> Boolean) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __SearchView_setOnSuggestionListener_SearchView_OnSuggestionListener? =
@@ -298,7 +298,7 @@ fun android.widget.SearchView.onSuggestionSelect(act: (Int) -> Boolean) {
 		l!!._onSuggestionSelect = act
 	}
 }
-fun android.widget.SearchView.onSuggestionClick(act: (Int) -> Boolean) {
+public fun android.widget.SearchView.onSuggestionClick(act: (Int) -> Boolean) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __SearchView_setOnSuggestionListener_SearchView_OnSuggestionListener? =
@@ -310,7 +310,7 @@ fun android.widget.SearchView.onSuggestionClick(act: (Int) -> Boolean) {
 		l!!._onSuggestionClick = act
 	}
 }
-fun android.widget.AutoCompleteTextView.onItemSelected(act: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit) {
+public fun android.widget.AutoCompleteTextView.onItemSelected(act: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener? =
@@ -322,7 +322,7 @@ fun android.widget.AutoCompleteTextView.onItemSelected(act: (android.widget.Adap
 		l!!._onItemSelected = act
 	}
 }
-fun android.widget.AutoCompleteTextView.onNothingSelected(act: (android.widget.AdapterView<*>?) -> Unit) {
+public fun android.widget.AutoCompleteTextView.onNothingSelected(act: (android.widget.AdapterView<*>?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener? =
@@ -334,7 +334,7 @@ fun android.widget.AutoCompleteTextView.onNothingSelected(act: (android.widget.A
 		l!!._onNothingSelected = act
 	}
 }
-fun android.widget.SeekBar.onProgressChanged(act: (android.widget.SeekBar?, Int, Boolean) -> Unit) {
+public fun android.widget.SeekBar.onProgressChanged(act: (android.widget.SeekBar?, Int, Boolean) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __SeekBar_setOnSeekBarChangeListener_SeekBar_OnSeekBarChangeListener? =
@@ -346,7 +346,7 @@ fun android.widget.SeekBar.onProgressChanged(act: (android.widget.SeekBar?, Int,
 		l!!._onProgressChanged = act
 	}
 }
-fun android.widget.SeekBar.onStartTrackingTouch(act: (android.widget.SeekBar?) -> Unit) {
+public fun android.widget.SeekBar.onStartTrackingTouch(act: (android.widget.SeekBar?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __SeekBar_setOnSeekBarChangeListener_SeekBar_OnSeekBarChangeListener? =
@@ -358,7 +358,7 @@ fun android.widget.SeekBar.onStartTrackingTouch(act: (android.widget.SeekBar?) -
 		l!!._onStartTrackingTouch = act
 	}
 }
-fun android.widget.SeekBar.onStopTrackingTouch(act: (android.widget.SeekBar?) -> Unit) {
+public fun android.widget.SeekBar.onStopTrackingTouch(act: (android.widget.SeekBar?) -> Unit) {
 	val props = getTag() as? ViewProps
 	if (props!=null) {
 		var l: __SeekBar_setOnSeekBarChangeListener_SeekBar_OnSeekBarChangeListener? =
