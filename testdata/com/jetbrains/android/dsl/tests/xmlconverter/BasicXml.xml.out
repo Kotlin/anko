@@ -1,6 +1,6 @@
 import android.view.ViewGroup.LayoutParams.*
 import android.widget.*
-import com.example.adsl.*
+import kotlinx.android.dsl.*
 import kotlin.properties.Delegates
 
 class Foo(val act: android.app.Activity) {

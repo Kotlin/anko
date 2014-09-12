@@ -26,7 +26,7 @@ open class GeneratorProps() : BaseGeneratorProps() {
 	override val indent = "\t"
 
 	override val outputDirectory = "dsl_out/"
-	override val outputPackage = "com.example.adsl"
+	override val outputPackage = "kotlinx.android.dsl"
 
 	override val viewGroupBaseClass = "android/view/ViewGroup"
 	override val viewBaseClass = "android/view/View"
