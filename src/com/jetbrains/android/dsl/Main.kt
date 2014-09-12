@@ -12,12 +12,12 @@ import java.io.Writer
 import java.io.PrintWriter
 
 fun main(args: Array<String>) {
-	val classTree = ClassProcessor(args).genClassTree()
-	val props = GeneratorProps()
+  val classTree = ClassProcessor(args).genClassTree()
+  val props = GeneratorProps()
 
-	props.helperConstructors
+  props.helperConstructors
 
-	val generator = Generator(classTree, props)
-	val renderer = Renderer(generator)
-	Writer(renderer).write()
+  val generator = Generator(classTree, props)
+  val renderer = Renderer(generator)
+  Writer(renderer).write()
 }

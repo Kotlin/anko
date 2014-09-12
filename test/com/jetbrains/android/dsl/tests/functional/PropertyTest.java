@@ -17,18 +17,18 @@ public class PropertyTest extends BaseFunctionalTest {
     }
 
     protected void initSettings(BaseGeneratorProps settings) {
-	    settings.setGenerateImports(false);
-	    settings.setGeneratePackage(false);
+        settings.setGenerateImports(false);
+        settings.setGeneratePackage(false);
 
-	    settings.setGenerateProperties(true);
-	    settings.setGeneratePropertySetters(true);
-	    settings.setGenerateLayoutParamsHelperClasses(false);
-	    settings.setGenerateViewExtensionMethods(false);
-	    settings.setGenerateViewHelperConstructors(false);
-	    settings.setGenerateViewGroupExtensionMethods(false);
-	    settings.setGenerateSimpleListeners(false);
-	    settings.setGenerateComplexListenerClasses(false);
-	    settings.setGenerateComplexListenerSetters(false);
+        settings.setGenerateProperties(true);
+        settings.setGeneratePropertySetters(true);
+        settings.setGenerateLayoutParamsHelperClasses(false);
+        settings.setGenerateViewExtensionMethods(false);
+        settings.setGenerateViewHelperConstructors(false);
+        settings.setGenerateViewGroupExtensionMethods(false);
+        settings.setGenerateSimpleListeners(false);
+        settings.setGenerateComplexListenerClasses(false);
+        settings.setGenerateComplexListenerSetters(false);
     }
 
     @Test

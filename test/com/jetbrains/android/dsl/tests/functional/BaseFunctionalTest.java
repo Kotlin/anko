@@ -44,15 +44,15 @@ public abstract class BaseFunctionalTest extends Assert {
 
     protected void runFunctionalTest(String testDataFile, Subsystem subsystem, TestGeneratorProps settings) throws IOException {
         initSettings(settings);
-	    generator = new DSLGenerator(new String[] {inputJarFile}, settings);
+        generator = new DSLGenerator(new String[]{inputJarFile}, settings);
         generator.run();
 
         String actual = DslPackage.readFile(settings.tmpFiles.get(subsystem).getAbsolutePath());
-        String expected = loadOrCreate(new File("testdata/"+testDataFile), actual);
+        String expected = loadOrCreate(new File("testdata/" + testDataFile), actual);
 
         assertEquals(actual, expected);
-	    assertTrue(actual.length()>0);
-	    assertTrue(expected.length()>0);
+        assertTrue(actual.length() > 0);
+        assertTrue(expected.length() > 0);
     }
 
     protected void runFunctionalTest(String testDataFile, Subsystem subsystem) throws IOException {

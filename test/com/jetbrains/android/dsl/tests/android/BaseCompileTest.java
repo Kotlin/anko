@@ -35,21 +35,21 @@ public class BaseCompileTest extends Assert {
     protected void runCompileTest(File testData) throws IOException, InterruptedException {
         assertTrue(testData.exists());
         TestGeneratorProps settings = new AndroidTestGeneratorProps();
-        DSLGenerator gen = new DSLGenerator(new String[] {inputJarFile}, settings);
+        DSLGenerator gen = new DSLGenerator(new String[]{inputJarFile}, settings);
         gen.run();
         String kotlincArgs[] = {
-            kotlincFilename,
+                kotlincFilename,
                 "-jar", tmpJarFile,
                 "-classpath", inputJarFile,
                 testData.getPath()
         };
         ArrayList<String> args = new ArrayList<>(Arrays.asList(kotlincArgs));
-        for (File file: settings.tmpFiles.values()) {
+        for (File file : settings.tmpFiles.values()) {
             args.add(file.getAbsolutePath());
         }
         ProcResult res = compile(args.toArray(new String[args.size()]));
         assertEquals(res.stderr, "");
-        for (File file: settings.tmpFiles.values()) {
+        for (File file : settings.tmpFiles.values()) {
             file.delete();
         }
     }

@@ -8,32 +8,32 @@ import org.testng.annotations.Test;
 import java.io.File;
 
 public class ComplexListenerClassTest extends BaseFunctionalTest {
-	private final String testDataFile = "com/jetbrains/android/dsl/tests/functional/ComplexListenerClassTest.kt";
+    private final String testDataFile = "com/jetbrains/android/dsl/tests/functional/ComplexListenerClassTest.kt";
 
-	@Override
-	@BeforeMethod
-	public void setUp() throws Exception {
-		super.setUp();
-	}
+    @Override
+    @BeforeMethod
+    public void setUp() throws Exception {
+        super.setUp();
+    }
 
-	protected void initSettings(BaseGeneratorProps settings) {
-		settings.setGenerateImports(false);
-		settings.setGeneratePackage(false);
+    protected void initSettings(BaseGeneratorProps settings) {
+        settings.setGenerateImports(false);
+        settings.setGeneratePackage(false);
 
-		settings.setGenerateProperties(false);
-		settings.setGeneratePropertySetters(false);
-		settings.setGenerateLayoutParamsHelperClasses(false);
-		settings.setGenerateViewExtensionMethods(false);
-		settings.setGenerateViewHelperConstructors(false);
-		settings.setGenerateViewGroupExtensionMethods(false);
-		settings.setGenerateSimpleListeners(false);
-		settings.setGenerateComplexListenerClasses(true);
-		settings.setGenerateComplexListenerSetters(false);
-	}
+        settings.setGenerateProperties(false);
+        settings.setGeneratePropertySetters(false);
+        settings.setGenerateLayoutParamsHelperClasses(false);
+        settings.setGenerateViewExtensionMethods(false);
+        settings.setGenerateViewHelperConstructors(false);
+        settings.setGenerateViewGroupExtensionMethods(false);
+        settings.setGenerateSimpleListeners(false);
+        settings.setGenerateComplexListenerClasses(true);
+        settings.setGenerateComplexListenerSetters(false);
+    }
 
-	@Test
-	public void testComplexListeners() throws Exception {
-		runFunctionalTest(testDataFile, Subsystem.LISTENERS);
-	}
+    @Test
+    public void testComplexListeners() throws Exception {
+        runFunctionalTest(testDataFile, Subsystem.LISTENERS);
+    }
 }
 
