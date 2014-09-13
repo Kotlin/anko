@@ -5,8 +5,11 @@ import org.objectweb.asm.Type
 import org.objectweb.asm.tree.MethodNode
 import java.util.TreeMap
 import java.util.ArrayList
+import com.jetbrains.android.dsl.utils.Buffer
 
 class Renderer(private val generator: Generator) {
+
+	private fun buffer(init: Buffer.() -> Unit) = Buffer(generator.props.indent, init)
 
   //indents
   private val I = generator.props.indent
@@ -15,33 +18,25 @@ class Renderer(private val generator: Generator) {
 
   val props = generator.props
 
-  //generate functions for making views
-  //example: fun ViewManager.textView(init: TextView.() -> Unit) = addView(TextView(dslContext), init, this)
+  /*generate functions for making views. example:
+    public fun ViewManager.textView(init: TextView.() -> Unit): TextView =
+      addView(TextView(dslContext), init, this)
+  */
   val views = if (!props.generateViewExtensionMethods) listOf() else
-    generator.viewClasses.filter { !it.isAbstract() && it.hasSimpleConstructor() }.map { clazz ->
-      val className = cleanInternalName(clazz.name!!)
-      val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
-      "public fun ViewManager.$funcName(init: $className.() -> Unit = {}): $className =\n"+
-        "${I}addView($className(dslContext), init, this)\n"
-    }
+    generateViews(generator.viewClasses) { cleanInternalName(it) }
 
-  //generate functions for making view groups (containers)
-  //example: fun ViewManager.linearLayout(init: _LinearLayout.() -> Unit) = addView(_LinearLayout(dslContext), init, this)
-  //_LinearLayout is a child of LinearLayout class with helper layoutParams() methods
+  /*generate functions for making view groups (containers). example:
+    public fun ViewManager.linearLayout(init: _LinearLayout.() -> Unit): LinearLayout
+      = addView(_LinearLayout(dslContext), init, this)
+  */
   val viewGroups = if (!props.generateViewGroupExtensionMethods) listOf() else
-    generator.viewGroupClasses.filter { !it.isAbstract() }.map { clazz ->
-      val originalClassName = cleanInternalName(clazz.name!!)
-      val className = stripClassName(cleanInternalName(clazz.name!!))
-      val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
-      "public fun ViewManager.$funcName(init: _$className.() -> Unit = {}): $originalClassName =\n"+
-        "${I}addView(_$className(dslContext), init, this)\n"
-    }
+	  generateViews(generator.viewGroupClasses) { "_"+stripClassName(cleanInternalName(it)) }
 
   //helper constructors for views
-  val helperConstructors = if (!props.generateViewHelperConstructors) listOf<String>() else genHelperConstructors()
+  val helperConstructors =
+	  if (!props.generateViewHelperConstructors) listOf<String>() else genHelperConstructors()
 
-  //generate properties for views
-  /* example:
+  /*generate properties for views. example:
     var android.widget.TextView.text: CharSequence?
       get() = getText()
       set(v) = setText(v)
@@ -51,16 +46,20 @@ class Renderer(private val generator: Generator) {
     generator.properies.map {
       val getter = it.getter
       val className = cleanInternalName(getter.clazz.name!!)
+	    val propertyName = it.name
       val bestSetter = it.setters.head
-      val propType = if (bestSetter!=null) "var" else "val"
+      val mutability = if (bestSetter!=null) "var" else "val"
       val returnType = getter.method.renderReturnType()
       //val otherSetters = if (it.setters.size>1) it.setters.tail else listOf()
-      "public $propType $className.${it.name}: $returnType\n"+
-        "${I}get() = ${getter.method.name!!}()"+
-        (if (bestSetter!=null) {
+
+			buffer {
+				line("public $mutability $className.$propertyName: $returnType")
+				indent.line("get() = ${getter.method.name!!}()")
+				if (bestSetter!=null) {
           val arg = if (returnType.endsWith("?")) "v!!" else "v"
-          "\n${I}set(v) = ${bestSetter.method.name}($arg)"
-        } else "")+"\n"
+          indent.line("set(v) = ${bestSetter.method.name}($arg)")
+				}
+			}.toString()
     }
 
   //render listeners
@@ -87,23 +86,41 @@ class Renderer(private val generator: Generator) {
   val layouts = if (!props.generateLayoutParamsHelperClasses) listOf() else
     generator.layouts.map { renderLayout(it) }
 
+	private fun generateViews(views: List<ClassNode>, nameResolver: (String) -> String): List<String> {
+		return views.filter { !it.isAbstract() && it.hasSimpleConstructor() }.map { clazz ->
+			val typeName = cleanInternalName(clazz.name!!)
+			val className = nameResolver(clazz.name!!)
+			val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
+
+      buffer {
+        line("public fun ViewManager.$funcName(init: $className.() -> Unit = {}): $typeName =")
+        line("addView($className(dslContext), init, this)")
+      }.toString()
+		}
+	}
+
   //render a simple listener (extension function)
   //example: fun android.view.View.onClick(l: (android.view.View?) -> Unit) = setOnClickListener(l)
   private fun renderSimpleListener(listener: SimpleListener): String {
     val obj = listener.setter.clazz.cleanInternalName()
     val argumentTypes = listener.method.argumentTypes
     val returnType = listener.method.returnType
-    return "public fun $obj.${listener.method.name}(l: ($argumentTypes) -> $returnType): Unit = ${listener.setter.method.name}(l)"
+
+    return buffer {
+      line("public fun $obj.${listener.method.name}(l: ($argumentTypes) -> $returnType): Unit =")
+      line("${listener.setter.method.name}(l)")
+    }.toString()
   }
 
   fun genHelperConstructors(): List<String> {
+    fun addMethods(node: ClassTreeNode, writeTo: ArrayList<MethodNode>): ArrayList<MethodNode> {
+      writeTo.addAll(node.data.methods!!)
+      if (node.parent!=null)
+        addMethods(node.parent!!, writeTo)
+      return writeTo
+    }
+
     fun resolveAllMethods(clazz: ClassNode): List<MethodNode> {
-      fun addMethods(node: ClassTreeNode, writeTo: ArrayList<MethodNode>): ArrayList<MethodNode> {
-        writeTo.addAll(node.data.methods!!)
-        if (node.parent!=null)
-          addMethods(node.parent!!, writeTo)
-        return writeTo
-      }
       return addMethods(generator.classTree.findNode(clazz)!!, ArrayList<MethodNode>())
     }
 
@@ -123,22 +140,26 @@ class Renderer(private val generator: Generator) {
 
     val ret = arrayListOf<String>()
     generator.viewClasses.filter { props.helperConstructors.contains(it.cleanInternalName()) }.forEach { view ->
+      val viewClassName = view.cleanInternalName()
       val helperConstructors = props.helperConstructors.get(view.cleanInternalName())!!
 
-      val viewClassName = view.cleanInternalName()
-      helperConstructors.forEach {
+      for (constructor in helperConstructors) {
         val functionName = view.cleanName().decapitalize()
-        val collected = it.zip(collectProperties(view, it))
-        val arguments = collected.map {
+        val collected = constructor.zip(collectProperties(view, constructor))
+        val helperArguments = collected.map {
           val argumentType = it.second.arguments!![0].toStr()
           "${it.first}: $argumentType"
         }.joinToString(", ")
-        val setters = collected.map { "${I}v.${it.second.name}(${it.first})" }
-        ret.add("public fun ViewManager.$functionName($arguments, init: $viewClassName.() -> Unit = {}): $viewClassName {\n"+
-          "${I}val v = $viewClassName(dslContext)\n"+
-          setters.joinToString("\n")+"\n"+
-          "${I}return addView(v, init, this)\n"+
-          "}")
+        val arguments = "$helperArguments, init: $viewClassName.() -> Unit = {}"
+        val setters = collected.map { "v.${it.second.name}(${it.first})" }
+
+        ret.add(buffer {
+          line("public fun ViewManager.$functionName($arguments): $viewClassName {")
+          line("val v = $viewClassName(dslContext)")
+          lines(setters)
+          line("return addView(v, init, this)")
+          line("}")
+        }.toString())
       }
     }
     return ret
@@ -163,17 +184,21 @@ class Renderer(private val generator: Generator) {
     fun renderExtensionMethods() = listener.methods.map { method ->
       val varName = method.name.decapitalize()
       val argumentType = "(${method.argumentTypes}) -> ${method.returnType}"
-      "public fun $setterClass.${decapitalize(method.name)}(act: $argumentType) {\n"+
-        "${I}val props = getTag() as? ViewProps\n"+
-        "${I}if (props!=null) {\n"+
-        "${I2}var l: $helperClassName? =\n"+
-        "${I3}props.listeners.get(\"$hashKey\") as? $helperClassName\n"+
-        "${I2}if (l==null) {\n"+
-        "${I3}l = $helperClassName(this)\n"+
-        "${I3}props.listeners.put(\"$hashKey\", l!!)\n"+
-        "${I2}}\n"+
-        "${I2}l!!._$varName = act\n"+
-        "${I}}\n}"
+      
+      buffer {
+        line("public fun $setterClass.${decapitalize(method.name)}(act: $argumentType) {")
+        line("val props = getTag() as? ViewProps")
+        line("if (props!=null) {")
+          line("var l: $helperClassName? =")
+          line("props.listeners.get(\"$hashKey\") as? $helperClassName")
+          line("if (l==null) {")
+          line("l = $helperClassName(this)")
+          line("props.listeners.put(\"$hashKey\", l!!)")
+        line("}")
+        line("l!!._$varName = act")
+        line("}").line("}")
+        
+      }.toString()
     }
     return renderExtensionMethods().joinToString("\n")
   }
@@ -192,8 +217,8 @@ class Renderer(private val generator: Generator) {
       val lambdaType = "((${method.argumentTypes}) -> ${method.returnType})"
       val returnValue = method.method.getReturnType().getDefaultValue()
       val initializer = "{ $argumentNames -> $returnValue }"
-      val simplifiedInitializer = if (initializer=="{ -> }") "{}" else initializer
-      "${I}var _$varName: $lambdaType = $simplifiedInitializer\n"
+      val simplifiedInitializer = if (initializer=="{  ->  }") "{}" else initializer
+      "var _$varName: $lambdaType = $simplifiedInitializer "
     }
     //listener methods (for produced anonymous class, already with indentation)
     val listenerMethods = listener.methods.map { method ->
@@ -202,15 +227,17 @@ class Renderer(private val generator: Generator) {
       val customArguments = props.customMethodParameters.get(customArgumentsKey)
       val arguments = customArguments ?: method.method.fmtArguments()
       val substitution = method.method.fmtArgumentsNames()
-      "${I3}override fun ${method.name}($arguments) = _$varName($substitution)\n"
+      "override fun ${method.name}($arguments) = _$varName($substitution)"
     }
 
-    return "public class $helperClassName(val v: $setterClass): ListenerHelper {\n"+
-      fields.joinToString("")+"\n"+
-      "${I}override fun apply() {\n" +
-      "${I2}v.${listener.setter.method.name}(object: $listenerClassName {\n" +
-      listenerMethods.joinToString("") +
-      "$I2})\n$I}\n}"
+    return buffer {
+      line("public class $helperClassName(val v: $setterClass): ListenerHelper {")
+      lines(fields).nl()
+      line("override fun apply() {")
+      line("v.${listener.setter.method.name}(object: $listenerClassName {")
+      lines(listenerMethods)
+      line("})").line("}").line("}")
+    }.toString()
   }
 
   //render a layout class (only those with custom LayoutParams)
