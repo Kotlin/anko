@@ -1,7 +1,8 @@
 Kōan
 ===========
 
-```Both this page and Koan are in deep conctruction now.
+```
+Both this page and Koan are in deep conctruction now.
 It should be completed in a week. Stay tuned!
 ```
 
