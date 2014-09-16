@@ -1,9 +1,9 @@
 Kōan
 ===========
 
-<div style="color:#9F0000"><pre><code>Both this page and Koan are in deep conctruction now.
+```Both this page and Koan are in deep conctruction now.
 It should be completed in a week. Stay tuned!
-</code></pre></div>
+```
 
 Koan is a library for [Kotlin](http://kotlinlang.org) which makes Android application development faster and easier. It allows to write clean and readable code, and lets you forget about sharp angles of Android SDK for Java.
 
@@ -96,6 +96,7 @@ There is no :tophat: actually, just number of Kotlin [extension methods](http://
 ### Is it extendable?
 
 Short answer: **yes**.
+
 For example, you want to be able to use a MapView in DSL. Then just write this in any Kotlin file from where you could import it:
 ```kotlin
 fun ViewManager.mapView(init: MapView.() -> Unit = {}) =
