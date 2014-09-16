@@ -21,6 +21,7 @@ abstract class BaseGeneratorProps() {
   open var generateSimpleListeners: Boolean = true
   open var generateComplexListenerClasses: Boolean = true
   open var generateComplexListenerSetters: Boolean = true
+	open var generateTopLevelExtensionMethods: Boolean = true
 
   abstract public fun getOutputFile(subsystem: Subsystem): File
 

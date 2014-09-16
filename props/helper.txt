@@ -49,6 +49,26 @@ private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T
     return v
 }
 
+private fun <T: View> Activity.addTopLevelView(v: T, init: T.() -> Unit): T {
+  UI { addView(v, init, this) }
+  return v
+}
+
+private fun <T: View> Fragment.addTopLevelView(v: T, init: T.() -> Unit): T {
+  UI { addView(v, init, this) }
+  return v
+}
+
+private fun <T: View> android.support.v4.app.Fragment.addTopLevelView(v: T, init: T.() -> Unit): T {
+  UI { addView(v, init, this) }
+  return v
+}
+
+private fun <T: View> Context.addTopLevelView(v: T, init: T.() -> Unit): T {
+  UI { addView(v, init, this) }
+  return v
+}
+
 private fun applyStyle(v: View, style: (Any) -> Unit) {
     style(v)
     if (v is ViewGroup) {
@@ -111,4 +131,8 @@ public fun Context.UI(init: UiHelper.() -> Unit): UiHelper {
     return dsl
 }
 
+public fun Activity.UI(init: UiHelper.() -> Unit): UiHelper = UI(true, init)
+
 public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity()!!.UI(false, init)
+
+public fun android.support.v4.app.Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity()!!.UI(false, init)

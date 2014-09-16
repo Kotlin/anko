@@ -86,7 +86,10 @@ class Renderer(private val generator: Generator) {
   val layouts = if (!props.generateLayoutParamsHelperClasses) listOf() else
     generator.layouts.map { renderLayout(it) }
 
-	private fun generateViews(views: List<ClassNode>, nameResolver: (String) -> String): List<String> {
+	private fun generateViews(
+			views: List<ClassNode>,
+			nameResolver: (String) -> String): List<String>
+	{
 		return views.filter { !it.isAbstract() && it.hasSimpleConstructor() }.map { clazz ->
 			val typeName = cleanInternalName(clazz.name!!)
 			val className = nameResolver(clazz.name!!)
@@ -95,6 +98,15 @@ class Renderer(private val generator: Generator) {
       buffer {
         line("public fun ViewManager.$funcName(init: $className.() -> Unit = {}): $typeName =")
         line("addView($className(dslContext), init, this)")
+	      if (generator.props.generateTopLevelExtensionMethods) {
+		      fun add(extendFor: String, ctx: String) {
+			      line("public fun $extendFor.$funcName(init: $className.() -> Unit = {}): $typeName =")
+			      line("addTopLevelView($className($ctx), init)")
+		      }
+		      add("Activity", "this")
+		      add("Fragment", "getActivity()!!")
+		      add("Context", "this")
+	      }
       }.toString()
 		}
 	}

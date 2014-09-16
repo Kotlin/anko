@@ -17,17 +17,6 @@ public class ComplexListenerSetterTest extends BaseFunctionalTest {
     }
 
     protected void initSettings(BaseGeneratorProps settings) {
-        settings.setGenerateImports(false);
-        settings.setGeneratePackage(false);
-
-        settings.setGenerateProperties(false);
-        settings.setGeneratePropertySetters(false);
-        settings.setGenerateLayoutParamsHelperClasses(false);
-        settings.setGenerateViewExtensionMethods(false);
-        settings.setGenerateViewHelperConstructors(false);
-        settings.setGenerateViewGroupExtensionMethods(false);
-        settings.setGenerateSimpleListeners(false);
-        settings.setGenerateComplexListenerClasses(false);
         settings.setGenerateComplexListenerSetters(true);
     }
 

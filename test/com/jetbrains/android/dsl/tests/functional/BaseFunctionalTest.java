@@ -57,6 +57,21 @@ public abstract class BaseFunctionalTest extends Assert {
 
     protected void runFunctionalTest(String testDataFile, Subsystem subsystem) throws IOException {
         TestGeneratorProps settings = new TestGeneratorProps();
+
+        settings.setGenerateImports(false);
+        settings.setGeneratePackage(false);
+
+        settings.setGenerateProperties(false);
+        settings.setGeneratePropertySetters(false);
+        settings.setGenerateLayoutParamsHelperClasses(false);
+        settings.setGenerateViewExtensionMethods(false);
+        settings.setGenerateViewHelperConstructors(false);
+        settings.setGenerateViewGroupExtensionMethods(false);
+        settings.setGenerateSimpleListeners(false);
+        settings.setGenerateComplexListenerClasses(false);
+        settings.setGenerateComplexListenerSetters(false);
+        settings.setGenerateTopLevelExtensionMethods(false);
+
         runFunctionalTest(testDataFile, subsystem, settings);
     }
 
