@@ -9,7 +9,7 @@ import com.jetbrains.android.dsl.utils.Buffer
 
 class Renderer(private val generator: Generator) {
 
-	private fun buffer(init: Buffer.() -> Unit) = Buffer(generator.props.indent, init)
+  private fun buffer(init: Buffer.() -> Unit) = Buffer(generator.props.indent, init)
 
   //indents
   private val I = generator.props.indent
@@ -30,11 +30,11 @@ class Renderer(private val generator: Generator) {
       = addView(_LinearLayout(dslContext), init, this)
   */
   val viewGroups = if (!props.generateViewGroupExtensionMethods) listOf() else
-	  generateViews(generator.viewGroupClasses) { "_"+stripClassName(cleanInternalName(it)) }
+    generateViews(generator.viewGroupClasses) { "_"+stripClassName(cleanInternalName(it)) }
 
   //helper constructors for views
   val helperConstructors =
-	  if (!props.generateViewHelperConstructors) listOf<String>() else genHelperConstructors()
+    if (!props.generateViewHelperConstructors) listOf<String>() else genHelperConstructors()
 
   /*generate properties for views. example:
     var android.widget.TextView.text: CharSequence?
@@ -46,20 +46,20 @@ class Renderer(private val generator: Generator) {
     generator.properies.map {
       val getter = it.getter
       val className = cleanInternalName(getter.clazz.name!!)
-	    val propertyName = it.name
+      val propertyName = it.name
       val bestSetter = it.setters.head
       val mutability = if (bestSetter!=null) "var" else "val"
       val returnType = getter.method.renderReturnType()
       //val otherSetters = if (it.setters.size>1) it.setters.tail else listOf()
 
-			buffer {
-				line("public $mutability $className.$propertyName: $returnType")
-				indent.line("get() = ${getter.method.name!!}()")
-				if (bestSetter!=null) {
+      buffer {
+        line("public $mutability $className.$propertyName: $returnType")
+        indent.line("get() = ${getter.method.name!!}()")
+        if (bestSetter!=null) {
           val arg = if (returnType.endsWith("?")) "v!!" else "v"
           indent.line("set(v) = ${bestSetter.method.name}($arg)")
-				}
-			}.toString()
+        }
+      }.toString()
     }
 
   //render listeners
@@ -86,30 +86,30 @@ class Renderer(private val generator: Generator) {
   val layouts = if (!props.generateLayoutParamsHelperClasses) listOf() else
     generator.layouts.map { renderLayout(it) }
 
-	private fun generateViews(
-			views: List<ClassNode>,
-			nameResolver: (String) -> String): List<String>
-	{
-		return views.filter { !it.isAbstract() && it.hasSimpleConstructor() }.map { clazz ->
-			val typeName = cleanInternalName(clazz.name!!)
-			val className = nameResolver(clazz.name!!)
-			val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
+  private fun generateViews(
+      views: List<ClassNode>,
+      nameResolver: (String) -> String): List<String>
+  {
+    return views.filter { !it.isAbstract() && it.hasSimpleConstructor() }.map { clazz ->
+      val typeName = cleanInternalName(clazz.name!!)
+      val className = nameResolver(clazz.name!!)
+      val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
 
       buffer {
         line("public fun ViewManager.$funcName(init: $className.() -> Unit = {}): $typeName =")
         line("addView($className(dslContext), init, this)")
-	      if (generator.props.generateTopLevelExtensionMethods) {
-		      fun add(extendFor: String, ctx: String) {
-			      line("public fun $extendFor.$funcName(init: $className.() -> Unit = {}): $typeName =")
-			      line("addTopLevelView($className($ctx), init)")
-		      }
-		      add("Activity", "this")
-		      add("Fragment", "getActivity()!!")
-		      add("Context", "this")
-	      }
+        if (generator.props.generateTopLevelExtensionMethods) {
+          fun add(extendFor: String, ctx: String) {
+            line("public fun $extendFor.$funcName(init: $className.() -> Unit = {}): $typeName =")
+            line("addTopLevelView($className($ctx), init)")
+          }
+          add("Activity", "this")
+          add("Fragment", "getActivity()!!")
+          add("Context", "this")
+        }
       }.toString()
-		}
-	}
+    }
+  }
 
   //render a simple listener (extension function)
   //example: fun android.view.View.onClick(l: (android.view.View?) -> Unit) = setOnClickListener(l)
