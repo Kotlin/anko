@@ -4,29 +4,26 @@ import java.util.HashSet
 import java.util.HashMap
 import java.util.ArrayList
 import java.io.File
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.file.Path
-import java.nio.charset.StandardCharsets
-import java.nio.ByteBuffer
 
-open class GeneratorProps() : BaseGeneratorProps() {
+
+open class GeneratorProps(outputDirectory: String = "gen/") : BaseGeneratorProps() {
 
   override fun getOutputFile(subsystem: Subsystem): File {
+    val parentDirectory = outputDirectory+"src/main/kotlin/"
     return when (subsystem) {
-      Subsystem.PROPERTIES -> File(outputDirectory + "Properties.kt")
-      Subsystem.VIEWS -> File(outputDirectory + "Views.kt")
-      Subsystem.LISTENERS -> File(outputDirectory + "Listeners.kt")
-      Subsystem.LAYOUTS -> File(outputDirectory + "Layouts.kt")
-      Subsystem.HELPER -> File(outputDirectory + "Helpers.kt")
+      Subsystem.PROPERTIES -> File(parentDirectory + "Properties.kt")
+      Subsystem.VIEWS -> File(parentDirectory + "Views.kt")
+      Subsystem.LISTENERS -> File(parentDirectory + "Listeners.kt")
+      Subsystem.LAYOUTS -> File(parentDirectory + "Layouts.kt")
+      Subsystem.HELPER -> File(parentDirectory + "Helpers.kt")
       else -> throw RuntimeException("Unable to get output file for non-existing subsystem $subsystem")
     }
   }
 
   override val indent = "  "
 
-  override val outputDirectory = "dsl_out/"
-  override val outputPackage = "kotlinx.android.dsl"
+  override val outputDirectory = outputDirectory
+  override val outputPackage = "kotlinx.android.koan"
 
   override val viewGroupBaseClass = "android/view/ViewGroup"
   override val viewBaseClass = "android/view/View"
@@ -77,13 +74,4 @@ open class GeneratorProps() : BaseGeneratorProps() {
         r
       }
     }
-
-  protected fun readFile(name: String): String {
-    var data = Files.readAllBytes(Paths.get(name) as Path)
-    return StandardCharsets.UTF_8.decode(ByteBuffer.wrap(data)).toString()
-  }
-
-  protected fun readLines(fileName: String): MutableList<String> {
-    return Files.readAllLines(Paths.get(fileName)!!, StandardCharsets.UTF_8)
-  }
 }

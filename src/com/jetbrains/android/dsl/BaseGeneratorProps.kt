@@ -1,16 +1,12 @@
 package com.jetbrains.android.dsl
 
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.file.Path
-import java.nio.charset.StandardCharsets
-import java.nio.ByteBuffer
 import java.io.File
 import java.util.HashMap
 
 abstract class BaseGeneratorProps() {
   open var generateImports: Boolean = true
   open var generatePackage: Boolean = true
+  open var generateMavenArtifact: Boolean = true
 
   open var generateProperties: Boolean = true
   open var generatePropertySetters: Boolean = true

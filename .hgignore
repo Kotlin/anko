@@ -7,5 +7,4 @@ adslGenerator.iml
 .DS_Store
 
 syntax: glob
-*.jar
 *.class

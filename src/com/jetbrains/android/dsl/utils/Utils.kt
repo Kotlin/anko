@@ -8,6 +8,8 @@ import java.nio.charset.StandardCharsets
 import java.nio.ByteBuffer
 import java.util.LinkedHashMap
 import java.util.ArrayList
+import java.io.File
+import java.io.PrintWriter
 
 fun Type.isVoid(): Boolean = getSort()==Type.VOID
 
@@ -98,12 +100,18 @@ fun updateIfNotNull<T>(old: T, new: T): T {
     return old ?: new
 }
 
-fun readFile(name: String): String {
-    var data = Files.readAllBytes(Paths.get(name) as Path)
+fun readFile(fileName: String): String {
+    var data = Files.readAllBytes(Paths.get(fileName) as Path)
     return StandardCharsets.UTF_8.decode(ByteBuffer.wrap(data)).toString()
 }
 
-public fun readLines(fileName: String): MutableList<String> {
+fun writeFile(fileName: String, text: String) {
+  val writer = PrintWriter(File(fileName))
+  writer.write(text)
+  writer.close()
+}
+
+fun readLines(fileName: String): MutableList<String> {
     return Files.readAllLines(Paths.get(fileName)!!, StandardCharsets.UTF_8)
 }
 

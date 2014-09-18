@@ -1,13 +1,10 @@
 package com.jetbrains.android.dsl
 
-import com.jetbrains.android.dsl.ClassTree
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
-import org.objectweb.asm.Type
 import org.objectweb.asm.tree.InnerClassNode
 import java.util.TreeMap
 import java.util.Arrays
-import java.util.ArrayList
 
 data class ListenerMethod(val method: MethodNode, val name: String, val argumentTypes: String, val returnType: String)
 

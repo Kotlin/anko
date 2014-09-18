@@ -2,7 +2,6 @@ package com.jetbrains.android.dsl.xmlconverter
 
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
-import java.util.ArrayList
 import java.util.HashMap
 import com.jetbrains.android.dsl.Context
 

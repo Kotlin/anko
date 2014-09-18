@@ -5,8 +5,6 @@ import com.jetbrains.android.dsl.Subsystem;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.File;
-
 public class HelperConstructorTest extends BaseFunctionalTest {
     private final String testDataFile = "com/jetbrains/android/dsl/tests/functional/HelperConstructorTest.kt";
 

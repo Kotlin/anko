@@ -1,0 +1,52 @@
+buildscript {
+    ext.kotlin_version = '0.8.11'
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.github.dcendents:android-maven-plugin:1.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'android-library'
+apply plugin: 'kotlin-android'
+apply from: 'maven_push.gradle'
+
+allprojects {
+    version = VERSION_NAME
+    group = GROUP
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+repositories {
+    mavenLocal()
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        targetSdkVersion "%VERSION%"
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+	repositories {
+        mavenCentral()
+    }
+
+    compile 'com.android.support:support-v4:19.1.+'
+		compile 'com.google.maps.android:android-maps-utils:0.3+'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}

@@ -4,9 +4,6 @@ import com.jetbrains.android.dsl.BaseGeneratorProps;
 import com.jetbrains.android.dsl.Subsystem;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import sun.org.mozilla.javascript.internal.BaseFunction;
-
-import java.io.File;
 
 public class SimpleListenerTest extends BaseFunctionalTest {
 

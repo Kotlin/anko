@@ -1,23 +1,37 @@
 package com.jetbrains.android.dsl
 
-import java.io.InputStream
-import java.util.jar.JarFile
-import java.util.Collections
-import java.util.Enumeration
-import java.util.jar.JarEntry
-import org.objectweb.asm.tree.ClassNode
-import org.objectweb.asm.ClassReader
 import java.io.File
-import java.io.Writer
-import java.io.PrintWriter
 
 fun main(args: Array<String>) {
-  val classTree = ClassProcessor(args).genClassTree()
-  val props = GeneratorProps()
+  val original = File("original/")
+  if (!original.exists() || !original.isDirectory()) {
+    throw RuntimeException("\"original\" directory does not exist.")
+  }
+  val versions = original.listFiles { it.isDirectory() } ?: array<File>()
 
-  props.helperConstructors
+  for (version in versions) {
+    val jars = version.listFiles { it.isFile() && it.getName().toLowerCase().endsWith(".jar") }
+      ?.map { it.getAbsolutePath() } ?: listOf<String>()
+    val intVersion = parseVersion(version.getName())
+    if (intVersion!=null && jars.isNotEmpty()) {
+      println("Processing version=${version.getName()}, jars: ${jars.joinToString(",")}")
 
-  val generator = Generator(classTree, props)
-  val renderer = Renderer(generator)
-  Writer(renderer).write()
+      val outputDirectory = "gen/${version.getName()}/"
+      val fileOutputDirectory = File("$outputDirectory/src/main/kotlin/")
+      if (!fileOutputDirectory.exists()) {
+        fileOutputDirectory.mkdirs()
+      }
+
+      DSLGenerator(intVersion, version.getName(), jars, GeneratorProps(outputDirectory)).run()
+    }
+  }
+
+  File("props/mvn/deploy.sh").copyTo(File("gen/deploy.sh"))
+}
+
+private fun parseVersion(name: String): Int? {
+  val prob = name.filter { it.isDigit() }
+  return if (prob.isNotEmpty())
+    prob.toInt()
+  else null
 }

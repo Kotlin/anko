@@ -1,6 +1,7 @@
 package com.jetbrains.android.dsl.tests;
 
-import com.jetbrains.android.dsl.*;
+import com.jetbrains.android.dsl.ClassTree;
+import com.jetbrains.android.dsl.NoSuchClassException;
 import org.objectweb.asm.tree.ClassNode;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;

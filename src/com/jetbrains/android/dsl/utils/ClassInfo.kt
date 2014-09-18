@@ -3,7 +3,6 @@ package com.jetbrains.android.dsl
 import org.objectweb.asm.*
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
-import com.jetbrains.android.dsl.ClassTree
 
 class NoSignatureException(message: String): RuntimeException(message)
 class MethodNodeWithClass(var clazz: ClassNode, val method: MethodNode) {

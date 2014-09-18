@@ -1,12 +1,12 @@
 package com.jetbrains.android.dsl.tests;
 
-import org.jetbrains.annotations.NotNull;
 import com.jetbrains.android.dsl.GeneratorProps;
 import com.jetbrains.android.dsl.Subsystem;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
 
 public class TestGeneratorProps extends GeneratorProps {
     public TestGeneratorProps() throws IOException {
@@ -18,10 +18,6 @@ public class TestGeneratorProps extends GeneratorProps {
     }
 
     public final HashMap<Subsystem, File> tmpFiles = new HashMap<>();
-
-    private File getFile(String name, String ext) {
-        return new File("tmp/" + name + ext);
-    }
 
     @NotNull
     @Override

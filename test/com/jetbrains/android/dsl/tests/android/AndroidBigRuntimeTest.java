@@ -1,7 +1,5 @@
 package com.jetbrains.android.dsl.tests.android;
 
-import com.jetbrains.android.dsl.DSLGenerator;
-import com.jetbrains.android.dsl.GeneratorProps;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -22,8 +20,8 @@ public class AndroidBigRuntimeTest extends BaseCompileTest {
     public void setUp() throws Exception {
         super.setUp();
 
-        DSLGenerator generator = new DSLGenerator(new String[]{inputJarFile}, new AndroidTestGeneratorProps());
-        generator.run();
+        //DSLGenerator generator = new DSLGenerator(new String[]{inputJarFile}, new AndroidTestGeneratorProps());
+        //generator.run();
     }
 
     @Test

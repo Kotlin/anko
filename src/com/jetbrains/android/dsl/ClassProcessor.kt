@@ -4,12 +4,10 @@ import java.io.InputStream
 import org.objectweb.asm.tree.ClassNode
 import java.util.jar.JarFile
 import org.objectweb.asm.ClassReader
-import java.util.Collections
 import java.util.Enumeration
 import java.util.jar.JarEntry
-import java.util.ArrayList
 
-class ClassProcessor(val jars: Array<String>) {
+class ClassProcessor(val jars: List<String>) {
 
   private class ComplexIterator<T>(iterators: List<Iterator<T>>): Iterator<T> {
 
@@ -42,7 +40,7 @@ class ClassProcessor(val jars: Array<String>) {
     return classTree
   }
 
-  private fun extractClasses(jars: Array<String>): Iterator<InputStream> {
+  private fun extractClasses(jars: List<String>): Iterator<InputStream> {
     val jarFiles = jars.map { JarFile(it) }
     return ComplexIterator(jarFiles.map { jarFile ->
       (jarFile.entries() as Enumeration<JarEntry>).iterator()

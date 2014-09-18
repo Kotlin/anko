@@ -1,26 +1,32 @@
 package com.jetbrains.android.dsl.tests.functional;
 
+import com.jetbrains.android.dsl.BaseGeneratorProps;
+import com.jetbrains.android.dsl.DSLGenerator;
+import com.jetbrains.android.dsl.DslPackage;
+import com.jetbrains.android.dsl.Subsystem;
+import com.jetbrains.android.dsl.tests.DirectoryFilter;
+import com.jetbrains.android.dsl.tests.JarFilter;
 import com.jetbrains.android.dsl.tests.TestGeneratorProps;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import com.jetbrains.android.dsl.*;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.security.DigestInputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class BaseFunctionalTest extends Assert {
-    protected final String inputJarFile = "android.jar";
     protected DSLGenerator generator;
+
+    private static final FileFilter directoryFilter = new DirectoryFilter();
+    private static final FileFilter jarFilter = new JarFilter();
 
     @BeforeMethod
     public void setUp() throws Exception {
-        assertTrue(new File(inputJarFile).exists());
         assertTrue(new File("props/imports_layouts.txt").exists());
         assertTrue(new File("props/imports_views.txt").exists());
         assertTrue(new File("props/custom_method_parameters.txt").exists());
@@ -42,13 +48,21 @@ public abstract class BaseFunctionalTest extends Assert {
         }
     }
 
-    protected void runFunctionalTest(String testDataFile, Subsystem subsystem, TestGeneratorProps settings) throws IOException {
+    protected void runFunctionalTest(
+        int version,
+        String fVersion,
+        List<String> inputJarFiles,
+        String testDataFile,
+        Subsystem subsystem,
+        TestGeneratorProps settings) throws IOException
+    {
         initSettings(settings);
-        generator = new DSLGenerator(new String[]{inputJarFile}, settings);
+        generator = new DSLGenerator(version, fVersion, inputJarFiles, settings);
         generator.run();
 
         String actual = DslPackage.readFile(settings.tmpFiles.get(subsystem).getAbsolutePath());
-        String expected = loadOrCreate(new File("testdata/" + testDataFile), actual);
+        String expectedPath = ("testdata/" + fVersion + "/" + testDataFile);
+        String expected = loadOrCreate(new File(expectedPath), actual);
 
         assertEquals(actual, expected);
         assertTrue(actual.length() > 0);
@@ -60,6 +74,7 @@ public abstract class BaseFunctionalTest extends Assert {
 
         settings.setGenerateImports(false);
         settings.setGeneratePackage(false);
+        settings.setGenerateMavenArtifact(false);
 
         settings.setGenerateProperties(false);
         settings.setGeneratePropertySetters(false);
@@ -72,7 +87,19 @@ public abstract class BaseFunctionalTest extends Assert {
         settings.setGenerateComplexListenerSetters(false);
         settings.setGenerateTopLevelExtensionMethods(false);
 
-        runFunctionalTest(testDataFile, subsystem, settings);
+        File[] versions = new File("original/").listFiles(directoryFilter);
+        for (File ver: versions) {
+          String fVersion = ver.getName();
+          int version = Integer.parseInt(fVersion.replaceAll("[^0-9]", ""));
+
+          List<File> jarFiles = Arrays.asList(ver.listFiles(jarFilter));
+          List<String> jarFilesString = new ArrayList<>();
+          for (File f: jarFiles) {
+            jarFilesString.add(f.getAbsolutePath());
+          }
+          runFunctionalTest(version, fVersion, jarFilesString, testDataFile, subsystem, settings);
+        }
+
     }
 
     @AfterMethod
@@ -81,4 +108,5 @@ public abstract class BaseFunctionalTest extends Assert {
     }
 
     protected abstract void initSettings(BaseGeneratorProps settings);
+
 }

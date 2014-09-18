@@ -1,9 +1,9 @@
 package com.jetbrains.android.dsl.tests.xmlconverter;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
 import com.jetbrains.android.dsl.DslPackage;
 import com.jetbrains.android.dsl.xmlconverter.Converter;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.FileWriter;

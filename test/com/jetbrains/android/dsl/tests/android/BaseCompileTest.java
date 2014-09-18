@@ -1,27 +1,27 @@
 package com.jetbrains.android.dsl.tests.android;
 
 import com.jetbrains.android.dsl.DSLGenerator;
+import com.jetbrains.android.dsl.tests.DirectoryFilter;
+import com.jetbrains.android.dsl.tests.JarFilter;
 import com.jetbrains.android.dsl.tests.TestGeneratorProps;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import com.jetbrains.android.dsl.Generator;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class BaseCompileTest extends Assert {
     private final String kotlincFilename = "lib/kotlinc/bin/kotlinc-jvm";
-    final String inputJarFile = "android.jar";
     final String tmpJarFile = this.getClass() + "out.jar";
+
+    private static final FileFilter directoryFilter = new DirectoryFilter();
+    private static final FileFilter jarFilter = new JarFilter();
 
     @BeforeMethod
     public void setUp() throws Exception {
-        assertTrue(new File(inputJarFile).exists());
         assertTrue(new File("props/imports_layouts.txt").exists());
         assertTrue(new File("props/imports_views.txt").exists());
         assertTrue(new File("props/custom_method_parameters.txt").exists());
@@ -34,23 +34,40 @@ public class BaseCompileTest extends Assert {
 
     protected void runCompileTest(File testData) throws IOException, InterruptedException {
         assertTrue(testData.exists());
-        TestGeneratorProps settings = new AndroidTestGeneratorProps();
-        DSLGenerator gen = new DSLGenerator(new String[]{inputJarFile}, settings);
-        gen.run();
-        String kotlincArgs[] = {
+
+        File[] versions = new File("original/").listFiles(directoryFilter);
+        for (File ver: versions) {
+            String fVersion = ver.getName();
+            int version = Integer.parseInt(fVersion.replaceAll("[^0-9]", ""));
+
+            List<File> jarFiles = Arrays.asList(ver.listFiles(jarFilter));
+            List<String> jarFilesString = new ArrayList<>();
+            StringBuilder classpath = new StringBuilder();
+            for (File f: jarFiles) {
+                jarFilesString.add(f.getAbsolutePath());
+                if (classpath.length()>0) {
+                    classpath.append(File.pathSeparatorChar);
+                }
+                classpath.append(f.getPath());
+            }
+            TestGeneratorProps settings = new AndroidTestGeneratorProps();
+            DSLGenerator gen = new DSLGenerator(version, fVersion, jarFilesString, settings);
+            gen.run();
+            String kotlincArgs[] = {
                 kotlincFilename,
                 "-jar", tmpJarFile,
-                "-classpath", inputJarFile,
+                "-classpath", classpath.toString(),
                 testData.getPath()
-        };
-        ArrayList<String> args = new ArrayList<>(Arrays.asList(kotlincArgs));
-        for (File file : settings.tmpFiles.values()) {
-            args.add(file.getAbsolutePath());
-        }
-        ProcResult res = compile(args.toArray(new String[args.size()]));
-        assertEquals(res.stderr, "");
-        for (File file : settings.tmpFiles.values()) {
-            file.delete();
+            };
+            ArrayList<String> args = new ArrayList<>(Arrays.asList(kotlincArgs));
+            for (File file : settings.tmpFiles.values()) {
+                args.add(file.getAbsolutePath());
+            }
+            ProcResult res = compile(args.toArray(new String[args.size()]));
+            assertEquals(res.stderr, "");
+            for (File file : settings.tmpFiles.values()) {
+                file.delete();
+            }
         }
     }
 
