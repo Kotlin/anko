@@ -15,6 +15,7 @@ public class TestGeneratorProps extends GeneratorProps {
         tmpFiles.put(Subsystem.PROPERTIES, File.createTempFile("properties", ".kt"));
         tmpFiles.put(Subsystem.LISTENERS, File.createTempFile("listeners", ".kt"));
         tmpFiles.put(Subsystem.HELPER, File.createTempFile("helper", ".kt"));
+        tmpFiles.put(Subsystem.SUPPORT, File.createTempFile("support", ".kt"));
     }
 
     public final HashMap<Subsystem, File> tmpFiles = new HashMap<>();

@@ -4,8 +4,8 @@ import com.jetbrains.android.dsl.BaseGeneratorProps;
 import com.jetbrains.android.dsl.DSLGenerator;
 import com.jetbrains.android.dsl.DslPackage;
 import com.jetbrains.android.dsl.Subsystem;
-import com.jetbrains.android.dsl.tests.DirectoryFilter;
-import com.jetbrains.android.dsl.tests.JarFilter;
+import com.jetbrains.android.dsl.utils.DirectoryFilter;
+import com.jetbrains.android.dsl.utils.JarFilter;
 import com.jetbrains.android.dsl.tests.TestGeneratorProps;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -33,6 +33,8 @@ public abstract class BaseFunctionalTest extends Assert {
         assertTrue(new File("props/excluded_classes.txt").exists());
         assertTrue(new File("props/excluded_methods.txt").exists());
         assertTrue(new File("props/helper_constructors.txt").exists());
+        assertTrue(new File("props/Helpers.kt").exists());
+        assertTrue(new File("props/Support.kt").exists());
     }
 
     protected String loadOrCreate(File file, String data) throws IOException {

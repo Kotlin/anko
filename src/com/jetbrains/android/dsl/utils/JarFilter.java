@@ -1,4 +1,4 @@
-package com.jetbrains.android.dsl.tests;
+package com.jetbrains.android.dsl.utils;
 
 import java.io.File;
 import java.io.FileFilter;

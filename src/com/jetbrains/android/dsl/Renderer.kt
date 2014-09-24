@@ -7,14 +7,14 @@ import com.jetbrains.android.dsl.utils.Buffer
 
 class Renderer(private val generator: Generator) {
 
-  private fun buffer(init: Buffer.() -> Unit) = Buffer(generator.props.indent, init)
+  val props = generator.props
+
+  private fun buffer(init: Buffer.() -> Unit) = Buffer(props.indent, init)
 
   //indents
   private val I = generator.props.indent
   private val I2 = I.repeat(2)
   private val I3 = I.repeat(3)
-
-  val props = generator.props
 
   /*generate functions for making views. example:
     public fun ViewManager.textView(init: TextView.() -> Unit): TextView =
@@ -96,10 +96,10 @@ class Renderer(private val generator: Generator) {
       buffer {
         line("public fun ViewManager.$funcName(init: $className.() -> Unit = {}): $typeName =")
         line("addView($className(dslContext), init, this)")
-        if (generator.props.generateTopLevelExtensionMethods) {
+        if (props.generateTopLevelExtensionMethods) {
           fun add(extendFor: String, ctx: String) {
             line("public fun $extendFor.$funcName(init: $className.() -> Unit = {}): $typeName =")
-            line("addTopLevelView($className($ctx), init)")
+            line("add${extendFor}TopLevelView($className($ctx), init)")
           }
           add("Activity", "this")
           add("Fragment", "getActivity()!!")
@@ -277,19 +277,5 @@ class Renderer(private val generator: Generator) {
 
   //only <init>(Context) View constructors now supported
   private fun ClassNode.hasSimpleConstructor() = getConstructors().any { it.arguments?.size==1 }
-
-  //for testing purposes
-  override fun toString(): String {
-    val builder = StringBuilder()
-    with(builder) {
-      views.forEach { append("$it\n") }
-      viewGroups.forEach { append("$it\n") }
-      properties.forEach { append("$it\n") }
-      simpleListeners.forEach { append("$it\n") }
-      listenerSetters.forEach { append("$it\n") }
-      listenerHelperClasses.forEach { append("$it\n") }
-    }
-    return builder.toString()
-  }
 
 }

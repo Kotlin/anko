@@ -1,8 +1,8 @@
 package com.jetbrains.android.dsl.tests.android;
 
 import com.jetbrains.android.dsl.DSLGenerator;
-import com.jetbrains.android.dsl.tests.DirectoryFilter;
-import com.jetbrains.android.dsl.tests.JarFilter;
+import com.jetbrains.android.dsl.utils.DirectoryFilter;
+import com.jetbrains.android.dsl.utils.JarFilter;
 import com.jetbrains.android.dsl.tests.TestGeneratorProps;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -28,7 +28,8 @@ public class BaseCompileTest extends Assert {
         assertTrue(new File("props/excluded_classes.txt").exists());
         assertTrue(new File("props/excluded_methods.txt").exists());
         assertTrue(new File("props/helper_constructors.txt").exists());
-        assertTrue(new File("props/helper.txt").exists());
+        assertTrue(new File("props/Helpers.kt").exists());
+        assertTrue(new File("props/Support.kt").exists());
         assertTrue(new File(kotlincFilename).exists());
     }
 

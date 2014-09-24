@@ -17,13 +17,21 @@ class Writer(private val renderer: Renderer) {
     val views = writeViews()
     val listeners = writeListeners()
     if (properties || layouts || views || listeners) {
-      writeHelper();
+      writeHelper()
+      if (props.generateSupport) {
+        writeSupport()
+      }
     }
   }
 
   private fun writeHelper() {
-    val helper = Files.readAllLines(Paths.get("props/helper.txt")!!, StandardCharsets.UTF_8)
+    val helper = Files.readAllLines(Paths.get("props/Helpers.kt")!!, StandardCharsets.UTF_8)
     writeToFile(props.getOutputFile(Subsystem.HELPER), helper)
+  }
+
+  private fun writeSupport() {
+    val support = Files.readAllLines(Paths.get("props/Support.kt")!!, StandardCharsets.UTF_8)
+    writeToFile(props.getOutputFile(Subsystem.SUPPORT), support)
   }
 
   private fun writeProperties(): Boolean {

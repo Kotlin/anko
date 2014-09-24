@@ -26,6 +26,8 @@ class DSLGenerator(
   }
 
   override fun run() {
+    props.generateSupport = fVersion.contains("s")
+
     val classTree = ClassProcessor(jars).genClassTree()
     val generator = Generator(classTree, props)
     val renderer = Renderer(generator)

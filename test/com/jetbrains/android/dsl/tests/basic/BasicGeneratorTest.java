@@ -1,8 +1,9 @@
 package com.jetbrains.android.dsl.tests.basic;
 
 import com.jetbrains.android.dsl.DSLGenerator;
-import com.jetbrains.android.dsl.tests.DirectoryFilter;
-import com.jetbrains.android.dsl.tests.JarFilter;
+import com.jetbrains.android.dsl.Subsystem;
+import com.jetbrains.android.dsl.utils.DirectoryFilter;
+import com.jetbrains.android.dsl.utils.JarFilter;
 import com.jetbrains.android.dsl.tests.TestGeneratorProps;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -30,7 +31,8 @@ public class BasicGeneratorTest extends Assert {
         assertTrue(new File("props/excluded_classes.txt").exists());
         assertTrue(new File("props/excluded_methods.txt").exists());
         assertTrue(new File("props/helper_constructors.txt").exists());
-        assertTrue(new File("props/helper.txt").exists());
+        assertTrue(new File("props/Helpers.kt").exists());
+        assertTrue(new File("props/Support.kt").exists());
         assertTrue(new File(kotlincFilename).exists());
     }
 
@@ -106,11 +108,20 @@ public class BasicGeneratorTest extends Assert {
           TestGeneratorProps settings = new TestGeneratorProps();
           DSLGenerator gen = new DSLGenerator(version, fVersion, jarFilesString, settings);
           gen.run();
+          String supportFile = settings.tmpFiles.get(Subsystem.SUPPORT).getAbsolutePath();
           for (File file: settings.tmpFiles.values()) {
-              assertTrue(file.length() > 0);
+              if (file.getAbsolutePath().equals(supportFile)) {
+                  if (settings.getGenerateSupport()) {
+                      assertTrue(file.length() > 0);
+                  }
+              } else {
+                  assertTrue(file.length() > 0);
+              }
           }
           for (File file: settings.tmpFiles.values()) {
-              file.delete();
+              if (file.exists()) {
+                  file.delete();
+              }
           }
       }
     }
