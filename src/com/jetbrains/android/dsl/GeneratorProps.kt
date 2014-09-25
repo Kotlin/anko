@@ -5,7 +5,6 @@ import java.util.HashMap
 import java.util.ArrayList
 import java.io.File
 
-
 open class GeneratorProps(outputDirectory: String = "gen/") : BaseGeneratorProps() {
 
   override fun getOutputFile(subsystem: Subsystem): File {
@@ -15,8 +14,12 @@ open class GeneratorProps(outputDirectory: String = "gen/") : BaseGeneratorProps
       Subsystem.VIEWS -> File(parentDirectory + "Views.kt")
       Subsystem.LISTENERS -> File(parentDirectory + "Listeners.kt")
       Subsystem.LAYOUTS -> File(parentDirectory + "Layouts.kt")
-      Subsystem.HELPER -> File(parentDirectory + "Helpers.kt")
+      Subsystem.HELPERS -> File(parentDirectory + "Helpers.kt")
       Subsystem.SUPPORT -> File(parentDirectory + "Support.kt")
+      Subsystem.CUSTOM -> File(parentDirectory + "Custom.kt")
+      Subsystem.ASYNC -> File(parentDirectory + "Async.kt")
+      Subsystem.CONTEXT_UTILS -> File(parentDirectory + "ContextUtils.kt")
+      Subsystem.DIALOGS -> File(parentDirectory + "Dialogs.kt")
       else -> throw RuntimeException("Unable to get output file for non-existing subsystem $subsystem")
     }
   }
@@ -39,21 +42,20 @@ open class GeneratorProps(outputDirectory: String = "gen/") : BaseGeneratorProps
     hashMap.put(t.first, readFile(t.second)); hashMap
   }
 
-  override val helperConstructors: Map<String, List<List<String>>>
+  override val helperConstructors: Map<String, List<List<Variable>>>
     get() {
-      val res = HashMap<String, ArrayList<ArrayList<String>>>()
-      for (line in readLines("props/helper_constructors.txt")) {
+      val res = HashMap<String, ArrayList<List<Variable>>>()
+      for (line in readLines("props/helper_constructors.txt").filter { it.isNotEmpty() && !it.startsWith('#') }) {
         try {
-          with (line.replaceAll("\\s", "").split(':')) {
-            val className = get(0)
-            val constructors = res.getOrElse(className, { ArrayList<ArrayList<String>>() })
-            val props = ArrayList<String>()
-            for (prop in get(1).split(',')) {
-              props.add(prop)
-            }
-            constructors.add(props)
-            res.put(className, constructors)
-          }
+          val separator = line.indexOf(' ')
+          val className = line.substring(0, separator)
+          val props = line.substring(separator+1).split(',').map {
+            val nameType = it.split(":")
+            Variable(nameType[0].trim(), nameType[1].trim())
+          }.toList()
+          val constructors = res.getOrElse(className, { ArrayList<List<Variable>>() })
+          constructors.add(props)
+          res.put(className, constructors)
         } catch (e: ArrayIndexOutOfBoundsException) {
           throw RuntimeException("Failed to tokenize string, malformed helper_constructors.txt")
         }

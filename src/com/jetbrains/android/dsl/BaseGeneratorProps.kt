@@ -3,6 +3,12 @@ package com.jetbrains.android.dsl
 import java.io.File
 import java.util.HashMap
 
+class Variable(val name: String, val typ: String) {
+  override fun toString(): String {
+    return "$name:$typ"
+  }
+}
+
 abstract class BaseGeneratorProps() {
   open var generateImports: Boolean = true
   open var generatePackage: Boolean = true
@@ -19,6 +25,7 @@ abstract class BaseGeneratorProps() {
   open var generateComplexListenerSetters: Boolean = true
   open var generateTopLevelExtensionMethods: Boolean = true
   open var generateSupport: Boolean = false
+  open var generateStatic: Boolean = true
 
   abstract public fun getOutputFile(subsystem: Subsystem): File
 
@@ -34,6 +41,6 @@ abstract class BaseGeneratorProps() {
 
   abstract val excludedClasses: Set<String>
   abstract val excludedMethods: Set<String>
-  abstract val helperConstructors: Map<String, List<List<String>>>
+  abstract val helperConstructors: Map<String, List<List<Variable>>>
   abstract val customMethodParameters: Map<String, String>
 }

@@ -24,7 +24,7 @@ open class ConverterSettings : BaseConverterSettings() {
 	}
 
 	override val ignoredProperties: Set<String> = readIgnoredProps()
-	override val helperConProps: HashMap<String, ArrayList<HashSet<String>>> = readHelperConProps()
+	override val helperConProps: HashMap<String, ArrayList<Set<String>>> = readHelperConProps()
 	override val quotedKeys: Set<String> = props.getProperty("quoted_keys", "")!!.split(",").toSet()
 
 	override val dslPackage: String = props.getProperty("dsl_package") ?: "com.example.dsl"
@@ -34,26 +34,50 @@ open class ConverterSettings : BaseConverterSettings() {
 		return props.getProperty("ignored_props", "")!!.split(",").toSet()
 	}
 
-	private fun readHelperConProps(): HashMap<String, ArrayList<HashSet<String>>> {
-		val res = HashMap<String, ArrayList<HashSet<String>>>()
-		for (line in readLines("props/helper_constructors.txt")) {
-			try {
-				with (line.replaceAll("\\s", "").split(':')) {
-					val className = get(0)
-					val constructors = res.getOrElse(className, { ArrayList<HashSet<String>>() })
-					val props = HashSet<String>()
-					for (prop in get(1).split(',')) {
-						props.add(prop)
-					}
-					constructors.add(props)
-					res.put(className, constructors)
-				}
-			} catch (e: ArrayIndexOutOfBoundsException) {
-				throw RuntimeException("Failed to tokenize string, malformed helper_constructors.txt")
-			}
-		}
-		return res
+	private fun readHelperConProps(): HashMap<String, ArrayList<Set<String>>> {
+    val res = HashMap<String, ArrayList<Set<String>>>()
+    for (line in readLines("props/helper_constructors.txt").filter { it.isNotEmpty() && !it.startsWith('#') }) {
+      try {
+        val separator = line.indexOf(' ')
+        val className = line.substring(0, separator)
+        val props = line.substring(separator+1).split(',').map {
+          val nameType = it.split(":")
+          nameType[0].trim()
+        }.toSet()
+        val constructors = res.getOrElse(className, { ArrayList<Set<String>>() })
+        constructors.add(props)
+        System.out.println(props)
+        res.put(className, constructors)
+      } catch (e: ArrayIndexOutOfBoundsException) {
+        throw RuntimeException("Failed to tokenize string, malformed helper_constructors.txt")
+      }
+    }
+    readHelperConPropsOld();
+    return res
 	}
+
+  private fun readHelperConPropsOld(): HashMap<String, ArrayList<HashSet<String>>> {
+    System.out.println("OLD");
+    val res = HashMap<String, ArrayList<HashSet<String>>>()
+    for (line in readLines("props/helper_constructors.old")) {
+      try {
+        with (line.replaceAll("\\s", "").split(':')) {
+          val className = get(0)
+          val constructors = res.getOrElse(className, { ArrayList<HashSet<String>>() })
+          val props = HashSet<String>()
+          for (prop in get(1).split(',')) {
+            props.add(prop)
+          }
+          constructors.add(props)
+          System.out.println(props);
+          res.put(className, constructors)
+        }
+      } catch (e: ArrayIndexOutOfBoundsException) {
+        throw RuntimeException("Failed to tokenize string, malformed helper_constructors.txt")
+      }
+    }
+    return res
+  }
 
 	private fun readLines(fileName: String): MutableList<String> {
 		return Files.readAllLines(Paths.get(fileName)!!, StandardCharsets.UTF_8)

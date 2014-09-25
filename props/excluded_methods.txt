@@ -7,3 +7,4 @@ android.view.View#getTouchables
 android.gesture.GestureOverlayView#getCurrentStroke
 android.inputmethodservice.KeyboardView#setShifted
 android.widget.AutoCompleteTextView#setAdapter
+android.widget.ImageView#getDrawable

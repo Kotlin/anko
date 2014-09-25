@@ -39,7 +39,6 @@ class Renderer(private val generator: Generator) {
       get() = getText()
       set(v) = setText(v)
    */
-  //TODO: parse otherSetters (make additional props without a getter)
   val properties = if (!props.generateProperties) listOf() else
     generator.properies.map {
       val getter = it.getter
@@ -48,7 +47,7 @@ class Renderer(private val generator: Generator) {
       val bestSetter = it.setters.head
       val mutability = if (bestSetter!=null) "var" else "val"
       val returnType = getter.method.renderReturnType()
-      //val otherSetters = if (it.setters.size>1) it.setters.tail else listOf()
+      val otherSetters = if (it.setters.size>1) it.setters.tail else listOf()
 
       buffer {
         line("public $mutability $className.$propertyName: $returnType")
@@ -56,6 +55,18 @@ class Renderer(private val generator: Generator) {
         if (bestSetter!=null) {
           val arg = if (returnType.endsWith("?")) "v!!" else "v"
           indent.line("set(v) = ${bestSetter.method.name}($arg)")
+        }
+
+        if (otherSetters.notEmpty && supportsResourceSetter(returnType)) {
+          val resourceSetter = otherSetters.firstOrNull {
+            (it.method.arguments?.size ?: 0)==1 &&
+              (it.method.arguments?.get(0)?.getClassName()=="int")
+          }
+          if (resourceSetter!=null) {
+            line("public var $className.${propertyName}Resource: Int")
+            indent.line("get() = 0")
+            indent.line("set(v) = ${resourceSetter.method.name}(v)")
+          }
         }
       }.toString()
     }
@@ -134,12 +145,13 @@ class Renderer(private val generator: Generator) {
       return addMethods(generator.classTree.findNode(clazz)!!, ArrayList<MethodNode>())
     }
 
-    fun collectProperties(clazz: ClassNode, needed: List<String>): List<MethodNode> {
+    fun collectProperties(clazz: ClassNode, needed: List<Variable>): List<MethodNode> {
       val ret = arrayListOf<MethodNode>()
       needed.forEach { neededProp ->
         val propList = resolveAllMethods(clazz)
         val found = propList.firstOrNull {
-          it.name.equals("set${neededProp.capitalize()}") && it.arguments?.size==1
+          it.name.equals("set${neededProp.name.capitalize()}") && it.arguments?.size==1 &&
+            cleanInternalName(it.arguments?.get(0)?.getClassName() ?: "").endsWith(neededProp.typ)
         }
         if (found==null)
           throw RuntimeException("Property $neededProp for helper constructor ${clazz.cleanInternalName()}.<init>$needed not found.")
@@ -158,10 +170,10 @@ class Renderer(private val generator: Generator) {
         val collected = constructor.zip(collectProperties(view, constructor))
         val helperArguments = collected.map {
           val argumentType = it.second.arguments!![0].toStr()
-          "${it.first}: $argumentType"
+          "${it.first.name}: $argumentType"
         }.joinToString(", ")
         val arguments = "$helperArguments, init: $viewClassName.() -> Unit = {}"
-        val setters = collected.map { "v.${it.second.name}(${it.first})" }
+        val setters = collected.map { "v.${it.second.name}(${it.first.name})" }
 
         ret.add(buffer {
           line("public fun ViewManager.$functionName($arguments): $viewClassName {")
@@ -273,6 +285,13 @@ class Renderer(private val generator: Generator) {
     return "public class $helperClassName(ctx: Context): $layoutClassName(ctx) {\n"+
       layoutParamsFunc.joinToString("\n")+
       "\n}"
+  }
+
+  private fun supportsResourceSetter(typ: String): Boolean {
+    return (
+      typ.matches("^CharSequence\\??$")
+      || (typ.matches("^android.graphics.drawable.Drawable\\??$"))
+    )
   }
 
   //only <init>(Context) View constructors now supported

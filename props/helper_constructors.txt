@@ -1,4 +1,13 @@
-android.widget.Button: text
-android.widget.CheckBox: text
-android.widget.CheckBox: text, checked
-android.widget.TextView: text
+# Java types (lower case primitive types, no question marks on nullables)
+android.widget.Button text:CharSequence
+android.widget.Button text:int
+android.widget.CheckBox text:CharSequence
+android.widget.CheckBox text:int
+android.widget.CheckBox text:CharSequence, checked:boolean
+android.widget.CheckBox text:int, checked:boolean
+android.widget.TextView text:CharSequence
+android.widget.TextView text:int
+android.widget.ImageView imageDrawable:Drawable
+android.widget.ImageView imageResource:int
+android.widget.ImageButton imageDrawable:Drawable
+android.widget.ImageButton imageResource:int

@@ -961,9 +961,6 @@ public var android.widget.ImageView.cropToPadding: Boolean
   get() = getCropToPadding()
   set(v) = setCropToPadding(v)
 
-public val android.widget.ImageView.drawable: android.graphics.drawable.Drawable?
-  get() = getDrawable()
-
 public var android.widget.ImageView.imageAlpha: Int
   get() = getImageAlpha()
   set(v) = setImageAlpha(v)
@@ -1391,6 +1388,9 @@ public var android.widget.TextView.highlightColor: Int
 public var android.widget.TextView.hint: CharSequence?
   get() = getHint()
   set(v) = setHint(v!!)
+public var android.widget.TextView.hintResource: Int
+  get() = 0
+  set(v) = setHint(v)
 
 public val android.widget.TextView.hintTextColors: android.content.res.ColorStateList?
   get() = getHintTextColors()
@@ -1511,6 +1511,9 @@ public val android.widget.TextView.shadowRadius: Float
 public var android.widget.TextView.text: CharSequence?
   get() = getText()
   set(v) = setText(v!!)
+public var android.widget.TextView.textResource: Int
+  get() = 0
+  set(v) = setText(v)
 
 public val android.widget.TextView.textColors: android.content.res.ColorStateList?
   get() = getTextColors()

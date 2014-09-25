@@ -10,12 +10,16 @@ import java.util.HashMap;
 
 public class TestGeneratorProps extends GeneratorProps {
     public TestGeneratorProps() throws IOException {
-        tmpFiles.put(Subsystem.VIEWS, File.createTempFile("views", ".kt"));
-        tmpFiles.put(Subsystem.LAYOUTS, File.createTempFile("layouts", ".kt"));
-        tmpFiles.put(Subsystem.PROPERTIES, File.createTempFile("properties", ".kt"));
-        tmpFiles.put(Subsystem.LISTENERS, File.createTempFile("listeners", ".kt"));
-        tmpFiles.put(Subsystem.HELPER, File.createTempFile("helper", ".kt"));
-        tmpFiles.put(Subsystem.SUPPORT, File.createTempFile("support", ".kt"));
+        tmpFiles.put(Subsystem.VIEWS, File.createTempFile("Views", ".kt"));
+        tmpFiles.put(Subsystem.LAYOUTS, File.createTempFile("Layouts", ".kt"));
+        tmpFiles.put(Subsystem.PROPERTIES, File.createTempFile("Properties", ".kt"));
+        tmpFiles.put(Subsystem.LISTENERS, File.createTempFile("Listeners", ".kt"));
+        tmpFiles.put(Subsystem.HELPERS, File.createTempFile("Helpers", ".kt"));
+        tmpFiles.put(Subsystem.SUPPORT, File.createTempFile("Support", ".kt"));
+        tmpFiles.put(Subsystem.CUSTOM, File.createTempFile("Custom", ".kt"));
+        tmpFiles.put(Subsystem.ASYNC, File.createTempFile("Async", ".kt"));
+        tmpFiles.put(Subsystem.CONTEXT_UTILS, File.createTempFile("ContextUtils", ".kt"));
+        tmpFiles.put(Subsystem.DIALOGS, File.createTempFile("Dialogs", ".kt"));
     }
 
     public final HashMap<Subsystem, File> tmpFiles = new HashMap<>();

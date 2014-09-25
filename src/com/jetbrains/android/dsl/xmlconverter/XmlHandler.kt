@@ -68,7 +68,7 @@ class XmlHandler(val buffer: StringBuffer, val controlsXmlBuffer: StringBuffer, 
         if(attrs == null)
             return qName.decapitalize()
         //FIXME: how to deal with name clashes?
-        val classInternalName = settings.helperConProps.keySet().find { it.endsWith(qName) }
+        val classInternalName = settings.helperConProps.keySet().firstOrNull { it.endsWith("."+qName) }
         val constructors = settings.helperConProps[classInternalName]
         //no helper constructors at all
         if (constructors == null)

@@ -33,6 +33,23 @@ public var View.tag: Any?
         } else setTag(tag)
     }
 
+public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, manager: ViewManager): T {
+  return addView(view(manager.dslContext), init, manager)
+}
+
+public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, act: Activity): T {
+  return act.addActivityTopLevelView(view(act), init)
+}
+
+public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, ctx: Context): T {
+  return ctx.addContextTopLevelView(view(ctx), init)
+}
+
+public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, fragment: Fragment): T {
+  val ctx = fragment.getActivity()!!
+  return fragment.addFragmentTopLevelView(view(ctx), init)
+}
+
 private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T {
     v.setTag(ViewProps(hashMapOf(), defaultStyle, v.getTag()))
     v.init()
@@ -49,22 +66,17 @@ private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T
     return v
 }
 
-private fun <T: View> Activity.addTopLevelView(v: T, init: T.() -> Unit): T {
+private fun <T: View> Activity.addActivityTopLevelView(v: T, init: T.() -> Unit): T {
   UI { addView(v, init, this) }
   return v
 }
 
-private fun <T: View> Fragment.addTopLevelView(v: T, init: T.() -> Unit): T {
+private fun <T: View> Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {
   UI { addView(v, init, this) }
   return v
 }
 
-private fun <T: View> android.support.v4.app.Fragment.addTopLevelView(v: T, init: T.() -> Unit): T {
-  UI { addView(v, init, this) }
-  return v
-}
-
-private fun <T: View> Context.addTopLevelView(v: T, init: T.() -> Unit): T {
+private fun <T: View> Context.addContextTopLevelView(v: T, init: T.() -> Unit): T {
   UI { addView(v, init, this) }
   return v
 }
@@ -135,4 +147,3 @@ public fun Activity.UI(init: UiHelper.() -> Unit): UiHelper = UI(true, init)
 
 public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity()!!.UI(false, init)
 
-public fun android.support.v4.app.Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity()!!.UI(false, init)

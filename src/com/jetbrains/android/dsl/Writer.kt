@@ -17,21 +17,30 @@ class Writer(private val renderer: Renderer) {
     val views = writeViews()
     val listeners = writeListeners()
     if (properties || layouts || views || listeners) {
-      writeHelper()
-      if (props.generateSupport) {
+      writeHelpers()
+      if (props.generateSupport && props.generateStatic) {
         writeSupport()
+      }
+      if (props.generateStatic) {
+        writeCustom()
+        writeAsync()
+        writeContextUtils()
+        writeDialogs()
       }
     }
   }
 
-  private fun writeHelper() {
-    val helper = Files.readAllLines(Paths.get("props/Helpers.kt")!!, StandardCharsets.UTF_8)
-    writeToFile(props.getOutputFile(Subsystem.HELPER), helper)
-  }
+  private fun writeCustom() = writeStatic(Subsystem.CUSTOM, "props/Custom.kt")
+  private fun writeAsync() = writeStatic(Subsystem.ASYNC, "props/Async.kt")
+  private fun writeContextUtils() = writeStatic(Subsystem.CONTEXT_UTILS, "props/ContextUtils.kt")
+  private fun writeDialogs() = writeStatic(Subsystem.DIALOGS, "props/Dialogs.kt")
 
-  private fun writeSupport() {
-    val support = Files.readAllLines(Paths.get("props/Support.kt")!!, StandardCharsets.UTF_8)
-    writeToFile(props.getOutputFile(Subsystem.SUPPORT), support)
+  private fun writeHelpers() = writeStatic(Subsystem.HELPERS, "props/Helpers.kt")
+  private fun writeSupport() = writeStatic(Subsystem.SUPPORT, "props/Support.kt")
+
+  private fun writeStatic(subsystem: Subsystem, filename: String) {
+    val support = Files.readAllLines(Paths.get(filename)!!, StandardCharsets.UTF_8)
+    writeToFile(props.getOutputFile(subsystem), support)
   }
 
   private fun writeProperties(): Boolean {
