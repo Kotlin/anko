@@ -10,28 +10,23 @@ private data class ViewProps(var listeners: HashMap<String, ListenerHelper>, var
 private val defaultStyle: (Any) -> Unit = {}
 
 private trait ListenerHelper {
-    fun apply()
+  fun apply()
 }
 
-public fun View.style(style: (Any) -> Unit) {
-    var props = getTag() as? ViewProps
-    if (props!=null) {
-        props!!.style = style
-    } else setTag(ViewProps(hashMapOf(), style, getTag()))
-}
+public fun View.style(style: (Any) -> Unit): Unit = applyStyle(this, style)
 
 public var View.tag: Any?
-    get() = {
-        val tag = getTag()
-        val props = tag as? ViewProps
-        if (props!=null) props.realTag else tag
-    }
-    set(tag) {
-        var props = getTag() as? ViewProps
-        if (props!=null) {
-            props!!.realTag = tag
-        } else setTag(tag)
-    }
+  get() = {
+    val tag = getTag()
+    val props = tag as? ViewProps
+    if (props!=null) props.realTag else tag
+  }
+  set(tag) {
+    var props = getTag() as? ViewProps
+    if (props!=null) {
+      props!!.realTag = tag
+    } else setTag(tag)
+  }
 
 public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, manager: ViewManager): T {
   return addView(view(manager.dslContext), init, manager)
@@ -51,19 +46,19 @@ public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit,
 }
 
 private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T {
-    v.setTag(ViewProps(hashMapOf(), defaultStyle, v.getTag()))
-    v.init()
-    val props = v.getTag() as? ViewProps
-    if (props != null) {
-        props.listeners.values().forEach { it.apply() }
-        v.setTag(props.realTag)
-    }
-    when (manager) {
-        is ViewGroup -> manager.addView(v)
-        is UiHelper -> manager.addView(v)
-        else -> throw RuntimeException("Wrong parent: ${manager.getClass()!!.getName()}")
-    }
-    return v
+  v.setTag(ViewProps(hashMapOf(), defaultStyle, v.getTag()))
+  v.init()
+  val props = v.getTag() as? ViewProps
+  if (props != null) {
+    props.listeners.values().forEach { it.apply() }
+    v.setTag(props.realTag)
+  }
+  when (manager) {
+    is ViewGroup -> manager.addView(v)
+    is UiHelper -> manager.addView(v)
+    else -> throw RuntimeException("Wrong parent: ${manager.getClass()!!.getName()}")
+  }
+  return v
 }
 
 private fun <T: View> Activity.addActivityTopLevelView(v: T, init: T.() -> Unit): T {
@@ -82,65 +77,65 @@ private fun <T: View> Context.addContextTopLevelView(v: T, init: T.() -> Unit): 
 }
 
 private fun applyStyle(v: View, style: (Any) -> Unit) {
-    style(v)
-    if (v is ViewGroup) {
-        val maxId = v.getChildCount()-1
-        for (i in 0..maxId) {
-            val maybeChild = v.getChildAt(i)
-            if (maybeChild!=null) style(maybeChild)
-        }
+  style(v)
+  if (v is ViewGroup) {
+    val maxId = v.getChildCount()-1
+    for (i in 0..maxId) {
+      val maybeChild = v.getChildAt(i)
+      if (maybeChild!=null) applyStyle(maybeChild, style)
     }
+  }
 }
 
 private val ViewManager.dslContext: Context
-    get() {
-        return when(this) {
-            is ViewGroup -> this.getContext()!!
-            is UiHelper -> this.ctx
-            else -> throw RuntimeException("${getClass()!!.getName()} is a wrong parent")
-        }
+  get() {
+    return when(this) {
+      is ViewGroup -> this.getContext()!!
+      is UiHelper -> this.ctx
+      else -> throw RuntimeException("${getClass()!!.getName()} is a wrong parent")
     }
+  }
 
 class UiHelper(val ctx: Context, private val setContentView: Boolean = true): ViewManager {
-    private var view: View? = null
+  private var view: View? = null
 
-    fun toView() = view!!
-    override fun addView(view: View, params: ViewGroup.LayoutParams) {
-        addView(view)
-    }
+  fun toView() = view!!
+  override fun addView(view: View, params: ViewGroup.LayoutParams) {
+    addView(view)
+  }
 
-    fun setContentView(): Unit = when (ctx) {
+  fun setContentView(): Unit = when (ctx) {
+    is Activity -> ctx.setContentView(view)
+    else -> {}
+  }
+
+  fun addView(view: View) {
+    this.view = view
+    if (setContentView) {
+      when (ctx) {
         is Activity -> ctx.setContentView(view)
         else -> {}
+      }
     }
-
-    fun addView(view: View) {
-        this.view = view
-        if (setContentView) {
-            when (ctx) {
-                is Activity -> ctx.setContentView(view)
-                else -> {}
-            }
-        }
-    }
-    override fun updateViewLayout(view: View, params: ViewGroup.LayoutParams) {
-        throw UnsupportedOperationException()
-    }
-    override fun removeView(view: View) {
-        throw UnsupportedOperationException()
-    }
+  }
+  override fun updateViewLayout(view: View, params: ViewGroup.LayoutParams) {
+    throw UnsupportedOperationException()
+  }
+  override fun removeView(view: View) {
+    throw UnsupportedOperationException()
+  }
 }
 
 public fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
-    val dsl = UiHelper(this, setContentView)
-    dsl.init()
-    return dsl
+  val dsl = UiHelper(this, setContentView)
+  dsl.init()
+  return dsl
 }
 
 public fun Context.UI(init: UiHelper.() -> Unit): UiHelper {
-    val dsl = UiHelper(this, false)
-    dsl.init()
-    return dsl
+  val dsl = UiHelper(this, false)
+  dsl.init()
+  return dsl
 }
 
 public fun Activity.UI(init: UiHelper.() -> Unit): UiHelper = UI(true, init)

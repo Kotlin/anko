@@ -42,11 +42,11 @@ android {
 }
 
 dependencies {
-	repositories {
+  repositories {
         mavenCentral()
     }
 
     compile 'com.android.support:support-v4:19.1.+'
-		compile 'com.google.maps.android:android-maps-utils:0.3+'
+    compile 'com.google.maps.android:android-maps-utils:0.3+'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
