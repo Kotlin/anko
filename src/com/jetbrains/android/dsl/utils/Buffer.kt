@@ -1,9 +1,9 @@
 package com.jetbrains.android.dsl.utils
 
-public class Buffer(private val indentSymbol: String, val init: Buffer.() -> Unit) {
+public class Buffer(private val indentSymbol: String, indent: Int = 0, val init: Buffer.() -> Unit) {
 
   private val builder = StringBuilder();
-  private var mainIndent = 0;
+  private var mainIndent = indent;
   private var tempIndent = 0;
 
   { init() }

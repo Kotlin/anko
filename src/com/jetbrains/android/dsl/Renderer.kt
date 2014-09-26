@@ -9,12 +9,8 @@ class Renderer(private val generator: Generator) {
 
   val props = generator.props
 
-  private fun buffer(init: Buffer.() -> Unit) = Buffer(props.indent, init)
-
-  //indents
-  private val I = generator.props.indent
-  private val I2 = I.repeat(2)
-  private val I3 = I.repeat(3)
+  private fun buffer(init: Buffer.() -> Unit) = Buffer(props.indent, 0, init)
+  private fun buffer(indent: Int, init: Buffer.() -> Unit) = Buffer(props.indent, indent, init)
 
   /*generate functions for making views. example:
     public fun ViewManager.textView(init: TextView.() -> Unit): TextView =
@@ -273,12 +269,14 @@ class Renderer(private val generator: Generator) {
       val substituded = constructor.fmtLayoutParamsArgumentsInvoke()
       val initArgumentName = "${decapitalize(lp.layout.cleanName())}Init"
       val separator = if (arguments == "") "" else ","
-      return "${I}public fun <T: View> T.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = {}): T {\n"+
-        "${I2}val layoutParams = $layoutParamsClassName($substituded)\n"+
-        "${I2}layoutParams.$initArgumentName()\n" +
-        "${I2}this@layoutParams.setLayoutParams(layoutParams)\n"+
-        "${I2}return this\n"+
-        "${I}}"
+      return buffer(indent = 1) {
+        line("public fun <T: View> T.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = {}): T {")
+        line("val layoutParams = $layoutParamsClassName($substituded)")
+        line("layoutParams.$initArgumentName()")
+        line("this@layoutParams.setLayoutParams(layoutParams)")
+        line("return this")
+        line("}")
+      }.toString()
     }
 
     val layoutParamsFunc = lp.constructors.map { renderExtensionFunction(it) }
