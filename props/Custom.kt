@@ -76,6 +76,11 @@ public fun Fragment.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout
   __dslAddView(
     {val v = _LinearLayout(it); v.setOrientation(LinearLayout.VERTICAL); v},
     init, this): LinearLayout
+
+public fun Context.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
+  __dslAddView(
+    {val v = _LinearLayout(it); v.setOrientation(LinearLayout.VERTICAL); v},
+    init, this): LinearLayout
 /* END SECTION */
 
 

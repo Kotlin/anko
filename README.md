@@ -1,23 +1,21 @@
 Kōan
 ===========
 
-```
-Both this page and Koan are in deep construction now.
-It should be completed in a week. Stay tuned!
-```
-
-Koan is a [Kotlin](http://kotlinlang.org) library for Android which makes application development faster and easier. It could make your code clean and easy to read, and lets you forget about sharp angles of Android SDK for Java.
+Koan is a library which makes Android application development faster and easier. It could make your code clean and easy to read, and lets you forget about sharp angles of Android SDK for Java.
 
 Just a brief example. Here is a "hello world" written with Koan.
 ```kotlin
 verticalLayout {
-  val name = editText()
-  button {
-    text = "Say Hello"
+  val name = ediÏtText()
+  button("Say Hello") {
     onClick { toast("Hello, ${name.text}!") }
   }
 }
 ```
+
+Code above creates a button inside LinearLayout and applies onClickListener to that button.
+
+As you might have guessed, it's a DSL for Android. This one is for [Kotlin](http://kotlinlang.org) programming language.
 
 ## Contents
 
@@ -27,32 +25,34 @@ verticalLayout {
 	* [Supporting existing code](#supporting-existing-code)
 	* [How does it work?](#how-is-it-work)
 	* [Is it extendable?](#is-it-extendable)
+	* [Using with Gradle](#using-with-gradle)
 * [Understanding Koan](#understanding-koan)
 	* [Basics](#basics)
 	* [Helper methods](#helper-methods)
 	* [Layouts and LayoutParams](#layouts-and-layoutparams)
 	* [Listeners](#listeners)
-	* [Resources and dimensions](#resources-and-dimensions)
-	* [UI tag](#ui-tag)
+	* [Resources, colors and dimensions](#resources-and-dimensions)
+	* [UI wrapper](#ui-wrapper)
 	* [Styles](#styles)
-* Advanced topics
-	* Intents
-  * Dialogs and toasts
-  * Asynchronous tasks
+* [Advanced topics](#advanced-topics)
+	* [Intents](#intents)
+	* [Dialogs and toasts](#dialogs-and-toasts)
+	* [Asynchronous tasks](#asynchronous-tasks)
+	* [Extending Koan](#extending-koan)
 
 ## Reason for existence
 
 ### Why DSL?
 
-By default, UI in Android is written in XML. That is incredibly insane, and that's why:
+By default, UI in Android is written using XML. That is incredibly insane, and that's why:
 
 * It is not typesafe;
 * And not null-safe;
-* It forces you to write almost *the same Java code* for every layout you made;
-* XML is parsed when displayed wasting CPU time;
+* It forces you to write almost *the same code* for every layout you made;
+* XML is parsed on device wasting CPU time and battery;
 * Above all, it allows no code reusing.
 
-Well, you may create UI programmatically but nobody does that because it looks ugly and extremely hard to maintain. Here's the Kotlin version (Java one is even longer).
+Well, you may create UI programmatically but nobody does that because it looks ugly and extremely hard to maintain. Here's the Kotlin version (one in Java is even longer).
 ```kotlin
 val act = this
 val layout = LinearLayout(act)
@@ -79,8 +79,8 @@ Finally, Scaloid manages a subclass for every single View in Android widget hier
 
 ### Supporting existing code
 
-You don't have to rewrite all your UI with Koan. Moreover, you can keep your old classes written in Java.
-Moreover, if you want to write a Kotlin activity class and inflate a layout from XML, you still can use View properties, which would make your life better:
+You don't have to rewrite all your UI with Koan. You can keep your old classes written in Java.
+Moreover, if you still want (or have) to write a Kotlin activity class and inflate an XML layout for some reason, you can use View properties, which would make your life better:
 
 ```kotlin
 //Same as findViewById(), simpler to use
@@ -91,7 +91,9 @@ name.onClick { /*do something*/ }
 
 ### How does it work?
 
-There is no :tophat: actually, just some Kotlin [extension functions](http://kotlinlang.org/docs/reference/extensions.html), extension properties and mechanism similar to type-safe builders described [here](http://kotlinlang.org/docs/reference/type-safe-builders.html).
+There is no :tophat: actually, it is built of some Kotlin [extension functions](http://kotlinlang.org/docs/reference/extensions.html), extension properties and mechanism similar to type-safe builders described [here](http://kotlinlang.org/docs/reference/type-safe-builders.html).
+
+It's a job for a phrenzy guy to write all these extensions by hand so they're generated automatically using *android.jar* files from Android SDK as sources.
 
 ### Is it extendable?
 
@@ -112,9 +114,31 @@ frameLayout {
 }
 ```
 
+Also see [Extending Koan](#extending-koan) if you need an ability to create top-level DSL views.
+
+### Using with Gradle
+
+There's a [small sample project](https://github.com/yanex/koan-demo-gradle) to show how to include Koan library to your Android Gradle project.
+
+Basically, all you have to do is to add an additional repository and a compile dependency:
+
+```gradle
+repositories {
+  ...
+  maven { url "http://repo.yanex.org/maven2" }
+}
+
+dependencies {
+  ...
+  compile 'org.jetbrains.kotlin:koan:19-0.1'
+}
+```
+
+That means Koan for Android SDK v. 19 without support.v4 package bindings will be loaded. If you use support.v4, replace `19` with `19s`.
+
 ## Understanding Koan
 
-If you came from Java world right now and know nothing about Kotlin syntax, you can use [this](http://kotlinlang.org/docs/reference/) reference. Kotlin is easy and similar to Java (but much better), so studying would be easy.
+Maybe you came from Java world right now and know nothing about Kotlin syntax, so you can use [this](http://kotlinlang.org/docs/reference/) reference. Kotlin is easy and similar to Java (but much better), so studying would be easy.
 
 ### Basics
 
@@ -143,11 +167,13 @@ override fun onCreate(savedInstanceState: Bundle?) {
   }
 ```
 
-Note this doesn't invoke ``setContentView(R.layout.something)`` explicitly. Koan does this automatically for Activities (and only for them).
+Note this doesn't invoke `setContentView(R.layout.something)` explicitly. Koan does it automatically for Activities (and only for them).
 
-``verticalLayout`` (a LinearLayout but already with a ``LinearLayout.VERTICAL`` orientation), ``editText`` and ``button`` are [extension functions](http://kotlinlang.org/docs/reference/extensions.html). Such extension functions exist for almost every View in Android framework, and they work in Activities, Fragments (both default and that from android.support package) and even for Context.
+`padding`, `hint` and `textSize` are extension properties. They exist for most of View properties allowing you to write `text = "Some text"` instead of `setText("Some text")`.
 
-If you have a context instance, write DSL like this:
+`verticalLayout` (a LinearLayout but already with a `LinearLayout.VERTICAL` orientation), `editText` and `button` are [extension functions](http://kotlinlang.org/docs/reference/extensions.html). Such functions also exist for almost every View in Android framework, and they work in Activities, Fragments (both default and that from android.support package) and even for Context.
+
+If you have a Context instance, write DSL like this:
 
 ```kotlin
 val name = with(myContext) {
@@ -157,15 +183,13 @@ val name = with(myContext) {
 }
 ```
 
-Variable ``name`` now has a type of EditText.
-
-``padding``, ``hint`` and ``textSize`` are extension properties. They also exist for most of View properties allowing you to write ``text = "Some text"`` instead of ``setText("Some text")``.
+Variable `name` has a type of EditText.
 
 ### Helper methods
 
-You probably noticed that ``button`` function in the previous chapter accepts a String parameter. Helper methods exist for some views such as TextView, EditText, Button, ImageView.
+You probably noticed that `button` function in the previous chapter accepts a String parameter. Helper methods exist for some views such as TextView, EditText, Button or ImageView.
 
-If you have nothing to set for the View, you can omit ``{}`` and write just this: ``button("Ok")`` or this: ``button()``.
+If you have nothing to set for the particular View, you can omit `{}` and write just this: `button("Ok")` or this: `button()`.
 
 ```kotlin
 verticalLayout {
@@ -176,12 +200,14 @@ verticalLayout {
 
 ### Layouts and LayoutParams
 
-Position of widgets inside a ViewGroup can be set using LayoutParams. In XML it looks like this:
+Position of widgets inside a parent can be set using LayoutParams. In XML it looks like this:
 
 ```xml
 <ImageView 
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
+  android_layout_marginLeft="5dip"
+  android_layout_marginTop="10dip"
   android:src="@drawable/something" />
 ```
 
@@ -200,9 +226,9 @@ linearLayout {
 
 If you specify layoutParams, both width and height defaults are WRAP_CONTENT. But you always can set it explicitly for sure. Use named arguments, it's convenient.
 
-``margin``, ``horizontalMargin`` and ``verticalMargin`` are convenient helper properties. ``horizontalMargin`` sets both left and right margins, ``verticalMargin`` set top and bottom ones, and ``margin`` sets all for margins simultaneously.
+`margin`, `horizontalMargin` and `verticalMargin` are convenient helper properties. `horizontalMargin` sets both left and right margins, `verticalMargin` set top and bottom ones, and `margin` sets all for margins simultaneously.
 
-For RelativeLayout ``layoutParams`` are quite different.
+In case of RelativeLayout, ``layoutParams`` are quite different.
 
 ```kotlin
 val ID_OK = 1
@@ -211,13 +237,14 @@ relativeLayout {
   button("Ok") {
     id = ID_OK
   }.layoutParams { alignParentTop() }
+
   button("Cancel").layoutParams { below(ID_OK) }
 }
 ```
 
 ### Listeners
 
-You can define listener methods directly in DSL.
+You can set listeners from DSL.
 
 ```kotlin
 button("Login") {
@@ -235,7 +262,7 @@ button.setOnClickListener(object: OnClickListener {
   }
 })
 ```
-And this is much more helpful when you have listeners with bunch of methods. The next code is written without using Koan:
+And this is much more helpful when you have listeners with lots of methods. The next code is written without using Koan:
 
 ```kotlin
 seekBar.setOnSeekBarChangeListener(object: OnSeekBarChangeListener {
@@ -260,19 +287,30 @@ seekBar {
 }
 ```
 
-### Resources and dimensions
+### Resources, colors and dimensions
 
-All examples in the previous chapters used raw Java strings, but it is not a good practice. Typically you have all your string data into res/values/ directory and access it in runtime calling ``getString(R.string.login)`` or something.
+#### Using resource identifiers
 
-Fortunately, you could both write ``button(R.string.login)`` (a helper method) or ``button { textResource = R.string.login }`` (extension property) in Koan DSL.
+All examples in the previous chapters used raw Java strings, but it is not a good practice. Typically you put all your string data into res/values/ directory and access it in runtime calling, for example, `getString(R.string.login)`.
 
-Kotlin properties can have only one setter so the property name is quite different. Instead of ``text``, ``hint``, ``image`` write ``textResource``, ``hintResource`` and ``imageResource``. This kind of properties always returns 0 when read.
+Fortunately, in Koan you could pass the resource identifier both to helper method (`button(R.string.login)`) or to extension property (`button { textResource = R.string.login }`).
 
-Also, you can specify dimension values in dip (density-independent pixels) or in sp (scale-independent pixels): `dip(dipValue)` or `sp(spValue)`. Note that textSize property already accepts **sp**. Use ``px2dip`` and ``px2sp`` to convert backwards.
+Note that the property name is quite different. Instead of setting `text`, `hint`, `image`, write `textResource`, `hintResource` and `imageResource`. This kind of properties always returns 0 when read.
 
-**Warning:** these functions throws an Exception if executed before onCreate(). Do not execute it in class constructor.
+#### Colors
 
-### UI tag
+Two simple extension functions to make the code more readable.
+
+Function             | Result
+---------------------|--------- 
+`0xff0000.opaque`    | <span style="color:#ff0000">non-transparent red</span>
+`0x99.gray.opaque`   | <span style="color:#999">non-transparent #999999 gray</span>
+
+#### Dimensions
+
+Also, you can specify dimension values in **dip** (density-independent pixels) or in **sp** (scale-independent pixels): `dip(dipValue)` or `sp(spValue)`. Note that textSize property already accepts **sp** (`textSize = 16f`). Use `px2dip` and `px2sp` to convert backwards.
+
+### UI wrapper
 
 Before the Beginning of Time Koan used UI tag as a top-level DSL element:
 
@@ -284,11 +322,11 @@ UI {
 }
 ```
 
-You can still use this tag if you want. And it would be much easier to extend DSL as you have to declare only one `ViewManager.customView` extension function.
+You can still use this tag if you want. And it would be much easier to extend DSL as you have to declare only one `ViewManager.customView` function. See [Extending Koan](#extending-koan) for the futher information.
 
 ### Styles
 
-Koan supports styling. Style is simply a function that accepts Any (object base type in Kotlin), and this function is applied for the View itself, and then recursively to each child of a View if it is a ViewGroup.
+Koan supports styling. Style is simply a function that accepts View, and this function is applied for the View itself, and then recursively to each child of a View if it is a ViewGroup.
 
 ```kotlin
 verticalLayout {
@@ -307,7 +345,9 @@ verticalLayout {
 
 ### Intents
 
-Even if you won't use DSL, Koan still has something to make your life easier. For example, it has Intent call wrappers for some Intents used widely.
+Even if you won't use DSL, Koan still has something to make your life easier.
+
+For example, it has call wrappers for some Intents used widely.
 
 Goal                | Solution
 --------------------|--------- 
@@ -316,7 +356,7 @@ Browse the web      | `browse(url)`
 Share some text     | `share(text, [subject])`
 Send a email        | `email(email, [subject], [text])`
 
-Methods return true if intent was sent.
+Arguments surrounded with `[]` are optional. Methods return true if intent was sent.
 
 Also, that is how you can start an activity:
 ```kotlin
@@ -334,20 +374,32 @@ startActivity(javaClass<SomeActivity>(),
 
 ### Dialogs and toasts
 
+An easy way to make toast notifications, alerts and selectors. All these functions could be executed from any thread.
+
 #### Toasts
 
 ```kotlin
 toast("Hi there!")
 toast(R.string.message)
-longToast("I'm so long")
+longToast("Wow, such long")
 ```
 
 #### Alerts
 
 ```kotlin
-alert("Oh well", "Have you tried turning it off and on again?") {
-  positiveButton("Yes") {toast("Well…")}
+alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
+  positiveButton("Yes") {toast("Oh…")}
   negativeButton("No") {}
+}.show()
+```
+
+Alerts seamlessly support DSL as custom views:
+
+```kotlin
+alert {
+  view {
+    editText()
+  }
 }.show()
 ```
 
@@ -362,7 +414,7 @@ selector("Where are you from?", countries) { i ->
 
 ### Asynchronous tasks
 
-AsyncTask is a jumbo class. Wait, no, it is sometimes a jumbo<JustOneElementWhichWouldBeConvertedIntoArray, SomethingNotReallyUseful, Result>. It's twice as awful as hell.
+AsyncTask is a jumbo. Wait, no, it is sometimes a jumbo<JustOneElementWhichWillBeConvertedToArray, SomethingNotReallyUseful, Result>. It's twice as awful as hell.
 
 There's a way better.
 
@@ -370,17 +422,17 @@ There's a way better.
 async {
   //long background task
   uiThread {
-    result.text = "Completed"
+    result.text = "Done"
   }
 }
 ```
 
-Also, Koan toasts and dialogs are always executed in main thread, so `uiThread {}` is unneeded:
+Also, as written in the previous chapter, Koan toasts and dialogs are always executed in main thread, so there's no need in `uiThread {}`:
 
 ```kotlin
 async {
   //long background task
-  toast("Completed!")
+  toast("Done!")
 }
 ```
 
@@ -391,4 +443,57 @@ val executor = Executors.newScheduledThreadPool(4)
 async(executor) {
   //some task
 }
+```
+
+`asyncResult` is similar to `async` but this one accepts function that returns something of particular type. Both `asyncResult` and `async` returns Java Future.
+
+```kotlin
+fun apiCall(): Result {
+  //something
+}
+val future: Future<Result> = asyncResult(::apiCall)
+```
+
+### Extending Koan
+
+Assuming `CustomView` would be your custom View class name, and `customView` is what you want to write in DSL.
+
+If you just plan to use your custom View in DSL surrounded by some other View:
+
+```kotlin
+fun ViewManager.customView(init: CustomView.() -> Unit = {}) =
+  __dslAddView({CustomView(it)}, init, this)
+```
+
+So now you can write this:
+
+```kotlin
+frameLayout {
+  customView()
+}
+```
+
+…or this (see the [UI wrapper](UI wrapper) chapter):
+
+```kotlin
+UI {
+  customView()
+}
+```
+
+But if you really want to use your view as a top-level child without a UI wrapper, add this:
+
+```kotlin
+fun Activity.customView(init: View.() -> Unit = {}) =
+  __dslAddView({View(it)}, init, this)
+
+fun Fragment.customView(init: View.() -> Unit = {}) =
+  __dslAddView({View(it)}, init, this)
+
+fun Context.customView(init: View.() -> Unit = {}) =
+  __dslAddView({View(it)}, init, this)
+
+//Only if you use android.support.v4
+fun android.support.v4.app.Fragment.customView(init: View.() -> Unit = {}) =
+  __dslAddView({View(it)}, init, this)
 ```
