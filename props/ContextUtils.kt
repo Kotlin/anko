@@ -9,25 +9,35 @@ import android.os.Bundle
 import android.net.Uri
 import java.io.Serializable
 
-val Activity.intent: Intent
+public val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
+public val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
+public val HDPI: Int = android.util.DisplayMetrics.DENSITY_HIGH
+
+//May not be available on older Android versions
+public val TVDPI: Int = 213
+public val XHDPI: Int = 320
+public val XXHDPI: Int = 480
+public val XXXHDPI: Int = 640
+
+public val Activity.intent: Intent
   get() = getIntent()!!
 
-val Context.defaultSharedPreferences: SharedPreferences
+public val Context.defaultSharedPreferences: SharedPreferences
   get() = PreferenceManager.getDefaultSharedPreferences(this)!!
 
-val Fragment.defaultSharedPreferences: SharedPreferences
+public val Fragment.defaultSharedPreferences: SharedPreferences
   get() = PreferenceManager.getDefaultSharedPreferences(getActivity()!!)!!
 
-val Fragment.act: Activity
+public val Fragment.act: Activity
   get() = getActivity()!!
 
-val Fragment.ctx: Context
+public val Fragment.ctx: Context
   get() = getActivity()!!
 
-val Context.ctx: Context
+public val Context.ctx: Context
   get() = this
 
-val Activity.basis: Activity
+public val Activity.basis: Activity
   get() = this
 
 public fun Fragment.browse(url: String): Boolean = ctx.browse(url)
@@ -114,3 +124,18 @@ private fun Context.internalStartActivity(activity: Class<out Activity>, params:
   }
   startActivity(intent)
 }
+
+public val Context.displayMetrics: android.util.DisplayMetrics
+  get() = getResources()!!.getDisplayMetrics()!!
+
+public val Context.conf: android.content.res.Configuration
+  get() = getResources()!!.getConfiguration()!!
+
+public val android.content.res.Configuration.portrait: Boolean
+  get() = orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT
+
+public val android.content.res.Configuration.landscape: Boolean
+  get() = orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+
+public val android.content.res.Configuration.long: Boolean
+  get() = (screenLayout and android.content.res.Configuration.SCREENLAYOUT_LONG_YES) != 0

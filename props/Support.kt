@@ -5,6 +5,8 @@ import android.widget.LinearLayout
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Future
 
 /* SECTION HELPERS */
 private fun <T: View> android.support.v4.app.Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {
@@ -72,7 +74,15 @@ public fun android.support.v4.app.Fragment.selector(
 /* SECTION ASYNC */
 public fun android.support.v4.app.Fragment.uiThread(f: () -> Unit): Unit = getActivity()!!.uiThread(f)
 
-public fun android.support.v4.app.Fragment.async(task: () -> Unit): Unit = getActivity()!!.async(task)
+public fun android.support.v4.app.Fragment.async(task: () -> Unit): Future<Unit> = getActivity()!!.async(task)
+
+public fun android.support.v4.app.Fragment.async(executorService: ExecutorService, task: () -> Unit): Future<Unit> =
+  getActivity()!!.async(executorService, task)
+
+public fun <T> android.support.v4.app.Fragment.asyncResult(task: () -> T): Future<T> = getActivity()!!.asyncResult(task)
+
+public fun <T> android.support.v4.app.Fragment.asyncResult(executorService: ExecutorService, task: () -> T): Future<T> =
+  getActivity()!!.asyncResult(executorService, task)
 
 public fun android.support.v4.app.Fragment.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
   __dslAddView(
