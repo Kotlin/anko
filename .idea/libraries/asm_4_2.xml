@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="asm-4.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/asm-4.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
