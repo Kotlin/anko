@@ -148,23 +148,23 @@ DSL is loaded in ``onCreate()``:
 
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
-    super<Activity>.onCreate(savedInstanceState)
+  super<Activity>.onCreate(savedInstanceState)
 
-    verticalLayout {
-      padding = dip(30)
-      editText {
-        hint = "Name"
-        textSize = 24f
-      }
-      editText {
-        hint = "Password"
-        textSize = 24f
-      }
-      button("Login") {
-        textSize = 26f
-      }
+  verticalLayout {
+    padding = dip(30)
+    editText {
+      hint = "Name"
+      textSize = 24f
+    }
+    editText {
+      hint = "Password"
+      textSize = 24f
+    }
+    button("Login") {
+      textSize = 26f
     }
   }
+}
 ```
 
 Note this doesn't invoke `setContentView(R.layout.something)` explicitly. Koan does it automatically for Activities (and only for them).
@@ -215,12 +215,12 @@ In Koan you set LayoutParams just after View description:
 
 ```kotlin
 linearLayout {
-	button("Login") {
-	  textSize = 26f
-	}.layoutParams(width = wrapContent) {
-	  horizontalMargin = dip(5)
-	  topMargin = dip(10)
-	}
+  button("Login") {
+    textSize = 26f
+  }.layoutParams(width = wrapContent) {
+    horizontalMargin = dip(5)
+    topMargin = dip(10)
+  }
 }
 ```
 
