@@ -125,12 +125,12 @@ Basically, all you have to do is to add an additional repository and a compile d
 ```gradle
 repositories {
   ...
-  maven { url "http://repo.yanex.org/maven2" }
+  maven { url "http://dl.bintray.com/yanex/kotlin" }
 }
 
 dependencies {
   ...
-  compile 'org.jetbrains.kotlin:koan:19-0.1'
+  compile 'org.jetbrains.kotlin:koan:19-0.1@aar'
 }
 ```
 
