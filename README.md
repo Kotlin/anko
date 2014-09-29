@@ -414,7 +414,9 @@ selector("Where are you from?", countries) { i ->
 
 ### Asynchronous tasks
 
-AsyncTask is a jumbo. Wait, no, it is sometimes a jumbo<JustOneElementWhichWillBeConvertedToArray, SomethingNotReallyUseful, Result>. It's twice as awful as hell.
+AsyncTask is a jumbo. Wait, no, it is sometimes a  
+Jumbo<OneElementWhichWillBeConvertedToArray, SomethingNotReallyUseful, Result\>.  
+It's twice as awful as hell.
 
 There's a way better.
 
