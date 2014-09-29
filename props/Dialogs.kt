@@ -10,6 +10,7 @@ import android.app.Fragment
 import android.app.AlertDialog
 import android.graphics.drawable.Drawable
 import android.database.Cursor
+import android.view.ViewManager
 
 public fun Fragment.toast(textResource: Int): Unit = ctx.toast(textResource)
 public fun Context.toast(textResource: Int) {
@@ -110,6 +111,14 @@ public class AlertDialogBuilder(val ctx: Context, val init: AlertDialogBuilder.(
 
   public fun customTitle(title: View) {
     builder.setCustomTitle(title)
+  }
+
+  public fun view(view: View) {
+    builder.setView(view)
+  }
+  public fun view(dsl: ViewManager.() -> Unit) {
+    val view = ctx.UI(dsl).toView()
+    builder.setView(view)
   }
 
   public fun cancellable(value: Boolean = true) {

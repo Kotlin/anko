@@ -56,7 +56,7 @@ private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T
   when (manager) {
     is ViewGroup -> manager.addView(v)
     is UiHelper -> manager.addView(v)
-    else -> throw RuntimeException("Wrong parent: ${manager.getClass()!!.getName()}")
+    else -> throw RuntimeException("${manager.toString()} is the wrong parent")
   }
   return v
 }
@@ -92,7 +92,7 @@ private val ViewManager.dslContext: Context
     return when(this) {
       is ViewGroup -> this.getContext()!!
       is UiHelper -> this.ctx
-      else -> throw RuntimeException("${getClass()!!.getName()} is a wrong parent")
+      else -> throw RuntimeException("${this.toString()} is the wrong parent")
     }
   }
 

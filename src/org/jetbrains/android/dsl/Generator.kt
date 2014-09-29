@@ -143,7 +143,7 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
     if (viewGroup.innerClasses == null)
       return null
     val innerClasses = (viewGroup.innerClasses as List<InnerClassNode>)
-    val lp = innerClasses.firstOrNull { it.name?.contains("LayoutParams") }
+    val lp = innerClasses.firstOrNull { it.name?.contains("LayoutParams") ?: false }
     val lpNode = classTree.findNode(lp?.name)?.data
     return if (lpNode!=null)
       Pair(viewGroup, classTree.findNode(lp?.name)?.data!!)
@@ -152,12 +152,7 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
 
   //returns true if the viewGroup contains custom LayoutParams class
   private fun hasLayoutParams(viewGroup: ClassNode): Boolean {
-    if (viewGroup.innerClasses == null)
-      return false
-    val innerClasses = (viewGroup.innerClasses as List<InnerClassNode>)
-    val lp = innerClasses.firstOrNull { it.name?.contains("LayoutParams") }
-    val lpNode = classTree.findNode(lp?.name)?.data
-    return (lpNode!=null)
+    return extractLayoutParams(viewGroup)!=null
   }
 
   //for testing purposes

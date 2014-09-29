@@ -24,7 +24,7 @@ public fun Fragment.async(task: () -> Unit): Future<Unit> {
 }
 
 public fun Fragment.async(executorService: ExecutorService, task: () -> Unit): Future<Unit> {
-  return executorService.submit<Unit> { task(); Unit.VALUE }
+  return executorService.submit<Unit> { task() }
 }
 
 public fun Context.async(task: () -> Unit): Future<Unit> {
@@ -32,7 +32,7 @@ public fun Context.async(task: () -> Unit): Future<Unit> {
 }
 
 public fun Context.async(executorService: ExecutorService, task: () -> Unit): Future<Unit> {
-  return executorService.submit<Unit> { task(); Unit.VALUE }
+  return executorService.submit<Unit> { task() }
 }
 
 public fun <T> Fragment.asyncResult(task: () -> T): Future<T> {
@@ -57,7 +57,7 @@ object BackgroundExecutor {
     Executors.newScheduledThreadPool(2 * Runtime.getRuntime().availableProcessors())
 
   fun execute(task: () -> Unit): Future<Unit> {
-    return executor.submit<Unit> { task(); Unit.VALUE }
+    return executor.submit<Unit> { task() }
   }
 
   fun <T> submit(task: () -> T): Future<T> {
