@@ -226,7 +226,7 @@ linearLayout {
 }
 ```
 
-If you specify `layoutParams`, but omit `with` and/or `height`, their default values are both `WRAP_CONTENT`. But you always can pass them explicitly, for sure. Use [named arguments](http://kotlinlang.org/docs/reference/functions.html#named-arguments), it's convenient.
+If you specify `layoutParams`, but omit `width` and/or `height`, their default values are both `WRAP_CONTENT`. But you always can pass them explicitly, for sure. Use [named arguments](http://kotlinlang.org/docs/reference/functions.html#named-arguments), it's convenient.
 
 Some convenient helper properties to notice:
 - `horizontalMargin` sets both left and right margins, 
