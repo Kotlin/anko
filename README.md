@@ -1,9 +1,9 @@
 Kōan
 ===========
 
-Koan is a library which makes Android application development faster and easier. It could make your code clean and easy to read, and lets you forget about sharp angles of Android SDK for Java.
+Koan is a library which makes Android application development faster and easier. It makes your code clean and easy to read, and lets you forget about rough edges of Android SDK for Java.
 
-Just a brief example. Here is a "hello world" written with Koan.
+Just a brief example. Here is a "hello world" written with Koan:
 ```kotlin
 verticalLayout {
   val name = ediÏtText()
@@ -13,9 +13,9 @@ verticalLayout {
 }
 ```
 
-Code above creates a button inside LinearLayout and applies onClickListener to that button.
+Code above creates a button inside a `LinearLayout` and attaches an `OnClickListener` to that button.
 
-As you might have guessed, it's a DSL for Android. This one is for [Kotlin](http://kotlinlang.org) programming language.
+As you might have guessed, it's a DSL for Android. It is written in [Kotlin](http://kotlinlang.org).
 
 ## Contents
 
