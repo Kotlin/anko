@@ -251,7 +251,7 @@ The compiler will complain if you try to pass inappropriate `layoutParams`.
 
 ### Listeners
 
-You can set listeners from DSL.
+You can set listeners from the Koan code:
 
 ```kotlin
 button("Login") {
@@ -263,13 +263,14 @@ button("Login") {
 
 It would be the same as this:
 ```kotlinm
-button.setOnClickListener(object: OnClickListener {
+button.setOnClickListener(object : OnClickListener {
   override fun onClick(v: View) {
     login(name, password)
   }
 })
 ```
-And this is much more helpful when you have listeners with lots of methods. The next code is written without using Koan:
+
+Koan is very helpful when you have listeners with lots of methods. Consider the following code written without using Koan:
 
 ```kotlin
 seekBar.setOnSeekBarChangeListener(object: OnSeekBarChangeListener {
