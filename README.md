@@ -353,9 +353,7 @@ verticalLayout {
 
 ### Intents
 
-Even if you won't use DSL, Koan still has something to make your life easier.
-
-For example, it has call wrappers for some Intents used widely.
+Even if you won't use the DSL to create UIs, Koan still has something to make your life easier. For example, it has call wrappers for some widely used `Intents`:
 
 Goal                | Solution
 --------------------|--------- 
@@ -364,9 +362,9 @@ Browse the web      | `browse(url)`
 Share some text     | `share(text, [subject])`
 Send a email        | `email(email, [subject], [text])`
 
-Arguments surrounded with `[]` are optional. Methods return true if intent was sent.
+Arguments surrounded with `[]` are optional. Methods return true if the intent was sent.
 
-Also, that is how you can start an activity:
+Also, this is how you can start an activity:
 ```kotlin
 startActivity(javaClass<SomeActivity>())
 ```
@@ -382,7 +380,7 @@ startActivity(javaClass<SomeActivity>(),
 
 ### Dialogs and toasts
 
-An easy way to make toast notifications, alerts and selectors. All these functions could be executed from any thread.
+Koan provides an easy way to make toast notifications, alerts and selectors. All the functions desribed below can be executed from any thread.
 
 #### Toasts
 
@@ -422,11 +420,11 @@ selector("Where are you from?", countries) { i ->
 
 ### Asynchronous tasks
 
-AsyncTask is a jumbo. Wait, no, it is sometimes a  
-Jumbo\<OneElementWhichWillBeConvertedToArray, SomethingNotReallyUseful, Result\>.  
+`AsyncTask` is a jumbo. Wait, no, it is sometimes a  
+`Jumbo<OneElementWhichWillBeConvertedToArray, SomethingNotReallyUseful, Result>`.  
 It's twice as awful as hell.
 
-There's a way better.
+There's a better way:
 
 ```kotlin
 async {
@@ -437,7 +435,7 @@ async {
 }
 ```
 
-Also, as written in the previous chapter, Koan toasts and dialogs are always executed in main thread, so there's no need in `uiThread {}`:
+Also, as mentioned above, Koan toasts and dialogs are always executed in main thread, so there's no need in `uiThread {}`:
 
 ```kotlin
 async {
@@ -446,7 +444,7 @@ async {
 }
 ```
 
-You can even execute tasks using your own ExecutorService:
+You can even execute tasks using your own `ExecutorService`:
 
 ```kotlin
 val executor = Executors.newScheduledThreadPool(4)
@@ -455,7 +453,7 @@ async(executor) {
 }
 ```
 
-`asyncResult` is similar to `async` but this one accepts function that returns something of particular type. Both `asyncResult` and `async` returns Java Future.
+`asyncResult` is similar to `async` but this one accepts a function that returns something. Both `asyncResult` and `async` return Java `Future`s.
 
 ```kotlin
 fun apiCall(): Result {
@@ -466,9 +464,9 @@ val future: Future<Result> = asyncResult(::apiCall)
 
 ### Extending Koan
 
-Assuming `CustomView` would be your custom View class name, and `customView` is what you want to write in DSL.
+Let's say, `CustomView` is your custom `View` class name, and `customView` is what you want to write in the DSL.
 
-If you just plan to use your custom View in DSL surrounded by some other View:
+If you only plan to use your custom `View` in the DSL surrounded by some other `View`:
 
 ```kotlin
 fun ViewManager.customView(init: CustomView.() -> Unit = {}) =
@@ -491,7 +489,7 @@ UI {
 }
 ```
 
-But if you really want to use your view as a top-level child without a UI wrapper, add this:
+But if you really want to use your view as a top-level widget without a UI wrapper, add this:
 
 ```kotlin
 fun Activity.customView(init: View.() -> Unit = {}) =
