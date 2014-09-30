@@ -95,11 +95,11 @@ There is no :tophat: actually, Koan consists of some Kotlin [extension functions
 
 It's a depressing job to write all these extensions by hand so they're generated automatically using *android.jar* files from Android SDK as sources.
 
-### Is it extendable?
+### Is it extensible?
 
 Short answer: **yes**.
 
-For example, you might want to use a MapView in DSL. Then just write this in any Kotlin file from where you could import it:
+For example, you might want to use a `MapView` in the DSL. Then just write this in any Kotlin file from where you could import it:
 ```kotlin
 fun ViewManager.mapView(init: MapView.() -> Unit = {}) =
   __dslAddView({MapView(it)}, init, this)
@@ -114,7 +114,7 @@ frameLayout {
 }
 ```
 
-Also see [Extending Koan](#extending-koan) if you need an ability to create top-level DSL views.
+Also see [Extending Koan](#extending-koan) if you need an to create top-level DSL views.
 
 ### Using with Gradle
 
