@@ -6,7 +6,7 @@ Koan is a library which makes Android application development faster and easier.
 Just a brief example. Here is a "hello world" written with Koan:
 ```kotlin
 verticalLayout {
-  val name = ediÏtText()
+  val name = editText()
   button("Say Hello") {
     onClick { toast("Hello, ${name.text}!") }
   }
