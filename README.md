@@ -189,9 +189,9 @@ Variable `name` has type `EditText`.
 
 ### Helper methods
 
-You probably noticed that `button` function in the previous chapter accepts a String parameter. Helper methods exist for some views such as TextView, EditText, Button or ImageView.
+As you probably noticed, the `button` function in the previous section accepts a `String` parameter. Such helper methods exist for some views such as `TextView`, `EditText`, `Button` or `ImageView`.
 
-If you have nothing to set for the particular View, you can omit `{}` and write just this: `button("Ok")` or this: `button()`.
+If you don't need to set any properties for some particular `View`, you can omit `{}` and write `button("Ok")` or even just `button()`:
 
 ```kotlin
 verticalLayout {
