@@ -23,7 +23,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [Why DSL?](#why-dsl)
 	* [Why not Scaloid?](#why-not-scaloid)
 	* [Supporting existing code](#supporting-existing-code)
-	* [How does it work?](#how-is-it-work)
+	* [How it works](#how-it-works)
 	* [Is it extendable?](#is-it-extendable)
 	* [Using with Gradle](#using-with-gradle)
 * [Understanding Koan](#understanding-koan)
@@ -89,11 +89,11 @@ name.hint = "Enter your name"
 name.onClick { /*do something*/ }
 ```
 
-### How does it work?
+### How it works
 
-There is no :tophat: actually, it is built of some Kotlin [extension functions](http://kotlinlang.org/docs/reference/extensions.html), extension properties and mechanism similar to type-safe builders described [here](http://kotlinlang.org/docs/reference/type-safe-builders.html).
+There is no :tophat: actually, Koan consists of some Kotlin [extension functions](http://kotlinlang.org/docs/reference/extensions.html) and properties arranged into *type-safe builders*, as described [here](http://kotlinlang.org/docs/reference/type-safe-builders.html).
 
-It's a job for a phrenzy guy to write all these extensions by hand so they're generated automatically using *android.jar* files from Android SDK as sources.
+It's a depressing job to write all these extensions by hand so they're generated automatically using *android.jar* files from Android SDK as sources.
 
 ### Is it extendable?
 
