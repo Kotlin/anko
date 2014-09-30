@@ -91,7 +91,7 @@ name.onClick { /*do something*/ }
 
 ### How it works
 
-There is no :tophat: actually, Koan consists of some Kotlin [extension functions](http://kotlinlang.org/docs/reference/extensions.html) and properties arranged into *type-safe builders*, as described [here](http://kotlinlang.org/docs/reference/type-safe-builders.html).
+There is no :tophat: actually, Koan consists of some Kotlin [extension functions and properties](http://kotlinlang.org/docs/reference/extensions.html) arranged into *type-safe builders*, as described [here](http://kotlinlang.org/docs/reference/type-safe-builders.html).
 
 It's a depressing job to write all these extensions by hand so they're generated automatically using *android.jar* files from Android SDK as sources.
 
@@ -144,9 +144,9 @@ Kotlin is similar enough to Java (but much better), so learning it will be easy.
 
 ### Basics
 
-Koan doesn't require you to inherit from its classes. Just use standard Activity, Fragment, FragmentActivity or whatever you want.
+In Koan, you don't need to inherit from any special classes: just use standard `Activity`, `Fragment`, `FragmentActivity` or whatever you want.
 
-DSL is loaded in ``onCreate()``:
+DSL is available in `onCreate()`:
 
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
@@ -169,13 +169,13 @@ override fun onCreate(savedInstanceState: Bundle?) {
 }
 ```
 
-Note this doesn't invoke `setContentView(R.layout.something)` explicitly. Koan does it automatically for Activities (and only for them).
+Note that there's no explicit call to `setContentView(R.layout.something)`: Koan sets content views automatically for `Activities` (and only for them).
 
-`padding`, `hint` and `textSize` are extension properties. They exist for most of View properties allowing you to write `text = "Some text"` instead of `setText("Some text")`.
+`padding`, `hint` and `textSize` are [extension properties](http://kotlinlang.org/docs/reference/extensions.html#extension-properties). They exist for most `View` properties allowing you to write `text = "Some text"` instead of `setText("Some text")`.
 
-`verticalLayout` (a LinearLayout but already with a `LinearLayout.VERTICAL` orientation), `editText` and `button` are [extension functions](http://kotlinlang.org/docs/reference/extensions.html). Such functions also exist for almost every View in Android framework, and they work in Activities, Fragments (both default and that from android.support package) and even for Context.
+`verticalLayout` (a `LinearLayout` but already with a `LinearLayout.VERTICAL` orientation), `editText` and `button` are [extension functions](http://kotlinlang.org/docs/reference/extensions.html). Such functions also exist for almost every `View` in Android framework, and they work in `Activities`, `Fragments` (both default and that from `android.support` package) and even for `Context`.
 
-If you have a Context instance, write DSL like this:
+If you have a `Context` instance, you can write DSL constructs like this:
 
 ```kotlin
 val name = with(myContext) {
@@ -185,7 +185,7 @@ val name = with(myContext) {
 }
 ```
 
-Variable `name` has a type of EditText.
+Variable `name` has type `EditText`.
 
 ### Helper methods
 
