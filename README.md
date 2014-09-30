@@ -19,7 +19,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 
 ## Contents
 
-* [Reason for existence](#reason-for-existence)
+* [Why Koan?](#why-koan)
 	* [Why DSL?](#why-dsl)
 	* [Why not Scaloid?](#why-not-scaloid)
 	* [Supporting existing code](#supporting-existing-code)
@@ -40,19 +40,20 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [Asynchronous tasks](#asynchronous-tasks)
 	* [Extending Koan](#extending-koan)
 
-## Reason for existence
+## Why Koan?
 
 ### Why DSL?
 
-By default, UI in Android is written using XML. That is incredibly insane, and that's why:
+By default, UI in Android is written using XML. That is inconvenient in the following ways:
 
 * It is not typesafe;
 * And not null-safe;
 * It forces you to write almost *the same code* for every layout you made;
 * XML is parsed on device wasting CPU time and battery;
-* Above all, it allows no code reusing.
+* Above all, it allows no code reuse.
 
-Well, you may create UI programmatically but nobody does that because it looks ugly and extremely hard to maintain. Here's the Kotlin version (one in Java is even longer).
+Well, you can create UI programmatically but nobody does that because it looks ugly and is extremely hard to maintain. Here's a plain Kotlin version (one in Java is even longer):
+
 ```kotlin
 val act = this
 val layout = LinearLayout(act)
@@ -60,16 +61,14 @@ layout.setOrientation(LinearLayout.VERTICAL)
 val name = EditText(act)
 val button = Button(act)
 button.setText("Say Hello")
-button.setOnClickListener(object: View.OnClickListener {
-  override fun onClick(v: View) {
-    Toast.makeText(act, "Hello, ${name.getText()}!", Toast.LENGTH_SHORT).show()  
-  }
-})
+button.setOnClickListener {
+  Toast.makeText(act, "Hello, ${name.getText()}!", Toast.LENGTH_SHORT).show()  
+}
 layout.addView(name)
 layout.addView(button)
 ```
 
-Here the DSL comes. It is easy to read, easy to write and there're actually no runtime overhead. Just try it!
+A DSL makes the same logic easy to read, easy to write and there're no runtime overhead. Just try it!
 
 ### Why not Scaloid?
 
