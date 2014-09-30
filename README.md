@@ -202,7 +202,7 @@ verticalLayout {
 
 ### Layouts and LayoutParams
 
-Position of widgets inside a parent can be set using LayoutParams. In XML it looks like this:
+Positioning of widgets inside parent containers can be tuned using `LayoutParams`. In XML it looks like this:
 
 ```xml
 <ImageView 
@@ -213,7 +213,7 @@ Position of widgets inside a parent can be set using LayoutParams. In XML it loo
   android:src="@drawable/something" />
 ```
 
-In Koan you set LayoutParams just after View description:
+In Koan, you specify `LayoutParams` right after a `View` description:
 
 ```kotlin
 linearLayout {
@@ -226,11 +226,14 @@ linearLayout {
 }
 ```
 
-If you specify layoutParams, both width and height defaults are WRAP_CONTENT. But you always can set it explicitly for sure. Use named arguments, it's convenient.
+If you specify `layoutParams`, but omit `with` and/or `height`, their default values are both `WRAP_CONTENT`. But you always can pass them explicitly, for sure. Use [named arguments](http://kotlinlang.org/docs/reference/functions.html#named-arguments), it's convenient.
 
-`margin`, `horizontalMargin` and `verticalMargin` are convenient helper properties. `horizontalMargin` sets both left and right margins, `verticalMargin` set top and bottom ones, and `margin` sets all for margins simultaneously.
+Some convenient helper properties to notice:
+- `horizontalMargin` sets both left and right margins, 
+- `verticalMargin` set top and bottom ones, and 
+- `margin` sets all for margins simultaneously.
 
-In case of RelativeLayout, ``layoutParams`` are quite different.
+Note that `layoutParams` are different for different layouts, for example, in the case of `RelativeLayout`:
 
 ```kotlin
 val ID_OK = 1
@@ -243,6 +246,8 @@ relativeLayout {
   button("Cancel").layoutParams { below(ID_OK) }
 }
 ```
+
+The compiler will complain if you try to pass inappropriate `layoutParams`.
 
 ### Listeners
 
