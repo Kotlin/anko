@@ -138,7 +138,9 @@ This loads Koan for Android SDK `v. 19` without `support.v4` package bindings. I
 
 ## Understanding Koan
 
-Maybe you came from Java world right now and know nothing about Kotlin syntax, so you can use [this](http://kotlinlang.org/docs/reference/) reference. Kotlin is easy and similar to Java (but much better), so studying would be easy.
+As mentioned above, Koan is written in Kotlin. 
+In case you are not familiar with Kotlin, please refer to [kotlinlang.org](http://kotlinlang.org/docs/reference/). 
+Kotlin is similar enough to Java (but much better), so learning it will be easy.
 
 ### Basics
 
