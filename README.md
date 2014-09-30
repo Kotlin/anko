@@ -72,9 +72,10 @@ A DSL makes the same logic easy to read, easy to write and there're no runtime o
 
 ### Why not Scaloid?
 
-[Scaloid](https://github.com/pocorall/scaloid) is a similar library for Scala, with lots of amusing stuff.
-But Android and Scala are not good friends: Scala compiler is dreadfully slow, Android sbt plugin is full of bugs, and because Scala library is enormous you have to use tools such as ProGuard even when debugging your app.
-Finally, Scaloid manages a subclass for every single View in Android widget hierarchy so it is not easy to make new DSL entries for your own Views. Also, that consumes lots of memory without a particular reason.
+[Scaloid](https://github.com/pocorall/scaloid) is a similar library for Scala, with lots of cool stuff supported.
+But Android and Scala are not very good friends: Scala compiler is dreadfully slow, Android sbt plugin is full of bugs, and because Scala library is enormous you have to use tools such as ProGuard even when debugging your app.
+
+Finally, **Scaloid manages a subclass for every single `View` in Android widget hierarchy** so it is not easy to make new DSL constructs for your own `View`s. Also, it consumes lots of memory without no good reason.
 
 ### Supporting existing code
 
