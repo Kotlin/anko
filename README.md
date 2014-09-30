@@ -118,7 +118,7 @@ Also see [Extending Koan](#extending-koan) if you need an to create top-level DS
 
 ### Using with Gradle
 
-There's a [small sample project](https://github.com/yanex/koan-demo-gradle) to show how to include Koan library to your Android Gradle project.
+There's a [small sample project](https://github.com/yanex/koan-demo-gradle) to show how to include Koan library into your Android Gradle project.
 
 Basically, all you have to do is to add an additional repository and a compile dependency:
 
@@ -134,7 +134,7 @@ dependencies {
 }
 ```
 
-That means Koan for Android SDK v. 19 without support.v4 package bindings will be loaded. If you use support.v4, replace `19` with `19s`.
+This loads Koan for Android SDK `v. 19` without `support.v4` package bindings. If you use `support.v4`, replace `19` with `19s`.
 
 ## Understanding Koan
 
