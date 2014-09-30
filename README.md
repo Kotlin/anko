@@ -69,7 +69,7 @@ layout.addView(name)
 layout.addView(button)
 ```
 
-Here comes DSL. It is easy to read, easy to write and there're actually no runtime overhead. Just try it!
+Here the DSL comes. It is easy to read, easy to write and there're actually no runtime overhead. Just try it!
 
 ### Why not Scaloid?
 
