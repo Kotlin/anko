@@ -1,29 +1,29 @@
 Kōan
 ===========
 
-Koan is a library which makes Android application development faster and easier. It could make your code clean and easy to read, and lets you forget about sharp angles of Android SDK for Java.
+Koan is a library which makes Android application development faster and easier. It makes your code clean and easy to read, and lets you forget about rough edges of Android SDK for Java.
 
-Just a brief example. Here is a "hello world" written with Koan.
+Just a brief example. Here is a "hello world" written with Koan:
 ```kotlin
 verticalLayout {
-  val name = ediÏtText()
+  val name = editText()
   button("Say Hello") {
     onClick { toast("Hello, ${name.text}!") }
   }
 }
 ```
 
-Code above creates a button inside LinearLayout and applies onClickListener to that button.
+Code above creates a button inside a `LinearLayout` and attaches an `OnClickListener` to that button.
 
-As you might have guessed, it's a DSL for Android. This one is for [Kotlin](http://kotlinlang.org) programming language.
+As you might have guessed, it's a DSL for Android. It is written in [Kotlin](http://kotlinlang.org).
 
 ## Contents
 
-* [Reason for existence](#reason-for-existence)
+* [Why Koan?](#why-koan)
 	* [Why DSL?](#why-dsl)
 	* [Why not Scaloid?](#why-not-scaloid)
 	* [Supporting existing code](#supporting-existing-code)
-	* [How does it work?](#how-is-it-work)
+	* [How it works](#how-it-works)
 	* [Is it extendable?](#is-it-extendable)
 	* [Using with Gradle](#using-with-gradle)
 * [Understanding Koan](#understanding-koan)
@@ -40,19 +40,20 @@ As you might have guessed, it's a DSL for Android. This one is for [Kotlin](http
 	* [Asynchronous tasks](#asynchronous-tasks)
 	* [Extending Koan](#extending-koan)
 
-## Reason for existence
+## Why Koan?
 
 ### Why DSL?
 
-By default, UI in Android is written using XML. That is incredibly insane, and that's why:
+By default, UI in Android is written using XML. That is inconvenient in the following ways:
 
 * It is not typesafe;
 * And not null-safe;
 * It forces you to write almost *the same code* for every layout you made;
 * XML is parsed on device wasting CPU time and battery;
-* Above all, it allows no code reusing.
+* Above all, it allows no code reuse.
 
-Well, you may create UI programmatically but nobody does that because it looks ugly and extremely hard to maintain. Here's the Kotlin version (one in Java is even longer).
+Well, you can create UI programmatically but nobody does that because it looks ugly and is extremely hard to maintain. Here's a plain Kotlin version (one in Java is even longer):
+
 ```kotlin
 val act = this
 val layout = LinearLayout(act)
@@ -60,22 +61,21 @@ layout.setOrientation(LinearLayout.VERTICAL)
 val name = EditText(act)
 val button = Button(act)
 button.setText("Say Hello")
-button.setOnClickListener(object: View.OnClickListener {
-  override fun onClick(v: View) {
-    Toast.makeText(act, "Hello, ${name.getText()}!", Toast.LENGTH_SHORT).show()  
-  }
-})
+button.setOnClickListener {
+  Toast.makeText(act, "Hello, ${name.getText()}!", Toast.LENGTH_SHORT).show()  
+}
 layout.addView(name)
 layout.addView(button)
 ```
 
-Here the DSL comes. It is easy to read, easy to write and there're actually no runtime overhead. Just try it!
+A DSL makes the same logic easy to read, easy to write and there're no runtime overhead. Just try it!
 
 ### Why not Scaloid?
 
-[Scaloid](https://github.com/pocorall/scaloid) is a similar library for Scala, with lots of amusing stuff.
-But Android and Scala are not good friends: Scala compiler is dreadfully slow, Android sbt plugin is full of bugs, and because Scala library is enormous you have to use tools such as ProGuard even when debugging your app.
-Finally, Scaloid manages a subclass for every single View in Android widget hierarchy so it is not easy to make new DSL entries for your own Views. Also, that consumes lots of memory without a particular reason.
+[Scaloid](https://github.com/pocorall/scaloid) is a similar library for Scala, with lots of cool stuff supported.
+But Android and Scala are not very good friends: Scala compiler is dreadfully slow, Android sbt plugin is full of bugs, and because Scala library is enormous you have to use tools such as ProGuard even when debugging your app.
+
+Finally, **Scaloid manages a subclass for every single `View` in Android widget hierarchy** so it is not easy to make new DSL constructs for your own `View`s. Also, it consumes lots of memory without no good reason.
 
 ### Supporting existing code
 
@@ -89,17 +89,17 @@ name.hint = "Enter your name"
 name.onClick { /*do something*/ }
 ```
 
-### How does it work?
+### How it works
 
-There is no :tophat: actually, it is built of some Kotlin [extension functions](http://kotlinlang.org/docs/reference/extensions.html), extension properties and mechanism similar to type-safe builders described [here](http://kotlinlang.org/docs/reference/type-safe-builders.html).
+There is no :tophat: actually, Koan consists of some Kotlin [extension functions](http://kotlinlang.org/docs/reference/extensions.html) and properties arranged into *type-safe builders*, as described [here](http://kotlinlang.org/docs/reference/type-safe-builders.html).
 
-It's a job for a phrenzy guy to write all these extensions by hand so they're generated automatically using *android.jar* files from Android SDK as sources.
+It's a depressing job to write all these extensions by hand so they're generated automatically using *android.jar* files from Android SDK as sources.
 
-### Is it extendable?
+### Is it extensible?
 
 Short answer: **yes**.
 
-For example, you might want to use a MapView in DSL. Then just write this in any Kotlin file from where you could import it:
+For example, you might want to use a `MapView` in the DSL. Then just write this in any Kotlin file from where you could import it:
 ```kotlin
 fun ViewManager.mapView(init: MapView.() -> Unit = {}) =
   __dslAddView({MapView(it)}, init, this)
@@ -114,11 +114,11 @@ frameLayout {
 }
 ```
 
-Also see [Extending Koan](#extending-koan) if you need an ability to create top-level DSL views.
+Also see [Extending Koan](#extending-koan) if you need an to create top-level DSL views.
 
 ### Using with Gradle
 
-There's a [small sample project](https://github.com/yanex/koan-demo-gradle) to show how to include Koan library to your Android Gradle project.
+There's a [small sample project](https://github.com/yanex/koan-demo-gradle) to show how to include Koan library into your Android Gradle project.
 
 Basically, all you have to do is to add an additional repository and a compile dependency:
 
@@ -134,7 +134,7 @@ dependencies {
 }
 ```
 
-That means Koan for Android SDK v. 19 without support.v4 package bindings will be loaded. If you use support.v4, replace `19` with `19s`.
+This loads Koan for Android SDK `v. 19` without `support.v4` package bindings. If you use `support.v4`, replace `19` with `19s`.
 
 ## Understanding Koan
 
