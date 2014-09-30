@@ -295,15 +295,15 @@ seekBar {
 }
 ```
 
-### Resources, colors and dimensions
+### Resources, Colors and Dimensions
 
 #### Using resource identifiers
 
-All examples in the previous chapters used raw Java strings, but it is not a good practice. Typically you put all your string data into res/values/ directory and access it in runtime calling, for example, `getString(R.string.login)`.
+All examples in the previous chapters used raw Java strings, but it is hardly a good practice. Typically you put all your string data into `res/values/` directory and access it at runtime calling, for example, `getString(R.string.login)`.
 
-Fortunately, in Koan you could pass the resource identifier both to helper method (`button(R.string.login)`) or to extension property (`button { textResource = R.string.login }`).
+Fortunately, in Koan you can pass resource identifiers both to helper methods (`button(R.string.login)`) and to extension properties (`button { textResource = R.string.login }`).
 
-Note that the property name is quite different. Instead of setting `text`, `hint`, `image`, write `textResource`, `hintResource` and `imageResource`. This kind of properties always returns 0 when read.
+Note that the property name is not the same: instead of `text`, `hint`, `image`, we now use `textResource`, `hintResource` and `imageResource`. Properties of this kind always return `0` when read.
 
 #### Colors
 
@@ -316,7 +316,7 @@ Function             | Result
 
 #### Dimensions
 
-Also, you can specify dimension values in **dip** (density-independent pixels) or in **sp** (scale-independent pixels): `dip(dipValue)` or `sp(spValue)`. Note that textSize property already accepts **sp** (`textSize = 16f`). Use `px2dip` and `px2sp` to convert backwards.
+Also, you can specify dimension values in **dip** (density-independent pixels) or in **sp** (scale-independent pixels): `dip(dipValue)` or `sp(spValue)`. Note that the `textSize` property already accepts **sp** (`textSize = 16f`). Use `px2dip` and `px2sp` to convert backwards.
 
 ### UI wrapper
 
@@ -330,11 +330,11 @@ UI {
 }
 ```
 
-You can still use this tag if you want. And it would be much easier to extend DSL as you have to declare only one `ViewManager.customView` function. See [Extending Koan](#extending-koan) for the futher information.
+You can still use this tag if you want. And it would be much easier to extend DSL as you have to declare only one `ViewManager.customView` function. See [Extending Koan](#extending-koan) for more information.
 
 ### Styles
 
-Koan supports styling. Style is simply a function that accepts View, and this function is applied for the View itself, and then recursively to each child of a View if it is a ViewGroup.
+Koan supports styling: `style` is simply a function that accepts `View`, is applied for the `View` itself, and then recursively to each child of a `View` if it is a `ViewGroup`:
 
 ```kotlin
 verticalLayout {
