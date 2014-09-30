@@ -146,6 +146,8 @@ Kotlin is similar enough to Java (but much better), so learning it will be easy.
 
 In Koan, you don't need to inherit from any special classes: just use standard `Activity`, `Fragment`, `FragmentActivity` or whatever you want.
 
+First of all, import `kotlinx.android.koan.*` to use Koan DSL in your classes.
+
 DSL is available in `onCreate()`:
 
 ```kotlin
