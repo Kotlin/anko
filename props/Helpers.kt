@@ -22,14 +22,13 @@ import android.app.Activity
 import android.app.Fragment
 import java.util.HashMap
 
-private data class ViewProps(var listeners: HashMap<String, ListenerHelper>, var style: (Any) -> Unit, var realTag: Any? = null)
-private val defaultStyle: (Any) -> Unit = {}
+private data class ViewProps(var listeners: HashMap<String, ListenerHelper>, var realTag: Any? = null)
 
 private trait ListenerHelper {
   fun apply()
 }
 
-public fun View.style(style: (Any) -> Unit): Unit = applyStyle(this, style)
+public fun View.style(style: (View) -> Unit): Unit = applyStyle(this, style)
 
 public var View.tag: Any?
   get() = {
@@ -62,7 +61,7 @@ public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit,
 }
 
 private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T {
-  v.setTag(ViewProps(hashMapOf(), defaultStyle, v.getTag()))
+  v.setTag(ViewProps(hashMapOf(), v.getTag()))
   v.init()
   val props = v.getTag() as? ViewProps
   if (props != null) {
@@ -92,7 +91,7 @@ private fun <T: View> Context.addContextTopLevelView(v: T, init: T.() -> Unit): 
   return v
 }
 
-private fun applyStyle(v: View, style: (Any) -> Unit) {
+private fun applyStyle(v: View, style: (View) -> Unit) {
   style(v)
   if (v is ViewGroup) {
     val maxId = v.getChildCount()-1
