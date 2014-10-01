@@ -15,6 +15,8 @@ verticalLayout {
 
 Code above creates a button inside a `LinearLayout` and attaches an `OnClickListener` to that button.
 
+<img src="doc/helloworld.png" alt="Hello world" height="90" width="373" />
+
 As you might have guessed, it's a DSL for Android. It is written in [Kotlin](http://kotlinlang.org).
 
 ## Contents
