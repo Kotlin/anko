@@ -1,11 +1,9 @@
 out/*
+gen/*
 lib/*
-dsl_out/*
 .idea/dictionaries/*
 .idea/inspectionProfiles/*
 .idea/workspace.xml
 .idea/tasks.xml
-*.class
-adslGenerator.iml
 .DS_Store
 original/**/*.jar
