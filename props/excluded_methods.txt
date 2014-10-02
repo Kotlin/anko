@@ -8,3 +8,4 @@ android.gesture.GestureOverlayView#getCurrentStroke
 android.inputmethodservice.KeyboardView#setShifted
 android.widget.AutoCompleteTextView#setAdapter
 android.widget.ImageView#getDrawable
+android.widget.EditText#getText

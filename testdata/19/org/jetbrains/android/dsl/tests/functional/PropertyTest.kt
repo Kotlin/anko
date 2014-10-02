@@ -837,9 +837,6 @@ public var android.widget.DialerFilter.mode: Int
 public val android.widget.DialerFilter.qwertyKeyboard: Boolean
   get() = isQwertyKeyboard()
 
-public val android.widget.EditText.text: android.text.Editable?
-  get() = getText()
-
 public var android.widget.ExpandableListView.adapter: android.widget.ListAdapter?
   get() = getAdapter()
   set(v) = setAdapter(v!!)
