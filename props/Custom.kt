@@ -62,25 +62,20 @@ public fun Fragment.px2sp(px: Int): Float = ctx.px2sp(px)
 
 
 /* SECTION CUSTOM VIEWS */
+private val verticalLayoutFactory = { (ctx: Context) ->
+  val v = _LinearLayout(ctx); v.setOrientation(LinearLayout.VERTICAL); v}
+
 public fun ViewManager.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
-  __dslAddView(
-    {val v = _LinearLayout(it); v.setOrientation(LinearLayout.VERTICAL); v},
-    init, this): LinearLayout
+  __dslAddView(verticalLayoutFactory, init, this): LinearLayout
 
 public fun Activity.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
-  __dslAddView(
-    {val v = _LinearLayout(it); v.setOrientation(LinearLayout.VERTICAL); v},
-    init, this): LinearLayout
+  __dslAddView(verticalLayoutFactory, init, this): LinearLayout
 
 public fun Fragment.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
-  __dslAddView(
-    {val v = _LinearLayout(it); v.setOrientation(LinearLayout.VERTICAL); v},
-    init, this): LinearLayout
+  __dslAddView(verticalLayoutFactory, init, this): LinearLayout
 
 public fun Context.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
-  __dslAddView(
-    {val v = _LinearLayout(it); v.setOrientation(LinearLayout.VERTICAL); v},
-    init, this): LinearLayout
+  __dslAddView(verticalLayoutFactory, init, this): LinearLayout
 /* END SECTION */
 
 
