@@ -56,11 +56,6 @@ public open class MyActivity() : Activity() {
                 viewAnimator {}
                 expandableListView {}
                 viewFlipper {}
-
-                val a = textView {
-                	text = R.string.s1.rStr
-                	a.text = "ABC"
-                }
             }
         }
     }

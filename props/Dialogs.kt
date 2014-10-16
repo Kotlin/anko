@@ -32,10 +32,12 @@ public fun Context.longToast(text: String) {
   uiThread { Toast.makeText(this, text, Toast.LENGTH_LONG).show() }
 }
 
+private val defaultOnCancel = {}
+
 public fun Fragment.selector(
   title: CharSequence = "",
   items: List<CharSequence>,
-  onCancel: () -> Unit = {},
+  onCancel: () -> Unit = defaultOnCancel,
   onClick: (Int) -> Unit): Unit =
   ctx.selector(title, items, onCancel, onClick)
 
@@ -60,7 +62,7 @@ public fun Context.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilde
 public fun Context.selector(
   title: CharSequence = "",
   items: List<CharSequence>,
-  onCancel: () -> Unit = {},
+  onCancel: () -> Unit = defaultOnCancel,
   onClick: (Int) -> Unit)
 {
   uiThread {

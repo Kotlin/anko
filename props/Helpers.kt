@@ -24,6 +24,8 @@ import java.util.HashMap
 
 private data class ViewProps(var listeners: HashMap<String, ListenerHelper>, var realTag: Any? = null)
 
+private val defaultInit: Any.() -> Unit = {}
+
 private trait ListenerHelper {
   fun apply()
 }

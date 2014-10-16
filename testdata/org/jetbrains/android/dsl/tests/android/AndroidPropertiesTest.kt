@@ -16,7 +16,7 @@ public open class MyActivity() : Activity() {
                 dividerPadding = 1
                 orientation = -1
                 showDividers = 0
-                weightSum = 2.4
+                weightSum = 2.4f
                 textSwitcher {}
                 calendarView {
                     date = 123456
@@ -124,8 +124,8 @@ public open class MyActivity() : Activity() {
                 editText {}
                 ratingBar {
                     numStars = 3
-                    rating = 3.4
-                    stepSize = 0.7
+                    rating = 3.4f
+                    stepSize = 0.7f
                 }
                 stackView {}
                 quickContactBadge {}
@@ -139,7 +139,6 @@ public open class MyActivity() : Activity() {
 
                 }
                 viewAnimator {}
-                mediaController {}
                 expandableListView {
                     adapter = null
                     val elv_selectedPosition = selectedPosition

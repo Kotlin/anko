@@ -117,11 +117,11 @@ class Renderer(private val generator: Generator) {
       val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
 
       buffer {
-        line("public fun ViewManager.$funcName(init: $className.() -> Unit = {}): $typeName =")
+        line("public fun ViewManager.$funcName(init: $className.() -> Unit = defaultInit): $typeName =")
         line("addView($className(dslContext), init, this)")
         if (props.generateTopLevelExtensionMethods) {
           fun add(extendFor: String, ctx: String) {
-            line("public fun $extendFor.$funcName(init: $className.() -> Unit = {}): $typeName =")
+            line("public fun $extendFor.$funcName(init: $className.() -> Unit = defaultInit): $typeName =")
             line("add${extendFor}TopLevelView($className($ctx), init)")
           }
           add("Activity", "this")
@@ -184,7 +184,7 @@ class Renderer(private val generator: Generator) {
           val argumentType = it.second.arguments!![0].toStr()
           "${it.first.name}: $argumentType"
         }.joinToString(", ")
-        val arguments = "$helperArguments, init: $viewClassName.() -> Unit = {}"
+        val arguments = "$helperArguments, init: $viewClassName.() -> Unit = defaultInit"
         val setters = collected.map { "v.${it.second.name}(${it.first.name})" }
 
         ret.add(buffer {
@@ -286,7 +286,7 @@ class Renderer(private val generator: Generator) {
       val initArgumentName = "${decapitalize(lp.layout.cleanName())}Init"
       val separator = if (arguments == "") "" else ","
       return buffer(indent = 1) {
-        line("public fun <T: View> T.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = {}): T {")
+        line("public fun <T: View> T.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = defaultInit): T {")
         line("val layoutParams = $layoutParamsClassName($substituded)")
         line("layoutParams.$initArgumentName()")
         line("this@layoutParams.setLayoutParams(layoutParams)")
