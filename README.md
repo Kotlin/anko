@@ -132,7 +132,7 @@ repositories {
 
 dependencies {
   ...
-  compile 'org.jetbrains.kotlin:koan:19-0.1@aar'
+  compile 'org.jetbrains.kotlin:koan:19-0.1.2@aar'
 }
 ```
 
