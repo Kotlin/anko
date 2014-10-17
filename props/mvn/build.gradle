@@ -1,11 +1,11 @@
 buildscript {
-    ext.kotlin_version = '0.8.11'
+    ext.kotlin_version = '0.9.66'
     repositories {
         mavenCentral()
         mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.android.tools.build:gradle:0.12.2'
         classpath 'com.github.dcendents:android-maven-plugin:1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -47,6 +47,5 @@ dependencies {
     }
 
     compile 'com.android.support:support-v4:19.1.+'
-    compile 'com.google.maps.android:android-maps-utils:0.3+'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
