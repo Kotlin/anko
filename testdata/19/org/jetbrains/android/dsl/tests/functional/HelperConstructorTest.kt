@@ -22,6 +22,18 @@ public fun ViewManager.imageView(imageResource: Int, init: android.widget.ImageV
   return addView(v, init, this)
 }
 
+public fun ViewManager.editText(text: CharSequence?, init: android.widget.EditText.() -> Unit = defaultInit): android.widget.EditText {
+  val v = android.widget.EditText(dslContext)
+  v.setText(text)
+  return addView(v, init, this)
+}
+
+public fun ViewManager.editText(text: Int, init: android.widget.EditText.() -> Unit = defaultInit): android.widget.EditText {
+  val v = android.widget.EditText(dslContext)
+  v.setText(text)
+  return addView(v, init, this)
+}
+
 public fun ViewManager.button(text: CharSequence?, init: android.widget.Button.() -> Unit = defaultInit): android.widget.Button {
   val v = android.widget.Button(dslContext)
   v.setText(text)

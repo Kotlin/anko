@@ -7,6 +7,8 @@ android.widget.CheckBox text:CharSequence, checked:boolean
 android.widget.CheckBox text:int, checked:boolean
 android.widget.TextView text:CharSequence
 android.widget.TextView text:int
+android.widget.EditText text:CharSequence
+android.widget.EditText text:int
 android.widget.ImageView imageDrawable:Drawable
 android.widget.ImageView imageResource:int
 android.widget.ImageButton imageDrawable:Drawable
