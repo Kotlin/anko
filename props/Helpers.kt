@@ -30,7 +30,10 @@ private trait ListenerHelper {
   fun apply()
 }
 
-public fun View.style(style: (View) -> Unit): Unit = applyStyle(this, style)
+public fun <T: View> T.style(style: (View) -> Unit): T {
+  applyStyle(this, style)
+  return this
+}
 
 public var View.tag: Any?
   get() = {
