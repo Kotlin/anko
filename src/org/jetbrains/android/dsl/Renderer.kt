@@ -265,7 +265,7 @@ class Renderer(private val generator: Generator) {
     }
 
     return buffer {
-      line("public class $helperClassName(val v: $setterClass): ListenerHelper {")
+      line("class $helperClassName(val v: $setterClass): ListenerHelper {")
       lines(fields).nl()
       line("override fun apply() {")
       line("v.${listener.setter.method.name}(object: $listenerClassName {")
