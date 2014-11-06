@@ -56,13 +56,14 @@ class Renderer(private val generator: Generator) {
       val getter = it.getter
       val className = cleanInternalName(getter.clazz.name!!)
       val propertyName = it.name
+      val fullPropertyName = "$className.$propertyName"
       val bestSetter = it.setters.head
       val mutability = if (bestSetter!=null) "var" else "val"
       val returnType = getter.method.renderReturnType()
       val otherSetters = if (it.setters.size>1) it.setters.tail else listOf()
 
       buffer {
-        line("public $mutability $className.$propertyName: $returnType")
+        line("public $mutability $fullPropertyName: $returnType")
         indent.line("get() = ${getter.method.name!!}()")
         if (bestSetter!=null) {
           val arg = if (returnType.endsWith("?")) "v!!" else "v"
@@ -75,8 +76,8 @@ class Renderer(private val generator: Generator) {
               (it.method.arguments?.get(0)?.getClassName()=="int")
           }
           if (resourceSetter!=null) {
-            line("public var $className.${propertyName}Resource: Int")
-            indent.line("get() = 0")
+            line("public var ${fullPropertyName}Resource: Int")
+            indent.line("get() = throw KoanException(\"'${fullPropertyName}Resource' property doesn't have a getter\")")
             indent.line("set(v) = ${resourceSetter.method.name}(v)")
           }
         }

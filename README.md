@@ -307,7 +307,7 @@ All examples in the previous chapters used raw Java strings, but it is hardly a 
 
 Fortunately, in Koan you can pass resource identifiers both to helper methods (`button(R.string.login)`) and to extension properties (`button { textResource = R.string.login }`).
 
-Note that the property name is not the same: instead of `text`, `hint`, `image`, we now use `textResource`, `hintResource` and `imageResource`. Properties of this kind always return `0` when read.
+Note that the property name is not the same: instead of `text`, `hint`, `image`, we now use `textResource`, `hintResource` and `imageResource`. Properties of this kind always throws `KoanException` when read.
 
 #### Colors
 
