@@ -37,6 +37,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [UI wrapper](#ui-wrapper)
 	* [Styles](#styles)
 * [Advanced topics](#advanced-topics)
+	* [Instance shorthands](#instance-shorthands)
 	* [Intents](#intents)
 	* [Dialogs and toasts](#dialogs-and-toasts)
 	* [Asynchronous tasks](#asynchronous-tasks)
@@ -354,6 +355,12 @@ verticalLayout {
 ```
 
 ## Advanced topics
+
+### Instance shorthands
+
+Sometimes you need to pass a `Context` instance to some Android SDK method from your `Activity` code. Usually you can just use `this`, but what if you're inside the inner class? You would probably write `SomeActivity.this` in case of Java and `this@SomeActivity` if you're writing in Kotlin.
+
+With Koan you can just write `ctx`. It is an extension property which works both inside `Activity` and `Service` and is even accessible from `Fragment` (it uses `getActivity()` method under the hood). You can also get an `Activity` instance using `act` extension property.
 
 ### Intents
 
