@@ -70,7 +70,6 @@ private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T
   v.init()
   val props = v.getTag() as? ViewProps
   if (props != null) {
-    props.listeners.values().forEach { it.apply() }
     v.setTag(props.realTag)
   }
   when (manager) {

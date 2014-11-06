@@ -230,6 +230,7 @@ class Renderer(private val generator: Generator) {
           line("props.listeners.put(\"$hashKey\", l!!)")
         line("}")
         line("l!!._$varName = act")
+        line("l!!.apply()")
         line("}").line("}")
         
       }.toString()

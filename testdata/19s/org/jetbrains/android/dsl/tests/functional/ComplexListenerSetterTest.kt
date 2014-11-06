@@ -8,6 +8,7 @@ public fun android.inputmethodservice.KeyboardView.onPress(act: (Int) -> Unit) {
       props.listeners.put("android.inputmethodservice.KeyboardView_setOnKeyboardActionListener", l!!)
     }
     l!!._onPress = act
+    l!!.apply()
   }
 }
 
@@ -21,6 +22,7 @@ public fun android.inputmethodservice.KeyboardView.onRelease(act: (Int) -> Unit)
       props.listeners.put("android.inputmethodservice.KeyboardView_setOnKeyboardActionListener", l!!)
     }
     l!!._onRelease = act
+    l!!.apply()
   }
 }
 
@@ -34,6 +36,7 @@ public fun android.inputmethodservice.KeyboardView.onKey(act: (Int, IntArray?) -
       props.listeners.put("android.inputmethodservice.KeyboardView_setOnKeyboardActionListener", l!!)
     }
     l!!._onKey = act
+    l!!.apply()
   }
 }
 
@@ -47,6 +50,7 @@ public fun android.inputmethodservice.KeyboardView.onText(act: (CharSequence?) -
       props.listeners.put("android.inputmethodservice.KeyboardView_setOnKeyboardActionListener", l!!)
     }
     l!!._onText = act
+    l!!.apply()
   }
 }
 
@@ -60,6 +64,7 @@ public fun android.inputmethodservice.KeyboardView.swipeLeft(act: () -> Unit) {
       props.listeners.put("android.inputmethodservice.KeyboardView_setOnKeyboardActionListener", l!!)
     }
     l!!._swipeLeft = act
+    l!!.apply()
   }
 }
 
@@ -73,6 +78,7 @@ public fun android.inputmethodservice.KeyboardView.swipeRight(act: () -> Unit) {
       props.listeners.put("android.inputmethodservice.KeyboardView_setOnKeyboardActionListener", l!!)
     }
     l!!._swipeRight = act
+    l!!.apply()
   }
 }
 
@@ -86,6 +92,7 @@ public fun android.inputmethodservice.KeyboardView.swipeDown(act: () -> Unit) {
       props.listeners.put("android.inputmethodservice.KeyboardView_setOnKeyboardActionListener", l!!)
     }
     l!!._swipeDown = act
+    l!!.apply()
   }
 }
 
@@ -99,6 +106,7 @@ public fun android.inputmethodservice.KeyboardView.swipeUp(act: () -> Unit) {
       props.listeners.put("android.inputmethodservice.KeyboardView_setOnKeyboardActionListener", l!!)
     }
     l!!._swipeUp = act
+    l!!.apply()
   }
 }
 
@@ -112,6 +120,7 @@ public fun android.view.ViewGroup.onChildViewAdded(act: (android.view.View?, and
       props.listeners.put("android.view.ViewGroup_setOnHierarchyChangeListener", l!!)
     }
     l!!._onChildViewAdded = act
+    l!!.apply()
   }
 }
 
@@ -125,6 +134,7 @@ public fun android.view.ViewGroup.onChildViewRemoved(act: (android.view.View?, a
       props.listeners.put("android.view.ViewGroup_setOnHierarchyChangeListener", l!!)
     }
     l!!._onChildViewRemoved = act
+    l!!.apply()
   }
 }
 
@@ -138,6 +148,7 @@ public fun android.support.v4.view.ViewPager.onPageScrolled(act: (Int, Float, In
       props.listeners.put("android.support.v4.view.ViewPager_setOnPageChangeListener", l!!)
     }
     l!!._onPageScrolled = act
+    l!!.apply()
   }
 }
 
@@ -151,6 +162,7 @@ public fun android.support.v4.view.ViewPager.onPageSelected(act: (Int) -> Unit) 
       props.listeners.put("android.support.v4.view.ViewPager_setOnPageChangeListener", l!!)
     }
     l!!._onPageSelected = act
+    l!!.apply()
   }
 }
 
@@ -164,6 +176,7 @@ public fun android.support.v4.view.ViewPager.onPageScrollStateChanged(act: (Int)
       props.listeners.put("android.support.v4.view.ViewPager_setOnPageChangeListener", l!!)
     }
     l!!._onPageScrollStateChanged = act
+    l!!.apply()
   }
 }
 
@@ -177,6 +190,7 @@ public fun android.widget.AdapterView<out android.widget.Adapter?>.onItemSelecte
       props.listeners.put("android.widget.AdapterView<out android.widget.Adapter?>_setOnItemSelectedListener", l!!)
     }
     l!!._onItemSelected = act
+    l!!.apply()
   }
 }
 
@@ -190,6 +204,7 @@ public fun android.widget.AdapterView<out android.widget.Adapter?>.onNothingSele
       props.listeners.put("android.widget.AdapterView<out android.widget.Adapter?>_setOnItemSelectedListener", l!!)
     }
     l!!._onNothingSelected = act
+    l!!.apply()
   }
 }
 
@@ -203,6 +218,7 @@ public fun android.widget.SlidingDrawer.onScrollStarted(act: () -> Unit) {
       props.listeners.put("android.widget.SlidingDrawer_setOnDrawerScrollListener", l!!)
     }
     l!!._onScrollStarted = act
+    l!!.apply()
   }
 }
 
@@ -216,6 +232,7 @@ public fun android.widget.SlidingDrawer.onScrollEnded(act: () -> Unit) {
       props.listeners.put("android.widget.SlidingDrawer_setOnDrawerScrollListener", l!!)
     }
     l!!._onScrollEnded = act
+    l!!.apply()
   }
 }
 
@@ -229,6 +246,7 @@ public fun android.widget.AbsListView.onScrollStateChanged(act: (android.widget.
       props.listeners.put("android.widget.AbsListView_setOnScrollListener", l!!)
     }
     l!!._onScrollStateChanged = act
+    l!!.apply()
   }
 }
 
@@ -242,6 +260,7 @@ public fun android.widget.AbsListView.onScroll(act: (android.widget.AbsListView?
       props.listeners.put("android.widget.AbsListView_setOnScrollListener", l!!)
     }
     l!!._onScroll = act
+    l!!.apply()
   }
 }
 
@@ -255,6 +274,7 @@ public fun android.widget.RadioGroup.onChildViewAdded(act: (android.view.View?, 
       props.listeners.put("android.widget.RadioGroup_setOnHierarchyChangeListener", l!!)
     }
     l!!._onChildViewAdded = act
+    l!!.apply()
   }
 }
 
@@ -268,6 +288,7 @@ public fun android.widget.RadioGroup.onChildViewRemoved(act: (android.view.View?
       props.listeners.put("android.widget.RadioGroup_setOnHierarchyChangeListener", l!!)
     }
     l!!._onChildViewRemoved = act
+    l!!.apply()
   }
 }
 
@@ -281,6 +302,7 @@ public fun android.widget.TableLayout.onChildViewAdded(act: (android.view.View?,
       props.listeners.put("android.widget.TableLayout_setOnHierarchyChangeListener", l!!)
     }
     l!!._onChildViewAdded = act
+    l!!.apply()
   }
 }
 
@@ -294,6 +316,7 @@ public fun android.widget.TableLayout.onChildViewRemoved(act: (android.view.View
       props.listeners.put("android.widget.TableLayout_setOnHierarchyChangeListener", l!!)
     }
     l!!._onChildViewRemoved = act
+    l!!.apply()
   }
 }
 
@@ -307,6 +330,7 @@ public fun android.widget.TableRow.onChildViewAdded(act: (android.view.View?, an
       props.listeners.put("android.widget.TableRow_setOnHierarchyChangeListener", l!!)
     }
     l!!._onChildViewAdded = act
+    l!!.apply()
   }
 }
 
@@ -320,6 +344,7 @@ public fun android.widget.TableRow.onChildViewRemoved(act: (android.view.View?, 
       props.listeners.put("android.widget.TableRow_setOnHierarchyChangeListener", l!!)
     }
     l!!._onChildViewRemoved = act
+    l!!.apply()
   }
 }
 
@@ -333,6 +358,7 @@ public fun android.widget.SearchView.onQueryTextSubmit(act: (String?) -> Boolean
       props.listeners.put("android.widget.SearchView_setOnQueryTextListener", l!!)
     }
     l!!._onQueryTextSubmit = act
+    l!!.apply()
   }
 }
 
@@ -346,6 +372,7 @@ public fun android.widget.SearchView.onQueryTextChange(act: (String?) -> Boolean
       props.listeners.put("android.widget.SearchView_setOnQueryTextListener", l!!)
     }
     l!!._onQueryTextChange = act
+    l!!.apply()
   }
 }
 
@@ -359,6 +386,7 @@ public fun android.widget.SearchView.onSuggestionSelect(act: (Int) -> Boolean) {
       props.listeners.put("android.widget.SearchView_setOnSuggestionListener", l!!)
     }
     l!!._onSuggestionSelect = act
+    l!!.apply()
   }
 }
 
@@ -372,6 +400,7 @@ public fun android.widget.SearchView.onSuggestionClick(act: (Int) -> Boolean) {
       props.listeners.put("android.widget.SearchView_setOnSuggestionListener", l!!)
     }
     l!!._onSuggestionClick = act
+    l!!.apply()
   }
 }
 
@@ -385,6 +414,7 @@ public fun android.widget.AutoCompleteTextView.onItemSelected(act: (android.widg
       props.listeners.put("android.widget.AutoCompleteTextView_setOnItemSelectedListener", l!!)
     }
     l!!._onItemSelected = act
+    l!!.apply()
   }
 }
 
@@ -398,6 +428,7 @@ public fun android.widget.AutoCompleteTextView.onNothingSelected(act: (android.w
       props.listeners.put("android.widget.AutoCompleteTextView_setOnItemSelectedListener", l!!)
     }
     l!!._onNothingSelected = act
+    l!!.apply()
   }
 }
 
@@ -411,6 +442,7 @@ public fun android.widget.SeekBar.onProgressChanged(act: (android.widget.SeekBar
       props.listeners.put("android.widget.SeekBar_setOnSeekBarChangeListener", l!!)
     }
     l!!._onProgressChanged = act
+    l!!.apply()
   }
 }
 
@@ -424,6 +456,7 @@ public fun android.widget.SeekBar.onStartTrackingTouch(act: (android.widget.Seek
       props.listeners.put("android.widget.SeekBar_setOnSeekBarChangeListener", l!!)
     }
     l!!._onStartTrackingTouch = act
+    l!!.apply()
   }
 }
 
@@ -437,6 +470,7 @@ public fun android.widget.SeekBar.onStopTrackingTouch(act: (android.widget.SeekB
       props.listeners.put("android.widget.SeekBar_setOnSeekBarChangeListener", l!!)
     }
     l!!._onStopTrackingTouch = act
+    l!!.apply()
   }
 }
 
