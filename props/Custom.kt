@@ -105,15 +105,15 @@ public var View.paddingBottom: Int
   set(value) {this.setPadding(this.getPaddingLeft(), this.getPaddingTop(), this.getPaddingRight(), value)}
 
 public var View.padding: Int
-  get() = throw Error("padding field doesn't have a getter")
+  get() = throw KoanException("'padding' property doesn't have a getter")
   set(value) {this.setPadding(value, value, value, value)}
 
 public var LinearLayout.gravity: Int
-  get() = throw Error("gravity property doesn't have a getter")
+  get() = throw KoanException("'gravity' property doesn't have a getter")
   set(value) {this.setGravity(value)}
 
 public var TextView.textColor: Int
-  get() = throw Error("textColor property doesn't have a getter")
+  get() = throw KoanException("'textColor' property doesn't have a getter")
   set(value) {this.setTextColor(value)}
 
 public var ImageView.image: Drawable?
@@ -131,19 +131,19 @@ public val matchParent: Int = android.view.ViewGroup.LayoutParams.MATCH_PARENT
 public val wrapContent: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 
 public var LinearLayout.LayoutParams.margin: Int
-  get() = throw RuntimeException("No getter")
+  get() = throw KoanException("'LinearLayout.LayoutParams.margin' property doesn't have a getter")
   set(v) {
     leftMargin = v; rightMargin = v; topMargin = v; bottomMargin = v
   }
 
 public var LinearLayout.LayoutParams.verticalMargin: Int
-  get() = throw RuntimeException("No getter")
+  get() = throw KoanException("'LinearLayout.LayoutParams.verticalMargin' property doesn't have a getter")
   set(v) {
     topMargin = v; bottomMargin = v
   }
 
 public var LinearLayout.LayoutParams.horizontalMargin: Int
-  get() = throw RuntimeException("No getter")
+  get() = throw KoanException("'LinearLayout.LayoutParams.horizontalMargin' property doesn't have a getter")
   set(v) {
     leftMargin = v; rightMargin = v
   }

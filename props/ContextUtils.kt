@@ -119,7 +119,7 @@ private fun Context.internalStartActivity(activity: Class<out Activity>, params:
       is Long -> intent.putExtra(it.first, it.second as Long)
       is Serializable -> intent.putExtra(it.first, it.second as Serializable)
       is Bundle -> intent.putExtra(it.first, it.second as Bundle)
-      else -> throw Error("Argument ${it.first} has wrong type: ${it.second.javaClass.getName()}")
+      else -> throw KoanException("Intent extra ${it.first} has wrong type ${it.second.javaClass.getName()}")
     }
   }
   startActivity(intent)
