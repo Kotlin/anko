@@ -128,7 +128,7 @@ private fun Context.internalStartActivity(activity: Class<out Activity>, params:
 public val Context.displayMetrics: android.util.DisplayMetrics
   get() = getResources()!!.getDisplayMetrics()!!
 
-public val Context.conf: android.content.res.Configuration
+public val Context.configuration: android.content.res.Configuration
   get() = getResources()!!.getConfiguration()!!
 
 public val android.content.res.Configuration.portrait: Boolean
