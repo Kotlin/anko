@@ -37,7 +37,7 @@ public val Fragment.ctx: Context
 public val Context.ctx: Context
   get() = this
 
-public val Activity.basis: Activity
+public val Activity.act: Activity
   get() = this
 
 public fun Fragment.browse(url: String): Boolean = ctx.browse(url)
