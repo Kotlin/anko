@@ -39,6 +39,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 * [Advanced topics](#advanced-topics)
 	* [Instance shorthands](#instance-shorthands)
 	* [Intents](#intents)
+	* [Services](#services)
 	* [Dialogs and toasts](#dialogs-and-toasts)
 	* [Asynchronous tasks](#asynchronous-tasks)
 	* [Extending Koan](#extending-koan)
@@ -388,6 +389,17 @@ startActivity(javaClass<SomeActivity>(),
   "data" to someSerializable
 )
 ```
+
+### Services
+
+With Koan you can get handy access to many Android services.
+
+E.g. that's the Java way for obtaining an Android service instance:
+```java
+(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)
+```
+
+In Kotlin, it's just `notificationService`. The same as for `displayManager`, `sensorManager`, `locationManager` — bindings are available to all services, just try it out!
 
 ### Dialogs and toasts
 
