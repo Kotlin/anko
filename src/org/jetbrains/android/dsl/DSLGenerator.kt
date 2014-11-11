@@ -68,7 +68,6 @@ class DSLGenerator(
 
       //copy gradle build files
       copy("gradle.properties") { it.replace("%FVERSION%", fVersion) }
-      copy("maven_push.gradle")
       copy("build.gradle") { it.replace("%VERSION%", sVersion) }
     }
   }

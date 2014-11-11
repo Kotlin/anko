@@ -2,35 +2,19 @@ buildscript {
     ext.kotlin_version = '0.9.66'
     repositories {
         mavenCentral()
-        mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
-        classpath 'com.github.dcendents:android-maven-plugin:1.1'
+        classpath 'com.android.tools.build:gradle:0.14.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply from: 'maven_push.gradle'
-
-allprojects {
-    version = VERSION_NAME
-    group = GROUP
-
-    repositories {
-        mavenCentral()
-    }
-}
-
-repositories {
-    mavenLocal()
-}
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion %VERSION%
+            buildToolsVersion "21.1.1"
 
     defaultConfig {
         targetSdkVersion "%VERSION%"
@@ -42,10 +26,28 @@ android {
 }
 
 dependencies {
-  repositories {
+    repositories {
         mavenCentral()
     }
 
-    compile 'com.android.support:support-v4:19.1.+'
+    compile 'com.android.support:support-v4:%VERSION%.+'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
+task androidReleaseJar(type: Jar, dependsOn: assembleRelease) {
+    from "$buildDir/intermediates/classes/release/"
+}
+
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId POM_ARTEFACT_GROUP
+            artifactId POM_ARTEFACT_ID
+            version POM_ARTEFACT_VERSION
+
+            artifact androidReleaseJar
+        }
+    }
 }
