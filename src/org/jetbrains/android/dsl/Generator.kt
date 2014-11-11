@@ -108,6 +108,13 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
       LayoutParamsNode(layoutClass, layoutParamsClass, layoutParamsClass.getConstructors())
     }
 
+  val services = if (!props.generateServices) listOf() else
+    classTree.findNode("android/content/Context")?.data?.fields
+        ?.filter { it.name.endsWith("_SERVICE") }
+        ?.map { it.name to classTree.findNode("android", it.name.toServiceClassName()) }
+        ?.filter { it.second != null }
+        ?: listOf()
+
   //Convert list of getters and map of setters to property list
   private fun genProperties(
       getters: Collection<MethodNodeWithClass>,
@@ -216,5 +223,17 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
     this.cleanInternalName() in props.excludedClasses
   private fun MethodNodeWithClass.isExcluded() =
     (this.clazz.cleanInternalName()+"#"+this.method.name!!) in props.excludedMethods
+
+  private fun String.toServiceClassName(): String {
+    var nextCapital = true
+    val builder = StringBuilder()
+    for (char in replace("_SERVICE", "_MANAGER").toCharArray()) when (char) {
+      '_' -> nextCapital = true
+      else -> builder.append(
+          if (nextCapital) { nextCapital = false; char } else Character.toLowerCase(char)
+      )
+    }
+    return builder.toString()
+  }
 
 }

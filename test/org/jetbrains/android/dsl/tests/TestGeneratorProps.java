@@ -36,6 +36,7 @@ public class TestGeneratorProps extends GeneratorProps {
         tmpFiles.put(Subsystem.ASYNC, File.createTempFile("Async", ".kt"));
         tmpFiles.put(Subsystem.CONTEXT_UTILS, File.createTempFile("ContextUtils", ".kt"));
         tmpFiles.put(Subsystem.DIALOGS, File.createTempFile("Dialogs", ".kt"));
+        tmpFiles.put(Subsystem.SERVICES, File.createTempFile("Services", ".kt"));
     }
 
     public final HashMap<Subsystem, File> tmpFiles = new HashMap<>();

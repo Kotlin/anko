@@ -108,6 +108,13 @@ class Renderer(private val generator: Generator) {
   val layouts = if (!props.generateLayoutParamsHelperClasses) listOf() else
     generator.layouts.map { renderLayout(it) }
 
+  val services = generator.services.map {
+    val propertyName = it.second!!.data.cleanNameDecap()
+    val className = it.second!!.data.cleanInternalName()
+    "public val Context.$propertyName: $className\n"+
+        "${props.indent}get() = getSystemService(Context.${it.first}) as $className"
+  }
+
   private fun generateViews(
       views: List<ClassNode>,
       nameResolver: (String) -> String): List<String>

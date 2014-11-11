@@ -36,6 +36,7 @@ open class GeneratorProps(outputDirectory: String = "gen/") : BaseGeneratorProps
       Subsystem.ASYNC -> File(parentDirectory + "Async.kt")
       Subsystem.CONTEXT_UTILS -> File(parentDirectory + "ContextUtils.kt")
       Subsystem.DIALOGS -> File(parentDirectory + "Dialogs.kt")
+      Subsystem.SERVICES -> File(parentDirectory + "Services.kt")
       else -> throw RuntimeException("Unable to get output file for non-existing subsystem $subsystem")
     }
   }
@@ -53,7 +54,8 @@ open class GeneratorProps(outputDirectory: String = "gen/") : BaseGeneratorProps
 
   override val imports = listOf(
     "layouts" to "props/imports_layouts.txt",
-    "views" to "props/imports_views.txt"
+    "views" to "props/imports_views.txt",
+    "services" to "props/imports_services.txt"
   ).fold(HashMap<String, String>()) { hashMap, t ->
     hashMap.put(t.first, readFile(t.second)); hashMap
   }

@@ -44,6 +44,7 @@ class Writer(private val renderer: Renderer) {
         writeDialogs()
       }
     }
+    writeServices()
   }
 
   private fun writeCustom() = writeStatic(Subsystem.CUSTOM, "props/Custom.kt")
@@ -57,6 +58,14 @@ class Writer(private val renderer: Renderer) {
   private fun writeStatic(subsystem: Subsystem, filename: String) {
     val support = Files.readAllLines(Paths.get(filename)!!, StandardCharsets.UTF_8)
     writeToFile(props.getOutputFile(subsystem), support)
+  }
+
+  private fun writeServices(): Boolean {
+    return if (props.generateServices) {
+      val imports = props.imports["services"] ?: ""
+      writeToFile(props.getOutputFile(Subsystem.SERVICES), renderer.services, imports)
+      true
+    } else false
   }
 
   private fun writeProperties(): Boolean {

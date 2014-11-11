@@ -168,3 +168,10 @@ public fun android.widget.RelativeLayout.LayoutParams.centerHorizontally(): Unit
 public fun android.widget.RelativeLayout.LayoutParams.centerVertically(): Unit = addRule(android.widget.RelativeLayout.CENTER_VERTICAL)
 public fun android.widget.RelativeLayout.LayoutParams.centerInParent(): Unit = addRule(android.widget.RelativeLayout.CENTER_IN_PARENT)
 /* END SECTION */
+
+/* SECTION SERVICES */
+public val Context.vibrator: android.os.Vibrator
+  get() = getSystemService(Context.VIBRATOR_SERVICE) as android.os.Vibrator
+public val Context.layoutInflater: android.view.LayoutInflater
+  get() = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as android.view.LayoutInflater
+/* END SECTION */

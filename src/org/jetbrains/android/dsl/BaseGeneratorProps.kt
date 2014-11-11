@@ -40,6 +40,7 @@ abstract class BaseGeneratorProps() {
   open var generateComplexListenerClasses: Boolean = true
   open var generateComplexListenerSetters: Boolean = true
   open var generateTopLevelExtensionMethods: Boolean = true
+  open var generateServices: Boolean = true
   open var generateSupport: Boolean = false
   open var generateStatic: Boolean = true
 

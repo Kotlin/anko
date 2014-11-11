@@ -28,4 +28,5 @@ enum class Subsystem {
   ASYNC
   CONTEXT_UTILS
   DIALOGS
+  SERVICES
 }

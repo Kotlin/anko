@@ -108,6 +108,7 @@ public abstract class BaseFunctionalTest extends Assert {
         settings.setGenerateComplexListenerClasses(false);
         settings.setGenerateComplexListenerSetters(false);
         settings.setGenerateTopLevelExtensionMethods(false);
+        settings.setGenerateServices(false);
         settings.setGenerateStatic(false);
 
         File[] versions = new File("original/").listFiles(directoryFilter);
