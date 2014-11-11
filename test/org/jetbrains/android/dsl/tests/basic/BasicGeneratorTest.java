@@ -135,7 +135,7 @@ public class BasicGeneratorTest extends Assert {
             assertTrue(file.length() > 0);
           }
         } else {
-          assertTrue(file.length() > 0);
+          assertTrue(file.length() > 0, "File "+file.getName()+" doesn't exist or is empty");
         }
       }
       for (File file: settings.tmpFiles.values()) {
