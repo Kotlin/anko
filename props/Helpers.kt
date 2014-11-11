@@ -54,10 +54,6 @@ public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit,
   return addView(view(manager.dslContext), init, manager)
 }
 
-public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, act: Activity): T {
-  return act.addActivityTopLevelView(view(act), init)
-}
-
 public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, ctx: Context): T {
   return ctx.addContextTopLevelView(view(ctx), init)
 }
@@ -79,11 +75,6 @@ private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T
     is UiHelper -> manager.addView(v)
     else -> throw KoanException("$manager is the wrong parent")
   }
-  return v
-}
-
-private fun <T: View> Activity.addActivityTopLevelView(v: T, init: T.() -> Unit): T {
-  UI { addView(v, init, this) }
   return v
 }
 

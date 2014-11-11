@@ -125,7 +125,6 @@ class Renderer(private val generator: Generator) {
             line("public fun $extendFor.$funcName(init: $className.() -> Unit = defaultInit): $typeName =")
             line("add${extendFor}TopLevelView($className($ctx), init)")
           }
-          add("Activity", "this")
           add("Fragment", "getActivity()!!")
           add("Context", "this")
         }
