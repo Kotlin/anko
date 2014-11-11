@@ -113,6 +113,24 @@ class ClassTree : Iterable<ClassNode>{
         return null
     }
 
+    private fun findNode(node: ClassTreeNode, parentPackage: String, className: String): ClassTreeNode? {
+        for (child in node.children) {
+            val childName = child.data.name
+            if (childName.startsWith(parentPackage) && childName.endsWith(className)) {
+                return child
+            } else {
+                val ret = findNode(child, parentPackage, className)
+                if (ret != null)
+                    return ret
+            }
+        }
+        return null
+    }
+
+    public fun findNode(parentPackage: String, className: String): ClassTreeNode? {
+        return findNode(root, parentPackage + '/', '/' + className)
+    }
+
     public fun findNode(name: String?): ClassTreeNode? {
         return findNode(root, name)
     }
