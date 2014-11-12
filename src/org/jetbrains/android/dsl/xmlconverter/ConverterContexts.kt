@@ -37,11 +37,11 @@ open class WidgetContext(): Context() {
     }
 
     public open fun setId(id: String) {
-        writeln("id = R.id.$id")
+    writeln("id = R.id.$id")
     }
 
     public override fun toString(): String {
-         if (!layoutParams.isEmpty())
+        if (!layoutParams.isEmpty())
             writeln("layoutParams(${layoutParams.joinToString()})")
         return buffer.toString()
     }

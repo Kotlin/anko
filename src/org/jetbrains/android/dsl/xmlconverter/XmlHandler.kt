@@ -54,8 +54,8 @@ class XmlHandler(val buffer: StringBuffer, val controlsXmlBuffer: StringBuffer, 
             ctx.writeln(buildCons(qName, attrs) + " {")
         ctx.incIndent()
         for (attr in attrs) {
-          if (isSkippableAttr(attr.key)) continue
-          ctx.addProperty(attr.key, attr.value)
+            if (isSkippableAttr(attr.key)) continue
+            ctx.addProperty(attr.key, attr.value)
         }
         widgetsBodyCtx.absorbChildren(true)
     }
@@ -93,13 +93,14 @@ class XmlHandler(val buffer: StringBuffer, val controlsXmlBuffer: StringBuffer, 
         val attrKeys = attrs.keySet()
         var bestMatchingCons: Set<String>? = null
         for (cons in constructors) {
-            if (cons.all { it in attrKeys })
+            if (cons.all { it in attrKeys }) {
                 if (bestMatchingCons != null) {
                     if (cons.size > bestMatchingCons!!.size)
                         bestMatchingCons = cons
                 } else {
                     bestMatchingCons = cons
                 }
+            }
         }
         //no matching constructor found
         if (bestMatchingCons == null)

@@ -69,9 +69,9 @@ class TypeParameter(val name: String, val upperBounds: List<GenericType>)
 class ValueParameter(val index: Int, val genericType: GenericType)
 
 class GenericMethodSignature(
-        val typeParameters: List<TypeParameter>,
-        val returnType: GenericType,
-        val valueParameters: List<ValueParameter>
+    val typeParameters: List<TypeParameter>,
+    val returnType: GenericType,
+    val valueParameters: List<ValueParameter>
 )
 
 fun TypeParameter.hasNontrivialBounds(): Boolean {
@@ -87,38 +87,38 @@ fun parseGenericMethodSignature(signature: String): GenericMethodSignature {
     val valueParameters = ArrayList<ValueParameter>()
 
     SignatureReader(signature).accept(
-            object : SignatureVisitor(Opcodes.ASM4) {
-                var bounds = ArrayList<GenericType>()
+        object : SignatureVisitor(Opcodes.ASM4) {
+            var bounds = ArrayList<GenericType>()
 
-                public override fun visitFormalTypeParameter(name: String?) {
-                    bounds = ArrayList<GenericType>()
-                    var param = TypeParameter(name!!, bounds)
-                    typeParameters.add(param)
-                }
-
-                public override fun visitClassBound(): SignatureVisitor {
-                    val bound = GenericTypeImpl()
-                    bounds.add(bound)
-                    return GenericTypeParser(bound)
-                }
-
-                public override fun visitInterfaceBound(): SignatureVisitor {
-                    val bound = GenericTypeImpl()
-                    bounds.add(bound)
-                    return GenericTypeParser(bound)
-                }
-
-                public override fun visitParameterType(): SignatureVisitor {
-                    val parameterType = GenericTypeImpl()
-                    val param = ValueParameter(valueParameters.size(), parameterType)
-                    valueParameters.add(param)
-                    return GenericTypeParser(parameterType)
-                }
-
-                public override fun visitReturnType(): SignatureVisitor {
-                    return GenericTypeParser(returnType)
-                }
+            public override fun visitFormalTypeParameter(name: String?) {
+                bounds = ArrayList<GenericType>()
+                var param = TypeParameter(name!!, bounds)
+                typeParameters.add(param)
             }
+
+            public override fun visitClassBound(): SignatureVisitor {
+                val bound = GenericTypeImpl()
+                bounds.add(bound)
+                return GenericTypeParser(bound)
+            }
+
+            public override fun visitInterfaceBound(): SignatureVisitor {
+                val bound = GenericTypeImpl()
+                bounds.add(bound)
+                return GenericTypeParser(bound)
+            }
+
+            public override fun visitParameterType(): SignatureVisitor {
+                val parameterType = GenericTypeImpl()
+                val param = ValueParameter(valueParameters.size(), parameterType)
+                valueParameters.add(param)
+                return GenericTypeParser(parameterType)
+            }
+
+            public override fun visitReturnType(): SignatureVisitor {
+                return GenericTypeParser(returnType)
+            }
+        }
     )
     return GenericMethodSignature(typeParameters, returnType, valueParameters)
 }

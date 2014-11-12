@@ -34,6 +34,5 @@ class KotlinWriter {
     public override fun toString(): String {
         return buffer.toString()
     }
-
 }
 

@@ -20,13 +20,14 @@ import java.util.ArrayList
 
 open class InvalidIndent(num: Int) : RuntimeException("Indentation level < 0: $num")
 open data class Indent(): CharSequence {
-	override val length: Int = 0
-	override fun get(index: Int): Char {
-		throw UnsupportedOperationException()
-	}
+    override val length: Int = 0
+    override fun get(index: Int): Char {
+        throw UnsupportedOperationException()
+    }
 }
-object IncIndent: Indent()
-object DecIndent: Indent()
+
+object IncIndent : Indent()
+object DecIndent : Indent()
 
 open class Context(val buffer: StringBuffer = StringBuffer(), var indentDepth: Int = 0) {
     private val INDENT_UNIT = "    "
@@ -35,18 +36,18 @@ open class Context(val buffer: StringBuffer = StringBuffer(), var indentDepth: I
     protected var currentIndent: String = INDENT_UNIT.repeat(indentDepth)
 
     public fun write(contents: List<CharSequence>) {
-      val indentOnStart = indentDepth
-      contents.forEach {
-        when(it) {
-          is IncIndent -> incIndent()
-          is DecIndent -> decIndent()
-          else -> writeln(it)
+        val indentOnStart = indentDepth
+        contents.forEach {
+            when(it) {
+                is IncIndent -> incIndent()
+                is DecIndent -> decIndent()
+                else -> writeln(it)
+            }
         }
-      }
-      if (indentOnStart < indentDepth) {
-        indentDepth = indentOnStart
-        currentIndent = INDENT_UNIT.repeat(indentDepth)
-      }
+        if (indentOnStart < indentDepth) {
+            indentDepth = indentOnStart
+            currentIndent = INDENT_UNIT.repeat(indentDepth)
+        }
     }
 
     public fun incIndent() {
@@ -84,7 +85,8 @@ open class Context(val buffer: StringBuffer = StringBuffer(), var indentDepth: I
     }
 
     public fun fork(newBuffer: StringBuffer = StringBuffer(),
-                    newIndentDepth: Int = indentDepth ): Context {
+                    newIndentDepth: Int = indentDepth
+    ): Context {
         val child = Context(newBuffer, newIndentDepth)
         children.add(child)
         return child
@@ -92,7 +94,9 @@ open class Context(val buffer: StringBuffer = StringBuffer(), var indentDepth: I
 
     public fun adopt<T: Context>(c: T, inheritIndent: Boolean = true): T {
         children.add(c)
-        if (inheritIndent) c.currentIndent = currentIndent
+        if (inheritIndent) {
+            c.currentIndent = currentIndent
+        }
         return c
     }
 
@@ -105,10 +109,6 @@ open class Context(val buffer: StringBuffer = StringBuffer(), var indentDepth: I
                 write(child.toString())
         }
         children.clear()
-    }
-
-    public override fun toString(): String {
-        return buffer.toString()
     }
 }
 

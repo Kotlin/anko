@@ -23,7 +23,7 @@ import org.objectweb.asm.tree.MethodNode
 class NoSignatureException(message: String) : RuntimeException(message)
 
 class MethodNodeWithClass(var clazz: ClassNode, val method: MethodNode) {
-	fun toStringCompact() = "${clazz.name}#${method.name}"
+    fun toStringCompact() = "${clazz.name}#${method.name}"
 }
 
 fun decapitalize(name: String): String {

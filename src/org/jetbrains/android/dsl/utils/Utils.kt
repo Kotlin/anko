@@ -122,9 +122,9 @@ fun readFile(fileName: String): String {
 }
 
 fun writeFile(fileName: String, text: String) {
-  val writer = PrintWriter(File(fileName))
-  writer.write(text)
-  writer.close()
+    val writer = PrintWriter(File(fileName))
+    writer.write(text)
+    writer.close()
 }
 
 fun readLines(fileName: String): MutableList<String> {
@@ -152,9 +152,9 @@ public fun <T, K, V> Iterable<T>.toMap(mapper: (T) -> Pair<K, V>): Map<K, V> = i
 
 //join two lists
 fun <T> List<T>.join(another: List<T>): List<T> {
-	val list = ArrayList(this)
-	list.addAll(another)
-	return list
+    val list = ArrayList(this)
+    list.addAll(another)
+    return list
 }
 
 //drop last n characters
