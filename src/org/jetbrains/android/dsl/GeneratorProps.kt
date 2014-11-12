@@ -24,7 +24,7 @@ import java.io.File
 open class GeneratorProps(outputDirectory: String = "gen/") : BaseGeneratorProps() {
 
   override fun getOutputFile(subsystem: Subsystem): File {
-    val parentDirectory = outputDirectory+"src/main/kotlin/"
+    val parentDirectory = outputDirectory + "src/main/kotlin/"
     return when (subsystem) {
       Subsystem.PROPERTIES -> File(parentDirectory + "Properties.kt")
       Subsystem.VIEWS -> File(parentDirectory + "Views.kt")
@@ -67,7 +67,7 @@ open class GeneratorProps(outputDirectory: String = "gen/") : BaseGeneratorProps
         try {
           val separator = line.indexOf(' ')
           val className = line.substring(0, separator)
-          val props = line.substring(separator+1).split(',').map {
+          val props = line.substring(separator + 1).split(',').map {
             val nameType = it.split(":")
             Variable(nameType[0].trim(), nameType[1].trim())
           }.toList()
@@ -85,9 +85,9 @@ open class GeneratorProps(outputDirectory: String = "gen/") : BaseGeneratorProps
     get() {
       fun parseLine(s: String): Pair<String, String>? {
         val trimmed = s.trim()
-        if (trimmed.length==0) return null
+        if (trimmed.length == 0) return null
         val paren = trimmed.indexOf('(')
-        return Pair(trimmed.substring(0, paren), trimmed.substring(paren+1, trimmed.length-1))
+        return Pair(trimmed.substring(0, paren), trimmed.substring(paren + 1, trimmed.length - 1))
       }
       return readLines("props/custom_method_parameters.txt").fold(HashMap<String, String>()) { r, t ->
         val parsed = parseLine(t)

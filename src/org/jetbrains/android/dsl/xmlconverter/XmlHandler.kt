@@ -26,16 +26,16 @@ class XmlHandler(val buffer: StringBuffer, val controlsXmlBuffer: StringBuffer, 
     val globalCtx = Context(buffer)
     val importsCtx = globalCtx.fork()
     val headerCtx = globalCtx.fork()
-    val widgetsDeclCtx = globalCtx.fork(newIndentDepth = globalCtx.indentDepth+1)
-    val widgetsBodyCtx = globalCtx.fork(newIndentDepth = globalCtx.indentDepth+1)
+    val widgetsDeclCtx = globalCtx.fork(newIndentDepth = globalCtx.indentDepth + 1)
+    val widgetsBodyCtx = globalCtx.fork(newIndentDepth = globalCtx.indentDepth + 1)
 
     val controlsBuffer = Context(controlsXmlBuffer)
     var lastLayout = ""
 
-		override fun startElement(uri: String, localName: String, qName_: String, attributes: Attributes) {
+    override fun startElement(uri: String, localName: String, qName_: String, attributes: Attributes) {
         val attrs = attributes.toMap()
         val ctx: WidgetContext
-	      val qName = qName_
+        val qName = qName_
         widgetsBodyCtx.incIndent()
         if (qName.endsWith("Layout")) {
             lastLayout = qName
@@ -52,11 +52,11 @@ class XmlHandler(val buffer: StringBuffer, val controlsXmlBuffer: StringBuffer, 
         }
         else
             ctx.writeln(buildCons(qName, attrs) + " {")
-				ctx.incIndent()
-				for (attr in attrs) {
-					if (isSkippableAttr(attr.key)) continue
-					ctx.addProperty(attr.key, attr.value)
-				}
+        ctx.incIndent()
+        for (attr in attrs) {
+          if (isSkippableAttr(attr.key)) continue
+          ctx.addProperty(attr.key, attr.value)
+        }
         widgetsBodyCtx.absorbChildren(true)
     }
 
@@ -65,7 +65,7 @@ class XmlHandler(val buffer: StringBuffer, val controlsXmlBuffer: StringBuffer, 
         val id = attributes["id"]
         attributes.remove("id")
         if (id == null) return null
-        val idValue = id.substring(id.indexOf("/")+1)
+        val idValue = id.substring(id.indexOf("/") + 1)
         controlsBuffer writeln "<item name=\"$idValue\" type=\"id\"/>"
         widgetsBodyCtx write "$idValue = "
         widgetsDeclCtx writeln "val $idValue: $widgetClass by Delegates.notNull();"
@@ -84,7 +84,7 @@ class XmlHandler(val buffer: StringBuffer, val controlsXmlBuffer: StringBuffer, 
         if(attrs == null)
             return qName.decapitalize()
         //FIXME: how to deal with name clashes?
-        val classInternalName = settings.helperConProps.keySet().firstOrNull { it.endsWith("."+qName) }
+        val classInternalName = settings.helperConProps.keySet().firstOrNull { it.endsWith("." + qName) }
         val constructors = settings.helperConProps[classInternalName]
         //no helper constructors at all
         if (constructors == null)
@@ -107,7 +107,7 @@ class XmlHandler(val buffer: StringBuffer, val controlsXmlBuffer: StringBuffer, 
         val res = StringBuffer()
         res append "${qName.decapitalize()}("
         for (arg in bestMatchingCons!!) {
-            res append "$arg = ${quote(arg,attrs[arg])}, "
+            res append "$arg = ${quote(arg, attrs[arg])}, "
             attrs.remove(arg)
         }
         res.trim(2)
@@ -115,7 +115,7 @@ class XmlHandler(val buffer: StringBuffer, val controlsXmlBuffer: StringBuffer, 
         return res.toString()
     }
 
-		override fun endElement(uri: String?, localName: String, qName: String) {
+    override fun endElement(uri: String?, localName: String, qName: String) {
         widgetsBodyCtx.writeln("}")
         widgetsBodyCtx.decIndent()
     }

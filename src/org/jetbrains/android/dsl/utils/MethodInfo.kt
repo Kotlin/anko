@@ -47,7 +47,7 @@ fun genericTypeToStr(param: GenericType): String {
 			}
 			res append ", "
 		}
-		res.delete(res.size-2, res.size)
+		res.delete(res.size - 2, res.size)
 		res append ">"
 	}
 	if (param.classifier is ToplevelClass) res append "?"
@@ -82,7 +82,7 @@ fun MethodNode.processArguments(skipType: String = "",  app: (argName: String, a
 		argNum++
 		nameIndex += arg.getSize()
 	}
-	if ( buf.length >= 2) buf.delete(buf.length-2, buf.length)
+	if ( buf.length >= 2) buf.delete(buf.length - 2, buf.length)
 	return buf.toString()
 }
 
@@ -105,7 +105,7 @@ fun MethodNode.fmtLayoutParamsArguments(skipType: String = ""): String {
 	return processArguments(skipType) { name, _type, nul ->
 		val defaultValue = specialLayoutParamsArguments.get(name)
 		val realName = specialLayoutParamsNames.getOrElse(name, {name})
-		if (defaultValue==null)
+		if (defaultValue == null)
 			"$realName: $_type, "
 		else
 			"$realName: $_type = $defaultValue, "

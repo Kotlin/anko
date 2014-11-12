@@ -32,13 +32,13 @@ class DSLGenerator(
 
   private fun copy(original: String) {
     val originalFile = File("props/mvn/$original")
-    val toCreateFile = File((props.outputDirectory+original))
+    val toCreateFile = File((props.outputDirectory + original))
     originalFile.copyTo(toCreateFile)
   }
 
   private fun copy(original: String, process: (String) -> String) {
     val contents = process(readFile("props/mvn/$original"))
-    writeFile(props.outputDirectory+original, contents)
+    writeFile(props.outputDirectory + original, contents)
   }
 
   override fun run() {
@@ -51,14 +51,14 @@ class DSLGenerator(
 
     if (props.generateMavenArtifact) {
       //create res directory
-      val resDirectory = File(props.outputDirectory+"src/main/res/")
+      val resDirectory = File(props.outputDirectory + "src/main/res/")
       if (!resDirectory.exists()) {
         resDirectory.mkdirs()
       }
 
       //write manifest
       val manifest = mvnManifest.replace("%VERSION%", sVersion)
-      writeFile(props.outputDirectory+"src/main/AndroidManifest.xml", manifest)
+      writeFile(props.outputDirectory + "src/main/AndroidManifest.xml", manifest)
 
       //copy gradle wrapper
       copy("gradlew")

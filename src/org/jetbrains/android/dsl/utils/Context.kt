@@ -31,23 +31,23 @@ object DecIndent: Indent()
 open class Context(val buffer: StringBuffer = StringBuffer(), var indentDepth: Int = 0) {
     private val INDENT_UNIT = "    "
 
-		private val children = ArrayList<Context>()
-		protected var currentIndent: String = INDENT_UNIT.repeat(indentDepth)
+    private val children = ArrayList<Context>()
+    protected var currentIndent: String = INDENT_UNIT.repeat(indentDepth)
 
-		public fun write(contents: List<CharSequence>) {
-			val indentOnStart = indentDepth
-			contents.forEach {
-				when(it) {
-					is IncIndent -> incIndent()
-					is DecIndent -> decIndent()
-					else -> writeln(it)
-				}
-			}
-			if (indentOnStart<indentDepth) {
-				indentDepth = indentOnStart
-				currentIndent = INDENT_UNIT.repeat(indentDepth)
-			}
-		}
+    public fun write(contents: List<CharSequence>) {
+      val indentOnStart = indentDepth
+      contents.forEach {
+        when(it) {
+          is IncIndent -> incIndent()
+          is DecIndent -> decIndent()
+          else -> writeln(it)
+        }
+      }
+      if (indentOnStart < indentDepth) {
+        indentDepth = indentOnStart
+        currentIndent = INDENT_UNIT.repeat(indentDepth)
+      }
+    }
 
     public fun incIndent() {
         indentDepth++
@@ -80,7 +80,7 @@ open class Context(val buffer: StringBuffer = StringBuffer(), var indentDepth: I
     }
 
     public fun trim(num: Int) {
-        buffer.delete(buffer.length-num, buffer.length)
+        buffer.delete(buffer.length - num, buffer.length)
     }
 
     public fun fork(newBuffer: StringBuffer = StringBuffer(),

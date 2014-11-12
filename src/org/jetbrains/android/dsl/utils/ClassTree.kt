@@ -69,7 +69,7 @@ class ClassTree : Iterable<ClassNode>{
             return true
     }
 
-    private fun findParentIf(node: ClassTreeNode, f: (ClassTreeNode) -> Boolean ): ClassTreeNode? {
+    private fun findParentIf(node: ClassTreeNode, f: (ClassTreeNode) -> Boolean): ClassTreeNode? {
         var n = node
         while (n != root) {
             if (f(n)) return n
@@ -78,7 +78,7 @@ class ClassTree : Iterable<ClassNode>{
         return null
     }
 
-    private fun anyParentIf(node: ClassTreeNode, f: (ClassTreeNode) -> Boolean ): Boolean {
+    private fun anyParentIf(node: ClassTreeNode, f: (ClassTreeNode) -> Boolean): Boolean {
         return findParentIf(node, f) != null
     }
 

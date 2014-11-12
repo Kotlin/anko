@@ -56,7 +56,7 @@ open class ConverterSettings : BaseConverterSettings() {
       try {
         val separator = line.indexOf(' ')
         val className = line.substring(0, separator)
-        val props = line.substring(separator+1).split(',').map {
+        val props = line.substring(separator + 1).split(',').map {
           val nameType = it.split(":")
           nameType[0].trim()
         }.toSet()

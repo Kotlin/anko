@@ -72,9 +72,9 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
     availableMethods.filter {
       it.method.isGetter() && it.clazz.isView() && it.method.isPublic() &&
         !(it.clazz.isAbstract() && it.clazz.isViewGroup()) &&
-        it.method.arguments?.size==0 && !it.method.getReturnType().isVoid()
+        it.method.arguments?.size == 0 && !it.method.getReturnType().isVoid()
     }.fold(TreeMap<String, MethodNodeWithClass>(), {r, t ->
-      val key = t.clazz.name!!+"#"+t.method.name
+      val key = t.clazz.name!! + "#" + t.method.name
       if (!r.contains(key)) r.put(key, t)
       r
     }).values()
@@ -87,10 +87,10 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
       val name = it.method.name ?: ""
       //find all methods named "set*", with uppercased letter after "set" in a T:View class
       //also method must be public and have only one argument
-      name.startsWith("set") && name.length>3 && Character.isUpperCase(name.charAt(3)) &&
-        it.clazz.isView() && it.method.isPublic() && (it.method.arguments?.size)==1 &&
+      name.startsWith("set") && name.length > 3 && Character.isUpperCase(name.charAt(3)) &&
+        it.clazz.isView() && it.method.isPublic() && (it.method.arguments?.size) == 1 &&
         !(it.method.name!!.startsWith("setOn") && it.method.name!!.endsWith("Listener"))
-    }.groupBy { it.clazz.name!!+"#"+it.method.name!! }
+    }.groupBy { it.clazz.name!! + "#"+it.method.name!! }
 
   //a pair of getter method and bunch of setters for the property. For example,
   //android.widget.TextView contains getText() and various setText() methods, so the "text"
@@ -102,7 +102,7 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
   //for the class LinearLayout, _LinearLayout class will be generated
   val layouts = if (!props.generateLayoutParamsHelperClasses) listOf() else
     viewGroupClasses.map { extractLayoutParams(it) }
-      .filter { it!=null }.map {
+      .filter { it != null }.map {
       val layoutClass = it!!.first //null items are already filtered
       val layoutParamsClass = it.second
       LayoutParamsNode(layoutClass, layoutParamsClass, layoutParamsClass.getConstructors())
@@ -121,7 +121,7 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
       setters: Map<String, List<MethodNodeWithClass>>) : List<ViewProperty> {
     return getters.map { getter ->
       val name = decapitalize(getter.method.toProperty())
-      val settersKey = getter.clazz.name!!+"#set${getter.method.toCapitalizedProperty()}"
+      val settersKey = getter.clazz.name!! + "#set${getter.method.toCapitalizedProperty()}"
       val settersList = setters.get(settersKey) ?: listOf()
       if (settersList.isNotEmpty()) {
         val splittedSetters = settersList.partition { Arrays.equals(it.method.arguments, getter.method.arguments) }
@@ -165,17 +165,17 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
   private fun extractLayoutParams(viewGroup: ClassNode): Pair<ClassNode, ClassNode>? {
     if (viewGroup.innerClasses == null)
       return null
-    val innerClasses = (viewGroup.innerClasses as List<InnerClassNode>)
+    val innerClasses = (viewGroup.innerClasses : List<InnerClassNode>)
     val lp = innerClasses.firstOrNull { it.name?.contains("LayoutParams") ?: false }
     val lpNode = classTree.findNode(lp?.name)?.data
-    return if (lpNode!=null)
+    return if (lpNode != null)
       Pair(viewGroup, classTree.findNode(lp?.name)?.data!!)
     else null
   }
 
   //returns true if the viewGroup contains custom LayoutParams class
   private fun hasLayoutParams(viewGroup: ClassNode): Boolean {
-    return extractLayoutParams(viewGroup)!=null
+    return extractLayoutParams(viewGroup) != null
   }
 
   //for testing purposes
@@ -183,7 +183,7 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
     val builder = StringBuilder()
     with(builder) {
       append("Available classes:\n")
-      availableClasses.forEach { append(it.name+"\n") }
+      availableClasses.forEach { append(it.name + "\n") }
 
       append("\nAvailable methods:\n")
       availableMethods.forEach { append("${it.toStringCompact()} ${it.method.visibleAnnotations?.map { it.desc }} ${it.method.invisibleAnnotations?.map { it.desc }}\n") }
@@ -196,7 +196,7 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
 
       append("\nSetters:\n")
       propertySetters.values().forEach {
-        val setters = it.map { it.toStringCompact() }.joinToString(", ")
+        val setters = it.map { it.toStringCompact() }.joinToString()
         append("$setters\n")
       }
 
@@ -205,7 +205,7 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
 
       append("\nProperties:\n")
       properies.forEach {
-        val setters = it.setters.map { it.toStringCompact() }.joinToString(", ")
+        val setters = it.setters.map { it.toStringCompact() }.joinToString()
         append("Getter[${it.getter.toStringCompact()}], Setters[$setters]\n")
       }
 
@@ -222,7 +222,7 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
   private fun ClassNode.isExcluded() =
     this.cleanInternalName() in props.excludedClasses
   private fun MethodNodeWithClass.isExcluded() =
-    (this.clazz.cleanInternalName()+"#"+this.method.name!!) in props.excludedMethods
+    (this.clazz.cleanInternalName() + "#" + this.method.name!!) in props.excludedMethods
 
   private fun String.toServiceClassName(): String {
     var nextCapital = true

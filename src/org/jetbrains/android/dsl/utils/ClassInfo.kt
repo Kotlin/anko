@@ -20,7 +20,8 @@ import org.objectweb.asm.*
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 
-class NoSignatureException(message: String): RuntimeException(message)
+class NoSignatureException(message: String) : RuntimeException(message)
+
 class MethodNodeWithClass(var clazz: ClassNode, val method: MethodNode) {
 	fun toStringCompact() = "${clazz.name}#${method.name}"
 }
@@ -52,10 +53,13 @@ fun ClassNode.cleanNameDecap(): String {
 fun ClassNode.buldTypeParams(): String {
     return if (signature != null) {
         val wtf = parseGenericMethodSignature(signature!!)
-        if (wtf.typeParameters.isEmpty()) return ""
-        val t: List<String> = wtf.typeParameters.map { it.upperBounds.fold("") {i, bound -> i + "out "+ genericTypeToStr(bound) }}
-        val res = t.makeString()
-        "<$res>"
+        if (wtf.typeParameters.isEmpty()) {
+            return ""
+        }
+        val t: List<String> = wtf.typeParameters.map {
+            it.upperBounds.fold("") {i, bound -> i + "out " + genericTypeToStr(bound) }
+        }
+        t.joinToString(prefix = "<", postfix = ">")
     } else ""
 }
 
@@ -80,15 +84,13 @@ fun ClassNode.isGeneric(): Boolean {
 }
 
 fun ClassNode.getConstructors(): List<MethodNode> {
-    return (methods as List<MethodNode>).filter { it.isConstructor() }
+    return (methods: List<MethodNode>).filter { it.isConstructor() }
 }
 
 fun ClassNode.isView(classTree: ClassTree, viewBaseClass: String): Boolean {
-	return classTree.isSuccessorOf(this, viewBaseClass) ||
-		this.name == viewBaseClass
+    return classTree.isSuccessorOf(this, viewBaseClass) || this.name == viewBaseClass
 }
 
 fun ClassNode.isViewGroup(classTree: ClassTree, viewGroupBaseClass: String): Boolean {
-	return classTree.isSuccessorOf(this, viewGroupBaseClass) ||
-		this.name == viewGroupBaseClass
+    return classTree.isSuccessorOf(this, viewGroupBaseClass) || this.name == viewGroupBaseClass
 }

@@ -25,14 +25,14 @@ public class Buffer(private val indentSymbol: String, indent: Int = 0, val init:
   { init() }
 
   public fun line(s: String): Buffer {
-    if (mainIndent >0 && s.startsWith('}'))
+    if (mainIndent > 0 && s.startsWith('}'))
       mainIndent = mainIndent - 1
 
     if (s.isNotEmpty())
       builder.append(indentSymbol.repeat(mainIndent+tempIndent)).append(s.trim()).append('\n')
     else builder.append('\n')
 
-    if (tempIndent>0)
+    if (tempIndent > 0)
       tempIndent = tempIndent - 1
     if (s.endsWith('{'))
       mainIndent = mainIndent + 1

@@ -59,7 +59,7 @@ class ClassProcessor(val jars: List<String>) {
   private fun extractClasses(jars: List<String>): Iterator<InputStream> {
     val jarFiles = jars.map { JarFile(it) }
     return ComplexIterator(jarFiles.map { jarFile ->
-      (jarFile.entries() as Enumeration<JarEntry>).iterator()
+      (jarFile.entries() : Enumeration<JarEntry>).iterator()
       .filter {
         it.getName().endsWith(".class")
       }.map {

@@ -42,7 +42,7 @@ open class WidgetContext(): Context() {
 
     public override fun toString(): String {
          if (!layoutParams.isEmpty())
-            writeln("layoutParams(${layoutParams.makeString()})")
+            writeln("layoutParams(${layoutParams.joinToString()})")
         return buffer.toString()
     }
 }

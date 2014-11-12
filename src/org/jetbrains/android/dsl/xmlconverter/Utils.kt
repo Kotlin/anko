@@ -27,7 +27,7 @@ fun isSkippableAttribute(name: String?): Boolean {
 
 public fun Attributes.toMap(): HashMap<String, String> {
     val res = HashMap<String, String>()
-    for (index in 0..getLength()-1) {
+    for (index in 0..getLength() - 1) {
         val attrName = getLocalName(index)!!
         val attrVal = getValue(index)!!
         res[attrName] = attrVal
@@ -36,5 +36,5 @@ public fun Attributes.toMap(): HashMap<String, String> {
 }
 
 public fun StringBuffer.trim(num: Int) {
-    delete(length-num, length)
+    delete(length - num, length)
 }

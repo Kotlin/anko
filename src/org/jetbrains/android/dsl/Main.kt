@@ -71,7 +71,7 @@ private fun gen() {
   for (version in getVersions()) {
     val jars = getJars(version)?.map { it.getAbsolutePath() } ?: listOf<String>()
     val intVersion = parseVersion(version.getName())
-    if (intVersion!=null && jars.isNotEmpty()) {
+    if (intVersion != null && jars.isNotEmpty()) {
       println("Processing version=${version.getName()}, jars: ${jars.joinToString(",")}")
 
       val outputDirectory = "gen/${version.getName()}/"

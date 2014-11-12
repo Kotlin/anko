@@ -27,7 +27,7 @@ import java.util.ArrayList
 import java.io.File
 import java.io.PrintWriter
 
-fun Type.isVoid(): Boolean = getSort()==Type.VOID
+fun Type.isVoid(): Boolean = getSort() == Type.VOID
 
 fun typeMap(str: String): String {
     return when (str) {
@@ -117,7 +117,7 @@ fun updateIfNotNull<T>(old: T, new: T): T {
 }
 
 fun readFile(fileName: String): String {
-    var data = Files.readAllBytes(Paths.get(fileName) as Path)
+    var data = Files.readAllBytes(Paths.get(fileName) : Path)
     return StandardCharsets.UTF_8.decode(ByteBuffer.wrap(data)).toString()
 }
 
@@ -158,4 +158,4 @@ fun <T> List<T>.join(another: List<T>): List<T> {
 }
 
 //drop last n characters
-private fun String.dropLast(n: Int) = if (n>=length) "" else substring(0, length-n)
+private fun String.dropLast(n: Int) = if (n >= length) "" else substring(0, length-n)
