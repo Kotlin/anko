@@ -32,7 +32,7 @@ private trait ListenerHelper {
     fun apply()
 }
 
-public fun <T: View> T.style(style: (View) -> Unit): T {
+public fun <T : View> T.style(style: (View) -> Unit): T {
     applyStyle(this, style)
     return this
 }
@@ -41,27 +41,27 @@ public var View.tag: Any?
     get() = {
         val tag = getTag()
         val props = tag as? ViewProps
-        if (props!=null) props.realTag else tag
+        if (props != null) props.realTag else tag
     }
     set(tag) {
         var props = getTag() as? ViewProps
-        if (props!=null) props!!.realTag = tag else setTag(tag)
+        if (props != null) props!!.realTag = tag else setTag(tag)
     }
 
-public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, manager: ViewManager): T {
+public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, manager: ViewManager): T {
     return addView(view(manager.dslContext), init, manager)
 }
 
-public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, ctx: Context): T {
+public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, ctx: Context): T {
     return ctx.addContextTopLevelView(view(ctx), init)
 }
 
-public fun <T: View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, fragment: Fragment): T {
+public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, fragment: Fragment): T {
     val ctx = fragment.getActivity()!!
     return fragment.addFragmentTopLevelView(view(ctx), init)
 }
 
-private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T {
+private fun <T : View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T {
     v.setTag(ViewProps(hashMapOf(), v.getTag()))
     v.init()
     val props = v.getTag() as? ViewProps
@@ -76,12 +76,12 @@ private fun <T: View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T
     return v
 }
 
-private fun <T: View> Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {
+private fun <T : View> Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {
     UI { addView(v, init, this) }
     return v
 }
 
-private fun <T: View> Context.addContextTopLevelView(v: T, init: T.() -> Unit): T {
+private fun <T : View> Context.addContextTopLevelView(v: T, init: T.() -> Unit): T {
     UI { addView(v, init, this) }
     return v
 }
@@ -89,24 +89,24 @@ private fun <T: View> Context.addContextTopLevelView(v: T, init: T.() -> Unit): 
 private fun applyStyle(v: View, style: (View) -> Unit) {
     style(v)
     if (v is ViewGroup) {
-        val maxId = v.getChildCount()-1
+        val maxId = v.getChildCount() - 1
         for (i in 0..maxId) {
             val maybeChild = v.getChildAt(i)
-            if (maybeChild!=null) applyStyle(maybeChild, style)
+            if (maybeChild != null) applyStyle(maybeChild, style)
         }
     }
 }
 
 private val ViewManager.dslContext: Context
     get() {
-        return when(this) {
+        return when (this) {
             is ViewGroup -> this.getContext()!!
             is UiHelper -> this.ctx
             else -> throw KoanException("$this is the wrong parent")
         }
     }
 
-class UiHelper(val ctx: Context, private val setContentView: Boolean = true): ViewManager {
+class UiHelper(val ctx: Context, private val setContentView: Boolean = true) : ViewManager {
     private var view: View? = null
 
     fun toView() = view!!
@@ -117,7 +117,8 @@ class UiHelper(val ctx: Context, private val setContentView: Boolean = true): Vi
 
     fun setContentView(): Unit = when (ctx) {
         is Activity -> ctx.setContentView(view)
-        else -> {}
+        else -> {
+        }
     }
 
     fun addView(view: View) {
@@ -125,13 +126,16 @@ class UiHelper(val ctx: Context, private val setContentView: Boolean = true): Vi
         if (setContentView) {
             when (ctx) {
                 is Activity -> ctx.setContentView(view)
-                else -> {}
+                else -> {
+                }
             }
         }
     }
+
     override fun updateViewLayout(view: View, params: ViewGroup.LayoutParams) {
         throw UnsupportedOperationException()
     }
+
     override fun removeView(view: View) {
         throw UnsupportedOperationException()
     }

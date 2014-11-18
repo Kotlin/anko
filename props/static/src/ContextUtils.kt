@@ -67,7 +67,7 @@ public fun Context.share(text: String, subject: String = ""): Boolean {
     } catch (e: ActivityNotFoundException) {
         e.printStackTrace()
         return false
-  }
+    }
 }
 
 public fun Fragment.email(email: String, subject: String = "", text: String = ""): Boolean = ctx.email(email, subject, text)
@@ -103,11 +103,11 @@ public fun Context.makeCall(number: String): Boolean {
 }
 
 public fun Fragment.startActivity(activity: Class<out Activity>, vararg params: Pair<String, Any>) {
-    ctx.internalStartActivity(activity , params)
+    ctx.internalStartActivity(activity, params)
 }
 
 public fun Context.startActivity(activity: Class<out Activity>, vararg params: Pair<String, Any>) {
-    internalStartActivity(activity , params)
+    internalStartActivity(activity, params)
 }
 
 private fun Context.internalStartActivity(activity: Class<out Activity>, params: Array<Pair<String, Any>>) {

@@ -43,12 +43,12 @@ public class BaseCompileTest extends Assert {
         assertTrue(new File("props/excluded_classes.txt").exists());
         assertTrue(new File("props/excluded_methods.txt").exists());
         assertTrue(new File("props/helper_constructors.txt").exists());
-        assertTrue(new File("props/Helpers.kt").exists());
-        assertTrue(new File("props/Support.kt").exists());
-        assertTrue(new File("props/Custom.kt").exists());
-        assertTrue(new File("props/Async.kt").exists());
-        assertTrue(new File("props/ContextUtils.kt").exists());
-        assertTrue(new File("props/Dialogs.kt").exists());
+        assertTrue(new File("props/static/src/Helpers.kt").exists());
+        assertTrue(new File("props/static/src/Support.kt").exists());
+        assertTrue(new File("props/static/src/Custom.kt").exists());
+        assertTrue(new File("props/static/src/Async.kt").exists());
+        assertTrue(new File("props/static/src/ContextUtils.kt").exists());
+        assertTrue(new File("props/static/src/Dialogs.kt").exists());
         assertTrue(new File(kotlincFilename).exists());
     }
 

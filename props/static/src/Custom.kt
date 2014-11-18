@@ -10,7 +10,7 @@ import android.graphics.drawable.Drawable
 
 /* SECTION VIEWS */
 //type casting is now under the hood
-public fun <T: View> View.find(id: Int): T = findViewById(id) as T
+public fun <T : View> View.find(id: Int): T = findViewById(id) as T
 /* END SECTION */
 
 /* SECTION COLORS */
@@ -89,43 +89,63 @@ public var View.backgroundColor: Int
 
 public var View.backgroundResource: Int
     get() = 0
-    set(value) {this.setBackgroundResource(value)}
+    set(value) {
+        this.setBackgroundResource(value)
+    }
 
 public var View.paddingLeft: Int
     get() = this.getPaddingLeft()
-    set(value) {this.setPadding(value, this.getPaddingTop(), this.getPaddingRight(), this.getPaddingBottom())}
+    set(value) {
+        this.setPadding(value, this.getPaddingTop(), this.getPaddingRight(), this.getPaddingBottom())
+    }
 
 public var View.paddingTop: Int
     get() = this.getPaddingTop()
-    set(value) {this.setPadding(this.getPaddingLeft(), value, this.getPaddingRight(), this.getPaddingBottom())}
+    set(value) {
+        this.setPadding(this.getPaddingLeft(), value, this.getPaddingRight(), this.getPaddingBottom())
+    }
 
 public var View.paddingRight: Int
     get() = this.getPaddingRight()
-    set(value) {this.setPadding(this.getPaddingLeft(), this.getPaddingTop(), value, this.getPaddingBottom())}
+    set(value) {
+        this.setPadding(this.getPaddingLeft(), this.getPaddingTop(), value, this.getPaddingBottom())
+    }
 
 public var View.paddingBottom: Int
     get() = this.getPaddingBottom()
-    set(value) {this.setPadding(this.getPaddingLeft(), this.getPaddingTop(), this.getPaddingRight(), value)}
+    set(value) {
+        this.setPadding(this.getPaddingLeft(), this.getPaddingTop(), this.getPaddingRight(), value)
+    }
 
 public var View.padding: Int
     get() = throw KoanException("'padding' property doesn't have a getter")
-    set(value) {this.setPadding(value, value, value, value)}
+    set(value) {
+        this.setPadding(value, value, value, value)
+    }
 
 public var LinearLayout.gravity: Int
     get() = throw KoanException("'gravity' property doesn't have a getter")
-    set(value) {this.setGravity(value)}
+    set(value) {
+        this.setGravity(value)
+    }
 
 public var TextView.textColor: Int
     get() = throw KoanException("'textColor' property doesn't have a getter")
-    set(value) {this.setTextColor(value)}
+    set(value) {
+        this.setTextColor(value)
+    }
 
 public var ImageView.image: Drawable?
     get() = this.getDrawable()
-    set(value) {this.setImageDrawable(value)}
+    set(value) {
+        this.setImageDrawable(value)
+    }
 
 public var ImageView.imageResource: Int
     get() = 0
-    set(value) {this.setImageResource(value)}
+    set(value) {
+        this.setImageResource(value)
+    }
 /* END SECTION */
 
 

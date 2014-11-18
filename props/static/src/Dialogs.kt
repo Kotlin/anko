@@ -63,8 +63,7 @@ public fun Context.selector(
     title: CharSequence = "",
     items: List<CharSequence>,
     onCancel: () -> Unit = defaultOnCancel,
-    onClick: (Int) -> Unit)
-{
+    onClick: (Int) -> Unit) {
     uiThread {
         AlertDialogBuilder(this) {
             title(title)
@@ -78,7 +77,9 @@ public class AlertDialogBuilder(val ctx: Context, val init: AlertDialogBuilder.(
     private val builder: AlertDialog.Builder = AlertDialog.Builder(ctx)
     protected var dialog: AlertDialog? = null;
 
-    { init() }
+    {
+        init()
+    }
 
     public fun dismiss() {
         dialog?.dismiss()
@@ -121,6 +122,7 @@ public class AlertDialogBuilder(val ctx: Context, val init: AlertDialogBuilder.(
     public fun view(view: View) {
         builder.setView(view)
     }
+
     public fun view(dsl: ViewManager.() -> Unit) {
         val view = ctx.UI(dsl).toView()
         builder.setView(view)
@@ -146,11 +148,11 @@ public class AlertDialogBuilder(val ctx: Context, val init: AlertDialogBuilder.(
         })
     }
 
-    public fun neutralButton(textResource: Int = android.R.string.ok, f: DialogInterface.() -> Unit = {dismiss()}) {
+    public fun neutralButton(textResource: Int = android.R.string.ok, f: DialogInterface.() -> Unit = { dismiss() }) {
         neutralButton(ctx.getString(textResource), f)
     }
 
-    public fun neutralButton(title: String, f: DialogInterface.() -> Unit = {dismiss()}) {
+    public fun neutralButton(title: String, f: DialogInterface.() -> Unit = { dismiss() }) {
         builder.setNeutralButton(title, object : OnClickListener {
             override public fun onClick(dialog: DialogInterface, which: Int) {
                 dialog.f()
@@ -170,11 +172,11 @@ public class AlertDialogBuilder(val ctx: Context, val init: AlertDialogBuilder.(
         })
     }
 
-    public fun negativeButton(textResource: Int = android.R.string.ok, f: DialogInterface.() -> Unit = {dismiss()}) {
+    public fun negativeButton(textResource: Int = android.R.string.ok, f: DialogInterface.() -> Unit = { dismiss() }) {
         negativeButton(ctx.getString(textResource), f)
     }
 
-    public fun negativeButton(title: String, f: DialogInterface.() -> Unit = {dismiss()}) {
+    public fun negativeButton(title: String, f: DialogInterface.() -> Unit = { dismiss() }) {
         builder.setNegativeButton(title, object : OnClickListener {
             override public fun onClick(dialog: DialogInterface, which: Int) {
                 dialog.f()

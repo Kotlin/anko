@@ -47,13 +47,13 @@ class Writer(private val renderer: Renderer) {
         writeServices()
     }
 
-    private fun writeCustom() = writeStatic(Subsystem.CUSTOM, "props/Custom.kt")
-    private fun writeAsync() = writeStatic(Subsystem.ASYNC, "props/Async.kt")
-    private fun writeContextUtils() = writeStatic(Subsystem.CONTEXT_UTILS, "props/ContextUtils.kt")
-    private fun writeDialogs() = writeStatic(Subsystem.DIALOGS, "props/Dialogs.kt")
+    private fun writeCustom() = writeStatic(Subsystem.CUSTOM, "props/static/src/Custom.kt")
+    private fun writeAsync() = writeStatic(Subsystem.ASYNC, "props/static/src/Async.kt")
+    private fun writeContextUtils() = writeStatic(Subsystem.CONTEXT_UTILS, "props/static/src/ContextUtils.kt")
+    private fun writeDialogs() = writeStatic(Subsystem.DIALOGS, "props/static/src/Dialogs.kt")
 
-    private fun writeHelpers() = writeStatic(Subsystem.HELPERS, "props/Helpers.kt")
-    private fun writeSupport() = writeStatic(Subsystem.SUPPORT, "props/Support.kt")
+    private fun writeHelpers() = writeStatic(Subsystem.HELPERS, "props/static/src/Helpers.kt")
+    private fun writeSupport() = writeStatic(Subsystem.SUPPORT, "props/static/src/Support.kt")
 
     private fun writeStatic(subsystem: Subsystem, filename: String) {
         val support = Files.readAllLines(Paths.get(filename)!!, StandardCharsets.UTF_8)

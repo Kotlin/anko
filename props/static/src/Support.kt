@@ -9,16 +9,15 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 
 /* SECTION HELPERS */
-private fun <T: View> android.support.v4.app.Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {
+private fun <T : View> android.support.v4.app.Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {
     UI { addView(v, init, this) }
     return v
 }
 
-public fun <T: View> __dslAddView(
+public fun <T : View> __dslAddView(
     view: (ctx: Context) -> T,
     init: T.() -> Unit,
-    fragment: android.support.v4.app.Fragment): T
-{
+    fragment: android.support.v4.app.Fragment): T {
     val ctx = fragment.getActivity()!!
     return fragment.addFragmentTopLevelView(view(ctx), init)
 }
@@ -47,8 +46,8 @@ public fun android.support.v4.app.Fragment.email(email: String, subject: String 
 public fun android.support.v4.app.Fragment.makeCall(number: String): Boolean = ctx.makeCall(number)
 
 public fun android.support.v4.app.Fragment.startActivity(
-  activity: Class<out Activity>,
-  vararg params: Pair<String, Any>
+    activity: Class<out Activity>,
+    vararg params: Pair<String, Any>
 ): Unit = ctx.internalStartActivity(activity, params)
 /* END SECTION */
 
@@ -86,7 +85,7 @@ public fun <T> android.support.v4.app.Fragment.asyncResult(executorService: Exec
 
 public fun android.support.v4.app.Fragment.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
     __dslAddView(
-        {val v = _LinearLayout(it); v.setOrientation(LinearLayout.VERTICAL); v},
+        { val v = _LinearLayout(it); v.setOrientation(LinearLayout.VERTICAL); v },
         init, this
     )
 
