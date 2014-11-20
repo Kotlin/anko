@@ -29,4 +29,5 @@ enum class Subsystem {
     CONTEXT_UTILS
     DIALOGS
     SERVICES
+    INTERNALS
 }

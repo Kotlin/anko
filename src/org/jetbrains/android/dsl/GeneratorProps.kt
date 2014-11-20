@@ -37,6 +37,7 @@ open class GeneratorProps(outputDirectory: String = "gen/") : BaseGeneratorProps
             Subsystem.CONTEXT_UTILS -> File(parentDirectory + "ContextUtils.kt")
             Subsystem.DIALOGS -> File(parentDirectory + "Dialogs.kt")
             Subsystem.SERVICES -> File(parentDirectory + "Services.kt")
+            Subsystem.INTERNALS -> File(parentDirectory + "Internals.kt")
             else -> throw RuntimeException("Unable to get output file for non-existing subsystem $subsystem")
         }
     }

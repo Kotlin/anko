@@ -45,6 +45,7 @@ class Writer(private val renderer: Renderer) {
             }
         }
         writeServices()
+        writeInternals()
     }
 
     private fun writeCustom() = writeStatic(Subsystem.CUSTOM, "props/static/src/Custom.kt")
@@ -54,10 +55,11 @@ class Writer(private val renderer: Renderer) {
 
     private fun writeHelpers() = writeStatic(Subsystem.HELPERS, "props/static/src/Helpers.kt")
     private fun writeSupport() = writeStatic(Subsystem.SUPPORT, "props/static/src/Support.kt")
+    private fun writeInternals() = writeStatic(Subsystem.INTERNALS, "props/static/src/Internals.kt")
 
     private fun writeStatic(subsystem: Subsystem, filename: String) {
         val support = Files.readAllLines(Paths.get(filename)!!, StandardCharsets.UTF_8)
-        writeToFile(props.getOutputFile(subsystem), support)
+        writeToFile(props.getOutputFile(subsystem), support, "", false)
     }
 
     private fun writeServices(): Boolean {
@@ -115,9 +117,9 @@ class Writer(private val renderer: Renderer) {
         } else false
     }
 
-    private fun writeToFile(file: File, text: List<String>, imports: String = "") {
+    private fun writeToFile(file: File, text: List<String>, imports: String = "", generatePackage: Boolean = true) {
         val writer = PrintWriter(file)
-        if (props.generatePackage) {
+        if (props.generatePackage && generatePackage) {
             writer.println("package ${props.outputPackage}\n")
         }
         if (props.generateImports && imports.isNotEmpty()) {

@@ -10,6 +10,7 @@ import android.app.Fragment
 import android.os.Bundle
 import android.net.Uri
 import java.io.Serializable
+import kotlinx.android.koan.internals.__internalStartActivity
 
 public val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
 public val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
@@ -104,34 +105,14 @@ public fun Context.makeCall(number: String): Boolean {
     }
 }
 
-public fun Fragment.startActivity(activity: Class<out Activity>, vararg params: Pair<String, Any>) {
-    ctx.internalStartActivity(activity, params)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
+    ctx.__internalStartActivity(javaClass<T>(), params)
 }
 
-public fun Context.startActivity(activity: Class<out Activity>, vararg params: Pair<String, Any>) {
-    internalStartActivity(activity, params)
-}
-
-private fun Context.internalStartActivity(activity: Class<out Activity>, params: Array<Pair<String, Any>>) {
-    val intent = Intent(this, activity)
-    params.forEach {
-        when (it.second) {
-            is Int -> intent.putExtra(it.first, it.second as Int)
-            is Long -> intent.putExtra(it.first, it.second as Long)
-            is CharSequence -> intent.putExtra(it.first, it.second as CharSequence)
-            is String -> intent.putExtra(it.first, it.second as String)
-            is Float -> intent.putExtra(it.first, it.second as Float)
-            is Double -> intent.putExtra(it.first, it.second as Double)
-            is Char -> intent.putExtra(it.first, it.second as Char)
-            is Short -> intent.putExtra(it.first, it.second as Short)
-            is Boolean -> intent.putExtra(it.first, it.second as Boolean)
-            is Long -> intent.putExtra(it.first, it.second as Long)
-            is Serializable -> intent.putExtra(it.first, it.second as Serializable)
-            is Bundle -> intent.putExtra(it.first, it.second as Bundle)
-            else -> throw KoanException("Intent extra ${it.first} has wrong type ${it.second.javaClass.getName()}")
-        }
-    }
-    startActivity(intent)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<String, Any>) {
+    __internalStartActivity(javaClass<T>(), params)
 }
 
 public val Context.displayMetrics: android.util.DisplayMetrics

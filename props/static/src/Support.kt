@@ -9,6 +9,7 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
+import kotlinx.android.koan.internals.__internalStartActivity
 
 /* SECTION HELPERS */
 private fun <T : View> android.support.v4.app.Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {
@@ -50,7 +51,7 @@ public fun android.support.v4.app.Fragment.makeCall(number: String): Boolean = c
 public fun android.support.v4.app.Fragment.startActivity(
     activity: Class<out Activity>,
     vararg params: Pair<String, Any>
-): Unit = ctx.internalStartActivity(activity, params)
+): Unit = ctx.__internalStartActivity(activity, params)
 /* END SECTION */
 
 

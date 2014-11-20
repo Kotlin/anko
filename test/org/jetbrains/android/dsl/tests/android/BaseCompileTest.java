@@ -49,6 +49,7 @@ public class BaseCompileTest extends Assert {
         assertTrue(new File("props/static/src/Async.kt").exists());
         assertTrue(new File("props/static/src/ContextUtils.kt").exists());
         assertTrue(new File("props/static/src/Dialogs.kt").exists());
+        assertTrue(new File("props/static/src/Internals.kt").exists());
         assertTrue(new File(kotlincFilename).exists());
     }
 
