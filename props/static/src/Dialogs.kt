@@ -1,3 +1,5 @@
+package kotlinx.android.koan
+
 import android.view.View
 import android.view.KeyEvent
 import android.widget.Toast

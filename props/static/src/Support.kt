@@ -1,3 +1,5 @@
+package kotlinx.android.koan
+
 import android.app.Activity
 import android.app.Fragment
 import android.view.View

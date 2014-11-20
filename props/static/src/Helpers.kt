@@ -1,3 +1,5 @@
+package kotlinx.android.koan
+
 /*
  * Copyright 2014 JetBrains s.r.o.
  *
