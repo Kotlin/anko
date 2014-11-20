@@ -9,8 +9,11 @@
              dest="lib/gson-2.3.jar"/>
         <get src="http://repo1.maven.org/maven2/com/google/android/android/4.1.1.4/android-4.1.1.4.jar"
              dest="android.jar"/>
-        <get src="https://github.com/JetBrains/kotlin/releases/download/build-0.9.66/kotlin-compiler-0.9.66.zip"
-             dest="lib/kotlinc.zip"/>
+        <get src="https://teamcity.jetbrains.com/repository/download/bt345/190188:id/kotlin-compiler-0.9.796.zip"
+             dest="lib/kotlinc.zip"
+             username="guest"
+             password="guest"
+                />
         <get src="http://search.maven.org/remotecontent?filepath=junit/junit/4.11/junit-4.11.jar"
              dest="lib/junit-4.11.jar" />
         <unzip src="lib/kotlinc.zip"
