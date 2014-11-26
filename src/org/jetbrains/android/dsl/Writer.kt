@@ -46,12 +46,14 @@ class Writer(private val renderer: Renderer) {
         }
         writeServices()
         writeInternals()
+        writeDatabase()
     }
 
     private fun writeCustom() = writeStatic(Subsystem.CUSTOM, "props/static/src/Custom.kt")
     private fun writeAsync() = writeStatic(Subsystem.ASYNC, "props/static/src/Async.kt")
     private fun writeContextUtils() = writeStatic(Subsystem.CONTEXT_UTILS, "props/static/src/ContextUtils.kt")
     private fun writeDialogs() = writeStatic(Subsystem.DIALOGS, "props/static/src/Dialogs.kt")
+    private fun writeDatabase() = writeStatic(Subsystem.DATABASE, "props/static/src/Database.kt")
 
     private fun writeHelpers() = writeStatic(Subsystem.HELPERS, "props/static/src/Helpers.kt")
     private fun writeSupport() = writeStatic(Subsystem.SUPPORT, "props/static/src/Support.kt")

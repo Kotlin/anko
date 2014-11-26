@@ -30,4 +30,5 @@ enum class Subsystem {
     DIALOGS
     SERVICES
     INTERNALS
+    DATABASE
 }
