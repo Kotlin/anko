@@ -53,9 +53,33 @@ public fun SQLiteDatabase.query(tableName: String, vararg columns: String, init:
     return builder.exec(this)
 }
 
+public fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = false, vararg columns: Pair<String, SqlOrderDirection>) {
+    val escapedTableName = tableName.replace("`", "``")
+    val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
+    execSQL(
+        columns.map { col ->
+            "${col.first} ${col.second}"
+        }.joinToString(", ", prefix = "CREATE TABLE $ifNotExistsText `$escapedTableName`(", postfix = ");")
+    )
+}
+
+private fun SQLiteDatabase.dropTable(tableName: String, ifNotExists: Boolean = false) {
+    val escapedTableName = tableName.replace("`", "``")
+    val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
+    execSQL("DROP TABLE $ifNotExistsText `$escapedTableName`;")
+}
+
 public enum class SqlOrderDirection {
     ASC
     DESC
+}
+
+public enum class SqlType(val text: String) {
+    NULL : SqlType("NULL")
+    INTEGER : SqlType("INT")
+    REAL : SqlType("REAL")
+    TEXT : SqlType("TEXT")
+    BLOB : SqlType("BLOB")
 }
 
 public class QueryBuilder(val tableName: String) {
