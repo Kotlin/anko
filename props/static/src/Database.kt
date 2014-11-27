@@ -22,20 +22,20 @@ public fun SQLiteDatabase.replaceOrThrow(tableName: String, vararg values: Pair<
 }
 
 public fun SQLiteDatabase.select(tableName: String, init: SelectQueryBuilder.() -> Unit): Cursor {
-    val builder = SelectQueryBuilder(tableName)
+    val builder = SelectQueryBuilderImpl(tableName)
     builder.init()
     return builder.exec(this)
 }
 
 public fun SQLiteDatabase.select(tableName: String, vararg columns: String, init: SelectQueryBuilder.() -> Unit): Cursor {
-    val builder = SelectQueryBuilder(tableName)
+    val builder = SelectQueryBuilderImpl(tableName)
     builder.columns(*columns)
     builder.init()
     return builder.exec(this)
 }
 
 public fun SQLiteDatabase.update(tableName: String, vararg values: Pair<String, Any>, init: UpdateQueryBuilder.() -> Unit): Int {
-    val builder = UpdateQueryBuilder(this, tableName, values)
+    val builder = UpdateQueryBuilderImpl(this, tableName, values)
     builder.init()
     return builder.exec()
 }
@@ -118,12 +118,50 @@ public enum class SqlType(val text: String) {
     BLOB : SqlType("BLOB")
 }
 
-public class UpdateQueryBuilder(val db: SQLiteDatabase, val tableName: String, val values: Array<Pair<String, Any>>) {
+public trait UpdateQueryBuilder {
+    public fun where(select: String, vararg args: Pair<String, Any>)
+    public fun where(select: String)
+    public fun where(select: String, vararg args: String)
+}
+
+private class UpdateQueryBuilderImpl(val db: SQLiteDatabase, val tableName: String, val values: Array<Pair<String, Any>>) : UpdateQueryBuilder {
 
     private var selectionApplied = false
     private var useNativeSelection = false
     private var selection: String? = null
     private var nativeSelectionArgs: Array<String>? = null
+
+    public override fun where(select: String, vararg args: Pair<String, Any>) {
+        if (selectionApplied)
+            throw KoanException("Query selection was already applied.")
+
+        selectionApplied = true
+        useNativeSelection = false
+        val argsMap = args.fold(hashMapOf<String, Any>()) { (map, arg) ->
+            map.put(arg.first, arg.second)
+            map
+        }
+        selection = applyArguments(select, argsMap)
+    }
+
+    public override fun where(select: String) {
+        if (selectionApplied)
+            throw KoanException("Query selection was already applied.")
+
+        selectionApplied = true
+        useNativeSelection = false
+        selection = select
+    }
+
+    public override fun where(select: String, vararg args: String) {
+        if (selectionApplied)
+            throw KoanException("Query selection was already applied.")
+
+        selectionApplied = true
+        useNativeSelection = true
+        selection = select
+        nativeSelectionArgs = args
+    }
 
     public fun exec(): Int {
         val finalSelection = if (selectionApplied) selection else null
@@ -132,8 +170,25 @@ public class UpdateQueryBuilder(val db: SQLiteDatabase, val tableName: String, v
     }
 }
 
-public class SelectQueryBuilder(val tableName: String) {
-    public var distinct: Boolean = false
+public trait SelectQueryBuilder {
+    public var distinct: Boolean
+
+    public fun column(name: String)
+    public fun groupBy(value: String)
+    public fun orderBy(value: String)
+    public fun orderBy(value: String, direction: SqlOrderDirection)
+    public fun limit(count: Int)
+    public fun limit(offset: Int, count: Int)
+    public fun columns(vararg names: String)
+    public fun having(having: String)
+    public fun having(having: String, vararg args: Pair<String, Any>)
+    public fun where(select: String, vararg args: Pair<String, Any>)
+    public fun where(select: String)
+    public fun where(select: String, vararg args: String)
+}
+
+private class SelectQueryBuilderImpl(val tableName: String) : SelectQueryBuilder {
+    public override var distinct: Boolean = false
 
     private val columns = arrayListOf<String>()
     private val groupBy = arrayListOf<String>()
@@ -156,19 +211,19 @@ public class SelectQueryBuilder(val tableName: String) {
             groupBy.joinToString(", "), having, orderBy.joinToString(", "), limit)
     }
 
-    public fun column(name: String) {
+    public override fun column(name: String) {
         columns.add(name)
     }
 
-    public fun groupBy(value: String) {
+    public override fun groupBy(value: String) {
         groupBy.add(value)
     }
 
-    public fun orderBy(value: String) {
+    public override fun orderBy(value: String) {
         orderBy.add(value)
     }
 
-    public fun orderBy(value: String, direction: SqlOrderDirection) {
+    public override fun orderBy(value: String, direction: SqlOrderDirection) {
         if (direction == SqlOrderDirection.DESC) {
             orderBy.add("$value DESC")
         } else {
@@ -176,19 +231,19 @@ public class SelectQueryBuilder(val tableName: String) {
         }
     }
 
-    public fun limit(count: Int) {
+    public override fun limit(count: Int) {
         limit = count.toString()
     }
 
-    public fun limit(offset: Int, count: Int) {
+    public override fun limit(offset: Int, count: Int) {
         limit = "$offset, $count"
     }
 
-    public fun columns(vararg names: String) {
+    public override fun columns(vararg names: String) {
         columns.addAll(names)
     }
 
-    public fun having(having: String) {
+    public override fun having(having: String) {
         if (havingApplied)
             throw KoanException("Query having was already applied.")
 
@@ -196,7 +251,7 @@ public class SelectQueryBuilder(val tableName: String) {
         this.having = having
     }
 
-    public fun having(having: String, vararg args: Pair<String, Any>) {
+    public override fun having(having: String, vararg args: Pair<String, Any>) {
         if (selectionApplied)
             throw KoanException("Query having was already applied.")
 
@@ -208,7 +263,7 @@ public class SelectQueryBuilder(val tableName: String) {
         this.having = applyArguments(having, argsMap)
     }
 
-    public fun where(select: String, vararg args: Pair<String, Any>) {
+    public override fun where(select: String, vararg args: Pair<String, Any>) {
         if (selectionApplied)
             throw KoanException("Query selection was already applied.")
 
@@ -221,7 +276,7 @@ public class SelectQueryBuilder(val tableName: String) {
         selection = applyArguments(select, argsMap)
     }
 
-    public fun where(select: String) {
+    public override fun where(select: String) {
         if (selectionApplied)
             throw KoanException("Query selection was already applied.")
 
@@ -230,7 +285,7 @@ public class SelectQueryBuilder(val tableName: String) {
         selection = select
     }
 
-    public fun where(select: String, vararg args: String) {
+    public override fun where(select: String, vararg args: String) {
         if (selectionApplied)
             throw KoanException("Query selection was already applied.")
 
