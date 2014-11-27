@@ -1,9 +1,46 @@
-package kotlinx.android.koan
+package kotlinx.android.koan.db
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import android.database.Cursor
 import java.util.regex.Pattern
+import kotlinx.android.koan.*
+
+public val NULL: SqlType = SqlTypeImpl("NULL")
+public val INT: SqlType = SqlTypeImpl("INT")
+public val REAL: SqlType = SqlTypeImpl("REAL")
+public val TEXT: SqlType = SqlTypeImpl("TEXT")
+public val BLOB: SqlType = SqlTypeImpl("BLOB")
+
+public val PRIMARY_KEY: SqlTypeModifier = SqlTypeModifierImpl("PRIMARY KEY")
+public val UNIQUE: SqlTypeModifier = SqlTypeModifierImpl("UNIQUE")
+
+public trait SqlType {
+    open val name: String
+    open val modifier: String?
+}
+
+public trait SqlTypeModifier {
+    open val modifier: String
+}
+
+private open class SqlTypeImpl(name: String, modifier: String? = null) : SqlType {
+    override val name: String = name
+    override val modifier: String? = modifier
+
+    public override fun toString(): String {
+        return if (modifier == null) name else "$name $modifier"
+    }
+}
+
+private open class SqlTypeModifierImpl(modifier: String) : SqlTypeModifier {
+    override val modifier: String = modifier
+    public override fun toString(): String = modifier
+}
+
+public fun SqlType.plus(m: SqlTypeModifier) : SqlType {
+    return SqlTypeImpl(name, if (modifier == null) m.toString() else "$modifier $m")
+}
 
 public fun SQLiteDatabase.insert(tableName: String, vararg values: Pair<String, Any>): Long {
     return insert(tableName, null, values.toContentValues())
@@ -40,7 +77,7 @@ public fun SQLiteDatabase.update(tableName: String, vararg values: Pair<String, 
     return builder.exec()
 }
 
-public fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = false, vararg columns: Pair<String, SqlOrderDirection>) {
+public fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = false, vararg columns: Pair<String, SqlType>) {
     val escapedTableName = tableName.replace("`", "``")
     val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
     execSQL(
@@ -108,14 +145,6 @@ private fun Array<Pair<String, Any>>.toContentValues(): ContentValues {
 public enum class SqlOrderDirection {
     ASC
     DESC
-}
-
-public enum class SqlType(val text: String) {
-    NULL : SqlType("NULL")
-    INTEGER : SqlType("INT")
-    REAL : SqlType("REAL")
-    TEXT : SqlType("TEXT")
-    BLOB : SqlType("BLOB")
 }
 
 public trait UpdateQueryBuilder {
