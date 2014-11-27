@@ -21,13 +21,13 @@ public fun SQLiteDatabase.replaceOrThrow(tableName: String, vararg values: Pair<
     return replaceOrThrow(tableName, null, values.toContentValues())
 }
 
-public fun SQLiteDatabase.query(tableName: String, init: SelectQueryBuilder.() -> Unit): Cursor {
+public fun SQLiteDatabase.select(tableName: String, init: SelectQueryBuilder.() -> Unit): Cursor {
     val builder = SelectQueryBuilder(tableName)
     builder.init()
     return builder.exec(this)
 }
 
-public fun SQLiteDatabase.query(tableName: String, vararg columns: String, init: SelectQueryBuilder.() -> Unit): Cursor {
+public fun SQLiteDatabase.select(tableName: String, vararg columns: String, init: SelectQueryBuilder.() -> Unit): Cursor {
     val builder = SelectQueryBuilder(tableName)
     builder.columns(*columns)
     builder.init()
