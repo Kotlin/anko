@@ -16,8 +16,9 @@
 
 package org.jetbrains.android.dsl.tests.functional;
 
-import org.jetbrains.android.dsl.BaseGeneratorProps;
-import org.jetbrains.android.dsl.Subsystem;
+import org.jetbrains.android.dsl.BaseGeneratorConfiguration;
+import org.jetbrains.android.dsl.ConfigurationTune;
+import org.jetbrains.android.dsl.KoanFile;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,12 +31,12 @@ public class HelperConstructorTest extends BaseFunctionalTest {
         super.setUp();
     }
 
-    protected void initSettings(BaseGeneratorProps settings) {
-        settings.setGenerateViewHelperConstructors(true);
+    protected void initSettings(BaseGeneratorConfiguration settings) {
+        settings.getTunes().add(ConfigurationTune.HELPER_CONSTRUCTORS);
     }
 
     @Test
     public void testHelperConstructors() throws Exception {
-        runFunctionalTest(testDataFile, Subsystem.VIEWS);
+        runFunctionalTest(testDataFile, KoanFile.VIEWS);
     }
 }

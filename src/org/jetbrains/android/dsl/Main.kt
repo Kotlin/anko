@@ -80,7 +80,7 @@ private fun gen() {
                 fileOutputDirectory.mkdirs()
             }
 
-            DSLGenerator(intVersion, version.getName(), jars, GeneratorProps(outputDirectory)).run()
+            DSLGenerator(intVersion, version.getName(), jars, GeneratorConfiguration(outputDirectory)).run()
         }
     }
 

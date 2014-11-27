@@ -58,14 +58,14 @@ public class BaseCompileTest extends Assert {
 
         File[] versions = new File("original/").listFiles(directoryFilter);
         for (File ver: versions) {
-            AndroidTestGeneratorProps props = compile(testData, ver);
+            AndroidTestGeneratorConfiguration props = compile(testData, ver);
             for (File file : props.tmpFiles.values()) {
                 file.delete();
             }
         }
     }
 
-    private AndroidTestGeneratorProps compile(File testData, File ver) throws IOException, InterruptedException {
+    private AndroidTestGeneratorConfiguration compile(File testData, File ver) throws IOException, InterruptedException {
         String fVersion = ver.getName();
         int version = Integer.parseInt(fVersion.replaceAll("[^0-9]", ""));
 
@@ -79,7 +79,7 @@ public class BaseCompileTest extends Assert {
             }
             classpath.append(f.getPath());
         }
-        AndroidTestGeneratorProps props = new AndroidTestGeneratorProps();
+        AndroidTestGeneratorConfiguration props = new AndroidTestGeneratorConfiguration();
         DSLGenerator gen = new DSLGenerator(version, fVersion, jarFilesString, props);
         gen.run();
         String kotlincArgs[] = {

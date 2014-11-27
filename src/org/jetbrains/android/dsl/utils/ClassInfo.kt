@@ -87,10 +87,10 @@ fun ClassNode.getConstructors(): List<MethodNode> {
     return (methods: List<MethodNode>).filter { it.isConstructor() }
 }
 
-fun ClassNode.isView(classTree: ClassTree, viewBaseClass: String): Boolean {
-    return classTree.isSuccessorOf(this, viewBaseClass) || this.name == viewBaseClass
+fun ClassNode.isView(classTree: ClassTree): Boolean {
+    return classTree.isSuccessorOf(this, "android/view/View") || this.name == "android/view/View"
 }
 
-fun ClassNode.isViewGroup(classTree: ClassTree, viewGroupBaseClass: String): Boolean {
-    return classTree.isSuccessorOf(this, viewGroupBaseClass) || this.name == viewGroupBaseClass
+fun ClassNode.isViewGroup(classTree: ClassTree): Boolean {
+    return classTree.isSuccessorOf(this, "android/view/ViewGroup") || this.name == "android/view/ViewGroup"
 }

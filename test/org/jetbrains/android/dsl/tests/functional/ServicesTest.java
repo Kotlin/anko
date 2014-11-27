@@ -16,8 +16,8 @@
 
 package org.jetbrains.android.dsl.tests.functional;
 
-import org.jetbrains.android.dsl.BaseGeneratorProps;
-import org.jetbrains.android.dsl.Subsystem;
+import org.jetbrains.android.dsl.BaseGeneratorConfiguration;
+import org.jetbrains.android.dsl.KoanFile;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,12 +30,12 @@ public class ServicesTest extends BaseFunctionalTest {
         super.setUp();
     }
 
-    protected void initSettings(BaseGeneratorProps settings) {
-        settings.setGenerateServices(true);
+    protected void initSettings(BaseGeneratorConfiguration settings) {
+        settings.getFiles().add(KoanFile.SERVICES);
     }
 
     @Test
     public void testServices() throws Exception {
-        runFunctionalTest(testDataFile, Subsystem.SERVICES);
+        runFunctionalTest(testDataFile, KoanFile.SERVICES);
     }
 }

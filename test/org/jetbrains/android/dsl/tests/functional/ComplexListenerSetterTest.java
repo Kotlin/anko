@@ -16,8 +16,9 @@
 
 package org.jetbrains.android.dsl.tests.functional;
 
-import org.jetbrains.android.dsl.BaseGeneratorProps;
-import org.jetbrains.android.dsl.Subsystem;
+import org.jetbrains.android.dsl.BaseGeneratorConfiguration;
+import org.jetbrains.android.dsl.ConfigurationTune;
+import org.jetbrains.android.dsl.KoanFile;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,13 +31,14 @@ public class ComplexListenerSetterTest extends BaseFunctionalTest {
         super.setUp();
     }
 
-    protected void initSettings(BaseGeneratorProps settings) {
-        settings.setGenerateComplexListenerSetters(true);
+    protected void initSettings(BaseGeneratorConfiguration settings) {
+        settings.getFiles().add(KoanFile.LISTENERS);
+        settings.getTunes().add(ConfigurationTune.COMPLEX_LISTENER_SETTERS);
     }
 
     @Test
     public void testComplexListenerSetters() throws Exception {
-        runFunctionalTest(testDataFile, Subsystem.LISTENERS);
+        runFunctionalTest(testDataFile, KoanFile.LISTENERS);
     }
 }
 

@@ -21,6 +21,7 @@ import org.objectweb.asm.tree.MethodNode
 import org.objectweb.asm.tree.InnerClassNode
 import java.util.TreeMap
 import java.util.Arrays
+import org.jetbrains.android.dsl.KoanFile.*
 
 data class ListenerMethod(val method: MethodNode, val name: String, val argumentTypes: String, val returnType: String)
 
@@ -45,7 +46,7 @@ data class LayoutParamsNode(val layout: ClassNode, val layoutParams: ClassNode, 
     }
 }
 
-class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
+class Generator(val classTree: ClassTree, val props: BaseGeneratorConfiguration) {
 
     //filter off excluded classes and methods
     private val availableClasses = classTree.filter { !it.isExcluded() }
@@ -68,7 +69,7 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
     }
 
     //find get* methods on View classes, like getText() or getVisibility()
-    private val propertyGetters = if (!props.generateProperties) listOf<MethodNodeWithClass>() else
+    private val propertyGetters = if (!props[PROPERTIES]) listOf<MethodNodeWithClass>() else
         availableMethods.filter {
             it.method.isGetter() && it.clazz.isView() && it.method.isPublic() &&
                 !(it.clazz.isAbstract() && it.clazz.isViewGroup()) &&
@@ -82,8 +83,7 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
     //find set* methods on View classes, like setText() or setVisibility()
     //grouped by className_methodName because there can be several setter methods like
     //setText(Int) and setText(String)
-    private val propertySetters = if (!props.generatePropertySetters) mapOf() else
-        availableMethods.filter {
+    private val propertySetters = availableMethods.filter {
             val name = it.method.name ?: ""
             //find all methods named "set*", with uppercased letter after "set" in a T:View class
             //also method must be public and have only one argument
@@ -100,15 +100,14 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
     //find all ancestors of ViewGroup.LayoutParams in classes that extends ViewGroup.
     //a helper class will be created for each layout. For example,
     //for the class LinearLayout, _LinearLayout class will be generated
-    val layouts = if (!props.generateLayoutParamsHelperClasses) listOf() else
-        viewGroupClasses.map { extractLayoutParams(it) }
+    val layouts = viewGroupClasses.map { extractLayoutParams(it) }
             .filter { it != null }.map {
             val layoutClass = it!!.first //null items are already filtered
             val layoutParamsClass = it.second
             LayoutParamsNode(layoutClass, layoutParamsClass, layoutParamsClass.getConstructors())
         }
 
-    val services = if (!props.generateServices) listOf() else
+    val services = if (!props[SERVICES]) listOf() else
         classTree.findNode("android/content/Context")?.data?.fields
                 ?.filter { it.name.endsWith("_SERVICE") }
                 ?.map { it.name to classTree.findNode("android", it.name.toServiceClassName()) }
@@ -213,10 +212,10 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorProps) {
         return builder.toString()
     }
 
-    private fun ClassNode.isView() = isView(classTree, props.viewBaseClass)
-    private fun ClassNode.isViewGroup() = isViewGroup(classTree, props.viewGroupBaseClass)
+    private fun ClassNode.isView() = isView(classTree)
+    private fun ClassNode.isViewGroup() = isViewGroup(classTree)
     private fun ClassNode.isViewGroupWithParams(): Boolean {
-        return isViewGroup(classTree, props.viewGroupBaseClass) && hasLayoutParams(this)
+        return isViewGroup(classTree) && hasLayoutParams(this)
     }
 
     private fun ClassNode.isExcluded() =

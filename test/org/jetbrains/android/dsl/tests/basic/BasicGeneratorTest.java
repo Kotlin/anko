@@ -17,10 +17,10 @@
 package org.jetbrains.android.dsl.tests.basic;
 
 import org.jetbrains.android.dsl.DSLGenerator;
-import org.jetbrains.android.dsl.Subsystem;
+import org.jetbrains.android.dsl.KoanFile;
 import org.jetbrains.android.dsl.utils.DirectoryFilter;
 import org.jetbrains.android.dsl.utils.JarFilter;
-import org.jetbrains.android.dsl.tests.TestGeneratorProps;
+import org.jetbrains.android.dsl.tests.TestGeneratorConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -89,7 +89,7 @@ public class BasicGeneratorTest extends Assert {
                 classpath.append(f.getPath());
             }
 
-            TestGeneratorProps settings = new TestGeneratorProps();
+            TestGeneratorConfiguration settings = new TestGeneratorConfiguration();
             DSLGenerator gen = new DSLGenerator(version, fVersion, jarFilesString, settings);
             gen.run();
             String kotlincArgs[] = {kotlincFilename,
@@ -126,13 +126,13 @@ public class BasicGeneratorTest extends Assert {
                 classpath.append(f.getPath());
             }
 
-            TestGeneratorProps settings = new TestGeneratorProps();
+            TestGeneratorConfiguration settings = new TestGeneratorConfiguration();
             DSLGenerator gen = new DSLGenerator(version, fVersion, jarFilesString, settings);
             gen.run();
-            String supportFile = settings.tmpFiles.get(Subsystem.SUPPORT).getAbsolutePath();
+            String supportFile = settings.tmpFiles.get(KoanFile.SUPPORT).getAbsolutePath();
             for (File file: settings.tmpFiles.values()) {
                 if (file.getAbsolutePath().equals(supportFile)) {
-                    if (settings.getGenerateSupport()) {
+                    if (settings.getFiles().contains(KoanFile.SUPPORT)) {
                         assertTrue(file.length() > 0);
                     }
                 } else {

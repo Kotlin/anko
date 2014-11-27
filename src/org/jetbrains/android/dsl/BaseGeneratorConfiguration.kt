@@ -25,34 +25,26 @@ class Variable(val name: String, val typ: String) {
     }
 }
 
-abstract class BaseGeneratorProps() {
+public enum class ConfigurationTune {
+    HELPER_CONSTRUCTORS
+    TOP_LEVEL_DSL_ITEMS
+    SIMPLE_LISTENERS
+    COMPLEX_LISTENER_SETTERS
+    COMPLEX_LISTENER_CLASSES
+}
+
+abstract class BaseGeneratorConfiguration {
+    open val indent: String = "  "
+
+    open val files: MutableSet<KoanFile> = hashSetOf(*KoanFile.values())
+    open val tunes: MutableSet<ConfigurationTune> = hashSetOf(*ConfigurationTune.values())
+
     open var generateImports: Boolean = true
     open var generatePackage: Boolean = true
     open var generateMavenArtifact: Boolean = true
 
-    open var generateProperties: Boolean = true
-    open var generatePropertySetters: Boolean = true
-    open var generateLayoutParamsHelperClasses: Boolean = true
-    open var generateViewExtensionMethods: Boolean = true
-    open var generateViewHelperConstructors: Boolean = true
-    open var generateViewGroupExtensionMethods: Boolean = true
-    open var generateSimpleListeners: Boolean = true
-    open var generateComplexListenerClasses: Boolean = true
-    open var generateComplexListenerSetters: Boolean = true
-    open var generateTopLevelExtensionMethods: Boolean = true
-    open var generateServices: Boolean = true
-    open var generateSupport: Boolean = false
-    open var generateStatic: Boolean = true
-
-    abstract public fun getOutputFile(subsystem: Subsystem): File
-
-    abstract val indent: String
-
     abstract val outputDirectory: String
     abstract val outputPackage: String
-
-    abstract val viewGroupBaseClass: String
-    abstract val viewBaseClass: String
 
     abstract val imports: HashMap<String, String>
 
@@ -60,4 +52,10 @@ abstract class BaseGeneratorProps() {
     abstract val excludedMethods: Set<String>
     abstract val helperConstructors: Map<String, List<List<Variable>>>
     abstract val customMethodParameters: Map<String, String>
+
+    public fun get(file: KoanFile): Boolean = files.contains(file)
+
+    public fun get(tune: ConfigurationTune): Boolean = tunes.contains(tune)
+
+    public abstract fun getOutputFile(subsystem: KoanFile): File
 }

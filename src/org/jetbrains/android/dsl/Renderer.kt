@@ -20,6 +20,8 @@ import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 import java.util.ArrayList
 import org.jetbrains.android.dsl.utils.Buffer
+import org.jetbrains.android.dsl.KoanFile.*
+import org.jetbrains.android.dsl.ConfigurationTune.*
 
 class Renderer(private val generator: Generator) {
 
@@ -32,26 +34,25 @@ class Renderer(private val generator: Generator) {
         public fun ViewManager.textView(init: TextView.() -> Unit): TextView =
             addView(TextView(dslContext), init, this)
     */
-    val views = if (!props.generateViewExtensionMethods) listOf() else
+    val views = if (!props[VIEWS]) listOf() else
         generateViews(generator.viewClasses) { cleanInternalName(it) }
 
     /*generate functions for making view groups (containers). example:
         public fun ViewManager.linearLayout(init: _LinearLayout.() -> Unit): LinearLayout
             = addView(_LinearLayout(dslContext), init, this)
     */
-    val viewGroups = if (!props.generateViewGroupExtensionMethods) listOf() else
+    val viewGroups = if (!props[VIEWS]) listOf() else
         generateViews(generator.viewGroupClasses) { "_" + stripClassName(cleanInternalName(it)) }
 
-    //helper constructors for views
     val helperConstructors =
-        if (!props.generateViewHelperConstructors) listOf<String>() else genHelperConstructors()
+        if (!props[HELPER_CONSTRUCTORS]) listOf<String>() else genHelperConstructors()
 
     /*generate properties for views. example:
         var android.widget.TextView.text: CharSequence?
             get() = getText()
             set(v) = setText(v)
      */
-    val properties = if (!props.generateProperties) listOf() else
+    val properties = if (!props[PROPERTIES]) listOf() else
         generator.properies.map {
             val getter = it.getter
             val className = cleanInternalName(getter.clazz.name!!)
@@ -89,23 +90,22 @@ class Renderer(private val generator: Generator) {
             fun android.view.View.onClick(l: (android.view.View?) -> Unit) = setOnClickListener(l)
         complex listener (with bunch of methods) contains helper class and an extension method fot each listener method.
      */
-    val simpleListeners = if (!props.generateSimpleListeners) listOf() else
+    val simpleListeners = if (!props[SIMPLE_LISTENERS]) listOf() else
         generator.listeners.filter { it is SimpleListener }.map { renderSimpleListener(it as SimpleListener) }
 
     private val complexListeners =
-        if (!props.generateComplexListenerClasses && !props.generateComplexListenerSetters)
+        if (!props[COMPLEX_LISTENER_CLASSES] && !props[COMPLEX_LISTENER_SETTERS])
             listOf()
         else generator.listeners.filter { it is ComplexListener }
 
-    //setters for complex listeners
-    val listenerSetters = if (!props.generateComplexListenerSetters) listOf() else
+    val complexListenerSetters = if (!props[COMPLEX_LISTENER_SETTERS]) listOf() else
         complexListeners.map { renderComplexListenerSetters(it as ComplexListener) }
 
-    val listenerHelperClasses = if (!props.generateComplexListenerClasses) listOf() else
+    val complexListenerClasses = if (!props[COMPLEX_LISTENER_CLASSES]) listOf() else
         complexListeners.map { renderComplexListenerClass(it as ComplexListener) }
 
     //generated layout classes with custom LayoutParams
-    val layouts = if (!props.generateLayoutParamsHelperClasses) listOf() else
+    val layouts = if (!props[LAYOUTS]) listOf() else
         generator.layouts.map { renderLayout(it) }
 
     val services = generator.services.map {
@@ -127,7 +127,7 @@ class Renderer(private val generator: Generator) {
             buffer {
                 line("public fun ViewManager.$funcName(init: $className.() -> Unit = defaultInit): $typeName =")
                 line("addView($className(dslContext), init, this)")
-                if (props.generateTopLevelExtensionMethods) {
+                if (props[TOP_LEVEL_DSL_ITEMS]) {
                     fun add(extendFor: String, ctx: String) {
                         line("public fun $extendFor.$funcName(init: $className.() -> Unit = defaultInit): $typeName =")
                         line("add${extendFor}TopLevelView($className($ctx), init)")

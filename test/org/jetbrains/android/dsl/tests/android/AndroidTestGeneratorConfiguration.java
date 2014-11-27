@@ -14,21 +14,14 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.dsl
+package org.jetbrains.android.dsl.tests.android;
 
-enum class Subsystem {
-    PROPERTIES
-    VIEWS
-    LISTENERS
-    LAYOUTS
-    TOP_LEVEL
-    HELPERS
-    SUPPORT
-    CUSTOM
-    ASYNC
-    CONTEXT_UTILS
-    DIALOGS
-    SERVICES
-    INTERNALS
-    DATABASE
+import org.jetbrains.android.dsl.tests.TestGeneratorConfiguration;
+
+import java.io.IOException;
+
+public class AndroidTestGeneratorConfiguration extends TestGeneratorConfiguration {
+    public AndroidTestGeneratorConfiguration() throws IOException {
+        super();
+    }
 }

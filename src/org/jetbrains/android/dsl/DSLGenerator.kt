@@ -22,7 +22,7 @@ class DSLGenerator(
     val version: Int,
     val fVersion: String,
     val jars: List<String>,
-    val props: BaseGeneratorProps): Runnable
+    val props: BaseGeneratorConfiguration): Runnable
 {
 
     private val sVersion = version.toString()
@@ -42,7 +42,10 @@ class DSLGenerator(
     }
 
     override fun run() {
-        props.generateSupport = fVersion.contains("s")
+        if (fVersion.contains("s"))
+            props.files.add(KoanFile.SUPPORT)
+        else
+            props.files.remove(KoanFile.SUPPORT)
 
         val classTree = ClassProcessor(jars).genClassTree()
         val generator = Generator(classTree, props)

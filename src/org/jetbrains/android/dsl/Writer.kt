@@ -22,101 +22,82 @@ import java.util.ArrayList
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.charset.StandardCharsets
+import org.jetbrains.android.dsl.KoanFile.*
+import org.jetbrains.android.dsl.ConfigurationTune.*
 
 class Writer(private val renderer: Renderer) {
 
     val props = renderer.props
 
     fun write() {
-        val properties = writeProperties()
-        val layouts = writeLayouts()
-        val views = writeViews()
-        val listeners = writeListeners()
-        if (properties || layouts || views || listeners) {
-            writeHelpers()
-            if (props.generateSupport && props.generateStatic) {
-                writeSupport()
-            }
-            if (props.generateStatic) {
-                writeCustom()
-                writeAsync()
-                writeContextUtils()
-                writeDialogs()
-            }
+        sortedSetOf(
+            ASYNC,
+            CONTEXT_UTILS,
+            CUSTOM,
+            DATABASE,
+            DIALOGS,
+            HELPERS,
+            INTERNALS,
+            SUPPORT
+        ).forEach { if (props[it]) writeStatic(it) }
+
+        setOf(
+            LAYOUTS to ::writeLayouts,
+            LISTENERS to ::writeListeners,
+            PROPERTIES to ::writeProperties,
+            SERVICES to ::writeServices
+        ).forEach { if (props[it.first]) it.second() }
+
+        if (props[VIEWS] || props[HELPER_CONSTRUCTORS])
+            writeViews()
+    }
+
+    private fun writeLayouts() {
+        val imports = props.imports["layouts"] ?: ""
+        writeToFile(props.getOutputFile(KoanFile.LAYOUTS), renderer.layouts, imports)
+    }
+
+    private fun writeListeners() {
+        val allListeners = ArrayList<String>()
+
+        array(
+            SIMPLE_LISTENERS to renderer.simpleListeners,
+            COMPLEX_LISTENER_CLASSES to renderer.complexListenerClasses,
+            COMPLEX_LISTENER_SETTERS to renderer.complexListenerSetters
+        ).forEach { if (props[it.first]) allListeners.addAll(it.second) }
+
+        if (allListeners.isNotEmpty())
+            writeToFile(props.getOutputFile(KoanFile.LISTENERS), allListeners)
+    }
+
+    private fun writeProperties() {
+        writeToFile(props.getOutputFile(KoanFile.PROPERTIES), renderer.properties)
+    }
+
+    private fun writeServices() {
+        val imports = props.imports["services"] ?: ""
+        writeToFile(props.getOutputFile(KoanFile.SERVICES), renderer.services, imports)
+    }
+
+    private fun writeViews() {
+        val allViews = arrayListOf<String>()
+
+        if (props[VIEWS]) {
+            allViews.addAll(renderer.views)
+            allViews.addAll(renderer.viewGroups)
         }
-        writeServices()
-        writeInternals()
-        writeDatabase()
+
+        if (props[HELPER_CONSTRUCTORS])
+            allViews.addAll(renderer.helperConstructors)
+
+        val imports = props.imports["views"] ?: ""
+        writeToFile(props.getOutputFile(KoanFile.VIEWS), allViews, imports)
     }
 
-    private fun writeCustom() = writeStatic(Subsystem.CUSTOM, "props/static/src/Custom.kt")
-    private fun writeAsync() = writeStatic(Subsystem.ASYNC, "props/static/src/Async.kt")
-    private fun writeContextUtils() = writeStatic(Subsystem.CONTEXT_UTILS, "props/static/src/ContextUtils.kt")
-    private fun writeDialogs() = writeStatic(Subsystem.DIALOGS, "props/static/src/Dialogs.kt")
-    private fun writeDatabase() = writeStatic(Subsystem.DATABASE, "props/static/src/Database.kt")
-
-    private fun writeHelpers() = writeStatic(Subsystem.HELPERS, "props/static/src/Helpers.kt")
-    private fun writeSupport() = writeStatic(Subsystem.SUPPORT, "props/static/src/Support.kt")
-    private fun writeInternals() = writeStatic(Subsystem.INTERNALS, "props/static/src/Internals.kt")
-
-    private fun writeStatic(subsystem: Subsystem, filename: String) {
-        val support = Files.readAllLines(Paths.get(filename)!!, StandardCharsets.UTF_8)
-        writeToFile(props.getOutputFile(subsystem), support, "", false)
-    }
-
-    private fun writeServices(): Boolean {
-        return if (props.generateServices) {
-            val imports = props.imports["services"] ?: ""
-            writeToFile(props.getOutputFile(Subsystem.SERVICES), renderer.services, imports)
-            true
-        } else false
-    }
-
-    private fun writeProperties(): Boolean {
-        return if (props.generateProperties) {
-            writeToFile(props.getOutputFile(Subsystem.PROPERTIES), renderer.properties)
-            true
-        } else false
-    }
-
-    private fun writeLayouts(): Boolean {
-        return if (props.generateLayoutParamsHelperClasses) {
-            val imports = props.imports["layouts"] ?: ""
-            writeToFile(props.getOutputFile(Subsystem.LAYOUTS), renderer.layouts, imports)
-            true
-        } else false
-    }
-
-    private fun writeViews(): Boolean {
-        return if (props.generateViewExtensionMethods || props.generateViewGroupExtensionMethods
-                || props.generateViewHelperConstructors) {
-            val allViews = arrayListOf<String>()
-            if (props.generateViewExtensionMethods)
-                allViews.addAll(renderer.views)
-            if (props.generateViewGroupExtensionMethods)
-                allViews.addAll(renderer.viewGroups)
-            if (props.generateViewHelperConstructors)
-                allViews.addAll(renderer.helperConstructors)
-            val imports = props.imports["views"] ?: ""
-            writeToFile(props.getOutputFile(Subsystem.VIEWS), allViews, imports)
-            imports.length>0 || allViews.isNotEmpty()
-        } else false
-    }
-
-    private fun writeListeners(): Boolean {
-        val generate = props.generateSimpleListeners
-            || props.generateComplexListenerClasses || props.generateComplexListenerSetters
-        return if (generate) {
-            val allListeners = ArrayList<String>()
-            if (props.generateSimpleListeners)
-                allListeners.addAll(renderer.simpleListeners)
-            if (props.generateComplexListenerClasses)
-                allListeners.addAll(renderer.listenerHelperClasses)
-            if (props.generateComplexListenerSetters)
-                allListeners.addAll(renderer.listenerSetters)
-            writeToFile(props.getOutputFile(Subsystem.LISTENERS), allListeners)
-            return allListeners.isNotEmpty()
-        } else false
+    private fun writeStatic(subsystem: KoanFile) {
+        val filename = "props/static/src/${subsystem.filename}"
+        val contents = Files.readAllLines(Paths.get(filename), StandardCharsets.UTF_8)
+        writeToFile(props.getOutputFile(subsystem), contents, "", false)
     }
 
     private fun writeToFile(file: File, text: List<String>, imports: String = "", generatePackage: Boolean = true) {

@@ -16,8 +16,9 @@
 
 package org.jetbrains.android.dsl.tests.functional;
 
-import org.jetbrains.android.dsl.BaseGeneratorProps;
-import org.jetbrains.android.dsl.Subsystem;
+import org.jetbrains.android.dsl.BaseGeneratorConfiguration;
+import org.jetbrains.android.dsl.ConfigurationTune;
+import org.jetbrains.android.dsl.KoanFile;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,13 +31,13 @@ public class LayoutsTest extends BaseFunctionalTest {
         super.setUp();
     }
 
-    protected void initSettings(BaseGeneratorProps settings) {
-        settings.setGenerateLayoutParamsHelperClasses(true);
+    protected void initSettings(BaseGeneratorConfiguration settings) {
+        settings.getFiles().add(KoanFile.LAYOUTS);
     }
 
     @Test
     public void testLayouts() throws Exception {
-        runFunctionalTest(testDataFile, Subsystem.LAYOUTS);
+        runFunctionalTest(testDataFile, KoanFile.LAYOUTS);
     }
 }
 

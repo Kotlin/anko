@@ -16,13 +16,13 @@
 
 package org.jetbrains.android.dsl.tests.functional;
 
-import org.jetbrains.android.dsl.BaseGeneratorProps;
+import org.jetbrains.android.dsl.BaseGeneratorConfiguration;
 import org.jetbrains.android.dsl.DSLGenerator;
 import org.jetbrains.android.dsl.DslPackage;
-import org.jetbrains.android.dsl.Subsystem;
+import org.jetbrains.android.dsl.KoanFile;
 import org.jetbrains.android.dsl.utils.DirectoryFilter;
 import org.jetbrains.android.dsl.utils.JarFilter;
-import org.jetbrains.android.dsl.tests.TestGeneratorProps;
+import org.jetbrains.android.dsl.tests.TestGeneratorConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -75,8 +75,8 @@ public abstract class BaseFunctionalTest extends Assert {
         String fVersion,
         List<String> inputJarFiles,
         String testDataFile,
-        Subsystem subsystem,
-        TestGeneratorProps settings) throws IOException
+        KoanFile subsystem,
+        TestGeneratorConfiguration settings) throws IOException
     {
         initSettings(settings);
         generator = new DSLGenerator(version, fVersion, inputJarFiles, settings);
@@ -91,25 +91,15 @@ public abstract class BaseFunctionalTest extends Assert {
         assertTrue(expected.length() > 0);
     }
 
-    protected void runFunctionalTest(String testDataFile, Subsystem subsystem) throws IOException {
-        TestGeneratorProps settings = new TestGeneratorProps();
+    protected void runFunctionalTest(String testDataFile, KoanFile subsystem) throws IOException {
+        TestGeneratorConfiguration settings = new TestGeneratorConfiguration();
 
         settings.setGenerateImports(false);
         settings.setGeneratePackage(false);
         settings.setGenerateMavenArtifact(false);
 
-        settings.setGenerateProperties(false);
-        settings.setGeneratePropertySetters(false);
-        settings.setGenerateLayoutParamsHelperClasses(false);
-        settings.setGenerateViewExtensionMethods(false);
-        settings.setGenerateViewHelperConstructors(false);
-        settings.setGenerateViewGroupExtensionMethods(false);
-        settings.setGenerateSimpleListeners(false);
-        settings.setGenerateComplexListenerClasses(false);
-        settings.setGenerateComplexListenerSetters(false);
-        settings.setGenerateTopLevelExtensionMethods(false);
-        settings.setGenerateServices(false);
-        settings.setGenerateStatic(false);
+        settings.getFiles().clear();
+        settings.getTunes().clear();
 
         File[] versions = new File("original/").listFiles(directoryFilter);
         for (File ver: versions) {
@@ -131,6 +121,6 @@ public abstract class BaseFunctionalTest extends Assert {
 
     }
 
-    protected abstract void initSettings(BaseGeneratorProps settings);
+    protected abstract void initSettings(BaseGeneratorConfiguration settings);
 
 }

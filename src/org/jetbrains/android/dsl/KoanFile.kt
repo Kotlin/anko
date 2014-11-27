@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.dsl.tests.android;
+package org.jetbrains.android.dsl
 
-import org.jetbrains.android.dsl.tests.TestGeneratorProps;
-
-import java.io.IOException;
-
-public class AndroidTestGeneratorProps extends TestGeneratorProps {
-    public AndroidTestGeneratorProps() throws IOException {
-        super();
-    }
+enum class KoanFile(val filename: String) {
+    ASYNC : KoanFile("Async.kt")
+    CONTEXT_UTILS : KoanFile("ContextUtils.kt")
+    CUSTOM : KoanFile("Custom.kt")
+    DATABASE : KoanFile("Database.kt")
+    DIALOGS : KoanFile("Dialogs.kt")
+    HELPERS : KoanFile("Helpers.kt")
+    INTERNALS : KoanFile("Internals.kt")
+    LAYOUTS : KoanFile("Layouts.kt")
+    LISTENERS : KoanFile("Listeners.kt")
+    PROPERTIES : KoanFile("Properties.kt")
+    SERVICES : KoanFile("Services.kt")
+    SUPPORT : KoanFile("Support.kt")
+    VIEWS : KoanFile("Views.kt")
 }

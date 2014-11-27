@@ -21,37 +21,18 @@ import java.util.HashMap
 import java.util.ArrayList
 import java.io.File
 
-open class GeneratorProps(outputDirectory: String = "gen/") : BaseGeneratorProps() {
-
-    override fun getOutputFile(subsystem: Subsystem): File {
-        val parentDirectory = outputDirectory + "src/main/kotlin/"
-        return when (subsystem) {
-            Subsystem.PROPERTIES -> File(parentDirectory + "Properties.kt")
-            Subsystem.VIEWS -> File(parentDirectory + "Views.kt")
-            Subsystem.LISTENERS -> File(parentDirectory + "Listeners.kt")
-            Subsystem.LAYOUTS -> File(parentDirectory + "Layouts.kt")
-            Subsystem.HELPERS -> File(parentDirectory + "Helpers.kt")
-            Subsystem.SUPPORT -> File(parentDirectory + "Support.kt")
-            Subsystem.CUSTOM -> File(parentDirectory + "Custom.kt")
-            Subsystem.ASYNC -> File(parentDirectory + "Async.kt")
-            Subsystem.CONTEXT_UTILS -> File(parentDirectory + "ContextUtils.kt")
-            Subsystem.DIALOGS -> File(parentDirectory + "Dialogs.kt")
-            Subsystem.SERVICES -> File(parentDirectory + "Services.kt")
-            Subsystem.INTERNALS -> File(parentDirectory + "Internals.kt")
-            else -> throw RuntimeException("Unable to get output file for non-existing subsystem $subsystem")
-        }
-    }
-
-    override val indent = "  "
+open class GeneratorConfiguration(outputDirectory: String = "gen/") : BaseGeneratorConfiguration() {
 
     override val outputDirectory = outputDirectory
     override val outputPackage = "kotlinx.android.koan"
 
-    override val viewGroupBaseClass = "android/view/ViewGroup"
-    override val viewBaseClass = "android/view/View"
-
     override val excludedClasses = HashSet(readLines("props/excluded_classes.txt"))
+
     override val excludedMethods = HashSet(readLines("props/excluded_methods.txt"))
+
+    override fun getOutputFile(subsystem: KoanFile): File {
+        return File(outputDirectory + "src/main/kotlin/", subsystem.filename)
+    }
 
     override val imports = listOf(
         "layouts" to "props/imports_layouts.txt",
