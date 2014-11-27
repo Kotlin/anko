@@ -5,6 +5,87 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.Cursor
 import java.util.regex.Pattern
 
+public fun SQLiteDatabase.insert(tableName: String, vararg values: Pair<String, Any>): Long {
+    return insert(tableName, null, values.toContentValues())
+}
+
+public fun SQLiteDatabase.insertOrThrow(tableName: String, vararg values: Pair<String, Any>): Long {
+    return insertOrThrow(tableName, null, values.toContentValues())
+}
+
+public fun SQLiteDatabase.replace(tableName: String, vararg values: Pair<String, Any>): Long {
+    return replace(tableName, null, values.toContentValues())
+}
+
+public fun SQLiteDatabase.replaceOrThrow(tableName: String, vararg values: Pair<String, Any>): Long {
+    return replaceOrThrow(tableName, null, values.toContentValues())
+}
+
+public fun SQLiteDatabase.query(tableName: String, init: SelectQueryBuilder.() -> Unit): Cursor {
+    val builder = SelectQueryBuilder(tableName)
+    builder.init()
+    return builder.exec(this)
+}
+
+public fun SQLiteDatabase.query(tableName: String, vararg columns: String, init: SelectQueryBuilder.() -> Unit): Cursor {
+    val builder = SelectQueryBuilder(tableName)
+    builder.columns(*columns)
+    builder.init()
+    return builder.exec(this)
+}
+
+public fun SQLiteDatabase.update(tableName: String, vararg values: Pair<String, Any>, init: UpdateQueryBuilder.() -> Unit): Int {
+    val builder = UpdateQueryBuilder(this, tableName, values)
+    builder.init()
+    return builder.exec()
+}
+
+public fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = false, vararg columns: Pair<String, SqlOrderDirection>) {
+    val escapedTableName = tableName.replace("`", "``")
+    val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
+    execSQL(
+        columns.map { col ->
+            "${col.first} ${col.second}"
+        }.joinToString(", ", prefix = "CREATE TABLE $ifNotExistsText `$escapedTableName`(", postfix = ");")
+    )
+}
+
+private fun SQLiteDatabase.dropTable(tableName: String, ifNotExists: Boolean = false) {
+    val escapedTableName = tableName.replace("`", "``")
+    val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
+    execSQL("DROP TABLE $ifNotExistsText `$escapedTableName`;")
+}
+
+private fun escape(s: String): String {
+    return '\''+s.replace("'", "''")+'\''
+}
+
+private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^\\{}]+)\\}")
+
+private fun applyArguments(select: String, args: Map<String, Any>): String {
+    val matcher = ARG_PATTERN.matcher(select)
+    val buffer = StringBuffer(select.length())
+    while (matcher.find()) {
+        val key = matcher.group(2)
+        val value = args.get(key)
+        if (value == null)
+            throw IllegalStateException("Can't find a value for key " + key)
+
+        val valueString = if (value is Int || value is Long || value is Byte || value is Short) {
+            value.toString()
+        } else if (value is Boolean) {
+            if (value) "1" else "0"
+        } else if (value is Float || value is Double) {
+            value.toString()
+        } else {
+            escape(value.toString())
+        }
+        matcher.appendReplacement(buffer, matcher.group(1) + valueString)
+    }
+    matcher.appendTail(buffer)
+    return buffer.toString()
+}
+
 private fun Array<Pair<String, Any>>.toContentValues(): ContentValues {
     val values = ContentValues()
     for ((key, value) in this) {
@@ -24,51 +105,6 @@ private fun Array<Pair<String, Any>>.toContentValues(): ContentValues {
     return values
 }
 
-public fun SQLiteDatabase.insert(tableName: String, vararg values: Pair<String, Any>): Long {
-    return insert(tableName, null, values.toContentValues())
-}
-
-public fun SQLiteDatabase.insertOrThrow(tableName: String, vararg values: Pair<String, Any>): Long {
-    return insertOrThrow(tableName, null, values.toContentValues())
-}
-
-public fun SQLiteDatabase.replace(tableName: String, vararg values: Pair<String, Any>): Long {
-    return replace(tableName, null, values.toContentValues())
-}
-
-public fun SQLiteDatabase.replaceOrThrow(tableName: String, vararg values: Pair<String, Any>): Long {
-    return replaceOrThrow(tableName, null, values.toContentValues())
-}
-
-public fun SQLiteDatabase.query(tableName: String, init: QueryBuilder.() -> Unit): Cursor {
-    val builder = QueryBuilder(tableName)
-    builder.init()
-    return builder.exec(this)
-}
-
-public fun SQLiteDatabase.query(tableName: String, vararg columns: String, init: QueryBuilder.() -> Unit): Cursor {
-    val builder = QueryBuilder(tableName)
-    builder.columns(*columns)
-    builder.init()
-    return builder.exec(this)
-}
-
-public fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = false, vararg columns: Pair<String, SqlOrderDirection>) {
-    val escapedTableName = tableName.replace("`", "``")
-    val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
-    execSQL(
-        columns.map { col ->
-            "${col.first} ${col.second}"
-        }.joinToString(", ", prefix = "CREATE TABLE $ifNotExistsText `$escapedTableName`(", postfix = ");")
-    )
-}
-
-private fun SQLiteDatabase.dropTable(tableName: String, ifNotExists: Boolean = false) {
-    val escapedTableName = tableName.replace("`", "``")
-    val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
-    execSQL("DROP TABLE $ifNotExistsText `$escapedTableName`;")
-}
-
 public enum class SqlOrderDirection {
     ASC
     DESC
@@ -82,7 +118,21 @@ public enum class SqlType(val text: String) {
     BLOB : SqlType("BLOB")
 }
 
-public class QueryBuilder(val tableName: String) {
+public class UpdateQueryBuilder(val db: SQLiteDatabase, val tableName: String, val values: Array<Pair<String, Any>>) {
+
+    private var selectionApplied = false
+    private var useNativeSelection = false
+    private var selection: String? = null
+    private var nativeSelectionArgs: Array<String>? = null
+
+    public fun exec(): Int {
+        val finalSelection = if (selectionApplied) selection else null
+        val finalSelectionArgs = if (selectionApplied && useNativeSelection) nativeSelectionArgs else null
+        return db.update(tableName, values.toContentValues(), finalSelection, finalSelectionArgs)
+    }
+}
+
+public class SelectQueryBuilder(val tableName: String) {
     public var distinct: Boolean = false
 
     private val columns = arrayListOf<String>()
@@ -188,37 +238,5 @@ public class QueryBuilder(val tableName: String) {
         useNativeSelection = true
         selection = select
         nativeSelectionArgs = args
-    }
-
-    private fun escape(s: String): String {
-        return '\''+s.replace("'", "''")+'\''
-    }
-
-    private fun applyArguments(select: String, args: Map<String, Any>): String {
-        val matcher = ARG_PATTERN.matcher(select)
-        val buffer = StringBuffer(select.length())
-        while (matcher.find()) {
-            val key = matcher.group(2)
-            val value = args.get(key)
-            if (value == null)
-                throw IllegalStateException("Can't find a value for key " + key)
-
-            val valueString = if (value is Int || value is Long || value is Byte || value is Short) {
-                value.toString()
-            } else if (value is Boolean) {
-                if (value) "1" else "0"
-            } else if (value is Float || value is Double) {
-                value.toString()
-            } else {
-                escape(value.toString())
-            }
-            matcher.appendReplacement(buffer, matcher.group(1) + valueString)
-        }
-        matcher.appendTail(buffer)
-        return buffer.toString()
-    }
-
-    class object {
-        private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^\\{}]+)\\}")
     }
 }
