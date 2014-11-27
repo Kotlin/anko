@@ -24,20 +24,17 @@ import java.io.File;
 
 public class AndroidBigRuntimeTest extends BaseCompileTest {
 
-    private final File testLayoutsDataFile = new File("testdata/org/jetbrains/android/dsl/tests/android/AndroidLayoutsTest.kt");
-    private final File testPropertiesDataFile = new File("testdata/org/jetbrains/android/dsl/tests/android/AndroidPropertiesTest.kt");
-    private final File testSimpleDataFile = new File("testdata/org/jetbrains/android/dsl/tests/android/AndroidSimpleTest.kt");
-    private final File testWidgetsDataFile = new File("testdata/org/jetbrains/android/dsl/tests/android/AndroidWidgetTest.kt");
-    private final File testLayoutParamsDataFile = new File("testdata/org/jetbrains/android/dsl/tests/android/AndroidLayoutParamsTest.kt");
-    private final File testListenerHelpersDataFile = new File("testdata/org/jetbrains/android/dsl/tests/android/AndroidListenerHelpersTest.kt");
-    private final File testMultiMethodListenersFile = new File("testdata/org/jetbrains/android/dsl/tests/android/AndroidMultiMethodListeners.kt");
+    private final File testLayoutsDataFile = new File("testdata/compile/AndroidLayoutsTest.kt");
+    private final File testPropertiesDataFile = new File("testdata/compile/AndroidPropertiesTest.kt");
+    private final File testSimpleDataFile = new File("testdata/compile/AndroidSimpleTest.kt");
+    private final File testWidgetsDataFile = new File("testdata/compile/AndroidWidgetTest.kt");
+    private final File testLayoutParamsDataFile = new File("testdata/compile/AndroidLayoutParamsTest.kt");
+    private final File testListenerHelpersDataFile = new File("testdata/compile/AndroidListenerHelpersTest.kt");
+    private final File testMultiMethodListenersFile = new File("testdata/compile/AndroidMultiMethodListeners.kt");
 
     @BeforeMethod
     public void setUp() throws Exception {
         super.setUp();
-
-        //DSLGenerator generator = new DSLGenerator(new String[]{inputJarFile}, new AndroidTestGeneratorProps());
-        //generator.run();
     }
 
     @Test
