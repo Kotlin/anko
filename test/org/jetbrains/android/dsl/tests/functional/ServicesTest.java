@@ -22,7 +22,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class ServicesTest extends BaseFunctionalTest {
-    private final String testDataFile = "org/jetbrains/android/dsl/tests/functional/ServicesTest.kt";
+    private final String testDataFile = "ServicesTest.kt";
 
     @Override
     @BeforeMethod

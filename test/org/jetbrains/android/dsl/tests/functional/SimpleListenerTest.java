@@ -23,7 +23,7 @@ import org.testng.annotations.Test;
 
 public class SimpleListenerTest extends BaseFunctionalTest {
 
-    private final String testDataFile = "org/jetbrains/android/dsl/tests/functional/SimpleListenerTest.kt";
+    private final String testDataFile = "SimpleListenerTest.kt";
 
     @Override
     @BeforeMethod

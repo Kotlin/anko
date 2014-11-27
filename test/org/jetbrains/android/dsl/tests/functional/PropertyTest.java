@@ -22,7 +22,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class PropertyTest extends BaseFunctionalTest {
-    private final String testDataFile = "org/jetbrains/android/dsl/tests/functional/PropertyTest.kt";
+    private final String testDataFile = "PropertyTest.kt";
 
     @Override
     @BeforeMethod

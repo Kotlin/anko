@@ -22,7 +22,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class ComplexListenerClassTest extends BaseFunctionalTest {
-    private final String testDataFile = "org/jetbrains/android/dsl/tests/functional/ComplexListenerClassTest.kt";
+    private final String testDataFile = "ComplexListenerClassTest.kt";
 
     @Override
     @BeforeMethod
