@@ -22,7 +22,7 @@ class DSLGenerator(
     val version: Int,
     val fVersion: String,
     val jars: List<String>,
-    val props: BaseGeneratorConfiguration): Runnable
+    val config: BaseGeneratorConfiguration): Runnable
 {
 
     private val sVersion = version.toString()
@@ -32,36 +32,36 @@ class DSLGenerator(
 
     private fun copy(original: String) {
         val originalFile = File("props/mvn/$original")
-        val toCreateFile = File((props.outputDirectory + original))
+        val toCreateFile = File((config.outputDirectory + original))
         originalFile.copyTo(toCreateFile)
     }
 
     private fun copy(original: String, process: (String) -> String) {
         val contents = process(readFile("props/mvn/$original"))
-        writeFile(props.outputDirectory + original, contents)
+        writeFile(config.outputDirectory + original, contents)
     }
 
     override fun run() {
         if (fVersion.contains("s"))
-            props.files.add(KoanFile.SUPPORT)
+            config.files.add(KoanFile.SUPPORT)
         else
-            props.files.remove(KoanFile.SUPPORT)
+            config.files.remove(KoanFile.SUPPORT)
 
         val classTree = ClassProcessor(jars).genClassTree()
-        val generator = Generator(classTree, props)
+        val generator = Generator(classTree, config)
         val renderer = Renderer(generator)
         Writer(renderer).write()
 
-        if (props.generateMavenArtifact) {
+        if (config.generateMavenArtifact) {
             //create res directory
-            val resDirectory = File(props.outputDirectory + "src/main/res/")
+            val resDirectory = File(config.outputDirectory + "src/main/res/")
             if (!resDirectory.exists()) {
                 resDirectory.mkdirs()
             }
 
             //write manifest
             val manifest = mvnManifest.replace("%VERSION%", sVersion)
-            writeFile(props.outputDirectory + "src/main/AndroidManifest.xml", manifest)
+            writeFile(config.outputDirectory + "src/main/AndroidManifest.xml", manifest)
 
             //copy gradle wrapper
             copy("gradlew")

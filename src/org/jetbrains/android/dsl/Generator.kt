@@ -46,7 +46,7 @@ data class LayoutParamsNode(val layout: ClassNode, val layoutParams: ClassNode, 
     }
 }
 
-class Generator(val classTree: ClassTree, val props: BaseGeneratorConfiguration) {
+class Generator(val classTree: ClassTree, val config: BaseGeneratorConfiguration) {
 
     //filter off excluded classes and methods
     private val availableClasses = classTree.filter { !it.isExcluded() }
@@ -69,7 +69,7 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorConfiguration)
     }
 
     //find get* methods on View classes, like getText() or getVisibility()
-    private val propertyGetters = if (!props[PROPERTIES]) listOf<MethodNodeWithClass>() else
+    private val propertyGetters = if (!config[PROPERTIES]) listOf<MethodNodeWithClass>() else
         availableMethods.filter {
             it.method.isGetter() && it.clazz.isView() && it.method.isPublic() &&
                 !(it.clazz.isAbstract() && it.clazz.isViewGroup()) &&
@@ -107,7 +107,7 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorConfiguration)
             LayoutParamsNode(layoutClass, layoutParamsClass, layoutParamsClass.getConstructors())
         }
 
-    val services = if (!props[SERVICES]) listOf() else
+    val services = if (!config[SERVICES]) listOf() else
         classTree.findNode("android/content/Context")?.data?.fields
                 ?.filter { it.name.endsWith("_SERVICE") }
                 ?.map { it.name to classTree.findNode("android", it.name.toServiceClassName()) }
@@ -219,9 +219,9 @@ class Generator(val classTree: ClassTree, val props: BaseGeneratorConfiguration)
     }
 
     private fun ClassNode.isExcluded() =
-        this.cleanInternalName() in props.excludedClasses
+        this.cleanInternalName() in config.excludedClasses
     private fun MethodNodeWithClass.isExcluded() =
-        (this.clazz.cleanInternalName() + "#" + this.method.name!!) in props.excludedMethods
+        (this.clazz.cleanInternalName() + "#" + this.method.name!!) in config.excludedMethods
 
     private fun String.toServiceClassName(): String {
         var nextCapital = true

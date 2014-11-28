@@ -27,7 +27,7 @@ import org.jetbrains.android.dsl.ConfigurationTune.*
 
 class Writer(private val renderer: Renderer) {
 
-    val props = renderer.props
+    val config = renderer.config
 
     fun write() {
         sortedSetOf(
@@ -39,22 +39,22 @@ class Writer(private val renderer: Renderer) {
             HELPERS,
             INTERNALS,
             SUPPORT
-        ).forEach { if (props[it]) writeStatic(it) }
+        ).forEach { if (config[it]) writeStatic(it) }
 
         setOf(
             LAYOUTS to ::writeLayouts,
             LISTENERS to ::writeListeners,
             PROPERTIES to ::writeProperties,
             SERVICES to ::writeServices
-        ).forEach { if (props[it.first]) it.second() }
+        ).forEach { if (config[it.first]) it.second() }
 
-        if (props[VIEWS] || props[HELPER_CONSTRUCTORS])
+        if (config[VIEWS] || config[HELPER_CONSTRUCTORS])
             writeViews()
     }
 
     private fun writeLayouts() {
         val imports = Props.imports["layouts"] ?: ""
-        writeToFile(props.getOutputFile(KoanFile.LAYOUTS), renderer.layouts, imports)
+        writeToFile(config.getOutputFile(KoanFile.LAYOUTS), renderer.layouts, imports)
     }
 
     private fun writeListeners() {
@@ -64,48 +64,48 @@ class Writer(private val renderer: Renderer) {
             SIMPLE_LISTENERS to renderer.simpleListeners,
             COMPLEX_LISTENER_CLASSES to renderer.complexListenerClasses,
             COMPLEX_LISTENER_SETTERS to renderer.complexListenerSetters
-        ).forEach { if (props[it.first]) allListeners.addAll(it.second) }
+        ).forEach { if (config[it.first]) allListeners.addAll(it.second) }
 
         if (allListeners.isNotEmpty())
-            writeToFile(props.getOutputFile(KoanFile.LISTENERS), allListeners)
+            writeToFile(config.getOutputFile(KoanFile.LISTENERS), allListeners)
     }
 
     private fun writeProperties() {
-        writeToFile(props.getOutputFile(KoanFile.PROPERTIES), renderer.properties)
+        writeToFile(config.getOutputFile(KoanFile.PROPERTIES), renderer.properties)
     }
 
     private fun writeServices() {
         val imports = Props.imports["services"] ?: ""
-        writeToFile(props.getOutputFile(KoanFile.SERVICES), renderer.services, imports)
+        writeToFile(config.getOutputFile(KoanFile.SERVICES), renderer.services, imports)
     }
 
     private fun writeViews() {
         val allViews = arrayListOf<String>()
 
-        if (props[VIEWS]) {
+        if (config[VIEWS]) {
             allViews.addAll(renderer.views)
             allViews.addAll(renderer.viewGroups)
         }
 
-        if (props[HELPER_CONSTRUCTORS])
+        if (config[HELPER_CONSTRUCTORS])
             allViews.addAll(renderer.helperConstructors)
 
         val imports = Props.imports["views"] ?: ""
-        writeToFile(props.getOutputFile(KoanFile.VIEWS), allViews, imports)
+        writeToFile(config.getOutputFile(KoanFile.VIEWS), allViews, imports)
     }
 
     private fun writeStatic(subsystem: KoanFile) {
         val filename = "props/static/src/${subsystem.filename}"
         val contents = Files.readAllLines(Paths.get(filename), StandardCharsets.UTF_8)
-        writeToFile(props.getOutputFile(subsystem), contents, "", false)
+        writeToFile(config.getOutputFile(subsystem), contents, "", false)
     }
 
     private fun writeToFile(file: File, text: List<String>, imports: String = "", generatePackage: Boolean = true) {
         val writer = PrintWriter(file)
-        if (props.generatePackage && generatePackage) {
-            writer.println("package ${props.outputPackage}\n")
+        if (config.generatePackage && generatePackage) {
+            writer.println("package ${config.outputPackage}\n")
         }
-        if (props.generateImports && imports.isNotEmpty()) {
+        if (config.generateImports && imports.isNotEmpty()) {
             writer.println(imports)
             writer.println()
         }

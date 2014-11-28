@@ -25,34 +25,34 @@ import org.jetbrains.android.dsl.ConfigurationTune.*
 
 class Renderer(private val generator: Generator) {
 
-    val props = generator.props
+    val config = generator.config
 
-    private fun buffer(init: Buffer.() -> Unit) = Buffer(props.indent, 0, init)
-    private fun buffer(indent: Int, init: Buffer.() -> Unit) = Buffer(props.indent, indent, init)
+    private fun buffer(init: Buffer.() -> Unit) = Buffer(config.indent, 0, init)
+    private fun buffer(indent: Int, init: Buffer.() -> Unit) = Buffer(config.indent, indent, init)
 
     /*generate functions for making views. example:
         public fun ViewManager.textView(init: TextView.() -> Unit): TextView =
             addView(TextView(dslContext), init, this)
     */
-    val views = if (!props[VIEWS]) listOf() else
+    val views = if (!config[VIEWS]) listOf() else
         generateViews(generator.viewClasses) { cleanInternalName(it) }
 
     /*generate functions for making view groups (containers). example:
         public fun ViewManager.linearLayout(init: _LinearLayout.() -> Unit): LinearLayout
             = addView(_LinearLayout(dslContext), init, this)
     */
-    val viewGroups = if (!props[VIEWS]) listOf() else
+    val viewGroups = if (!config[VIEWS]) listOf() else
         generateViews(generator.viewGroupClasses) { "_" + stripClassName(cleanInternalName(it)) }
 
     val helperConstructors =
-        if (!props[HELPER_CONSTRUCTORS]) listOf<String>() else genHelperConstructors()
+        if (!config[HELPER_CONSTRUCTORS]) listOf<String>() else genHelperConstructors()
 
     /*generate properties for views. example:
         var android.widget.TextView.text: CharSequence?
             get() = getText()
             set(v) = setText(v)
      */
-    val properties = if (!props[PROPERTIES]) listOf() else
+    val properties = if (!config[PROPERTIES]) listOf() else
         generator.properies.map {
             val getter = it.getter
             val className = cleanInternalName(getter.clazz.name!!)
@@ -90,29 +90,29 @@ class Renderer(private val generator: Generator) {
             fun android.view.View.onClick(l: (android.view.View?) -> Unit) = setOnClickListener(l)
         complex listener (with bunch of methods) contains helper class and an extension method fot each listener method.
      */
-    val simpleListeners = if (!props[SIMPLE_LISTENERS]) listOf() else
+    val simpleListeners = if (!config[SIMPLE_LISTENERS]) listOf() else
         generator.listeners.filter { it is SimpleListener }.map { renderSimpleListener(it as SimpleListener) }
 
     private val complexListeners =
-        if (!props[COMPLEX_LISTENER_CLASSES] && !props[COMPLEX_LISTENER_SETTERS])
+        if (!config[COMPLEX_LISTENER_CLASSES] && !config[COMPLEX_LISTENER_SETTERS])
             listOf()
         else generator.listeners.filter { it is ComplexListener }
 
-    val complexListenerSetters = if (!props[COMPLEX_LISTENER_SETTERS]) listOf() else
+    val complexListenerSetters = if (!config[COMPLEX_LISTENER_SETTERS]) listOf() else
         complexListeners.map { renderComplexListenerSetters(it as ComplexListener) }
 
-    val complexListenerClasses = if (!props[COMPLEX_LISTENER_CLASSES]) listOf() else
+    val complexListenerClasses = if (!config[COMPLEX_LISTENER_CLASSES]) listOf() else
         complexListeners.map { renderComplexListenerClass(it as ComplexListener) }
 
     //generated layout classes with custom LayoutParams
-    val layouts = if (!props[LAYOUTS]) listOf() else
+    val layouts = if (!config[LAYOUTS]) listOf() else
         generator.layouts.map { renderLayout(it) }
 
     val services = generator.services.map {
         val propertyName = it.second!!.data.cleanNameDecap()
         val className = it.second!!.data.cleanInternalName()
         "public val Context.$propertyName: $className\n"+
-                "${props.indent}get() = getSystemService(Context.${it.first}) as $className"
+                "${config.indent}get() = getSystemService(Context.${it.first}) as $className"
     }
 
     private fun generateViews(
@@ -127,7 +127,7 @@ class Renderer(private val generator: Generator) {
             buffer {
                 line("public fun ViewManager.$funcName(init: $className.() -> Unit = defaultInit): $typeName =")
                 line("addView($className(dslContext), init, this)")
-                if (props[TOP_LEVEL_DSL_ITEMS]) {
+                if (config[TOP_LEVEL_DSL_ITEMS]) {
                     fun add(extendFor: String, ctx: String) {
                         line("public fun $extendFor.$funcName(init: $className.() -> Unit = defaultInit): $typeName =")
                         line("add${extendFor}TopLevelView($className($ctx), init)")
