@@ -41,13 +41,13 @@ open class ConverterSettings : BaseConverterSettings() {
 
     override val ignoredProperties: Set<String> = readIgnoredProps()
     override val helperConProps: HashMap<String, ArrayList<Set<String>>> = readHelperConProps()
-    override val quotedKeys: Set<String> = props.getProperty("quoted_keys", "")!!.split(",").toSet()
+    override val quotedKeys: Set<String> = props.getProperty("quoted_keys", "").split(",").toSet()
 
     override val dslPackage: String = props.getProperty("dsl_package") ?: "com.example.dsl"
     override val className: String = props.getProperty("class_name") ?: "Foo"
 
     private fun readIgnoredProps(): Set<String> {
-        return props.getProperty("ignored_props", "")!!.split(",").toSet()
+        return props.getProperty("ignored_props", "").split(",").toSet()
     }
 
     private fun readHelperConProps(): HashMap<String, ArrayList<Set<String>>> {
@@ -71,6 +71,6 @@ open class ConverterSettings : BaseConverterSettings() {
     }
 
     private fun readLines(fileName: String): MutableList<String> {
-        return Files.readAllLines(Paths.get(fileName)!!, StandardCharsets.UTF_8)
+        return Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8)
     }
 }

@@ -55,7 +55,7 @@ class Renderer(private val generator: Generator) {
     val properties = if (!config[PROPERTIES]) listOf() else
         generator.properies.map {
             val getter = it.getter
-            val className = cleanInternalName(getter.clazz.name!!)
+            val className = cleanInternalName(getter.clazz.name)
             val propertyName = it.name
             val fullPropertyName = "$className.$propertyName"
             val bestSetter = it.setters.head
@@ -65,7 +65,7 @@ class Renderer(private val generator: Generator) {
 
             buffer {
                 line("public $mutability $fullPropertyName: $returnType")
-                indent.line("get() = ${getter.method.name!!}()")
+                indent.line("get() = ${getter.method.name}()")
                 if (bestSetter != null) {
                     val arg = if (returnType.endsWith("?")) "v!!" else "v"
                     indent.line("set(v) = ${bestSetter.method.name}($arg)")
@@ -73,7 +73,7 @@ class Renderer(private val generator: Generator) {
 
                 if (otherSetters.notEmpty && supportsResourceSetter(returnType)) {
                     val resourceSetter = otherSetters.firstOrNull {
-                        (it.method.arguments?.size ?: 0) == 1 &&
+                        (it.method.arguments?.size() ?: 0) == 1 &&
                             (it.method.arguments?.get(0)?.getClassName() == "int")
                     }
                     if (resourceSetter != null) {
@@ -120,9 +120,9 @@ class Renderer(private val generator: Generator) {
             nameResolver: (String) -> String): List<String>
     {
         return views.filter { !it.isAbstract() && it.hasSimpleConstructor() }.map { clazz ->
-            val typeName = cleanInternalName(clazz.name!!)
-            val className = nameResolver(clazz.name!!)
-            val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name!!)))
+            val typeName = cleanInternalName(clazz.name)
+            val className = nameResolver(clazz.name)
+            val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name)))
 
             buffer {
                 line("public fun ViewManager.$funcName(init: $className.() -> Unit = defaultInit): $typeName =")
@@ -154,14 +154,14 @@ class Renderer(private val generator: Generator) {
 
     fun genHelperConstructors(): List<String> {
         fun addMethods(node: ClassTreeNode, writeTo: ArrayList<MethodNode>): ArrayList<MethodNode> {
-            writeTo.addAll(node.data.methods!!)
+            writeTo.addAll(node.data.methods)
             if (node.parent != null)
                 addMethods(node.parent!!, writeTo)
             return writeTo
         }
 
         fun resolveAllMethods(clazz: ClassNode): List<MethodNode> {
-            return addMethods(generator.classTree.findNode(clazz)!!, ArrayList<MethodNode>())
+            return addMethods(generator.classTree.findNode(clazz)!!, arrayListOf<MethodNode>())
         }
 
         fun collectProperties(clazz: ClassNode, needed: List<Variable>): List<MethodNode> {
@@ -169,7 +169,7 @@ class Renderer(private val generator: Generator) {
             needed.forEach { neededProp ->
                 val propList = resolveAllMethods(clazz)
                 val found = propList.firstOrNull {
-                    it.name.equals("set${neededProp.name.capitalize()}") && it.arguments?.size == 1 &&
+                    it.name.equals("set${neededProp.name.capitalize()}") && it.arguments?.size() == 1 &&
                         cleanInternalName(it.arguments?.get(0)?.getClassName() ?: "").endsWith(neededProp.typ)
                 }
                 if (found == null)
@@ -209,9 +209,9 @@ class Renderer(private val generator: Generator) {
     //get a name for helper class. Listener interfaces are often inner so we'll separate the base class name with "_"
     //For example, for class android.widget.SearchView.OnSuggestionListener it would be SearchView_OnSuggessionListener
     fun getHelperClassName(listener: ComplexListener): String {
-        val basename = stripClassName(listener.clazz.name!!).replace("$", "_")
+        val basename = stripClassName(listener.clazz.name).replace("$", "_")
         val setterClassName = listener.setter.clazz.cleanName()
-        val setterName = setterClassName.replace(".", "_") + "_" + listener.setter.method.name!!
+        val setterName = setterClassName.replace(".", "_") + "_" + listener.setter.method.name
         return "__" + setterName + "_" + basename.substring(basename.lastIndexOf("/") + 1)
     }
 
@@ -316,6 +316,6 @@ class Renderer(private val generator: Generator) {
     }
 
     //only <init>(Context) View constructors now supported
-    private fun ClassNode.hasSimpleConstructor() = getConstructors().any { it.arguments?.size == 1 }
+    private fun ClassNode.hasSimpleConstructor() = getConstructors().any { it.arguments?.size() == 1 }
 
 }

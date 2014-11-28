@@ -43,7 +43,7 @@ fun cleanInternalName(name: String): String {
 }
 
 fun ClassNode.cleanName(): String {
-    return stripClassName(cleanInternalName(name!!))
+    return stripClassName(cleanInternalName(name))
 }
 
 fun ClassNode.cleanNameDecap(): String {
@@ -52,7 +52,7 @@ fun ClassNode.cleanNameDecap(): String {
 
 fun ClassNode.buldTypeParams(): String {
     return if (signature != null) {
-        val wtf = parseGenericMethodSignature(signature!!)
+        val wtf = parseGenericMethodSignature(signature)
         if (wtf.typeParameters.isEmpty()) {
             return ""
         }
@@ -64,7 +64,7 @@ fun ClassNode.buldTypeParams(): String {
 }
 
 fun ClassNode.cleanInternalName(): String {
-    return name!!.replace('/', '.').replace('$', '.') + buldTypeParams()
+    return name.replace('/', '.').replace('$', '.') + buldTypeParams()
 }
 
 fun ClassNode.toContainerName() = "_${cleanName()}"
@@ -72,7 +72,7 @@ fun ClassNode.toContainerName() = "_${cleanName()}"
 fun ClassNode.toContainerInternalName() = "_${cleanInternalName()}"
 
 fun ClassNode.isInner(): Boolean {
-    return name!!.contains("$")
+    return name.contains("$")
 }
 
 fun ClassNode.isAbstract(): Boolean {

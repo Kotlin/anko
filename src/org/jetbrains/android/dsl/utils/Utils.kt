@@ -68,7 +68,7 @@ fun Type.toStr(nullable: Boolean = true): String {
         }
         else -> {
             try {
-                typeMap(cleanInternalName(getInternalName()!!)) + if (nullable) "?" else ""
+                typeMap(cleanInternalName(getInternalName())) + if (nullable) "?" else ""
             } catch (e: NullPointerException) {
                 "INVALID"
             }
@@ -105,7 +105,7 @@ fun Type.getDefaultValue() : String {
         }
         else -> {
             try {
-                typeMap(cleanInternalName(getInternalName()!!)) + "()"
+                typeMap(cleanInternalName(getInternalName())) + "()"
             } catch (e: NullPointerException) {
                 "INVALID"
             }
@@ -128,7 +128,7 @@ fun writeFile(fileName: String, text: String) {
 }
 
 fun readLines(fileName: String): MutableList<String> {
-    return Files.readAllLines(Paths.get(fileName)!!, StandardCharsets.UTF_8)
+    return Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8)
 }
 
 public fun <K, V, M: MutableMap<K, V>> Iterator<Pair<K, V>>.toMutableMap(map: M): M {

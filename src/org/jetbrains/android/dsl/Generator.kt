@@ -30,7 +30,7 @@ abstract class Listener(val setter: MethodNodeWithClass, val listener: ClassNode
 data class SimpleListener(setter: MethodNodeWithClass, val clazz: ClassNode, val method: ListenerMethod):
     Listener(setter, clazz) {
     override fun toString(): String {
-        return "SimpleListener{${setter.toStringCompact()} <- ${clazz.name!!}: ${method.name}}"
+        return "SimpleListener{${setter.toStringCompact()} <- ${clazz.name}: ${method.name}}"
     }
 }
 data class ComplexListener(setter: MethodNodeWithClass, val clazz: ClassNode, val methods: List<ListenerMethod>):
@@ -73,9 +73,9 @@ class Generator(val classTree: ClassTree, val config: BaseGeneratorConfiguration
         availableMethods.filter {
             it.method.isGetter() && it.clazz.isView() && it.method.isPublic() &&
                 !(it.clazz.isAbstract() && it.clazz.isViewGroup()) &&
-                it.method.arguments?.size == 0 && !it.method.getReturnType().isVoid()
+                it.method.arguments?.size() == 0 && !it.method.getReturnType().isVoid()
         }.fold(TreeMap<String, MethodNodeWithClass>(), {r, t ->
-            val key = t.clazz.name!! + "#" + t.method.name
+            val key = t.clazz.name + "#" + t.method.name
             if (!r.contains(key)) r.put(key, t)
             r
         }).values()
@@ -88,9 +88,9 @@ class Generator(val classTree: ClassTree, val config: BaseGeneratorConfiguration
             //find all methods named "set*", with uppercased letter after "set" in a T:View class
             //also method must be public and have only one argument
             name.startsWith("set") && name.length > 3 && Character.isUpperCase(name.charAt(3)) &&
-                it.clazz.isView() && it.method.isPublic() && (it.method.arguments?.size) == 1 &&
-                !(it.method.name!!.startsWith("setOn") && it.method.name!!.endsWith("Listener"))
-        }.groupBy { it.clazz.name!! + "#"+it.method.name!! }
+                it.clazz.isView() && it.method.isPublic() && (it.method.arguments?.size()) == 1 &&
+                !(it.method.name.startsWith("setOn") && it.method.name.endsWith("Listener"))
+        }.groupBy { it.clazz.name + "#" + it.method.name }
 
     //a pair of getter method and bunch of setters for the property. For example,
     //android.widget.TextView contains getText() and various setText() methods, so the "text"
@@ -120,7 +120,7 @@ class Generator(val classTree: ClassTree, val config: BaseGeneratorConfiguration
             setters: Map<String, List<MethodNodeWithClass>>) : List<ViewProperty> {
         return getters.map { getter ->
             val name = decapitalize(getter.method.toProperty())
-            val settersKey = getter.clazz.name!! + "#set${getter.method.toCapitalizedProperty()}"
+            val settersKey = getter.clazz.name + "#set${getter.method.toCapitalizedProperty()}"
             val settersList = setters.get(settersKey) ?: listOf()
             if (settersList.isNotEmpty()) {
                 val splittedSetters = settersList.partition { Arrays.equals(it.method.arguments, getter.method.arguments) }
@@ -137,7 +137,7 @@ class Generator(val classTree: ClassTree, val config: BaseGeneratorConfiguration
         return when (methods?.size ?: 0) {
             1 -> {
                 //if it's a simple listener, with just one method
-                val rawName = setter.method.name!!
+                val rawName = setter.method.name
                 //delete "setOn" end "Listener" parts of String
                 val name = decapitalize(rawName.substring("set".length).dropLast("Listener".length))
                 val method = methods!![0]
@@ -150,7 +150,7 @@ class Generator(val classTree: ClassTree, val config: BaseGeneratorConfiguration
             else -> {
                 //if a complex listener
                 val listenerMethods = methods?.map { method ->
-                    val methodName = method.name!!
+                    val methodName = method.name
                     val argumentTypes = method.fmtArgumentsTypes()
                     val returnType = method.getReturnType().toStr()
                     ListenerMethod(method, methodName, argumentTypes, returnType)
@@ -221,7 +221,7 @@ class Generator(val classTree: ClassTree, val config: BaseGeneratorConfiguration
     private fun ClassNode.isExcluded() =
         this.cleanInternalName() in config.excludedClasses
     private fun MethodNodeWithClass.isExcluded() =
-        (this.clazz.cleanInternalName() + "#" + this.method.name!!) in config.excludedMethods
+        (this.clazz.cleanInternalName() + "#" + this.method.name) in config.excludedMethods
 
     private fun String.toServiceClassName(): String {
         var nextCapital = true

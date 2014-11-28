@@ -90,9 +90,9 @@ fun parseGenericMethodSignature(signature: String): GenericMethodSignature {
         object : SignatureVisitor(Opcodes.ASM4) {
             var bounds = ArrayList<GenericType>()
 
-            public override fun visitFormalTypeParameter(name: String?) {
+            public override fun visitFormalTypeParameter(name: String) {
                 bounds = ArrayList<GenericType>()
-                var param = TypeParameter(name!!, bounds)
+                var param = TypeParameter(name, bounds)
                 typeParameters.add(param)
             }
 
@@ -129,8 +129,8 @@ private class GenericTypeParser(val result: GenericTypeImpl) : SignatureVisitor(
         result.classifierVar = BaseType(descriptor)
     }
 
-    override fun visitTypeVariable(name: String?) {
-        result.classifierVar = TypeVariable(name!!)
+    override fun visitTypeVariable(name: String) {
+        result.classifierVar = TypeVariable(name)
     }
 
     override fun visitArrayType(): SignatureVisitor {
@@ -140,15 +140,15 @@ private class GenericTypeParser(val result: GenericTypeImpl) : SignatureVisitor(
         return GenericTypeParser(argument)
     }
 
-    override fun visitClassType(name: String?) {
-        result.classifierVar = ToplevelClass(name!!)
+    override fun visitClassType(name: String) {
+        result.classifierVar = ToplevelClass(name)
     }
 
-    override fun visitInnerClassType(name: String?) {
+    override fun visitInnerClassType(name: String) {
         val outer = GenericTypeImpl()
         outer.classifierVar = result.classifier
         outer.arguments.addAll(result.arguments)
-        result.classifierVar = InnerClass(outer, name!!)
+        result.classifierVar = InnerClass(outer, name)
         result.arguments.clear()
     }
 

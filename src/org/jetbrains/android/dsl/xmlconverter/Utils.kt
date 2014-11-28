@@ -28,8 +28,8 @@ fun isSkippableAttribute(name: String?): Boolean {
 public fun Attributes.toMap(): HashMap<String, String> {
     val res = HashMap<String, String>()
     for (index in 0..getLength() - 1) {
-        val attrName = getLocalName(index)!!
-        val attrVal = getValue(index)!!
+        val attrName = getLocalName(index)
+        val attrVal = getValue(index)
         res[attrName] = attrVal
     }
     return res

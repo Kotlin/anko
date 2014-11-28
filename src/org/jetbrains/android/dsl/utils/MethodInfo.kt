@@ -29,7 +29,7 @@ fun genericTypeToStr(param: GenericType): String {
     var res = StringBuilder()
     res append when(param.classifier) {
         is ToplevelClass -> cleanInternalName((param.classifier as ToplevelClass).internalName)
-        is BaseType -> Type.getType("${(param.classifier as BaseType).descriptor}")!!.toStr()
+        is BaseType -> Type.getType("${(param.classifier as BaseType).descriptor}").toStr()
         else -> return "" //throw DSLGeneratorException("Unexpected classifier of generic type: ${param.classifier}")
     }
     if (param.arguments.size > 0) {
@@ -56,18 +56,18 @@ fun genericTypeToStr(param: GenericType): String {
 
 fun MethodNode.buildKotlinSignature(): List<String> {
     if (signature == null)
-        return ArrayList<String>()
-    val parsed = parseGenericMethodSignature(signature!!)
+        return listOf()
+    val parsed = parseGenericMethodSignature(signature)
     return parsed.valueParameters.map { genericTypeToStr(it.genericType) }
 }
 
 fun MethodNode.processArguments(skipType: String = "",  app: (argName: String, argType: String, nullable: String) -> String): String {
     if (getArgumentCount() == 0)
         return ""
-    val locals = if (localVariables == null || localVariables!!.isEmpty())
+    val locals = if (localVariables == null || localVariables.isEmpty())
         HashMap<Int, LocalVariableNode>()
     else
-        localVariables!!.toMap { a -> a.index to a }
+        localVariables.toMap { a -> a.index to a }
     val buf = StringBuffer()
     var argNum = 0
     var nameIndex = if (isStatic()) 0 else 1
@@ -136,19 +136,19 @@ fun MethodNode.isStatic(): Boolean {
 }
 
 fun MethodNode.isGetter(): Boolean {
-    return (((name!!.startsWith("get") && name!!.length > 3 && Character.isUpperCase(name!!.charAt(3)))) ||
-        (name!!.startsWith("is") && name!!.length > 2 && Character.isUpperCase(name!!.charAt(2))) &&
-        arguments?.size == 0 && (getReturnType().getSort() != Type.VOID))
+    return (((name.startsWith("get") && name.length > 3 && Character.isUpperCase(name.charAt(3)))) ||
+        (name.startsWith("is") && name.length > 2 && Character.isUpperCase(name.charAt(2))) &&
+        arguments?.size() == 0 && (getReturnType().getSort() != Type.VOID))
 }
 
 fun MethodNode.isSetter(): Boolean {
-    return ((name!!.startsWith("set") && name!!.length > 3) && arguments?.size == 1)
+    return ((name.startsWith("set") && name.length > 3) && arguments?.size() == 1)
 }
 
 fun MethodNode.isProperty(): Boolean {
-    return ((name!!.startsWith("set") && name!!.length > 3) ||
-        (name!!.startsWith("get") && name!!.length > 3) ||
-        (name!!.startsWith("is") && name!!.length > 2))
+    return ((name.startsWith("set") && name.length > 3) ||
+        (name.startsWith("get") && name.length > 3) ||
+        (name.startsWith("is") && name.length > 2))
 }
 
 fun MethodNode.isProperty(prop: String): Boolean {
@@ -172,30 +172,30 @@ fun MethodNode.isGeneric(): Boolean {
 
 fun MethodNode.getArgumentCount(): Int {
     //wtf !!
-    return if (arguments != null) arguments!!.size else 0
+    return if (arguments != null) arguments!!.size() else 0
 }
 
 fun MethodNode.getReturnType(): Type {
-    return Type.getReturnType(desc)!!
+    return Type.getReturnType(desc)
 }
 
 fun MethodNode.renderReturnType(): String {
-    return if(signature != null) genericTypeToStr(parseGenericMethodSignature(signature!!).returnType)
+    return if(signature != null) genericTypeToStr(parseGenericMethodSignature(signature).returnType)
     else getReturnType().toStr()
 }
 
 fun MethodNode.toProperty(): String {
-    val tmp = if (name!!.startsWith("get") || name!!.startsWith("set"))
-        name!!.substring(3)
+    val tmp = if (name.startsWith("get") || name.startsWith("set"))
+        name.substring(3)
     else
-        name!!.substring(2)
+        name.substring(2)
     return decapitalize(tmp)
 }
 
 fun MethodNode.toCapitalizedProperty(): String {
-    val tmp = if (name!!.startsWith("get") || name!!.startsWith("set"))
-        name!!.substring(3)
+    val tmp = if (name.startsWith("get") || name.startsWith("set"))
+        name.substring(3)
     else
-        name!!.substring(2)
+        name.substring(2)
     return tmp
 }

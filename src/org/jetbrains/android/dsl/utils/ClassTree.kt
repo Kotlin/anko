@@ -39,7 +39,7 @@ class ClassTree : Iterable<ClassNode>{
     public fun add(_class: ClassNode) {
         val parent = findNode(root, _class.superName)
         val newNode: ClassTreeNode
-        val orphans = getOrphansOf(_class.name!!)
+        val orphans = getOrphansOf(_class.name)
         if (parent != null) {
             newNode = ClassTreeNode(parent, _class)
             parent.children.add(newNode)
@@ -62,7 +62,7 @@ class ClassTree : Iterable<ClassNode>{
         val parent = findNode(ancestorName)
         if (parent == null)
             throw NoSuchClassException()
-        val child = findNode(parent, _class.name!!)
+        val child = findNode(parent, _class.name)
         if ((child == null) || (child == parent))
             return false
         else
@@ -86,7 +86,7 @@ class ClassTree : Iterable<ClassNode>{
         val node = findNode(root, _class)
         if (node == null)
             throw NoSuchClassException()
-        return findParentIf(node, { it.data.methods!!.any { it.isProperty(property) } })?.data
+        return findParentIf(node, { it.data.methods.any { it.isProperty(property) } })?.data
     }
 
     private fun getOrphansOf(parentClassName: String): List<ClassTreeNode> {

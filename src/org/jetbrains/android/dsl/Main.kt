@@ -21,7 +21,7 @@ import org.jetbrains.android.dsl.utils.DirectoryFilter
 import org.jetbrains.android.dsl.utils.JarFilter
 
 fun main(args: Array<String>) {
-    if (args.size>0) {
+    if (args.size()>0) {
         args.forEach {
             arg -> when (arg) {
                 "gen", "generate" -> gen()
