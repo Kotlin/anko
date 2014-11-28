@@ -62,12 +62,8 @@ abstract class BaseGeneratorConfiguration {
     abstract val outputDirectory: String
     abstract val outputPackage: String
 
-    abstract val imports: HashMap<String, String>
-
     abstract val excludedClasses: Set<String>
     abstract val excludedMethods: Set<String>
-    abstract val helperConstructors: Map<String, List<List<Variable>>>
-    abstract val customMethodParameters: Map<String, String>
 
     public fun get(file: KoanFile): Boolean = files.contains(file)
 

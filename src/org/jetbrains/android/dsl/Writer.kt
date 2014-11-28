@@ -53,7 +53,7 @@ class Writer(private val renderer: Renderer) {
     }
 
     private fun writeLayouts() {
-        val imports = props.imports["layouts"] ?: ""
+        val imports = Props.imports["layouts"] ?: ""
         writeToFile(props.getOutputFile(KoanFile.LAYOUTS), renderer.layouts, imports)
     }
 
@@ -75,7 +75,7 @@ class Writer(private val renderer: Renderer) {
     }
 
     private fun writeServices() {
-        val imports = props.imports["services"] ?: ""
+        val imports = Props.imports["services"] ?: ""
         writeToFile(props.getOutputFile(KoanFile.SERVICES), renderer.services, imports)
     }
 
@@ -90,7 +90,7 @@ class Writer(private val renderer: Renderer) {
         if (props[HELPER_CONSTRUCTORS])
             allViews.addAll(renderer.helperConstructors)
 
-        val imports = props.imports["views"] ?: ""
+        val imports = Props.imports["views"] ?: ""
         writeToFile(props.getOutputFile(KoanFile.VIEWS), allViews, imports)
     }
 

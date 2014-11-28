@@ -180,9 +180,9 @@ class Renderer(private val generator: Generator) {
         }
 
         val ret = arrayListOf<String>()
-        generator.viewClasses.filter { props.helperConstructors.contains(it.cleanInternalName()) }.forEach { view ->
+        generator.viewClasses.filter { Props.helperConstructors.contains(it.cleanInternalName()) }.forEach { view ->
             val viewClassName = view.cleanInternalName()
-            val helperConstructors = props.helperConstructors.get(view.cleanInternalName())!!
+            val helperConstructors = Props.helperConstructors.get(view.cleanInternalName())!!
 
             for (constructor in helperConstructors) {
                 val functionName = view.cleanName().decapitalize()
@@ -266,7 +266,7 @@ class Renderer(private val generator: Generator) {
         val listenerMethods = listener.methods.map { method ->
             val varName = method.name.decapitalize()
             val customArgumentsKey = "$listenerClassName#${method.name}"
-            val customArguments = props.customMethodParameters.get(customArgumentsKey)
+            val customArguments = Props.customMethodParameters.get(customArgumentsKey)
             val arguments = customArguments ?: method.method.fmtArguments()
             val substitution = method.method.fmtArgumentsNames()
             "override fun ${method.name}($arguments) = _$varName($substitution)"
