@@ -23,37 +23,26 @@ import org.jetbrains.android.dsl.utils.Buffer
 import org.jetbrains.android.dsl.KoanFile.*
 import org.jetbrains.android.dsl.ConfigurationTune.*
 
-class Renderer(private val generator: Generator) {
-
-    val config = generator.config
+class Renderer(private val generator: Generator) : Configurable(generator.config) {
 
     private fun buffer(init: Buffer.() -> Unit) = Buffer(config.indent, 0, init)
     private fun buffer(indent: Int, init: Buffer.() -> Unit) = Buffer(config.indent, indent, init)
 
-    /*generate functions for making views. example:
-        public fun ViewManager.textView(init: TextView.() -> Unit): TextView =
-            addView(TextView(dslContext), init, this)
-    */
-    val views = if (!config[VIEWS]) listOf() else
+    val views = generate(VIEWS) {
         generateViews(generator.viewClasses) { cleanInternalName(it) }
+    }
 
-    /*generate functions for making view groups (containers). example:
-        public fun ViewManager.linearLayout(init: _LinearLayout.() -> Unit): LinearLayout
-            = addView(_LinearLayout(dslContext), init, this)
-    */
-    val viewGroups = if (!config[VIEWS]) listOf() else
+    val viewGroups = generate(VIEWS) {
         generateViews(generator.viewGroupClasses) { "_" + stripClassName(cleanInternalName(it)) }
+    }
 
-    val helperConstructors =
-        if (!config[HELPER_CONSTRUCTORS]) listOf<String>() else genHelperConstructors()
+    val helperConstructors = generate(HELPER_CONSTRUCTORS) {
+        genHelperConstructors()
+    }
 
-    /*generate properties for views. example:
-        var android.widget.TextView.text: CharSequence?
-            get() = getText()
-            set(v) = setText(v)
-     */
-    val properties = if (!config[PROPERTIES]) listOf() else
-        generator.properies.map {
+    // Generate View extension properties (with "best" setter)
+    val properties = generate(PROPERTIES) {
+        generator.properties.map {
             val getter = it.getter
             val className = cleanInternalName(getter.clazz.name)
             val propertyName = it.name
@@ -61,7 +50,7 @@ class Renderer(private val generator: Generator) {
             val bestSetter = it.setters.head
             val mutability = if (bestSetter != null) "var" else "val"
             val returnType = getter.method.renderReturnType()
-            val otherSetters = if (it.setters.size>1) it.setters.tail else listOf()
+            val otherSetters = if (it.setters.size > 1) it.setters.tail else listOf()
 
             buffer {
                 line("public $mutability $fullPropertyName: $returnType")
@@ -71,42 +60,53 @@ class Renderer(private val generator: Generator) {
                     indent.line("set(v) = ${bestSetter.method.name}($arg)")
                 }
 
-                if (otherSetters.notEmpty && supportsResourceSetter(returnType)) {
-                    val resourceSetter = otherSetters.firstOrNull {
-                        (it.method.arguments?.size() ?: 0) == 1 &&
-                            (it.method.arguments?.get(0)?.getClassName() == "int")
-                    }
-                    if (resourceSetter != null) {
-                        line("public var ${fullPropertyName}Resource: Int")
-                        indent.line("get() = throw KoanException(\"'${fullPropertyName}Resource' property doesn't have a getter\")")
-                        indent.line("set(v) = ${resourceSetter.method.name}(v)")
-                    }
-                }
+                renderResourceProperty(otherSetters, fullPropertyName, returnType)
             }.toString()
         }
+    }
 
-    //render listeners
-    /*simple listener (interface with one method) contains only an extension method, like this:
-            fun android.view.View.onClick(l: (android.view.View?) -> Unit) = setOnClickListener(l)
-        complex listener (with bunch of methods) contains helper class and an extension method fot each listener method.
-     */
-    val simpleListeners = if (!config[SIMPLE_LISTENERS]) listOf() else
-        generator.listeners.filter { it is SimpleListener }.map { renderSimpleListener(it as SimpleListener) }
+    private fun Buffer.renderResourceProperty(
+        otherSetters: List<MethodNodeWithClass>,
+        fullPropertyName: String,
+        returnType: String)
+    {
+        if (otherSetters.notEmpty && supportsResourceSetter(returnType)) {
+            val resourceSetter = otherSetters.firstOrNull {
+                (it.method.arguments?.size() ?: 0) == 1 &&
+                    (it.method.arguments?.get(0)?.getClassName() == "int")
+            }
+            if (resourceSetter != null) {
+                line("public var ${fullPropertyName}Resource: Int")
+                indent.line("get() = throw KoanException(\"'${fullPropertyName}Resource' property doesn't have a getter\")")
+                indent.line("set(v) = ${resourceSetter.method.name}(v)")
+            }
+        }
+    }
 
-    private val complexListeners =
-        if (!config[COMPLEX_LISTENER_CLASSES] && !config[COMPLEX_LISTENER_SETTERS])
-            listOf()
-        else generator.listeners.filter { it is ComplexListener }
+    // Render simple listeners (interfaces with one method)
+    val simpleListeners = generate(SIMPLE_LISTENERS) {
+        generator.listeners
+            .filter { it is SimpleListener }
+            .map { renderSimpleListener(it as SimpleListener) }
+    }
 
-    val complexListenerSetters = if (!config[COMPLEX_LISTENER_SETTERS]) listOf() else
+    // Render complex listeners (interfaces with more than one method)
+    private val complexListeners = generate(COMPLEX_LISTENER_CLASSES, COMPLEX_LISTENER_SETTERS) {
+        generator.listeners.filter { it is ComplexListener }
+    }
+
+    val complexListenerSetters = generate(COMPLEX_LISTENER_SETTERS) {
         complexListeners.map { renderComplexListenerSetters(it as ComplexListener) }
+    }
 
-    val complexListenerClasses = if (!config[COMPLEX_LISTENER_CLASSES]) listOf() else
+    val complexListenerClasses = generate(COMPLEX_LISTENER_CLASSES) {
         complexListeners.map { renderComplexListenerClass(it as ComplexListener) }
+    }
 
     //generated layout classes with custom LayoutParams
-    val layouts = if (!config[LAYOUTS]) listOf() else
+    val layouts = generate(LAYOUTS) {
         generator.layouts.map { renderLayout(it) }
+    }
 
     val services = generator.services.map {
         val propertyName = it.second!!.data.cleanNameDecap()
@@ -161,7 +161,7 @@ class Renderer(private val generator: Generator) {
         }
 
         fun resolveAllMethods(clazz: ClassNode): List<MethodNode> {
-            return addMethods(generator.classTree.findNode(clazz)!!, arrayListOf<MethodNode>())
+            return addMethods(generator.classTree.findNode(clazz)!!, arrayListOf())
         }
 
         fun collectProperties(clazz: ClassNode, needed: List<Variable>): List<MethodNode> {
@@ -310,12 +310,12 @@ class Renderer(private val generator: Generator) {
 
     private fun supportsResourceSetter(typ: String): Boolean {
         return (
-            typ.matches("^CharSequence\\??$")
-            || (typ.matches("^android.graphics.drawable.Drawable\\??$"))
+            typ.matches("^CharSequence\\??$") ||
+                (typ.matches("^android.graphics.drawable.Drawable\\??$"))
         )
     }
 
-    //only <init>(Context) View constructors now supported
+    // Only one-argument (typically <init>(Context)) View constructors are now supported
     private fun ClassNode.hasSimpleConstructor() = getConstructors().any { it.arguments?.size() == 1 }
 
 }

@@ -19,8 +19,6 @@ package org.jetbrains.android.dsl
 import java.io.PrintWriter
 import java.io.File
 import java.util.ArrayList
-import java.nio.file.Files
-import java.nio.file.Paths
 import java.nio.charset.StandardCharsets
 import org.jetbrains.android.dsl.KoanFile.*
 import org.jetbrains.android.dsl.ConfigurationTune.*
@@ -95,12 +93,12 @@ class Writer(private val renderer: Renderer) {
     }
 
     private fun writeStatic(subsystem: KoanFile) {
-        val filename = "props/static/src/${subsystem.filename}"
-        val contents = Files.readAllLines(Paths.get(filename), StandardCharsets.UTF_8)
+        val file = File("props/static/src/${subsystem.filename}")
+        val contents = file.readLines("UTF-8")
         writeToFile(config.getOutputFile(subsystem), contents, "", false)
     }
 
-    private fun writeToFile(file: File, text: List<String>, imports: String = "", generatePackage: Boolean = true) {
+    private fun writeToFile(file: File, text: Collection<String>, imports: String = "", generatePackage: Boolean = true) {
         val writer = PrintWriter(file)
         if (config.generatePackage && generatePackage) {
             writer.println("package ${config.outputPackage}\n")

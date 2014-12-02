@@ -17,15 +17,13 @@
 package org.jetbrains.android.dsl
 
 import org.objectweb.asm.*
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.file.Path
 import java.nio.charset.StandardCharsets
 import java.nio.ByteBuffer
 import java.util.LinkedHashMap
 import java.util.ArrayList
 import java.io.File
 import java.io.PrintWriter
+import kotlin.platform.platformName
 
 fun Type.isVoid(): Boolean = getSort() == Type.VOID
 
@@ -116,19 +114,10 @@ fun updateIfNotNull<T>(old: T, new: T): T {
     return old ?: new
 }
 
-fun readFile(fileName: String): String {
-    var data = Files.readAllBytes(Paths.get(fileName) : Path)
-    return StandardCharsets.UTF_8.decode(ByteBuffer.wrap(data)).toString()
-}
-
 fun writeFile(fileName: String, text: String) {
     val writer = PrintWriter(File(fileName))
     writer.write(text)
     writer.close()
-}
-
-fun readLines(fileName: String): MutableList<String> {
-    return Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8)
 }
 
 public fun <K, V, M: MutableMap<K, V>> Iterator<Pair<K, V>>.toMutableMap(map: M): M {
@@ -155,6 +144,14 @@ fun <T> List<T>.join(another: List<T>): List<T> {
     val list = ArrayList(this)
     list.addAll(another)
     return list
+}
+
+fun <T> Configurable.generate(vararg file: KoanFile, init: () -> Collection<T>) : Collection<T> {
+    return if (file.all { config[it] }) init() else listOf()
+}
+
+fun <T> Configurable.generate(vararg tune: ConfigurationTune, init: () -> Collection<T>) : Collection<T> {
+    return if (tune.all { config[it] }) init() else listOf()
 }
 
 //drop last n characters

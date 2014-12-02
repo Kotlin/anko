@@ -25,20 +25,23 @@ import org.jetbrains.android.dsl.KoanFile.*
 
 data class ListenerMethod(val method: MethodNode, val name: String, val argumentTypes: String, val returnType: String)
 
-//class for pair<setter, listener>
+// Pair(listener setter, listener class)
 abstract class Listener(val setter: MethodNodeWithClass, val listener: ClassNode)
+
 data class SimpleListener(setter: MethodNodeWithClass, val clazz: ClassNode, val method: ListenerMethod):
     Listener(setter, clazz) {
     override fun toString(): String {
         return "SimpleListener{${setter.toStringCompact()} <- ${clazz.name}: ${method.name}}"
     }
 }
+
 data class ComplexListener(setter: MethodNodeWithClass, val clazz: ClassNode, val methods: List<ListenerMethod>):
     Listener(setter, clazz) {
     override fun toString(): String {
         return "ComplexListener{${setter.toStringCompact()} <- ${clazz.name}: ${methods.toString()}}"
     }
 }
+
 data class ViewProperty(val name: String, val getter: MethodNodeWithClass, val setters: List<MethodNodeWithClass>)
 data class LayoutParamsNode(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>) {
     override fun toString(): String {
@@ -46,19 +49,17 @@ data class LayoutParamsNode(val layout: ClassNode, val layoutParams: ClassNode, 
     }
 }
 
-class Generator(val classTree: ClassTree, val config: BaseGeneratorConfiguration) {
+class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): Configurable(config) {
 
-    //filter off excluded classes and methods
     private val availableClasses = classTree.filter { !it.isExcluded() }
     private val availableMethods = availableClasses.flatMap { clazz ->
         clazz.methods?.map { MethodNodeWithClass(clazz, it) }?.filter { !it.isExcluded() } ?: listOf()
     }
 
-    //views and viewGroups without custom LayoutParams
+    // Views and viewGroups without custom LayoutParams
     val viewClasses = availableClasses.filter { it.isView() && !it.isViewGroupWithParams() && !it.isInner() }
     val viewGroupClasses = availableClasses.filter { it.isViewGroupWithParams() && !it.isInner() && !it.isAbstract() }
 
-    //find listeners in methods
     val listeners = availableMethods.filter {
         val name = it.method.name ?: ""
         name.startsWith("setOn") && name.endsWith("Listener") && it.clazz.isView() && it.method.isPublic()
@@ -68,34 +69,35 @@ class Generator(val classTree: ClassTree, val config: BaseGeneratorConfiguration
         makeListener(it, node.data)
     }
 
-    //find get* methods on View classes, like getText() or getVisibility()
-    private val propertyGetters = if (!config[PROPERTIES]) listOf<MethodNodeWithClass>() else
+    // Find get* methods on View classes, like getText() or getVisibility()
+    private val propertyGetters = generate(PROPERTIES) {
         availableMethods.filter {
-            it.method.isGetter() && it.clazz.isView() && it.method.isPublic() &&
-                !(it.clazz.isAbstract() && it.clazz.isViewGroup()) &&
-                it.method.arguments?.size() == 0 && !it.method.getReturnType().isVoid()
-        }.fold(TreeMap<String, MethodNodeWithClass>(), {r, t ->
-            val key = t.clazz.name + "#" + t.method.name
-            if (!r.contains(key)) r.put(key, t)
-            r
+            val (clazz, method) = it
+            clazz.isView() && !(clazz.isAbstract() && clazz.isViewGroup()) &&
+                method.isGetter() && method.isPublic() &&
+                method.arguments?.size() == 0 && !method.getReturnType().isVoid()
+        }.fold(TreeMap<String, MethodNodeWithClass>(), { map, cam ->
+            val key = cam.clazz.name + "#" + cam.method.name
+            if (!map.contains(key)) {
+                map.put(key, cam)
+            }
+            map
         }).values()
+    }
 
-    //find set* methods on View classes, like setText() or setVisibility()
-    //grouped by className_methodName because there can be several setter methods like
-    //setText(Int) and setText(String)
+    /* Find set* methods on View classes, like setText() or setVisibility() grouped by className_methodName
+       because there can be several setter methods like setText(Int) and setText(String) */
     private val propertySetters = availableMethods.filter {
             val name = it.method.name ?: ""
-            //find all methods named "set*", with uppercased letter after "set" in a T:View class
-            //also method must be public and have only one argument
-            name.startsWith("set") && name.length > 3 && Character.isUpperCase(name.charAt(3)) &&
-                it.clazz.isView() && it.method.isPublic() && (it.method.arguments?.size()) == 1 &&
+            val (clazz, method) = it
+            /* Find all methods named "set*", with uppercase letter after "set" in a View ancestor class
+               Such methods must be public and have only one argument */
+            name.length > 3 && name.startsWith("set") && Character.isUpperCase(name.charAt(3)) &&
+                clazz.isView() && method.isPublic() && it.method.arguments?.size() == 1 &&
                 !(it.method.name.startsWith("setOn") && it.method.name.endsWith("Listener"))
         }.groupBy { it.clazz.name + "#" + it.method.name }
 
-    //a pair of getter method and bunch of setters for the property. For example,
-    //android.widget.TextView contains getText() and various setText() methods, so the "text"
-    //property will be in this list
-    val properies = genProperties(propertyGetters, propertySetters)
+    val properties = genProperties(propertyGetters, propertySetters)
 
     //find all ancestors of ViewGroup.LayoutParams in classes that extends ViewGroup.
     //a helper class will be created for each layout. For example,
@@ -107,12 +109,13 @@ class Generator(val classTree: ClassTree, val config: BaseGeneratorConfiguration
             LayoutParamsNode(layoutClass, layoutParamsClass, layoutParamsClass.getConstructors())
         }
 
-    val services = if (!config[SERVICES]) listOf() else
+    val services = generate(SERVICES) {
         classTree.findNode("android/content/Context")?.data?.fields
-                ?.filter { it.name.endsWith("_SERVICE") }
-                ?.map { it.name to classTree.findNode("android", it.name.toServiceClassName()) }
-                ?.filter { it.second != null }
-                ?: listOf()
+            ?.filter { it.name.endsWith("_SERVICE") }
+            ?.map { it.name to classTree.findNode("android", it.name.toServiceClassName()) }
+            ?.filter { it.second != null }
+            ?: listOf()
+    }
 
     //Convert list of getters and map of setters to property list
     private fun genProperties(
@@ -175,41 +178,6 @@ class Generator(val classTree: ClassTree, val config: BaseGeneratorConfiguration
     //returns true if the viewGroup contains custom LayoutParams class
     private fun hasLayoutParams(viewGroup: ClassNode): Boolean {
         return extractLayoutParams(viewGroup) != null
-    }
-
-    //for testing purposes
-    override fun toString(): String {
-        val builder = StringBuilder()
-        with(builder) {
-            append("Available classes:\n")
-            availableClasses.forEach { append(it.name + "\n") }
-
-            append("\nAvailable methods:\n")
-            availableMethods.forEach { append("${it.toStringCompact()} ${it.method.visibleAnnotations?.map { it.desc }} ${it.method.invisibleAnnotations?.map { it.desc }}\n") }
-
-            append("\nListeners:\n")
-            listeners.forEach { append("${it.toString()}\n") }
-
-            append("\nGetters:\n")
-            propertyGetters.forEach { append("${it.toStringCompact()}\n") }
-
-            append("\nSetters:\n")
-            propertySetters.values().forEach {
-                val setters = it.map { it.toStringCompact() }.joinToString()
-                append("$setters\n")
-            }
-
-            append("Layout params:\n")
-            layouts.forEach { append("${it.toString()}\n") }
-
-            append("\nProperties:\n")
-            properies.forEach {
-                val setters = it.setters.map { it.toStringCompact() }.joinToString()
-                append("Getter[${it.getter.toStringCompact()}], Setters[$setters]\n")
-            }
-
-        }
-        return builder.toString()
     }
 
     private fun ClassNode.isView() = isView(classTree)

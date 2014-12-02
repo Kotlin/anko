@@ -22,7 +22,7 @@ import org.objectweb.asm.tree.MethodNode
 
 class NoSignatureException(message: String) : RuntimeException(message)
 
-class MethodNodeWithClass(var clazz: ClassNode, val method: MethodNode) {
+data class MethodNodeWithClass(var clazz: ClassNode, val method: MethodNode) {
     fun toStringCompact() = "${clazz.name}#${method.name}"
 }
 
