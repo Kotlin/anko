@@ -94,7 +94,7 @@ class Writer(private val renderer: Renderer) {
 
     private fun writeStatic(subsystem: KoanFile) {
         val file = File("props/static/src/${subsystem.filename}")
-        val contents = file.readLines("UTF-8")
+        val contents = file.readLines()
         writeToFile(config.getOutputFile(subsystem), contents, "", false)
     }
 

@@ -28,7 +28,7 @@ class DSLGenerator(
     private val sVersion = version.toString()
 
     private val mvnManifest: String
-        get() = readFile("props/mvn/AndroidManifest.xml")
+        get() = File("props/mvn/AndroidManifest.xml").readText()
 
     private fun copy(original: String) {
         val originalFile = File("props/mvn/$original")
@@ -37,7 +37,7 @@ class DSLGenerator(
     }
 
     private fun copy(original: String, process: (String) -> String) {
-        val contents = process(readFile("props/mvn/$original"))
+        val contents = process(File("props/mvn/$original").readText())
         writeFile(config.outputDirectory + original, contents)
     }
 

@@ -154,5 +154,7 @@ fun <T> Configurable.generate(vararg tune: ConfigurationTune, init: () -> Collec
     return if (tune.all { config[it] }) init() else listOf()
 }
 
+public fun readFile(filename: String): String = File(filename).readText()
+
 //drop last n characters
 private fun String.dropLast(n: Int) = if (n >= length) "" else substring(0, length-n)

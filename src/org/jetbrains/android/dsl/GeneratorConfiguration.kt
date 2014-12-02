@@ -26,9 +26,9 @@ open class GeneratorConfiguration(outputDirectory: String = "gen/") : BaseGenera
     override val outputDirectory = outputDirectory
     override val outputPackage = "kotlinx.android.koan"
 
-    override val excludedClasses = HashSet(readLines("props/excluded_classes.txt"))
+    override val excludedClasses = File("props/excluded_classes.txt").readLines().toSet()
 
-    override val excludedMethods = HashSet(readLines("props/excluded_methods.txt"))
+    override val excludedMethods = File("props/excluded_methods.txt").readLines().toSet()
 
     override fun getOutputFile(subsystem: KoanFile): File {
         return File(outputDirectory + "src/main/kotlin/", subsystem.filename)
