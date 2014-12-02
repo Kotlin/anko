@@ -32,10 +32,9 @@ class XmlHandler(val buffer: StringBuffer, val controlsXmlBuffer: StringBuffer, 
     val controlsBuffer = Context(controlsXmlBuffer)
     var lastLayout = ""
 
-    override fun startElement(uri: String, localName: String, qName_: String, attributes: Attributes) {
+    override fun startElement(uri: String, localName: String, qName: String, attributes: Attributes) {
         val attrs = attributes.toMap()
         val ctx: WidgetContext
-        val qName = qName_
         widgetsBodyCtx.incIndent()
         if (qName.endsWith("Layout")) {
             lastLayout = qName
