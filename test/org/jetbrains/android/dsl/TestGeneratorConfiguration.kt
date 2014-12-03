@@ -16,23 +16,12 @@
 
 package org.jetbrains.android.dsl
 
-import java.util.HashSet
-import java.util.HashMap
-import java.util.ArrayList
+
 import java.io.File
+import java.io.IOException
+import java.util.HashMap
 
-open class GeneratorConfiguration(outputDirectory: String = "gen/") : BaseGeneratorConfiguration() {
-
-    override val outputDirectory = outputDirectory
-    override val outputPackage = "kotlinx.android.koan"
-
-    override val excludedClasses = File("props/excluded_classes.txt").readLines().toSet()
-
-    override val excludedMethods = File("props/excluded_methods.txt").readLines().toSet()
-
-    override fun getOutputFile(koanFile: KoanFile): File {
-        return File(outputDirectory + "src/main/kotlin/", koanFile.filename)
-    }
-
-
+public open class TestGeneratorConfiguration : GeneratorConfiguration() {
+    public val tmpFiles: Map<KoanFile, File> =
+        KoanFile.values().toList().toMap { it to File.createTempFile(it.filename, ".kt") }
 }

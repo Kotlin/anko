@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.dsl.android;
+package org.jetbrains.android.dsl.android
 
-import org.jetbrains.android.dsl.TestGeneratorConfiguration;
+import org.jetbrains.android.dsl.TestGeneratorConfiguration
 
-import java.io.IOException;
+import java.io.IOException
 
-public class AndroidTestGeneratorConfiguration extends TestGeneratorConfiguration {
-    public AndroidTestGeneratorConfiguration() throws IOException {
-        super();
-    }
-}
+public class AndroidTestGeneratorConfiguration : TestGeneratorConfiguration()

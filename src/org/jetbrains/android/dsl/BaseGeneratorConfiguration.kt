@@ -71,5 +71,5 @@ abstract class BaseGeneratorConfiguration {
 
     public fun get(tune: ConfigurationTune): Boolean = tunes.contains(tune)
 
-    public abstract fun getOutputFile(subsystem: KoanFile): File
+    public abstract fun getOutputFile(koanFile: KoanFile): File
 }
