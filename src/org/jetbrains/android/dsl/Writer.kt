@@ -36,6 +36,7 @@ class Writer(private val renderer: Renderer) {
             DIALOGS,
             HELPERS,
             INTERNALS,
+            SQL_PARSERS,
             SUPPORT
         ).forEach { if (config[it]) writeStatic(it) }
 
@@ -43,7 +44,8 @@ class Writer(private val renderer: Renderer) {
             LAYOUTS to ::writeLayouts,
             LISTENERS to ::writeListeners,
             PROPERTIES to ::writeProperties,
-            SERVICES to ::writeServices
+            SERVICES to ::writeServices,
+            SQL_PARSER_HELPERS to ::writeSqlParserHelpers
         ).forEach { if (config[it.first]) it.second() }
 
         if (config[VIEWS] || config[HELPER_CONSTRUCTORS])
@@ -75,6 +77,11 @@ class Writer(private val renderer: Renderer) {
     private fun writeServices() {
         val imports = Props.imports["services"] ?: ""
         writeToFile(config.getOutputFile(KoanFile.SERVICES), renderer.services, imports)
+    }
+
+    private fun writeSqlParserHelpers() {
+        val imports = Props.imports["sqliteparserhelpers"] ?: ""
+        writeToFile(config.getOutputFile(KoanFile.SQL_PARSER_HELPERS), renderer.sqLiteParserHelpers, imports, false)
     }
 
     private fun writeViews() {

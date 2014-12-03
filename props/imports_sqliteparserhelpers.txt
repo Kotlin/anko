@@ -1,0 +1,3 @@
+package kotlinx.android.koan.db
+
+import android.database.sqlite.SQLiteException

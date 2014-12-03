@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.Cursor
 import java.util.regex.Pattern
 import kotlinx.android.koan.*
+import android.database.sqlite.SQLiteOpenHelper
 
 public val NULL: SqlType = SqlTypeImpl("NULL")
 public val INT: SqlType = SqlTypeImpl("INT")
@@ -40,6 +41,18 @@ private open class SqlTypeModifierImpl(modifier: String) : SqlTypeModifier {
 
 public fun SqlType.plus(m: SqlTypeModifier) : SqlType {
     return SqlTypeImpl(name, if (modifier == null) m.toString() else "$modifier $m")
+}
+
+public inline fun SQLiteOpenHelper.database(act: SQLiteDatabase.() -> Unit) {
+    var db: SQLiteDatabase? = null
+    try {
+        db = getWritableDatabase()
+        db!!.act()
+    } finally {
+        if (db != null && db!!.isOpen()) {
+            db!!.close()
+        }
+    }
 }
 
 public fun SQLiteDatabase.insert(tableName: String, vararg values: Pair<String, Any>): Long {

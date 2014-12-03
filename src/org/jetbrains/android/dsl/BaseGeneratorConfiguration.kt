@@ -37,6 +37,8 @@ public enum class KoanFile(val filename: String) {
     LISTENERS : KoanFile("Listeners.kt")
     PROPERTIES : KoanFile("Properties.kt")
     SERVICES : KoanFile("Services.kt")
+    SQL_PARSER_HELPERS : KoanFile("SqlParserHelpers.kt")
+    SQL_PARSERS : KoanFile("SqlParsers.kt")
     SUPPORT : KoanFile("Support.kt")
     VIEWS : KoanFile("Views.kt")
 }
