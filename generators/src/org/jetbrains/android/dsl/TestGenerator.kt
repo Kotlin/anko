@@ -75,7 +75,7 @@ private fun Context.functionalTest(name: String, mainKoanFile: KoanFile, configI
 }
 
 fun main(args: Array<String>) {
-    val versions = File("./testdata/")
+    val versions = File("./testData/")
         .listFiles { it.isDirectory() && it.name.matches("\\d+s?") }
         ?.map { it.name }
         ?: listOf()

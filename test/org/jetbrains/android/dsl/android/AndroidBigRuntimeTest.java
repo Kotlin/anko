@@ -24,13 +24,13 @@ import java.io.File;
 
 public class AndroidBigRuntimeTest extends BaseCompileTest {
 
-    private final File testLayoutsDataFile = new File("testdata/compile/AndroidLayoutsTest.kt");
-    private final File testPropertiesDataFile = new File("testdata/compile/AndroidPropertiesTest.kt");
-    private final File testSimpleDataFile = new File("testdata/compile/AndroidSimpleTest.kt");
-    private final File testWidgetsDataFile = new File("testdata/compile/AndroidWidgetTest.kt");
-    private final File testLayoutParamsDataFile = new File("testdata/compile/AndroidLayoutParamsTest.kt");
-    private final File testListenerHelpersDataFile = new File("testdata/compile/AndroidListenerHelpersTest.kt");
-    private final File testMultiMethodListenersFile = new File("testdata/compile/AndroidMultiMethodListeners.kt");
+    private final File testLayoutsDataFile = new File("testData/compile/AndroidLayoutsTest.kt");
+    private final File testPropertiesDataFile = new File("testData/compile/AndroidPropertiesTest.kt");
+    private final File testSimpleDataFile = new File("testData/compile/AndroidSimpleTest.kt");
+    private final File testWidgetsDataFile = new File("testData/compile/AndroidWidgetTest.kt");
+    private final File testLayoutParamsDataFile = new File("testData/compile/AndroidLayoutParamsTest.kt");
+    private final File testListenerHelpersDataFile = new File("testData/compile/AndroidListenerHelpersTest.kt");
+    private final File testMultiMethodListenersFile = new File("testData/compile/AndroidMultiMethodListeners.kt");
 
     @BeforeMethod
     public void setUp() throws Exception {

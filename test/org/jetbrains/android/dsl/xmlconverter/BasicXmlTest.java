@@ -29,13 +29,13 @@ public class BasicXmlTest extends Assert {
     private Converter c = new Converter();
 
     public BasicXmlTest() {
-        c.run("testdata/xmlconverter/BasicXml.xml.in");
+        c.run("testData/xmlconverter/BasicXml.xml.in");
     }
 
     //@Test
     public void testUI() throws Exception {
         String convertedActual = c.toString();
-        String convertedExpected = loadOrCreate(new File("testdata/xmlconverter/BasicXml.xml.out"),
+        String convertedExpected = loadOrCreate(new File("testData/xmlconverter/BasicXml.xml.out"),
                 convertedActual);
         assertEquals(convertedActual, convertedExpected);
 
@@ -44,7 +44,7 @@ public class BasicXmlTest extends Assert {
     @Test
     public void testResourceIds() throws Exception {
         String resourcesActual = c.getControlsXmlBuffer().toString();
-        String resourcesExpected = loadOrCreate(new File("testdata/xmlconverter/BasicXml.res.xml.out"),
+        String resourcesExpected = loadOrCreate(new File("testData/xmlconverter/BasicXml.res.xml.out"),
                 resourcesActual);
         assertEquals(resourcesActual, resourcesExpected);
     }

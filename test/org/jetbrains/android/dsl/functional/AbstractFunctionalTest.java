@@ -65,7 +65,7 @@ public abstract class AbstractFunctionalTest extends Assert {
         generator.run();
 
         String actual = DslPackage.readFile(settings.tmpFiles.get(subsystem).getAbsolutePath());
-        String expectedPath = ("testdata/" + fVersion + "/" + testDataFile);
+        String expectedPath = ("testData/" + fVersion + "/" + testDataFile);
         String expected = loadOrCreate(new File(expectedPath), actual);
 
         assertEquals(actual, expected);
