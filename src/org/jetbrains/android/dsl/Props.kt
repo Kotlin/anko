@@ -26,10 +26,10 @@ object Props {
     val imports: Map<String, String> by Delegates.lazy {
         val map = hashMapOf<String, String>()
         File("props")
-            .listFiles { it.name.startsWith("imports_") }
+            .listFiles { it.name.startsWith("imports_") && it.name.endsWith(".txt") }
             ?.forEach {
-                val name = it.name
-                map.put(name.substring(name.indexOf('_')), it.readText())
+                val name = it.name.replace(".txt", "")
+                map.put(name.substring(name.indexOf('_') + 1), it.readText())
             }
         map
     }
