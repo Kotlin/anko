@@ -147,11 +147,11 @@ fun <T> List<T>.join(another: List<T>): List<T> {
 }
 
 fun <T> Configurable.generate(vararg file: KoanFile, init: () -> Collection<T>) : Collection<T> {
-    return if (file.all { config[it] }) init() else listOf()
+    return if (file.any { config[it] }) init() else listOf()
 }
 
 fun <T> Configurable.generate(vararg tune: ConfigurationTune, init: () -> Collection<T>) : Collection<T> {
-    return if (tune.all { config[it] }) init() else listOf()
+    return if (tune.any { config[it] }) init() else listOf()
 }
 
 public fun readFile(filename: String): String = File(filename).readText()
