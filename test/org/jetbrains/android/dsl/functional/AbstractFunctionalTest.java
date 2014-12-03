@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.dsl.tests.functional;
+package org.jetbrains.android.dsl.functional;
 
 import org.jetbrains.android.dsl.BaseGeneratorConfiguration;
 import org.jetbrains.android.dsl.DSLGenerator;
@@ -22,10 +22,9 @@ import org.jetbrains.android.dsl.DslPackage;
 import org.jetbrains.android.dsl.KoanFile;
 import org.jetbrains.android.dsl.utils.DirectoryFilter;
 import org.jetbrains.android.dsl.utils.JarFilter;
-import org.jetbrains.android.dsl.tests.TestGeneratorConfiguration;
+import org.jetbrains.android.dsl.TestGeneratorConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -35,27 +34,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class BaseFunctionalTest extends Assert {
+public abstract class AbstractFunctionalTest extends Assert {
     protected DSLGenerator generator;
 
-    private static final FileFilter directoryFilter = new DirectoryFilter();
     private static final FileFilter jarFilter = new JarFilter();
-
-    @BeforeMethod
-    public void setUp() throws Exception {
-        assertTrue(new File("props/imports_layouts.txt").exists());
-        assertTrue(new File("props/imports_views.txt").exists());
-        assertTrue(new File("props/custom_method_parameters.txt").exists());
-        assertTrue(new File("props/excluded_classes.txt").exists());
-        assertTrue(new File("props/excluded_methods.txt").exists());
-        assertTrue(new File("props/helper_constructors.txt").exists());
-        assertTrue(new File("props/static/src/Helpers.kt").exists());
-        assertTrue(new File("props/static/src/Support.kt").exists());
-        assertTrue(new File("props/static/src/Custom.kt").exists());
-        assertTrue(new File("props/static/src/Async.kt").exists());
-        assertTrue(new File("props/static/src/ContextUtils.kt").exists());
-        assertTrue(new File("props/static/src/Dialogs.kt").exists());
-    }
 
     protected String loadOrCreate(File file, String data) throws IOException {
         try {
@@ -91,7 +73,7 @@ public abstract class BaseFunctionalTest extends Assert {
         assertTrue(expected.length() > 0);
     }
 
-    protected void runFunctionalTest(String testDataFile, KoanFile subsystem) throws IOException {
+    protected void runFunctionalTest(String testDataFile, KoanFile subsystem, String version) throws IOException {
         TestGeneratorConfiguration settings = new TestGeneratorConfiguration();
 
         settings.setGenerateImports(false);
@@ -101,18 +83,15 @@ public abstract class BaseFunctionalTest extends Assert {
         settings.getFiles().clear();
         settings.getTunes().clear();
 
-        File[] versions = new File("original/").listFiles(directoryFilter);
-        for (File ver: versions) {
-          String fVersion = ver.getName();
-          int version = Integer.parseInt(fVersion.replaceAll("[^0-9]", ""));
+        File versionDir = new File("original", version);
+        int intVersion = Integer.parseInt(version.replaceAll("[^0-9]", ""));
 
-          List<File> jarFiles = Arrays.asList(ver.listFiles(jarFilter));
-          List<String> jarFilesString = new ArrayList<>();
-          for (File f: jarFiles) {
+        List<File> jarFiles = Arrays.asList(versionDir.listFiles(jarFilter));
+        List<String> jarFilesString = new ArrayList<>();
+        for (File f: jarFiles) {
             jarFilesString.add(f.getAbsolutePath());
-          }
-          runFunctionalTest(version, fVersion, jarFilesString, testDataFile, subsystem, settings);
         }
+        runFunctionalTest(intVersion, version, jarFilesString, testDataFile, subsystem, settings);
 
     }
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.dsl.tests.android;
+package org.jetbrains.android.dsl.android;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

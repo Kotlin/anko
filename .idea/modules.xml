@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/generators/generators.iml" filepath="$PROJECT_DIR$/generators/generators.iml" />
       <module fileurl="file://$PROJECT_DIR$/koan.iml" filepath="$PROJECT_DIR$/koan.iml" />
       <module fileurl="file://$PROJECT_DIR$/props/static/static.iml" filepath="$PROJECT_DIR$/props/static/static.iml" />
       <module fileurl="file://$PROJECT_DIR$/props/stubs/stubs.iml" filepath="$PROJECT_DIR$/props/stubs/stubs.iml" />

@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.dsl.tests.xmlconverter;
+package org.jetbrains.android.dsl.xmlconverter;
 
 import org.jetbrains.android.dsl.DslPackage;
-import org.jetbrains.android.dsl.xmlconverter.Converter;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -30,13 +29,13 @@ public class BasicXmlTest extends Assert {
     private Converter c = new Converter();
 
     public BasicXmlTest() {
-        c.run("testdata/org/jetbrains/android/dsl/tests/xmlconverter/BasicXml.xml.in");
+        c.run("testdata/xmlconverter/BasicXml.xml.in");
     }
 
     //@Test
     public void testUI() throws Exception {
         String convertedActual = c.toString();
-        String convertedExpected = loadOrCreate(new File("testdata/org/jetbrains/android/dsl/tests/xmlconverter/BasicXml.xml.out"),
+        String convertedExpected = loadOrCreate(new File("testdata/xmlconverter/BasicXml.xml.out"),
                 convertedActual);
         assertEquals(convertedActual, convertedExpected);
 
@@ -45,7 +44,7 @@ public class BasicXmlTest extends Assert {
     @Test
     public void testResourceIds() throws Exception {
         String resourcesActual = c.getControlsXmlBuffer().toString();
-        String resourcesExpected = loadOrCreate(new File("testdata/org/jetbrains/android/dsl/tests/xmlconverter/BasicXml.res.xml.out"),
+        String resourcesExpected = loadOrCreate(new File("testdata/xmlconverter/BasicXml.res.xml.out"),
                 resourcesActual);
         assertEquals(resourcesActual, resourcesExpected);
     }

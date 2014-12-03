@@ -14,14 +14,26 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.dsl.tests.android;
+package org.jetbrains.android.dsl;
 
-import org.jetbrains.android.dsl.tests.TestGeneratorConfiguration;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
-public class AndroidTestGeneratorConfiguration extends TestGeneratorConfiguration {
-    public AndroidTestGeneratorConfiguration() throws IOException {
-        super();
+public class TestGeneratorConfiguration extends GeneratorConfiguration {
+    public TestGeneratorConfiguration() throws IOException {
+        for (KoanFile koanFile : KoanFile.values()) {
+            tmpFiles.put(koanFile, File.createTempFile(koanFile.getFilename(), ".kt"));
+        }
+    }
+
+    public final HashMap<KoanFile, File> tmpFiles = new HashMap<>();
+
+    @NotNull
+    @Override
+    public File getOutputFile(KoanFile subsystem) {
+        return tmpFiles.get(subsystem);
     }
 }

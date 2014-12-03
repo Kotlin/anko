@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.dsl.tests.basic;
+package org.jetbrains.android.dsl.basic;
 
 import org.jetbrains.android.dsl.DSLGenerator;
 import org.jetbrains.android.dsl.KoanFile;
 import org.jetbrains.android.dsl.utils.DirectoryFilter;
 import org.jetbrains.android.dsl.utils.JarFilter;
-import org.jetbrains.android.dsl.tests.TestGeneratorConfiguration;
+import org.jetbrains.android.dsl.TestGeneratorConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -41,19 +41,6 @@ public class BasicGeneratorTest extends Assert {
 
     @BeforeMethod
     public void setUp() throws Exception {
-        assertTrue(new File("props/imports_layouts.txt").exists());
-        assertTrue(new File("props/imports_views.txt").exists());
-        assertTrue(new File("props/custom_method_parameters.txt").exists());
-        assertTrue(new File("props/excluded_classes.txt").exists());
-        assertTrue(new File("props/excluded_methods.txt").exists());
-        assertTrue(new File("props/helper_constructors.txt").exists());
-        assertTrue(new File("props/static/src/Helpers.kt").exists());
-        assertTrue(new File("props/static/src/Support.kt").exists());
-        assertTrue(new File("props/static/src/Custom.kt").exists());
-        assertTrue(new File("props/static/src/Async.kt").exists());
-        assertTrue(new File("props/static/src/ContextUtils.kt").exists());
-        assertTrue(new File("props/static/src/Dialogs.kt").exists());
-        assertTrue(new File("props/static/src/Internals.kt").exists());
         assertTrue(new File(kotlincFilename).exists());
     }
 

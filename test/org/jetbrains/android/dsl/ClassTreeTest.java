@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.dsl.tests;
+package org.jetbrains.android.dsl;
 
 import org.jetbrains.android.dsl.ClassTree;
 import org.jetbrains.android.dsl.NoSuchClassException;
