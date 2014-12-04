@@ -22,6 +22,7 @@ import java.util.ArrayList
 import org.jetbrains.android.dsl.utils.Buffer
 import org.jetbrains.android.dsl.KoanFile.*
 import org.jetbrains.android.dsl.ConfigurationTune.*
+import org.objectweb.asm.Type
 
 class Renderer(private val generator: Generator) : Configurable(generator.config) {
 
@@ -137,8 +138,27 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         list
     }
 
+    val interfaceWorkarounds = if (!config[INTERFACE_WORKAROUNDS]) "" else
+        generator.interfaceWorkarounds.map {
+            val (mainClass, ancestor, innerClass) = it
+            val probInterfaceName = innerClass!!.innerName
+            val conflict = generator.interfaceWorkarounds.count { it.third!!.innerName == probInterfaceName } > 1
+            val interfaceName = (
+                if (conflict) stripClassName(cleanInternalName(innerClass.outerName)) + "_" else "") + probInterfaceName
+            val ancestorName = cleanInternalName(ancestor!!.name)
+            buffer(1) {
+                line("public static interface $interfaceName {")
+                for (field in mainClass.fields.filter { it.isPublic && it.isStatic && it.isFinal }) {
+                    val name = field.name
+                    val type = Type.getType(field.desc).toJavaStr()
+                    line("public static final $type $name = $ancestorName.$name;")
+                }
+                line("}")
+            }.toString()
+        }.joinToString("\n", "public final class InterfaceWorkarounds {\n\n", "\n\n}")
+
     private fun generateViews(views: List<ClassNode>, nameResolver: (String) -> String): List<String> {
-        return views.filter { !it.isAbstract() && it.hasSimpleConstructor() }.map { clazz ->
+        return views.filter { !it.isAbstract && it.hasSimpleConstructor() }.map { clazz ->
             val typeName = cleanInternalName(clazz.name)
             val className = nameResolver(clazz.name)
             val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name)))

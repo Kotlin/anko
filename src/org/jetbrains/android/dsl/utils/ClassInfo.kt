@@ -19,6 +19,7 @@ package org.jetbrains.android.dsl
 import org.objectweb.asm.*
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
+import org.objectweb.asm.tree.InnerClassNode
 
 class NoSignatureException(message: String) : RuntimeException(message)
 
@@ -75,9 +76,32 @@ fun ClassNode.isInner(): Boolean {
     return name.contains("$")
 }
 
-fun ClassNode.isAbstract(): Boolean {
-    return ((access and Opcodes.ACC_ABSTRACT) != 0)
-}
+val ClassNode.isAbstract: Boolean
+    get() = ((access and Opcodes.ACC_ABSTRACT) != 0)
+
+val ClassNode.isPublic: Boolean
+    get() = ((access and Opcodes.ACC_PUBLIC) != 0)
+
+val ClassNode.isStatic: Boolean
+    get() = ((access and Opcodes.ACC_STATIC) != 0)
+
+val ClassNode.isInterface: Boolean
+    get() = ((access and Opcodes.ACC_INTERFACE) != 0)
+
+val InnerClassNode.isAbstract: Boolean
+    get() = ((access and Opcodes.ACC_ABSTRACT) != 0)
+
+val InnerClassNode.isPublic: Boolean
+    get() = ((access and Opcodes.ACC_PUBLIC) != 0)
+
+val InnerClassNode.isProtected: Boolean
+    get() = ((access and Opcodes.ACC_PROTECTED) != 0)
+
+val InnerClassNode.isStatic: Boolean
+    get() = ((access and Opcodes.ACC_STATIC) != 0)
+
+val InnerClassNode.isInterface: Boolean
+    get() = ((access and Opcodes.ACC_INTERFACE) != 0)
 
 fun ClassNode.isGeneric(): Boolean {
     return signature != null

@@ -1,3 +1,4 @@
 android.support.v4.app.NoSaveStateFrameLayout
 android.app.FragmentBreadCrumbs
 android.widget.MediaController
+android.provider.ContactsContract.BaseSyncColumns

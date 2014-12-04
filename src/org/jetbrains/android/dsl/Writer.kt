@@ -50,6 +50,15 @@ class Writer(private val renderer: Renderer) {
 
         if (config[VIEWS] || config[HELPER_CONSTRUCTORS])
             writeViews()
+
+        if (config[INTERFACE_WORKAROUNDS])
+            writeInterfaceWorkarounds()
+    }
+
+    fun writeInterfaceWorkarounds() {
+        val imports = "package ${config.outputPackage}.workarounds;"
+        val contents = listOf(renderer.interfaceWorkarounds)
+        writeToFile(config.getOutputFile(KoanFile.INTERFACE_WORKAROUNDS), contents, imports, false)
     }
 
     private fun writeLayouts() {
@@ -106,6 +115,10 @@ class Writer(private val renderer: Renderer) {
     }
 
     private fun writeToFile(file: File, text: Collection<String>, imports: String = "", generatePackage: Boolean = true) {
+        val dir = file.getParentFile()
+        if (!dir.exists())
+            dir.mkdirs()
+
         val writer = PrintWriter(file)
         if (config.generatePackage && generatePackage) {
             writer.println("package ${config.outputPackage}\n")

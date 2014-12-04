@@ -74,6 +74,28 @@ fun Type.toStr(nullable: Boolean = true): String {
     }
 }
 
+fun Type.toJavaStr(): String {
+    return when (getSort()) {
+        Type.BOOLEAN -> "boolean"
+        Type.INT -> "int"
+        Type.FLOAT -> "float"
+        Type.DOUBLE -> "double"
+        Type.LONG -> "long"
+        Type.BYTE -> "byte"
+        Type.CHAR -> "char"
+        Type.SHORT -> "short"
+        Type.VOID -> "void"
+        Type.ARRAY -> getElementType().toJavaStr() + "[]"
+        else -> {
+            try {
+                typeMap(cleanInternalName(getInternalName()))
+            } catch (e: NullPointerException) {
+                "INVALID"
+            }
+        }
+    }
+}
+
 fun Type.getDefaultValue() : String {
     return when (getSort()) {
         Type.BOOLEAN -> "false"

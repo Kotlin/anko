@@ -58,7 +58,7 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
 
     // Views and viewGroups without custom LayoutParams
     val viewClasses = availableClasses.filter { it.isView() && !it.isViewGroupWithParams() && !it.isInner() }
-    val viewGroupClasses = availableClasses.filter { it.isViewGroupWithParams() && !it.isInner() && !it.isAbstract() }
+    val viewGroupClasses = availableClasses.filter { it.isViewGroupWithParams() && !it.isInner() && !it.isAbstract }
 
     val listeners = availableMethods.filter {
         val name = it.method.name ?: ""
@@ -73,7 +73,7 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
     private val propertyGetters = generate(PROPERTIES) {
         availableMethods.filter {
             val (clazz, method) = it
-            clazz.isView() && !(clazz.isAbstract() && clazz.isViewGroup()) &&
+            clazz.isView() && !(clazz.isAbstract && clazz.isViewGroup()) &&
                 method.isGetter() && method.isPublic() &&
                 method.arguments?.size() == 0 && !method.getReturnType().isVoid()
         }.fold(TreeMap<String, MethodNodeWithClass>(), { map, cam ->
@@ -115,6 +115,26 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
             ?.map { it.name to classTree.findNode("android", it.name.toServiceClassName()) }
             ?.filter { it.second != null }
             ?: listOf()
+    }
+
+    val interfaceWorkarounds = generate(INTERFACE_WORKAROUNDS) {
+        availableClasses.filter {
+            it.isPublic && it.innerClasses != null && it.fields != null && it.fields.notEmpty &&
+                it.innerClasses.any { inner -> inner.isProtected && inner.isInterface && inner.name == it.name }
+        }.map {
+            // We're looking for a public ancestor for this interface, but the ancestor also may be protected inner one
+            val ancestor = classTree.filter {
+                clazz -> clazz.isPublic && clazz.interfaces.any { itf -> itf == it.name } && (
+                        clazz.innerClasses == null ||
+                        clazz.innerClasses.isEmpty() ||
+                        !clazz.innerClasses.any { it.name == clazz.name && it.isProtected }
+                )
+            }
+            val innerClass = it.innerClasses.firstOrNull {
+                inner -> inner.isProtected && inner.isInterface && inner.name == it.name
+            }
+            Triple(it, ancestor.head, innerClass)
+        }.filter { it.second != null && it.third != null }
     }
 
     //Convert list of getters and map of setters to property list

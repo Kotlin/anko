@@ -32,6 +32,7 @@ public enum class KoanFile(val filename: String) {
     DATABASE : KoanFile("Database.kt")
     DIALOGS : KoanFile("Dialogs.kt")
     HELPERS : KoanFile("Helpers.kt")
+    INTERFACE_WORKAROUNDS : KoanFile("InterfaceWorkarounds.java")
     INTERNALS : KoanFile("Internals.kt")
     LAYOUTS : KoanFile("Layouts.kt")
     LISTENERS : KoanFile("Listeners.kt")

@@ -31,8 +31,7 @@ open class GeneratorConfiguration(outputDirectory: String = "gen/") : BaseGenera
     override val excludedMethods = File("props/excluded_methods.txt").readLines().toSet()
 
     override fun getOutputFile(koanFile: KoanFile): File {
-        return File(outputDirectory + "src/main/kotlin/", koanFile.filename)
+        return File(outputDirectory + "src/main/kotlin/" + outputPackage.replace('.', '/') + '/', koanFile.filename)
     }
-
 
 }
