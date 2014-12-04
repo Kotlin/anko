@@ -26,6 +26,7 @@ import org.testng.annotations.BeforeMethod
 import java.io.*
 import java.util.ArrayList
 import java.util.Arrays
+import org.jetbrains.android.dsl.KoanFile
 
 public open class BaseCompileTest : Assert() {
     private val kotlincFilename = "lib/kotlinc/bin/kotlinc-jvm"
@@ -57,6 +58,7 @@ public open class BaseCompileTest : Assert() {
         val classpath = jarFiles.map { it.getPath() }.joinToString(File.pathSeparator)
 
         val props = AndroidTestGeneratorConfiguration()
+        props.files.remove(KoanFile.INTERFACE_WORKAROUNDS)
         DSLGenerator(intVersion, version, jarFilesString, props).run()
 
         val kotlincArgs = array(kotlincFilename, "-d", tmpJarFile, "-classpath", classpath.toString(), testData.getPath())
@@ -78,22 +80,12 @@ public open class BaseCompileTest : Assert() {
         val errors = StringBuilder()
         val output = StringBuilder()
 
-        var str = brInput.readLine()
-        while (str != null) {
-            if (str.startsWith("ERROR"))
-                errors.append(str).append("\n")
-            else
-                output.append(str).append("\n")
-            str = brInput.readLine()
-        }
-
-        str = brError.readLine()
-        while (str != null) {
-            if (str.startsWith("ERROR"))
-                errors.append(str).append("\n")
-            else
-                output.append(str).append("\n")
-            brError.readLine()
+        (brInput.lines() + brError.lines()).forEach { line ->
+            if (line.startsWith("ERROR")) {
+                errors.append(line).append("\n")
+            } else {
+                output.append(line).append("\n")
+            }
         }
 
         p.waitFor()

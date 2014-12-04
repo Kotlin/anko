@@ -111,22 +111,12 @@ public class BasicGeneratorTest {
         val output = StringBuilder()
         val errors = StringBuilder()
 
-        var str = brInput.readLine()
-        while (str != null) {
-            if (str.startsWith("ERROR"))
-                errors.append(str).append("\n")
-            else
-                output.append(str).append("\n")
-            str = brInput.readLine()
-        }
-
-        str = brError.readLine()
-        while (str != null) {
-            if (str.startsWith("ERROR"))
-                errors.append(str).append("\n")
-            else
-                output.append(str).append("\n")
-            brError.readLine()
+        (brInput.lines() + brError.lines()).forEach { line ->
+            if (line.startsWith("ERROR")) {
+                errors.append(line).append("\n")
+            } else {
+                output.append(line).append("\n")
+            }
         }
 
         p.waitFor()
