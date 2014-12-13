@@ -21,6 +21,8 @@ import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 
 import java.io.File
+import org.testng.annotations.BeforeClass
+import org.testng.annotations.AfterClass
 
 public class AndroidBigRuntimeTest : BaseCompileTest() {
 
@@ -32,9 +34,9 @@ public class AndroidBigRuntimeTest : BaseCompileTest() {
     private val testListenerHelpersDataFile = File("testData/compile/AndroidListenerHelpersTest.kt")
     private val testMultiMethodListenersFile = File("testData/compile/AndroidMultiMethodListeners.kt")
 
-    BeforeMethod
-    override fun setUp() {
-        super.setUp()
+    BeforeClass
+    override fun setUpClass() {
+        super.setUpClass()
     }
 
     Test
@@ -75,5 +77,10 @@ public class AndroidBigRuntimeTest : BaseCompileTest() {
     AfterMethod
     override fun tearDown() {
         super.tearDown()
+    }
+
+    AfterClass
+    override fun tearDownClass() {
+        super.tearDownClass()
     }
 }

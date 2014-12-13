@@ -27,29 +27,48 @@ import java.io.*
 import java.util.ArrayList
 import java.util.Arrays
 import org.jetbrains.android.dsl.KoanFile
+import org.testng.annotations.BeforeClass
+import org.testng.annotations.AfterClass
 
 public open class BaseCompileTest : Assert() {
     private val kotlincFilename = "lib/kotlinc/bin/kotlinc-jvm"
     private val tmpJarFile = javaClass.getName() + "_out.jar"
 
-    BeforeMethod
-    public open fun setUp() {
+    private val versions = File("original/").listFiles(directoryFilter)
+
+    private val File.libraryJar: String
+        get() = "lib-$name.jar"
+
+    BeforeClass
+    public open fun setUpClass() {
         Assert.assertTrue(File(kotlincFilename).exists())
+
+        for (ver in versions) {
+            compileLibrary(ver)
+        }
     }
 
     protected fun runCompileTest(testData: File) {
         Assert.assertTrue(testData.exists())
 
-        val versions = File("original/").listFiles(directoryFilter)
         for (ver in versions) {
-            val props = compile(testData, ver)
-            for (file in props.tmpFiles.values()) {
-                file.delete()
-            }
+            compile(testData, ver)
         }
     }
 
-    private fun compile(testData: File, ver: File): AndroidTestGeneratorConfiguration {
+    private fun compile(testData: File, ver: File) {
+        val jarFiles = ver.listFiles(jarFilter)
+        val classpath = (jarFiles.map { it.getPath() } + listOf(ver.libraryJar)).joinToString(File.pathSeparator)
+
+        val kotlincArgs = array(kotlincFilename, "-d", tmpJarFile, "-classpath", classpath.toString(), testData.getPath())
+        val args = arrayListOf(*kotlincArgs)
+        val res = runCompiler(args.copyToArray())
+
+        Assert.assertEquals(res.stderr, "")
+        Assert.assertEquals(res.exitCode, 0)
+    }
+
+    private fun compileLibrary(ver: File): AndroidTestGeneratorConfiguration {
         val version = ver.getName()
         val intVersion = Integer.parseInt(version.replaceAll("[^0-9]", ""))
 
@@ -61,12 +80,16 @@ public open class BaseCompileTest : Assert() {
         props.files.remove(KoanFile.INTERFACE_WORKAROUNDS)
         DSLGenerator(intVersion, version, jarFilesString, props).run()
 
-        val kotlincArgs = array(kotlincFilename, "-d", tmpJarFile, "-classpath", classpath.toString(), testData.getPath())
+        val kotlincArgs = array(kotlincFilename, "-d", ver.libraryJar, "-classpath", classpath.toString())
         val args = arrayListOf(*kotlincArgs)
         for (file in props.tmpFiles.values()) {
             args.add(file.getAbsolutePath())
         }
         val res = runCompiler(args.copyToArray())
+
+        for (file in props.tmpFiles.values()) {
+            file.delete()
+        }
 
         Assert.assertEquals(res.stderr, "")
         Assert.assertEquals(res.exitCode, 0)
@@ -95,6 +118,13 @@ public open class BaseCompileTest : Assert() {
     AfterMethod
     public open fun tearDown() {
         File(tmpJarFile).delete()
+    }
+
+    AfterClass
+    public open fun tearDownClass() {
+        for (ver in versions) {
+            File(ver.libraryJar).delete()
+        }
     }
 
     class ProcResult(val stdout: String, val stderr: String, val exitCode: Int)
