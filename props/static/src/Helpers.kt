@@ -100,7 +100,11 @@ private fun <T : View> Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit
 }
 
 private fun <T : View> Context.addContextTopLevelView(v: T, init: T.() -> Unit): T {
-    UI { addView(v, init, this) }
+    if (this is Activity) {
+        (this : Activity).UI { addView(v, init, this) }
+    } else {
+        UI { addView(v, init, this) }
+    }
     return v
 }
 
