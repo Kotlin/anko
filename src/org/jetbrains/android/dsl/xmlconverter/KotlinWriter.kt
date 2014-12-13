@@ -23,7 +23,7 @@ class KotlinWriter {
     val buffer = StringBuffer()
     val ctx = Context(buffer)
 
-    public fun handleAttribute(parentName: String, name: String, value:String) {
+    public fun handleAttribute(parentName: String, name: String, value: String) {
 
     }
 

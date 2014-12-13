@@ -92,7 +92,7 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
             val (clazz, method) = it
             /* Find all methods named "set*", with uppercase letter after "set" in a View ancestor class
                Such methods must be public and have only one argument */
-            name.length > 3 && name.startsWith("set") && Character.isUpperCase(name.charAt(3)) &&
+            name.size > 3 && name.startsWith("set") && Character.isUpperCase(name.charAt(3)) &&
                 clazz.isView() && method.isPublic() && it.method.arguments?.size() == 1 &&
                 !(it.method.name.startsWith("setOn") && it.method.name.endsWith("Listener"))
         }.groupBy { it.clazz.name + "#" + it.method.name }
@@ -162,7 +162,7 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
                 //if it's a simple listener, with just one method
                 val rawName = setter.method.name
                 //delete "setOn" end "Listener" parts of String
-                val name = decapitalize(rawName.substring("set".length).dropLast("Listener".length))
+                val name = decapitalize(rawName.substring("set".size).dropLast("Listener".size))
                 val method = methods!![0]
                 val argumentTypes = method.fmtArgumentsTypes()
                 val returnType = method.getReturnType().toStr()

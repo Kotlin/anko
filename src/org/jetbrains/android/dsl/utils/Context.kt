@@ -20,8 +20,12 @@ import java.util.ArrayList
 
 open class InvalidIndent(num: Int) : RuntimeException("Indentation level < 0: $num")
 open data class Indent(): CharSequence {
-    override val length: Int = 0
-    override fun get(index: Int): Char {
+    override fun length(): Int = 0
+
+    override fun charAt(index: Int): Char {
+        throw UnsupportedOperationException()
+    }
+    override fun subSequence(start: Int, end: Int): CharSequence {
         throw UnsupportedOperationException()
     }
 }
@@ -59,7 +63,7 @@ open class Context(val buffer: StringBuffer = StringBuffer(), var indentDepth: I
         indentDepth--
         if(indentDepth < 0)
             throw InvalidIndent(indentDepth)
-        currentIndent = currentIndent.substring(0, currentIndent.length - INDENT_UNIT.length)
+        currentIndent = currentIndent.substring(0, currentIndent.size - INDENT_UNIT.size)
     }
 
     public open fun write(what: CharSequence) {
@@ -81,7 +85,7 @@ open class Context(val buffer: StringBuffer = StringBuffer(), var indentDepth: I
     }
 
     public fun trim(num: Int) {
-        buffer.delete(buffer.length - num, buffer.length)
+        buffer.delete(buffer.size - num, buffer.size)
     }
 
     public fun fork(newBuffer: StringBuffer = StringBuffer(),

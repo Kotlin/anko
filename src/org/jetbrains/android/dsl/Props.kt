@@ -58,10 +58,10 @@ object Props {
     val customMethodParameters: Map<String, String> by Delegates.lazy {
         fun parseLine(s: String): Pair<String, String>? {
             val trimmed = s.trim()
-            if (trimmed.length == 0)
+            if (trimmed.size == 0)
                 return null
             val paren = trimmed.indexOf('(')
-            return Pair(trimmed.substring(0, paren), trimmed.substring(paren + 1, trimmed.length - 1))
+            return Pair(trimmed.substring(0, paren), trimmed.substring(paren + 1, trimmed.size - 1))
         }
 
         val lines = File("props/custom_method_parameters.txt").readLines()

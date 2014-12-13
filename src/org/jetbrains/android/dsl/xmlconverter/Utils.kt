@@ -36,5 +36,5 @@ public fun Attributes.toMap(): HashMap<String, String> {
 }
 
 public fun StringBuffer.trim(num: Int) {
-    delete(length - num, length)
+    delete(size - num, size)
 }

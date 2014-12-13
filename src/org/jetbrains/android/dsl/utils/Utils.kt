@@ -179,4 +179,4 @@ fun <T> Configurable.generate(vararg tune: ConfigurationTune, init: () -> Collec
 public fun readFile(filename: String): String = File(filename).readText()
 
 //drop last n characters
-private fun String.dropLast(n: Int) = if (n >= length) "" else substring(0, length-n)
+private fun String.dropLast(n: Int) = if (n >= size) "" else substring(0, size - n)

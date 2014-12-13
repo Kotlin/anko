@@ -82,7 +82,7 @@ fun MethodNode.processArguments(skipType: String = "",  app: (argName: String, a
         argNum++
         nameIndex += arg.getSize()
     }
-    if ( buf.length >= 2) buf.delete(buf.length - 2, buf.length)
+    if ( buf.size >= 2) buf.delete(buf.size - 2, buf.size)
     return buf.toString()
 }
 
@@ -136,19 +136,19 @@ fun MethodNode.isStatic(): Boolean {
 }
 
 fun MethodNode.isGetter(): Boolean {
-    return (((name.startsWith("get") && name.length > 3 && Character.isUpperCase(name.charAt(3)))) ||
-        (name.startsWith("is") && name.length > 2 && Character.isUpperCase(name.charAt(2))) &&
+    return (((name.startsWith("get") && name.size > 3 && Character.isUpperCase(name.charAt(3)))) ||
+        (name.startsWith("is") && name.size > 2 && Character.isUpperCase(name.charAt(2))) &&
         arguments?.size() == 0 && (getReturnType().getSort() != Type.VOID))
 }
 
 fun MethodNode.isSetter(): Boolean {
-    return ((name.startsWith("set") && name.length > 3) && arguments?.size() == 1)
+    return ((name.startsWith("set") && name.size > 3) && arguments?.size() == 1)
 }
 
 fun MethodNode.isProperty(): Boolean {
-    return ((name.startsWith("set") && name.length > 3) ||
-        (name.startsWith("get") && name.length > 3) ||
-        (name.startsWith("is") && name.length > 2))
+    return ((name.startsWith("set") && name.size > 3) ||
+        (name.startsWith("get") && name.size > 3) ||
+        (name.startsWith("is") && name.size > 2))
 }
 
 fun MethodNode.isProperty(prop: String): Boolean {
