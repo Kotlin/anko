@@ -42,6 +42,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [Services](#services)
 	* [Dialogs and toasts](#dialogs-and-toasts)
 	* [Asynchronous tasks](#asynchronous-tasks)
+	* [Using SQLite](#using-sqlite)
 	* [Extending Koan](#extending-koan)
 
 ## Why Koan?
@@ -87,7 +88,7 @@ You don't have to rewrite all your UI with Koan. You can keep your old classes w
 Moreover, if you still want (or have) to write a Kotlin activity class and inflate an XML layout for some reason, you can use View properties, which would make your life better:
 
 ```kotlin
-//Same as findViewById(), simpler to use
+// Same as findViewById(), simpler to use
 val name = find<TextView>(R.id.name)
 name.hint = "Enter your name"
 name.onClick { /*do something*/ }
@@ -109,7 +110,7 @@ fun ViewManager.mapView(init: MapView.() -> Unit = {}) =
   __dslAddView({MapView(it)}, init, this)
 ```
 
-``{MapView(it)}`` is a builder function for your custom View. It accepts a Context instance.
+``{MapView(it)}`` is a factory function for your custom View. It accepts a Context instance.
 
 So now you can write this:
 ```kotlin
@@ -118,7 +119,7 @@ frameLayout {
 }
 ```
 
-Also see [Extending Koan](#extending-koan) if you need an to create top-level DSL views.
+Also see [Extending Koan](#extending-koan) if you need to create top-level DSL views.
 
 ### Using with Gradle
 
@@ -175,7 +176,13 @@ override fun onCreate(savedInstanceState: Bundle?) {
 }
 ```
 
-Note that there's no explicit call to `setContentView(R.layout.something)`: Koan sets content views automatically for `Activities` (and only for them).
+<table>
+<tr><td width="50px" align="center">:penguin:</td>
+<td>
+<i>There's no explicit call to <code>setContentView(R.layout.something)</code>: Koan sets content views automatically for <code>Activities</code> (and only for them).</i>
+</td>
+</tr>
+</table>
 
 `padding`, `hint` and `textSize` are [extension properties](http://kotlinlang.org/docs/reference/extensions.html#extension-properties). They exist for most `View` properties allowing you to write `text = "Some text"` instead of `setText("Some text")`.
 
@@ -234,6 +241,14 @@ linearLayout {
 
 If you specify `layoutParams`, but omit `width` and/or `height`, their default values are both `WRAP_CONTENT`. But you always can pass them explicitly, for sure. Use [named arguments](http://kotlinlang.org/docs/reference/functions.html#named-arguments), it's convenient.
 
+<table>
+<tr><td width="50px" align="center">:penguin:</td>
+<td>
+<i>If you don't specify any <code>layoutParams</code> at all, the default value for <code>LinearLayout</code> is <code>MATCH_PARENT</code>.</i>
+</td>
+</tr>
+</table>
+
 Some convenient helper properties to notice:
 - `horizontalMargin` sets both left and right margins, 
 - `verticalMargin` set top and bottom ones, and 
@@ -252,8 +267,6 @@ relativeLayout {
   button("Cancel").layoutParams { below(ID_OK) }
 }
 ```
-
-The compiler will complain if you try to pass inappropriate `layoutParams`.
 
 ### Listeners
 
@@ -281,13 +294,13 @@ Koan is very helpful when you have listeners with lots of methods. Consider the 
 ```kotlin
 seekBar.setOnSeekBarChangeListener(object: OnSeekBarChangeListener {
   override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-    //something
+    // Something
   }
   override fun onStartTrackingTouch(seekBar: SeekBar?) {
-    //just an empty method
+    // Just an empty method
   }
   override fun onStopTrackingTouch(seekBar: SeekBar) {
-    //another empty method
+    // Another empty method
   }
 })
 ```
@@ -295,8 +308,8 @@ seekBar.setOnSeekBarChangeListener(object: OnSeekBarChangeListener {
 And now with Koan:
 ```kotlin
 seekBar {
-  onProgressChanged { (seekBar, i, b) ->
-    //something
+  onProgressChanged { (seekBar, progress, fromUser) ->
+    // Something
   }
 }
 ```
@@ -309,7 +322,15 @@ All examples in the previous chapters used raw Java strings, but it is hardly a 
 
 Fortunately, in Koan you can pass resource identifiers both to helper methods (`button(R.string.login)`) and to extension properties (`button { textResource = R.string.login }`).
 
-Note that the property name is not the same: instead of `text`, `hint`, `image`, we now use `textResource`, `hintResource` and `imageResource`. Properties of this kind always throws `KoanException` when read.
+Note that the property name is not the same: instead of `text`, `hint`, `image`, we now use `textResource`, `hintResource` and `imageResource`.
+
+<table>
+<tr><td width="50px" align="center">:penguin:</td>
+<td>
+<i>Resource properties always throw <code>KoanException</code> when read.</i>
+</td>
+</tr>
+</table>
 
 #### Colors
 
@@ -350,7 +371,7 @@ verticalLayout {
   editText {
     hint = "Password"
   }
-}.style { v -> when(v) {
+}.style { view -> when(view) {
   is EditText -> v.textSize = 20f
 }}
 ```
@@ -410,7 +431,7 @@ Koan provides an easy way to make toast notifications, alerts and selectors. All
 ```kotlin
 toast("Hi there!")
 toast(R.string.message)
-longToast("Wow, such long")
+longToast("Wow, such a duration")
 ```
 
 #### Alerts
@@ -444,14 +465,13 @@ selector("Where are you from?", countries) { i ->
 ### Asynchronous tasks
 
 `AsyncTask` is a jumbo. Wait, no, it is sometimes a  
-`Jumbo<OneElementWhichWillBeConvertedToArray, SomethingNotReallyUseful, Result>`.  
-It's twice as awful as hell.
+`Jumbo<OneElementWhichWillBeConvertedToArray, SomethingNotReallyUseful, Result>`. It's twice as awful as hell.
 
 There's a better way:
 
 ```kotlin
 async {
-  //long background task
+  // Long background task
   uiThread {
     result.text = "Done"
   }
@@ -462,7 +482,7 @@ Also, as mentioned above, Koan toasts and dialogs are always executed in main th
 
 ```kotlin
 async {
-  //long background task
+  // Another long background task
   toast("Done!")
 }
 ```
@@ -472,7 +492,7 @@ You can even execute tasks using your own `ExecutorService`:
 ```kotlin
 val executor = Executors.newScheduledThreadPool(4)
 async(executor) {
-  //some task
+  // Some task
 }
 ```
 
@@ -480,10 +500,14 @@ async(executor) {
 
 ```kotlin
 fun apiCall(): Result {
-  //something
+  // Something
 }
 val future: Future<Result> = asyncResult(::apiCall)
 ```
+
+### Using SQLite
+
+Please refer to [Using SQLite](doc/SQLITE.md) document for details.
 
 ### Extending Koan
 
@@ -524,7 +548,7 @@ fun Fragment.customView(init: View.() -> Unit = {}) =
 fun Context.customView(init: View.() -> Unit = {}) =
   __dslAddView({View(it)}, init, this)
 
-//Only if you use android.support.v4
+// Only if you use android.support.v4
 fun android.support.v4.app.Fragment.customView(init: View.() -> Unit = {}) =
   __dslAddView({View(it)}, init, this)
 ```
