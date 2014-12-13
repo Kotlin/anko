@@ -25,6 +25,7 @@ import android.content.Context
 import android.app.Fragment
 import android.app.Activity
 import android.graphics.drawable.Drawable
+import android.widget.EditText
 
 /* SECTION VIEWS */
 //type casting is now under the hood
@@ -145,6 +146,12 @@ public var LinearLayout.gravity: Int
     get() = throw KoanException("'gravity' property doesn't have a getter")
     set(value) {
         this.setGravity(value)
+    }
+
+public var TextView.isSelectable: Boolean
+    get() = isTextSelectable()
+    set(value) {
+        this.setTextIsSelectable(value)
     }
 
 public var TextView.textColor: Int

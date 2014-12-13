@@ -1775,9 +1775,6 @@ public val android.widget.TextView.inputMethodTarget: Boolean
 public val android.widget.TextView.suggestionsEnabled: Boolean
   get() = isSuggestionsEnabled()
 
-public val android.widget.TextView.textSelectable: Boolean
-  get() = isTextSelectable()
-
 public val android.widget.TimePicker.baseline: Int
   get() = getBaseline()
 
