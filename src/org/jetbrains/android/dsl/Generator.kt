@@ -57,8 +57,13 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
     }
 
     // Views and viewGroups without custom LayoutParams
-    val viewClasses = availableClasses.filter { it.isView() && !it.isViewGroupWithParams() && !it.isInner() }
-    val viewGroupClasses = availableClasses.filter { it.isViewGroupWithParams() && !it.isInner() && !it.isAbstract }
+    val viewClasses = availableClasses
+        .filter { it.isView() && !it.isViewGroupWithParams() && !it.isInner() }
+        .sortBy { it.name }
+
+    val viewGroupClasses = availableClasses
+        .filter { it.isViewGroupWithParams() && !it.isInner() && !it.isAbstract }
+        .sortBy { it.name }
 
     val listeners = availableMethods.filter {
         val name = it.method.name ?: ""
@@ -67,7 +72,7 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
         val name = it.method.arguments!![0].getInternalName()
         val node = classTree.findNode(name)!!
         makeListener(it, node.data)
-    }
+    }.sortBy { it.setter.clazz.name + "#" + it.setter.method.name }
 
     // Find get* methods on View classes, like getText() or getVisibility()
     private val propertyGetters = generate(PROPERTIES) {
@@ -107,13 +112,14 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
             val layoutClass = it!!.first //null items are already filtered
             val layoutParamsClass = it.second
             LayoutParamsNode(layoutClass, layoutParamsClass, layoutParamsClass.getConstructors())
-        }
+        }.sortBy { it.layout.name }
 
     val services = generate(SERVICES) {
         classTree.findNode("android/content/Context")?.data?.fields
             ?.filter { it.name.endsWith("_SERVICE") }
             ?.map { it.name to classTree.findNode("android", it.name.toServiceClassName()) }
             ?.filter { it.second != null }
+            ?.sortBy { it.first }
             ?: listOf()
     }
 

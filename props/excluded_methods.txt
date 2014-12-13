@@ -4,6 +4,7 @@ android.view.View#getPaddingLeft
 android.view.View#getPaddingRight
 android.view.View#getPaddingBottom
 android.view.View#getTouchables
+android.view.View#isImportantForAccessibility
 android.gesture.GestureOverlayView#getCurrentStroke
 android.inputmethodservice.KeyboardView#setShifted
 android.widget.AutoCompleteTextView#setAdapter

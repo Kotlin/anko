@@ -6,10 +6,10 @@ public class LayoutsTest : AbstractFunctionalTest() {
     override fun initSettings(settings: BaseGeneratorConfiguration) {
         settings.files.add(KoanFile.LAYOUTS)
     }
-    [Test] public fun testLayoutsTestFor19() {
-        runFunctionalTest(testDataFile, KoanFile.LAYOUTS, "19")
+    [Test] public fun testLayoutsTestFor21() {
+        runFunctionalTest(testDataFile, KoanFile.LAYOUTS, "21")
     }
-    [Test] public fun testLayoutsTestFor19s() {
-        runFunctionalTest(testDataFile, KoanFile.LAYOUTS, "19s")
+    [Test] public fun testLayoutsTestFor21s() {
+        runFunctionalTest(testDataFile, KoanFile.LAYOUTS, "21s")
     }
 }

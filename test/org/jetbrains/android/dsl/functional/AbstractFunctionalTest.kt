@@ -24,7 +24,7 @@ import java.io.FileWriter
 import java.io.IOException
 import java.util.ArrayList
 import java.util.Arrays
-import kotlin.test.*
+import org.testng.Assert.*
 
 public abstract class AbstractFunctionalTest {
 

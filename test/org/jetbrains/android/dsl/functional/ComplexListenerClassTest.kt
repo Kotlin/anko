@@ -7,10 +7,10 @@ public class ComplexListenerClassTest : AbstractFunctionalTest() {
         settings.files.add(KoanFile.LISTENERS)
         settings.tunes.add(ConfigurationTune.COMPLEX_LISTENER_CLASSES)
     }
-    [Test] public fun testComplexListenerClassTestFor19() {
-        runFunctionalTest(testDataFile, KoanFile.LISTENERS, "19")
+    [Test] public fun testComplexListenerClassTestFor21() {
+        runFunctionalTest(testDataFile, KoanFile.LISTENERS, "21")
     }
-    [Test] public fun testComplexListenerClassTestFor19s() {
-        runFunctionalTest(testDataFile, KoanFile.LISTENERS, "19s")
+    [Test] public fun testComplexListenerClassTestFor21s() {
+        runFunctionalTest(testDataFile, KoanFile.LISTENERS, "21s")
     }
 }

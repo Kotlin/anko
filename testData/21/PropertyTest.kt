@@ -99,59 +99,6 @@ public var android.opengl.GLSurfaceView.renderMode: Int
   get() = getRenderMode()
   set(v) = setRenderMode(v)
 
-public var android.support.v4.view.PagerTabStrip.drawFullUnderline: Boolean
-  get() = getDrawFullUnderline()
-  set(v) = setDrawFullUnderline(v)
-
-public var android.support.v4.view.PagerTabStrip.tabIndicatorColor: Int
-  get() = getTabIndicatorColor()
-  set(v) = setTabIndicatorColor(v)
-
-public var android.support.v4.view.PagerTitleStrip.textSpacing: Int
-  get() = getTextSpacing()
-  set(v) = setTextSpacing(v)
-
-public var android.support.v4.view.ViewPager.adapter: android.support.v4.view.PagerAdapter?
-  get() = getAdapter()
-  set(v) = setAdapter(v!!)
-
-public var android.support.v4.view.ViewPager.currentItem: Int
-  get() = getCurrentItem()
-  set(v) = setCurrentItem(v)
-
-public var android.support.v4.view.ViewPager.offscreenPageLimit: Int
-  get() = getOffscreenPageLimit()
-  set(v) = setOffscreenPageLimit(v)
-
-public var android.support.v4.view.ViewPager.pageMargin: Int
-  get() = getPageMargin()
-  set(v) = setPageMargin(v)
-
-public val android.support.v4.view.ViewPager.fakeDragging: Boolean
-  get() = isFakeDragging()
-
-public var android.support.v4.widget.SlidingPaneLayout.coveredFadeColor: Int
-  get() = getCoveredFadeColor()
-  set(v) = setCoveredFadeColor(v)
-
-public var android.support.v4.widget.SlidingPaneLayout.parallaxDistance: Int
-  get() = getParallaxDistance()
-  set(v) = setParallaxDistance(v)
-
-public var android.support.v4.widget.SlidingPaneLayout.sliderFadeColor: Int
-  get() = getSliderFadeColor()
-  set(v) = setSliderFadeColor(v)
-
-public val android.support.v4.widget.SlidingPaneLayout.open: Boolean
-  get() = isOpen()
-
-public val android.support.v4.widget.SlidingPaneLayout.slideable: Boolean
-  get() = isSlideable()
-
-public var android.support.v4.widget.SwipeRefreshLayout.refreshing: Boolean
-  get() = isRefreshing()
-  set(v) = setRefreshing(v)
-
 public val android.view.SurfaceView.holder: android.view.SurfaceHolder?
   get() = getHolder()
 
@@ -198,6 +145,14 @@ public var android.view.View.background: android.graphics.drawable.Drawable?
   get() = getBackground()
   set(v) = setBackground(v!!)
 
+public var android.view.View.backgroundTintList: android.content.res.ColorStateList?
+  get() = getBackgroundTintList()
+  set(v) = setBackgroundTintList(v!!)
+
+public var android.view.View.backgroundTintMode: android.graphics.PorterDuff.Mode?
+  get() = getBackgroundTintMode()
+  set(v) = setBackgroundTintMode(v!!)
+
 public val android.view.View.baseline: Int
   get() = getBaseline()
 
@@ -212,6 +167,10 @@ public var android.view.View.cameraDistance: Float
 public var android.view.View.clipBounds: android.graphics.Rect?
   get() = getClipBounds()
   set(v) = setClipBounds(v!!)
+
+public var android.view.View.clipToOutline: Boolean
+  get() = getClipToOutline()
+  set(v) = setClipToOutline(v)
 
 public var android.view.View.contentDescription: CharSequence?
   get() = getContentDescription()
@@ -239,6 +198,10 @@ public var android.view.View.drawingCacheQuality: Int
 
 public val android.view.View.drawingTime: Long
   get() = getDrawingTime()
+
+public var android.view.View.elevation: Float
+  get() = getElevation()
+  set(v) = setElevation(v)
 
 public var android.view.View.filterTouchesWhenObscured: Boolean
   get() = getFilterTouchesWhenObscured()
@@ -340,6 +303,10 @@ public var android.view.View.nextFocusUpId: Int
 public val android.view.View.onFocusChangeListener: android.view.View.OnFocusChangeListener?
   get() = getOnFocusChangeListener()
 
+public var android.view.View.outlineProvider: android.view.ViewOutlineProvider?
+  get() = getOutlineProvider()
+  set(v) = setOutlineProvider(v!!)
+
 public var android.view.View.overScrollMode: Int
   get() = getOverScrollMode()
   set(v) = setOverScrollMode(v)
@@ -424,6 +391,10 @@ public var android.view.View.scrollY: Int
 public val android.view.View.solidColor: Int
   get() = getSolidColor()
 
+public var android.view.View.stateListAnimator: android.animation.StateListAnimator?
+  get() = getStateListAnimator()
+  set(v) = setStateListAnimator(v!!)
+
 public var android.view.View.systemUiVisibility: Int
   get() = getSystemUiVisibility()
   set(v) = setSystemUiVisibility(v)
@@ -444,6 +415,10 @@ public var android.view.View.touchDelegate: android.view.TouchDelegate?
   get() = getTouchDelegate()
   set(v) = setTouchDelegate(v!!)
 
+public var android.view.View.transitionName: String?
+  get() = getTransitionName()
+  set(v) = setTransitionName(v!!)
+
 public var android.view.View.translationX: Float
   get() = getTranslationX()
   set(v) = setTranslationX(v)
@@ -451,6 +426,10 @@ public var android.view.View.translationX: Float
 public var android.view.View.translationY: Float
   get() = getTranslationY()
   set(v) = setTranslationY(v)
+
+public var android.view.View.translationZ: Float
+  get() = getTranslationZ()
+  set(v) = setTranslationZ(v)
 
 public val android.view.View.verticalFadingEdgeLength: Int
   get() = getVerticalFadingEdgeLength()
@@ -491,6 +470,13 @@ public var android.view.View.x: Float
 public var android.view.View.y: Float
   get() = getY()
   set(v) = setY(v)
+
+public var android.view.View.z: Float
+  get() = getZ()
+  set(v) = setZ(v)
+
+public val android.view.View.accessibilityFocused: Boolean
+  get() = isAccessibilityFocused()
 
 public var android.view.View.activated: Boolean
   get() = isActivated()
@@ -569,6 +555,10 @@ public val android.view.View.layoutRequested: Boolean
 public var android.view.View.longClickable: Boolean
   get() = isLongClickable()
   set(v) = setLongClickable(v)
+
+public var android.view.View.nestedScrollingEnabled: Boolean
+  get() = isNestedScrollingEnabled()
+  set(v) = setNestedScrollingEnabled(v)
 
 public val android.view.View.opaque: Boolean
   get() = isOpaque()
@@ -674,6 +664,10 @@ public var android.widget.AbsSeekBar.keyProgressIncrement: Int
   get() = getKeyProgressIncrement()
   set(v) = setKeyProgressIncrement(v)
 
+public var android.widget.AbsSeekBar.splitTrack: Boolean
+  get() = getSplitTrack()
+  set(v) = setSplitTrack(v)
+
 public var android.widget.AbsSeekBar.thumb: android.graphics.drawable.Drawable?
   get() = getThumb()
   set(v) = setThumb(v!!)
@@ -681,6 +675,24 @@ public var android.widget.AbsSeekBar.thumb: android.graphics.drawable.Drawable?
 public var android.widget.AbsSeekBar.thumbOffset: Int
   get() = getThumbOffset()
   set(v) = setThumbOffset(v)
+
+public var android.widget.AbsSeekBar.thumbTintList: android.content.res.ColorStateList?
+  get() = getThumbTintList()
+  set(v) = setThumbTintList(v!!)
+
+public var android.widget.AbsSeekBar.thumbTintMode: android.graphics.PorterDuff.Mode?
+  get() = getThumbTintMode()
+  set(v) = setThumbTintMode(v!!)
+
+public val android.widget.ActionMenuView.menu: android.view.Menu?
+  get() = getMenu()
+
+public var android.widget.ActionMenuView.popupTheme: Int
+  get() = getPopupTheme()
+  set(v) = setPopupTheme(v)
+
+public val android.widget.ActionMenuView.overflowMenuShowing: Boolean
+  get() = isOverflowMenuShowing()
 
 public var android.widget.AdapterViewFlipper.flipInterval: Int
   get() = getFlipInterval()
@@ -817,6 +829,14 @@ public var android.widget.CheckedTextView.checkMarkDrawable: android.graphics.dr
   get() = getCheckMarkDrawable()
   set(v) = setCheckMarkDrawable(v!!)
 
+public var android.widget.CheckedTextView.checkMarkTintList: android.content.res.ColorStateList?
+  get() = getCheckMarkTintList()
+  set(v) = setCheckMarkTintList(v!!)
+
+public var android.widget.CheckedTextView.checkMarkTintMode: android.graphics.PorterDuff.Mode?
+  get() = getCheckMarkTintMode()
+  set(v) = setCheckMarkTintMode(v!!)
+
 public var android.widget.CheckedTextView.checked: Boolean
   get() = isChecked()
   set(v) = setChecked(v)
@@ -831,6 +851,14 @@ public var android.widget.Chronometer.format: String?
 
 public val android.widget.Chronometer.onChronometerTickListener: android.widget.Chronometer.OnChronometerTickListener?
   get() = getOnChronometerTickListener()
+
+public var android.widget.CompoundButton.buttonTintList: android.content.res.ColorStateList?
+  get() = getButtonTintList()
+  set(v) = setButtonTintList(v!!)
+
+public var android.widget.CompoundButton.buttonTintMode: android.graphics.PorterDuff.Mode?
+  get() = getButtonTintMode()
+  set(v) = setButtonTintMode(v!!)
 
 public val android.widget.CompoundButton.compoundPaddingLeft: Int
   get() = getCompoundPaddingLeft()
@@ -851,6 +879,10 @@ public var android.widget.DatePicker.calendarViewShown: Boolean
 
 public val android.widget.DatePicker.dayOfMonth: Int
   get() = getDayOfMonth()
+
+public var android.widget.DatePicker.firstDayOfWeek: Int
+  get() = getFirstDayOfWeek()
+  set(v) = setFirstDayOfWeek(v)
 
 public var android.widget.DatePicker.maxDate: Long
   get() = getMaxDate()
@@ -913,6 +945,14 @@ public var android.widget.FrameLayout.foreground: android.graphics.drawable.Draw
 public var android.widget.FrameLayout.foregroundGravity: Int
   get() = getForegroundGravity()
   set(v) = setForegroundGravity(v)
+
+public var android.widget.FrameLayout.foregroundTintList: android.content.res.ColorStateList?
+  get() = getForegroundTintList()
+  set(v) = setForegroundTintList(v!!)
+
+public var android.widget.FrameLayout.foregroundTintMode: android.graphics.PorterDuff.Mode?
+  get() = getForegroundTintMode()
+  set(v) = setForegroundTintMode(v!!)
 
 public var android.widget.FrameLayout.measureAllChildren: Boolean
   get() = getMeasureAllChildren()
@@ -1019,6 +1059,14 @@ public var android.widget.ImageView.imageMatrix: android.graphics.Matrix?
   get() = getImageMatrix()
   set(v) = setImageMatrix(v!!)
 
+public var android.widget.ImageView.imageTintList: android.content.res.ColorStateList?
+  get() = getImageTintList()
+  set(v) = setImageTintList(v!!)
+
+public var android.widget.ImageView.imageTintMode: android.graphics.PorterDuff.Mode?
+  get() = getImageTintMode()
+  set(v) = setImageTintMode(v!!)
+
 public var android.widget.ImageView.maxHeight: Int
   get() = getMaxHeight()
   set(v) = setMaxHeight(v)
@@ -1030,6 +1078,9 @@ public var android.widget.ImageView.maxWidth: Int
 public var android.widget.ImageView.scaleType: android.widget.ImageView.ScaleType?
   get() = getScaleType()
   set(v) = setScaleType(v!!)
+
+public val android.widget.ImageView.opaque: Boolean
+  get() = isOpaque()
 
 public val android.widget.LinearLayout.baseline: Int
   get() = getBaseline()
@@ -1135,6 +1186,14 @@ public var android.widget.ProgressBar.indeterminateDrawable: android.graphics.dr
   get() = getIndeterminateDrawable()
   set(v) = setIndeterminateDrawable(v!!)
 
+public var android.widget.ProgressBar.indeterminateTintList: android.content.res.ColorStateList?
+  get() = getIndeterminateTintList()
+  set(v) = setIndeterminateTintList(v!!)
+
+public var android.widget.ProgressBar.indeterminateTintMode: android.graphics.PorterDuff.Mode?
+  get() = getIndeterminateTintMode()
+  set(v) = setIndeterminateTintMode(v!!)
+
 public var android.widget.ProgressBar.interpolator: android.view.animation.Interpolator?
   get() = getInterpolator()
   set(v) = setInterpolator(v!!)
@@ -1147,13 +1206,37 @@ public var android.widget.ProgressBar.progress: Int
   get() = getProgress()
   set(v) = setProgress(v)
 
+public var android.widget.ProgressBar.progressBackgroundTintList: android.content.res.ColorStateList?
+  get() = getProgressBackgroundTintList()
+  set(v) = setProgressBackgroundTintList(v!!)
+
+public var android.widget.ProgressBar.progressBackgroundTintMode: android.graphics.PorterDuff.Mode?
+  get() = getProgressBackgroundTintMode()
+  set(v) = setProgressBackgroundTintMode(v!!)
+
 public var android.widget.ProgressBar.progressDrawable: android.graphics.drawable.Drawable?
   get() = getProgressDrawable()
   set(v) = setProgressDrawable(v!!)
 
+public var android.widget.ProgressBar.progressTintList: android.content.res.ColorStateList?
+  get() = getProgressTintList()
+  set(v) = setProgressTintList(v!!)
+
+public var android.widget.ProgressBar.progressTintMode: android.graphics.PorterDuff.Mode?
+  get() = getProgressTintMode()
+  set(v) = setProgressTintMode(v!!)
+
 public var android.widget.ProgressBar.secondaryProgress: Int
   get() = getSecondaryProgress()
   set(v) = setSecondaryProgress(v)
+
+public var android.widget.ProgressBar.secondaryProgressTintList: android.content.res.ColorStateList?
+  get() = getSecondaryProgressTintList()
+  set(v) = setSecondaryProgressTintList(v!!)
+
+public var android.widget.ProgressBar.secondaryProgressTintMode: android.graphics.PorterDuff.Mode?
+  get() = getSecondaryProgressTintMode()
+  set(v) = setSecondaryProgressTintMode(v!!)
 
 public var android.widget.ProgressBar.indeterminate: Boolean
   get() = isIndeterminate()
@@ -1279,6 +1362,14 @@ public val android.widget.Switch.compoundPaddingLeft: Int
 
 public val android.widget.Switch.compoundPaddingRight: Int
   get() = getCompoundPaddingRight()
+
+public var android.widget.Switch.showText: Boolean
+  get() = getShowText()
+  set(v) = setShowText(v)
+
+public var android.widget.Switch.splitTrack: Boolean
+  get() = getSplitTrack()
+  set(v) = setSplitTrack(v)
 
 public var android.widget.Switch.switchMinWidth: Int
   get() = getSwitchMinWidth()
@@ -1423,6 +1514,10 @@ public var android.widget.TextView.filters: Array<android.text.InputFilter>?
   get() = getFilters()
   set(v) = setFilters(v!!)
 
+public var android.widget.TextView.fontFeatureSettings: String?
+  get() = getFontFeatureSettings()
+  set(v) = setFontFeatureSettings(v!!)
+
 public var android.widget.TextView.freezesText: Boolean
   get() = getFreezesText()
   set(v) = setFreezesText(v)
@@ -1469,6 +1564,10 @@ public var android.widget.TextView.keyListener: android.text.method.KeyListener?
 
 public val android.widget.TextView.layout: android.text.Layout?
   get() = getLayout()
+
+public var android.widget.TextView.letterSpacing: Float
+  get() = getLetterSpacing()
+  set(v) = setLetterSpacing(v)
 
 public val android.widget.TextView.lineCount: Int
   get() = getLineCount()
@@ -1558,6 +1657,10 @@ public val android.widget.TextView.shadowDy: Float
 public val android.widget.TextView.shadowRadius: Float
   get() = getShadowRadius()
 
+public var android.widget.TextView.showSoftInputOnFocus: Boolean
+  get() = getShowSoftInputOnFocus()
+  set(v) = setShowSoftInputOnFocus(v)
+
 public var android.widget.TextView.text: CharSequence?
   get() = getText()
   set(v) = setText(v!!)
@@ -1644,6 +1747,52 @@ public var android.widget.ToggleButton.textOff: CharSequence?
 public var android.widget.ToggleButton.textOn: CharSequence?
   get() = getTextOn()
   set(v) = setTextOn(v!!)
+
+public val android.widget.Toolbar.contentInsetEnd: Int
+  get() = getContentInsetEnd()
+
+public val android.widget.Toolbar.contentInsetLeft: Int
+  get() = getContentInsetLeft()
+
+public val android.widget.Toolbar.contentInsetRight: Int
+  get() = getContentInsetRight()
+
+public val android.widget.Toolbar.contentInsetStart: Int
+  get() = getContentInsetStart()
+
+public var android.widget.Toolbar.logo: android.graphics.drawable.Drawable?
+  get() = getLogo()
+  set(v) = setLogo(v!!)
+
+public var android.widget.Toolbar.logoDescription: CharSequence?
+  get() = getLogoDescription()
+  set(v) = setLogoDescription(v!!)
+
+public val android.widget.Toolbar.menu: android.view.Menu?
+  get() = getMenu()
+
+public var android.widget.Toolbar.navigationContentDescription: CharSequence?
+  get() = getNavigationContentDescription()
+  set(v) = setNavigationContentDescription(v!!)
+
+public var android.widget.Toolbar.navigationIcon: android.graphics.drawable.Drawable?
+  get() = getNavigationIcon()
+  set(v) = setNavigationIcon(v!!)
+
+public var android.widget.Toolbar.popupTheme: Int
+  get() = getPopupTheme()
+  set(v) = setPopupTheme(v)
+
+public var android.widget.Toolbar.subtitle: CharSequence?
+  get() = getSubtitle()
+  set(v) = setSubtitle(v!!)
+
+public var android.widget.Toolbar.title: CharSequence?
+  get() = getTitle()
+  set(v) = setTitle(v!!)
+
+public val android.widget.Toolbar.overflowMenuShowing: Boolean
+  get() = isOverflowMenuShowing()
 
 public val android.widget.TwoLineListItem.text1: android.widget.TextView?
   get() = getText1()

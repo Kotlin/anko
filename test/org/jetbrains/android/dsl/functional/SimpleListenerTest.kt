@@ -7,10 +7,10 @@ public class SimpleListenerTest : AbstractFunctionalTest() {
         settings.files.add(KoanFile.LISTENERS)
         settings.tunes.add(ConfigurationTune.SIMPLE_LISTENERS)
     }
-    [Test] public fun testSimpleListenerTestFor19() {
-        runFunctionalTest(testDataFile, KoanFile.LISTENERS, "19")
+    [Test] public fun testSimpleListenerTestFor21() {
+        runFunctionalTest(testDataFile, KoanFile.LISTENERS, "21")
     }
-    [Test] public fun testSimpleListenerTestFor19s() {
-        runFunctionalTest(testDataFile, KoanFile.LISTENERS, "19s")
+    [Test] public fun testSimpleListenerTestFor21s() {
+        runFunctionalTest(testDataFile, KoanFile.LISTENERS, "21s")
     }
 }

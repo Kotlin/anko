@@ -6,10 +6,10 @@ public class ServicesTest : AbstractFunctionalTest() {
     override fun initSettings(settings: BaseGeneratorConfiguration) {
         settings.files.add(KoanFile.SERVICES)
     }
-    [Test] public fun testServicesTestFor19() {
-        runFunctionalTest(testDataFile, KoanFile.SERVICES, "19")
+    [Test] public fun testServicesTestFor21() {
+        runFunctionalTest(testDataFile, KoanFile.SERVICES, "21")
     }
-    [Test] public fun testServicesTestFor19s() {
-        runFunctionalTest(testDataFile, KoanFile.SERVICES, "19s")
+    [Test] public fun testServicesTestFor21s() {
+        runFunctionalTest(testDataFile, KoanFile.SERVICES, "21s")
     }
 }

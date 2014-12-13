@@ -138,44 +138,30 @@ public fun android.view.ViewGroup.onChildViewRemoved(act: (android.view.View?, a
   }
 }
 
-public fun android.support.v4.view.ViewPager.onPageScrolled(act: (Int, Float, Int) -> Unit) {
+public fun android.widget.AbsListView.onScrollStateChanged(act: (android.widget.AbsListView?, Int) -> Unit) {
   val props = getTag() as? ViewProps
   if (props != null) {
-    var l: __ViewPager_setOnPageChangeListener_ViewPager_OnPageChangeListener? =
-      props.listeners.get("android.support.v4.view.ViewPager_setOnPageChangeListener") as? __ViewPager_setOnPageChangeListener_ViewPager_OnPageChangeListener
+    var l: __AbsListView_setOnScrollListener_AbsListView_OnScrollListener? =
+      props.listeners.get("android.widget.AbsListView_setOnScrollListener") as? __AbsListView_setOnScrollListener_AbsListView_OnScrollListener
     if (l == null) {
-      l = __ViewPager_setOnPageChangeListener_ViewPager_OnPageChangeListener(this)
-      props.listeners.put("android.support.v4.view.ViewPager_setOnPageChangeListener", l!!)
+      l = __AbsListView_setOnScrollListener_AbsListView_OnScrollListener(this)
+      props.listeners.put("android.widget.AbsListView_setOnScrollListener", l!!)
     }
-    l!!._onPageScrolled = act
+    l!!._onScrollStateChanged = act
     l!!.apply()
   }
 }
 
-public fun android.support.v4.view.ViewPager.onPageSelected(act: (Int) -> Unit) {
+public fun android.widget.AbsListView.onScroll(act: (android.widget.AbsListView?, Int, Int, Int) -> Unit) {
   val props = getTag() as? ViewProps
   if (props != null) {
-    var l: __ViewPager_setOnPageChangeListener_ViewPager_OnPageChangeListener? =
-      props.listeners.get("android.support.v4.view.ViewPager_setOnPageChangeListener") as? __ViewPager_setOnPageChangeListener_ViewPager_OnPageChangeListener
+    var l: __AbsListView_setOnScrollListener_AbsListView_OnScrollListener? =
+      props.listeners.get("android.widget.AbsListView_setOnScrollListener") as? __AbsListView_setOnScrollListener_AbsListView_OnScrollListener
     if (l == null) {
-      l = __ViewPager_setOnPageChangeListener_ViewPager_OnPageChangeListener(this)
-      props.listeners.put("android.support.v4.view.ViewPager_setOnPageChangeListener", l!!)
+      l = __AbsListView_setOnScrollListener_AbsListView_OnScrollListener(this)
+      props.listeners.put("android.widget.AbsListView_setOnScrollListener", l!!)
     }
-    l!!._onPageSelected = act
-    l!!.apply()
-  }
-}
-
-public fun android.support.v4.view.ViewPager.onPageScrollStateChanged(act: (Int) -> Unit) {
-  val props = getTag() as? ViewProps
-  if (props != null) {
-    var l: __ViewPager_setOnPageChangeListener_ViewPager_OnPageChangeListener? =
-      props.listeners.get("android.support.v4.view.ViewPager_setOnPageChangeListener") as? __ViewPager_setOnPageChangeListener_ViewPager_OnPageChangeListener
-    if (l == null) {
-      l = __ViewPager_setOnPageChangeListener_ViewPager_OnPageChangeListener(this)
-      props.listeners.put("android.support.v4.view.ViewPager_setOnPageChangeListener", l!!)
-    }
-    l!!._onPageScrollStateChanged = act
+    l!!._onScroll = act
     l!!.apply()
   }
 }
@@ -208,58 +194,30 @@ public fun android.widget.AdapterView<out android.widget.Adapter?>.onNothingSele
   }
 }
 
-public fun android.widget.SlidingDrawer.onScrollStarted(act: () -> Unit) {
+public fun android.widget.AutoCompleteTextView.onItemSelected(act: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit) {
   val props = getTag() as? ViewProps
   if (props != null) {
-    var l: __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener? =
-      props.listeners.get("android.widget.SlidingDrawer_setOnDrawerScrollListener") as? __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener
+    var l: __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener? =
+      props.listeners.get("android.widget.AutoCompleteTextView_setOnItemSelectedListener") as? __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener
     if (l == null) {
-      l = __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener(this)
-      props.listeners.put("android.widget.SlidingDrawer_setOnDrawerScrollListener", l!!)
+      l = __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener(this)
+      props.listeners.put("android.widget.AutoCompleteTextView_setOnItemSelectedListener", l!!)
     }
-    l!!._onScrollStarted = act
+    l!!._onItemSelected = act
     l!!.apply()
   }
 }
 
-public fun android.widget.SlidingDrawer.onScrollEnded(act: () -> Unit) {
+public fun android.widget.AutoCompleteTextView.onNothingSelected(act: (android.widget.AdapterView<*>?) -> Unit) {
   val props = getTag() as? ViewProps
   if (props != null) {
-    var l: __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener? =
-      props.listeners.get("android.widget.SlidingDrawer_setOnDrawerScrollListener") as? __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener
+    var l: __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener? =
+      props.listeners.get("android.widget.AutoCompleteTextView_setOnItemSelectedListener") as? __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener
     if (l == null) {
-      l = __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener(this)
-      props.listeners.put("android.widget.SlidingDrawer_setOnDrawerScrollListener", l!!)
+      l = __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener(this)
+      props.listeners.put("android.widget.AutoCompleteTextView_setOnItemSelectedListener", l!!)
     }
-    l!!._onScrollEnded = act
-    l!!.apply()
-  }
-}
-
-public fun android.widget.AbsListView.onScrollStateChanged(act: (android.widget.AbsListView?, Int) -> Unit) {
-  val props = getTag() as? ViewProps
-  if (props != null) {
-    var l: __AbsListView_setOnScrollListener_AbsListView_OnScrollListener? =
-      props.listeners.get("android.widget.AbsListView_setOnScrollListener") as? __AbsListView_setOnScrollListener_AbsListView_OnScrollListener
-    if (l == null) {
-      l = __AbsListView_setOnScrollListener_AbsListView_OnScrollListener(this)
-      props.listeners.put("android.widget.AbsListView_setOnScrollListener", l!!)
-    }
-    l!!._onScrollStateChanged = act
-    l!!.apply()
-  }
-}
-
-public fun android.widget.AbsListView.onScroll(act: (android.widget.AbsListView?, Int, Int, Int) -> Unit) {
-  val props = getTag() as? ViewProps
-  if (props != null) {
-    var l: __AbsListView_setOnScrollListener_AbsListView_OnScrollListener? =
-      props.listeners.get("android.widget.AbsListView_setOnScrollListener") as? __AbsListView_setOnScrollListener_AbsListView_OnScrollListener
-    if (l == null) {
-      l = __AbsListView_setOnScrollListener_AbsListView_OnScrollListener(this)
-      props.listeners.put("android.widget.AbsListView_setOnScrollListener", l!!)
-    }
-    l!!._onScroll = act
+    l!!._onNothingSelected = act
     l!!.apply()
   }
 }
@@ -286,62 +244,6 @@ public fun android.widget.RadioGroup.onChildViewRemoved(act: (android.view.View?
     if (l == null) {
       l = __RadioGroup_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(this)
       props.listeners.put("android.widget.RadioGroup_setOnHierarchyChangeListener", l!!)
-    }
-    l!!._onChildViewRemoved = act
-    l!!.apply()
-  }
-}
-
-public fun android.widget.TableLayout.onChildViewAdded(act: (android.view.View?, android.view.View?) -> Unit) {
-  val props = getTag() as? ViewProps
-  if (props != null) {
-    var l: __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
-      props.listeners.get("android.widget.TableLayout_setOnHierarchyChangeListener") as? __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener
-    if (l == null) {
-      l = __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(this)
-      props.listeners.put("android.widget.TableLayout_setOnHierarchyChangeListener", l!!)
-    }
-    l!!._onChildViewAdded = act
-    l!!.apply()
-  }
-}
-
-public fun android.widget.TableLayout.onChildViewRemoved(act: (android.view.View?, android.view.View?) -> Unit) {
-  val props = getTag() as? ViewProps
-  if (props != null) {
-    var l: __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
-      props.listeners.get("android.widget.TableLayout_setOnHierarchyChangeListener") as? __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener
-    if (l == null) {
-      l = __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(this)
-      props.listeners.put("android.widget.TableLayout_setOnHierarchyChangeListener", l!!)
-    }
-    l!!._onChildViewRemoved = act
-    l!!.apply()
-  }
-}
-
-public fun android.widget.TableRow.onChildViewAdded(act: (android.view.View?, android.view.View?) -> Unit) {
-  val props = getTag() as? ViewProps
-  if (props != null) {
-    var l: __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
-      props.listeners.get("android.widget.TableRow_setOnHierarchyChangeListener") as? __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener
-    if (l == null) {
-      l = __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(this)
-      props.listeners.put("android.widget.TableRow_setOnHierarchyChangeListener", l!!)
-    }
-    l!!._onChildViewAdded = act
-    l!!.apply()
-  }
-}
-
-public fun android.widget.TableRow.onChildViewRemoved(act: (android.view.View?, android.view.View?) -> Unit) {
-  val props = getTag() as? ViewProps
-  if (props != null) {
-    var l: __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
-      props.listeners.get("android.widget.TableRow_setOnHierarchyChangeListener") as? __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener
-    if (l == null) {
-      l = __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(this)
-      props.listeners.put("android.widget.TableRow_setOnHierarchyChangeListener", l!!)
     }
     l!!._onChildViewRemoved = act
     l!!.apply()
@@ -404,34 +306,6 @@ public fun android.widget.SearchView.onSuggestionClick(act: (Int) -> Boolean) {
   }
 }
 
-public fun android.widget.AutoCompleteTextView.onItemSelected(act: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit) {
-  val props = getTag() as? ViewProps
-  if (props != null) {
-    var l: __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener? =
-      props.listeners.get("android.widget.AutoCompleteTextView_setOnItemSelectedListener") as? __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener
-    if (l == null) {
-      l = __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener(this)
-      props.listeners.put("android.widget.AutoCompleteTextView_setOnItemSelectedListener", l!!)
-    }
-    l!!._onItemSelected = act
-    l!!.apply()
-  }
-}
-
-public fun android.widget.AutoCompleteTextView.onNothingSelected(act: (android.widget.AdapterView<*>?) -> Unit) {
-  val props = getTag() as? ViewProps
-  if (props != null) {
-    var l: __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener? =
-      props.listeners.get("android.widget.AutoCompleteTextView_setOnItemSelectedListener") as? __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener
-    if (l == null) {
-      l = __AutoCompleteTextView_setOnItemSelectedListener_AdapterView_OnItemSelectedListener(this)
-      props.listeners.put("android.widget.AutoCompleteTextView_setOnItemSelectedListener", l!!)
-    }
-    l!!._onNothingSelected = act
-    l!!.apply()
-  }
-}
-
 public fun android.widget.SeekBar.onProgressChanged(act: (android.widget.SeekBar?, Int, Boolean) -> Unit) {
   val props = getTag() as? ViewProps
   if (props != null) {
@@ -470,6 +344,90 @@ public fun android.widget.SeekBar.onStopTrackingTouch(act: (android.widget.SeekB
       props.listeners.put("android.widget.SeekBar_setOnSeekBarChangeListener", l!!)
     }
     l!!._onStopTrackingTouch = act
+    l!!.apply()
+  }
+}
+
+public fun android.widget.SlidingDrawer.onScrollStarted(act: () -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener? =
+      props.listeners.get("android.widget.SlidingDrawer_setOnDrawerScrollListener") as? __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener
+    if (l == null) {
+      l = __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener(this)
+      props.listeners.put("android.widget.SlidingDrawer_setOnDrawerScrollListener", l!!)
+    }
+    l!!._onScrollStarted = act
+    l!!.apply()
+  }
+}
+
+public fun android.widget.SlidingDrawer.onScrollEnded(act: () -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener? =
+      props.listeners.get("android.widget.SlidingDrawer_setOnDrawerScrollListener") as? __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener
+    if (l == null) {
+      l = __SlidingDrawer_setOnDrawerScrollListener_SlidingDrawer_OnDrawerScrollListener(this)
+      props.listeners.put("android.widget.SlidingDrawer_setOnDrawerScrollListener", l!!)
+    }
+    l!!._onScrollEnded = act
+    l!!.apply()
+  }
+}
+
+public fun android.widget.TableLayout.onChildViewAdded(act: (android.view.View?, android.view.View?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
+      props.listeners.get("android.widget.TableLayout_setOnHierarchyChangeListener") as? __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener
+    if (l == null) {
+      l = __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(this)
+      props.listeners.put("android.widget.TableLayout_setOnHierarchyChangeListener", l!!)
+    }
+    l!!._onChildViewAdded = act
+    l!!.apply()
+  }
+}
+
+public fun android.widget.TableLayout.onChildViewRemoved(act: (android.view.View?, android.view.View?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
+      props.listeners.get("android.widget.TableLayout_setOnHierarchyChangeListener") as? __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener
+    if (l == null) {
+      l = __TableLayout_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(this)
+      props.listeners.put("android.widget.TableLayout_setOnHierarchyChangeListener", l!!)
+    }
+    l!!._onChildViewRemoved = act
+    l!!.apply()
+  }
+}
+
+public fun android.widget.TableRow.onChildViewAdded(act: (android.view.View?, android.view.View?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
+      props.listeners.get("android.widget.TableRow_setOnHierarchyChangeListener") as? __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener
+    if (l == null) {
+      l = __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(this)
+      props.listeners.put("android.widget.TableRow_setOnHierarchyChangeListener", l!!)
+    }
+    l!!._onChildViewAdded = act
+    l!!.apply()
+  }
+}
+
+public fun android.widget.TableRow.onChildViewRemoved(act: (android.view.View?, android.view.View?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener? =
+      props.listeners.get("android.widget.TableRow_setOnHierarchyChangeListener") as? __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener
+    if (l == null) {
+      l = __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListener(this)
+      props.listeners.put("android.widget.TableRow_setOnHierarchyChangeListener", l!!)
+    }
+    l!!._onChildViewRemoved = act
     l!!.apply()
   }
 }

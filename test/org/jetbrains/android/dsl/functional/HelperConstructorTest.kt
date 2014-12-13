@@ -6,10 +6,10 @@ public class HelperConstructorTest : AbstractFunctionalTest() {
     override fun initSettings(settings: BaseGeneratorConfiguration) {
         settings.tunes.add(ConfigurationTune.HELPER_CONSTRUCTORS)
     }
-    [Test] public fun testHelperConstructorTestFor19() {
-        runFunctionalTest(testDataFile, KoanFile.VIEWS, "19")
+    [Test] public fun testHelperConstructorTestFor21() {
+        runFunctionalTest(testDataFile, KoanFile.VIEWS, "21")
     }
-    [Test] public fun testHelperConstructorTestFor19s() {
-        runFunctionalTest(testDataFile, KoanFile.VIEWS, "19s")
+    [Test] public fun testHelperConstructorTestFor21s() {
+        runFunctionalTest(testDataFile, KoanFile.VIEWS, "21s")
     }
 }
