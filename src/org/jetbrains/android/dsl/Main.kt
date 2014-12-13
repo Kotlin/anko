@@ -83,8 +83,6 @@ private fun gen() {
             DSLGenerator(intVersion, version.getName(), jars, GeneratorConfiguration(outputDirectory)).run()
         }
     }
-
-    File("props/mvn/deploy.sh").copyTo(File("gen/deploy.sh"))
 }
 
 private fun parseVersion(name: String): Int? {
