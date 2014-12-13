@@ -14,7 +14,7 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion %VERSION%
-            buildToolsVersion "21.1.1"
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         targetSdkVersion "%VERSION%"
