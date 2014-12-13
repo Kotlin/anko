@@ -1,0 +1,26 @@
+<project name="Update Dependencies" default="update">
+    <target name="update">
+        <mkdir dir="lib"/>
+
+        <get src="http://repo1.maven.org/maven2/org/ow2/asm/asm-debug-all/4.2/asm-debug-all-4.2.jar"
+             dest="lib/asm-4.2.jar" usetimestamp="true"/>
+
+        <get src="http://repo1.maven.org/maven2/org/testng/testng/6.7/testng-6.7.jar"
+             dest="lib/testng-6.7.jar" usetimestamp="true"/>
+
+        <get src="http://repo1.maven.org/maven2/com/google/code/gson/gson/2.3/gson-2.3.jar"
+             dest="lib/gson-2.3.jar" usetimestamp="true"/>
+
+        <get src="http://search.maven.org/remotecontent?filepath=junit/junit/4.11/junit-4.11.jar"
+             dest="lib/junit-4.11.jar" usetimestamp="true"/>
+
+        <get src="https://teamcity.jetbrains.com/repository/download/bt345/355950:id/kotlin-compiler-0.9.1306.zip"
+             dest="lib/kotlinc.zip" username="guest" password="guest" usetimestamp="true"/>
+
+        <delete dir="lib/kotlinc" failonerror="false"/>
+        <unzip src="lib/kotlinc.zip"
+               dest="lib/"/>
+        <chmod dir="lib/kotlinc/bin" perm="+x"
+               includes="**/*"/>
+    </target>
+</project>
