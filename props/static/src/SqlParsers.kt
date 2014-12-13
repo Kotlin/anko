@@ -10,11 +10,11 @@ public trait RowParser<T> {
     fun parseRow(columns: Array<Any>): T
 }
 
-public trait RichRowParser<T> {
+public trait MapRowParser<T> {
     fun parseRow(columns: Map<String, Any>): T
 }
 
-public class SingleColumnParser<T> : RowParser<T> {
+private class SingleColumnParser<T> : RowParser<T> {
     override fun parseRow(columns: Array<Any>): T {
         if (columns.size() != 0)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
@@ -36,21 +36,21 @@ private class ScalarColumnParser<R, T>(val modifier: ((R) -> T)? = null) : RowPa
 }
 
 public val ShortParser: RowParser<Short> = ScalarColumnParser<Long, Short> { it.toShort() }
-public val IntParser: RowParser<Int> = ScalarColumnParser<Long, Int>  { it.toInt() }
+public val IntParser: RowParser<Int> = ScalarColumnParser<Long, Int> { it.toInt() }
 public val LongParser: RowParser<Long> = SingleColumnParser()
 public val FloatParser: RowParser<Float> = ScalarColumnParser<Double, Float> { it.toFloat() }
 public val DoubleParser: RowParser<Double> = SingleColumnParser()
 public val StringParser: RowParser<String> = SingleColumnParser()
 public val BlobParser: RowParser<ByteArray> = SingleColumnParser()
 
-public fun <T> Cursor.parseSingle(parser: RowParser<T>): T = withCursor {
+public fun <T: Any> Cursor.parseSingle(parser: RowParser<T>): T = use {
     if (getCount() != 1)
         throw SQLiteException("parseSingle accepts only cursors with a single entry")
     moveToFirst()
     return parser.parseRow(readColumnsArray(this))
 }
 
-public fun <T> Cursor.parseOpt(parser: RowParser<T>): T? = withCursor {
+public fun <T: Any> Cursor.parseOpt(parser: RowParser<T>): T? = use {
     if (getCount() > 1)
         throw SQLiteException("parseSingle accepts only cursors with a single entry or empty cursors")
     if (getCount() == 0)
@@ -59,7 +59,7 @@ public fun <T> Cursor.parseOpt(parser: RowParser<T>): T? = withCursor {
     return parser.parseRow(readColumnsArray(this))
 }
 
-public fun <T> Cursor.parseList(parser: RowParser<T>): List<T> = withCursor {
+public fun <T: Any> Cursor.parseList(parser: RowParser<T>): List<T> = use {
     val list = ArrayList<T>(getCount())
     moveToFirst()
     while (!isAfterLast()) {
@@ -69,14 +69,14 @@ public fun <T> Cursor.parseList(parser: RowParser<T>): List<T> = withCursor {
     return list
 }
 
-public fun <T> Cursor.parseSingle(parser: RichRowParser<T>): T = withCursor {
+public fun <T: Any> Cursor.parseSingle(parser: MapRowParser<T>): T = use {
     if (getCount() != 1)
         throw SQLiteException("parseSingle accepts only cursors with getCount() == 1")
     moveToFirst()
     return parser.parseRow(readColumnsMap(this))
 }
 
-public fun <T> Cursor.parseOpt(parser: RichRowParser<T>): T? = withCursor {
+public fun <T: Any> Cursor.parseOpt(parser: MapRowParser<T>): T? = use {
     if (getCount() > 1)
         throw SQLiteException("parseSingle accepts only cursors with getCount() == 1 or empty cursors")
     if (getCount() == 0)
@@ -85,7 +85,7 @@ public fun <T> Cursor.parseOpt(parser: RichRowParser<T>): T? = withCursor {
     return parser.parseRow(readColumnsMap(this))
 }
 
-public fun <T> Cursor.parseList(parser: RichRowParser<T>): List<T> = withCursor {
+public fun <T: Any> Cursor.parseList(parser: MapRowParser<T>): List<T> = use {
     val list = ArrayList<T>(getCount())
     moveToFirst()
     while (!isAfterLast()) {
@@ -95,8 +95,16 @@ public fun <T> Cursor.parseList(parser: RichRowParser<T>): List<T> = withCursor 
     return list
 }
 
+public fun Cursor.stream(): Stream<Array<Any>> {
+    return CursorStream(this)
+}
+
+public fun Cursor.mapStream(): Stream<Map<String, Any>> {
+    return CursorMapStream(this)
+}
+
 [suppress("NOTHING_TO_INLINE")]
-public inline fun <reified T> rowParser(): RowParser<T> {
+public inline fun <reified T> classParser(): RowParser<T> {
     val clazz = javaClass<T>()
     val constructors = clazz.getDeclaredConstructors().filter {
         val types = it.getParameterTypes()
@@ -130,16 +138,6 @@ public inline fun <reified T> rowParser(): RowParser<T> {
     }
 }
 
-private inline fun <T> Cursor.withCursor(init: Cursor.() -> T): T {
-    try {
-        return init()
-    } finally {
-        if (!isClosed()) {
-            close()
-        }
-    }
-}
-
 private fun readColumnsArray(cursor: Cursor): Array<Any> {
     val count = cursor.getColumnCount()
     val arr = arrayOfNulls<Any>(count)
@@ -169,4 +167,38 @@ private fun readColumnsMap(cursor: Cursor): Map<String, Any> {
         })
     }
     return map
+}
+
+private class CursorMapStream(val cursor: Cursor) : Stream<Map<String, Any>> {
+    override fun iterator(): Iterator<Map<String, Any>> {
+        return CursorMapIterator(cursor)
+    }
+}
+
+private class CursorStream(val cursor: Cursor) : Stream<Array<Any>> {
+    override fun iterator(): Iterator<Array<Any>> {
+        return CursorIterator(cursor)
+    }
+}
+
+private class CursorIterator(val cursor: Cursor) : Iterator<Array<Any>> {
+    override fun next(): Array<Any> {
+        cursor.moveToNext()
+        return readColumnsArray(cursor)
+    }
+
+    override fun hasNext(): Boolean {
+        return cursor.getPosition() < cursor.getCount() - 1
+    }
+}
+
+private class CursorMapIterator(val cursor: Cursor) : Iterator<Map<String, Any>> {
+    override fun next(): Map<String, Any> {
+        cursor.moveToNext()
+        return readColumnsMap(cursor)
+    }
+
+    override fun hasNext(): Boolean {
+        return cursor.getPosition() < cursor.getCount() - 1
+    }
 }

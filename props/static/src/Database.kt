@@ -13,8 +13,17 @@ public val REAL: SqlType = SqlTypeImpl("REAL")
 public val TEXT: SqlType = SqlTypeImpl("TEXT")
 public val BLOB: SqlType = SqlTypeImpl("BLOB")
 
+public fun FOREIGN_KEY(columnName: String, referenceTable: String, referenceColumn: String): SqlType {
+    return SqlTypeImpl("FOREIGN KEY($columnName) REFERENCES $referenceTable($referenceColumn)")
+}
+
 public val PRIMARY_KEY: SqlTypeModifier = SqlTypeModifierImpl("PRIMARY KEY")
+public val NOT_NULL: SqlTypeModifier = SqlTypeModifierImpl("NOT_NULL")
+public val AUTOINCREMENT: SqlTypeModifier = SqlTypeModifierImpl("AUTOINCREMENT")
 public val UNIQUE: SqlTypeModifier = SqlTypeModifierImpl("UNIQUE")
+public fun DEFAULT(value: String): SqlTypeModifier = SqlTypeModifierImpl("DEFAULT $value")
+
+public class TransactionAbortException : RuntimeException()
 
 public trait SqlType {
     open val name: String
@@ -43,15 +52,15 @@ public fun SqlType.plus(m: SqlTypeModifier) : SqlType {
     return SqlTypeImpl(name, if (modifier == null) m.toString() else "$modifier $m")
 }
 
-public inline fun SQLiteOpenHelper.database(act: SQLiteDatabase.() -> Unit) {
-    var db: SQLiteDatabase? = null
-    try {
-        db = getWritableDatabase()
-        db!!.act()
-    } finally {
-        if (db != null && db!!.isOpen()) {
-            db!!.close()
-        }
+public inline fun <T> SQLiteOpenHelper.withReadableDatabase(f: SQLiteDatabase.() -> T): T {
+    return getReadableDatabase().use {
+        it.f()
+    }
+}
+
+public inline fun <T> SQLiteOpenHelper.withWritableDatabase(f: SQLiteDatabase.() -> T): T {
+    return getWritableDatabase().use {
+        it.f()
     }
 }
 
@@ -71,23 +80,30 @@ public fun SQLiteDatabase.replaceOrThrow(tableName: String, vararg values: Pair<
     return replaceOrThrow(tableName, null, values.toContentValues())
 }
 
-public fun SQLiteDatabase.select(tableName: String, init: SelectQueryBuilder.() -> Unit): Cursor {
-    val builder = SelectQueryBuilderImpl(tableName)
-    builder.init()
-    return builder.exec(this)
+public fun SQLiteDatabase.transaction(code: SQLiteDatabase.() -> Unit) {
+    try {
+        beginTransaction()
+        code()
+        setTransactionSuccessful()
+    } catch (e: TransactionAbortException) {
+        // Do nothing, just stop the transaction
+    } finally {
+        endTransaction()
+    }
 }
 
-public fun SQLiteDatabase.select(tableName: String, vararg columns: String, init: SelectQueryBuilder.() -> Unit): Cursor {
-    val builder = SelectQueryBuilderImpl(tableName)
+public fun SQLiteDatabase.select(tableName: String): SelectQueryBuilder {
+    return SelectQueryBuilder(this, tableName)
+}
+
+public fun SQLiteDatabase.select(tableName: String, vararg columns: String): SelectQueryBuilder {
+    val builder = SelectQueryBuilder(this, tableName)
     builder.columns(*columns)
-    builder.init()
-    return builder.exec(this)
+    return builder
 }
 
-public fun SQLiteDatabase.update(tableName: String, vararg values: Pair<String, Any>, init: UpdateQueryBuilder.() -> Unit): Int {
-    val builder = UpdateQueryBuilderImpl(this, tableName, values)
-    builder.init()
-    return builder.exec()
+public fun SQLiteDatabase.update(tableName: String, vararg values: Pair<String, Any>): UpdateQueryBuilder {
+    return UpdateQueryBuilder(this, tableName, values)
 }
 
 public fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = false, vararg columns: Pair<String, SqlType>) {
@@ -160,22 +176,17 @@ public enum class SqlOrderDirection {
     DESC
 }
 
-public trait UpdateQueryBuilder {
-    public fun where(select: String, vararg args: Pair<String, Any>)
-    public fun where(select: String)
-    public fun where(select: String, vararg args: String)
-}
-
-private class UpdateQueryBuilderImpl(val db: SQLiteDatabase, val tableName: String, val values: Array<Pair<String, Any>>) : UpdateQueryBuilder {
+public class UpdateQueryBuilder(val db: SQLiteDatabase, val tableName: String, val values: Array<Pair<String, Any>>) {
 
     private var selectionApplied = false
     private var useNativeSelection = false
     private var selection: String? = null
     private var nativeSelectionArgs: Array<String>? = null
 
-    public override fun where(select: String, vararg args: Pair<String, Any>) {
-        if (selectionApplied)
+    public fun where(select: String, vararg args: Pair<String, Any>): UpdateQueryBuilder {
+        if (selectionApplied) {
             throw KoanException("Query selection was already applied.")
+        }
 
         selectionApplied = true
         useNativeSelection = false
@@ -184,18 +195,20 @@ private class UpdateQueryBuilderImpl(val db: SQLiteDatabase, val tableName: Stri
             map
         }
         selection = applyArguments(select, argsMap)
+        return this
     }
 
-    public override fun where(select: String) {
+    public fun where(select: String): UpdateQueryBuilder {
         if (selectionApplied)
             throw KoanException("Query selection was already applied.")
 
         selectionApplied = true
         useNativeSelection = false
         selection = select
+        return this
     }
 
-    public override fun where(select: String, vararg args: String) {
+    public fun whereSupport(select: String, vararg args: String): UpdateQueryBuilder {
         if (selectionApplied)
             throw KoanException("Query selection was already applied.")
 
@@ -203,6 +216,7 @@ private class UpdateQueryBuilderImpl(val db: SQLiteDatabase, val tableName: Stri
         useNativeSelection = true
         selection = select
         nativeSelectionArgs = args
+        return this
     }
 
     public fun exec(): Int {
@@ -212,29 +226,12 @@ private class UpdateQueryBuilderImpl(val db: SQLiteDatabase, val tableName: Stri
     }
 }
 
-public trait SelectQueryBuilder {
-    public var distinct: Boolean
-
-    public fun column(name: String)
-    public fun groupBy(value: String)
-    public fun orderBy(value: String)
-    public fun orderBy(value: String, direction: SqlOrderDirection)
-    public fun limit(count: Int)
-    public fun limit(offset: Int, count: Int)
-    public fun columns(vararg names: String)
-    public fun having(having: String)
-    public fun having(having: String, vararg args: Pair<String, Any>)
-    public fun where(select: String, vararg args: Pair<String, Any>)
-    public fun where(select: String)
-    public fun where(select: String, vararg args: String)
-}
-
-private class SelectQueryBuilderImpl(val tableName: String) : SelectQueryBuilder {
-    public override var distinct: Boolean = false
-
+public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
     private val columns = arrayListOf<String>()
     private val groupBy = arrayListOf<String>()
     private val orderBy = arrayListOf<String>()
+
+    private var distinct: Boolean = false
 
     private var havingApplied = false
     private var having: String? = null
@@ -245,7 +242,38 @@ private class SelectQueryBuilderImpl(val tableName: String) : SelectQueryBuilder
     private var selection: String? = null
     private var nativeSelectionArgs: Array<String>? = null
 
-    fun exec(db: SQLiteDatabase): Cursor {
+    public fun <T> exec(f: Cursor.() -> T): T {
+        val cursor = execInternal()
+        return cursor.use {
+            cursor.f()
+        }
+    }
+
+    public fun <T: Any> parseSingle(parser: RowParser<T>): T = execInternal().use {
+        it.parseSingle(parser)
+    }
+
+    public fun <T: Any> parseOpt(parser: RowParser<T>): T? = execInternal().use {
+        it.parseOpt(parser)
+    }
+
+    public fun <T: Any> parseList(parser: RowParser<T>): List<T> = execInternal().use {
+        it.parseList(parser)
+    }
+
+    public fun <T: Any> parseSingle(parser: MapRowParser<T>): T = execInternal().use {
+        it.parseSingle(parser)
+    }
+
+    public fun <T: Any> parseOpt(parser: MapRowParser<T>): T? =execInternal().use {
+        it.parseOpt(parser)
+    }
+
+    public fun <T: Any> parseList(parser: MapRowParser<T>): List<T> = execInternal().use {
+        it.parseList(parser)
+    }
+
+    private fun execInternal(): Cursor {
         val finalSelection = if (selectionApplied) selection else null
         val finalSelectionArgs = if (selectionApplied && useNativeSelection) nativeSelectionArgs else null
         return db.query(distinct, tableName, columns.copyToArray(),
@@ -253,49 +281,59 @@ private class SelectQueryBuilderImpl(val tableName: String) : SelectQueryBuilder
             groupBy.joinToString(", "), having, orderBy.joinToString(", "), limit)
     }
 
-    public override fun column(name: String) {
+    fun distinct(distinct: Boolean): SelectQueryBuilder {
+        this.distinct = distinct
+        return this
+    }
+
+    public fun column(name: String): SelectQueryBuilder {
         columns.add(name)
+        return this
     }
 
-    public override fun groupBy(value: String) {
+    public fun groupBy(value: String): SelectQueryBuilder {
         groupBy.add(value)
+        return this
     }
 
-    public override fun orderBy(value: String) {
-        orderBy.add(value)
-    }
-
-    public override fun orderBy(value: String, direction: SqlOrderDirection) {
+    public fun orderBy(value: String, direction: SqlOrderDirection = SqlOrderDirection.ASC): SelectQueryBuilder {
         if (direction == SqlOrderDirection.DESC) {
             orderBy.add("$value DESC")
         } else {
             orderBy.add(value)
         }
+        return this
     }
 
-    public override fun limit(count: Int) {
+    public fun limit(count: Int): SelectQueryBuilder {
         limit = count.toString()
+        return this
     }
 
-    public override fun limit(offset: Int, count: Int) {
+    public fun limit(offset: Int, count: Int): SelectQueryBuilder {
         limit = "$offset, $count"
+        return this
     }
 
-    public override fun columns(vararg names: String) {
+    public fun columns(vararg names: String): SelectQueryBuilder {
         columns.addAll(names)
+        return this
     }
 
-    public override fun having(having: String) {
-        if (havingApplied)
+    public fun having(having: String): SelectQueryBuilder {
+        if (havingApplied) {
             throw KoanException("Query having was already applied.")
+        }
 
         havingApplied = true
         this.having = having
+        return this
     }
 
-    public override fun having(having: String, vararg args: Pair<String, Any>) {
-        if (selectionApplied)
+    public fun having(having: String, vararg args: Pair<String, Any>): SelectQueryBuilder {
+        if (selectionApplied) {
             throw KoanException("Query having was already applied.")
+        }
 
         havingApplied = true
         val argsMap = args.fold(hashMapOf<String, Any>()) { (map, arg) ->
@@ -303,11 +341,13 @@ private class SelectQueryBuilderImpl(val tableName: String) : SelectQueryBuilder
             map
         }
         this.having = applyArguments(having, argsMap)
+        return this
     }
 
-    public override fun where(select: String, vararg args: Pair<String, Any>) {
-        if (selectionApplied)
+    public fun where(select: String, vararg args: Pair<String, Any>): SelectQueryBuilder {
+        if (selectionApplied) {
             throw KoanException("Query selection was already applied.")
+        }
 
         selectionApplied = true
         useNativeSelection = false
@@ -316,24 +356,29 @@ private class SelectQueryBuilderImpl(val tableName: String) : SelectQueryBuilder
             map
         }
         selection = applyArguments(select, argsMap)
+        return this
     }
 
-    public override fun where(select: String) {
-        if (selectionApplied)
+    public fun where(select: String): SelectQueryBuilder {
+        if (selectionApplied) {
             throw KoanException("Query selection was already applied.")
+        }
 
         selectionApplied = true
         useNativeSelection = false
         selection = select
+        return this
     }
 
-    public override fun where(select: String, vararg args: String) {
-        if (selectionApplied)
+    public fun whereSupport(select: String, vararg args: String): SelectQueryBuilder {
+        if (selectionApplied) {
             throw KoanException("Query selection was already applied.")
+        }
 
         selectionApplied = true
         useNativeSelection = true
         selection = select
         nativeSelectionArgs = args
+        return this
     }
 }
