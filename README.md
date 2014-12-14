@@ -34,10 +34,10 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [Layouts and LayoutParams](#layouts-and-layoutparams)
 	* [Listeners](#listeners)
 	* [Resources, colors and dimensions](#resources-and-dimensions)
+	* [Instance shorthands](#instance-shorthands)
 	* [UI wrapper](#ui-wrapper)
 	* [Styles](#styles)
 * [Advanced topics](#advanced-topics)
-	* [Instance shorthands](#instance-shorthands)
 	* [Intents](#intents)
 	* [Services](#services)
 	* [Dialogs and toasts](#dialogs-and-toasts)
@@ -345,6 +345,12 @@ Function             | Result
 
 Also, you can specify dimension values in **dip** (density-independent pixels) or in **sp** (scale-independent pixels): `dip(dipValue)` or `sp(spValue)`. Note that the `textSize` property already accepts **sp** (`textSize = 16f`). Use `px2dip` and `px2sp` to convert backwards.
 
+### Instance shorthands
+
+Sometimes you need to pass a `Context` instance to some Android SDK method from your `Activity` code. Usually you can just use `this`, but what if you're inside the inner class? You would probably write `SomeActivity.this` in case of Java and `this@SomeActivity` if you're writing in Kotlin.
+
+With Koan you can just write `ctx`. It is an extension property which works both inside `Activity` and `Service` and is even accessible from `Fragment` (it uses `getActivity()` method under the hood). You can also get an `Activity` instance using `act` extension property.
+
 ### UI wrapper
 
 Before the Beginning of Time Koan used UI tag as a top-level DSL element:
@@ -377,12 +383,6 @@ verticalLayout {
 ```
 
 ## Advanced topics
-
-### Instance shorthands
-
-Sometimes you need to pass a `Context` instance to some Android SDK method from your `Activity` code. Usually you can just use `this`, but what if you're inside the inner class? You would probably write `SomeActivity.this` in case of Java and `this@SomeActivity` if you're writing in Kotlin.
-
-With Koan you can just write `ctx`. It is an extension property which works both inside `Activity` and `Service` and is even accessible from `Fragment` (it uses `getActivity()` method under the hood). You can also get an `Activity` instance using `act` extension property.
 
 ### Intents
 
