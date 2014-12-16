@@ -110,7 +110,7 @@ fun ViewManager.mapView(init: MapView.() -> Unit = {}) =
   __dslAddView({MapView(it)}, init, this)
 ```
 
-``{MapView(it)}`` is a factory function for your custom View. It accepts a Context instance.
+``{MapView(it)}`` is a factory function for your custom `View`. It accepts a `Context` instance.
 
 So now you can write this:
 ```kotlin
@@ -139,7 +139,7 @@ dependencies {
 }
 ```
 
-This loads Koan for Android SDK `v. 19` without `support.v4` package bindings. If you use `support.v4`, replace `19` with `19s`.
+This loads Koan for Android SDK v. 19 without `support.v4` package bindings. If you use `support.v4`, replace `19` with `19s`.
 
 ## Understanding Koan
 
@@ -241,14 +241,6 @@ linearLayout {
 
 If you specify `layoutParams`, but omit `width` and/or `height`, their default values are both `WRAP_CONTENT`. But you always can pass them explicitly, for sure. Use [named arguments](http://kotlinlang.org/docs/reference/functions.html#named-arguments), it's convenient.
 
-<table>
-<tr><td width="50px" align="center">:penguin:</td>
-<td>
-<i>If you don't specify any <code>layoutParams</code> at all, the default value for <code>LinearLayout</code> is <code>MATCH_PARENT</code>.</i>
-</td>
-</tr>
-</table>
-
 Some convenient helper properties to notice:
 - `horizontalMargin` sets both left and right margins, 
 - `verticalMargin` set top and bottom ones, and 
@@ -313,6 +305,8 @@ seekBar {
   }
 }
 ```
+
+If you set `onProgressChanged` and `onStartTrackingTouch` for the same `View`, these two "partially defined" listeners will be merged. For the same listener method, last wins.
 
 ### Resources, Colors and Dimensions
 
