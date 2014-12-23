@@ -28,6 +28,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [How it works](#how-it-works)
 	* [Is it extendable?](#is-it-extendable)
 	* [Using with Gradle](#using-with-gradle)
+	* [Using as Jar library](#using-as-jar-library)
 * [Understanding Koan](#understanding-koan)
 	* [Basics](#basics)
 	* [Helper methods](#helper-methods)
@@ -141,6 +142,10 @@ dependencies {
 ```
 
 This loads Koan for Android SDK v. 21 (Android 5.0) without `support.v4` package bindings. If you use `support.v4`, replace `21` with `21s`.
+
+### Using as Jar library
+
+If your project is not based on Gradle, you don't have to jump around with Maven artifacts. Just attach the **jar** from the [releases page](https://github.com/yanex/koan/releases) as a project library and that's it.
 
 ## Understanding Koan
 
