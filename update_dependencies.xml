@@ -14,7 +14,7 @@
         <get src="http://search.maven.org/remotecontent?filepath=junit/junit/4.11/junit-4.11.jar"
              dest="lib/junit-4.11.jar" usetimestamp="true"/>
 
-        <get src="https://teamcity.jetbrains.com/repository/download/bt345/355950:id/kotlin-compiler-0.9.1306.zip"
+        <get src="https://teamcity.jetbrains.com/repository/download/bt345/358973:id/kotlin-compiler-0.10.4.zip"
              dest="lib/kotlinc.zip" username="guest" password="guest" usetimestamp="true"/>
 
         <delete dir="lib/kotlinc" failonerror="false"/>
