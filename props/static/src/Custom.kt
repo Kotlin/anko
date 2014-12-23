@@ -90,9 +90,6 @@ private val verticalLayoutFactory = { (ctx: Context) ->
 public fun ViewManager.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
     __dslAddView(verticalLayoutFactory, init, this): LinearLayout
 
-public fun Activity.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
-    __dslAddView(verticalLayoutFactory, init, this): LinearLayout
-
 public fun Fragment.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
     __dslAddView(verticalLayoutFactory, init, this): LinearLayout
 
