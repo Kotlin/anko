@@ -21,14 +21,20 @@ import org.jetbrains.android.dsl.utils.DirectoryFilter
 import org.jetbrains.android.dsl.utils.JarFilter
 
 fun main(args: Array<String>) {
-    if (args.size()>0) {
-        args.forEach {
-            arg -> when (arg) {
+    if (args.size() > 0) {
+        args.forEach { taskName ->
+            println(":: $taskName")
+            when (taskName) {
                 "gen", "generate" -> gen()
                 "clean" -> clean()
                 "versions" -> versions()
+                else -> {
+                    println("Invalid task $taskName")
+                    return
+                }
             }
         }
+        println("Done.")
     } else gen()
 }
 
