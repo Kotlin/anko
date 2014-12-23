@@ -29,6 +29,7 @@ import android.widget.EditText
 
 /* SECTION VIEWS */
 //type casting is now under the hood
+[suppress("UNCHECKED_CAST")]
 public fun <T : View> View.find(id: Int): T = findViewById(id) as T
 /* END SECTION */
 

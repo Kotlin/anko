@@ -75,7 +75,7 @@ public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit
 }
 
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, fragment: Fragment): T {
-    val ctx = fragment.getActivity()!!
+    val ctx = fragment.getActivity()
     return fragment.addFragmentTopLevelView(view(ctx), init)
 }
 
@@ -122,7 +122,7 @@ private fun applyStyle(v: View, style: (View) -> Unit) {
 private val ViewManager.dslContext: Context
     get() {
         return when (this) {
-            is ViewGroup -> this.getContext()!!
+            is ViewGroup -> this.getContext()
             is UiHelper -> this.ctx
             else -> throw KoanException("$this is the wrong parent")
         }
@@ -177,5 +177,5 @@ public fun Context.UI(init: UiHelper.() -> Unit): UiHelper {
 
 public fun Activity.UI(init: UiHelper.() -> Unit): UiHelper = UI(true, init)
 
-public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity()!!.UI(false, init)
+public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity().UI(false, init)
 

@@ -168,7 +168,7 @@ private fun applyArguments(select: String, args: Map<String, Any>): String {
     return buffer.toString()
 }
 
-private fun Array<Pair<String, Any>>.toContentValues(): ContentValues {
+private fun Array<out Pair<String, Any>>.toContentValues(): ContentValues {
     val values = ContentValues()
     for ((key, value) in this) {
         when(value) {
@@ -192,12 +192,12 @@ public enum class SqlOrderDirection {
     DESC
 }
 
-public class UpdateQueryBuilder(val db: SQLiteDatabase, val tableName: String, val values: Array<Pair<String, Any>>) {
+public class UpdateQueryBuilder(val db: SQLiteDatabase, val tableName: String, val values: Array<out Pair<String, Any>>) {
 
     private var selectionApplied = false
     private var useNativeSelection = false
     private var selection: String? = null
-    private var nativeSelectionArgs: Array<String>? = null
+    private var nativeSelectionArgs: Array<out String>? = null
 
     public fun where(select: String, vararg args: Pair<String, Any>): UpdateQueryBuilder {
         if (selectionApplied) {
@@ -256,7 +256,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
     private var selectionApplied = false
     private var useNativeSelection = false
     private var selection: String? = null
-    private var nativeSelectionArgs: Array<String>? = null
+    private var nativeSelectionArgs: Array<out String>? = null
 
     public fun <T> exec(f: Cursor.() -> T): T {
         val cursor = execInternal()

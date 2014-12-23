@@ -23,7 +23,7 @@ import java.io.Serializable
 import android.os.Bundle
 import kotlinx.android.koan.*
 
-public fun Context.__internalStartActivity(activity: Class<out Activity>, params: Array<Pair<String, Any>>) {
+public fun Context.__internalStartActivity(activity: Class<out Activity>, params: Array<out Pair<String, Any>>) {
     val intent = Intent(this, activity)
     params.forEach {
         when (it.second) {

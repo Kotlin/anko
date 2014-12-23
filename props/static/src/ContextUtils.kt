@@ -39,19 +39,19 @@ public val XXHDPI: Int = 480
 public val XXXHDPI: Int = 640
 
 public val Activity.intent: Intent
-    get() = getIntent()!!
+    get() = getIntent()
 
 public val Context.defaultSharedPreferences: SharedPreferences
-    get() = PreferenceManager.getDefaultSharedPreferences(this)!!
+    get() = PreferenceManager.getDefaultSharedPreferences(this)
 
 public val Fragment.defaultSharedPreferences: SharedPreferences
-    get() = PreferenceManager.getDefaultSharedPreferences(getActivity()!!)!!
+    get() = PreferenceManager.getDefaultSharedPreferences(getActivity())
 
 public val Fragment.act: Activity
-    get() = getActivity()!!
+    get() = getActivity()
 
 public val Fragment.ctx: Context
-    get() = getActivity()!!
+    get() = getActivity()
 
 public val Context.ctx: Context
     get() = this
@@ -96,9 +96,9 @@ public fun Context.email(email: String, subject: String = "", text: String = "")
         val intent = Intent(Intent.ACTION_SEND)
         intent.setType("text/html")
         intent.putExtra(Intent.EXTRA_EMAIL, email)
-        if (subject.size > 0)
+        if (subject.length() > 0)
             intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-        if (text.size > 0)
+        if (text.length() > 0)
             intent.putExtra(Intent.EXTRA_TEXT, text)
         startActivity(Intent.createChooser(intent, null))
         return true
@@ -132,10 +132,10 @@ public inline fun <reified T: Activity> Context.startActivity(vararg params: Pai
 }
 
 public val Context.displayMetrics: android.util.DisplayMetrics
-    get() = getResources()!!.getDisplayMetrics()!!
+    get() = getResources().getDisplayMetrics()
 
 public val Context.configuration: android.content.res.Configuration
-    get() = getResources()!!.getConfiguration()!!
+    get() = getResources().getConfiguration()
 
 public val android.content.res.Configuration.portrait: Boolean
     get() = orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT

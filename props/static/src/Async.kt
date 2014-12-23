@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 
 public fun Fragment.uiThread(f: () -> Unit) {
-    getActivity()!!.uiThread(f)
+    getActivity().uiThread(f)
 }
 
 public fun Context.uiThread(f: () -> Unit) {
@@ -38,7 +38,7 @@ public fun Context.uiThread(f: () -> Unit) {
 }
 
 public fun Fragment.async(task: () -> Unit): Future<Unit> {
-    return getActivity()!!.async(task)
+    return getActivity().async(task)
 }
 
 public fun Fragment.async(executorService: ExecutorService, task: () -> Unit): Future<Unit> {
@@ -54,7 +54,7 @@ public fun Context.async(executorService: ExecutorService, task: () -> Unit): Fu
 }
 
 public fun <T> Fragment.asyncResult(task: () -> T): Future<T> {
-    return getActivity()!!.asyncResult(task)
+    return getActivity().asyncResult(task)
 }
 
 public fun <T> Fragment.asyncResult(executorService: ExecutorService, task: () -> T): Future<T> {
@@ -85,6 +85,6 @@ object BackgroundExecutor {
 }
 
 private object ContextHelper {
-    val handler = Handler(Looper.getMainLooper()!!)
-    val uiThread = Looper.getMainLooper()!!.getThread()
+    val handler = Handler(Looper.getMainLooper())
+    val uiThread = Looper.getMainLooper().getThread()
 }

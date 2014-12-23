@@ -43,7 +43,7 @@ private class ScalarColumnParser<R, T>(val modifier: ((R) -> T)? = null) : RowPa
     override fun parseRow(columns: Array<Any>): T {
         if (columns.size() != 0)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
-        [suppress("UNCHECKED_CAST")]
+        [suppress("UNCHECKED_CAST", "UNNECESSARY_NOT_NULL_ASSERTION")]
         return if (modifier != null)
             modifier!!(columns[0] as R)
         else
