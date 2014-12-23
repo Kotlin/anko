@@ -135,11 +135,11 @@ repositories {
 
 dependencies {
   ...
-  compile 'org.jetbrains.kotlin:koan:19-0.1.2@aar'
+  compile 'org.jetbrains.kotlin:koan-21:0.2@aar'
 }
 ```
 
-This loads Koan for Android SDK v. 19 without `support.v4` package bindings. If you use `support.v4`, replace `19` with `19s`.
+This loads Koan for Android SDK v. 21 (Android 5.0) without `support.v4` package bindings. If you use `support.v4`, replace `21` with `21s`.
 
 ## Understanding Koan
 
