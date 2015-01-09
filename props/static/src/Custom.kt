@@ -212,8 +212,11 @@ public fun android.widget.RelativeLayout.LayoutParams.alignParentTop(): Unit = a
 public fun android.widget.RelativeLayout.LayoutParams.alignParentLeft(): Unit = addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT)
 public fun android.widget.RelativeLayout.LayoutParams.alignParentBottom(): Unit = addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM)
 public fun android.widget.RelativeLayout.LayoutParams.alignParentRight(): Unit = addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT)
-public fun android.widget.RelativeLayout.LayoutParams.alignParentStart(): Unit = addRule(android.widget.RelativeLayout.ALIGN_PARENT_START)
-public fun android.widget.RelativeLayout.LayoutParams.alignParentEnd(): Unit = addRule(android.widget.RelativeLayout.ALIGN_PARENT_END)
+
+// Unavailable in older versions of SDK
+public fun android.widget.RelativeLayout.LayoutParams.alignParentStart(): Unit = addRule(20) //android.widget.RelativeLayout.ALIGN_PARENT_START)
+public fun android.widget.RelativeLayout.LayoutParams.alignParentEnd(): Unit = addRule(21) //android.widget.RelativeLayout.ALIGN_PARENT_END)
+
 public fun android.widget.RelativeLayout.LayoutParams.centerHorizontally(): Unit = addRule(android.widget.RelativeLayout.CENTER_HORIZONTAL)
 public fun android.widget.RelativeLayout.LayoutParams.centerVertically(): Unit = addRule(android.widget.RelativeLayout.CENTER_VERTICAL)
 public fun android.widget.RelativeLayout.LayoutParams.centerInParent(): Unit = addRule(android.widget.RelativeLayout.CENTER_IN_PARENT)
