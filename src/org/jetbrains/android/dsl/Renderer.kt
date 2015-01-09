@@ -120,7 +120,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         val list = arrayListOf<String>()
         for (i in 1..22) {
             val types = (1..i).map { "T$it" }.joinToString(", ")
-            val args = (1..i).map { "columns[$it] as T$it" }.joinToString(", ")
+            val args = (1..i).map { "columns[${it - 1}] as T$it" }.joinToString(", ")
             list.add(buffer {
                 line("public fun <$types, R> rowParser(parser: ($types) -> R): RowParser<R> {")
                     line("return object : RowParser<R> {")
