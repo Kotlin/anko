@@ -154,10 +154,6 @@ public class AlertDialogBuilder(val ctx: Context, val init: AlertDialogBuilder.(
         builder.setOnCancelListener { f() }
     }
 
-    public fun onDismiss(f: () -> Unit) {
-        builder.setOnDismissListener { f() }
-    }
-
     public fun onKey(f: (keyCode: Int, e: KeyEvent) -> Boolean) {
         builder.setOnKeyListener(object : OnKeyListener {
             override fun onKey(dialog: DialogInterface?, keyCode: Int, event: KeyEvent): Boolean {
