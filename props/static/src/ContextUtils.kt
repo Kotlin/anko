@@ -27,6 +27,7 @@ import android.os.Bundle
 import android.net.Uri
 import java.io.Serializable
 import kotlinx.android.koan.internals.__internalStartActivity
+import android.os.Parcelable
 
 public val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
 public val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
@@ -129,6 +130,29 @@ public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pa
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<String, Any>) {
     __internalStartActivity(javaClass<T>(), params)
+}
+
+fun Bundle(vararg params: Pair<String, Any>): Bundle {
+    val b = Bundle()
+    for (p in params) {
+        val (k, v) = p
+        when (v) {
+            is Boolean -> b.putBoolean(k, v)
+            is Byte -> b.putByte(k, v)
+            is Char -> b.putChar(k, v)
+            is Short -> b.putShort(k, v)
+            is Int -> b.putInt(k, v)
+            is Long -> b.putLong(k, v)
+            is Float -> b.putFloat(k, v)
+            is Double -> b.putDouble(k, v)
+            is String -> b.putString(k, v)
+            is CharSequence -> b.putCharSequence(k, v)
+            is Parcelable -> b.putParcelable(k, v)
+            else -> throw KoanException("Invalid bundle component (${v.javaClass})")
+        }
+    }
+
+    return b
 }
 
 public val Context.displayMetrics: android.util.DisplayMetrics
