@@ -21,6 +21,8 @@ import android.database.sqlite.SQLiteException
 import java.util.ArrayList
 import java.lang.reflect.Modifier
 import kotlinx.android.koan.KoanException
+import kotlinx.android.koan.internals.useDatabase
+import kotlinx.android.koan.internals.useCursor
 
 public trait RowParser<T> {
     fun parseRow(columns: Array<Any>): T
@@ -59,14 +61,14 @@ public val DoubleParser: RowParser<Double> = SingleColumnParser()
 public val StringParser: RowParser<String> = SingleColumnParser()
 public val BlobParser: RowParser<ByteArray> = SingleColumnParser()
 
-public fun <T: Any> Cursor.parseSingle(parser: RowParser<T>): T = use {
+public fun <T: Any> Cursor.parseSingle(parser: RowParser<T>): T = useCursor {
     if (getCount() != 1)
         throw SQLiteException("parseSingle accepts only cursors with a single entry")
     moveToFirst()
     return parser.parseRow(readColumnsArray(this))
 }
 
-public fun <T: Any> Cursor.parseOpt(parser: RowParser<T>): T? = use {
+public fun <T: Any> Cursor.parseOpt(parser: RowParser<T>): T? = useCursor {
     if (getCount() > 1)
         throw SQLiteException("parseSingle accepts only cursors with a single entry or empty cursors")
     if (getCount() == 0)
@@ -75,7 +77,7 @@ public fun <T: Any> Cursor.parseOpt(parser: RowParser<T>): T? = use {
     return parser.parseRow(readColumnsArray(this))
 }
 
-public fun <T: Any> Cursor.parseList(parser: RowParser<T>): List<T> = use {
+public fun <T: Any> Cursor.parseList(parser: RowParser<T>): List<T> = useCursor {
     val list = ArrayList<T>(getCount())
     moveToFirst()
     while (!isAfterLast()) {
@@ -85,14 +87,14 @@ public fun <T: Any> Cursor.parseList(parser: RowParser<T>): List<T> = use {
     return list
 }
 
-public fun <T: Any> Cursor.parseSingle(parser: MapRowParser<T>): T = use {
+public fun <T: Any> Cursor.parseSingle(parser: MapRowParser<T>): T = useCursor {
     if (getCount() != 1)
         throw SQLiteException("parseSingle accepts only cursors with getCount() == 1")
     moveToFirst()
     return parser.parseRow(readColumnsMap(this))
 }
 
-public fun <T: Any> Cursor.parseOpt(parser: MapRowParser<T>): T? = use {
+public fun <T: Any> Cursor.parseOpt(parser: MapRowParser<T>): T? = useCursor {
     if (getCount() > 1)
         throw SQLiteException("parseSingle accepts only cursors with getCount() == 1 or empty cursors")
     if (getCount() == 0)
@@ -101,7 +103,7 @@ public fun <T: Any> Cursor.parseOpt(parser: MapRowParser<T>): T? = use {
     return parser.parseRow(readColumnsMap(this))
 }
 
-public fun <T: Any> Cursor.parseList(parser: MapRowParser<T>): List<T> = use {
+public fun <T: Any> Cursor.parseList(parser: MapRowParser<T>): List<T> = useCursor {
     val list = ArrayList<T>(getCount())
     moveToFirst()
     while (!isAfterLast()) {

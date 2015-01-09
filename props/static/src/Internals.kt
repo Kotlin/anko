@@ -22,6 +22,8 @@ import android.content.Intent
 import java.io.Serializable
 import android.os.Bundle
 import kotlinx.android.koan.*
+import android.database.sqlite.SQLiteDatabase
+import android.database.Cursor
 
 public fun Context.__internalStartActivity(activity: Class<out Activity>, params: Array<out Pair<String, Any>>) {
     val intent = Intent(this, activity)
@@ -43,4 +45,30 @@ public fun Context.__internalStartActivity(activity: Class<out Activity>, params
         }
     }
     startActivity(intent)
+}
+
+// SQLiteDatabase is not closeable in older versions of Android
+public inline fun <T> SQLiteDatabase.useDatabase(f: (SQLiteDatabase) -> T) : T {
+    try {
+        return f(this)
+    } finally {
+        try {
+            close()
+        } catch (e: Exception) {
+            // Do nothing
+        }
+    }
+}
+
+// Cursor is not closeable in older versions of Android
+public inline fun <T> Cursor.useCursor(f: (Cursor) -> T) : T {
+    try {
+        return f(this)
+    } finally {
+        try {
+            close()
+        } catch (e: Exception) {
+            // Do nothing
+        }
+    }
 }

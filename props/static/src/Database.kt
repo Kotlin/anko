@@ -22,6 +22,8 @@ import android.database.Cursor
 import java.util.regex.Pattern
 import kotlinx.android.koan.*
 import android.database.sqlite.SQLiteOpenHelper
+import kotlinx.android.koan.internals.useDatabase
+import kotlinx.android.koan.internals.useCursor
 
 public val NULL: SqlType = SqlTypeImpl("NULL")
 public val INT: SqlType = SqlTypeImpl("INT")
@@ -69,13 +71,13 @@ public fun SqlType.plus(m: SqlTypeModifier) : SqlType {
 }
 
 public inline fun <T> SQLiteOpenHelper.withReadableDatabase(f: SQLiteDatabase.() -> T): T {
-    return getReadableDatabase().use {
+    return getReadableDatabase().useDatabase {
         it.f()
     }
 }
 
 public inline fun <T> SQLiteOpenHelper.withWritableDatabase(f: SQLiteDatabase.() -> T): T {
-    return getWritableDatabase().use {
+    return getWritableDatabase().useDatabase {
         it.f()
     }
 }
@@ -260,32 +262,32 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
 
     public fun <T> exec(f: Cursor.() -> T): T {
         val cursor = execInternal()
-        return cursor.use {
+        return cursor.useCursor {
             cursor.f()
         }
     }
 
-    public fun <T: Any> parseSingle(parser: RowParser<T>): T = execInternal().use {
+    public fun <T: Any> parseSingle(parser: RowParser<T>): T = execInternal().useCursor {
         it.parseSingle(parser)
     }
 
-    public fun <T: Any> parseOpt(parser: RowParser<T>): T? = execInternal().use {
+    public fun <T: Any> parseOpt(parser: RowParser<T>): T? = execInternal().useCursor {
         it.parseOpt(parser)
     }
 
-    public fun <T: Any> parseList(parser: RowParser<T>): List<T> = execInternal().use {
+    public fun <T: Any> parseList(parser: RowParser<T>): List<T> = execInternal().useCursor {
         it.parseList(parser)
     }
 
-    public fun <T: Any> parseSingle(parser: MapRowParser<T>): T = execInternal().use {
+    public fun <T: Any> parseSingle(parser: MapRowParser<T>): T = execInternal().useCursor {
         it.parseSingle(parser)
     }
 
-    public fun <T: Any> parseOpt(parser: MapRowParser<T>): T? =execInternal().use {
+    public fun <T: Any> parseOpt(parser: MapRowParser<T>): T? = execInternal().useCursor {
         it.parseOpt(parser)
     }
 
-    public fun <T: Any> parseList(parser: MapRowParser<T>): List<T> = execInternal().use {
+    public fun <T: Any> parseList(parser: MapRowParser<T>): List<T> = execInternal().useCursor {
         it.parseList(parser)
     }
 
