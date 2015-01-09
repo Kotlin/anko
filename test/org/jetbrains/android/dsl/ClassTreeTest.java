@@ -26,7 +26,7 @@ import java.util.Collections;
 
 public class ClassTreeTest extends Assert {
 
-    private final ArrayList<ClassNode> classes = new ArrayList<>();
+    private final ArrayList<ClassNode> classes = new ArrayList<ClassNode>();
     private ArrayList<ClassNode> shuffledClasses;
 
     @BeforeMethod
@@ -42,7 +42,7 @@ public class ClassTreeTest extends Assert {
         classes.add(new SimpleClassNode("com.example.F", "com.example.E"));
         classes.add(new SimpleClassNode("com.example.G", "com.example.F"));
         classes.add(new SimpleClassNode("com.example.H", "com.example.F"));
-        shuffledClasses = new ArrayList<>(classes);
+        shuffledClasses = new ArrayList<ClassNode>(classes);
         Collections.shuffle(shuffledClasses);
     }
 

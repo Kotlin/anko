@@ -19,7 +19,6 @@ package org.jetbrains.android.dsl
 import java.io.PrintWriter
 import java.io.File
 import java.util.ArrayList
-import java.nio.charset.StandardCharsets
 import org.jetbrains.android.dsl.KoanFile.*
 import org.jetbrains.android.dsl.ConfigurationTune.*
 

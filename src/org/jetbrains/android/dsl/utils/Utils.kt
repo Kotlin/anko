@@ -17,7 +17,6 @@
 package org.jetbrains.android.dsl
 
 import org.objectweb.asm.*
-import java.nio.charset.StandardCharsets
 import java.nio.ByteBuffer
 import java.util.LinkedHashMap
 import java.util.ArrayList

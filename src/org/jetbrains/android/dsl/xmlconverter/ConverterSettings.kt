@@ -22,9 +22,6 @@ import java.io.FileInputStream
 import java.util.HashMap
 import java.util.ArrayList
 import java.util.HashSet
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.charset.StandardCharsets
 
 open class ConverterSettings : BaseConverterSettings() {
 
@@ -52,7 +49,7 @@ open class ConverterSettings : BaseConverterSettings() {
 
     private fun readHelperConProps(): HashMap<String, ArrayList<Set<String>>> {
         val res = HashMap<String, ArrayList<Set<String>>>()
-        for (line in readLines("props/helper_constructors.txt").filter { it.isNotEmpty() && !it.startsWith('#') }) {
+        for (line in File("props/helper_constructors.txt").readLines().filter { it.isNotEmpty() && !it.startsWith('#') }) {
             try {
                 val separator = line.indexOf(' ')
                 val className = line.substring(0, separator)
@@ -68,9 +65,5 @@ open class ConverterSettings : BaseConverterSettings() {
             }
         }
         return res
-    }
-
-    private fun readLines(fileName: String): MutableList<String> {
-        return Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8)
     }
 }
