@@ -35,8 +35,8 @@ public fun Context.toast(textResource: Int) {
     uiThread { Toast.makeText(this, textResource, Toast.LENGTH_SHORT).show() }
 }
 
-public fun Fragment.toast(text: String): Unit = ctx.toast(text)
-public fun Context.toast(text: String) {
+public fun Fragment.toast(text: CharSequence): Unit = ctx.toast(text)
+public fun Context.toast(text: CharSequence) {
     uiThread { Toast.makeText(this, text, Toast.LENGTH_SHORT).show() }
 }
 
@@ -45,8 +45,8 @@ public fun Context.longToast(textResource: Int) {
     uiThread { Toast.makeText(this, textResource, Toast.LENGTH_LONG).show() }
 }
 
-public fun Fragment.longToast(text: String): Unit = ctx.longToast(text)
-public fun Context.longToast(text: String) {
+public fun Fragment.longToast(text: CharSequence): Unit = ctx.longToast(text)
+public fun Context.longToast(text: CharSequence) {
     uiThread { Toast.makeText(this, text, Toast.LENGTH_LONG).show() }
 }
 
