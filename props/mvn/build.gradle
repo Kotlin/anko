@@ -38,6 +38,10 @@ task androidReleaseJar(type: Jar, dependsOn: assembleRelease) {
     from "$buildDir/intermediates/classes/release/"
 }
 
+task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
+    from "src/main/kotlin"
+}
+
 apply plugin: 'maven-publish'
 
 publishing {
@@ -48,6 +52,9 @@ publishing {
             version POM_ARTEFACT_VERSION
 
             artifact androidReleaseJar
+            artifact androidReleaseSources {
+                classifier "source"
+            }
         }
     }
 }
