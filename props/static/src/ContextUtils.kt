@@ -132,7 +132,12 @@ public inline fun <reified T: Activity> Context.startActivity(vararg params: Pai
     __internalStartActivity(javaClass<T>(), params)
 }
 
-fun Bundle(vararg params: Pair<String, Any>): Bundle {
+public fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
+    setArguments(Bundle(*params))
+    return this
+}
+
+private fun Bundle(vararg params: Pair<String, Any>): Bundle {
     val b = Bundle()
     for (p in params) {
         val (k, v) = p
