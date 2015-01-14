@@ -343,7 +343,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         }
 
         val layoutParamsFunc = lp.constructors.map { renderExtensionFunction(it) }
-        return "public class $helperClassName(ctx: Context): $layoutClassName(ctx) {\n" +
+        return "public open class $helperClassName(ctx: Context): $layoutClassName(ctx) {\n" +
             layoutParamsFunc.joinToString("\n") + "\n}"
     }
 
