@@ -59,7 +59,19 @@ public fun Fragment.selector(
     onClick: (Int) -> Unit): Unit =
     ctx.selector(title, items, onCancel, onClick)
 
-public fun Context.alert(title: String, message: String, init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder {
+public fun Fragment.alert(message: String, title: String? = null, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder = ctx.alert(message, title, init)
+public fun Context.alert(message: String, title: String? = null, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder {
+    return AlertDialogBuilder(this) {
+        if (title != null) {
+            title(title)
+        }
+        message(message)
+        init()
+    }
+}
+
+public fun Fragment.alert(message: Int, title: Int, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder = ctx.alert(message, title, init)
+public fun Context.alert(message: Int, title: Int, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder {
     return AlertDialogBuilder(this) {
         title(title)
         message(message)
@@ -67,14 +79,7 @@ public fun Context.alert(title: String, message: String, init: AlertDialogBuilde
     }
 }
 
-public fun Context.alert(title: Int, message: Int, init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder {
-    return AlertDialogBuilder(this) {
-        title(title)
-        message(message)
-        init()
-    }
-}
-
+public fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = AlertDialogBuilder(ctx, init)
 public fun Context.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = AlertDialogBuilder(this, init)
 
 public fun Context.selector(
