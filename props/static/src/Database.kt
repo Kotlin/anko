@@ -124,6 +124,10 @@ public fun SQLiteDatabase.update(tableName: String, vararg values: Pair<String, 
     return UpdateQueryBuilder(this, tableName, values)
 }
 
+public fun SQLiteDatabase.delete(tableName: String, whereClause: String = "", vararg args: Pair<String, Any>): Int {
+    return delete(tableName, applyArguments(whereClause, *args), null)
+}
+
 public fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = false, vararg columns: Pair<String, SqlType>) {
     val escapedTableName = tableName.replace("`", "``")
     val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
@@ -146,9 +150,17 @@ private fun escape(s: String): String {
 
 private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^\\{}]+)\\}")
 
-private fun applyArguments(select: String, args: Map<String, Any>): String {
-    val matcher = ARG_PATTERN.matcher(select)
-    val buffer = StringBuffer(select.length())
+private fun applyArguments(whereClause: String, vararg args: Pair<String, Any>): String {
+    val argsMap = args.fold(hashMapOf<String, Any>()) { (map, arg) ->
+        map.put(arg.first, arg.second)
+        map
+    }
+    return applyArguments(whereClause, argsMap)
+}
+
+private fun applyArguments(whereClause: String, args: Map<String, Any>): String {
+    val matcher = ARG_PATTERN.matcher(whereClause)
+    val buffer = StringBuffer(whereClause.length())
     while (matcher.find()) {
         val key = matcher.group(2)
         val value = args.get(key)
@@ -354,11 +366,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
         }
 
         havingApplied = true
-        val argsMap = args.fold(hashMapOf<String, Any>()) { (map, arg) ->
-            map.put(arg.first, arg.second)
-            map
-        }
-        this.having = applyArguments(having, argsMap)
+        this.having = applyArguments(having, *args)
         return this
     }
 
@@ -369,11 +377,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
 
         selectionApplied = true
         useNativeSelection = false
-        val argsMap = args.fold(hashMapOf<String, Any>()) { (map, arg) ->
-            map.put(arg.first, arg.second)
-            map
-        }
-        selection = applyArguments(select, argsMap)
+        selection = applyArguments(select, *args)
         return this
     }
 
