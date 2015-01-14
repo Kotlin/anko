@@ -26,6 +26,7 @@ import android.app.Fragment
 import android.app.Activity
 import android.graphics.drawable.Drawable
 import android.widget.EditText
+import android.widget.RelativeLayout
 
 /* SECTION VIEWS */
 //type casting is now under the hood
@@ -194,6 +195,28 @@ public var LinearLayout.LayoutParams.verticalMargin: Int
 
 public var LinearLayout.LayoutParams.horizontalMargin: Int
     get() = throw KoanException("'LinearLayout.LayoutParams.horizontalMargin' property doesn't have a getter")
+    set(v) {
+        leftMargin = v; rightMargin = v
+    }
+
+public var RelativeLayout.LayoutParams.margin: Int
+    get() = throw KoanException("'RelativeLayout.LayoutParams.margin' property doesn't have a getter")
+    set(v) {
+        leftMargin = v
+        rightMargin = v
+        topMargin = v
+        bottomMargin = v
+    }
+
+public var RelativeLayout.LayoutParams.verticalMargin: Int
+    get() = throw KoanException("'RelativeLayout.LayoutParams.verticalMargin' property doesn't have a getter")
+    set(v) {
+        topMargin = v
+        bottomMargin = v
+    }
+
+public var RelativeLayout.LayoutParams.horizontalMargin: Int
+    get() = throw KoanException("'RelativeLayout.LayoutParams.horizontalMargin' property doesn't have a getter")
     set(v) {
         leftMargin = v; rightMargin = v
     }
