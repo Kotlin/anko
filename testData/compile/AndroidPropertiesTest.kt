@@ -12,7 +12,6 @@ public open class MyActivity() : Activity() {
             linearLayout {
                 val bl = baseline
                 baselineAlignedChildIndex = 0
-                dividerDrawable = null
                 dividerPadding = 1
                 orientation = -1
                 showDividers = 0
@@ -20,9 +19,7 @@ public open class MyActivity() : Activity() {
                 textSwitcher {}
                 calendarView {
                     date = 123456
-                    focusedMonthDateColor = 255
                     showWeekNumber = true
-                    weekSeparatorLineColor = 128
                 }
                 zoomButton {}
                 viewSwitcher {}
@@ -48,7 +45,6 @@ public open class MyActivity() : Activity() {
                     customSelectionActionModeCallback = null
                     error = "error"
                     freezesText = false
-                    highlightColor = 31
                     imeOptions = 0
                     linksClickable = true
                 }
@@ -74,17 +70,10 @@ public open class MyActivity() : Activity() {
                 }
                 zoomControls {}
                 imageView {
-                    adjustViewBounds = false
                     baseline = 234
                     imageMatrix = android.graphics.Matrix()
                 }
-                searchView {
-                    inputType = 3
-                    maxWidth = 32
-                    queryHint = "sdfsdfsf"
-                }
                 autoCompleteTextView {
-                    completionHint = "hint"
                     dropDownAnchor = 0
                     dropDownHeight = 0
                     dropDownHorizontalOffset = 2
@@ -92,9 +81,7 @@ public open class MyActivity() : Activity() {
                     validator = null
                 }
                 switch {
-                    switchPadding = 23
                     textOff = "918237"
-                    thumbTextPadding = 33
                 }
                 progressBar {
                     progress = 34
@@ -107,7 +94,6 @@ public open class MyActivity() : Activity() {
                     overscrollHeader = null
                 }
                 gridView {
-                    columnWidth = 23
                     gravity = 68
                     numColumns = 3
                 }
