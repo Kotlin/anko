@@ -1,4 +1,4 @@
-public class _AppWidgetHostView(ctx: Context): android.appwidget.AppWidgetHostView(ctx) {
+public open class _AppWidgetHostView(ctx: Context): android.appwidget.AppWidgetHostView(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, appWidgetHostViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
     layoutParams.appWidgetHostViewInit()
@@ -42,7 +42,7 @@ public class _AppWidgetHostView(ctx: Context): android.appwidget.AppWidgetHostVi
   }
 
 }
-public class _WebView(ctx: Context): android.webkit.WebView(ctx) {
+public open class _WebView(ctx: Context): android.webkit.WebView(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, webViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
     layoutParams.webViewInit()
@@ -65,7 +65,7 @@ public class _WebView(ctx: Context): android.webkit.WebView(ctx) {
   }
 
 }
-public class _AbsoluteLayout(ctx: Context): android.widget.AbsoluteLayout(ctx) {
+public open class _AbsoluteLayout(ctx: Context): android.widget.AbsoluteLayout(ctx) {
   public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, x: Int, y: Int, absoluteLayoutInit: android.widget.AbsoluteLayout.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.widget.AbsoluteLayout.LayoutParams(width, height, x, y)
     layoutParams.absoluteLayoutInit()
@@ -88,7 +88,7 @@ public class _AbsoluteLayout(ctx: Context): android.widget.AbsoluteLayout(ctx) {
   }
 
 }
-public class _ActionMenuView(ctx: Context): android.widget.ActionMenuView(ctx) {
+public open class _ActionMenuView(ctx: Context): android.widget.ActionMenuView(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, actionMenuViewInit: android.widget.ActionMenuView.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.widget.ActionMenuView.LayoutParams(c!!, attrs!!)
     layoutParams.actionMenuViewInit()
@@ -118,7 +118,7 @@ public class _ActionMenuView(ctx: Context): android.widget.ActionMenuView(ctx) {
   }
 
 }
-public class _FrameLayout(ctx: Context): android.widget.FrameLayout(ctx) {
+public open class _FrameLayout(ctx: Context): android.widget.FrameLayout(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, frameLayoutInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
     layoutParams.frameLayoutInit()
@@ -162,7 +162,7 @@ public class _FrameLayout(ctx: Context): android.widget.FrameLayout(ctx) {
   }
 
 }
-public class _Gallery(ctx: Context): android.widget.Gallery(ctx) {
+public open class _Gallery(ctx: Context): android.widget.Gallery(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, galleryInit: android.widget.Gallery.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.widget.Gallery.LayoutParams(c!!, attrs!!)
     layoutParams.galleryInit()
@@ -185,7 +185,7 @@ public class _Gallery(ctx: Context): android.widget.Gallery(ctx) {
   }
 
 }
-public class _GridLayout(ctx: Context): android.widget.GridLayout(ctx) {
+public open class _GridLayout(ctx: Context): android.widget.GridLayout(ctx) {
   public fun <T: View> T.layoutParams(rowSpec: android.widget.GridLayout.Spec?, columnSpec: android.widget.GridLayout.Spec?, gridLayoutInit: android.widget.GridLayout.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.widget.GridLayout.LayoutParams(rowSpec!!, columnSpec!!)
     layoutParams.gridLayoutInit()
@@ -229,7 +229,7 @@ public class _GridLayout(ctx: Context): android.widget.GridLayout(ctx) {
   }
 
 }
-public class _GridView(ctx: Context): android.widget.GridView(ctx) {
+public open class _GridView(ctx: Context): android.widget.GridView(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, gridViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
     layoutParams.gridViewInit()
@@ -252,7 +252,7 @@ public class _GridView(ctx: Context): android.widget.GridView(ctx) {
   }
 
 }
-public class _HorizontalScrollView(ctx: Context): android.widget.HorizontalScrollView(ctx) {
+public open class _HorizontalScrollView(ctx: Context): android.widget.HorizontalScrollView(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, horizontalScrollViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
     layoutParams.horizontalScrollViewInit()
@@ -275,7 +275,7 @@ public class _HorizontalScrollView(ctx: Context): android.widget.HorizontalScrol
   }
 
 }
-public class _LinearLayout(ctx: Context): android.widget.LinearLayout(ctx) {
+public open class _LinearLayout(ctx: Context): android.widget.LinearLayout(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, linearLayoutInit: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.widget.LinearLayout.LayoutParams(c!!, attrs!!)
     layoutParams.linearLayoutInit()
@@ -319,7 +319,7 @@ public class _LinearLayout(ctx: Context): android.widget.LinearLayout(ctx) {
   }
 
 }
-public class _RadioGroup(ctx: Context): android.widget.RadioGroup(ctx) {
+public open class _RadioGroup(ctx: Context): android.widget.RadioGroup(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, radioGroupInit: android.widget.RadioGroup.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.widget.RadioGroup.LayoutParams(c!!, attrs!!)
     layoutParams.radioGroupInit()
@@ -356,7 +356,7 @@ public class _RadioGroup(ctx: Context): android.widget.RadioGroup(ctx) {
   }
 
 }
-public class _RelativeLayout(ctx: Context): android.widget.RelativeLayout(ctx) {
+public open class _RelativeLayout(ctx: Context): android.widget.RelativeLayout(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, relativeLayoutInit: android.widget.RelativeLayout.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.widget.RelativeLayout.LayoutParams(c!!, attrs!!)
     layoutParams.relativeLayoutInit()
@@ -393,7 +393,7 @@ public class _RelativeLayout(ctx: Context): android.widget.RelativeLayout(ctx) {
   }
 
 }
-public class _ScrollView(ctx: Context): android.widget.ScrollView(ctx) {
+public open class _ScrollView(ctx: Context): android.widget.ScrollView(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, scrollViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
     layoutParams.scrollViewInit()
@@ -416,7 +416,7 @@ public class _ScrollView(ctx: Context): android.widget.ScrollView(ctx) {
   }
 
 }
-public class _TableLayout(ctx: Context): android.widget.TableLayout(ctx) {
+public open class _TableLayout(ctx: Context): android.widget.TableLayout(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, tableLayoutInit: android.widget.TableLayout.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.widget.TableLayout.LayoutParams(c!!, attrs!!)
     layoutParams.tableLayoutInit()
@@ -460,7 +460,7 @@ public class _TableLayout(ctx: Context): android.widget.TableLayout(ctx) {
   }
 
 }
-public class _TableRow(ctx: Context): android.widget.TableRow(ctx) {
+public open class _TableRow(ctx: Context): android.widget.TableRow(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, tableRowInit: android.widget.TableRow.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.widget.TableRow.LayoutParams(c!!, attrs!!)
     layoutParams.tableRowInit()
@@ -511,7 +511,7 @@ public class _TableRow(ctx: Context): android.widget.TableRow(ctx) {
   }
 
 }
-public class _TextSwitcher(ctx: Context): android.widget.TextSwitcher(ctx) {
+public open class _TextSwitcher(ctx: Context): android.widget.TextSwitcher(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, textSwitcherInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
     layoutParams.textSwitcherInit()
@@ -534,7 +534,7 @@ public class _TextSwitcher(ctx: Context): android.widget.TextSwitcher(ctx) {
   }
 
 }
-public class _Toolbar(ctx: Context): android.widget.Toolbar(ctx) {
+public open class _Toolbar(ctx: Context): android.widget.Toolbar(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, toolbarInit: android.widget.Toolbar.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.widget.Toolbar.LayoutParams(c!!, attrs!!)
     layoutParams.toolbarInit()
@@ -592,7 +592,7 @@ public class _Toolbar(ctx: Context): android.widget.Toolbar(ctx) {
   }
 
 }
-public class _ViewAnimator(ctx: Context): android.widget.ViewAnimator(ctx) {
+public open class _ViewAnimator(ctx: Context): android.widget.ViewAnimator(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, viewAnimatorInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
     layoutParams.viewAnimatorInit()
@@ -615,7 +615,7 @@ public class _ViewAnimator(ctx: Context): android.widget.ViewAnimator(ctx) {
   }
 
 }
-public class _ViewSwitcher(ctx: Context): android.widget.ViewSwitcher(ctx) {
+public open class _ViewSwitcher(ctx: Context): android.widget.ViewSwitcher(ctx) {
   public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, viewSwitcherInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
     val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
     layoutParams.viewSwitcherInit()
