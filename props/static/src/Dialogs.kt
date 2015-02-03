@@ -29,6 +29,7 @@ import android.app.AlertDialog
 import android.graphics.drawable.Drawable
 import android.database.Cursor
 import android.view.ViewManager
+import android.app.ProgressDialog
 
 public fun Fragment.toast(textResource: Int): Unit = ctx.toast(textResource)
 public fun Context.toast(textResource: Int) {
@@ -81,6 +82,32 @@ public fun Context.alert(message: Int, title: Int, init: AlertDialogBuilder.() -
 
 public fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = AlertDialogBuilder(ctx, init)
 public fun Context.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = AlertDialogBuilder(this, init)
+
+public fun Fragment.progressDialog(message: String? = null, title: String? = null, init: ProgressDialog.() -> Unit = {}): ProgressDialog {
+    return getActivity().progressDialog(false, message, title, init)
+}
+
+public fun Context.progressDialog(message: String? = null, title: String? = null, init: ProgressDialog.() -> Unit = {}): ProgressDialog {
+    return progressDialog(false, message, title, init)
+}
+
+public fun Fragment.indeterminateProgressDialog(message: String? = null, title: String? = null, init: ProgressDialog.() -> Unit = {}): ProgressDialog {
+    return getActivity().progressDialog(true, message, title, init)
+}
+
+public fun Context.indeterminateProgressDialog(message: String? = null, title: String? = null, init: ProgressDialog.() -> Unit = {}): ProgressDialog {
+    return progressDialog(true, message, title, init)
+}
+
+private fun Context.progressDialog(indeterminate: Boolean, message: String? = null, title: String? = null, init: ProgressDialog.() -> Unit = {}): ProgressDialog {
+    val dialog = ProgressDialog(this)
+    dialog.setIndeterminate(indeterminate)
+    if (message != null) dialog.setMessage(message)
+    if (title != null) dialog.setTitle(title)
+    dialog.init()
+    dialog.show()
+    return dialog
+}
 
 public fun Context.selector(
     title: CharSequence = "",
