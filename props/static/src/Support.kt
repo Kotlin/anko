@@ -26,6 +26,7 @@ import android.preference.PreferenceManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 import kotlinx.android.koan.internals.__internalStartActivity
+import android.content.Intent
 
 /* SECTION HELPERS */
 private fun <T : View> android.support.v4.app.Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {
@@ -68,6 +69,8 @@ public fun android.support.v4.app.Fragment.startActivity(
     activity: Class<out Activity>,
     vararg params: Pair<String, Any>
 ): Unit = ctx.__internalStartActivity(activity, params)
+
+public inline fun <reified T: Class<*>> android.support.v4.app.Fragment.Intent(): Intent = Intent(getActivity(), javaClass<T>())
 /* END SECTION */
 
 

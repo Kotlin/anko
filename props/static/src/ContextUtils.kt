@@ -187,3 +187,22 @@ public val android.content.res.Configuration.landscape: Boolean
 
 public val android.content.res.Configuration.long: Boolean
     get() = (screenLayout and android.content.res.Configuration.SCREENLAYOUT_LONG_YES) != 0
+
+public inline fun <reified T: Class<*>> Context.Intent(): Intent = Intent(this, javaClass<T>())
+
+public inline fun <reified T: Class<*>> Fragment.Intent(): Intent = Intent(getActivity(), javaClass<T>())
+
+private fun Intent.setFlag(flag: Int): Intent {
+    setFlags(flag)
+    return this
+}
+
+public fun Intent.clearTask(): Intent = setFlag(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+public fun Intent.clearTop(): Intent = setFlag(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+public fun Intent.clearWhenTaskReset(): Intent = setFlag(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+public fun Intent.excludeFromRecents(): Intent = setFlag(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+public fun Intent.multipleTask(): Intent = setFlag(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+public fun Intent.newTask(): Intent = setFlag(Intent.FLAG_ACTIVITY_NEW_TASK)
+public fun Intent.noAnimation(): Intent = setFlag(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+public fun Intent.noHistory(): Intent = setFlag(Intent.FLAG_ACTIVITY_NO_HISTORY)
+public fun Intent.singleTop(): Intent = setFlag(Intent.FLAG_ACTIVITY_SINGLE_TOP)
