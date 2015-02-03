@@ -153,7 +153,20 @@ private fun Bundle(vararg params: Pair<String, Any>): Bundle {
             is String -> b.putString(k, v)
             is CharSequence -> b.putCharSequence(k, v)
             is Parcelable -> b.putParcelable(k, v)
-            else -> throw KoanException("Invalid bundle component (${v.javaClass})")
+            is Serializable -> b.putSerializable(k, v)
+            is BooleanArray -> b.putBooleanArray(k, v)
+            is ByteArray -> b.putByteArray(k, v)
+            is CharArray -> b.putCharArray(k, v)
+            is DoubleArray -> b.putDoubleArray(k, v)
+            is FloatArray -> b.putFloatArray(k, v)
+            is IntArray -> b.putIntArray(k, v)
+            is LongArray -> b.putLongArray(k, v)
+            is Array<Parcelable> -> b.putParcelableArray(k, v)
+            is ShortArray -> b.putShortArray(k, v)
+            is Array<CharSequence> -> b.putCharSequenceArray(k, v)
+            is Array<String> -> b.putStringArray(k, v)
+            is Bundle -> b.putBundle(k, v)
+            else -> throw KoanException("Unsupported bundle component (${v.javaClass})")
         }
     }
 
