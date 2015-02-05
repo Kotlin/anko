@@ -137,11 +137,12 @@ repositories {
 
 dependencies {
   ...
-  compile 'org.jetbrains.kotlin:koan-21:0.2@aar'
+  compile 'org.jetbrains.kotlin:koan-15:0.2.1@aar'
 }
 ```
 
-This loads Koan for Android SDK v. 21 (Android 5.0) without `support.v4` package bindings. If you use `support.v4`, replace `21` with `21s`.
+This loads Koan for Android SDK v. 15 (Android 4.0.3) without `support.v4` package bindings. If you use `support.v4`, replace `15` with `15s`.  
+There are also builds for Android SDK v. 19 and v. 21.
 
 ### Using as Jar library
 
