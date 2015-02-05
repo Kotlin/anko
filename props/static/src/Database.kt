@@ -24,6 +24,8 @@ import kotlinx.android.koan.*
 import android.database.sqlite.SQLiteOpenHelper
 import kotlinx.android.koan.internals.useDatabase
 import kotlinx.android.koan.internals.useCursor
+import java.util.concurrent.atomic.AtomicInteger
+import android.content.Context
 
 public val NULL: SqlType = SqlTypeImpl("NULL")
 public val INT: SqlType = SqlTypeImpl("INT")
@@ -68,18 +70,6 @@ private open class SqlTypeModifierImpl(modifier: String) : SqlTypeModifier {
 
 public fun SqlType.plus(m: SqlTypeModifier) : SqlType {
     return SqlTypeImpl(name, if (modifier == null) m.toString() else "$modifier $m")
-}
-
-public inline fun <T> SQLiteOpenHelper.withReadableDatabase(f: SQLiteDatabase.() -> T): T {
-    return getReadableDatabase().useDatabase {
-        it.f()
-    }
-}
-
-public inline fun <T> SQLiteOpenHelper.withWritableDatabase(f: SQLiteDatabase.() -> T): T {
-    return getWritableDatabase().useDatabase {
-        it.f()
-    }
 }
 
 public fun SQLiteDatabase.insert(tableName: String, vararg values: Pair<String, Any>): Long {
@@ -204,6 +194,38 @@ private fun Array<out Pair<String, Any>>.toContentValues(): ContentValues {
 public enum class SqlOrderDirection {
     ASC
     DESC
+}
+
+public abstract class ManagedSQLiteOpenHelper(
+    ctx: Context,
+    name: String,
+    factory: SQLiteDatabase.CursorFactory? = null,
+    version: Int = 1
+): SQLiteOpenHelper(ctx, name, factory, version) {
+
+    private val counter = AtomicInteger()
+    private var db: SQLiteDatabase? = null
+
+    public fun <T> use(f: SQLiteDatabase.() -> T): T {
+        try {
+            return openDatabase().f()
+        } finally {
+            closeDatabase()
+        }
+    }
+
+    private synchronized fun openDatabase(): SQLiteDatabase {
+        if (counter.incrementAndGet() == 1) {
+            db = getWritableDatabase()
+        }
+        return db!!
+    }
+
+    private synchronized fun closeDatabase() {
+        if (counter.decrementAndGet() == 0) {
+            db?.close()
+        }
+    }
 }
 
 public class UpdateQueryBuilder(val db: SQLiteDatabase, val tableName: String, val values: Array<out Pair<String, Any>>) {
