@@ -114,5 +114,9 @@ open class Context(val buffer: StringBuffer = StringBuffer(), var indentDepth: I
         }
         children.clear()
     }
+
+    override fun toString(): String {
+        return buffer.toString()
+    }
 }
 

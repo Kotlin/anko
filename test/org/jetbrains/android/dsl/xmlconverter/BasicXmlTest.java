@@ -32,7 +32,7 @@ public class BasicXmlTest extends Assert {
         c.run("testData/xmlconverter/BasicXml.xml.in");
     }
 
-    //@Test
+    @Test
     public void testUI() throws Exception {
         String convertedActual = c.toString();
         String convertedExpected = loadOrCreate(new File("testData/xmlconverter/BasicXml.xml.out"),
