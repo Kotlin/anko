@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="org.jetbrains.koan">
+<manifest package="org.jetbrains.koan" xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-sdk android:targetSdkVersion="15" />
     <application />
 </manifest>
