@@ -32,6 +32,12 @@ import android.widget.RelativeLayout
 //type casting is now under the hood
 [suppress("UNCHECKED_CAST")]
 public fun <T : View> View.find(id: Int): T = findViewById(id) as T
+
+[suppress("UNCHECKED_CAST")]
+public fun <T : View> Activity.find(id: Int): T = findViewById(id) as T
+
+[suppress("UNCHECKED_CAST")]
+public fun <T : View> Fragment.find(id: Int): T = getView()?.findViewById(id) as T
 /* END SECTION */
 
 /* SECTION COLORS */
