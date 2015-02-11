@@ -44,8 +44,10 @@ public open class CompileTestFixture : Assert() {
         public open fun setUpClass() {
             Assert.assertTrue(File(kotlincFilename).exists())
 
-            for (ver in versions) {
-                compileLibrary(ver)
+            if (versionJars.isEmpty()) {
+                for (ver in versions) {
+                    compileLibrary(ver)
+                }
             }
         }
 
@@ -85,7 +87,7 @@ public open class CompileTestFixture : Assert() {
             return props
         }
 
-        private fun runProcess(args: Array<String>, compiler: Boolean = false): ProcResult {
+        fun runProcess(args: Array<String>, compiler: Boolean): ProcResult {
             val p = Runtime.getRuntime().exec(args)
             val brInput = BufferedReader(InputStreamReader(p.getInputStream()))
             val brError = BufferedReader(InputStreamReader(p.getErrorStream()))
@@ -144,7 +146,7 @@ public open class CompileTestFixture : Assert() {
                 "org.junit.runner.JUnitCore", "test.RobolectricTest"
         )
 
-        val result = runProcess(args)
+        val result = runProcess(args, false)
         Assert.assertTrue(result.stdout.contains("[COMPLETE]"))
         Assert.assertTrue(result.stderr.isEmpty())
     }
