@@ -28,23 +28,66 @@ import kotlinx.android.koan.db.*
 
 ## Accessing database
 
-If you use `SQLiteOpenHelper`, you could just call method `getReadableDatabase()` or `getWritableDatabase()` depending on your circumstances, but then you have to call `close()` method on the received SQLiteDatabase. Instead of enclosing your code into `try` blocks, you can write this:
+If you use `SQLiteOpenHelper`, you could just call method `getReadableDatabase()` or `getWritableDatabase()` (result is actually the same in production code), but then you must be sure to call `close()` on the received `SQLiteDatabase`, and you have to cache the helper class somewhere, and if you use it from several threads, you must be aware of proper open-close concurrent access. It's tough. That's why Android developers not really keen on default SQLite API.
+
+Koan provides a special class `ManagedSQLiteOpenHelper` that seamlessly replaces the default one. That's how you can use it:
 
 ```kotlin
-helper.withReadableDatabase {
-  // Now `this` is a SQLiteDatabase instance
+class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyDatabase", null, 1) {
+
+    class object {
+        private var instance: MyDatabaseOpenHelper? = null
+
+        synchronized fun getInstance(ctx: Context): MyDatabaseOpenHelper {
+            if (instance == null) {
+                instance = MyDatabaseOpenHelper(ctx.getApplicationContext())
+            }
+            return instance!!
+        }
+    }
+
+    override fun onCreate(db: SQLiteDatabase) {
+        // Here you create tables (more info about that is below)
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        // Here you can upgrade tables, as usual
+    }
 }
+
+// Access properties for Context (you could use it in Activity, Service etc.)
+val Context.database: MyDatabaseOpenHelper
+    get() = MyDatabaseOpenHelper.getInstance(getApplicationContext())
+
+// Access property for Fragment
+val Fragment.database: MyDatabaseOpenHelper
+    get() = MyDatabaseOpenHelper.getInstance(getActivity().getApplicationContext())
 ```
 
-or
+So what's the sense? Now, instead of enclosing your code into `try` blocks, you can write this:
 
 ```kotlin
-helper.withWritableDatabase {
-  // Here you can put some inserts
+database.use {
+    // Now `this` is a SQLiteDatabase instance
 }
 ```
 
 Database will be closed for sure after executing all code in `{}`.
+
+Asynchronous call example (please read [here](ADVANCED.md#asynchronous-tasks) about `async`):
+
+```kotlin
+class SomeActivity : Activity() {
+    private fun loadAsync() {
+        async {
+            val result = database.use {
+                // Now `this` is a SQLiteDatabase instance
+            }
+            uiThread { loadComplete(result) }
+        }
+    }
+}
+```
 
 <table>
 <tr><td width="50px" align="center">:penguin:</td>
@@ -61,7 +104,7 @@ With Koan you can easily create new tables and drop existing. Syntax is straight
 Let's create a sample `Customer` table:
 
 ```kotlin
-helper.withWritableDatabase {
+database.use {
   createTable("Customer", ifNotExists = true, 
     "_id" to INT + PRIMARY_KEY + UNIQUE,
     "name" to TEXT,

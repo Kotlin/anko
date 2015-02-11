@@ -133,7 +133,7 @@ val future: Future<Result> = asyncResult(::apiCall)
 
 ## Using SQLite
 
-Please refer to [Using SQLite](doc/SQLITE.md) document for details.
+Please refer to [Using SQLite](SQLITE.md) document for details.
 
 ## Extending Koan
 
