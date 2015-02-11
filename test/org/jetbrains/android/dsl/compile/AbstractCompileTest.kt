@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.dsl.android
+package org.jetbrains.android.dsl.compile
 
-import org.jetbrains.android.dsl.TestGeneratorConfiguration
+import java.io.File
 
-import java.io.IOException
+public open class AbstractCompileTest : CompileTestFixture() {
 
-public class AndroidTestGeneratorConfiguration : TestGeneratorConfiguration()
+    protected fun runCompileTest(testDataFile: String, version: String) {
+        runCompileTest(File("testData/compile/$testDataFile"), File("original/$version/"))
+    }
+
+}

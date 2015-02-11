@@ -38,4 +38,11 @@ public fun Context.generate() {
         file(KoanFile.LISTENERS)
         tune(ConfigurationTune.SIMPLE_LISTENERS)
     }
+
+    compileTests(ktFiles("robolectric"), "Robolectric")
+
+    compileTests(ktFiles("compile"), "Compile")
 }
+
+private fun ktFiles(category: String) = File("testData/$category")
+        .listFiles { it.name.endsWith(".kt") }?.map { it.name.replace(".kt", "") } ?: listOf()

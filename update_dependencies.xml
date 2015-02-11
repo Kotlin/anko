@@ -17,6 +17,27 @@
         <get src="https://teamcity.jetbrains.com/repository/download/bt345/358973:id/kotlin-compiler-0.10.4.zip"
              dest="lib/kotlinc.zip" username="guest" password="guest" usetimestamp="true"/>
 
+        <get src="http://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-all/1.3/hamcrest-all-1.3.jar"
+             dest="lib/hamcrest-all-1.3.jar" usetimestamp="true"/>
+
+        <get src="http://search.maven.org/remotecontent?filepath=org/json/json/20080701/json-20080701.jar"
+             dest="lib/json-20080701.jar" usetimestamp="true"/>
+
+        <get src="http://search.maven.org/remotecontent?filepath=org/ccil/cowan/tagsoup/tagsoup/1.2/tagsoup-1.2.jar"
+             dest="lib/tagsoup-1.2.jar" usetimestamp="true"/>
+
+        <get src="http://search.maven.org/remotecontent?filepath=org/robolectric/robolectric/2.4/robolectric-2.4-jar-with-dependencies.jar"
+             dest="lib/robolectric-with-dependencies.jar" usetimestamp="true"/>
+
+        <get src="http://search.maven.org/remotecontent?filepath=org/robolectric/robolectric/2.4/robolectric-2.4-sources.jar"
+             dest="lib/robolectric-sources.jar" usetimestamp="true"/>
+
+        <get src="http://search.maven.org/remotecontent?filepath=org/robolectric/android-all/4.3_r2-robolectric-0/android-all-4.3_r2-robolectric-0.jar"
+             dest="lib/android-all-4.1.2_r1-robolectric-0.jar" usetimestamp="true"/>
+
+        <get src="http://central.maven.org/maven2/com/google/android/support-v4/r6/support-v4-r6.jar"
+             dest="lib/android-support-v4.jar" usetimestamp="true"/>
+
         <delete dir="lib/kotlinc" failonerror="false"/>
         <unzip src="lib/kotlinc.zip"
                dest="lib/"/>
