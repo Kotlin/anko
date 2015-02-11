@@ -1,10 +1,10 @@
 buildscript {
-    ext.kotlin_version = '0.10.195'
+    ext.kotlin_version = '0.10.709'
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.14.2'
+        classpath 'com.android.tools.build:gradle:1.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -30,7 +30,7 @@ dependencies {
         mavenCentral()
     }
 
-    compile 'com.android.support:support-v4:21.0.2'
+    compile 'com.android.support:support-v4:21.0.3'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
