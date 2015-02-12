@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="item_detail_container" type="id"/>
-    <item name="textView1" type="id"/>
-    <item name="password" type="id"/>
-    <item name="textView2" type="id"/>
-    <item name="passwordConfirmation" type="id"/>
-    <item name="login" type="id"/>
-</resources>
