@@ -1,0 +1,1 @@
+Place android.jar from AndroidSDK/platforms/android-19 and corresponding classes.jar from unpacked android-support-v4.aar files here.

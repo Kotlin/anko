@@ -1,0 +1,1 @@
+Place android.jar from AndroidSDK/platforms/android-15 here.
