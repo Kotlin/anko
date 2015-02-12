@@ -7,6 +7,7 @@ Kōan Advanced topics
 * [Services](#services)
 * [Dialogs and toasts](#dialogs-and-toasts)
 * [Asynchronous tasks](#asynchronous-tasks)
+* [Logging](#logging)
 * [Using SQLite](#using-sqlite)
 * [Extending Koan](#extending-koan)
 
@@ -130,6 +131,40 @@ fun apiCall(): Result {
 }
 val future: Future<Result> = asyncResult(::apiCall)
 ```
+
+## Logging
+
+Android SDK provides `android.util.Log` class which has some logging methods. Usage is pretty straightforward though the methods require you to pass a `tag` argument. You can elimintate this with using `KoanLogger` trait:
+
+```kotlin
+class SomeActivity : Activity(), KoanLogger {
+  private fun someMethod() {
+    info("London is the capital of Great Britain")
+    debug(5) // .toString() method will be executed
+    warn(null) // "null" will be printed
+  }
+}
+```
+
+android.util.Log  | KoanLogger
+------------------|------------
+`v()`             | `verbose()`
+`d()`             | `debug()`
+`i()`             | `info()`
+`w()`             | `warn()`
+`e()`             | `error()`
+`wtf()`           | `wtf()`
+
+The default tag name is a class name (`SomeActivity` in this case) but you can easily change it by overriding the `loggerTag` property.
+
+Each method has two versions: plain and lazy (inlined):
+
+```kotlin
+info("String " + "concatenation")
+info { "String " + "concatenation" }
+```
+
+Lambda result will be calculated only if `Log.isLoggable(tag, Log.INFO)` is `true`.
 
 ## Using SQLite
 

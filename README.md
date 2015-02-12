@@ -43,6 +43,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [Services](doc/ADVANCED.md#services)
 	* [Dialogs and toasts](doc/ADVANCED.md#dialogs-and-toasts)
 	* [Asynchronous tasks](doc/ADVANCED.md#asynchronous-tasks)
+	* [Logging](doc/ADVANCED.md#logging)
 	* [Using SQLite](doc/ADVANCED.md#using-sqlite)
 	* [Extending Koan](doc/ADVANCED.md#extending-koan)
 * [Using SQLite](doc/SQLITE.md)
