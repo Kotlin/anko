@@ -35,6 +35,7 @@ class Writer(private val renderer: Renderer) {
             DIALOGS,
             HELPERS,
             INTERNALS,
+            LOGGER,
             SQL_PARSERS,
             SUPPORT
         ).forEach { if (config[it]) writeStatic(it) }
