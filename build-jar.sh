@@ -9,6 +9,7 @@ do
 	chmod u+x ./gradlew
 
 	./gradlew publish
+	./gradlew publishToMavenLocal
 
 	cd build/repo
 	rm -f org/jetbrains/kotlin/koan-15/maven-metadata.*
