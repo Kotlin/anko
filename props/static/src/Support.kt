@@ -106,10 +106,10 @@ public fun <T> android.support.v4.app.Fragment.asyncResult(executorService: Exec
     getActivity().asyncResult(executorService, task)
 
 public fun android.support.v4.app.Fragment.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
-    __dslAddView(
-        { val v = _LinearLayout(it); v.setOrientation(LinearLayout.VERTICAL); v },
-        init, this
-    )
+    __dslAddView(verticalLayoutFactory, init, this)
+
+public fun <T: View> android.support.v4.app.Fragment.include(layoutId: Int, init: T.() -> Unit): T =
+    __dslAddView(inflaterFactory(layoutId), init, this)
 
 public fun android.support.v4.app.Fragment.alert(
     title: String,
