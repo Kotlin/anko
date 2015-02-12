@@ -22,7 +22,7 @@ import android.util.Log
 
 public trait KoanLogger {
     protected val loggerTag: String
-        get() = javaClass.getName()
+        get() = javaClass.getSimpleName()
 
     protected fun verbose(message: Any?): Int = Log.v(loggerTag, message?.toString() ?: "null")
     protected fun debug(message: Any?): Int = Log.d(loggerTag, message?.toString() ?: "null")
