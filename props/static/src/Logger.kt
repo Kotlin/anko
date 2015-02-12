@@ -24,12 +24,66 @@ public trait KoanLogger {
     protected val loggerTag: String
         get() = javaClass.getSimpleName()
 
-    protected fun verbose(message: Any?): Int = Log.v(loggerTag, message?.toString() ?: "null")
-    protected fun debug(message: Any?): Int = Log.d(loggerTag, message?.toString() ?: "null")
-    protected fun info(message: Any?): Int = Log.i(loggerTag, message?.toString() ?: "null")
-    protected fun warn(message: Any?): Int = Log.w(loggerTag, message?.toString() ?: "null")
-    protected fun error(message: Any?): Int = Log.e(loggerTag, message?.toString() ?: "null")
-    protected fun wtf(message: Any?): Int = Log.wtf(loggerTag, message?.toString() ?: "null")
+    protected final fun verbose(message: Any?) {
+        val tag = loggerTag
+        if (Log.isLoggable(tag, Log.VERBOSE)) Log.v(tag, message?.toString() ?: "null")
+    }
+
+    protected final fun debug(message: Any?) {
+        val tag = loggerTag
+        if (Log.isLoggable(tag, Log.DEBUG)) Log.d(tag, message?.toString() ?: "null")
+    }
+
+    protected final fun info(message: Any?) {
+        val tag = loggerTag
+        if (Log.isLoggable(tag, Log.INFO)) Log.i(tag, message?.toString() ?: "null")
+    }
+
+    protected final fun warn(message: Any?) {
+        val tag = loggerTag
+        if (Log.isLoggable(tag, Log.WARN)) Log.w(tag, message?.toString() ?: "null")
+    }
+
+    protected final fun error(message: Any?) {
+        val tag = loggerTag
+        if (Log.isLoggable(tag, Log.ERROR)) Log.e(tag, message?.toString() ?: "null")
+    }
+
+    protected final fun wtf(message: Any?) {
+        Log.v(loggerTag, message?.toString() ?: "null")
+    }
+
+    /* lazy */
+
+    protected final inline fun verbose(message: () -> Any?) {
+        val tag = loggerTag
+        if (Log.isLoggable(tag, Log.VERBOSE)) Log.v(tag, message()?.toString() ?: "null")
+    }
+
+    protected final inline fun debug(message: () -> Any?) {
+        val tag = loggerTag
+        if (Log.isLoggable(tag, Log.DEBUG)) Log.d(tag, message()?.toString() ?: "null")
+    }
+
+    protected final inline fun info(message: () -> Any?) {
+        val tag = loggerTag
+        if (Log.isLoggable(tag, Log.INFO)) Log.i(tag, message()?.toString() ?: "null")
+    }
+
+    protected final inline fun warn(message: () -> Any?) {
+        val tag = loggerTag
+        if (Log.isLoggable(tag, Log.WARN)) Log.w(tag, message()?.toString() ?: "null")
+    }
+
+    protected final inline fun error(message: () -> Any?) {
+        val tag = loggerTag
+        if (Log.isLoggable(tag, Log.ERROR)) Log.e(tag, message()?.toString() ?: "null")
+    }
+
+    protected final inline fun wtf(message: () -> Any?) {
+        Log.v(loggerTag, message()?.toString() ?: "null")
+    }
+
 }
 
 public fun Throwable.getStackTraceString(): String = Log.getStackTraceString(this)
