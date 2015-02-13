@@ -1,4 +1,4 @@
-package org.jetbrains.android.dsl
+package org.jetbrains.android.generator.test
 
 import java.io.File
 import org.jetbrains.android.dsl.KoanFile

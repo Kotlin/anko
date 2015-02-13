@@ -1,7 +1,9 @@
-package org.jetbrains.android.dsl
+package org.jetbrains.android.generator.test
 
 import java.io.File
 import org.jetbrains.android.dsl.utils.Buffer
+import org.jetbrains.android.dsl.KoanFile
+import org.jetbrains.android.dsl.ConfigurationTune
 
 private fun Context.functionalTest(name: String, mainKoanFile: KoanFile, configInit: TestConfiguration.() -> Unit = {}) {
     val testConfiguration = TestConfiguration(name, mainKoanFile)
