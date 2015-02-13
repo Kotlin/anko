@@ -9,9 +9,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="testng-6.7" level="project" />
-    <orderEntry type="library" name="asm-4.2" level="project" />
+    <orderEntry type="library" exported="" name="asm-4.2" level="project" />
     <orderEntry type="library" name="junit-4.11" level="project" />
-    <orderEntry type="library" name="gson-2.3" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.3" level="project" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
   </component>
 </module>
