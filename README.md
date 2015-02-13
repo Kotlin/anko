@@ -37,6 +37,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [Resources, colors and dimensions](#resources-and-dimensions)
 	* [Instance shorthands](#instance-shorthands)
 	* [UI wrapper](#ui-wrapper)
+	* [Include tag](#include-tag)
 	* [Styles](#styles)
 * [Advanced topics](doc/ADVANCED.md)
 	* [Intents](doc/ADVANCED.md#intents)
@@ -355,7 +356,7 @@ With Koan you can just write `ctx`. It is an extension property which works both
 
 ### UI wrapper
 
-Before the Beginning of Time Koan used UI tag as a top-level DSL element:
+Before the Beginning of Time Koan always used `UI` tag as a top-level DSL element:
 
 ```kotlin
 UI {
@@ -366,6 +367,24 @@ UI {
 ```
 
 You can still use this tag if you want. And it would be much easier to extend DSL as you have to declare only one `ViewManager.customView` function. See [Extending Koan](#extending-koan) for more information.
+
+### Include tag
+
+It is easy to insert an XML layout into DSL. Use the `include` tag:
+
+```kotlin
+include<View>(R.layout.something) {
+  backgroundColor = Color.RED
+}.layoutParams(width = matchParent) { margin = dip(12) }
+```
+
+You can use `layoutParams` as usual, and if you provide a specific type instead of `View`, you could also use this type inside `{}`:
+
+```kotlin
+include<TextView>(R.layout.textfield) {
+  text = "Hello, world!"
+}
+```
 
 ### Styles
 
