@@ -11,3 +11,4 @@ android.widget.AutoCompleteTextView#setAdapter
 android.widget.ImageView#getDrawable
 android.widget.TextView#isTextSelectable
 android.widget.EditText#getText
+android.view.View#getBackground

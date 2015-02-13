@@ -194,10 +194,6 @@ public var android.view.View.animation: android.view.animation.Animation?
 public val android.view.View.applicationWindowToken: android.os.IBinder?
   get() = getApplicationWindowToken()
 
-public var android.view.View.background: android.graphics.drawable.Drawable?
-  get() = getBackground()
-  set(v) = setBackground(v!!)
-
 public var android.view.View.backgroundTintList: android.content.res.ColorStateList?
   get() = getBackgroundTintList()
   set(v) = setBackgroundTintList(v!!)

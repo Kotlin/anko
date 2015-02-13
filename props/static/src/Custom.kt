@@ -122,14 +122,18 @@ public fun <T: View> Context.include(layoutId: Int, init: T.() -> Unit): T =
 
 /* SECTION CUSTOM VIEW PROPERTIES */
 public var View.backgroundColor: Int
-    get() = 0
+    get() = throw KoanException("'padding' property doesn't have a getter")
     set(value) {this.setBackgroundColor(value)}
 
 public var View.backgroundResource: Int
-    get() = 0
+    get() = throw KoanException("'padding' property doesn't have a getter")
     set(value) {
         this.setBackgroundResource(value)
     }
+
+public var View.background: Drawable
+    get() = getBackground()
+    set(value) = this.setBackgroundDrawable(value)
 
 public var View.paddingLeft: Int
     get() = this.getPaddingLeft()
@@ -186,7 +190,7 @@ public var ImageView.image: Drawable?
     }
 
 public var ImageView.imageResource: Int
-    get() = 0
+    get() = throw KoanException("'textColor' property doesn't have a getter")
     set(value) {
         this.setImageResource(value)
     }
