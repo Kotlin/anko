@@ -21,8 +21,6 @@ import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 import org.objectweb.asm.tree.InnerClassNode
 
-class NoSignatureException(message: String) : RuntimeException(message)
-
 data class MethodNodeWithClass(var clazz: ClassNode, val method: MethodNode) {
     fun toStringCompact() = "${clazz.name}#${method.name}"
 }
@@ -67,10 +65,6 @@ fun ClassNode.buldTypeParams(): String {
 fun ClassNode.cleanInternalName(): String {
     return name.replace('/', '.').replace('$', '.') + buldTypeParams()
 }
-
-fun ClassNode.toContainerName() = "_${cleanName()}"
-
-fun ClassNode.toContainerInternalName() = "_${cleanInternalName()}"
 
 fun ClassNode.isInner(): Boolean {
     return name.contains("$")
