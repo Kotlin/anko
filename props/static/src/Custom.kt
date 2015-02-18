@@ -27,6 +27,7 @@ import android.app.Activity
 import android.graphics.drawable.Drawable
 import android.widget.EditText
 import android.widget.RelativeLayout
+import android.text.*
 
 /* SECTION VIEWS */
 //type casting is now under the hood
@@ -117,6 +118,65 @@ public fun <T: View> Fragment.include(layoutId: Int, init: T.() -> Unit): T =
 
 public fun <T: View> Context.include(layoutId: Int, init: T.() -> Unit): T =
     __dslAddView(inflaterFactory(layoutId), init, this)
+/* END SECTION */
+
+
+/* SECTION CUSTOM LISTENERS */
+class __EditText_addTextChangedListener_EditText_TextWatcher(val v: TextView): ListenerHelper {
+    var _afterTextChanged: ((Editable) -> Unit) = { s -> }
+    var _beforeTextChanged: ((CharSequence, Int, Int, Int) -> Unit) = { (a, b, c, d) -> }
+    var _onTextChanged: ((CharSequence, Int, Int, Int) -> Unit) = { (a, b, c, d) -> }
+
+    override fun apply() {
+        v.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(text: CharSequence, start: Int, count: Int, after: Int) = _beforeTextChanged(text, start, count, after)
+            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) = _onTextChanged(text, start, before, count)
+            override fun afterTextChanged(editable: Editable) = _afterTextChanged(editable)
+        })
+    }
+}
+
+public fun EditText.beforeTextChanged(act: (text: CharSequence, start: Int, count: Int, after: Int) -> Unit) {
+    val props = getTag() as? ViewProps
+    if (props != null) {
+        var l: __EditText_addTextChangedListener_EditText_TextWatcher? =
+                props.listeners.get("android.widget.EditText_addTextChangedListener") as? __EditText_addTextChangedListener_EditText_TextWatcher
+        if (l == null) {
+            l = __EditText_addTextChangedListener_EditText_TextWatcher(this)
+            props.listeners.put("android.widget.EditText_addTextChangedListener", l!!)
+        }
+        l!!._beforeTextChanged = act
+        l!!.apply()
+    }
+}
+
+public fun EditText.onTextChanged(act: (text: CharSequence, start: Int, before: Int, count: Int) -> Unit) {
+    val props = getTag() as? ViewProps
+    if (props != null) {
+        var l: __EditText_addTextChangedListener_EditText_TextWatcher? =
+                props.listeners.get("android.widget.EditText_addTextChangedListener") as? __EditText_addTextChangedListener_EditText_TextWatcher
+        if (l == null) {
+            l = __EditText_addTextChangedListener_EditText_TextWatcher(this)
+            props.listeners.put("android.widget.EditText_addTextChangedListener", l!!)
+        }
+        l!!._onTextChanged = act
+        l!!.apply()
+    }
+}
+
+public fun EditText.afterTextChanged(act: (editable: Editable) -> Unit) {
+    val props = getTag() as? ViewProps
+    if (props != null) {
+        var l: __EditText_addTextChangedListener_EditText_TextWatcher? =
+                props.listeners.get("android.widget.EditText_addTextChangedListener") as? __EditText_addTextChangedListener_EditText_TextWatcher
+        if (l == null) {
+            l = __EditText_addTextChangedListener_EditText_TextWatcher(this)
+            props.listeners.put("android.widget.EditText_addTextChangedListener", l!!)
+        }
+        l!!._afterTextChanged = act
+        l!!.apply()
+    }
+}
 /* END SECTION */
 
 
