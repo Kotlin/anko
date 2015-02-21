@@ -102,6 +102,7 @@ public fun Context.indeterminateProgressDialog(message: String? = null, title: S
 private fun Context.progressDialog(indeterminate: Boolean, message: String? = null, title: String? = null, init: ProgressDialog.() -> Unit = {}): ProgressDialog {
     val dialog = ProgressDialog(this)
     dialog.setIndeterminate(indeterminate)
+    if (!indeterminate) dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
     if (message != null) dialog.setMessage(message)
     if (title != null) dialog.setTitle(title)
     dialog.init()
