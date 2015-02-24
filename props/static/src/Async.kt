@@ -19,21 +19,23 @@ package kotlinx.android.koan
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import android.content.Context
-import android.app.Fragment
 import android.os.Handler
 import android.os.Looper
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
+import android.app.*
 
 public fun Fragment.uiThread(f: () -> Unit) {
     getActivity().uiThread(f)
 }
 
 public fun Context.uiThread(f: () -> Unit) {
-    if (ContextHelper.uiThread == Thread.currentThread()) {
-        f()
-    } else {
-        ContextHelper.handler.post(Runnable(f))
+    if (ContextHelper.uiThread == Thread.currentThread()) f() else ContextHelper.handler.post(Runnable(f))
+}
+
+public fun Activity.uiThread(f: () -> Unit) {
+    if (!isFinishing()) {
+        if (ContextHelper.uiThread == Thread.currentThread()) f() else ContextHelper.handler.post(Runnable(f))
     }
 }
 
