@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.dsl.utils;
+package org.jetbrains.android.dsl.utils
 
-import java.io.File;
-import java.io.FileFilter;
+import java.io.File
+import java.io.FileFilter
 
-public final class DirectoryFilter implements FileFilter {
-    @Override
-    public boolean accept(File pathname) {
-        return pathname.isDirectory() && !pathname.isHidden() && pathname.getName().matches("^[0-9]+s?$");
+public class DirectoryFilter : FileFilter {
+    override fun accept(path: File): Boolean {
+        return path.isDirectory() && !path.isHidden() &&
+                path.getName().matches("^[0-9]+s?$") &&
+                path.listFiles { it.name.endsWith(".jar") }?.isNotEmpty() ?: false
     }
 }
