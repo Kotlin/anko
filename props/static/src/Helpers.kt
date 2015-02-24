@@ -58,6 +58,10 @@ public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit
     return ctx.addContextTopLevelView(view(ctx), init)
 }
 
+public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, act: Activity): T {
+    return act.addActivityTopLevelView(view(act), init)
+}
+
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, fragment: Fragment): T {
     val ctx = fragment.getActivity()
     return fragment.addFragmentTopLevelView(view(ctx), init)
@@ -84,11 +88,12 @@ private fun <T : View> Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit
 }
 
 private fun <T : View> Context.addContextTopLevelView(v: T, init: T.() -> Unit): T {
-    if (this is Activity) {
-        (this : Activity).UI { addView(v, init, this) }
-    } else {
-        UI { addView(v, init, this) }
-    }
+    UI { addView(v, init, this) }
+    return v
+}
+
+private fun <T : View> Activity.addActivityTopLevelView(v: T, init: T.() -> Unit): T {
+    this.UI { addView(v, init, this) }
     return v
 }
 

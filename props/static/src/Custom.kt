@@ -110,6 +110,9 @@ public fun Fragment.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout
 public fun Context.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
     __dslAddView(verticalLayoutFactory, init, this): LinearLayout
 
+public fun Activity.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
+        __dslAddView(verticalLayoutFactory, init, this): LinearLayout
+
 public fun <T: View> ViewManager.include(layoutId: Int, init: T.() -> Unit): T =
     __dslAddView(inflaterFactory(layoutId), init, this)
 
@@ -118,6 +121,9 @@ public fun <T: View> Fragment.include(layoutId: Int, init: T.() -> Unit): T =
 
 public fun <T: View> Context.include(layoutId: Int, init: T.() -> Unit): T =
     __dslAddView(inflaterFactory(layoutId), init, this)
+
+public fun <T: View> Activity.include(layoutId: Int, init: T.() -> Unit): T =
+        __dslAddView(inflaterFactory(layoutId), init, this)
 /* END SECTION */
 
 

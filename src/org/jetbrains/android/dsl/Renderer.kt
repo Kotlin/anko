@@ -173,6 +173,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                     }
                     add("Fragment", "getActivity()!!")
                     add("Context", "this")
+                    add("Activity", "this")
                 }
             }.toString()
         }
