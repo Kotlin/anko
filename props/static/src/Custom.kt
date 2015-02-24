@@ -225,6 +225,18 @@ public var View.paddingBottom: Int
         this.setPadding(this.getPaddingLeft(), this.getPaddingTop(), this.getPaddingRight(), value)
     }
 
+public var View.paddingHorizontal: Int
+    get() = throw KoanException("'paddingHorizontal' property doesn't have a getter")
+    set(value) {
+        this.setPadding(value, this.getPaddingTop(), value, this.getPaddingBottom())
+    }
+
+public var View.paddingVertical: Int
+    get() = throw KoanException("'paddingVertical' property doesn't have a getter")
+    set(value) {
+        this.setPadding(this.getPaddingLeft(), value, this.getPaddingRight(), value)
+    }
+
 public var View.padding: Int
     get() = throw KoanException("'padding' property doesn't have a getter")
     set(value) {
