@@ -54,6 +54,7 @@ public open class CompileTestFixture : Assert() {
         platformStatic
         public open fun tearDownClass() {
             versionJars.values().forEach { it.delete() }
+            versionJars.clear()
         }
 
         private fun compileLibrary(ver: File): TestGeneratorConfiguration {
@@ -124,7 +125,7 @@ public open class CompileTestFixture : Assert() {
         val cp = listOf(
                 versionJars[ver],
                 tmpFile,
-                File(lib, "kotlin-runtime.jar"),
+                File(lib, "kotlinc/lib/kotlin-runtime.jar"),
                 File(lib, "junit-4.11.jar"),
                 File(lib, "hamcrest-all-1.3.jar"),
                 File(lib, "robolectric-with-dependencies.jar"),
@@ -147,7 +148,6 @@ public open class CompileTestFixture : Assert() {
         )
 
         val result = runProcess(args, false)
-        Assert.assertTrue(result.stdout.contains("[COMPLETE]"))
         Assert.assertTrue(result.stderr.isEmpty())
     }
 
