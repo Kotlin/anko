@@ -26,6 +26,11 @@ public fun Context.generate() {
         file(KoanFile.LAYOUTS)
     }
 
+    functionalTest("ViewTest", KoanFile.VIEWS) {
+        file(KoanFile.VIEWS)
+        tune(ConfigurationTune.TOP_LEVEL_DSL_ITEMS)
+    }
+
     functionalTest("PropertyTest", KoanFile.PROPERTIES) {
         file(KoanFile.PROPERTIES)
     }
