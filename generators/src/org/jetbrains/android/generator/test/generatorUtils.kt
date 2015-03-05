@@ -75,7 +75,7 @@ fun main(args: Array<String>) {
             ?.map { it.name }
             ?: listOf()
 
-    val testVersions = File("./testData/")
+    val testVersions = File("./testData/functional/")
         .listFiles { it.isDirectory() && it.name.matches("\\d+s?") }
         ?.map { it.name }
         ?: listOf()
