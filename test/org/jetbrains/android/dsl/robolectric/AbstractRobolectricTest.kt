@@ -18,7 +18,7 @@ package org.jetbrains.android.dsl.robolectric
 
 import org.jetbrains.android.dsl.compile.CompileTestFixture
 import java.io.File
-import org.jetbrains.android.dsl.utils.DirectoryFilter
+import org.jetbrains.android.dsl.utils.AndroidVersionDirectoryFilter
 
 public abstract class AbstractRobolectricTest : CompileTestFixture() {
 

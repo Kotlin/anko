@@ -22,19 +22,17 @@ import java.util.ArrayList
 import org.jetbrains.android.dsl.utils.Buffer
 import org.jetbrains.android.dsl.KoanFile.*
 import org.jetbrains.android.dsl.ConfigurationTune.*
+import org.jetbrains.android.dsl.utils.buffer
 import org.objectweb.asm.Type
 
 class Renderer(private val generator: Generator) : Configurable(generator.config) {
 
-    private fun buffer(init: Buffer.() -> Unit) = Buffer(config.indent, 0, init)
-    private fun buffer(indent: Int, init: Buffer.() -> Unit) = Buffer(config.indent, indent, init)
-
     val views = generate(VIEWS) {
-        generateViews(generator.viewClasses) { cleanInternalName(it) }
+        generateViews(generator.viewClasses) { it.fqName }
     }
 
     val viewGroups = generate(VIEWS) {
-        generateViews(generator.viewGroupClasses) { "_" + stripClassName(cleanInternalName(it)) }
+        generateViews(generator.viewGroupClasses) { "_" + it.simpleName }
     }
 
     val helperConstructors = generate(HELPER_CONSTRUCTORS) {
@@ -43,23 +41,18 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     // Generate View extension properties (with "best" setter)
     val properties = generate(PROPERTIES) {
-        generator.properties.map {
-            val getter = it.getter
-            val className = cleanInternalName(getter.clazz.name)
-            val propertyName = it.name
-            val fullPropertyName = "$className.$propertyName"
-            val bestSetter = it.setters.head
+        generator.properties.map { property ->
+            val getter = property.getter
+            val fullPropertyName = "${getter.clazz.fqName}.${property.name}"
+            val bestSetter = property.setters.firstOrNull()
             val mutability = if (bestSetter != null) "var" else "val"
             val returnType = getter.method.renderReturnType()
-            val otherSetters = if (it.setters.size > 1) it.setters.tail else listOf()
+            val otherSetters = if (property.setters.size() > 1) property.setters.drop(1) else listOf()
 
             buffer {
                 line("public $mutability $fullPropertyName: $returnType")
                 indent.line("get() = ${getter.method.name}()")
-                if (bestSetter != null) {
-                    val arg = if (returnType.endsWith("?")) "v!!" else "v"
-                    indent.line("set(v) = ${bestSetter.method.name}($arg)")
-                }
+                if (bestSetter != null) indent.line("set(v) = ${bestSetter.method.name}(v)")
 
                 renderResourceProperty(otherSetters, fullPropertyName, returnType)
             }.toString()
@@ -71,11 +64,11 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         fullPropertyName: String,
         returnType: String)
     {
-        if (otherSetters.notEmpty && supportsResourceSetter(returnType)) {
+        if (otherSetters.isNotEmpty() && supportsResourceSetter(returnType)) {
             val resourceSetter = otherSetters.firstOrNull {
-                (it.method.arguments?.size() ?: 0) == 1 &&
-                    (it.method.arguments?.get(0)?.getClassName() == "int")
+                it.method.args.size() == 1 && (it.method.args[0].getClassName() == "int")
             }
+
             if (resourceSetter != null) {
                 line("public var ${fullPropertyName}Resource: Int")
                 indent.line("get() = throw KoanException(\"'${fullPropertyName}Resource' property doesn't have a getter\")")
@@ -106,12 +99,12 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     //generated layout classes with custom LayoutParams
     val layouts = generate(LAYOUTS) {
-        generator.layouts.map { renderLayout(it) }
+        generator.layoutParams.map { renderLayout(it) }
     }
 
     val services = generator.services.map {
-        val propertyName = it.second!!.data.cleanNameDecap()
-        val className = it.second!!.data.cleanInternalName()
+        val propertyName = it.second!!.data.simpleName.decapitalize()
+        val className = it.second!!.data.fqName
         "public val Context.$propertyName: $className\n"+
                 "${config.indent}get() = getSystemService(Context.${it.first}) as $className"
     }
@@ -121,6 +114,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         for (i in 1..22) {
             val types = (1..i).map { "T$it" }.joinToString(", ")
             val args = (1..i).map { "columns[${it - 1}] as T$it" }.joinToString(", ")
+
             list.add(buffer {
                 line("public fun <$types, R> rowParser(parser: ($types) -> R): RowParser<R> {")
                     line("return object : RowParser<R> {")
@@ -143,25 +137,25 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
             val (mainClass, ancestor, innerClass) = it
             val probInterfaceName = innerClass!!.innerName
             val conflict = generator.interfaceWorkarounds.count { it.third!!.innerName == probInterfaceName } > 1
-            val interfaceName = (
-                if (conflict) stripClassName(cleanInternalName(innerClass.outerName)) + "_" else "") + probInterfaceName
-            val ancestorName = cleanInternalName(ancestor!!.name)
+            val interfaceName = (if (conflict) mainClass.simpleName + "_" else "") + probInterfaceName
+            val ancestorName = ancestor!!.fqName
+
             buffer(1) {
                 line("public static interface $interfaceName {")
                 for (field in mainClass.fields.filter { it.isPublic && it.isStatic && it.isFinal }) {
                     val name = field.name
-                    val type = Type.getType(field.desc).toJavaStr()
+                    val type = Type.getType(field.desc).asJavaString()
                     line("public static final $type $name = $ancestorName.$name;")
                 }
                 line("}")
             }.toString()
         }.joinToString("\n", "public final class InterfaceWorkarounds {\n\n", "\n\n}")
 
-    private fun generateViews(views: List<ClassNode>, nameResolver: (String) -> String): List<String> {
+    private fun generateViews(views: List<ClassNode>, nameResolver: (ClassNode) -> String): List<String> {
         return views.filter { !it.isAbstract && it.hasSimpleConstructor() }.map { clazz ->
-            val typeName = cleanInternalName(clazz.name)
-            val className = nameResolver(clazz.name)
-            val funcName = decapitalize(stripClassName(cleanInternalName(clazz.name)))
+            val typeName = clazz.fqName
+            val className = nameResolver(clazz)
+            val funcName = clazz.simpleName.decapitalize()
 
             buffer {
                 line("public fun ViewManager.$funcName(init: $className.() -> Unit = defaultInit): $typeName =")
@@ -182,12 +176,12 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     //render a simple listener (extension function)
     //example: fun android.view.View.onClick(l: (android.view.View?) -> Unit) = setOnClickListener(l)
     private fun renderSimpleListener(listener: SimpleListener): String {
-        val obj = listener.setter.clazz.cleanInternalName()
+        val className = listener.setter.clazz.fqNameWithTypeArguments
         val argumentTypes = listener.method.argumentTypes
         val returnType = listener.method.returnType
 
         return buffer {
-            line("public fun $obj.${listener.method.name}(l: ($argumentTypes) -> $returnType): Unit =")
+            line("public fun $className.${listener.method.name}(l: ($argumentTypes) -> $returnType): Unit =")
             line("${listener.setter.method.name}(l)")
         }.toString()
     }
@@ -209,26 +203,26 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
             needed.forEach { neededProp ->
                 val propList = resolveAllMethods(clazz)
                 val found = propList.firstOrNull {
-                    it.name.equals("set${neededProp.name.capitalize()}") && it.arguments?.size() == 1 &&
-                        cleanInternalName(it.arguments?.get(0)?.getClassName() ?: "").endsWith(neededProp.typ)
+                    it.name.equals("set${neededProp.name.capitalize()}") && it.args.size() == 1 &&
+                        it.args[0].fqName.endsWith(neededProp.type)
                 }
                 if (found == null)
-                    throw RuntimeException("Property $neededProp for helper constructor ${clazz.cleanInternalName()}.<init>$needed not found.")
+                    throw RuntimeException("Property $neededProp for helper constructor ${clazz.fqName}.<init>$needed not found.")
                 ret.add(found)
             }
             return ret
         }
 
         val ret = arrayListOf<String>()
-        generator.viewClasses.filter { Props.helperConstructors.contains(it.cleanInternalName()) }.forEach { view ->
-            val viewClassName = view.cleanInternalName()
-            val helperConstructors = Props.helperConstructors.get(view.cleanInternalName())!!
+        generator.viewClasses.filter { Props.helperConstructors.contains(it.fqName) }.forEach { view ->
+            val viewClassName = view.fqName
+            val helperConstructors = Props.helperConstructors[view.fqName]!!
 
             for (constructor in helperConstructors) {
-                val functionName = view.cleanName().decapitalize()
+                val functionName = view.simpleName.decapitalize()
                 val collected = constructor.zip(collectProperties(view, constructor))
                 val helperArguments = collected.map {
-                    val argumentType = it.second.arguments!![0].toStr()
+                    val argumentType = it.second.args[0].asString()
                     "${it.first.name}: $argumentType"
                 }.joinToString(", ")
                 val arguments = "$helperArguments, init: $viewClassName.() -> Unit = defaultInit"
@@ -249,8 +243,8 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     //get a name for helper class. Listener interfaces are often inner so we'll separate the base class name with "_"
     //For example, for class android.widget.SearchView.OnSuggestionListener it would be SearchView_OnSuggessionListener
     fun getHelperClassName(listener: ComplexListener): String {
-        val basename = stripClassName(listener.clazz.name).replace("$", "_")
-        val setterClassName = listener.setter.clazz.cleanName()
+        val basename = listener.clazz.name.substringAfter('.').replace("$", "_")
+        val setterClassName = listener.setter.clazz.simpleName
         val setterName = setterClassName.replace(".", "_") + "_" + listener.setter.method.name
         return "__" + setterName + "_" + basename.substring(basename.lastIndexOf("/") + 1)
     }
@@ -258,7 +252,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     private fun renderComplexListenerSetters(listener: ComplexListener): String {
         //ListenerHelper class name (helper mutable class, generates real listener)
         val helperClassName = getHelperClassName(listener)
-        val setterClass = listener.setter.clazz.cleanInternalName()
+        val setterClass = listener.setter.clazz.fqNameWithTypeArguments
         //key for storing ListenerHelper (local to this setter)
         val hashKey = "${setterClass}_${listener.setter.method.name}"
 
@@ -267,7 +261,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
             val argumentType = "(${method.argumentTypes}) -> ${method.returnType}"
 
             buffer {
-                line("public fun $setterClass.${decapitalize(method.name)}(act: $argumentType) {")
+                line("public fun $setterClass.${method.name.decapitalize()}(act: $argumentType) {")
                 line("val props = getTag() as? ViewProps")
                 line("if (props != null) {")
                     line("var l: $helperClassName? =")
@@ -287,17 +281,17 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     //render a complex listener
     private fun renderComplexListenerClass(listener: ComplexListener): String {
-        val listenerClassName = listener.clazz.cleanInternalName()
+        val listenerClassName = listener.clazz.fqName
         //ListenerHelper class name (helper mutable class, generates real listener)
         val helperClassName = getHelperClassName(listener)
-        val setterClass = listener.setter.clazz.cleanInternalName()
+        val setterClass = listener.setter.clazz.fqNameWithTypeArguments
 
         //field list (already with indentation)
         val fields = listener.methods.map { method ->
             val varName = method.name.decapitalize()
             val argumentNames = method.method.fmtArgumentsNames()
             val lambdaType = "((${method.argumentTypes}) -> ${method.returnType})"
-            val returnValue = method.method.getReturnType().getDefaultValue()
+            val returnValue = method.method.returnType.getDefaultValue()
             val initializer = "{ $argumentNames -> $returnValue }"
             val simplifiedInitializer = if (initializer == "{  ->  }") "{}" else initializer
             "var _$varName: $lambdaType = $simplifiedInitializer "
@@ -324,14 +318,14 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     //render a layout class (only those with custom LayoutParams)
     fun renderLayout(lp: LayoutParamsNode): String {
-        val layoutClassName = lp.layout.cleanInternalName()
-        val layoutParamsClassName = lp.layoutParams.cleanInternalName()
-        val helperClassName = "_${lp.layout.cleanName()}"
+        val layoutClassName = lp.layout.fqName
+        val layoutParamsClassName = lp.layoutParams.fqName
+        val helperClassName = "_${lp.layout.simpleName}"
 
         fun renderExtensionFunction(constructor: MethodNode): String {
             val arguments = constructor.fmtLayoutParamsArguments()
             val substituded = constructor.fmtLayoutParamsArgumentsInvoke()
-            val initArgumentName = "${decapitalize(lp.layout.cleanName())}Init"
+            val initArgumentName = "${lp.layout.simpleName.decapitalize()}Init"
             val separator = if (arguments == "") "" else ","
             return buffer(indent = 1) {
                 line("public fun <T: View> T.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = defaultInit): T {")
@@ -356,6 +350,6 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     // Only one-argument (typically <init>(Context)) View constructors are now supported
-    private fun ClassNode.hasSimpleConstructor() = getConstructors().any { it.arguments?.size() == 1 }
+    private fun ClassNode.hasSimpleConstructor() = getConstructors().any { it.args.size() == 1 }
 
 }

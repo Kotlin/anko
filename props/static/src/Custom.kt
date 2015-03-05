@@ -24,6 +24,7 @@ import android.widget.TextView
 import android.content.Context
 import android.app.Fragment
 import android.app.Activity
+import android.content.BroadcastReceiver
 import android.graphics.drawable.Drawable
 import android.widget.EditText
 import android.widget.RelativeLayout

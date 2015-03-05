@@ -17,7 +17,7 @@
 package org.jetbrains.android.dsl.functional
 
 import org.jetbrains.android.dsl.*
-import org.jetbrains.android.dsl.utils.JarFilter
+import org.jetbrains.android.dsl.utils.JarFileFilter
 import java.io.File
 import java.io.FileFilter
 import java.io.FileWriter
@@ -30,7 +30,7 @@ public abstract class AbstractFunctionalTest {
 
     protected fun loadOrCreate(file: File, data: String): String {
         try {
-            return readFile(file.getAbsolutePath())
+            return file.readText()
         } catch (e: Exception) {
             file.createNewFile()
             val fileWriter = FileWriter(file)
@@ -74,7 +74,7 @@ public abstract class AbstractFunctionalTest {
         val versionDir = File("original", version)
         val intVersion = version.replaceAll("[^0-9]", "").toInt()
 
-        val jarFiles = versionDir.listFiles(JarFilter()).map { it.getAbsolutePath() }
+        val jarFiles = versionDir.listFiles(JarFileFilter()).map { it.getAbsolutePath() }
 
         runFunctionalTest(version, intVersion, jarFiles, testDataFile, subsystem, settings)
 

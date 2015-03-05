@@ -14,6 +14,21 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.dsl
+package org.jetbrains.android.dsl.utils
 
-abstract class Configurable(val config: BaseGeneratorConfiguration)
+import java.io.File
+import java.io.FileFilter
+
+public class JarFileFilter : FileFilter {
+    override fun accept(path: File): Boolean {
+        return path.isFile() && path.getName().toLowerCase().endsWith(".jar")
+    }
+}
+
+public class AndroidVersionDirectoryFilter : FileFilter {
+    override fun accept(path: File): Boolean {
+        return path.isDirectory() && !path.isHidden() &&
+                path.getName().matches("^[0-9]+s?$") &&
+                path.listFiles { it.name.endsWith(".jar") }?.isNotEmpty() ?: false
+    }
+}

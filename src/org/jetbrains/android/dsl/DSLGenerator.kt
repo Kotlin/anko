@@ -38,7 +38,7 @@ class DSLGenerator(
 
     private fun copy(original: String, process: (String) -> String) {
         val contents = process(File("props/mvn/$original").readText())
-        writeFile(config.outputDirectory + original, contents)
+        File(config.outputDirectory + original).writeText(contents)
     }
 
     override fun run() {
@@ -61,7 +61,7 @@ class DSLGenerator(
 
             //write manifest
             val manifest = mvnManifest.replace("%VERSION%", sVersion)
-            writeFile(config.outputDirectory + "src/main/AndroidManifest.xml", manifest)
+            File(config.outputDirectory + "src/main/AndroidManifest.xml").writeText(manifest)
 
             //copy gradle wrapper
             copy("gradlew")

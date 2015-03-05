@@ -11,7 +11,7 @@ object AndroidJarCollector {
     private val ANDROID_HOME = System.getenv().get("ANDROID_HOME") ?: ""
 
     private val REQUIRED_VERSIONS = array("15", "15s", "19", "19s", "21", "21s")
-    private val VERSIONS = File("original").listFiles(DirectoryFilter())
+    private val VERSIONS = File("original").listFiles(AndroidVersionDirectoryFilter())
 
     fun check(): Boolean {
         if (VERSIONS == null || VERSIONS.isEmpty()) return false

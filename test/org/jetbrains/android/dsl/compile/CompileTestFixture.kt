@@ -24,8 +24,8 @@ import org.testng.annotations.AfterClass
 import org.jetbrains.android.dsl.KoanFile
 import org.jetbrains.android.dsl.DSLGenerator
 import java.io.BufferedReader
-import org.jetbrains.android.dsl.utils.DirectoryFilter
-import org.jetbrains.android.dsl.utils.JarFilter
+import org.jetbrains.android.dsl.utils.AndroidVersionDirectoryFilter
+import org.jetbrains.android.dsl.utils.JarFileFilter
 import java.io.InputStreamReader
 import kotlin.platform.platformStatic
 import org.jetbrains.android.dsl.TestGeneratorConfiguration
@@ -37,7 +37,7 @@ public open class CompileTestFixture : Assert() {
     class object {
         private val kotlincFilename = "lib/kotlinc/bin/kotlinc-jvm"
 
-        private val versions = File("original/").listFiles(DirectoryFilter())
+        private val versions = File("original/").listFiles(AndroidVersionDirectoryFilter())
         private val versionJars = hashMapOf<File, File>()
 
         platformStatic
@@ -61,7 +61,7 @@ public open class CompileTestFixture : Assert() {
             val version = ver.getName()
             val intVersion = Integer.parseInt(version.replaceAll("[^0-9]", ""))
 
-            val jarFiles = ver.listFiles(JarFilter())
+            val jarFiles = ver.listFiles(JarFileFilter())
             val jarFilesString = jarFiles.map { it.getAbsolutePath() }
             val classpath = jarFiles.map { it.getPath() }.joinToString(File.pathSeparator)
 
@@ -152,7 +152,7 @@ public open class CompileTestFixture : Assert() {
     }
 
     private fun compile(testData: File, ver: File, additionalLibraries: List<File>? = null): File {
-        val jarFiles = ver.listFiles(JarFilter())
+        val jarFiles = ver.listFiles(JarFileFilter())
         val classpath = (
                 jarFiles.map { it.getPath() } +
                         listOf(versionJars[ver]) +

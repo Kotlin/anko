@@ -36,57 +36,34 @@ class ClassTree : Iterable<ClassNode>{
         return ClassTreeIterator(root)
     }
 
-    public fun add(_class: ClassNode) {
-        val parent = findNode(root, _class.superName)
+    public fun add(clazz: ClassNode) {
+        val parent = findNode(root, clazz.superName)
         val newNode: ClassTreeNode
-        val orphans = getOrphansOf(_class.name)
+        val orphans = getOrphansOf(clazz.name)
         if (parent != null) {
-            newNode = ClassTreeNode(parent, _class)
+            newNode = ClassTreeNode(parent, clazz)
             parent.children.add(newNode)
         } else {
-            newNode = ClassTreeNode(root, _class)
+            newNode = ClassTreeNode(root, clazz)
             root.children.add(newNode)
         }
         newNode.children.addAll(orphans)
         orphans.forEach { it.parent = newNode }
     }
 
-    public fun isChildOf(_class: ClassNode, ancestorName: String): Boolean {
-        val treeNode = findNode(root, _class)
-        if (treeNode == null)
-            throw NoSuchClassException()
+    public fun isChildOf(clazz: ClassNode, ancestorName: String): Boolean {
+        val treeNode = findNode(root, clazz)
+        if (treeNode == null) throw NoSuchClassException()
+
         return treeNode.parent?.data?.name == ancestorName
     }
 
-    public fun isSuccessorOf(_class: ClassNode, ancestorName: String): Boolean {
+    public fun isSuccessorOf(clazz: ClassNode, ancestorName: String): Boolean {
         val parent = findNode(ancestorName)
-        if (parent == null)
-            throw NoSuchClassException()
-        val child = findNode(parent, _class.name)
-        if ((child == null) || (child == parent))
-            return false
-        else
-            return true
-    }
+        if (parent == null) throw NoSuchClassException()
 
-    private fun findParentIf(node: ClassTreeNode, f: (ClassTreeNode) -> Boolean): ClassTreeNode? {
-        var n = node
-        while (n != root) {
-            if (f(n)) return n
-            n = n.parent!!
-        }
-        return null
-    }
-
-    private fun anyParentIf(node: ClassTreeNode, f: (ClassTreeNode) -> Boolean): Boolean {
-        return findParentIf(node, f) != null
-    }
-
-    public fun findParentWithProperty(_class: ClassNode, property: String): ClassNode? {
-        val node = findNode(root, _class)
-        if (node == null)
-            throw NoSuchClassException()
-        return findParentIf(node, { it.data.methods.any { it.isProperty(property) } })?.data
+        val child = findNode(parent, clazz.name)
+        return child != null && child != parent
     }
 
     private fun getOrphansOf(parentClassName: String): List<ClassTreeNode> {
@@ -95,19 +72,13 @@ class ClassTree : Iterable<ClassNode>{
         return res.first
     }
 
-    private fun findChildByName(parent: ClassTreeNode, childName: String): Boolean {
-        return parent.children.any { it.data.name == childName }
-    }
-
     private fun findNode(node: ClassTreeNode, name: String?): ClassTreeNode? {
-        if (name == null) return null
         for (child in node.children) {
             if (child.data.name == name) {
                 return child
             } else {
                 val ret = findNode(child, name)
-                if (ret != null)
-                    return ret
+                if (ret != null) return ret
             }
         }
         return null
@@ -120,8 +91,7 @@ class ClassTree : Iterable<ClassNode>{
                 return child
             } else {
                 val ret = findNode(child, parentPackage, className)
-                if (ret != null)
-                    return ret
+                if (ret != null) return ret
             }
         }
         return null
@@ -131,16 +101,16 @@ class ClassTree : Iterable<ClassNode>{
         return findNode(root, parentPackage + '/', '/' + className)
     }
 
-    public fun findNode(name: String?): ClassTreeNode? {
+    public fun findNode(name: String): ClassTreeNode? {
         return findNode(root, name)
     }
 
-    public fun findNode(_class: ClassNode): ClassTreeNode? {
-        return findNode(root, _class.name)
+    public fun findNode(clazz: ClassNode): ClassTreeNode? {
+        return findNode(root, clazz.name)
     }
 
-    private fun findNode(node: ClassTreeNode, _class: ClassNode): ClassTreeNode? {
-        return findNode(node, _class.name)
+    private fun findNode(node: ClassTreeNode, clazz: ClassNode): ClassTreeNode? {
+        return findNode(node, clazz.name)
     }
 }
 
@@ -151,7 +121,7 @@ class ClassTreeIterator(var next: ClassTreeNode) : Iterator<ClassNode> {
     override fun next(): ClassNode {
         val node: ClassTreeNode = nodeQueue.element()
         nodeQueue.remove()
-        nodeQueue.addAll(node.children);
+        nodeQueue.addAll(node.children)
         return node.data
     }
 

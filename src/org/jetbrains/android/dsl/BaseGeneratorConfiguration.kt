@@ -19,9 +19,11 @@ package org.jetbrains.android.dsl
 import java.io.File
 import java.util.HashMap
 
-class Variable(val name: String, val typ: String) {
+abstract class Configurable(val config: BaseGeneratorConfiguration)
+
+class Variable(val name: String, val type: String) {
     override fun toString(): String {
-        return "$name:$typ"
+        return "$name:$type"
     }
 }
 
@@ -51,6 +53,14 @@ public enum class ConfigurationTune {
     SIMPLE_LISTENERS
     COMPLEX_LISTENER_SETTERS
     COMPLEX_LISTENER_CLASSES
+}
+
+fun <T> Configurable.generate(vararg file: KoanFile, init: () -> Collection<T>) : Collection<T> {
+    return if (file.any { config[it] }) init() else listOf()
+}
+
+fun <T> Configurable.generate(vararg tune: ConfigurationTune, init: () -> Collection<T>) : Collection<T> {
+    return if (tune.any { config[it] }) init() else listOf()
 }
 
 abstract class BaseGeneratorConfiguration {

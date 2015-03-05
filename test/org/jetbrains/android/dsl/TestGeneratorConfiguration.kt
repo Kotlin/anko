@@ -23,7 +23,7 @@ import java.util.HashMap
 
 public open class TestGeneratorConfiguration : GeneratorConfiguration() {
     public val tmpFiles: Map<KoanFile, File> =
-        KoanFile.values().toList().toMap { it to File.createTempFile(it.filename, ".kt") }
+        KoanFile.values().map { it to File.createTempFile(it.filename, ".kt") }.toMap()
 
     override fun getOutputFile(koanFile: KoanFile): File {
         return tmpFiles[koanFile]!!

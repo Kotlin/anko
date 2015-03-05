@@ -17,8 +17,8 @@
 package org.jetbrains.android.dsl
 
 import java.io.File
-import org.jetbrains.android.dsl.utils.DirectoryFilter
-import org.jetbrains.android.dsl.utils.JarFilter
+import org.jetbrains.android.dsl.utils.AndroidVersionDirectoryFilter
+import org.jetbrains.android.dsl.utils.JarFileFilter
 
 fun main(args: Array<String>) {
     if (args.size() > 0) {
@@ -68,10 +68,10 @@ private fun getVersions(): Array<File> {
     if (!original.exists() || !original.isDirectory()) {
         throw RuntimeException("\"original\" directory does not exist.")
     }
-    return original.listFiles(DirectoryFilter()) ?: array<File>()
+    return original.listFiles(AndroidVersionDirectoryFilter()) ?: array<File>()
 }
 
-private fun getJars(version: File) = version.listFiles(JarFilter())
+private fun getJars(version: File) = version.listFiles(JarFileFilter())
 
 private fun gen() {
     for (version in getVersions()) {

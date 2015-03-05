@@ -3,7 +3,6 @@ package org.jetbrains.android.generator.test
 import java.io.File
 import org.jetbrains.android.dsl.KoanFile
 import org.jetbrains.android.dsl.ConfigurationTune
-import org.jetbrains.android.dsl.writeFile
 import org.jetbrains.android.dsl.utils.Buffer
 
 public fun Context.generate() {

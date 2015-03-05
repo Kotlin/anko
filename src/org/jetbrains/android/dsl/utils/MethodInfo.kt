@@ -22,87 +22,58 @@ import java.util.ArrayList
 import org.objectweb.asm.tree.LocalVariableNode
 import java.util.HashMap
 
-val MethodNode.arguments: Array<Type>?
-    get() = Type.getArgumentTypes(desc)
-
-fun genericTypeToStr(param: GenericType): String {
-    var res = StringBuilder()
-    res append when(param.classifier) {
-        is ToplevelClass -> cleanInternalName((param.classifier as ToplevelClass).internalName)
-        is BaseType -> Type.getType("${(param.classifier as BaseType).descriptor}").toStr()
-        else -> return "" //throw DSLGeneratorException("Unexpected classifier of generic type: ${param.classifier}")
-    }
-    if (param.arguments.size > 0) {
-        res append "<"
-        for (arg in param.arguments) {
-            res append when(arg) {
-                is UnBoundedWildcard -> "*"
-                is NoWildcard -> genericTypeToStr(arg.genericType)
-                is BoundedWildcard ->
-                    return when(arg.wildcard) {
-                        Wildcard.EXTENDS -> "out ${genericTypeToStr(arg.bound)}"
-                        Wildcard.SUPER -> "in ${genericTypeToStr(arg.bound)}"
-                    }
-                else -> throw RuntimeException("Unexpected generic argument type: $arg")
-            }
-            res append ", "
-        }
-        res.delete(res.size - 2, res.size)
-        res append ">"
-    }
-    if (param.classifier is ToplevelClass) res append "?"
-    return res.toString()
-}
-
-fun MethodNode.buildKotlinSignature(): List<String> {
-    if (signature == null)
-        return listOf()
-    val parsed = parseGenericMethodSignature(signature)
-    return parsed.valueParameters.map { genericTypeToStr(it.genericType) }
-}
-
-fun MethodNode.processArguments(skipType: String = "",  app: (argName: String, argType: String, nullable: String) -> String): String {
-    if (getArgumentCount() == 0)
-        return ""
-    val locals = if (localVariables == null || localVariables.isEmpty())
-        HashMap<Int, LocalVariableNode>()
-    else
-        localVariables.toMap { a -> a.index to a }
-    val buf = StringBuffer()
-    var argNum = 0
-    var nameIndex = if (isStatic()) 0 else 1
-    val genericArgs = buildKotlinSignature()
-    for (arg in arguments!!) {
-        val argType = arg.toStr()
-        val nullable = if (argType.endsWith("?")) "!!" else ""
-        val local = locals[nameIndex]
-        val argName = local?.name ?: "p$argNum"
-        if (skipType != argType)
-            buf append app(argName, if(signature != null) genericArgs[argNum] else argType, nullable)
-        argNum++
-        nameIndex += arg.getSize()
-    }
-    if ( buf.size >= 2) buf.delete(buf.size - 2, buf.size)
-    return buf.toString()
-}
-
-fun MethodNode.fmtArguments(skipType: String = ""): String {
-    return processArguments(skipType) { name, _type, nul -> "$name: $_type, " }
-}
-
 private val specialLayoutParamsArguments = mapOf(
-    "width" to "android.view.ViewGroup.LayoutParams.WRAP_CONTENT",
-    "height" to "android.view.ViewGroup.LayoutParams.WRAP_CONTENT",
-    "w" to "android.view.ViewGroup.LayoutParams.WRAP_CONTENT",
-    "h" to "android.view.ViewGroup.LayoutParams.WRAP_CONTENT"
+        "width" to "android.view.ViewGroup.LayoutParams.WRAP_CONTENT",
+        "height" to "android.view.ViewGroup.LayoutParams.WRAP_CONTENT",
+        "w" to "android.view.ViewGroup.LayoutParams.WRAP_CONTENT",
+        "h" to "android.view.ViewGroup.LayoutParams.WRAP_CONTENT"
 )
 
 private val specialLayoutParamsNames = mapOf(
-    "w" to "width", "h" to "height"
+        "w" to "width", "h" to "height"
 )
 
-fun MethodNode.fmtLayoutParamsArguments(skipType: String = ""): String {
-    return processArguments(skipType) { name, _type, nul ->
+val MethodNode.args: Array<Type>
+    get() = Type.getArgumentTypes(desc)
+
+fun buildKotlinSignature(node: MethodNode): List<String> {
+    if (node.signature == null) return listOf()
+
+    val parsed = parseGenericMethodSignature(node.signature)
+    return parsed.valueParameters.map { genericTypeToStr(it.genericType) }
+}
+
+fun MethodNode.processArguments(template: (argName: String, argType: String, explicitNotNull: String) -> String): String {
+    if (args.isEmpty()) return ""
+
+    val locals = localVariables?.map { it.index to it }?.toMap() ?: hashMapOf()
+    val buffer = StringBuffer()
+    var argNum = 0
+    var nameIndex = if (isStatic) 0 else 1
+    val genericArgs = buildKotlinSignature(this)
+
+    for (arg in args) {
+        val argType = arg.asString()
+        val explicitNotNull = if (argType.endsWith("?")) "!!" else ""
+        val local = locals[nameIndex]
+        val argName = local?.name ?: "p$argNum"
+        if (argType.isNotEmpty()) {
+            buffer.append(template(argName, if (signature != null) genericArgs[argNum] else argType, explicitNotNull))
+        }
+        argNum++
+        nameIndex += arg.getSize()
+    }
+
+    if ( buffer.length() >= 2) buffer.delete(buffer.length() - 2, buffer.length())
+    return buffer.toString()
+}
+
+fun MethodNode.fmtArguments(): String {
+    return processArguments { name, _type, nul -> "$name: $_type, " }
+}
+
+fun MethodNode.fmtLayoutParamsArguments(): String {
+    return processArguments { name, _type, nul ->
         val defaultValue = specialLayoutParamsArguments.get(name)
         val realName = specialLayoutParamsNames.getOrElse(name, {name})
         if (defaultValue == null)
@@ -112,90 +83,56 @@ fun MethodNode.fmtLayoutParamsArguments(skipType: String = ""): String {
     }
 }
 
-fun MethodNode.fmtLayoutParamsArgumentsInvoke(skipType: String = ""): String {
-    return processArguments(skipType) { name, _type, nul ->
+fun MethodNode.fmtLayoutParamsArgumentsInvoke(): String {
+    return processArguments { name, _type, nul ->
         val realName = specialLayoutParamsNames.getOrElse(name, {name})
         "$realName$nul, "
     }
 }
 
-fun MethodNode.fmtArgumentsInvoke(skipType: String = ""): String {
-    return processArguments(skipType) { name, _type, nul -> "$name$nul, " }
+fun MethodNode.fmtArgumentsTypes(): String {
+    return processArguments { name, _type, nul -> "$_type, " }
 }
 
-fun MethodNode.fmtArgumentsTypes(skipType: String = ""): String {
-    return processArguments(skipType) { name, _type, nul -> "$_type, " }
+fun MethodNode.fmtArgumentsNames(): String {
+    return processArguments { name, _type, nul -> "$name, " }
 }
 
-fun MethodNode.fmtArgumentsNames(skipType: String = ""): String {
-    return processArguments(skipType) { name, _type, nul -> "$name, " }
-}
-
-fun MethodNode.isStatic(): Boolean {
-    return (access and Opcodes.ACC_STATIC) != 0
-}
 
 fun MethodNode.isGetter(): Boolean {
-    return (((name.startsWith("get") && name.size > 3 && Character.isUpperCase(name.charAt(3)))) ||
-        (name.startsWith("is") && name.size > 2 && Character.isUpperCase(name.charAt(2))) &&
-        arguments?.size() == 0 && (getReturnType().getSort() != Type.VOID))
+    val isNonBooleanGetter = name.startsWith("get") && name.length() > 3 && Character.isUpperCase(name.charAt(3))
+    val isBooleanGetter = name.startsWith("is") && name.length() > 2 && Character.isUpperCase(name.charAt(2))
+
+    return (isNonBooleanGetter || isBooleanGetter) && args.isEmpty() && !returnType.isVoid && isPublic
 }
 
-fun MethodNode.isSetter(): Boolean {
-    return ((name.startsWith("set") && name.size > 3) && arguments?.size() == 1)
+fun MethodNode.isNonListenerSetter(): Boolean {
+    val isSetter = name.startsWith("set") && name.length() > 3 && Character.isUpperCase(name.charAt(3))
+    return isSetter && !isListener && args.size() == 1 && isPublic
 }
 
-fun MethodNode.isProperty(): Boolean {
-    return ((name.startsWith("set") && name.size > 3) ||
-        (name.startsWith("get") && name.size > 3) ||
-        (name.startsWith("is") && name.size > 2))
-}
+val MethodNode.isConstructor: Boolean
+    get() = name == "<init>"
 
-fun MethodNode.isProperty(prop: String): Boolean {
-    if (!isProperty()) return false
-    return (name == "set" + capitalize(prop) ||
-        name == "get" + capitalize(prop) ||
-        name == "is" + capitalize(prop))
-}
+val MethodNode.isListener: Boolean
+    get() = name.startsWith("setOn") && name.endsWith("Listener")
 
-fun MethodNode.isConstructor(): Boolean {
-    return name == "<init>"
-}
+val MethodNode.isPublic: Boolean
+    get() = (access and Opcodes.ACC_PUBLIC) != 0
 
-fun MethodNode.isPublic(): Boolean {
-    return ((access and Opcodes.ACC_PUBLIC) != 0)
-}
+val MethodNode.isOverridden: Boolean
+    get() = (access and Opcodes.ACC_BRIDGE) != 0
 
-fun MethodNode.isGeneric(): Boolean {
-    return signature != null
-}
+val MethodNode.isStatic: Boolean
+    get() = (access and Opcodes.ACC_STATIC) != 0
 
-fun MethodNode.getArgumentCount(): Int {
-    //wtf !!
-    return if (arguments != null) arguments!!.size() else 0
-}
-
-fun MethodNode.getReturnType(): Type {
-    return Type.getReturnType(desc)
-}
+val MethodNode.returnType: Type
+    get() = Type.getReturnType(desc)
 
 fun MethodNode.renderReturnType(): String {
-    return if(signature != null) genericTypeToStr(parseGenericMethodSignature(signature).returnType)
-    else getReturnType().toStr()
-}
-
-fun MethodNode.toProperty(): String {
-    val tmp = if (name.startsWith("get") || name.startsWith("set"))
-        name.substring(3)
-    else
-        name.substring(2)
-    return decapitalize(tmp)
-}
-
-fun MethodNode.toCapitalizedProperty(): String {
-    val tmp = if (name.startsWith("get") || name.startsWith("set"))
-        name.substring(3)
-    else
-        name.substring(2)
-    return tmp
+    return if (signature != null) {
+        genericTypeToStr(parseGenericMethodSignature(signature).returnType)
+    } else {
+        returnType.asString()
+    }
 }
