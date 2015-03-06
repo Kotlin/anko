@@ -4,6 +4,7 @@ Kōan Advanced topics
 ## Contents
 
 * [Intents](#intents)
+* [Fragments](#fragments)
 * [Services](#services)
 * [Dialogs and toasts](#dialogs-and-toasts)
 * [Asynchronous tasks](#asynchronous-tasks)
@@ -13,7 +14,9 @@ Kōan Advanced topics
 
 ## Intents
 
-Even if you won't use the DSL to create UIs, Koan still has something to make your life easier. For example, it has call wrappers for some widely used `Intents`:
+### Useful intent callers
+
+Even if you won't use the DSL to create UI, Koan still has something to make your life easier. For example, it has call wrappers for some widely used `Intents`:
 
 Goal                | Solution
 --------------------|--------- 
@@ -23,19 +26,45 @@ Share some text     | `share(text, [subject])`
 Send a email        | `email(email, [subject], [text])`
 
 Arguments surrounded with `[]` are optional. Methods return true if the intent was sent.
-
-Also, this is how you can start an activity:
-```kotlin
-startActivity(javaClass<SomeActivity>())
 ```
 
-Or with arguments bundle:
+### Intent builder functions
+
+In Java you would make a new Activity intent like this:
+
+In general, you have to write a couple of lines to start a new `Activity`. And it requires you to write an additional line for each value you pass as an extra. For example, this is a code for starting an `Activity` with extra `(id, 5)` and a special flag:
+
 ```kotlin
-startActivity(javaClass<SomeActivity>(),
+val intent = Intent(this, javaClass<SomeOtherActivity>())
+intent.putExtra("id", 5)
+intent.setFlag(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+startActivity(intent)
+```
+
+Four lines is too much for this. Koan offers you an easier way:
+
+```kotlin
+startActivity(Intent<SomeOtherActivity>("id" to 5).singleTop())
+```
+
+If you don't need to pass any flags, the solution is even easier:
+
+```kotlin
+startActivity<SomeOtherActivity>("id" to 5)
+```
+
+## Fragments
+
+There's also a convenient arguments setter for a `Fragment` class:
+
+```kotlin
+class SomeFragment : Fragment()
+
+ ...
+
+SomeFragment().withArguments(
   "id" to 5,
-  "name" to "John",
-  "data" to someSerializable
-)
+  "name" to "John")
 ```
 
 ## Services
@@ -47,11 +76,11 @@ E.g. that's the Java way for obtaining an Android service instance:
 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)
 ```
 
-In Kotlin, it's just `notificationService`. The same as for `displayManager`, `sensorManager`, `locationManager` — bindings are available to all services, just try it out!
+In Kotlin, it's just `notificationService`. The same as for `displayManager`, `sensorManager`, `vibrator`, `layoutInflater` — bindings are available for all services, just try it out!
 
 ## Dialogs and toasts
 
-Koan provides an easy way to make toast notifications, alerts and selectors. All the functions desribed below can be executed from any thread.
+Koan provides an easy way to make `Toast` notifications, alerts and selectors. All the functions desribed below can be executed from any thread.
 
 ### Toasts
 
@@ -131,6 +160,14 @@ fun apiCall(): Result {
 }
 val future: Future<Result> = asyncResult(::apiCall)
 ```
+
+<table>
+<tr><td width="50px" align="center">:penguin:</td>
+<td>
+<i><code>uiThread()</code> acts quite differently for different classes. When called on <code>Activity</code>, code in lambda would not be executed if <code>isFinishing()</code> is <code>true</code>. Use <code>ctx.uiThread { }</code> if this is an unwanted result.</i>
+</td>
+</tr>
+</table>
 
 ## Logging
 
