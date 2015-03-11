@@ -93,11 +93,9 @@ public fun android.support.v4.app.Fragment.selector(
 
 
 /* SECTION ASYNC */
-public fun android.support.v4.app.Fragment.uiThread(f: () -> Unit): Unit = getActivity().uiThread(f)
+public fun android.support.v4.app.Fragment.async(task: KoanAsyncContext.() -> Unit): Future<Unit> = getActivity().async(task)
 
-public fun android.support.v4.app.Fragment.async(task: () -> Unit): Future<Unit> = getActivity().async(task)
-
-public fun android.support.v4.app.Fragment.async(executorService: ExecutorService, task: () -> Unit): Future<Unit> =
+public fun android.support.v4.app.Fragment.async(executorService: ExecutorService, task: KoanAsyncContext.() -> Unit): Future<Unit> =
     getActivity().async(executorService, task)
 
 public fun <T> android.support.v4.app.Fragment.asyncResult(task: () -> T): Future<T> = getActivity().asyncResult(task)

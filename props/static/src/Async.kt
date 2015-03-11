@@ -24,35 +24,34 @@ import android.os.Looper
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 import android.app.*
+import java.lang.ref.WeakReference
 
-public fun Fragment.uiThread(f: () -> Unit) {
-    getActivity().uiThread(f)
+public class KoanAsyncContext(val ctxReference: WeakReference<Context>)
+
+public fun KoanAsyncContext.uiThread(f: Context.() -> Unit) {
+    ctxReference.get()?.uiThread(f)
 }
 
-public fun Context.uiThread(f: () -> Unit) {
-    if (ContextHelper.uiThread == Thread.currentThread()) f() else ContextHelper.handler.post(Runnable(f))
+private fun Context.uiThread(f: Context.() -> Unit) {
+    if (ContextHelper.uiThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
 }
 
-public fun Activity.uiThread(f: () -> Unit) {
-    if (!isFinishing()) {
-        if (ContextHelper.uiThread == Thread.currentThread()) f() else ContextHelper.handler.post(Runnable(f))
-    }
-}
-
-public fun Fragment.async(task: () -> Unit): Future<Unit> {
+public fun Fragment.async(task: KoanAsyncContext.() -> Unit): Future<Unit> {
     return getActivity().async(task)
 }
 
-public fun Fragment.async(executorService: ExecutorService, task: () -> Unit): Future<Unit> {
-    return executorService.submit<Unit> { task() }
+public fun Fragment.async(executorService: ExecutorService, task: KoanAsyncContext.() -> Unit): Future<Unit> {
+    return getActivity().async(executorService, task)
 }
 
-public fun Context.async(task: () -> Unit): Future<Unit> {
-    return BackgroundExecutor.execute(task)
+public fun Context.async(task: KoanAsyncContext.() -> Unit): Future<Unit> {
+    val context = KoanAsyncContext(WeakReference(this))
+    return BackgroundExecutor.submit { context.task() }
 }
 
-public fun Context.async(executorService: ExecutorService, task: () -> Unit): Future<Unit> {
-    return executorService.submit<Unit> { task() }
+public fun Context.async(executorService: ExecutorService, task: KoanAsyncContext.() -> Unit): Future<Unit> {
+    val context = KoanAsyncContext(WeakReference(this))
+    return executorService.submit<Unit> { context.task() }
 }
 
 public fun <T> Fragment.asyncResult(task: () -> T): Future<T> {
