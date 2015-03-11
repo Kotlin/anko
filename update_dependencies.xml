@@ -14,8 +14,8 @@
         <get src="http://search.maven.org/remotecontent?filepath=junit/junit/4.11/junit-4.11.jar"
              dest="lib/junit-4.11.jar" usetimestamp="true"/>
 
-        <get src="https://teamcity.jetbrains.com/repository/download/bt345/392785:id/kotlin-compiler-0.10.770.zip"
-             dest="lib/kotlinc.zip" username="guest" password="guest" usetimestamp="true"/>
+        <get src="https://github.com/JetBrains/kotlin/releases/download/build-0.10.195/kotlin-compiler-0.10.195.zip"
+             dest="lib/kotlinc.zip" usetimestamp="true"/>
 
         <get src="http://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-all/1.3/hamcrest-all-1.3.jar"
              dest="lib/hamcrest-all-1.3.jar" usetimestamp="true"/>

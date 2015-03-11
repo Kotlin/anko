@@ -21,7 +21,7 @@ object HierarchyCollector {
         val androidJar = ver.listFiles { it.name == "android.jar" }!!.first().getAbsolutePath()
 
         val classTree = ClassProcessor(listOf(androidJar)).genClassTree()
-        val viewClasses = classTree.filter { it.isView(classTree) && !it.isInner() && it.name.startsWith("android/widget/") }
+        val viewClasses = classTree.filter { it.isView(classTree) && !it.isInner && it.name.startsWith("android/widget/") }
 
         val hierarchy = viewClasses.map {
             it.name.prettify() to getSuperViews(it, classTree)
