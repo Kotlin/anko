@@ -137,7 +137,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
             val (mainClass, ancestor, innerClass) = it
             val probInterfaceName = innerClass!!.innerName
             val conflict = generator.interfaceWorkarounds.count { it.third!!.innerName == probInterfaceName } > 1
-            val interfaceName = (if (conflict) mainClass.simpleName + "_" else "") + probInterfaceName
+            val interfaceName = (if (conflict) innerClass.outerName.substringAfterLast("/") + "_" else "") + probInterfaceName
             val ancestorName = ancestor!!.fqName
 
             buffer(1) {
