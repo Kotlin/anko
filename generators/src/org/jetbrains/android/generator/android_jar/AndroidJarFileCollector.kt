@@ -93,4 +93,23 @@ object AndroidJarCollector {
         }
         println("Complete.")
     }
+
+    private inline fun <R> ZipFile.use(block: (ZipFile) -> R): R {
+        var closed = false
+        try {
+            return block(this)
+        } catch (e: Exception) {
+            closed = true
+            try {
+                this.close()
+            }
+            catch (closeException: Exception) {}
+            throw e
+        } finally {
+            if (!closed) {
+                this.close()
+            }
+        }
+    }
+
 }
