@@ -333,8 +333,8 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
             groupBy.joinToString(", "), having, orderBy.joinToString(", "), limit)
     }
 
-    fun distinct(distinct: Boolean): SelectQueryBuilder {
-        this.distinct = distinct
+    fun distinct(): SelectQueryBuilder {
+        this.distinct = true
         return this
     }
 
