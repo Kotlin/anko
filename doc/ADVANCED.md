@@ -80,7 +80,7 @@ In Kotlin, it's just `notificationService`. The same as for `displayManager`, `s
 
 ## Dialogs and toasts
 
-Koan provides an easy way to make `Toast` notifications, alerts and selectors. All the functions desribed below can be executed from any thread.
+Koan provides an easy way to make `Toast` notifications, alerts and selectors.
 
 ### Toasts
 
@@ -131,15 +131,6 @@ async {
   uiThread {
     result.text = "Done"
   }
-}
-```
-
-Also, as mentioned above, Koan toasts and dialogs are always executed in main thread, so there's no need in `uiThread {}`:
-
-```kotlin
-async {
-  // Another long background task
-  toast("Done!")
 }
 ```
 

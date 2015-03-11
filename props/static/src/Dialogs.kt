@@ -33,22 +33,22 @@ import android.app.ProgressDialog
 
 public fun Fragment.toast(textResource: Int): Unit = ctx.toast(textResource)
 public fun Context.toast(textResource: Int) {
-    uiThread { Toast.makeText(this, textResource, Toast.LENGTH_SHORT).show() }
+    Toast.makeText(this, textResource, Toast.LENGTH_SHORT).show()
 }
 
 public fun Fragment.toast(text: CharSequence): Unit = ctx.toast(text)
 public fun Context.toast(text: CharSequence) {
-    uiThread { Toast.makeText(this, text, Toast.LENGTH_SHORT).show() }
+    Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 }
 
 public fun Fragment.longToast(textResource: Int): Unit = ctx.longToast(textResource)
 public fun Context.longToast(textResource: Int) {
-    uiThread { Toast.makeText(this, textResource, Toast.LENGTH_LONG).show() }
+    Toast.makeText(this, textResource, Toast.LENGTH_LONG).show()
 }
 
 public fun Fragment.longToast(text: CharSequence): Unit = ctx.longToast(text)
 public fun Context.longToast(text: CharSequence) {
-    uiThread { Toast.makeText(this, text, Toast.LENGTH_LONG).show() }
+    Toast.makeText(this, text, Toast.LENGTH_LONG).show()
 }
 
 private val defaultOnCancel = {}
@@ -115,13 +115,11 @@ public fun Context.selector(
     items: List<CharSequence>,
     onCancel: () -> Unit = defaultOnCancel,
     onClick: (Int) -> Unit) {
-    uiThread {
-        AlertDialogBuilder(this) {
-            title(title)
-            items(items, onClick)
-            onCancel(onCancel)
-        }.show()
-    }
+    AlertDialogBuilder(this) {
+        title(title)
+        items(items, onClick)
+        onCancel(onCancel)
+    }.show()
 }
 
 public class AlertDialogBuilder(val ctx: Context, val init: AlertDialogBuilder.() -> Unit = defaultInit) {
@@ -138,7 +136,7 @@ public class AlertDialogBuilder(val ctx: Context, val init: AlertDialogBuilder.(
 
     public fun show(): AlertDialogBuilder {
         dialog = builder.create()
-        ctx.uiThread { dialog!!.show() }
+        dialog!!.show()
         return this
     }
 
