@@ -140,7 +140,7 @@ repositories {
 
 dependencies {
   ...
-  compile 'org.jetbrains.kotlin:koan-15:0.3'
+  compile 'org.jetbrains.kotlin:koan-15:0.3.1'
 }
 ```
 
