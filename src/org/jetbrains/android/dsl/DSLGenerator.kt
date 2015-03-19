@@ -70,8 +70,10 @@ class DSLGenerator(
             copy("gradle/wrapper/gradle-wrapper.properties")
 
             //copy gradle build files
-            copy("gradle.properties") { it.replace("%FVERSION%", fVersion) }
-            copy("build.gradle") { it.replace("%VERSION%", sVersion) }
+            copy("gradle.properties") { it.substVersions() }
+            copy("build.gradle") { it.substVersions() }
         }
     }
+
+    private fun String.substVersions() = replace("%VERSION%", sVersion).replace("%FVERSION%", fVersion)
 }

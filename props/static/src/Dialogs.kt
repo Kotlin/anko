@@ -126,7 +126,7 @@ public class AlertDialogBuilder(val ctx: Context, val init: AlertDialogBuilder.(
     private val builder: AlertDialog.Builder = AlertDialog.Builder(ctx)
     protected var dialog: AlertDialog? = null;
 
-    {
+    init {
         init()
     }
 

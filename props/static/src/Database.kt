@@ -141,7 +141,7 @@ private fun escape(s: String): String {
 private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^\\{}]+)\\}")
 
 private fun applyArguments(whereClause: String, vararg args: Pair<String, Any>): String {
-    val argsMap = args.fold(hashMapOf<String, Any>()) { (map, arg) ->
+    val argsMap = args.fold(hashMapOf<String, Any>()) { map, arg ->
         map.put(arg.first, arg.second)
         map
     }
@@ -242,7 +242,7 @@ public class UpdateQueryBuilder(val db: SQLiteDatabase, val tableName: String, v
 
         selectionApplied = true
         useNativeSelection = false
-        val argsMap = args.fold(hashMapOf<String, Any>()) { (map, arg) ->
+        val argsMap = args.fold(hashMapOf<String, Any>()) { map, arg ->
             map.put(arg.first, arg.second)
             map
         }

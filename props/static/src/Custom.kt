@@ -91,14 +91,14 @@ public fun Fragment.px2sp(px: Int): Float = ctx.px2sp(px)
 
 
 /* SECTION CUSTOM VIEWS */
-private val verticalLayoutFactory = { (ctx: Context) ->
+private val verticalLayoutFactory = { ctx: Context ->
     val v = _LinearLayout(ctx)
     v.setOrientation(LinearLayout.VERTICAL)
     v
 }
 
 [suppress("UNCHECKED_CAST")]
-private fun <T: View> inflaterFactory(layoutId: Int) = { (ctx: Context) ->
+private fun <T: View> inflaterFactory(layoutId: Int) = { ctx: Context ->
     ctx.layoutInflater.inflate(layoutId, null) as T
 }
 
@@ -131,8 +131,8 @@ public fun <T: View> Activity.include(layoutId: Int, init: T.() -> Unit): T =
 /* SECTION CUSTOM LISTENERS */
 class __EditText_addTextChangedListener_EditText_TextWatcher(val v: TextView): ListenerHelper {
     var _afterTextChanged: ((Editable) -> Unit) = { s -> }
-    var _beforeTextChanged: ((CharSequence, Int, Int, Int) -> Unit) = { (a, b, c, d) -> }
-    var _onTextChanged: ((CharSequence, Int, Int, Int) -> Unit) = { (a, b, c, d) -> }
+    var _beforeTextChanged: ((CharSequence, Int, Int, Int) -> Unit) = { a, b, c, d -> }
+    var _onTextChanged: ((CharSequence, Int, Int, Int) -> Unit) = { a, b, c, d -> }
 
     override fun apply() {
         v.addTextChangedListener(object : TextWatcher {

@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '0.10.195'
+    ext.kotlin_version = '0.11.91'
     repositories {
         mavenCentral()
     }
@@ -30,7 +30,7 @@ dependencies {
         mavenCentral()
     }
 
-    compile 'com.android.support:support-v4:21.0.3'
+    compile fileTree(dir: '../../original/%FVERSION%', include: ['*.jar'])
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
