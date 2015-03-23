@@ -1,9 +1,9 @@
-Kōan :heart: SQLite
+Anko :heart: SQLite
 ===========
 
 Have you ever been tired of parsing SQLite query results using Android cursors? It required you to write lots of boilerplate code enclosed in countless try..finally blocks to close all the resources properly.
 
-Koan provides lots of different functions to simplify communication with SQLite database.
+Anko provides lots of different functions to simplify communication with SQLite database.
 
 ## Contents
 
@@ -20,17 +20,17 @@ Koan provides lots of different functions to simplify communication with SQLite 
 
 ## Db package
 
-All database-related tools are in the `kotlinx.android.koan.db` package. You could just import all children in one time:
+All database-related tools are in the `kotlinx.android.anko.db` package. You could just import all children in one time:
 
 ```kotlin
-import kotlinx.android.koan.db.*
+import kotlinx.android.anko.db.*
 ```
 
 ## Accessing database
 
 If you use `SQLiteOpenHelper`, you could just call method `getReadableDatabase()` or `getWritableDatabase()` (result is actually the same in production code), but then you must be sure to call `close()` on the received `SQLiteDatabase`, and you have to cache the helper class somewhere, and if you use it from several threads, you must be aware of proper open-close concurrent access. It's tough. That's why Android developers not really keen on default SQLite API.
 
-Koan provides a special class `ManagedSQLiteOpenHelper` that seamlessly replaces the default one. That's how you can use it:
+Anko provides a special class `ManagedSQLiteOpenHelper` that seamlessly replaces the default one. That's how you can use it:
 
 ```kotlin
 class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyDatabase", null, 1) {
@@ -99,7 +99,7 @@ class SomeActivity : Activity() {
 
 ## Creating and dropping tables
 
-With Koan you can easily create new tables and drop existing. Syntax is straightforward.
+With Anko you can easily create new tables and drop existing. Syntax is straightforward.
 
 Let's create a sample `Customer` table:
 
@@ -137,7 +137,7 @@ values.put("email", "user@domain.org")
 db.insert("User", null, values)
 ```
 
-Koan lets you to eliminate ceremonies by writing values directly in `insert()` function:
+Anko lets you to eliminate ceremonies by writing values directly in `insert()` function:
 
 ```kotlin
 db.insert("User", 
@@ -151,7 +151,7 @@ Functions `insertOrThrow()`, `replace()`, `replaceOrThrow()` are also exist.
 
 ## Querying data
 
-Koan provides a convenient query builder. It may be created with
+Anko provides a convenient query builder. It may be created with
 `db.select(tableName, vararg columns)` where `db` is an instance of `SQLiteDatabase`.
 
 Method                                | Description
@@ -191,7 +191,7 @@ db.select("User", "email").exec {
 
 ## Parsing query result
 
-So we're got some `Cursor`, how can we parse it? Fortunately, Koan provides functions `parseSingle`, `parseOpt` and `parseList`.
+So we're got some `Cursor`, how can we parse it? Fortunately, Anko provides functions `parseSingle`, `parseOpt` and `parseList`.
 
 Method                                | Description
 --------------------------------------|---------- 
@@ -217,7 +217,7 @@ If you want to be very efficient, use RowParser (but then you must know the inde
 
 `MapRowParser` is more convenient way to parse. Each map key is a column name.
 
-Koan already contains parsers for single-column rows:
+Anko already contains parsers for single-column rows:
 
 * `ShortParser`
 * `IntParser`
@@ -239,9 +239,9 @@ you can create a parser of (String, String, Int) row this way:
 val rowParser = classParser<Person>()
 ```
 
-For now Koan **does not support** creating such parsers with optional arguments. Also note that constructor will be invoked using Java Reflection so writing a custom `RowParser` is more reasonable for really huge data sets.
+For now Anko **does not support** creating such parsers with optional arguments. Also note that constructor will be invoked using Java Reflection so writing a custom `RowParser` is more reasonable for really huge data sets.
 
-If you're using Koan `db.select()` builder, you can directly call `parseSingle`, `parseOpt` or `parseList` on it.
+If you're using Anko `db.select()` builder, you can directly call `parseSingle`, `parseOpt` or `parseList` on it.
 
 ## Custom row parsers
 
@@ -267,7 +267,7 @@ val parser = rowParser { (id: Int, name: String, email: String) ->
 
 ## Cursor streams
 
-Koan provides a way to access SQLite `Cursor` in functional way. Just call `cursor.stream()` or `cursor.mapStream()` extension methods to get a `kotlin.Stream`. Also do not forget to close a `Cursor`.
+Anko provides a way to access SQLite `Cursor` in functional way. Just call `cursor.stream()` or `cursor.mapStream()` extension methods to get a `kotlin.Stream`. Also do not forget to close a `Cursor`.
 
 ## Updating values
 

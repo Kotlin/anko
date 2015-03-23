@@ -1,4 +1,4 @@
-Kōan Advanced topics
+Anko Advanced topics
 ===========
 
 ## Contents
@@ -10,13 +10,13 @@ Kōan Advanced topics
 * [Asynchronous tasks](#asynchronous-tasks)
 * [Logging](#logging)
 * [Using SQLite](#using-sqlite)
-* [Extending Koan](#extending-koan)
+* [Extending Anko](#extending-anko)
 
 ## Intents
 
 ### Useful intent callers
 
-Even if you won't use the DSL to create UI, Koan still has something to make your life easier. For example, it has call wrappers for some widely used `Intents`:
+Even if you won't use the DSL to create UI, Anko still has something to make your life easier. For example, it has call wrappers for some widely used `Intents`:
 
 Goal                | Solution
 --------------------|--------- 
@@ -41,7 +41,7 @@ intent.setFlag(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 startActivity(intent)
 ```
 
-Four lines is too much for this. Koan offers you an easier way:
+Four lines is too much for this. Anko offers you an easier way:
 
 ```kotlin
 startActivity(Intent<SomeOtherActivity>("id" to 5).singleTop())
@@ -69,7 +69,7 @@ SomeFragment().withArguments(
 
 ## Services
 
-With Koan you can get handy access to many Android services.
+With Anko you can get handy access to many Android services.
 
 E.g. that's the Java way for obtaining an Android service instance:
 ```java
@@ -80,7 +80,7 @@ In Kotlin, it's just `notificationService`. The same as for `displayManager`, `s
 
 ## Dialogs and toasts
 
-Koan provides an easy way to make `Toast` notifications, alerts and selectors.
+Anko provides an easy way to make `Toast` notifications, alerts and selectors.
 
 ### Toasts
 
@@ -162,10 +162,10 @@ val future: Future<Result> = asyncResult(::apiCall)
 
 ## Logging
 
-Android SDK provides `android.util.Log` class which has some logging methods. Usage is pretty straightforward though the methods require you to pass a `tag` argument. You can elimintate this with using `KoanLogger` trait:
+Android SDK provides `android.util.Log` class which has some logging methods. Usage is pretty straightforward though the methods require you to pass a `tag` argument. You can elimintate this with using `AnkoLogger` trait:
 
 ```kotlin
-class SomeActivity : Activity(), KoanLogger {
+class SomeActivity : Activity(), AnkoLogger {
   private fun someMethod() {
     info("London is the capital of Great Britain")
     debug(5) // .toString() method will be executed
@@ -174,7 +174,7 @@ class SomeActivity : Activity(), KoanLogger {
 }
 ```
 
-android.util.Log  | KoanLogger
+android.util.Log  | AnkoLogger
 ------------------|------------
 `v()`             | `verbose()`
 `d()`             | `debug()`
@@ -198,7 +198,7 @@ Lambda result will be calculated only if `Log.isLoggable(tag, Log.INFO)` is `tru
 
 Please refer to [Using SQLite](SQLITE.md) document for details.
 
-## Extending Koan
+## Extending Anko
 
 Let's say, `CustomView` is your custom `View` class name, and `customView` is what you want to write in the DSL.
 
