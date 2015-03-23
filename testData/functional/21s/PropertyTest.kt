@@ -842,7 +842,7 @@ public var android.widget.CalendarView.selectedDateVerticalBar: android.graphics
   get() = getSelectedDateVerticalBar()
   set(v) = setSelectedDateVerticalBar(v)
 public var android.widget.CalendarView.selectedDateVerticalBarResource: Int
-  get() = throw KoanException("'android.widget.CalendarView.selectedDateVerticalBarResource' property doesn't have a getter")
+  get() = throw AnkoException("'android.widget.CalendarView.selectedDateVerticalBarResource' property doesn't have a getter")
   set(v) = setSelectedDateVerticalBar(v)
 
 public var android.widget.CalendarView.selectedWeekBackgroundColor: Int
@@ -881,7 +881,7 @@ public var android.widget.CheckedTextView.checkMarkDrawable: android.graphics.dr
   get() = getCheckMarkDrawable()
   set(v) = setCheckMarkDrawable(v)
 public var android.widget.CheckedTextView.checkMarkDrawableResource: Int
-  get() = throw KoanException("'android.widget.CheckedTextView.checkMarkDrawableResource' property doesn't have a getter")
+  get() = throw AnkoException("'android.widget.CheckedTextView.checkMarkDrawableResource' property doesn't have a getter")
   set(v) = setCheckMarkDrawable(v)
 
 public var android.widget.CheckedTextView.checkMarkTintList: android.content.res.ColorStateList?
@@ -1589,7 +1589,7 @@ public var android.widget.TextView.hint: CharSequence?
   get() = getHint()
   set(v) = setHint(v)
 public var android.widget.TextView.hintResource: Int
-  get() = throw KoanException("'android.widget.TextView.hintResource' property doesn't have a getter")
+  get() = throw AnkoException("'android.widget.TextView.hintResource' property doesn't have a getter")
   set(v) = setHint(v)
 
 public val android.widget.TextView.hintTextColors: android.content.res.ColorStateList?
@@ -1720,7 +1720,7 @@ public var android.widget.TextView.text: CharSequence?
   get() = getText()
   set(v) = setText(v)
 public var android.widget.TextView.textResource: Int
-  get() = throw KoanException("'android.widget.TextView.textResource' property doesn't have a getter")
+  get() = throw AnkoException("'android.widget.TextView.textResource' property doesn't have a getter")
   set(v) = setText(v)
 
 public val android.widget.TextView.textColors: android.content.res.ColorStateList?
@@ -1816,14 +1816,14 @@ public var android.widget.Toolbar.logo: android.graphics.drawable.Drawable?
   get() = getLogo()
   set(v) = setLogo(v)
 public var android.widget.Toolbar.logoResource: Int
-  get() = throw KoanException("'android.widget.Toolbar.logoResource' property doesn't have a getter")
+  get() = throw AnkoException("'android.widget.Toolbar.logoResource' property doesn't have a getter")
   set(v) = setLogo(v)
 
 public var android.widget.Toolbar.logoDescription: CharSequence?
   get() = getLogoDescription()
   set(v) = setLogoDescription(v)
 public var android.widget.Toolbar.logoDescriptionResource: Int
-  get() = throw KoanException("'android.widget.Toolbar.logoDescriptionResource' property doesn't have a getter")
+  get() = throw AnkoException("'android.widget.Toolbar.logoDescriptionResource' property doesn't have a getter")
   set(v) = setLogoDescription(v)
 
 public val android.widget.Toolbar.menu: android.view.Menu?
@@ -1833,14 +1833,14 @@ public var android.widget.Toolbar.navigationContentDescription: CharSequence?
   get() = getNavigationContentDescription()
   set(v) = setNavigationContentDescription(v)
 public var android.widget.Toolbar.navigationContentDescriptionResource: Int
-  get() = throw KoanException("'android.widget.Toolbar.navigationContentDescriptionResource' property doesn't have a getter")
+  get() = throw AnkoException("'android.widget.Toolbar.navigationContentDescriptionResource' property doesn't have a getter")
   set(v) = setNavigationContentDescription(v)
 
 public var android.widget.Toolbar.navigationIcon: android.graphics.drawable.Drawable?
   get() = getNavigationIcon()
   set(v) = setNavigationIcon(v)
 public var android.widget.Toolbar.navigationIconResource: Int
-  get() = throw KoanException("'android.widget.Toolbar.navigationIconResource' property doesn't have a getter")
+  get() = throw AnkoException("'android.widget.Toolbar.navigationIconResource' property doesn't have a getter")
   set(v) = setNavigationIcon(v)
 
 public var android.widget.Toolbar.popupTheme: Int
@@ -1851,14 +1851,14 @@ public var android.widget.Toolbar.subtitle: CharSequence?
   get() = getSubtitle()
   set(v) = setSubtitle(v)
 public var android.widget.Toolbar.subtitleResource: Int
-  get() = throw KoanException("'android.widget.Toolbar.subtitleResource' property doesn't have a getter")
+  get() = throw AnkoException("'android.widget.Toolbar.subtitleResource' property doesn't have a getter")
   set(v) = setSubtitle(v)
 
 public var android.widget.Toolbar.title: CharSequence?
   get() = getTitle()
   set(v) = setTitle(v)
 public var android.widget.Toolbar.titleResource: Int
-  get() = throw KoanException("'android.widget.Toolbar.titleResource' property doesn't have a getter")
+  get() = throw AnkoException("'android.widget.Toolbar.titleResource' property doesn't have a getter")
   set(v) = setTitle(v)
 
 public val android.widget.Toolbar.overflowMenuShowing: Boolean

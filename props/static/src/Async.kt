@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.koan
+package kotlinx.android.anko
 
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -26,9 +26,9 @@ import java.util.concurrent.Future
 import android.app.*
 import java.lang.ref.WeakReference
 
-public class KoanAsyncContext(val ctxReference: WeakReference<Context>)
+public class AnkoAsyncContext(val ctxReference: WeakReference<Context>)
 
-public fun KoanAsyncContext.uiThread(f: Context.() -> Unit) {
+public fun AnkoAsyncContext.uiThread(f: Context.() -> Unit) {
     ctxReference.get()?.uiThread(f)
 }
 
@@ -36,21 +36,21 @@ private fun Context.uiThread(f: Context.() -> Unit) {
     if (ContextHelper.uiThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
 }
 
-public fun Fragment.async(task: KoanAsyncContext.() -> Unit): Future<Unit> {
+public fun Fragment.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> {
     return getActivity().async(task)
 }
 
-public fun Fragment.async(executorService: ExecutorService, task: KoanAsyncContext.() -> Unit): Future<Unit> {
+public fun Fragment.async(executorService: ExecutorService, task: AnkoAsyncContext.() -> Unit): Future<Unit> {
     return getActivity().async(executorService, task)
 }
 
-public fun Context.async(task: KoanAsyncContext.() -> Unit): Future<Unit> {
-    val context = KoanAsyncContext(WeakReference(this))
+public fun Context.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> {
+    val context = AnkoAsyncContext(WeakReference(this))
     return BackgroundExecutor.submit { context.task() }
 }
 
-public fun Context.async(executorService: ExecutorService, task: KoanAsyncContext.() -> Unit): Future<Unit> {
-    val context = KoanAsyncContext(WeakReference(this))
+public fun Context.async(executorService: ExecutorService, task: AnkoAsyncContext.() -> Unit): Future<Unit> {
+    val context = AnkoAsyncContext(WeakReference(this))
     return executorService.submit<Unit> { context.task() }
 }
 

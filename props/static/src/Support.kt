@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.koan
+package kotlinx.android.anko
 
 import android.app.Activity
 import android.app.Fragment
@@ -25,7 +25,7 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
-import kotlinx.android.koan.internals.__internalStartActivity
+import kotlinx.android.anko.internals.__internalStartActivity
 import android.content.Intent
 
 /* SECTION HELPERS */
@@ -93,9 +93,9 @@ public fun android.support.v4.app.Fragment.selector(
 
 
 /* SECTION ASYNC */
-public fun android.support.v4.app.Fragment.async(task: KoanAsyncContext.() -> Unit): Future<Unit> = getActivity().async(task)
+public fun android.support.v4.app.Fragment.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> = getActivity().async(task)
 
-public fun android.support.v4.app.Fragment.async(executorService: ExecutorService, task: KoanAsyncContext.() -> Unit): Future<Unit> =
+public fun android.support.v4.app.Fragment.async(executorService: ExecutorService, task: AnkoAsyncContext.() -> Unit): Future<Unit> =
     getActivity().async(executorService, task)
 
 public fun <T> android.support.v4.app.Fragment.asyncResult(task: () -> T): Future<T> = getActivity().asyncResult(task)

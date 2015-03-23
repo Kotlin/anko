@@ -1,7 +1,7 @@
 package org.jetbrains.android.generator.android_jar
 
 import java.io.*
-import org.jetbrains.android.dsl.utils.*
+import org.jetbrains.android.anko.utils.*
 import java.util.zip.*
 import java.util.regex.*
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.koan
+package kotlinx.android.anko
 
 import android.content.Context
 import android.view.ViewGroup
@@ -24,7 +24,7 @@ import android.app.Activity
 import android.app.Fragment
 import java.util.HashMap
 
-public class KoanException(message: String = "") : RuntimeException(message)
+public class AnkoException(message: String = "") : RuntimeException(message)
 
 private data class ViewProps(var listeners: HashMap<String, ListenerHelper>, var realTag: Any? = null)
 
@@ -77,7 +77,7 @@ private fun <T : View> addView(v: T, init: T.() -> Unit, manager: ViewManager): 
     when (manager) {
         is ViewGroup -> manager.addView(v)
         is UiHelper -> manager.addView(v)
-        else -> throw KoanException("$manager is the wrong parent")
+        else -> throw AnkoException("$manager is the wrong parent")
     }
     return v
 }
@@ -113,7 +113,7 @@ private val ViewManager.dslContext: Context
         return when (this) {
             is ViewGroup -> this.getContext()
             is UiHelper -> this.ctx
-            else -> throw KoanException("$this is the wrong parent")
+            else -> throw AnkoException("$this is the wrong parent")
         }
     }
 

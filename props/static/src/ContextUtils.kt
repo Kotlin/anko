@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.koan
+package kotlinx.android.anko
 
 import android.content.Intent
 import android.content.Context
@@ -26,7 +26,7 @@ import android.app.Fragment
 import android.os.Bundle
 import android.net.Uri
 import java.io.Serializable
-import kotlinx.android.koan.internals.__internalStartActivity
+import kotlinx.android.anko.internals.__internalStartActivity
 import android.os.Parcelable
 
 public val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
@@ -166,7 +166,7 @@ private fun Bundle(vararg params: Pair<String, Any>): Bundle {
             is Array<CharSequence> -> b.putCharSequenceArray(k, v)
             is Array<String> -> b.putStringArray(k, v)
             is Bundle -> b.putBundle(k, v)
-            else -> throw KoanException("Unsupported bundle component (${v.javaClass})")
+            else -> throw AnkoException("Unsupported bundle component (${v.javaClass})")
         }
     }
 

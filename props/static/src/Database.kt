@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package kotlinx.android.koan.db
+package kotlinx.android.anko.db
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import android.database.Cursor
 import java.util.regex.Pattern
-import kotlinx.android.koan.*
+import kotlinx.android.anko.*
 import android.database.sqlite.SQLiteOpenHelper
-import kotlinx.android.koan.internals.useDatabase
-import kotlinx.android.koan.internals.useCursor
+import kotlinx.android.anko.internals.useDatabase
+import kotlinx.android.anko.internals.useCursor
 import java.util.concurrent.atomic.AtomicInteger
 import android.content.Context
 
@@ -237,7 +237,7 @@ public class UpdateQueryBuilder(val db: SQLiteDatabase, val tableName: String, v
 
     public fun where(select: String, vararg args: Pair<String, Any>): UpdateQueryBuilder {
         if (selectionApplied) {
-            throw KoanException("Query selection was already applied.")
+            throw AnkoException("Query selection was already applied.")
         }
 
         selectionApplied = true
@@ -252,7 +252,7 @@ public class UpdateQueryBuilder(val db: SQLiteDatabase, val tableName: String, v
 
     public fun where(select: String): UpdateQueryBuilder {
         if (selectionApplied)
-            throw KoanException("Query selection was already applied.")
+            throw AnkoException("Query selection was already applied.")
 
         selectionApplied = true
         useNativeSelection = false
@@ -262,7 +262,7 @@ public class UpdateQueryBuilder(val db: SQLiteDatabase, val tableName: String, v
 
     public fun whereSupport(select: String, vararg args: String): UpdateQueryBuilder {
         if (selectionApplied)
-            throw KoanException("Query selection was already applied.")
+            throw AnkoException("Query selection was already applied.")
 
         selectionApplied = true
         useNativeSelection = true
@@ -374,7 +374,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
 
     public fun having(having: String): SelectQueryBuilder {
         if (havingApplied) {
-            throw KoanException("Query having was already applied.")
+            throw AnkoException("Query having was already applied.")
         }
 
         havingApplied = true
@@ -384,7 +384,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
 
     public fun having(having: String, vararg args: Pair<String, Any>): SelectQueryBuilder {
         if (selectionApplied) {
-            throw KoanException("Query having was already applied.")
+            throw AnkoException("Query having was already applied.")
         }
 
         havingApplied = true
@@ -394,7 +394,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
 
     public fun where(select: String, vararg args: Pair<String, Any>): SelectQueryBuilder {
         if (selectionApplied) {
-            throw KoanException("Query selection was already applied.")
+            throw AnkoException("Query selection was already applied.")
         }
 
         selectionApplied = true
@@ -405,7 +405,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
 
     public fun where(select: String): SelectQueryBuilder {
         if (selectionApplied) {
-            throw KoanException("Query selection was already applied.")
+            throw AnkoException("Query selection was already applied.")
         }
 
         selectionApplied = true
@@ -416,7 +416,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
 
     public fun whereSupport(select: String, vararg args: String): SelectQueryBuilder {
         if (selectionApplied) {
-            throw KoanException("Query selection was already applied.")
+            throw AnkoException("Query selection was already applied.")
         }
 
         selectionApplied = true

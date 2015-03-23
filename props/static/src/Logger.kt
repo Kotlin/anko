@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package kotlinx.android.koan
+package kotlinx.android.anko
 
 import android.content.Context
 import android.app.Fragment
 import android.util.Log
 
-public trait KoanLogger {
+public trait AnkoLogger {
     protected val loggerTag: String
         get() = javaClass.getSimpleName()
 

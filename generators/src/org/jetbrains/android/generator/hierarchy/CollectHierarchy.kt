@@ -1,12 +1,12 @@
 package org.jetbrains.android.generator.hierarchy
 
 import java.io.File
-import org.jetbrains.android.dsl.ClassProcessor
-import org.jetbrains.android.dsl.isInner
-import org.jetbrains.android.dsl.isView
+import org.jetbrains.android.anko.ClassProcessor
+import org.jetbrains.android.anko.isInner
+import org.jetbrains.android.anko.isView
 import org.objectweb.asm.tree.ClassNode
-import org.jetbrains.android.dsl.ClassTree
-import org.jetbrains.android.dsl.ClassTreeNode
+import org.jetbrains.android.anko.ClassTree
+import org.jetbrains.android.anko.ClassTreeNode
 import kotlin.platform.platformStatic
 import com.google.gson.Gson
 

@@ -3,7 +3,7 @@ package test
 import android.app.*
 import android.widget.*
 import android.os.Bundle
-import kotlinx.android.koan.*
+import kotlinx.android.anko.*
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.*

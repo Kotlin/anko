@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.koan
+package kotlinx.android.anko
 
 import android.view.View
 import android.view.KeyEvent

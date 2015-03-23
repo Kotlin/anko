@@ -1,12 +1,12 @@
 package org.jetbrains.android.generator.test
 
 import java.io.File
-import org.jetbrains.android.dsl.utils.Buffer
-import org.jetbrains.android.dsl.KoanFile
-import org.jetbrains.android.dsl.ConfigurationTune
+import org.jetbrains.android.anko.utils.Buffer
+import org.jetbrains.android.anko.AnkoFile
+import org.jetbrains.android.anko.ConfigurationTune
 
-private fun Context.functionalTest(name: String, mainKoanFile: KoanFile, configInit: TestConfiguration.() -> Unit = {}) {
-    val testConfiguration = TestConfiguration(name, mainKoanFile)
+private fun Context.functionalTest(name: String, mainAnkoFile: AnkoFile, configInit: TestConfiguration.() -> Unit = {}) {
+    val testConfiguration = TestConfiguration()
     testConfiguration.configInit()
 
     val dir = File("./test/" + basePackage.replace('.', '/'), "/functional")
@@ -22,7 +22,7 @@ private fun Context.functionalTest(name: String, mainKoanFile: KoanFile, configI
             line("override fun initSettings(settings: BaseGeneratorConfiguration) {")
 
             for (file in testConfiguration.files) {
-                line("settings.files.add(KoanFile.${file.name()})")
+                line("settings.files.add(AnkoFile.${file.name()})")
             }
             for (tune in testConfiguration.tunes) {
                 line("settings.tunes.add(ConfigurationTune.${tune.name()})")
@@ -31,7 +31,7 @@ private fun Context.functionalTest(name: String, mainKoanFile: KoanFile, configI
             line("}")
             for (version in testVersions) {
                 line("[Test] public fun test${name}For$version() {")
-                line("runFunctionalTest(testDataFile, KoanFile.${mainKoanFile.name()}, \"$version\")")
+                line("runFunctionalTest(testDataFile, AnkoFile.${mainAnkoFile.name()}, \"$version\")")
                 line("}")
             }
             line("}")
@@ -80,7 +80,7 @@ fun main(args: Array<String>) {
         ?.map { it.name }
         ?: listOf()
 
-    Context(versions, testVersions, "org.jetbrains.android.dsl").generate()
+    Context(versions, testVersions, "org.jetbrains.android.anko").generate()
 }
 
 private fun buffer(init: Buffer.() -> Unit) = Buffer("    ", 0, init)
@@ -91,15 +91,15 @@ private fun firstCapital(s: String): String {
 
 private class Context(val versions: List<String>, val testVersions: List<String>, val basePackage: String)
 
-private class TestConfiguration(val name: String, val mainKoanFile: KoanFile) {
-    val files = hashSetOf<KoanFile>()
+private class TestConfiguration {
+    val files = hashSetOf<AnkoFile>()
     val tunes = hashSetOf<ConfigurationTune>()
 
     fun tune(tune: ConfigurationTune) {
         tunes.add(tune)
     }
 
-    fun file(file: KoanFile) {
+    fun file(file: AnkoFile) {
         files.add(file)
     }
 

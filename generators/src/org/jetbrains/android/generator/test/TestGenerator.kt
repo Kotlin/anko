@@ -1,45 +1,45 @@
 package org.jetbrains.android.generator.test
 
 import java.io.File
-import org.jetbrains.android.dsl.KoanFile
-import org.jetbrains.android.dsl.ConfigurationTune
-import org.jetbrains.android.dsl.utils.Buffer
+import org.jetbrains.android.anko.AnkoFile
+import org.jetbrains.android.anko.ConfigurationTune
+import org.jetbrains.android.anko.utils.Buffer
 
 public fun Context.generate() {
 
-    functionalTest("ComplexListenerClassTest", KoanFile.LISTENERS) {
-        file(KoanFile.LISTENERS)
+    functionalTest("ComplexListenerClassTest", AnkoFile.LISTENERS) {
+        file(AnkoFile.LISTENERS)
         tune(ConfigurationTune.COMPLEX_LISTENER_CLASSES)
     }
 
-    functionalTest("ComplexListenerSetterTest", KoanFile.LISTENERS) {
-        file(KoanFile.LISTENERS)
+    functionalTest("ComplexListenerSetterTest", AnkoFile.LISTENERS) {
+        file(AnkoFile.LISTENERS)
         tune(ConfigurationTune.COMPLEX_LISTENER_SETTERS)
     }
 
-    functionalTest("HelperConstructorTest", KoanFile.VIEWS) {
+    functionalTest("HelperConstructorTest", AnkoFile.VIEWS) {
         tune(ConfigurationTune.HELPER_CONSTRUCTORS)
     }
 
-    functionalTest("LayoutsTest", KoanFile.LAYOUTS) {
-        file(KoanFile.LAYOUTS)
+    functionalTest("LayoutsTest", AnkoFile.LAYOUTS) {
+        file(AnkoFile.LAYOUTS)
     }
 
-    functionalTest("ViewTest", KoanFile.VIEWS) {
-        file(KoanFile.VIEWS)
+    functionalTest("ViewTest", AnkoFile.VIEWS) {
+        file(AnkoFile.VIEWS)
         tune(ConfigurationTune.TOP_LEVEL_DSL_ITEMS)
     }
 
-    functionalTest("PropertyTest", KoanFile.PROPERTIES) {
-        file(KoanFile.PROPERTIES)
+    functionalTest("PropertyTest", AnkoFile.PROPERTIES) {
+        file(AnkoFile.PROPERTIES)
     }
 
-    functionalTest("ServicesTest", KoanFile.SERVICES) {
-        file(KoanFile.SERVICES)
+    functionalTest("ServicesTest", AnkoFile.SERVICES) {
+        file(AnkoFile.SERVICES)
     }
 
-    functionalTest("SimpleListenerTest", KoanFile.LISTENERS) {
-        file(KoanFile.LISTENERS)
+    functionalTest("SimpleListenerTest", AnkoFile.LISTENERS) {
+        file(AnkoFile.LISTENERS)
         tune(ConfigurationTune.SIMPLE_LISTENERS)
     }
 

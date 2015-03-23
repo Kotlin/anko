@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Clean" type="Application" factoryName="Application">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-    <option name="MAIN_CLASS_NAME" value="org.jetbrains.android.dsl.DslPackage" />
+    <option name="MAIN_CLASS_NAME" value="org.jetbrains.android.anko.AnkoPackage" />
     <option name="VM_PARAMETERS" value="-Xmx1024M" />
     <option name="PROGRAM_PARAMETERS" value="clean" />
     <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
@@ -10,7 +10,7 @@
     <option name="ENABLE_SWING_INSPECTOR" value="false" />
     <option name="ENV_VARIABLES" />
     <option name="PASS_PARENT_ENVS" value="true" />
-    <module name="koan" />
+    <module name="anko" />
     <envs />
     <RunnerSettings RunnerId="Run" />
     <ConfigurationWrapper RunnerId="Run" />

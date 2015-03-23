@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package kotlinx.android.koan.db
+package kotlinx.android.anko.db
 
 import android.database.Cursor
 import android.database.sqlite.SQLiteException
 import java.util.ArrayList
 import java.lang.reflect.Modifier
-import kotlinx.android.koan.KoanException
-import kotlinx.android.koan.internals.useDatabase
-import kotlinx.android.koan.internals.useCursor
+import kotlinx.android.anko.AnkoException
+import kotlinx.android.anko.internals.useDatabase
+import kotlinx.android.anko.internals.useCursor
 
 public trait RowParser<T> {
     fun parseRow(columns: Array<Any>): T
@@ -130,7 +130,7 @@ public inline fun <reified T> classParser(): RowParser<T> {
             types != null && types.size() > 0
     }
     if (constructors.isEmpty())
-        throw KoanException(
+        throw AnkoException(
             "Can't initialize object parser for ${clazz.getCanonicalName()}, no acceptable constructors found")
 
     val c = constructors[0]
@@ -144,7 +144,7 @@ public inline fun <reified T> classParser(): RowParser<T> {
             else -> false
         }
         if (!valid)
-            throw KoanException(
+            throw AnkoException(
                 "Invalid argument type ${type.getCanonicalName()} in ${clazz.getCanonicalName()} constructor." +
                 "Supported types are: Long, Double, String, Array<Byte>.")
     }

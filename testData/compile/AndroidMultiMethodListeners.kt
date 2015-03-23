@@ -2,7 +2,7 @@ package com.example.android_test
 
 import android.app.Activity
 import android.os.Bundle
-import kotlinx.android.koan.*
+import kotlinx.android.anko.*
 import android.widget.LinearLayout
 import android.view.View
 import android.view.View.OnClickListener

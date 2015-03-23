@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package kotlinx.android.koan.internals
+package kotlinx.android.anko.internals
 
 import android.content.Context
 import android.app.Activity
 import android.content.Intent
 import java.io.Serializable
 import android.os.Bundle
-import kotlinx.android.koan.*
+import kotlinx.android.anko.*
 import android.database.sqlite.SQLiteDatabase
 import android.database.Cursor
 
@@ -41,7 +41,7 @@ public fun Context.__internalStartActivity(activity: Class<out Activity>, params
             is Long -> intent.putExtra(it.first, it.second as Long)
             is Serializable -> intent.putExtra(it.first, it.second as Serializable)
             is Bundle -> intent.putExtra(it.first, it.second as Bundle)
-            else -> throw KoanException("Intent extra ${it.first} has wrong type ${it.second.javaClass.getName()}")
+            else -> throw AnkoException("Intent extra ${it.first} has wrong type ${it.second.javaClass.getName()}")
         }
     }
     startActivity(intent)

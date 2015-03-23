@@ -23,7 +23,7 @@
  ===========================================================================
 -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="kotlinx.android.koan">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="kotlinx.android.anko">
 	<uses-sdk
 			android:minSdkVersion="9"
 			android:targetSdkVersion="%VERSION%"/>

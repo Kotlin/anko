@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.koan
+package kotlinx.android.anko
 
 import android.view.View
 import android.view.ViewManager
@@ -189,11 +189,11 @@ public fun EditText.afterTextChanged(act: (editable: Editable) -> Unit) {
 
 /* SECTION CUSTOM VIEW PROPERTIES */
 public var View.backgroundColor: Int
-    get() = throw KoanException("'padding' property doesn't have a getter")
+    get() = throw AnkoException("'padding' property doesn't have a getter")
     set(value) {this.setBackgroundColor(value)}
 
 public var View.backgroundResource: Int
-    get() = throw KoanException("'padding' property doesn't have a getter")
+    get() = throw AnkoException("'padding' property doesn't have a getter")
     set(value) {
         this.setBackgroundResource(value)
     }
@@ -227,25 +227,25 @@ public var View.paddingBottom: Int
     }
 
 public var View.paddingHorizontal: Int
-    get() = throw KoanException("'paddingHorizontal' property doesn't have a getter")
+    get() = throw AnkoException("'paddingHorizontal' property doesn't have a getter")
     set(value) {
         this.setPadding(value, this.getPaddingTop(), value, this.getPaddingBottom())
     }
 
 public var View.paddingVertical: Int
-    get() = throw KoanException("'paddingVertical' property doesn't have a getter")
+    get() = throw AnkoException("'paddingVertical' property doesn't have a getter")
     set(value) {
         this.setPadding(this.getPaddingLeft(), value, this.getPaddingRight(), value)
     }
 
 public var View.padding: Int
-    get() = throw KoanException("'padding' property doesn't have a getter")
+    get() = throw AnkoException("'padding' property doesn't have a getter")
     set(value) {
         this.setPadding(value, value, value, value)
     }
 
 public var LinearLayout.gravity: Int
-    get() = throw KoanException("'gravity' property doesn't have a getter")
+    get() = throw AnkoException("'gravity' property doesn't have a getter")
     set(value) {
         this.setGravity(value)
     }
@@ -257,7 +257,7 @@ public var TextView.isSelectable: Boolean
     }
 
 public var TextView.textColor: Int
-    get() = throw KoanException("'textColor' property doesn't have a getter")
+    get() = throw AnkoException("'textColor' property doesn't have a getter")
     set(value) {
         this.setTextColor(value)
     }
@@ -269,7 +269,7 @@ public var ImageView.image: Drawable?
     }
 
 public var ImageView.imageResource: Int
-    get() = throw KoanException("'textColor' property doesn't have a getter")
+    get() = throw AnkoException("'textColor' property doesn't have a getter")
     set(value) {
         this.setImageResource(value)
     }
@@ -281,7 +281,7 @@ public val matchParent: Int = android.view.ViewGroup.LayoutParams.MATCH_PARENT
 public val wrapContent: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 
 public var LinearLayout.LayoutParams.margin: Int
-    get() = throw KoanException("'LinearLayout.LayoutParams.margin' property doesn't have a getter")
+    get() = throw AnkoException("'LinearLayout.LayoutParams.margin' property doesn't have a getter")
     set(v) {
         leftMargin = v
         rightMargin = v
@@ -290,20 +290,20 @@ public var LinearLayout.LayoutParams.margin: Int
     }
 
 public var LinearLayout.LayoutParams.verticalMargin: Int
-    get() = throw KoanException("'LinearLayout.LayoutParams.verticalMargin' property doesn't have a getter")
+    get() = throw AnkoException("'LinearLayout.LayoutParams.verticalMargin' property doesn't have a getter")
     set(v) {
         topMargin = v
         bottomMargin = v
     }
 
 public var LinearLayout.LayoutParams.horizontalMargin: Int
-    get() = throw KoanException("'LinearLayout.LayoutParams.horizontalMargin' property doesn't have a getter")
+    get() = throw AnkoException("'LinearLayout.LayoutParams.horizontalMargin' property doesn't have a getter")
     set(v) {
         leftMargin = v; rightMargin = v
     }
 
 public var RelativeLayout.LayoutParams.margin: Int
-    get() = throw KoanException("'RelativeLayout.LayoutParams.margin' property doesn't have a getter")
+    get() = throw AnkoException("'RelativeLayout.LayoutParams.margin' property doesn't have a getter")
     set(v) {
         leftMargin = v
         rightMargin = v
@@ -312,14 +312,14 @@ public var RelativeLayout.LayoutParams.margin: Int
     }
 
 public var RelativeLayout.LayoutParams.verticalMargin: Int
-    get() = throw KoanException("'RelativeLayout.LayoutParams.verticalMargin' property doesn't have a getter")
+    get() = throw AnkoException("'RelativeLayout.LayoutParams.verticalMargin' property doesn't have a getter")
     set(v) {
         topMargin = v
         bottomMargin = v
     }
 
 public var RelativeLayout.LayoutParams.horizontalMargin: Int
-    get() = throw KoanException("'RelativeLayout.LayoutParams.horizontalMargin' property doesn't have a getter")
+    get() = throw AnkoException("'RelativeLayout.LayoutParams.horizontalMargin' property doesn't have a getter")
     set(v) {
         leftMargin = v; rightMargin = v
     }

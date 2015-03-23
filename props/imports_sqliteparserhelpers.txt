@@ -1,3 +1,3 @@
-package kotlinx.android.koan.db
+package kotlinx.android.anko.db
 
 import android.database.sqlite.SQLiteException
