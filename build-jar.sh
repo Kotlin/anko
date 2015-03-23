@@ -12,7 +12,7 @@ do
 	./gradlew publishToMavenLocal
 
 	cd build/repo
-	rm -f org/jetbrains/kotlin/koan-15/maven-metadata.*
+	rm -f org/jetbrains/kotlin/koan-$ver/maven-metadata.*
 	zip -r $ver.zip org
 	cp $ver.zip ../../../zip/$ver.zip
 	cd ../..
