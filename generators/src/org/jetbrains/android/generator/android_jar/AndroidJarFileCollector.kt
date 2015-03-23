@@ -83,8 +83,15 @@ object AndroidJarCollector {
             if (support) {
                 print(" support-v4...")
                 ZipFile(lastSupportV4Aar).use { zip ->
-                    FileOutputStream(File(versionDir, lastSupportV4Aar.name.substringBeforeLast('.') + ".jar")).use { f ->
-                        zip.getInputStream(zip.getEntry("classes.jar")).copyTo(f)
+                    val entries = zip.entries()
+                    var entry = entries.nextElement()
+                    while (entry != null) {
+                        if (entry.getName().toLowerCase().endsWith(".jar")) {
+                            FileOutputStream(File(versionDir, entry.getName().substringAfterLast('/'))).use { fos ->
+                                zip.getInputStream(entry).copyTo(fos)
+                            }
+                        }
+                        entry = if (entries.hasMoreElements()) entries.nextElement() else null
                     }
                 }
             }
