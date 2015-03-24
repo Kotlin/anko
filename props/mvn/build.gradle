@@ -13,11 +13,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion %VERSION%
+    compileSdkVersion %VERSION
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        targetSdkVersion "%VERSION%"
+        targetSdkVersion %VERSION
     }
 
     sourceSets {

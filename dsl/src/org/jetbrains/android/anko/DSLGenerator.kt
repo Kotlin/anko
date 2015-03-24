@@ -60,7 +60,7 @@ class DSLGenerator(
             }
 
             //write manifest
-            val manifest = mvnManifest.replace("%VERSION%", sVersion)
+            val manifest = mvnManifest.replace("%VERSION", sVersion)
             File(config.outputDirectory + "src/main/AndroidManifest.xml").writeText(manifest)
 
             //copy gradle wrapper
@@ -75,5 +75,5 @@ class DSLGenerator(
         }
     }
 
-    private fun String.substVersions() = replace("%VERSION%", sVersion).replace("%FVERSION%", fVersion)
+    private fun String.substVersions() = replace("%VERSION", sVersion).replace("%FVERSION", fVersion)
 }
