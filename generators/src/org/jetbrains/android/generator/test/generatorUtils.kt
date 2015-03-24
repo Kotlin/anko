@@ -70,7 +70,7 @@ private fun Context.compileTests(files: List<String>, category: String) {
 }
 
 fun main(args: Array<String>) {
-    val versions = File("./original/")
+    val versions = File("./workdir/original/")
             .listFiles { it.isDirectory() && it.name.matches("\\d+s?") }
             ?.map { it.name }
             ?: listOf()

@@ -23,7 +23,7 @@ import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 public abstract class AbstractRobolectricTest : CompileTestFixture() {
 
     protected fun runRobolectricTest(testDataFile: String, version: String) {
-        runRobolectricTest(File("testData/robolectric/$testDataFile"), File("original/$version/"))
+        runRobolectricTest(File("testData/robolectric/$testDataFile"), File("workdir/original/$version/"))
     }
 
 }

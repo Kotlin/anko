@@ -21,7 +21,7 @@ import java.io.File
 public open class AbstractCompileTest : CompileTestFixture() {
 
     protected fun runCompileTest(testDataFile: String, version: String) {
-        runCompileTest(File("testData/compile/$testDataFile"), File("original/$version/"))
+        runCompileTest(File("testData/compile/$testDataFile"), File("workdir/original/$version/"))
     }
 
 }

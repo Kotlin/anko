@@ -39,7 +39,7 @@ fun main(args: Array<String>) {
 }
 
 private fun clean() {
-    deleteDirectory(File("gen/"))
+    deleteDirectory(File("workdir/gen/"))
 }
 
 private fun versions() {
@@ -64,9 +64,9 @@ private fun deleteDirectory(f: File) {
 }
 
 private fun getVersions(): Array<File> {
-    val original = File("original/")
+    val original = File("workdir/original/")
     if (!original.exists() || !original.isDirectory()) {
-        throw RuntimeException("\"original\" directory does not exist.")
+        throw RuntimeException("\"workdir/original\" directory does not exist.")
     }
     return original.listFiles(AndroidVersionDirectoryFilter()) ?: array<File>()
 }
@@ -80,7 +80,7 @@ private fun gen() {
         if (intVersion != null && jars.isNotEmpty()) {
             println("Processing version=${version.getName()}, jars: ${jars.joinToString(",")}")
 
-            val outputDirectory = "gen/${version.getName()}/"
+            val outputDirectory = "workdir/gen/${version.getName()}/"
             val fileOutputDirectory = File("$outputDirectory/src/main/kotlin/")
             if (!fileOutputDirectory.exists()) {
                 fileOutputDirectory.mkdirs()

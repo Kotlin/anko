@@ -11,7 +11,7 @@ object AndroidJarCollector {
     private val ANDROID_HOME = System.getenv().get("ANDROID_HOME") ?: ""
 
     private val REQUIRED_VERSIONS = array("15", "15s", "19", "19s", "21", "21s")
-    private val VERSIONS = File("original").listFiles(AndroidVersionDirectoryFilter())
+    private val VERSIONS = File("workdir/original").listFiles(AndroidVersionDirectoryFilter())
 
     fun check(): Boolean {
         if (VERSIONS == null || VERSIONS.isEmpty()) return false
@@ -51,7 +51,7 @@ object AndroidJarCollector {
             return
         }
 
-        REQUIRED_VERSIONS.forEach { File("original/$it/").mkdirs() }
+        REQUIRED_VERSIONS.forEach { File("workdir/original/$it/").mkdirs() }
 
         if (ANDROID_HOME.isEmpty()) throw RuntimeException("ANDROID_HOME environment variable is not set")
 
@@ -65,7 +65,7 @@ object AndroidJarCollector {
 
         for (version in REQUIRED_VERSIONS) {
             print("Processing version ${version}:")
-            val versionDir = File("original", version)
+            val versionDir = File("workdir/original", version)
 
             val support = version.endsWith("s")
             val versionNumber = version.replace("s", "")

@@ -1,9 +1,8 @@
 out/*
-gen/*
 lib/*
 .idea/dictionaries/*
 .idea/inspectionProfiles/*
 .idea/workspace.xml
 .idea/tasks.xml
 .DS_Store
-original/
+workdir/*

@@ -34,10 +34,10 @@ public open class CompileTestFixture : Assert() {
 
     class ProcResult(val stdout: String, val stderr: String, val exitCode: Int)
 
-    class object {
+    companion object {
         private val kotlincFilename = "lib/kotlinc/bin/kotlinc-jvm"
 
-        private val versions = File("original/").listFiles(AndroidVersionDirectoryFilter())
+        private val versions = File("workdir/original/").listFiles(AndroidVersionDirectoryFilter())
         private val versionJars = hashMapOf<File, File>()
 
         platformStatic

@@ -21,7 +21,7 @@ import java.util.HashMap
 import java.util.ArrayList
 import java.io.File
 
-open class GeneratorConfiguration(outputDirectory: String = "gen/") : BaseGeneratorConfiguration() {
+open class GeneratorConfiguration(outputDirectory: String = "workdir/gen/") : BaseGeneratorConfiguration() {
 
     override val outputDirectory = outputDirectory
     override val outputPackage = "kotlinx.android.anko"

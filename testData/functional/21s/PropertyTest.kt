@@ -130,6 +130,9 @@ public var android.support.v4.view.ViewPager.pageMargin: Int
 public val android.support.v4.view.ViewPager.fakeDragging: Boolean
   get() = isFakeDragging()
 
+public val android.support.v4.widget.DrawerLayout.statusBarBackgroundDrawable: android.graphics.drawable.Drawable?
+  get() = getStatusBarBackgroundDrawable()
+
 public var android.support.v4.widget.SlidingPaneLayout.coveredFadeColor: Int
   get() = getCoveredFadeColor()
   set(v) = setCoveredFadeColor(v)
@@ -147,6 +150,9 @@ public val android.support.v4.widget.SlidingPaneLayout.open: Boolean
 
 public val android.support.v4.widget.SlidingPaneLayout.slideable: Boolean
   get() = isSlideable()
+
+public val android.support.v4.widget.SwipeRefreshLayout.progressCircleDiameter: Int
+  get() = getProgressCircleDiameter()
 
 public var android.support.v4.widget.SwipeRefreshLayout.refreshing: Boolean
   get() = isRefreshing()

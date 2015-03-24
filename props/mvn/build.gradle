@@ -30,7 +30,7 @@ dependencies {
         mavenCentral()
     }
 
-    compile fileTree(dir: '../../original/%FVERSION%', include: ['*.jar'])
+    compile fileTree(dir: '../../original/%FVERSION', include: ['*.jar'])
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 

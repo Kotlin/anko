@@ -36,4 +36,4 @@ Execute a run configuration named `Collect android.jar` and then `Generate`.
 </tr>
 </table>
 
-**4.** After doing this a number of directories with generated sources must be present in `gen` directory. You can build them all together by launching a `build-jar.sh` script. Script publishes all Anko versions in the local Maven repository and creates a zip files in `gen/zip` directory.
+**4.** After doing this a number of directories with generated sources must be present in `workdir/gen` directory. You can build them all together by launching a `build-jar.sh` script. Script publishes all Anko versions in the local Maven repository and creates a zip files in `gen/zip` directory.
