@@ -48,5 +48,5 @@ public fun Context.generate() {
     compileTests(ktFiles("compile"), "Compile")
 }
 
-private fun ktFiles(category: String) = File("testData/$category")
+private fun ktFiles(category: String) = File("dsl/testData/$category")
         .listFiles { it.name.endsWith(".kt") }?.map { it.name.replace(".kt", "") } ?: listOf()

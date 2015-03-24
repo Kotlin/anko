@@ -53,7 +53,7 @@ public abstract class AbstractFunctionalTest {
         generator.run()
 
         val actual = settings.getOutputFile(subsystem).readText()
-        val expectedPath = ("testData/functional/$version/$testDataFile")
+        val expectedPath = ("dsl/testData/functional/$version/$testDataFile")
         val expected = loadOrCreate(File(expectedPath), actual)
 
         assertTrue(expected.length() > 0)

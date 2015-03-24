@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/anko.iml" filepath="$PROJECT_DIR$/anko.iml" />
-      <module fileurl="file://$PROJECT_DIR$/generators/generators.iml" filepath="$PROJECT_DIR$/generators/generators.iml" />
       <module fileurl="file://$PROJECT_DIR$/props/static/static.iml" filepath="$PROJECT_DIR$/props/static/static.iml" />
       <module fileurl="file://$PROJECT_DIR$/props/stubs/stubs.iml" filepath="$PROJECT_DIR$/props/stubs/stubs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/utils/utils.iml" filepath="$PROJECT_DIR$/utils/utils.iml" />
     </modules>
   </component>
 </project>

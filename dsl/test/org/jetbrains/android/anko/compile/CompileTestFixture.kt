@@ -132,9 +132,9 @@ public open class CompileTestFixture : Assert() {
                 File(lib, "android-all-4.1.2_r1-robolectric-0.jar")
         ).map { it.getAbsolutePath() }.join(File.pathSeparator)
 
-        val manifest = File("testData/robolectric/AndroidManifest.xml")
-        val androidRes = File("testData/robolectric/res/")
-        val androidAssets = File("testData/robolectric/assets/")
+        val manifest = File("dsl/testData/robolectric/AndroidManifest.xml")
+        val androidRes = File("dsl/testData/robolectric/res/")
+        val androidAssets = File("dsl/testData/robolectric/assets/")
 
         val args = array(
                 "java", "-cp", cp,
