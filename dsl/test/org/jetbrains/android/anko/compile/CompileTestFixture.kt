@@ -35,7 +35,7 @@ public open class CompileTestFixture : Assert() {
     class ProcResult(val stdout: String, val stderr: String, val exitCode: Int)
 
     companion object {
-        private val kotlincFilename = "lib/kotlinc/bin/kotlinc-jvm"
+        private val kotlincFilename = "lib/Kotlin/kotlinc/bin/kotlinc-jvm"
 
         private val versions = File("workdir/original/").listFiles(AndroidVersionDirectoryFilter())
         private val versionJars = hashMapOf<File, File>()
@@ -125,7 +125,7 @@ public open class CompileTestFixture : Assert() {
         val cp = listOf(
                 versionJars[ver],
                 tmpFile,
-                File(lib, "kotlinc/lib/kotlin-runtime.jar"),
+                File(lib, "Kotlin/kotlinc/lib/kotlin-runtime.jar"),
                 File(lib, "junit-4.11.jar"),
                 File(lib, "hamcrest-all-1.3.jar"),
                 File(lib, "robolectric-with-dependencies.jar"),

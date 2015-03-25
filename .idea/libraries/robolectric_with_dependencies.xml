@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="robolectric-with-dependencies">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/robolectric-with-dependencies.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

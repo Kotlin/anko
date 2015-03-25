@@ -6,3 +6,4 @@ lib/*
 .idea/tasks.xml
 .DS_Store
 workdir/*
+/ideaSDK

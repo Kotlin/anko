@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact name="Plugin ZIP archive">
+    <output-path>$PROJECT_DIR$/out/artifacts/Plugin_ZIP_archive</output-path>
+    <root id="root">
+      <element id="archive" name="dsl-preview.zip">
+        <element id="directory" name="dsl-preview">
+          <element id="artifact" artifact-name="Plugin" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

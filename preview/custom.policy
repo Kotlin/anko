@@ -1,0 +1,16 @@
+grant {
+	permission java.util.PropertyPermission "robolectric.*", "read, write";
+	permission java.util.PropertyPermission "robo.*", "read, write";
+	permission java.util.PropertyPermission "android.*", "read, write";
+	permission java.util.PropertyPermission "user.dir", "read";
+	permission java.util.PropertyPermission "apple.awt.UIElement", "read, write";
+	permission java.io.FilePermission "<<ALL FILES>>", "read";
+	permission java.io.FilePermission "./tmp/-", "read, write, delete";
+	permission java.lang.RuntimePermission "accessDeclaredMembers";
+	permission java.lang.RuntimePermission "createClassLoader";
+	permission java.lang.RuntimePermission "setContextClassLoader";
+	permission java.lang.RuntimePermission "accessClassInPackage.sun.reflect";
+	permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+	permission java.net.SocketPermission "localhost:2048-100100", "listen,resolve";
+	permission java.net.SocketPermission "localhost:1-", "accept,resolve";
+};

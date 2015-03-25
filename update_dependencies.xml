@@ -1,6 +1,26 @@
 <project name="Update Dependencies" default="update">
+    <property name="ideaVersion" value="139.1116"/>
+    <property name="idea.sdk.fetch.needed" value="true"/>
+
+    <condition property="os.tag" value="win.zip">
+        <os family="windows"/>
+    </condition>
+
+    <condition property="os.tag" value="mac.zip">
+        <os family="mac"/>
+    </condition>
+
+    <condition property="os.tag" value="tar.gz">
+        <and>
+            <os family="unix"/>
+            <not>
+                <os family="mac"/>
+            </not>
+        </and>
+    </condition>
+
     <target name="update">
-        <mkdir dir="lib"/>
+        <mkdir dir="lib/download"/>
 
         <get src="http://repo1.maven.org/maven2/org/ow2/asm/asm-debug-all/4.2/asm-debug-all-4.2.jar"
              dest="lib/asm-4.2.jar" usetimestamp="true"/>
@@ -8,14 +28,14 @@
         <get src="http://repo1.maven.org/maven2/org/testng/testng/6.7/testng-6.7.jar"
              dest="lib/testng-6.7.jar" usetimestamp="true"/>
 
+        <get src="http://central.maven.org/maven2/org/zeromq/jeromq/0.3.4/jeromq-0.3.4.jar"
+             dest="lib/jeromq-0.3.4.jar" usetimestamp="true"/>
+
         <get src="http://repo1.maven.org/maven2/com/google/code/gson/gson/2.3/gson-2.3.jar"
              dest="lib/gson-2.3.jar" usetimestamp="true"/>
 
         <get src="http://search.maven.org/remotecontent?filepath=junit/junit/4.11/junit-4.11.jar"
              dest="lib/junit-4.11.jar" usetimestamp="true"/>
-
-        <get src="https://github.com/JetBrains/kotlin/releases/download/build-0.11.91/kotlin-compiler-0.11.91.zip"
-             dest="lib/kotlinc.zip" usetimestamp="true"/>
 
         <get src="http://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-all/1.3/hamcrest-all-1.3.jar"
              dest="lib/hamcrest-all-1.3.jar" usetimestamp="true"/>
@@ -38,10 +58,197 @@
         <get src="http://central.maven.org/maven2/com/google/android/support-v4/r6/support-v4-r6.jar"
              dest="lib/android-support-v4.jar" usetimestamp="true"/>
 
-        <delete dir="lib/kotlinc" failonerror="false"/>
-        <unzip src="lib/kotlinc.zip"
+        <get src="https://github.com/JetBrains/kotlin/releases/download/build-0.11.91/kotlin-plugin-0.11.91.zip"
+             dest="lib/kotlin-plugin.zip" usetimestamp="true"/>
+
+        <get src="http://heanet.dl.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-bin.zip"
+             dest="lib/download/ant-contrib-1.0b3-bin.zip" usetimestamp="true"/>
+
+        <delete file="lib/ant-contrib.jar" failonerror="false"/>
+        <unzip src="lib/download/ant-contrib-1.0b3-bin.zip" dest="lib">
+            <patternset>
+                <include name="ant-contrib/ant-contrib-1.0b3.jar"/>
+            </patternset>
+            <mapper type="merge" to="ant-contrib.jar"/>
+        </unzip>
+
+        <execute_update_with_id_resolve
+                teamcity.server.url="https://teamcity.jetbrains.com"
+                build.locator.request="buildType:bt410,status:SUCCESS,branch:idea/${ideaVersion}"/>
+
+        <delete dir="lib/kotlin-plugin" failonerror="false"/>
+        <unzip src="lib/kotlin-plugin.zip"
                dest="lib/"/>
-        <chmod dir="lib/kotlinc/bin" perm="+x"
+    </target>
+
+    <target name="set_unix_perms">
+        <chmod dir="lib/Kotlin/kotlinc/bin" perm="+x"
                includes="**/*"/>
     </target>
+
+    <macrodef name="execute_update_with_id_resolve">
+        <attribute name="teamcity.server.url"/>
+        <attribute name="build.locator.request"/>
+
+        <sequential>
+            <loadresource property="execute.build.id">
+                <url url="@{teamcity.server.url}/guestAuth/app/rest/builds/?locator=@{build.locator.request}"/>
+                <filterchain>
+                    <tokenfilter>
+                        <filetokenizer/>
+                        <replaceregex pattern="^(.*)\sid=&quot;(\d+)&quot;(.*)$" replace="\2" flags="s"/>
+                    </tokenfilter>
+                </filterchain>
+            </loadresource>
+
+            <echo message="IDEA build id: ${execute.build.id}"/>
+
+            <execute_update base.url="@{teamcity.server.url}/guestAuth/app/rest/builds/id:${execute.build.id}"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="execute_update">
+        <attribute name="base.url"/>
+
+        <sequential>
+            <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${basedir}/lib/ant-contrib.jar"/>
+
+            <loadresource property="idea.build.number">
+                <url url="@{base.url}/artifacts/children"/>
+                <filterchain>
+                    <tokenfilter>
+                        <filetokenizer/>
+
+                        <replaceregex pattern="^(.*)ideaIC-([\w\.]+)\.win\.zip(.*)$" replace="\2" flags="s"/>
+                    </tokenfilter>
+                </filterchain>
+            </loadresource>
+
+            <property name="idea.archive.name" value="ideaIC-${idea.build.number}.${os.tag}"/>
+
+            <echo message="IDEA build number: ${idea.build.number}"/>
+            <echo message="IDEA archive file: ${idea.archive.name}"/>
+
+            <property name="content.base.url" value="@{base.url}/artifacts/content"/>
+
+            <property name="core" value="ideaSDK/core"/>
+            <property name="core-analysis" value="ideaSDK/core-analysis"/>
+            <property name="jps" value="ideaSDK/jps"/>
+            <property name="jps-test" value="${jps}/test"/>
+
+            <if>
+                <istrue value="${idea.sdk.fetch.needed}"/>
+
+                <then>
+                    <delete dir="ideaSDK" failonerror="false">
+                        <exclude name="config-idea/**"/>
+                        <exclude name="system-idea/**"/>
+                    </delete>
+
+                    <mkdir dir="${core}"/>
+                    <mkdir dir="${core-analysis}"/>
+                    <mkdir dir="${jps}"/>
+                    <mkdir dir="${jps-test}"/>
+                    <get src="${content.base.url}/core/intellij-core.jar" dest="${core}/intellij-core.jar" usetimestamp="true"/>
+                    <get src="${content.base.url}/core/intellij-core-analysis.jar" dest="${core-analysis}/intellij-core-analysis.jar"
+                         usetimestamp="true"/>
+                    <get src="${content.base.url}/core/annotations.jar" dest="${core}/annotations.jar" usetimestamp="true"/>
+                    <get src="${content.base.url}/core/guava-17.0.jar" dest="${core}/guava-17.0.jar" usetimestamp="true"/>
+                    <get src="${content.base.url}/core/picocontainer.jar" dest="${core}/picocontainer.jar" usetimestamp="true"/>
+                    <get src="${content.base.url}/core/trove4j.jar" dest="${core}/trove4j.jar" usetimestamp="true"/>
+                    <!--<get src="${content.base.url}/core/snappy-java-1.0.5.jar" dest="${core}/snappy-java-1.0.5.jar" usetimestamp="true"/>-->
+
+                    <get src="${content.base.url}/jps/standalone-jps-IC-${idea.build.number}.zip"
+                         dest="lib/download/standalone-jps.zip"
+                         usetimestamp="true"/>
+
+                    <property name="jps.extracted.dir" value="lib/download/standalone-jps"/>
+                    <unzip src="lib/download/standalone-jps.zip" dest="${jps.extracted.dir}"/>
+
+                    <copy todir="${jps}" flatten="true">
+                        <resources>
+                            <file file="${jps.extracted.dir}/groovy-jps-plugin.jar"/>
+                            <file file="${jps.extracted.dir}/groovy_rt.jar"/>
+                            <file file="${jps.extracted.dir}/jdom.jar"/>
+                            <file file="${jps.extracted.dir}/jgoodies-forms.jar"/>
+                            <file file="${jps.extracted.dir}/jna.jar"/>
+                            <file file="${jps.extracted.dir}/jps-builders.jar"/>
+                            <file file="${jps.extracted.dir}/jps-model.jar"/>
+                            <file file="${jps.extracted.dir}/log4j.jar"/>
+                            <file file="${jps.extracted.dir}/nanoxml-2.2.3.jar"/>
+                            <file file="${jps.extracted.dir}/protobuf-2.5.0.jar"/>
+                            <file file="${jps.extracted.dir}/trove4j.jar"/>
+                            <file file="${jps.extracted.dir}/ui-designer-jps-plugin.jar"/>
+                            <file file="${jps.extracted.dir}/util.jar"/>
+                        </resources>
+                    </copy>
+
+                    <get src="${content.base.url}/jps/jps-build-test-IC-${idea.build.number}.jar" dest="${jps-test}/jps-build-test.jar"
+                         usetimestamp="true"/>
+
+                    <get src="${content.base.url}/${idea.archive.name}" dest="lib/download/${idea.archive.name}" usetimestamp="true"/>
+
+                    <delete file="lib/download/idea-sdk-sources.zip" failonerror="false"/>
+                    <get src="${content.base.url}/sources.zip" dest="lib/download/idea-sdk-sources.zip" usetimestamp="true"/>
+                </then>
+            </if>
+
+            <if>
+                <matches pattern=".+\.win\.zip" string="${idea.archive.name}"/>
+                <then>
+                    <unzip src="lib/download/${idea.archive.name}" dest="ideaSDK"/>
+                </then>
+                <elseif>
+                    <matches pattern=".+\.mac\.zip" string="${idea.archive.name}"/>
+                    <then>
+                        <unzip src="lib/download/${idea.archive.name}" dest="ideaSDK">
+                            <cutdirsmapper dirs="2"/>
+                        </unzip>
+                        <!-- Java can't manipulate permissions -->
+                        <exec executable="chmod">
+                            <arg value="a+x"/>
+                            <arg path="ideaSDK/bin/fsnotifier"/>
+                            <arg path="ideaSDK/bin/inspect.sh"/>
+                            <arg path="ideaSDK/bin/printenv.py"/>
+                            <arg path="ideaSDK/bin/restarter"/>
+                        </exec>
+                    </then>
+                </elseif>
+                <else>
+                    <untar src="lib/download/${idea.archive.name}" dest="ideaSDK" compression="gzip">
+                        <cutdirsmapper dirs="1"/>
+                    </untar>
+                    <!-- Java can't manipulate permissions -->
+                    <exec executable="chmod">
+                        <arg value="a+x"/>
+                        <arg path="ideaSDK/bin/fsnotifier"/>
+                        <arg path="ideaSDK/bin/fsnotifier64"/>
+                        <arg path="ideaSDK/bin/inspect.sh"/>
+                        <arg path="ideaSDK/bin/idea.sh"/>
+                    </exec>
+                </else>
+            </if>
+
+            <mkdir dir="ideaSDK/sources"/>
+            <copy file="lib/download/idea-sdk-sources.zip" tofile="ideaSDK/sources/sources.zip" overwrite="true"/>
+
+            <copy file="ideaSDK/lib/jdom.jar" todir="${core}"/>
+            <copy file="ideaSDK/lib/jna.jar" todir="${core}"/>
+            <copy file="ideaSDK/lib/log4j.jar" todir="${core}"/>
+            <copy file="ideaSDK/lib/xstream-1.4.3.jar" todir="${core}"/>
+            <copy file="ideaSDK/lib/xpp3-1.1.4-min.jar" todir="${core}"/>
+            <copy file="ideaSDK/lib/jsr166e.jar" todir="${core}"/>
+            <copy file="ideaSDK/lib/asm-all.jar" todir="${core}"/>
+
+            <!-- TODO temporary workaround since util-rt is not packaged into intellij-core.jar -->
+            <copy file="ideaSDK/lib/util.jar" todir="${core}"/>
+
+            <!--
+                 This one needs to be deleted because otherwise it gets onto the classpath
+                 together with junit-4.10.jar and the classloading goes crazy that breaks
+                 many nice features of IDEA including diffs in the test console.
+            -->
+            <delete file="ideaSDK/lib/junit.jar"/>
+        </sequential>
+    </macrodef>
 </project>

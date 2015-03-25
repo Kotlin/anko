@@ -1,1 +1,0 @@
-Project dependences will be downloaded here by get_libs Ant task.

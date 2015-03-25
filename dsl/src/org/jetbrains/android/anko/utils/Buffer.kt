@@ -25,9 +25,9 @@ public class Buffer(private val indentSymbol: String, indent: Int = 0, val init:
 
     private val builder = StringBuilder();
     private var mainIndent = indent;
-    private var tempIndent = 0;
+    private var tempIndent = 0
 
-    { init() }
+    init { init() }
 
     public fun line(s: String): Buffer {
         if (mainIndent > 0 && s.startsWith('}')) mainIndent = mainIndent - 1

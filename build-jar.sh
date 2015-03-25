@@ -9,8 +9,7 @@ do
 	cd $ver
 	chmod u+x ./gradlew
 
-	./gradlew publish
-	./gradlew publishToMavenLocal
+	./gradlew publish publishToMavenLocal
 
 	cd build/repo
 	rm -f org/jetbrains/kotlin/anko-$ver/maven-metadata.*

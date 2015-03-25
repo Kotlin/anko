@@ -1,0 +1,92 @@
+id -1
+enabled true
+visibility visible
+focusable false true
+focusableInTouchMode false true
+layoutDirection ltr
+clickable false true
+longClickable false true
+alpha 1
+layerType none
+overScrollMode ifContentScrolls
+
+soundEffectsEnabled true
+filterTouchesWhenObscured false
+drawingCacheQuality auto
+hapticFeedbackEnabled true
+keepScreenOn false
+
+height 0dp
+width 0dp
+minHeight -1dp
+minWidth -1dp 0dp
+maxHeight -1dp 0dp 2147483648dp
+maxWidth -1dp 2147483648dp
+weightSum 0
+cacheColorHint 0
+
+paddingTop 0dp
+paddingLeft 0dp
+paddingRight 0dp
+paddingBottom 0dp
+paddingStart 0dp
+paddingEnd 0dp
+dividerPadding 0dp
+
+saveEnabled true
+rotation 0
+labelFor -1
+fitsSystemWindows false
+minLines 0 -1
+maxLines 0 -1
+
+freezesText false
+cursorVisible true
+lineSpacingExtra 0dp
+singleLine false
+imeActionId 0
+textDirection firstStrong
+linksClickable true
+
+translationX 0dp
+translationY 0dp
+scaleX 1
+scaleY 1
+rotationX 0
+rotationY 0
+minEms -1
+maxEms -1
+
+scrollX 0dp
+scrollY 0dp
+
+shadowColor 0
+shadowRadius 0
+shadowDx 0
+shadowDy 0
+
+verticalScrollbarPosition defaultPosition
+maxLines 2147483647
+fillViewport false
+clipChildren true
+
+layoutMode clipBounds
+textAlignment gravity
+lineSpacingMultiplier 1
+weightSum -1
+baselineAlignedChildIndex -1
+
+background @android:drawable/edit_text_holo_* @android:drawable/btn_toggle_holo_* @android:drawable/btn_default_holo_*
+CalendarView#dateTextAppearance *
+CalendarView#weekDayTextAppearance *
+
+ViewStub#inflatedId 0
+AutoCompleteTextView#dropDownAnchor -1
+android.app.MediaRouteButton#background @android:drawable/item_background_holo_dark
+ZoomButton#background @android:drawable/btn_zoom_down @android:drawable/btn_zoom_up
+MultiAutoCompleteTextView#dropDownAnchor -1
+Spinner#background @android:drawable/spinner_background_holo_dark
+DatePicker#maxDate 4133880000000
+DatePicker#minDate -2209003200000
+CalendarView#maxDate 4133880000000
+CalendarView#minDate -2209003200000

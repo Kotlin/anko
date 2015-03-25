@@ -1,0 +1,139 @@
+/*
+ * Copyright 2015 JetBrains s.r.o.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.jetbrains.kotlin.android.xmlconverter
+
+import org.jetbrains.kotlin.android.attrs.Attr
+import org.jetbrains.kotlin.android.attrs.NoAttr
+
+val viewAttributeRenderers = listOf(
+        ::renderGravity,
+        ::renderBackground,
+        ::renderLinearLayoutOrientation,
+        ::renderTextSize,
+        ::renderTag,
+        ::renderVisibility,
+        ::renderSingleLine,
+        ::renderOrientation,
+        ::renderColor,
+        ::renderReference,
+        ::renderDimension,
+        ::renderString,
+        ::renderBoolean,
+        ::renderInteger,
+        ::renderFloat,
+        ::renderEnum,
+        ::renderFlags
+)
+
+[suppress("UNUSED_PARAMETER")]
+fun renderGravity(attr: Attr, key: String, value: String) = if (key == "gravity") {
+        val values = value.split('|').map { "Gravity.${it.toUpperCase()}" }
+        key * values.joinToString(" or ")
+    } else null
+
+[suppress("UNUSED_PARAMETER")]
+fun renderBackground(attr: Attr, key: String, value: String) = if (key == "background") {
+    if (value.isReference()) renderReference(NoAttr, "${key}Resource", value)
+    else if (value.isColor()) renderColor(NoAttr, "${key}Color", value)
+    else null
+} else null
+
+fun renderLinearLayoutOrientation(attr: Attr, key: String, value: String) =
+    if (key == "orientation" && attr.name == "LinearLayout")
+        key * "android.widget.LinearLayout.${value.toUpperCase()}" else null
+
+[suppress("UNUSED_PARAMETER")]
+fun renderTextSize(attr: Attr, key: String, value: String) = if (key == "textSize") {
+        val dimension = value.parseDimension()
+        key * "${dimension.first}f"
+    } else null
+
+[suppress("UNUSED_PARAMETER")]
+fun renderTag(attr: Attr, key: String, value: String) = if (key == "tag") {
+    renderString(NoAttr, key, value)
+} else null
+
+[suppress("UNUSED_PARAMETER")]
+fun renderVisibility(attr: Attr, key: String, value: String) = if (key == "visibility") {
+    "visibility" * "View.${value.toUpperCase()}"
+} else null
+
+[suppress("UNUSED_PARAMETER")]
+fun renderSingleLine(attr: Attr, key: String, value: String) = if (key == "singleLine") {
+        "setSingleLine($value)" * ""
+    } else null
+
+[suppress("UNUSED_PARAMETER")]
+fun renderOrientation(attr: Attr, key: String, value: String) = if (key == "orientation") {
+    "orientation" * "LinearLayout.${value.toUpperCase()}"
+} else null
+
+fun renderBoolean(attr: Attr, key: String, value: String) =
+        if (attr accepts "boolean" && (value == "true" || value == "false")) key * value else null
+
+fun renderInteger(attr: Attr, key: String, value: String) =
+        if (attr accepts "integer" && value.matches("\\-?[0-9]+")) key * value else null
+
+fun renderFloat(attr: Attr, key: String, value: String) = if (attr accepts "float") key * "${value}f" else null
+
+fun renderString(attr: Attr, key: String, value: String) =
+        if (attr accepts "string") {
+            if (value.isReference() && key.isSpecialReferenceAttribute())
+                renderReference(NoAttr, key + "Resource", value)
+            else
+                key * ("\"" + value.replace("\"", "\\\"") + "\"")
+        } else null
+
+fun renderColor(attr: Attr, key: String, value: String) = if (attr accepts "color" && value.isColor()) {
+        val color = value.replace("#", "").toLowerCase()
+        val displayColor = if (color.length() > 6 && !color.startsWith("ff"))
+            "0x${color}.toInt()" else "0x${color}.opaque"
+        key * displayColor
+    } else null
+
+fun renderReference(attr: Attr, key: String, value: String) = if (attr accepts "reference" && value.isReference()) {
+        val reference = value.parseReference()
+        val packageName = if (reference.packageName.isNotEmpty()) "${reference.packageName}." else ""
+        when (reference.type) {
+            "+id" -> key * "${packageName}Ids.${reference.value}"
+            else -> key * "${packageName}R.${reference.type}.${reference.value}"
+        }
+    } else null
+
+fun renderEnum(attr: Attr, key: String, value: String) = if (attr accepts "enum" && attr.enum != null) {
+        val enumEntry = attr.enum.firstOrNull { it.name == value }
+        if (enumEntry != null) key * enumEntry.value else key * value
+    } else null
+
+fun renderFlags(attr: Attr, key: String, value: String) = if (attr accepts "flags" && attr.flags != null) {
+        val sum = value.split('|').fold(0) { sum, flag ->
+            val entry = attr.flags.firstOrNull { it.name == flag }
+            sum + (entry?.value?.parseFlagValue() ?: 0)
+        }
+        key * sum.toString()
+    } else null
+
+fun renderDimension(attr: Attr, key: String, value: String) = if (attr accepts "dimension" && value.isDimension()) {
+    val rawDimension = value.parseDimension()
+    val dimension = when (rawDimension.second) {
+        "dp" -> rawDimension.first to "dip"
+        else -> rawDimension
+    }
+    key * "${dimension.second}(${dimension.first})"
+} else null
+
+private fun Attr.accepts(f: String) = this == NoAttr || f in this.format

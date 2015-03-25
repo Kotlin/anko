@@ -22,7 +22,7 @@ import org.testng.annotations.*
 import kotlin.platform.platformStatic
 
 public class GeneratedRobolectricTest : AbstractRobolectricTest() {
-    class object {
+    companion object {
         BeforeClass platformStatic fun setUpClass() = CompileTestFixture.setUpClass()
         AfterClass platformStatic fun tearDownClass() = CompileTestFixture.tearDownClass()
     }
