@@ -5,7 +5,7 @@
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" value="" />
     <option name="SUITE_NAME" value="" />
-    <option name="PACKAGE_NAME" value="" />
+    <option name="PACKAGE_NAME" value="org.jetbrains.android.anko" />
     <option name="MAIN_CLASS_NAME" value="" />
     <option name="METHOD_NAME" value="" />
     <option name="GROUP_NAME" value="" />
@@ -18,7 +18,7 @@
     <option name="ENV_VARIABLES" />
     <option name="PASS_PARENT_ENVS" value="true" />
     <option name="TEST_SEARCH_SCOPE">
-      <value defaultName="moduleWithDependencies" />
+      <value defaultName="singleModule" />
     </option>
     <option name="USE_DEFAULT_REPORTERS" value="false" />
     <option name="PROPERTIES_FILE" value="" />
