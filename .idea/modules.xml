@@ -7,8 +7,8 @@
       <module fileurl="file://$PROJECT_DIR$/preview/idea-plugin/idea-plugin.iml" filepath="$PROJECT_DIR$/preview/idea-plugin/idea-plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/preview/message-bus/message-bus.iml" filepath="$PROJECT_DIR$/preview/message-bus/message-bus.iml" />
       <module fileurl="file://$PROJECT_DIR$/preview/robowrapper/robowrapper.iml" filepath="$PROJECT_DIR$/preview/robowrapper/robowrapper.iml" />
-      <module fileurl="file://$PROJECT_DIR$/props/static/static.iml" filepath="$PROJECT_DIR$/props/static/static.iml" />
-      <module fileurl="file://$PROJECT_DIR$/props/stubs/stubs.iml" filepath="$PROJECT_DIR$/props/stubs/stubs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dsl/static/static.iml" filepath="$PROJECT_DIR$/dsl/static/static.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dsl/stubs/stubs.iml" filepath="$PROJECT_DIR$/dsl/stubs/stubs.iml" />
       <module fileurl="file://$PROJECT_DIR$/utils/utils.iml" filepath="$PROJECT_DIR$/utils/utils.iml" />
       <module fileurl="file://$PROJECT_DIR$/preview/xml-converter/xml-converter.iml" filepath="$PROJECT_DIR$/preview/xml-converter/xml-converter.iml" />
     </modules>

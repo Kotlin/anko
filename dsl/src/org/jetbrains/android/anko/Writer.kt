@@ -109,7 +109,7 @@ class Writer(private val renderer: Renderer) {
     }
 
     private fun writeStatic(subsystem: AnkoFile) {
-        val file = File("props/static/src/${subsystem.filename}")
+        val file = File("dsl/static/src/${subsystem.filename}")
         val contents = file.readLines()
         writeToFile(config.getOutputFile(subsystem), contents, "", false)
     }
