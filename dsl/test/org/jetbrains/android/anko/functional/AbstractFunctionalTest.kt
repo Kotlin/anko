@@ -52,8 +52,8 @@ public abstract class AbstractFunctionalTest {
         val generator = DSLGenerator(intVersion, version, inputJarFiles, settings)
         generator.run()
 
-        val actual = settings.getOutputFile(subsystem).readText()
-        val expectedPath = ("dsl/testData/functional/$version/$testDataFile")
+        val actual = settings.getOutputFile(subsystem).readText().replace("\r", "")
+        val expectedPath = ("dsl/testData/functional/$version/$testDataFile").replace("\r", "")
         val expected = loadOrCreate(File(expectedPath), actual)
 
         assertTrue(expected.length() > 0)
