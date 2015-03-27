@@ -35,7 +35,7 @@ public open class CompileTestFixture : Assert() {
     class ProcResult(val stdout: String, val stderr: String, val exitCode: Int)
 
     companion object {
-        private val kotlincFilename = "lib/Kotlin/kotlinc/bin/kotlinc-jvm"
+        private val kotlincFilename = "lib/Kotlin/kotlinc/bin/kotlinc-jvm" + (if (isWindows()) ".bat" else "")
 
         private val versions = File("workdir/original/").listFiles(AndroidVersionDirectoryFilter())
         private val versionJars = hashMapOf<File, File>()
@@ -72,7 +72,7 @@ public open class CompileTestFixture : Assert() {
             val outputJarFile = File.createTempFile("lib-" + ver.getName(), ".jar")
             versionJars[ver] = outputJarFile
 
-            val kotlincArgs = array(kotlincFilename, "-d", outputJarFile.getAbsolutePath(), "-classpath", classpath.toString())
+            val kotlincArgs = array(File(kotlincFilename).getAbsolutePath(), "-d", outputJarFile.getAbsolutePath(), "-classpath", classpath.toString())
             val args = arrayListOf(*kotlincArgs)
             for (file in props.tmpFiles.values()) {
                 args.add(file.getAbsolutePath())
@@ -105,6 +105,11 @@ public open class CompileTestFixture : Assert() {
 
             p.waitFor()
             return ProcResult(output.toString(), errors.toString(), p.exitValue())
+        }
+
+        private fun isWindows(): Boolean {
+            val osName = System.getProperty("os.name").toLowerCase()
+            return osName.contains("win")
         }
     }
 
@@ -160,7 +165,7 @@ public open class CompileTestFixture : Assert() {
                 .joinToString(File.pathSeparator)
 
         val tmpFile = File.createTempFile("compile", ".jar")
-        val kotlincArgs = array(kotlincFilename, "-d", tmpFile.getAbsolutePath(),
+        val kotlincArgs = array(File(kotlincFilename).getAbsolutePath(), "-d", tmpFile.getAbsolutePath(),
                 "-classpath", classpath.toString(), testData.getPath())
         val args = arrayListOf(*kotlincArgs)
         val res = runProcess(args.copyToArray(), compiler = true)
