@@ -1,12 +1,11 @@
 Building Anko
 ===========
 
-Build instructions described here are for Linux or OS X. If you're building Anko using Windows, some steps may differ.
-
 Required tools:
 
+* JDK 1.6
 * Android SDK (with platforms 15, 19, 21 installed)
-* IntelliJ IDEA
+* IntelliJ IDEA 14.0+
 * Maven
 * Gradle
 
@@ -24,7 +23,7 @@ git clone git@github.com:yanex/anko.git && cd anko
 ant -f update_dependencies.xml
 ```
 
-**3.** Now it's time to open Anko project in IntelliJ IDEA (14 version is recommended, both Community and Ultimate edition are ok).
+**3.** Now it's time to open Anko project in IntelliJ IDEA (both Community and Ultimate editions are ok).
 
 Execute a run configuration named `Collect android.jar` and then `Generate`.
 
@@ -36,4 +35,4 @@ Execute a run configuration named `Collect android.jar` and then `Generate`.
 </tr>
 </table>
 
-**4.** After doing this a number of directories with generated sources must be present in `workdir/gen` directory. You can build them all together by launching a `build-jar.sh` script. Script publishes all Anko versions in the local Maven repository and creates a zip files in `gen/zip` directory.
+**4.** After doing this a number of directories with generated sources must be present in `workdir/gen` directory. You can build them all together by launching a `build-jar.sh` script. Script publishes all Anko versions in the local Maven repository and creates a zip files in `workdir/gen/zip` directory.
