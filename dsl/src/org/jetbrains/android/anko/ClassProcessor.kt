@@ -25,6 +25,7 @@ import java.util.jar.JarEntry
 
 class ClassProcessor(val jars: List<String>) {
 
+    private class Shirt<T>
     private class ComplexIterator<T>(iterators: List<Iterator<T>>): Iterator<T> {
 
         private val internalIterator = iterators.iterator()
