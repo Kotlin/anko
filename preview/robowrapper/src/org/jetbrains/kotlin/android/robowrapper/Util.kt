@@ -18,6 +18,8 @@ package org.jetbrains.kotlin.android.robowrapper
 
 import java.text.DecimalFormat
 import android.app.Application
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 private val DEBUG = false
 
@@ -26,7 +28,7 @@ public class UnsupportedClassException : RuntimeException()
 private fun Float.prettifyNumber() = toDouble().prettifyNumber()
 
 private fun Double.prettifyNumber(): String {
-    val df = DecimalFormat("#")
+    val df = DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH))
     df.setMaximumFractionDigits(8)
     var value = df.format(this)
     if (value.startsWith(".")) value = "0$value"
