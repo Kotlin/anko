@@ -231,9 +231,6 @@ But if you really want to use your view as a top-level widget without a UI wrapp
 fun Activity.customView(init: View.() -> Unit = {}) =
   __dslAddView({View(it)}, init, this)
 
-fun Fragment.customView(init: View.() -> Unit = {}) =
-  __dslAddView({View(it)}, init, this)
-
 fun Context.customView(init: View.() -> Unit = {}) =
   __dslAddView({View(it)}, init, this)
 
