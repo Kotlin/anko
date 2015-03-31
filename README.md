@@ -40,6 +40,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [UI wrapper](#ui-wrapper)
 	* [Include tag](#include-tag)
 	* [Styles](#styles)
+* [Anko Preview Plugin](doc/PREVIEW.md)
 * [Advanced topics](doc/ADVANCED.md)
 	* [Intents](doc/ADVANCED.md#intents)
 	* [Services](doc/ADVANCED.md#services)
