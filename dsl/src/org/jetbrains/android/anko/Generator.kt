@@ -66,14 +66,14 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
         .sortBy { it.name }
 
     val listeners = availableMethods
-            .filter { it.clazz.isView && it.method.isPublic && it.method.isListener }
+            .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter }
             .map { makeListener(it) }
             .sortBy { it.setter.identifier }
 
     private val propertyGetters = generate(PROPERTIES) {
         availableMethods
                 .filter { it.clazz.isView && !(it.clazz.isViewGroup && it.clazz.isAbstract)
-                        && it.method.isGetter() && !it.method.isOverridden
+                        && it.method.isGetter() && !it.method.isOverridden && !it.method.isListenerGetter
                 }
                 .sortBy { it.identifier }
     }
@@ -182,6 +182,9 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
     private fun hasLayoutParams(viewGroup: ClassNode): Boolean {
         return !viewGroup.isAbstract && extractLayoutParams(viewGroup) != null
     }
+
+    private val MethodNode.isListenerGetter: Boolean
+        get() = name.startsWith("get") && name.endsWith("Listener")
 
     private val ClassNode.isView: Boolean
         get() = isView(classTree)

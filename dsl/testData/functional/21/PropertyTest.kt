@@ -112,10 +112,6 @@ public var android.view.TextureView.surfaceTexture: android.graphics.SurfaceText
   get() = getSurfaceTexture()
   set(v) = setSurfaceTexture(v)
 
-public var android.view.TextureView.surfaceTextureListener: android.view.TextureView.SurfaceTextureListener?
-  get() = getSurfaceTextureListener()
-  set(v) = setSurfaceTextureListener(v)
-
 public val android.view.TextureView.available: Boolean
   get() = isAvailable()
 
@@ -295,9 +291,6 @@ public var android.view.View.nextFocusRightId: Int
 public var android.view.View.nextFocusUpId: Int
   get() = getNextFocusUpId()
   set(v) = setNextFocusUpId(v)
-
-public val android.view.View.onFocusChangeListener: android.view.View.OnFocusChangeListener?
-  get() = getOnFocusChangeListener()
 
 public var android.view.View.outlineProvider: android.view.ViewOutlineProvider?
   get() = getOutlineProvider()
@@ -731,21 +724,9 @@ public var android.widget.AutoCompleteTextView.dropDownWidth: Int
   get() = getDropDownWidth()
   set(v) = setDropDownWidth(v)
 
-public val android.widget.AutoCompleteTextView.itemClickListener: android.widget.AdapterView.OnItemClickListener?
-  get() = getItemClickListener()
-
-public val android.widget.AutoCompleteTextView.itemSelectedListener: android.widget.AdapterView.OnItemSelectedListener?
-  get() = getItemSelectedListener()
-
 public var android.widget.AutoCompleteTextView.listSelection: Int
   get() = getListSelection()
   set(v) = setListSelection(v)
-
-public val android.widget.AutoCompleteTextView.onItemClickListener: android.widget.AdapterView.OnItemClickListener?
-  get() = getOnItemClickListener()
-
-public val android.widget.AutoCompleteTextView.onItemSelectedListener: android.widget.AdapterView.OnItemSelectedListener?
-  get() = getOnItemSelectedListener()
 
 public var android.widget.AutoCompleteTextView.threshold: Int
   get() = getThreshold()
@@ -850,9 +831,6 @@ public var android.widget.Chronometer.base: Long
 public var android.widget.Chronometer.format: String?
   get() = getFormat()
   set(v) = setFormat(v)
-
-public val android.widget.Chronometer.onChronometerTickListener: android.widget.Chronometer.OnChronometerTickListener?
-  get() = getOnChronometerTickListener()
 
 public var android.widget.CompoundButton.buttonTintList: android.content.res.ColorStateList?
   get() = getButtonTintList()
@@ -1251,9 +1229,6 @@ public var android.widget.RatingBar.numStars: Int
   get() = getNumStars()
   set(v) = setNumStars(v)
 
-public val android.widget.RatingBar.onRatingBarChangeListener: android.widget.RatingBar.OnRatingBarChangeListener?
-  get() = getOnRatingBarChangeListener()
-
 public var android.widget.RatingBar.rating: Float
   get() = getRating()
   set(v) = setRating(v)
@@ -1559,10 +1534,6 @@ public var android.widget.TextView.includeFontPadding: Boolean
 public var android.widget.TextView.inputType: Int
   get() = getInputType()
   set(v) = setInputType(v)
-
-public var android.widget.TextView.keyListener: android.text.method.KeyListener?
-  get() = getKeyListener()
-  set(v) = setKeyListener(v)
 
 public val android.widget.TextView.layout: android.text.Layout?
   get() = getLayout()
