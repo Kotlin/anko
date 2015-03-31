@@ -1,104 +1,3 @@
-public var android.app.MediaRouteButton.routeTypes: Int
-  get() = getRouteTypes()
-  set(v) = setRouteTypes(v)
-
-public val android.appwidget.AppWidgetHostView.appWidgetId: Int
-  get() = getAppWidgetId()
-
-public val android.appwidget.AppWidgetHostView.appWidgetInfo: android.appwidget.AppWidgetProviderInfo?
-  get() = getAppWidgetInfo()
-
-public var android.gesture.GestureOverlayView.fadeOffset: Long
-  get() = getFadeOffset()
-  set(v) = setFadeOffset(v)
-
-public var android.gesture.GestureOverlayView.gesture: android.gesture.Gesture?
-  get() = getGesture()
-  set(v) = setGesture(v)
-
-public var android.gesture.GestureOverlayView.gestureColor: Int
-  get() = getGestureColor()
-  set(v) = setGestureColor(v)
-
-public val android.gesture.GestureOverlayView.gesturePath: android.graphics.Path?
-  get() = getGesturePath()
-
-public var android.gesture.GestureOverlayView.gestureStrokeAngleThreshold: Float
-  get() = getGestureStrokeAngleThreshold()
-  set(v) = setGestureStrokeAngleThreshold(v)
-
-public var android.gesture.GestureOverlayView.gestureStrokeLengthThreshold: Float
-  get() = getGestureStrokeLengthThreshold()
-  set(v) = setGestureStrokeLengthThreshold(v)
-
-public var android.gesture.GestureOverlayView.gestureStrokeSquarenessTreshold: Float
-  get() = getGestureStrokeSquarenessTreshold()
-  set(v) = setGestureStrokeSquarenessTreshold(v)
-
-public var android.gesture.GestureOverlayView.gestureStrokeType: Int
-  get() = getGestureStrokeType()
-  set(v) = setGestureStrokeType(v)
-
-public var android.gesture.GestureOverlayView.gestureStrokeWidth: Float
-  get() = getGestureStrokeWidth()
-  set(v) = setGestureStrokeWidth(v)
-
-public var android.gesture.GestureOverlayView.orientation: Int
-  get() = getOrientation()
-  set(v) = setOrientation(v)
-
-public var android.gesture.GestureOverlayView.uncertainGestureColor: Int
-  get() = getUncertainGestureColor()
-  set(v) = setUncertainGestureColor(v)
-
-public var android.gesture.GestureOverlayView.eventsInterceptionEnabled: Boolean
-  get() = isEventsInterceptionEnabled()
-  set(v) = setEventsInterceptionEnabled(v)
-
-public var android.gesture.GestureOverlayView.fadeEnabled: Boolean
-  get() = isFadeEnabled()
-  set(v) = setFadeEnabled(v)
-
-public var android.gesture.GestureOverlayView.gestureVisible: Boolean
-  get() = isGestureVisible()
-  set(v) = setGestureVisible(v)
-
-public val android.gesture.GestureOverlayView.gesturing: Boolean
-  get() = isGesturing()
-
-public val android.inputmethodservice.ExtractEditText.focused: Boolean
-  get() = isFocused()
-
-public val android.inputmethodservice.ExtractEditText.inputMethodTarget: Boolean
-  get() = isInputMethodTarget()
-
-public var android.inputmethodservice.KeyboardView.keyboard: android.inputmethodservice.Keyboard?
-  get() = getKeyboard()
-  set(v) = setKeyboard(v)
-
-public var android.inputmethodservice.KeyboardView.previewEnabled: Boolean
-  get() = isPreviewEnabled()
-  set(v) = setPreviewEnabled(v)
-
-public var android.inputmethodservice.KeyboardView.proximityCorrectionEnabled: Boolean
-  get() = isProximityCorrectionEnabled()
-  set(v) = setProximityCorrectionEnabled(v)
-
-public val android.inputmethodservice.KeyboardView.shifted: Boolean
-  get() = isShifted()
-
-public var android.opengl.GLSurfaceView.debugFlags: Int
-  get() = getDebugFlags()
-  set(v) = setDebugFlags(v)
-
-public var android.opengl.GLSurfaceView.preserveEGLContextOnPause: Boolean
-  get() = getPreserveEGLContextOnPause()
-  set(v) = setPreserveEGLContextOnPause(v)
-
-public var android.opengl.GLSurfaceView.renderMode: Int
-  get() = getRenderMode()
-  set(v) = setRenderMode(v)
-
 public val android.view.SurfaceView.holder: android.view.SurfaceHolder?
   get() = getHolder()
 
@@ -119,13 +18,6 @@ public var android.view.TextureView.opaque: Boolean
   get() = isOpaque()
   set(v) = setOpaque(v)
 
-public var android.view.View.accessibilityLiveRegion: Int
-  get() = getAccessibilityLiveRegion()
-  set(v) = setAccessibilityLiveRegion(v)
-
-public val android.view.View.accessibilityNodeProvider: android.view.accessibility.AccessibilityNodeProvider?
-  get() = getAccessibilityNodeProvider()
-
 public var android.view.View.alpha: Float
   get() = getAlpha()
   set(v) = setAlpha(v)
@@ -133,9 +25,6 @@ public var android.view.View.alpha: Float
 public var android.view.View.animation: android.view.animation.Animation?
   get() = getAnimation()
   set(v) = setAnimation(v)
-
-public val android.view.View.applicationWindowToken: android.os.IBinder?
-  get() = getApplicationWindowToken()
 
 public var android.view.View.backgroundTintList: android.content.res.ColorStateList?
   get() = getBackgroundTintList()
@@ -168,12 +57,6 @@ public var android.view.View.contentDescription: CharSequence?
   get() = getContentDescription()
   set(v) = setContentDescription(v)
 
-public val android.view.View.context: android.content.Context?
-  get() = getContext()
-
-public val android.view.View.display: android.view.Display?
-  get() = getDisplay()
-
 public val android.view.View.drawableState: IntArray?
   get() = getDrawableState()
 
@@ -203,9 +86,6 @@ public var android.view.View.fitsSystemWindows: Boolean
   get() = getFitsSystemWindows()
   set(v) = setFitsSystemWindows(v)
 
-public val android.view.View.handler: android.os.Handler?
-  get() = getHandler()
-
 public val android.view.View.height: Int
   get() = getHeight()
 
@@ -223,9 +103,6 @@ public var android.view.View.importantForAccessibility: Int
 public var android.view.View.keepScreenOn: Boolean
   get() = getKeepScreenOn()
   set(v) = setKeepScreenOn(v)
-
-public val android.view.View.keyDispatcherState: android.view.KeyEvent.DispatcherState?
-  get() = getKeyDispatcherState()
 
 public var android.view.View.labelFor: Int
   get() = getLabelFor()
@@ -271,26 +148,6 @@ public var android.view.View.minimumHeight: Int
 public var android.view.View.minimumWidth: Int
   get() = getMinimumWidth()
   set(v) = setMinimumWidth(v)
-
-public var android.view.View.nextFocusDownId: Int
-  get() = getNextFocusDownId()
-  set(v) = setNextFocusDownId(v)
-
-public var android.view.View.nextFocusForwardId: Int
-  get() = getNextFocusForwardId()
-  set(v) = setNextFocusForwardId(v)
-
-public var android.view.View.nextFocusLeftId: Int
-  get() = getNextFocusLeftId()
-  set(v) = setNextFocusLeftId(v)
-
-public var android.view.View.nextFocusRightId: Int
-  get() = getNextFocusRightId()
-  set(v) = setNextFocusRightId(v)
-
-public var android.view.View.nextFocusUpId: Int
-  get() = getNextFocusUpId()
-  set(v) = setNextFocusUpId(v)
 
 public var android.view.View.outlineProvider: android.view.ViewOutlineProvider?
   get() = getOutlineProvider()
@@ -611,13 +468,6 @@ public var android.view.ViewStub.layoutInflater: android.view.LayoutInflater?
 public var android.view.ViewStub.layoutResource: Int
   get() = getLayoutResource()
   set(v) = setLayoutResource(v)
-
-public val android.webkit.WebView.accessibilityNodeProvider: android.view.accessibility.AccessibilityNodeProvider?
-  get() = getAccessibilityNodeProvider()
-
-public var android.webkit.WebView.certificate: android.net.http.SslCertificate?
-  get() = getCertificate()
-  set(v) = setCertificate(v)
 
 public val android.webkit.WebView.contentHeight: Int
   get() = getContentHeight()
@@ -1717,18 +1567,6 @@ public var android.widget.ToggleButton.textOff: CharSequence?
 public var android.widget.ToggleButton.textOn: CharSequence?
   get() = getTextOn()
   set(v) = setTextOn(v)
-
-public val android.widget.Toolbar.contentInsetEnd: Int
-  get() = getContentInsetEnd()
-
-public val android.widget.Toolbar.contentInsetLeft: Int
-  get() = getContentInsetLeft()
-
-public val android.widget.Toolbar.contentInsetRight: Int
-  get() = getContentInsetRight()
-
-public val android.widget.Toolbar.contentInsetStart: Int
-  get() = getContentInsetStart()
 
 public var android.widget.Toolbar.logo: android.graphics.drawable.Drawable?
   get() = getLogo()

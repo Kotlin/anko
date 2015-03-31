@@ -78,6 +78,7 @@ abstract class BaseGeneratorConfiguration {
 
     abstract val excludedClasses: Set<String>
     abstract val excludedMethods: Set<String>
+    abstract val excludedProperties: Set<String>
 
     public fun get(file: AnkoFile): Boolean = files.contains(file)
 
