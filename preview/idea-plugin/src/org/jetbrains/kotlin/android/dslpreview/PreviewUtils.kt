@@ -63,6 +63,12 @@ fun resolveJetClass(prob: PsiElement, cacheService: KotlinCacheService): JetClas
         if (descriptor is LazyJavaClassDescriptor) {
             val name = descriptor.fqName.asString()
             when (name) {
+                // Currently unsupported classes
+                "android.support.v7.app.ActionBarActivity" -> return false
+                "com.actionbarsherlock.app.SherlockActivity",
+                    "com.actionbarsherlock.app.SherlockListActivity",
+                    "com.actionbarsherlock.app.SherlockFragmentActivity" -> return false
+
                 "android.app.Activity" -> return true
                 "android.app.Fragment", "android.support.v4.app.Fragment" -> return true
                 else -> {}
