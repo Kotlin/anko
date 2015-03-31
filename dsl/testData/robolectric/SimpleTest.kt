@@ -36,7 +36,7 @@ public class RobolectricTest() {
         val button = activity.findViewById(2) as Button
 
         button.performClick()
-        assertEquals(textView.getText().toString(), "New text")
+        assertEquals("New text", textView.getText().toString())
 
         println("[COMPLETE]")
     }

@@ -59,7 +59,7 @@ public abstract class AbstractFunctionalTest {
 
         assertTrue(expected.length() > 0)
         assertTrue(actual.length() > 0)
-        assertEquals(actual, expected)
+        assertEquals(expected, actual)
     }
 
     protected fun runFunctionalTest(testDataFile: String, subsystem: AnkoFile, version: String) {

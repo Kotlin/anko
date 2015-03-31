@@ -80,8 +80,8 @@ public open class CompileTestFixture {
                 file.delete()
             }
 
-            assertEquals(res.stderr, "")
-            assertEquals(res.exitCode, 0)
+            assertEquals("", res.stderr)
+            assertEquals(0, res.exitCode)
             return props
         }
 
@@ -167,8 +167,8 @@ public open class CompileTestFixture {
         val args = arrayListOf(*kotlincArgs)
         val res = runProcess(args.copyToArray(), compiler = true)
 
-        assertEquals(res.stderr, "")
-        assertEquals(res.exitCode, 0)
+        assertEquals("", res.stderr)
+        assertEquals(0, res.exitCode)
 
         return tmpFile
     }
