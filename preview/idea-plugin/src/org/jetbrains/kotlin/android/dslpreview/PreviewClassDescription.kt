@@ -47,7 +47,7 @@ public class PreviewPsiClassDescription(val psiClass: PsiClass, androidFacet: An
 
 public class PreviewJetClassDescription(val jetClass: JetClass, androidFacet: AndroidFacet): PreviewClassDescription(androidFacet) {
     override val packageName: String = jetClass.getContainingJetFile().getPackageFqName().asString()
-    override val name: String = jetClass.getName()
+    override val name: String = jetClass.getName()!!
     override val qualifiedName: String = packageName + "." + name
 
     override fun toString(): String {

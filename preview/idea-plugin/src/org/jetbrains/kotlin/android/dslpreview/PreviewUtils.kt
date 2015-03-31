@@ -76,7 +76,7 @@ fun resolveJetClass(prob: PsiElement, cacheService: KotlinCacheService): JetClas
         }
 
         for (type in descriptor.getTypeConstructor().getSupertypes()) {
-            val superTypeDescriptor = type.getConstructor().getDeclarationDescriptor()
+            val superTypeDescriptor = type.getConstructor().getDeclarationDescriptor() ?: return false
             if (isClassSupported(superTypeDescriptor)) return true
         }
         return false

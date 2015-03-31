@@ -176,7 +176,8 @@ public class DslWorker(
         override fun run(progressIndicator: ProgressIndicator) {
             progressIndicator.setIndeterminate(true)
 
-            val pluginDirectory = File(PathManager.getJarPathForClass(javaClass)).getParent()
+            val pluginJarFile = PathManager.getJarPathForClass(javaClass)!!
+            val pluginDirectory = File(pluginJarFile).getParent()
             val policyFile = File(DependencyUtils.getDependencyDirectory(), "custom.policy")
 
             synchronized (ROBOWRAPPER_LOCK) {

@@ -322,17 +322,19 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
             return if (index<0) className else className.substring(0, index)
         }
 
-        fun isValidAncestor(clazz: PsiClass) =
-                !clazz.isEnum() &&
-                !clazz.isInterface() &&
-                clazz.getContainingClass() == null &&
-                facetPackageNames.contains(getPackageNameNaive(clazz.getQualifiedName()))
+        fun isValidAncestor(clazz: PsiClass): Boolean {
+            val fqName = clazz.getQualifiedName()
+            return fqName != null && !clazz.isEnum() &&
+                    !clazz.isInterface() &&
+                    clazz.getContainingClass() == null &&
+                    facetPackageNames.contains(getPackageNameNaive(fqName))
+        }
 
         try {
             return ClassInheritorsSearch.search(baseClasses[0])
                     .findAll()
                     .filter(::isValidAncestor)
-                    .map { it to it.getModule().resolveAndroidFacet() }
+                    .map { it to it.getModule()?.resolveAndroidFacet() }
                     .filter { it.second != null }
                     .map { PreviewPsiClassDescription(it.first, it.second!!) }
         }
@@ -343,7 +345,7 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
 
     override fun isApplicableEditor(textEditor: TextEditor) = true
 
-    private fun PsiClass.getModule(): Module {
+    private fun PsiClass.getModule(): Module? {
         return ProjectRootManager.getInstance(myProject).getFileIndex()
                 .getModuleForFile(getContainingFile().getVirtualFile())
     }
@@ -359,7 +361,7 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
     }
 
     private fun showNotification(text: String, messageType: MessageType) {
-        val statusBar = WindowManager.getInstance().getStatusBar(myProject)
+        val statusBar = WindowManager.getInstance().getStatusBar(myProject) ?: return
 
         JBPopupFactory.getInstance()
                 .createHtmlTextBalloonBuilder(text, messageType, null)

@@ -32,7 +32,8 @@ class RobowrapperContext(description: PreviewClassDescription) {
     val activityClassName = description.qualifiedName
 
     private val mainSourceProvider = androidFacet.getMainIdeaSourceProvider()
-    private val applicationPackage = androidFacet.getManifest().getPackage().getXmlAttributeValue().getValue()
+    private val applicationPackage = androidFacet.getManifest()
+            ?.getPackage()?.getXmlAttributeValue()?.getValue() ?: "app"
 
     private val apiLevel = androidFacet.getAndroidModuleInfo().getTargetSdkVersion().getApiLevel()
     private val androidAll = DependencyUtils.getAndroidAllVersionPath(apiLevel)
@@ -41,7 +42,11 @@ class RobowrapperContext(description: PreviewClassDescription) {
     private val resDirectory = mainSourceProvider.getResDirectories().firstOrNull()
 
     private val activities by Delegates.lazy {
-        androidFacet.getManifest().getApplication().getActivities().map { it.getActivityClass().toString() }
+        androidFacet.getManifest()
+                ?.getApplication()
+                ?.getActivities()
+                ?.map { it.getActivityClass().toString() }
+                ?: listOf()
     }
 
     private val manifest by Delegates.lazy { generateManifest() }
@@ -77,11 +82,12 @@ class RobowrapperContext(description: PreviewClassDescription) {
     public fun makeArguments(): List<String> {
         val module = androidFacet.getModule()
         val roots = ModuleRootManager.getInstance(module).orderEntries().classes().getRoots()
-        val androidSdkDirectory = androidFacet.getSdkData().getLocation().getPath()
+        val androidSdkDirectory = androidFacet.getSdkData()?.getLocation()?.getPath()
 
-        val pluginDirectory = File(PathManager.getJarPathForClass(javaClass)).getParent()
+        val pluginJarPath = PathManager.getJarPathForClass(javaClass)!!
+        val pluginDirectory = File(pluginJarPath).getParent()
         val robowrapperDirectory = File(
-            File(PathManager.getJarPathForClass(javaClass)).getParentFile().getParentFile(), "robowrapper/")
+            File(pluginJarPath).getParentFile().getParentFile(), "robowrapper/")
 
         val pluginDependencies = listOf(
             "gson-2.3.jar",
