@@ -9,10 +9,10 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
-    <orderEntry type="library" name="testng-6.7" level="project" />
     <orderEntry type="library" exported="" name="asm-4.2" level="project" />
-    <orderEntry type="library" name="junit-4.11" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
     <orderEntry type="library" name="jeromq-0.3.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="junit-4.11" level="project" />
+    <orderEntry type="library" scope="TEST" name="hamcrest-all-1.3" level="project" />
   </component>
 </module>

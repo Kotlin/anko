@@ -16,11 +16,7 @@
 
 package org.jetbrains.android.anko.compile
 
-import org.testng.Assert
 import java.io.File
-import org.testng.annotations.BeforeClass
-import org.testng.annotations.AfterMethod
-import org.testng.annotations.AfterClass
 import org.jetbrains.android.anko.AnkoFile
 import org.jetbrains.android.anko.DSLGenerator
 import java.io.BufferedReader
@@ -29,8 +25,9 @@ import org.jetbrains.android.anko.utils.JarFileFilter
 import java.io.InputStreamReader
 import kotlin.platform.platformStatic
 import org.jetbrains.android.anko.TestGeneratorConfiguration
+import org.junit.Assert.*
 
-public open class CompileTestFixture : Assert() {
+public open class CompileTestFixture {
 
     class ProcResult(val stdout: String, val stderr: String, val exitCode: Int)
 
@@ -42,7 +39,7 @@ public open class CompileTestFixture : Assert() {
 
         platformStatic
         public open fun setUpClass() {
-            Assert.assertTrue(File(kotlincFilename).exists())
+            assertTrue(File(kotlincFilename).exists())
 
             if (versionJars.isEmpty()) {
                 for (ver in versions) {
@@ -83,8 +80,8 @@ public open class CompileTestFixture : Assert() {
                 file.delete()
             }
 
-            Assert.assertEquals(res.stderr, "")
-            Assert.assertEquals(res.exitCode, 0)
+            assertEquals(res.stderr, "")
+            assertEquals(res.exitCode, 0)
             return props
         }
 
@@ -114,12 +111,12 @@ public open class CompileTestFixture : Assert() {
     }
 
     protected fun runCompileTest(testData: File, ver: File) {
-        Assert.assertTrue(testData.exists())
+        assertTrue(testData.exists())
         compile(testData, ver).delete()
     }
 
     protected fun runRobolectricTest(testDataFile: File, ver: File) {
-        Assert.assertTrue(testDataFile.exists())
+        assertTrue(testDataFile.exists())
 
         val lib = File("lib/")
         val tmpFile = compile(testDataFile, ver, listOf(
@@ -153,7 +150,7 @@ public open class CompileTestFixture : Assert() {
         )
 
         val result = runProcess(args, false)
-        Assert.assertTrue(result.stderr.isEmpty())
+        assertTrue(result.stderr.isEmpty())
     }
 
     private fun compile(testData: File, ver: File, additionalLibraries: List<File>? = null): File {
@@ -170,8 +167,8 @@ public open class CompileTestFixture : Assert() {
         val args = arrayListOf(*kotlincArgs)
         val res = runProcess(args.copyToArray(), compiler = true)
 
-        Assert.assertEquals(res.stderr, "")
-        Assert.assertEquals(res.exitCode, 0)
+        assertEquals(res.stderr, "")
+        assertEquals(res.exitCode, 0)
 
         return tmpFile
     }

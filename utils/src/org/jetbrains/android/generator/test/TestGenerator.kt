@@ -7,45 +7,45 @@ import org.jetbrains.android.anko.utils.Buffer
 
 public fun Context.generate() {
 
-    functionalTest("ComplexListenerClassTest", AnkoFile.LISTENERS) {
+    functionalDslTest("ComplexListenerClassTest", AnkoFile.LISTENERS) {
         file(AnkoFile.LISTENERS)
         tune(ConfigurationTune.COMPLEX_LISTENER_CLASSES)
     }
 
-    functionalTest("ComplexListenerSetterTest", AnkoFile.LISTENERS) {
+    functionalDslTest("ComplexListenerSetterTest", AnkoFile.LISTENERS) {
         file(AnkoFile.LISTENERS)
         tune(ConfigurationTune.COMPLEX_LISTENER_SETTERS)
     }
 
-    functionalTest("HelperConstructorTest", AnkoFile.VIEWS) {
+    functionalDslTest("HelperConstructorTest", AnkoFile.VIEWS) {
         tune(ConfigurationTune.HELPER_CONSTRUCTORS)
     }
 
-    functionalTest("LayoutsTest", AnkoFile.LAYOUTS) {
+    functionalDslTest("LayoutsTest", AnkoFile.LAYOUTS) {
         file(AnkoFile.LAYOUTS)
     }
 
-    functionalTest("ViewTest", AnkoFile.VIEWS) {
+    functionalDslTest("ViewTest", AnkoFile.VIEWS) {
         file(AnkoFile.VIEWS)
         tune(ConfigurationTune.TOP_LEVEL_DSL_ITEMS)
     }
 
-    functionalTest("PropertyTest", AnkoFile.PROPERTIES) {
+    functionalDslTest("PropertyTest", AnkoFile.PROPERTIES) {
         file(AnkoFile.PROPERTIES)
     }
 
-    functionalTest("ServicesTest", AnkoFile.SERVICES) {
+    functionalDslTest("ServicesTest", AnkoFile.SERVICES) {
         file(AnkoFile.SERVICES)
     }
 
-    functionalTest("SimpleListenerTest", AnkoFile.LISTENERS) {
+    functionalDslTest("SimpleListenerTest", AnkoFile.LISTENERS) {
         file(AnkoFile.LISTENERS)
         tune(ConfigurationTune.SIMPLE_LISTENERS)
     }
 
-    compileTests(ktFiles("robolectric"), "Robolectric")
+    dslCompileTests(ktFiles("robolectric"), "Robolectric")
 
-    compileTests(ktFiles("compile"), "Compile")
+    dslCompileTests(ktFiles("compile"), "Compile")
 }
 
 private fun ktFiles(category: String) = File("dsl/testData/$category")

@@ -25,9 +25,6 @@
         <get src="http://repo1.maven.org/maven2/org/ow2/asm/asm-debug-all/4.2/asm-debug-all-4.2.jar"
              dest="lib/asm-4.2.jar" usetimestamp="true"/>
 
-        <get src="http://repo1.maven.org/maven2/org/testng/testng/6.7/testng-6.7.jar"
-             dest="lib/testng-6.7.jar" usetimestamp="true"/>
-
         <get src="http://central.maven.org/maven2/org/zeromq/jeromq/0.3.4/jeromq-0.3.4.jar"
              dest="lib/jeromq-0.3.4.jar" usetimestamp="true"/>
 

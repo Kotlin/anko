@@ -5,18 +5,18 @@ import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.AnkoFile
 import org.jetbrains.android.anko.ConfigurationTune
 
-private fun Context.functionalTest(name: String, mainAnkoFile: AnkoFile, configInit: TestConfiguration.() -> Unit = {}) {
+private fun Context.functionalDslTest(name: String, mainAnkoFile: AnkoFile, configInit: TestConfiguration.() -> Unit = {}) {
     val testConfiguration = TestConfiguration()
     testConfiguration.configInit()
 
-    val dir = File("./test/" + basePackage.replace('.', '/'), "/functional")
+    val dir = File("./dsl/test/" + basePackage.replace('.', '/'), "/functional")
     val testFile = File(dir, "Generated${firstCapital(name)}.kt")
 
     if (!testFile.exists()) {
         testFile.writeText(buffer {
             line("package $basePackage.functional\n")
             line("import $basePackage.*")
-            line("import org.testng.annotations.Test\n")
+            line("import org.junit.Test\n")
             line("public class $name : AbstractFunctionalTest() {")
             line("private val testDataFile = \"$name.kt\"\n")
             line("override fun initSettings(settings: BaseGeneratorConfiguration) {")
@@ -40,8 +40,8 @@ private fun Context.functionalTest(name: String, mainAnkoFile: AnkoFile, configI
     }
 }
 
-private fun Context.compileTests(files: List<String>, category: String) {
-    val dir = File("./test/" + basePackage.replace('.', '/'), "/${category.toLowerCase()}")
+private fun Context.dslCompileTests(files: List<String>, category: String) {
+    val dir = File("./dsl/test/" + basePackage.replace('.', '/'), "/${category.toLowerCase()}")
     val testFile = File(dir, "Generated${category}Test.kt")
 
     if (!testFile.exists()) {
@@ -49,10 +49,10 @@ private fun Context.compileTests(files: List<String>, category: String) {
             line("package $basePackage.${category.toLowerCase()}\n").nl()
             line("import $basePackage.*")
             line("import $basePackage.compile.CompileTestFixture")
-            line("import org.testng.annotations.*\n")
+            line("import org.junit.*\n")
             line("import kotlin.platform.platformStatic").nl()
             line("public class Generated${category}Test : Abstract${category}Test() {")
-            line("class object {")
+            line("companion object {")
             line("  BeforeClass platformStatic fun setUpClass() = CompileTestFixture.setUpClass()")
             line("  AfterClass platformStatic fun tearDownClass() = CompileTestFixture.tearDownClass()")
             line("}").nl()
@@ -75,7 +75,7 @@ fun main(args: Array<String>) {
             ?.map { it.name }
             ?: listOf()
 
-    val testVersions = File("./testData/functional/")
+    val testVersions = File("./dsl/testData/functional/")
         .listFiles { it.isDirectory() && it.name.matches("\\d+s?") }
         ?.map { it.name }
         ?: listOf()

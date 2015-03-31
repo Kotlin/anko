@@ -17,9 +17,9 @@
 package org.jetbrains.android.anko;
 
 import org.objectweb.asm.tree.ClassNode;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.*;
+
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,7 @@ public class ClassTreeTest extends Assert {
     private final ArrayList<ClassNode> classes = new ArrayList<ClassNode>();
     private ArrayList<ClassNode> shuffledClasses;
 
-    @BeforeMethod
+    @Before
     public void setUp() throws Exception {
         classes.clear();
         classes.add(new SimpleClassNode("java.lang.Object", null));
@@ -85,7 +85,7 @@ public class ClassTreeTest extends Assert {
         assertFalse(tree.isSuccessorOf(classes.get(0), "java.lang.Object"));
     }
 
-    @Test(expectedExceptions = NoSuchClassException.class)
+    @Test(expected = NoSuchClassException.class)
     public void testNoSuchClassException() throws Exception {
         ClassTree tree = new ClassTree();
         ClassNode cn = new ClassNode();
