@@ -45,6 +45,8 @@ import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.android.uipreview.AndroidLayoutPreviewToolWindowManager
 
 import com.android.tools.idea.configurations.ConfigurationListener
+import com.intellij.compiler.impl.ModuleCompileScope
+import com.intellij.compiler.impl.ProjectCompileScope
 import com.intellij.openapi.actionSystem.AnActionEvent
 import org.jetbrains.android.sdk.AndroidTargetData
 
@@ -257,19 +259,23 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
 
         val actualSourceFileModification = sourceFileModificationTracker.getModificationCount()
         if (actualSourceFileModification != lastSourceFileModification) {
-            val module = ctx!!.androidFacet.getModule()
-            CompilerManager.getInstance(module.getProject()).make(module, object : CompileStatusNotification {
+            val notification = object : CompileStatusNotification {
 
                 override fun finished(aborted: Boolean, errors: Int, warnings: Int, compileContext: CompileContext) {
                     if (!aborted && errors == 0) {
                         lastSourceFileModification = actualSourceFileModification
                         myDslWorker?.exec(ctx!!)
-                    }
-                    else if (errors > 0) {
+                    } else if (errors > 0) {
                         showNotification("Build completed with errors.", MessageType.ERROR)
                     }
                 }
-            })
+            }
+            if (ctx!!.androidFacet.isGradleProject()) {
+                CompilerManager.getInstance(myProject).make(ProjectCompileScope(myProject), notification)
+            } else {
+                val module = ctx!!.androidFacet.getModule()
+                CompilerManager.getInstance(myProject).make(module, notification)
+            }
         }
         else {
             myDslWorker?.exec(ctx!!)
