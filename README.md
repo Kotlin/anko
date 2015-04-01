@@ -57,13 +57,13 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 
 By default, UI in Android is written using XML. That is inconvenient in the following ways:
 
-* It is not typesafe;
-* And not null-safe;
-* It forces you to write almost *the same code* for every layout you made;
-* XML is parsed on device wasting CPU time and battery;
-* Above all, it allows no code reuse.
+* It is not typesafe
+* It is not null-safe
+* It forces you to write almost *the same code* for every layout you make
+* XML is parsed on the device wasting CPU time and battery
+* Most of all, it allows no code reuse.
 
-Well, you can create UI programmatically but nobody does that because it looks ugly and is extremely hard to maintain. Here's a plain Kotlin version (one in Java is even longer):
+While you can create UI programmatically, it's hardly done because it's somewhat ugly and hard to maintain. Here's a plain Kotlin version (one in Java is even longer):
 
 ```kotlin
 val act = this
@@ -79,19 +79,26 @@ layout.addView(name)
 layout.addView(button)
 ```
 
-A DSL makes the same logic easy to read, easy to write and there're no runtime overhead. Just try it!
+A DSL makes the same logic easy to read, easy to write and there is no runtime overhead. Here it is again:
+
+```kotlin
+verticalLayout {
+  val name = editText()
+  button("Say Hello") {
+    onClick { toast("Hello, ${name.text}!") }
+  }
+}
+```
 
 ### Why not Scaloid?
 
-[Scaloid](https://github.com/pocorall/scaloid) is a similar library for Scala, with lots of cool stuff supported.
-But Android and Scala are not very good friends: Scala compiler is dreadfully slow, Android sbt plugin is full of bugs, and because Scala library is enormous you have to use tools such as ProGuard even when debugging your app.
+[Scaloid](https://github.com/pocorall/scaloid) is a similar library for Scala, with lots of cool features targeted at Scala developers. Anko on the other hand is primarily targeted at Java and Kotlin developers.
 
-Finally, **Scaloid manages a subclass for every single `View` in Android widget hierarchy** so it is not easy to make new DSL constructs for your own `View`s. Also, it consumes lots of memory without no good reason.
 
 ### Supporting existing code
 
 You don't have to rewrite all your UI with Anko. You can keep your old classes written in Java.
-Moreover, if you still want (or have) to write a Kotlin activity class and inflate an XML layout for some reason, you can use View properties, which would make your life better:
+Moreover, if you still want (or have) to write a Kotlin activity class and inflate an XML layout for some reason, you can use View properties, which would make things easier:
 
 ```kotlin
 // Same as findViewById(), simpler to use
@@ -102,9 +109,9 @@ name.onClick { /*do something*/ }
 
 ### How it works
 
-There is no :tophat: actually, Anko consists of some Kotlin [extension functions and properties](http://kotlinlang.org/docs/reference/extensions.html) arranged into *type-safe builders*, as described [here](http://kotlinlang.org/docs/reference/type-safe-builders.html).
+There is no :tophat:. Anko consists of some Kotlin [extension functions and properties](http://kotlinlang.org/docs/reference/extensions.html) arranged into *type-safe builders*, as described [under Type Safe Builders](http://kotlinlang.org/docs/reference/type-safe-builders.html).
 
-It's a depressing job to write all these extensions by hand so they're generated automatically using *android.jar* files from Android SDK as sources.
+Since it's somewhat tedious to write all these extensions by hand, they're generated automatically using *android.jar* files from Android SDK as sources.
 
 ### Is it extensible?
 
@@ -119,6 +126,7 @@ fun ViewManager.mapView(init: MapView.() -> Unit = {}) =
 ``{MapView(it)}`` is a factory function for your custom `View`. It accepts a `Context` instance.
 
 So now you can write this:
+
 ```kotlin
 frameLayout {
   val mapView = mapView().layoutParams(width = matchParent)
@@ -129,7 +137,7 @@ Also see [Extending Anko](#extending-anko) if you need to create top-level DSL v
 
 ### Using with Gradle
 
-There's a [small sample project](https://github.com/yanex/anko-demo-gradle) to show how to include Anko library into your Android Gradle project.
+There's a [small sample project](https://github.com/yanex/anko-demo-gradle) showing how to include Anko library into your Android Gradle project.
 
 Basically, all you have to do is to add an additional repository and a compile dependency:
 
@@ -154,13 +162,13 @@ If your project is not based on Gradle, you don't have to jump around with Maven
 
 ### Building Anko
 
-Instructions for building Anko are located [here](doc/BUILDING.md).
+Instructions for building Anko are located [under Building](doc/BUILDING.md).
 
 ## Understanding Anko
 
 As mentioned above, Anko is written in Kotlin. 
 In case you are not familiar with Kotlin, please refer to [kotlinlang.org](http://kotlinlang.org/docs/reference/). 
-Kotlin is similar enough to Java (but much better), so learning it will be easy.
+Kotlin is similar enough to Java, so learning it will be easy.
 
 ### Basics
 
@@ -199,9 +207,12 @@ override fun onCreate(savedInstanceState: Bundle?) {
 </tr>
 </table>
 
-`padding`, `hint` and `textSize` are [extension properties](http://kotlinlang.org/docs/reference/extensions.html#extension-properties). They exist for most `View` properties allowing you to write `text = "Some text"` instead of `setText("Some text")`.
+`padding`, `hint` and `textSize` are [extension properties](http://kotlinlang.org/docs/reference/extensions.html#extension-properties). They exist for most `View` properties allowing
+you to write `text = "Some text"` instead of `setText("Some text")`.
 
-`verticalLayout` (a `LinearLayout` but already with a `LinearLayout.VERTICAL` orientation), `editText` and `button` are [extension functions](http://kotlinlang.org/docs/reference/extensions.html). Such functions also exist for almost every `View` in Android framework, and they work in `Activities`, `Fragments` (both default and that from `android.support` package) and even for `Context`.
+`verticalLayout` (a `LinearLayout` but already with a `LinearLayout.VERTICAL` orientation), `editText` and `button` are
+[extension functions](http://kotlinlang.org/docs/reference/extensions.html). Such functions also exist for almost every `View` in Android
+framework, and they work in `Activities`, `Fragments` (both default and that from `android.support` package) and even for `Context`.
 
 If you have a `Context` instance, you can write DSL constructs like this:
 
@@ -217,7 +228,8 @@ Variable `name` has type `EditText`.
 
 ### Helper methods
 
-As you probably noticed, the `button` function in the previous section accepts a `String` parameter. Such helper methods exist for some views such as `TextView`, `EditText`, `Button` or `ImageView`.
+As you probably noticed, the `button` function in the previous section accepts a `String` parameter. Such helper methods exist for some views such
+as `TextView`, `EditText`, `Button` or `ImageView`.
 
 If you don't need to set any properties for some particular `View`, you can omit `{}` and write `button("Ok")` or even just `button()`:
 
@@ -254,9 +266,10 @@ linearLayout {
 }
 ```
 
-If you specify `layoutParams`, but omit `width` and/or `height`, their default values are both `WRAP_CONTENT`. But you always can pass them explicitly, for sure. Use [named arguments](http://kotlinlang.org/docs/reference/functions.html#named-arguments), it's convenient.
+If you specify `layoutParams`, but omit `width` and/or `height`, their default values are both `WRAP_CONTENT`. But you always can pass them explicitly: use [named arguments](http://kotlinlang.org/docs/reference/functions.html#named-arguments).
 
 Some convenient helper properties to notice:
+
 - `horizontalMargin` sets both left and right margins, 
 - `verticalMargin` set top and bottom ones, and 
 - `margin` sets all for margins simultaneously.
@@ -277,7 +290,7 @@ relativeLayout {
 
 ### Listeners
 
-You can set listeners from the Anko code:
+You can set listeners from Anko code:
 
 ```kotlin
 button("Login") {
@@ -288,7 +301,8 @@ button("Login") {
 ```
 
 It would be the same as this:
-```kotlinm
+
+```kotlin
 button.setOnClickListener(object : OnClickListener {
   override fun onClick(v: View) {
     login(name, password)
@@ -313,6 +327,7 @@ seekBar.setOnSeekBarChangeListener(object: OnSeekBarChangeListener {
 ```
 
 And now with Anko:
+
 ```kotlin
 seekBar {
   onProgressChanged { (seekBar, progress, fromUser) ->
@@ -352,13 +367,17 @@ Function             | Result
 
 #### Dimensions
 
-Also, you can specify dimension values in **dip** (density-independent pixels) or in **sp** (scale-independent pixels): `dip(dipValue)` or `sp(spValue)`. Note that the `textSize` property already accepts **sp** (`textSize = 16f`). Use `px2dip` and `px2sp` to convert backwards.
+You can specify dimension values in **dip** (density-independent pixels) or in **sp** (scale-independent pixels): `dip(dipValue)` or `sp(spValue)`. Note that the `textSize`
+property already accepts **sp** (`textSize = 16f`). Use `px2dip` and `px2sp` to convert backwards.
 
 ### Instance shorthands
 
-Sometimes you need to pass a `Context` instance to some Android SDK method from your `Activity` code. Usually you can just use `this`, but what if you're inside the inner class? You would probably write `SomeActivity.this` in case of Java and `this@SomeActivity` if you're writing in Kotlin.
+Sometimes you need to pass a `Context` instance to some Android SDK method from your `Activity` code.
+Usually you can just use `this`, but what if you're inside the inner class? You would probably write `SomeActivity.this` in case of Java
+and `this@SomeActivity` if you're writing in Kotlin.
 
-With Anko you can just write `ctx`. It is an extension property which works both inside `Activity` and `Service` and is even accessible from `Fragment` (it uses `getActivity()` method under the hood). You can also get an `Activity` instance using `act` extension property.
+With Anko you can just write `ctx`. It is an extension property which works both inside `Activity` and `Service` and is even
+accessible from `Fragment` (it uses `getActivity()` method under the hood). You can also get an `Activity` instance using `act` extension property.
 
 ### UI wrapper
 
@@ -372,7 +391,8 @@ UI {
 }
 ```
 
-You can still use this tag if you want. And it would be much easier to extend DSL as you have to declare only one `ViewManager.customView` function. See [Extending Anko](#extending-anko) for more information.
+You can still use this tag if you want. And it would be much easier to extend DSL as you have to declare only one `ViewManager.customView` function.
+See [Extending Anko](#extending-anko) for more information.
 
 ### Include tag
 
@@ -384,7 +404,7 @@ include<View>(R.layout.something) {
 }.layoutParams(width = matchParent) { margin = dip(12) }
 ```
 
-You can use `layoutParams` as usual, and if you provide a specific type instead of `View`, you could also use this type inside `{}`:
+You can use `layoutParams` as usual, and if you provide a specific type instead of `View`, you can also use this type inside `{}`:
 
 ```kotlin
 include<TextView>(R.layout.textfield) {
