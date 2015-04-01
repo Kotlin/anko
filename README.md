@@ -63,7 +63,7 @@ By default, UI in Android is written using XML. That is inconvenient in the foll
 * XML is parsed on the device wasting CPU time and battery
 * Most of all, it allows no code reuse.
 
-While you can create UI programmatically, it's hardly done because it quite ugly and hard to maintain. Here's a plain Kotlin version (one in Java is even longer):
+While you can create UI programmatically, it's hardly done because it's somewhat ugly and hard to maintain. Here's a plain Kotlin version (one in Java is even longer):
 
 ```kotlin
 val act = this
@@ -266,7 +266,7 @@ linearLayout {
 }
 ```
 
-If you specify `layoutParams`, but omit `width` and/or `height`, their default values are both `WRAP_CONTENT`. But you always can pass them explicitly: use [named arguments](http://kotlinlang.org/docs/reference/functions.html#named-arguments), it's convenient.
+If you specify `layoutParams`, but omit `width` and/or `height`, their default values are both `WRAP_CONTENT`. But you always can pass them explicitly: use [named arguments](http://kotlinlang.org/docs/reference/functions.html#named-arguments).
 
 Some convenient helper properties to notice:
 
