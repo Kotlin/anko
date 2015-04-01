@@ -92,10 +92,8 @@ verticalLayout {
 
 ### Why not Scaloid?
 
-[Scaloid](https://github.com/pocorall/scaloid) is a similar library for Scala, with lots of cool stuff supported.
-But Android and Scala are not very good friends: Scala compiler is dreadfully slow, Android sbt plugin is full of bugs, and because Scala library is enormous you have to use tools such as ProGuard even when debugging your app.
+[Scaloid](https://github.com/pocorall/scaloid) is a similar library for Scala, with lots of cool features targeted at Scala developers. This library is primarily targeted at Java and Kotlin developers.
 
-Finally, **Scaloid manages a subclass for every single `View` in Android widget hierarchy** so it is not easy to make new DSL constructs for your own `View`s. Also, it consumes lots of memory without no good reason.
 
 ### Supporting existing code
 
