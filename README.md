@@ -92,7 +92,7 @@ verticalLayout {
 
 ### Why not Scaloid?
 
-[Scaloid](https://github.com/pocorall/scaloid) is a similar library for Scala, with lots of cool features targeted at Scala developers. This library is primarily targeted at Java and Kotlin developers.
+[Scaloid](https://github.com/pocorall/scaloid) is a similar library for Scala, with lots of cool features targeted at Scala developers. Anko on the other hand is primarily targeted at Java and Kotlin developers.
 
 
 ### Supporting existing code
