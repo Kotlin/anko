@@ -6,6 +6,12 @@ public class LayoutsTest : AbstractFunctionalTest() {
     override fun initSettings(settings: BaseGeneratorConfiguration) {
         settings.files.add(AnkoFile.LAYOUTS)
     }
+    [Test] public fun testLayoutsTestFor15() {
+        runFunctionalTest(testDataFile, AnkoFile.LAYOUTS, "15")
+    }
+    [Test] public fun testLayoutsTestFor15s() {
+        runFunctionalTest(testDataFile, AnkoFile.LAYOUTS, "15s")
+    }
     [Test] public fun testLayoutsTestFor21() {
         runFunctionalTest(testDataFile, AnkoFile.LAYOUTS, "21")
     }

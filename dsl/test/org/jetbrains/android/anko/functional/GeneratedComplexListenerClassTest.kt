@@ -7,6 +7,12 @@ public class ComplexListenerClassTest : AbstractFunctionalTest() {
         settings.files.add(AnkoFile.LISTENERS)
         settings.tunes.add(ConfigurationTune.COMPLEX_LISTENER_CLASSES)
     }
+    [Test] public fun testComplexListenerClassTestFor15() {
+        runFunctionalTest(testDataFile, AnkoFile.LISTENERS, "15")
+    }
+    [Test] public fun testComplexListenerClassTestFor15s() {
+        runFunctionalTest(testDataFile, AnkoFile.LISTENERS, "15s")
+    }
     [Test] public fun testComplexListenerClassTestFor21() {
         runFunctionalTest(testDataFile, AnkoFile.LISTENERS, "21")
     }

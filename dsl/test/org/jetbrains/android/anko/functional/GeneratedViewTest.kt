@@ -7,6 +7,12 @@ public class ViewTest : AbstractFunctionalTest() {
         settings.files.add(AnkoFile.VIEWS)
         settings.tunes.add(ConfigurationTune.TOP_LEVEL_DSL_ITEMS)
     }
+    [Test] public fun testViewTestFor15() {
+        runFunctionalTest(testDataFile, AnkoFile.VIEWS, "15")
+    }
+    [Test] public fun testViewTestFor15s() {
+        runFunctionalTest(testDataFile, AnkoFile.VIEWS, "15s")
+    }
     [Test] public fun testViewTestFor21() {
         runFunctionalTest(testDataFile, AnkoFile.VIEWS, "21")
     }

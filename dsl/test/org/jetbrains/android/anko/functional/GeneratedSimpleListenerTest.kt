@@ -7,6 +7,12 @@ public class SimpleListenerTest : AbstractFunctionalTest() {
         settings.files.add(AnkoFile.LISTENERS)
         settings.tunes.add(ConfigurationTune.SIMPLE_LISTENERS)
     }
+    [Test] public fun testSimpleListenerTestFor15() {
+        runFunctionalTest(testDataFile, AnkoFile.LISTENERS, "15")
+    }
+    [Test] public fun testSimpleListenerTestFor15s() {
+        runFunctionalTest(testDataFile, AnkoFile.LISTENERS, "15s")
+    }
     [Test] public fun testSimpleListenerTestFor21() {
         runFunctionalTest(testDataFile, AnkoFile.LISTENERS, "21")
     }
