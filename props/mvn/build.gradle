@@ -53,7 +53,7 @@ publishing {
 
             artifact androidReleaseJar
             artifact androidReleaseSources {
-                classifier "source"
+                classifier "sources"
             }
 
             pom.withXml {
