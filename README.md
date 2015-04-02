@@ -142,13 +142,7 @@ There's a [template project](https://github.com/yanex/anko-template-project) sho
 Basically, all you have to do is to add an additional repository and a compile dependency:
 
 ```gradle
-repositories {
-  ...
-  maven { url "http://dl.bintray.com/yanex/kotlin" }
-}
-
 dependencies {
-  ...
   compile 'org.jetbrains.anko:anko:0.5-15'
 }
 ```
