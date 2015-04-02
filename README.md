@@ -149,12 +149,11 @@ repositories {
 
 dependencies {
   ...
-  compile 'org.jetbrains.kotlin:anko-15:0.3.1'
+  compile 'org.jetbrains.anko:anko:0.5-15'
 }
 ```
 
 This loads Anko for Android SDK v. 15 (Android 4.0.3) without `support.v4` package bindings. If you use `support.v4`, replace `15` with `15s`.  
-There are also builds for Android SDK v. 19 and v. 21.
 
 ### Using as Jar library
 
