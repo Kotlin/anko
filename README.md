@@ -137,7 +137,7 @@ Also see [Extending Anko](#extending-anko) if you need to create top-level DSL v
 
 ### Using with Gradle
 
-There's a [small sample project](https://github.com/yanex/anko-demo-gradle) showing how to include Anko library into your Android Gradle project.
+There's a [template project](https://github.com/yanex/anko-template-project) showing how to include Anko library into your Android Gradle project.
 
 Basically, all you have to do is to add an additional repository and a compile dependency:
 
