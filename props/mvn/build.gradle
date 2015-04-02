@@ -1,7 +1,7 @@
 buildscript {
     ext.kotlin_version = '0.11.91'
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.1'
@@ -27,7 +27,7 @@ android {
 
 dependencies {
     repositories {
-        mavenCentral()
+        jcenter()
     }
 
     compile fileTree(dir: '../../original/%FVERSION', include: ['*.jar'])
@@ -54,6 +54,36 @@ publishing {
             artifact androidReleaseJar
             artifact androidReleaseSources {
                 classifier "source"
+            }
+
+            pom.withXml {
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+                    name 'anko'
+                    description 'Kotlin DSL for Android'
+                    url projectUrl
+                    scm {
+                        url scmUrl
+                        connection connectionUrl
+                        developerConnection developerConnectionUrl
+                    }
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/license/LICENSE-2.0.txt'
+                            distribution 'repo'
+                            comments 'A business-friendly OSS license'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'JetBrains'
+                            name 'JetBrains Team'
+                            organization 'JetBrains'
+                            organizationUrl 'http://www.jetbrains.com'
+                        }
+                    }
+                }
             }
         }
     }
