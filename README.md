@@ -26,7 +26,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [Why not Scaloid?](#why-not-scaloid)
 	* [Supporting existing code](#supporting-existing-code)
 	* [How it works](#how-it-works)
-	* [Is it extendable?](#is-it-extensible)
+	* [Is it extensible?](#is-it-extensible)
 	* [Using with Gradle](#using-with-gradle)
 	* [Using as Jar library](#using-as-jar-library)
 	* [Building Anko](#building-anko)
