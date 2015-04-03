@@ -155,10 +155,15 @@ private fun renderAttribute(view: View, attr: Attr?, key: String, value: Any, to
         if (drawableAttributeValue != null) return drawableAttributeValue
     }
     if (attr != null) {
-        if (attr.format.contains("dimension") || key in dimensionProperties) {
+        if ("color" in attr.format) {
+            if (value is Int) return "#" + Integer.toHexString(value)
+            if (value is Long) return "#" + java.lang.Long.toHexString(value)
+        }
+
+        if ("dimension" in attr.format || key in dimensionProperties) {
             return resolveDimension(view, key, value.toString())
         }
-        if (attr.format.contains("enum") && attr.enum != null) {
+        if ("enum" in attr.format && attr.enum != null) {
             for (nv in attr.enum) {
                 val enumValue = nv.value.parseEnumFlagValue()
                 if (enumValue.toString().equals(basicRenderAttr(key, value))) {
@@ -166,7 +171,7 @@ private fun renderAttribute(view: View, attr: Attr?, key: String, value: Any, to
                 }
             }
         }
-        if (attr.format.contains("flags") && attr.flags != null) {
+        if ("flags" in attr.format && attr.flags != null) {
             return parseFlags(value.toString().toLong(), attr)
         }
         // If our property contains nothing but enum and flags, and string representation not found, exit
