@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/anko.iml" filepath="$PROJECT_DIR$/anko.iml" />
       <module fileurl="file://$PROJECT_DIR$/preview/attrs/attrs.iml" filepath="$PROJECT_DIR$/preview/attrs/attrs.iml" />
       <module fileurl="file://$PROJECT_DIR$/preview/idea-plugin/idea-plugin.iml" filepath="$PROJECT_DIR$/preview/idea-plugin/idea-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/idea-runner/idea-runner.iml" filepath="$PROJECT_DIR$/idea-runner/idea-runner.iml" />
       <module fileurl="file://$PROJECT_DIR$/preview/message-bus/message-bus.iml" filepath="$PROJECT_DIR$/preview/message-bus/message-bus.iml" />
       <module fileurl="file://$PROJECT_DIR$/preview/robowrapper/robowrapper.iml" filepath="$PROJECT_DIR$/preview/robowrapper/robowrapper.iml" />
       <module fileurl="file://$PROJECT_DIR$/dsl/static/static.iml" filepath="$PROJECT_DIR$/dsl/static/static.iml" />
