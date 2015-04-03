@@ -26,7 +26,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [Why not Scaloid?](#why-not-scaloid)
 	* [Supporting existing code](#supporting-existing-code)
 	* [How it works](#how-it-works)
-	* [Is it extendable?](#is-it-extendable)
+	* [Is it extensible?](#is-it-extensible)
 	* [Using with Gradle](#using-with-gradle)
 	* [Using as Jar library](#using-as-jar-library)
 	* [Building Anko](#building-anko)
@@ -35,7 +35,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [Helper methods](#helper-methods)
 	* [Layouts and LayoutParams](#layouts-and-layoutparams)
 	* [Listeners](#listeners)
-	* [Resources, colors and dimensions](#resources-and-dimensions)
+	* [Resources, colors and dimensions](#resources-colors-and-dimensions)
 	* [Instance shorthands](#instance-shorthands)
 	* [UI wrapper](#ui-wrapper)
 	* [Include tag](#include-tag)
@@ -133,7 +133,7 @@ frameLayout {
 }
 ```
 
-Also see [Extending Anko](#extending-anko) if you need to create top-level DSL views.
+Also see [Extending Anko](doc/ADVANCED.md#extending-anko) if you need to create top-level DSL views.
 
 ### Using with Gradle
 
@@ -151,7 +151,7 @@ This loads Anko for Android SDK v. 15 (Android 4.0.3) without `support.v4` packa
 
 ### Using as Jar library
 
-If your project is not based on Gradle, you don't have to jump around with Maven artifacts. Just attach the **jar** from the [releases page](https://github.com/yanex/anko/releases) as a project library and that's it.
+If your project is not based on Gradle, you don't have to jump around with Maven artifacts. Just attach the **jar** from the [releases page](https://github.com/JetBrains/anko/releases) as a project library and that's it.
 
 ### Building Anko
 
@@ -385,7 +385,7 @@ UI {
 ```
 
 You can still use this tag if you want. And it would be much easier to extend DSL as you have to declare only one `ViewManager.customView` function.
-See [Extending Anko](#extending-anko) for more information.
+See [Extending Anko](doc/ADVANCED.md#extending-anko) for more information.
 
 ### Include tag
 

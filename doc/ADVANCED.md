@@ -26,11 +26,8 @@ Share some text     | `share(text, [subject])`
 Send a email        | `email(email, [subject], [text])`
 
 Arguments surrounded with `[]` are optional. Methods return true if the intent was sent.
-```
 
 ### Intent builder functions
-
-In Java you would make a new Activity intent like this:
 
 In general, you have to write a couple of lines to start a new `Activity`. And it requires you to write an additional line for each value you pass as an extra. For example, this is a code for starting an `Activity` with extra `(id, 5)` and a special flag:
 
@@ -60,8 +57,7 @@ There's also a convenient arguments setter for a `Fragment` class:
 ```kotlin
 class SomeFragment : Fragment()
 
- ...
-
+// On the call site:
 SomeFragment().withArguments(
   "id" to 5,
   "name" to "John")
@@ -217,7 +213,7 @@ frameLayout {
 }
 ```
 
-…or this (see the [UI wrapper](#ui-wrapper) chapter):
+…or this (see the [UI wrapper](../README.md#ui-wrapper) chapter):
 
 ```kotlin
 UI {
