@@ -217,7 +217,7 @@ frameLayout {
 }
 ```
 
-…or this (see the [UI wrapper](#ui-wrapper) chapter):
+…or this (see the [UI wrapper](../README.md#ui-wrapper) chapter):
 
 ```kotlin
 UI {
