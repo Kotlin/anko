@@ -297,13 +297,11 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
     }
 
     private fun resolveAvailableClasses() {
-        val packageNames = ModuleManager.getInstance(myProject).getModules()
-                .map { it.resolveAndroidFacet() }.filterNotNull()
-                .map { it.getManifest()?.getPackage()?.getXmlAttributeValue()?.getValue() }.filterNotNull().toHashSet()
+        val cacheService = KotlinCacheService.getInstance(myProject)
 
-        val activityClasses = getAncestors(packageNames, "android.app.Activity")
-        val fragmentClasses = getAncestors(packageNames, "android.app.Fragment")
-        val supportFragmentClasses = getAncestors(packageNames, "android.support.v4.app.Fragment")
+        val activityClasses = getAncestors("android.app.Activity", cacheService)
+        val fragmentClasses = getAncestors("android.app.Fragment", cacheService)
+        val supportFragmentClasses = getAncestors("android.support.v4.app.Fragment", cacheService)
 
         if (myActivityListModel != null) {
             with(myActivityListModel!!) {
@@ -315,31 +313,15 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
         }
     }
 
-    private fun getAncestors(facetPackageNames: Set<String>, baseClassName: String): Collection<PreviewClassDescription> {
+    private fun getAncestors(baseClassName: String, cacheService: KotlinCacheService): Collection<PreviewClassDescription> {
         val baseClasses = JavaPsiFacade.getInstance(myProject).findClasses(baseClassName, GlobalSearchScope.allScope(myProject))
 
-        if (baseClasses.size() == 0) {
-            return listOf()
-        }
-
-        // We actually omit inner classes so it's correct
-        fun getPackageNameNaive(className: String): String {
-            val index = className.lastIndexOf('.')
-            return if (index<0) className else className.substring(0, index)
-        }
-
-        fun isValidAncestor(clazz: PsiClass): Boolean {
-            val fqName = clazz.getQualifiedName()
-            return fqName != null && !clazz.isEnum() &&
-                    !clazz.isInterface() &&
-                    clazz.getContainingClass() == null &&
-                    facetPackageNames.contains(getPackageNameNaive(fqName))
-        }
+        if (baseClasses.size() == 0) return listOf()
 
         try {
             return ClassInheritorsSearch.search(baseClasses[0])
                     .findAll()
-                    .filter(::isValidAncestor)
+                    .filter { resolveJetClass(it, cacheService) != null }
                     .map { it to it.getModule()?.resolveAndroidFacet() }
                     .filter { it.second != null }
                     .map { PreviewPsiClassDescription(it.first, it.second!!) }

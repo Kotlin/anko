@@ -20,11 +20,16 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.PsiElement
 import java.util.Collections
 import com.intellij.openapi.util.text.StringUtil
+import com.intellij.psi.PsiClass
+import com.intellij.psi.impl.light.AbstractLightClass
+import org.jetbrains.kotlin.asJava.KotlinLightElement
+import org.jetbrains.kotlin.asJava.LightClassUtil
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.ClassifierDescriptor
 import org.jetbrains.kotlin.idea.caches.resolve.KotlinCacheService
 import org.jetbrains.kotlin.load.java.lazy.descriptors.LazyJavaClassDescriptor
 import org.jetbrains.kotlin.psi.*
+import org.jetbrains.kotlin.resolve.source.KotlinSourceElement
 
 private val DEBUG = true
 
@@ -82,11 +87,17 @@ fun resolveJetClass(prob: PsiElement, cacheService: KotlinCacheService): JetClas
         return false
     }
 
+    if (prob is KotlinLightElement<*, *>) {
+        return resolveJetClass(prob.getOrigin(), cacheService)
+    }
+
     if (prob is JetClass && (prob.getParent() !is JetClassBody) &&
             !prob.isEnum() && !prob.isTrait() && !prob.isAnnotation() && !prob.isInner()) {
         try {
             val session = cacheService.getLazyResolveSession(prob)
             val memberDescriptor = session.getClassDescriptor(prob)
+
+            if (memberDescriptor.getSource() !is KotlinSourceElement) return null
 
             val constructor = memberDescriptor.getTypeConstructor()
             for (type in constructor.getSupertypes()) {
