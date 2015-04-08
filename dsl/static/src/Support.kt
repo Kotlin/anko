@@ -81,6 +81,21 @@ public inline fun <reified T: Any> Fragment.intentFor(): Intent = Intent(getActi
 /* END SECTION */
 
 
+/* SECTION CUSTOM */
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.dip(value: Int): Int = ctx.dip(value)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.dip(value: Float): Int = ctx.dip(value)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.sp(value: Int): Int = ctx.sp(value)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.sp(value: Float): Int = ctx.sp(value)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.px2dip(px: Int): Float = ctx.px2dip(px)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.px2sp(px: Int): Float = ctx.px2sp(px)
+/* END SECTION */
+
 /* SECTION DIALOGS */
 public fun Fragment.toast(textResource: Int): Unit = ctx.toast(textResource)
 
