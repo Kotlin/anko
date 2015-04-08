@@ -24,6 +24,9 @@ import android.os.Bundle
 import kotlinx.android.anko.*
 import android.database.sqlite.SQLiteDatabase
 import android.database.Cursor
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewManager
 
 public fun Context.__internalStartActivity(activity: Class<out Activity>, params: Array<out Pair<String, Any>>) {
     val intent = Intent(this, activity)
@@ -80,5 +83,40 @@ public inline fun <T> Cursor.useCursor(f: (Cursor) -> T) : T {
         } catch (e: Exception) {
             // Do nothing
         }
+    }
+}
+
+public class UiHelper(public val ctx: Context, private val setContentView: Boolean = true) : ViewManager {
+    private var view: View? = null
+
+    fun toView() = view!!
+
+    override fun addView(view: View, params: ViewGroup.LayoutParams) {
+        addView(view)
+    }
+
+    fun setContentView(): Unit = when (ctx) {
+        is Activity -> ctx.setContentView(view)
+        else -> {
+        }
+    }
+
+    fun addView(view: View) {
+        this.view = view
+        if (setContentView) {
+            when (ctx) {
+                is Activity -> ctx.setContentView(view)
+                else -> {
+                }
+            }
+        }
+    }
+
+    override fun updateViewLayout(view: View, params: ViewGroup.LayoutParams) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun removeView(view: View) {
+        throw UnsupportedOperationException()
     }
 }

@@ -29,6 +29,7 @@ import android.graphics.drawable.Drawable
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.text.*
+import kotlinx.android.anko.internals.UiHelper
 
 /* SECTION VIEWS */
 //type casting is now under the hood
@@ -73,20 +74,32 @@ public fun Context.px2sp(px: Int): Float =
     (px.toFloat() / (getResources()?.getDisplayMetrics()?.scaledDensity ?: 1f)).toFloat()
 
 //the same for nested DSL components
-public fun UiHelper.dip(value: Int): Int = ctx.dip(value)
-public fun UiHelper.dip(value: Float): Int = ctx.dip(value)
-public fun UiHelper.sp(value: Int): Int = ctx.sp(value)
-public fun UiHelper.sp(value: Float): Int = ctx.sp(value)
-public fun UiHelper.px2dip(px: Int): Float = ctx.px2dip(px)
-public fun UiHelper.px2sp(px: Int): Float = ctx.px2sp(px)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun UiHelper.dip(value: Int): Int = ctx.dip(value)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun UiHelper.dip(value: Float): Int = ctx.dip(value)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun UiHelper.sp(value: Int): Int = ctx.sp(value)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun UiHelper.sp(value: Float): Int = ctx.sp(value)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun UiHelper.px2dip(px: Int): Float = ctx.px2dip(px)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun UiHelper.px2sp(px: Int): Float = ctx.px2sp(px)
 
 //the same for Fragments
-public fun Fragment.dip(value: Int): Int = ctx.dip(value)
-public fun Fragment.dip(value: Float): Int = ctx.dip(value)
-public fun Fragment.sp(value: Int): Int = ctx.sp(value)
-public fun Fragment.sp(value: Float): Int = ctx.sp(value)
-public fun Fragment.px2dip(px: Int): Float = ctx.px2dip(px)
-public fun Fragment.px2sp(px: Int): Float = ctx.px2sp(px)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.dip(value: Int): Int = ctx.dip(value)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.dip(value: Float): Int = ctx.dip(value)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.sp(value: Int): Int = ctx.sp(value)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.sp(value: Float): Int = ctx.sp(value)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.px2dip(px: Int): Float = ctx.px2dip(px)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.px2sp(px: Int): Float = ctx.px2sp(px)
 /* END SECTION */
 
 

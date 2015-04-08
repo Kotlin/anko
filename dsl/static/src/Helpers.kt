@@ -22,6 +22,7 @@ import android.view.ViewManager
 import android.view.View
 import android.app.Activity
 import android.app.Fragment
+import kotlinx.android.anko.internals.UiHelper
 import java.util.HashMap
 
 public class AnkoException(message: String = "") : RuntimeException(message)
@@ -116,41 +117,6 @@ private val ViewManager.dslContext: Context
             else -> throw AnkoException("$this is the wrong parent")
         }
     }
-
-class UiHelper(val ctx: Context, private val setContentView: Boolean = true) : ViewManager {
-    private var view: View? = null
-
-    fun toView() = view!!
-
-    override fun addView(view: View, params: ViewGroup.LayoutParams) {
-        addView(view)
-    }
-
-    fun setContentView(): Unit = when (ctx) {
-        is Activity -> ctx.setContentView(view)
-        else -> {
-        }
-    }
-
-    fun addView(view: View) {
-        this.view = view
-        if (setContentView) {
-            when (ctx) {
-                is Activity -> ctx.setContentView(view)
-                else -> {
-                }
-            }
-        }
-    }
-
-    override fun updateViewLayout(view: View, params: ViewGroup.LayoutParams) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun removeView(view: View) {
-        throw UnsupportedOperationException()
-    }
-}
 
 public fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
     val dsl = UiHelper(this, setContentView)

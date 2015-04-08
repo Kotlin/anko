@@ -28,6 +28,7 @@ import java.util.concurrent.Future
 import kotlinx.android.anko.internals.__internalStartActivity
 import android.content.Intent
 import kotlinx.android.anko.internals.__internalStartActivityForResult
+import kotlinx.android.anko.internals.UiHelper
 
 /* SECTION HELPERS */
 private fun <T : View> Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {

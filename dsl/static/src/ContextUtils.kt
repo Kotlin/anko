@@ -61,7 +61,8 @@ public val Context.ctx: Context
 public val Activity.act: Activity
     get() = this
 
-public fun Fragment.browse(url: String): Boolean = ctx.browse(url)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.browse(url: String): Boolean = ctx.browse(url)
 
 public fun Context.browse(url: String): Boolean {
     try {
@@ -75,7 +76,8 @@ public fun Context.browse(url: String): Boolean {
     }
 }
 
-public fun Fragment.share(text: String, subject: String = ""): Boolean = ctx.share(text, subject)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.share(text: String, subject: String = ""): Boolean = ctx.share(text, subject)
 
 public fun Context.share(text: String, subject: String = ""): Boolean {
     try {
@@ -91,7 +93,8 @@ public fun Context.share(text: String, subject: String = ""): Boolean {
     }
 }
 
-public fun Fragment.email(email: String, subject: String = "", text: String = ""): Boolean = ctx.email(email, subject, text)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.email(email: String, subject: String = "", text: String = ""): Boolean = ctx.email(email, subject, text)
 
 public fun Context.email(email: String, subject: String = "", text: String = ""): Boolean {
     try {
@@ -110,7 +113,8 @@ public fun Context.email(email: String, subject: String = "", text: String = "")
     }
 }
 
-public fun Fragment.makeCall(number: String): Boolean = ctx.makeCall(number)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.makeCall(number: String): Boolean = ctx.makeCall(number)
 
 public fun Context.makeCall(number: String): Boolean {
     try {
@@ -203,7 +207,8 @@ public inline fun <reified T: Any> Context.intentFor(): Intent = Intent(this, ja
 
 public inline fun <reified T: Any> Fragment.intentFor(): Intent = Intent(getActivity(), javaClass<T>())
 
-private fun Intent.setFlag(flag: Int): Intent {
+[suppress("NOTHING_TO_INLINE")]
+private inline fun Intent.setFlag(flag: Int): Intent {
     setFlags(flag)
     return this
 }
