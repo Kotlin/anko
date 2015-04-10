@@ -36,6 +36,8 @@
         <download_platform_tools android.platform.tools.version="22" />
         <download_tools android.tools.version="24.1.2" />
         <download_build_tools android.build.tools.version="21.1.2" android.build.tools.full.version="5.0.1" />
+
+        <download_support_repository android.repo.version="12" />
     </target>
 
     <macrodef name="download_android_platform">
@@ -103,6 +105,19 @@
                     </exec>
                 </else>
             </if>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="download_support_repository">
+        <attribute name="android.repo.version" />
+
+        <sequential>
+            <get src="http://dl-ssl.google.com/android/repository/android_m2repository_r@{android.repo.version}.zip"
+                 dest="${download.dir}/android_m2repository_r@{android.repo.version}.zip" usetimestamp="true"/>
+
+            <mkdir dir="${android.sdk.dir}/extras/android" />
+
+            <unzip src="${download.dir}/android_m2repository_r@{android.repo.version}.zip" dest="${android.sdk.dir}/extras/android"/>
         </sequential>
     </macrodef>
 
