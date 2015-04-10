@@ -94,19 +94,19 @@ public inline fun UiHelper.dimen(resource: Int): Int = ctx.dimen(resource)
 
 //the same for Fragments
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.dip(value: Int): Int = ctx.dip(value)
+public inline fun Fragment.dip(value: Int): Int = getActivity().dip(value)
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.dip(value: Float): Int = ctx.dip(value)
+public inline fun Fragment.dip(value: Float): Int = getActivity().dip(value)
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.sp(value: Int): Int = ctx.sp(value)
+public inline fun Fragment.sp(value: Int): Int = getActivity().sp(value)
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.sp(value: Float): Int = ctx.sp(value)
+public inline fun Fragment.sp(value: Float): Int = getActivity().sp(value)
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.px2dip(px: Int): Float = ctx.px2dip(px)
+public inline fun Fragment.px2dip(px: Int): Float = getActivity().px2dip(px)
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.px2sp(px: Int): Float = ctx.px2sp(px)
+public inline fun Fragment.px2sp(px: Int): Float = getActivity().px2sp(px)
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.dimen(resource: Int): Int = ctx.dimen(resource)
+public inline fun Fragment.dimen(resource: Int): Int = getActivity().dimen(resource)
 /* END SECTION */
 
 

@@ -58,14 +58,14 @@ public val Fragment.act: Activity
 public val Fragment.ctx: Context
     get() = getActivity()
 
-public fun Fragment.browse(url: String): Boolean = ctx.browse(url)
+public fun Fragment.browse(url: String): Boolean = getActivity().browse(url)
 
-public fun Fragment.share(text: String, subject: String = ""): Boolean = ctx.share(text, subject)
+public fun Fragment.share(text: String, subject: String = ""): Boolean = getActivity().share(text, subject)
 
 public fun Fragment.email(email: String, subject: String = "", text: String = ""): Boolean =
-    ctx.email(email, subject, text)
+        getActivity().email(email, subject, text)
 
-public fun Fragment.makeCall(number: String): Boolean = ctx.makeCall(number)
+public fun Fragment.makeCall(number: String): Boolean = getActivity().makeCall(number)
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
@@ -83,36 +83,36 @@ public inline fun <reified T: Any> Fragment.intentFor(): Intent = Intent(getActi
 
 /* SECTION CUSTOM */
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.dip(value: Int): Int = ctx.dip(value)
+public inline fun Fragment.dip(value: Int): Int = getActivity().dip(value)
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.dip(value: Float): Int = ctx.dip(value)
+public inline fun Fragment.dip(value: Float): Int = getActivity().dip(value)
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.sp(value: Int): Int = ctx.sp(value)
+public inline fun Fragment.sp(value: Int): Int = getActivity().sp(value)
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.sp(value: Float): Int = ctx.sp(value)
+public inline fun Fragment.sp(value: Float): Int = getActivity().sp(value)
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.px2dip(px: Int): Float = ctx.px2dip(px)
+public inline fun Fragment.px2dip(px: Int): Float = getActivity().px2dip(px)
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.px2sp(px: Int): Float = ctx.px2sp(px)
+public inline fun Fragment.px2sp(px: Int): Float = getActivity().px2sp(px)
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.dimen(resource: Int): Int = ctx.dimen(resource)
+public inline fun Fragment.dimen(resource: Int): Int = getActivity().dimen(resource)
 /* END SECTION */
 
 /* SECTION DIALOGS */
-public fun Fragment.toast(textResource: Int): Unit = ctx.toast(textResource)
+public fun Fragment.toast(textResource: Int): Unit = getActivity().toast(textResource)
 
-public fun Fragment.toast(text: String): Unit = ctx.toast(text)
+public fun Fragment.toast(text: String): Unit = getActivity().toast(text)
 
-public fun Fragment.longToast(textResource: Int): Unit = ctx.longToast(textResource)
+public fun Fragment.longToast(textResource: Int): Unit = getActivity().longToast(textResource)
 
-public fun Fragment.longToast(text: String): Unit = ctx.longToast(text)
+public fun Fragment.longToast(text: String): Unit = getActivity().longToast(text)
 
 public fun Fragment.selector(
     title: CharSequence = "",
     items: List<CharSequence>,
     onCancel: () -> Unit = {},
     onClick: (Int) -> Unit
-): Unit = ctx.selector(title, items, onCancel, onClick)
+): Unit = getActivity().selector(title, items, onCancel, onClick)
 /* END SECTION */
 
 

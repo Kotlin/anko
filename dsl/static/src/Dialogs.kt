@@ -31,22 +31,22 @@ import android.database.Cursor
 import android.view.ViewManager
 import android.app.ProgressDialog
 
-public fun Fragment.toast(textResource: Int): Unit = ctx.toast(textResource)
+public fun Fragment.toast(textResource: Int): Unit = getActivity().toast(textResource)
 public fun Context.toast(textResource: Int) {
     Toast.makeText(this, textResource, Toast.LENGTH_SHORT).show()
 }
 
-public fun Fragment.toast(text: CharSequence): Unit = ctx.toast(text)
+public fun Fragment.toast(text: CharSequence): Unit = getActivity().toast(text)
 public fun Context.toast(text: CharSequence) {
     Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 }
 
-public fun Fragment.longToast(textResource: Int): Unit = ctx.longToast(textResource)
+public fun Fragment.longToast(textResource: Int): Unit = getActivity().longToast(textResource)
 public fun Context.longToast(textResource: Int) {
     Toast.makeText(this, textResource, Toast.LENGTH_LONG).show()
 }
 
-public fun Fragment.longToast(text: CharSequence): Unit = ctx.longToast(text)
+public fun Fragment.longToast(text: CharSequence): Unit = getActivity().longToast(text)
 public fun Context.longToast(text: CharSequence) {
     Toast.makeText(this, text, Toast.LENGTH_LONG).show()
 }
@@ -58,9 +58,9 @@ public fun Fragment.selector(
     items: List<CharSequence>,
     onCancel: () -> Unit = defaultOnCancel,
     onClick: (Int) -> Unit): Unit =
-    ctx.selector(title, items, onCancel, onClick)
+    getActivity().selector(title, items, onCancel, onClick)
 
-public fun Fragment.alert(message: String, title: String? = null, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder = ctx.alert(message, title, init)
+public fun Fragment.alert(message: String, title: String? = null, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder = getActivity().alert(message, title, init)
 public fun Context.alert(message: String, title: String? = null, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder {
     return AlertDialogBuilder(this) {
         if (title != null) {
@@ -71,7 +71,7 @@ public fun Context.alert(message: String, title: String? = null, init: AlertDial
     }
 }
 
-public fun Fragment.alert(message: Int, title: Int, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder = ctx.alert(message, title, init)
+public fun Fragment.alert(message: Int, title: Int, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder = getActivity().alert(message, title, init)
 public fun Context.alert(message: Int, title: Int, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder {
     return AlertDialogBuilder(this) {
         title(title)

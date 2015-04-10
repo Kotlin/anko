@@ -62,7 +62,7 @@ public val Activity.act: Activity
     get() = this
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.browse(url: String): Boolean = ctx.browse(url)
+public inline fun Fragment.browse(url: String): Boolean = getActivity().browse(url)
 
 public fun Context.browse(url: String): Boolean {
     try {
@@ -77,7 +77,7 @@ public fun Context.browse(url: String): Boolean {
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.share(text: String, subject: String = ""): Boolean = ctx.share(text, subject)
+public inline fun Fragment.share(text: String, subject: String = ""): Boolean = getActivity().share(text, subject)
 
 public fun Context.share(text: String, subject: String = ""): Boolean {
     try {
@@ -94,7 +94,8 @@ public fun Context.share(text: String, subject: String = ""): Boolean {
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.email(email: String, subject: String = "", text: String = ""): Boolean = ctx.email(email, subject, text)
+public inline fun Fragment.email(email: String, subject: String = "", text: String = ""): Boolean =
+        getActivity().email(email, subject, text)
 
 public fun Context.email(email: String, subject: String = "", text: String = ""): Boolean {
     try {
@@ -114,7 +115,7 @@ public fun Context.email(email: String, subject: String = "", text: String = "")
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.makeCall(number: String): Boolean = ctx.makeCall(number)
+public inline fun Fragment.makeCall(number: String): Boolean = getActivity().makeCall(number)
 
 public fun Context.makeCall(number: String): Boolean {
     try {
