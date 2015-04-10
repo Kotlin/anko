@@ -25,6 +25,7 @@ import org.jetbrains.android.anko.utils.JarFileFilter
 import java.io.InputStreamReader
 import kotlin.platform.platformStatic
 import org.jetbrains.android.anko.TestGeneratorConfiguration
+import org.jetbrains.android.anko.createTempTestFile
 import org.junit.Assert.*
 import java.util.Arrays
 import java.util.logging.Logger
@@ -52,10 +53,7 @@ public open class CompileTestFixture {
         }
 
         platformStatic
-        public open fun tearDownClass() {
-            versionJars.values().forEach { it.delete() }
-            versionJars.clear()
-        }
+        public open fun tearDownClass() {}
 
         private fun compileLibrary(ver: File): TestGeneratorConfiguration {
             val version = ver.getName()
@@ -69,7 +67,7 @@ public open class CompileTestFixture {
             props.files.remove(AnkoFile.INTERFACE_WORKAROUNDS)
             DSLGenerator(intVersion, version, jarFilesString, props).run()
 
-            val outputJarFile = File.createTempFile("lib-" + ver.getName(), ".jar", File("workdir/temp"))
+            val outputJarFile = createTempTestFile("lib-" + ver.getName(), ".jar")
             versionJars[ver] = outputJarFile
 
             val kotlincArgs = array(File(kotlincFilename).getAbsolutePath(), "-d", outputJarFile.getAbsolutePath(), "-classpath", classpath.toString())
@@ -166,7 +164,7 @@ public open class CompileTestFixture {
                         (additionalLibraries?.map { it.getAbsolutePath() } ?: listOf()))
                 .joinToString(File.pathSeparator)
 
-        val tmpFile = File.createTempFile("compile", ".jar", File("workdir/temp"))
+        val tmpFile = createTempTestFile("compile", ".jar")
         val kotlincArgs = array(File(kotlincFilename).getAbsolutePath(), "-d", tmpFile.getAbsolutePath(),
                 "-classpath", classpath.toString(), testData.getPath())
         val args = arrayListOf(*kotlincArgs)

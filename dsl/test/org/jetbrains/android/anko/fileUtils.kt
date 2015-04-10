@@ -17,14 +17,14 @@
 package org.jetbrains.android.anko
 
 import java.io.File
-import java.io.IOException
-import java.util.HashMap
 
-public open class TestGeneratorConfiguration : GeneratorConfiguration() {
-    public val tmpFiles: Map<AnkoFile, File> =
-        AnkoFile.values().map { it to createTempTestFile(it.filename, ".kt") }.toMap()
+fun createTempTestFile(name: String, extension: String): File {
+    val dir = File("workdir/temp")
+    if (!dir.exists()) dir.mkdirs()
 
-    override fun getOutputFile(ankoFile: AnkoFile): File {
-        return tmpFiles[ankoFile]!!
-    }
+    val file = File(dir, "$name$extension")
+    if (file.exists()) file.delete()
+    file.createNewFile()
+
+    return file
 }

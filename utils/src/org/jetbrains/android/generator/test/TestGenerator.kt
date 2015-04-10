@@ -7,40 +7,42 @@ import org.jetbrains.android.anko.utils.Buffer
 
 public fun Context.generate() {
 
-    functionalDslTest("ComplexListenerClassTest", AnkoFile.LISTENERS) {
-        file(AnkoFile.LISTENERS)
-        tune(ConfigurationTune.COMPLEX_LISTENER_CLASSES)
-    }
+    functionalDslTests {
+        functionalDslTest("ComplexListenerClassTest", AnkoFile.LISTENERS) {
+            file(AnkoFile.LISTENERS)
+            tune(ConfigurationTune.COMPLEX_LISTENER_CLASSES)
+        }
 
-    functionalDslTest("ComplexListenerSetterTest", AnkoFile.LISTENERS) {
-        file(AnkoFile.LISTENERS)
-        tune(ConfigurationTune.COMPLEX_LISTENER_SETTERS)
-    }
+        functionalDslTest("ComplexListenerSetterTest", AnkoFile.LISTENERS) {
+            file(AnkoFile.LISTENERS)
+            tune(ConfigurationTune.COMPLEX_LISTENER_SETTERS)
+        }
 
-    functionalDslTest("HelperConstructorTest", AnkoFile.VIEWS) {
-        tune(ConfigurationTune.HELPER_CONSTRUCTORS)
-    }
+        functionalDslTest("HelperConstructorTest", AnkoFile.VIEWS) {
+            tune(ConfigurationTune.HELPER_CONSTRUCTORS)
+        }
 
-    functionalDslTest("LayoutsTest", AnkoFile.LAYOUTS) {
-        file(AnkoFile.LAYOUTS)
-    }
+        functionalDslTest("LayoutsTest", AnkoFile.LAYOUTS) {
+            file(AnkoFile.LAYOUTS)
+        }
 
-    functionalDslTest("ViewTest", AnkoFile.VIEWS) {
-        file(AnkoFile.VIEWS)
-        tune(ConfigurationTune.TOP_LEVEL_DSL_ITEMS)
-    }
+        functionalDslTest("ViewTest", AnkoFile.VIEWS) {
+            file(AnkoFile.VIEWS)
+            tune(ConfigurationTune.TOP_LEVEL_DSL_ITEMS)
+        }
 
-    functionalDslTest("PropertyTest", AnkoFile.PROPERTIES) {
-        file(AnkoFile.PROPERTIES)
-    }
+        functionalDslTest("PropertyTest", AnkoFile.PROPERTIES) {
+            file(AnkoFile.PROPERTIES)
+        }
 
-    functionalDslTest("ServicesTest", AnkoFile.SERVICES) {
-        file(AnkoFile.SERVICES)
-    }
+        functionalDslTest("ServicesTest", AnkoFile.SERVICES) {
+            file(AnkoFile.SERVICES)
+        }
 
-    functionalDslTest("SimpleListenerTest", AnkoFile.LISTENERS) {
-        file(AnkoFile.LISTENERS)
-        tune(ConfigurationTune.SIMPLE_LISTENERS)
+        functionalDslTest("SimpleListenerTest", AnkoFile.LISTENERS) {
+            file(AnkoFile.LISTENERS)
+            tune(ConfigurationTune.SIMPLE_LISTENERS)
+        }
     }
 
     dslCompileTests(ktFiles("robolectric"), "Robolectric")

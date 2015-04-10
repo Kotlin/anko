@@ -64,6 +64,13 @@ public class Buffer(private val indentSymbol: String, indent: Int = 0, val init:
         return this
     }
 
+    public fun lines(lines: Array<String>): Buffer {
+        for (line in lines) {
+            line(line)
+        }
+        return this
+    }
+
     public val size: Int
         get() = builder.length()
 

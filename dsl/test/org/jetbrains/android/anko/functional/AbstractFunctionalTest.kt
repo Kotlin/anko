@@ -28,6 +28,8 @@ import org.junit.Assert.*
 import org.junit.Test
 
 public abstract class AbstractFunctionalTest {
+    val config = TestGeneratorConfiguration()
+    var classTree: ClassTree? = null
 
     protected fun loadOrCreate(file: File, data: String): String {
         try {
@@ -47,13 +49,15 @@ public abstract class AbstractFunctionalTest {
                                     inputJarFiles: List<String>,
                                     testDataFile: String,
                                     subsystem: AnkoFile,
-                                    settings: TestGeneratorConfiguration) {
-        initSettings(settings)
+                                    config: TestGeneratorConfiguration) {
+        if (classTree == null) {
+            classTree = ClassProcessor(inputJarFiles).genClassTree()
+        }
 
-        val generator = DSLGenerator(intVersion, version, inputJarFiles, settings)
+        val generator = DSLGenerator(intVersion, version, inputJarFiles, config, classTree)
         generator.run()
 
-        val actual = settings.getOutputFile(subsystem).readText().replace("\r", "")
+        val actual = config.getOutputFile(subsystem).readText().replace("\r", "")
         val expectedPath = ("dsl/testData/functional/$version/$testDataFile").replace("\r", "")
         val expected = loadOrCreate(File(expectedPath), actual)
 
@@ -62,25 +66,27 @@ public abstract class AbstractFunctionalTest {
         assertEquals(expected, actual)
     }
 
-    protected fun runFunctionalTest(testDataFile: String, subsystem: AnkoFile, version: String) {
-        val settings = TestGeneratorConfiguration()
+    protected fun runFunctionalTest(
+            testDataFile: String,
+            subsystem: AnkoFile,
+            version: String,
+            settings: BaseGeneratorConfiguration.() -> Unit
+    ) {
+        config.generateImports = false
+        config.generatePackage = false
+        config.generateMavenArtifact = false
 
-        settings.generateImports = false
-        settings.generatePackage = false
-        settings.generateMavenArtifact = false
+        config.files.clear()
+        config.tunes.clear()
 
-        settings.files.clear()
-        settings.tunes.clear()
+        config.settings()
 
         val versionDir = File("workdir/original", version)
         val intVersion = version.replaceAll("[^0-9]", "").toInt()
 
         val jarFiles = versionDir.listFiles(JarFileFilter()).map { it.getAbsolutePath() }
 
-        runFunctionalTest(version, intVersion, jarFiles, testDataFile, subsystem, settings)
-
+        runFunctionalTest(version, intVersion, jarFiles, testDataFile, subsystem, config)
     }
-
-    protected abstract fun initSettings(settings: BaseGeneratorConfiguration)
 
 }

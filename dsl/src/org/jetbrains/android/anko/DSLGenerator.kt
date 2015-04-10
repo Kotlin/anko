@@ -22,7 +22,8 @@ class DSLGenerator(
     val version: Int,
     val fVersion: String,
     val jars: List<String>,
-    val config: BaseGeneratorConfiguration): Runnable
+    val config: BaseGeneratorConfiguration,
+    val classTree: ClassTree? = null): Runnable
 {
 
     private val sVersion = version.toString()
@@ -47,7 +48,7 @@ class DSLGenerator(
         else
             config.files.remove(AnkoFile.SUPPORT)
 
-        val classTree = ClassProcessor(jars).genClassTree()
+        val classTree = this.classTree ?: ClassProcessor(jars).genClassTree()
         val generator = Generator(classTree, config)
         val renderer = Renderer(generator)
         Writer(renderer).write()
