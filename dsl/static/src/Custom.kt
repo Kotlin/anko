@@ -29,6 +29,7 @@ import android.graphics.drawable.Drawable
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.text.*
+import android.util.TypedValue
 import kotlinx.android.anko.internals.UiHelper
 
 /* SECTION VIEWS */
@@ -273,6 +274,12 @@ public var TextView.textColor: Int
     get() = throw AnkoException("'textColor' property doesn't have a getter")
     set(value) {
         this.setTextColor(value)
+    }
+
+public var TextView.textSizeDimen: Int
+    get() = throw AnkoException("'textSizeDimen' property doesn't have a getter")
+    set(value) {
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, getContext().getResources().getDimension(value))
     }
 
 public var ImageView.image: Drawable?
