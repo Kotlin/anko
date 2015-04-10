@@ -95,17 +95,19 @@ public class UiHelper(public val ctx: Context, private val setContentView: Boole
         addView(view)
     }
 
+    [suppress("USELESS_CAST_STATIC_ASSERT_IS_FINE")]
     fun setContentView(): Unit = when (ctx) {
-        is Activity -> ctx.setContentView(view)
+        is Activity -> (ctx as Activity).setContentView(view)
         else -> {
         }
     }
 
+    [suppress("USELESS_CAST_STATIC_ASSERT_IS_FINE")]
     fun addView(view: View) {
         this.view = view
         if (setContentView) {
             when (ctx) {
-                is Activity -> ctx.setContentView(view)
+                is Activity -> (ctx as Activity).setContentView(view)
                 else -> {
                 }
             }
