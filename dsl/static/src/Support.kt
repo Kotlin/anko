@@ -17,7 +17,7 @@
 package kotlinx.android.anko
 
 import android.app.Activity
-import android.app.Fragment
+import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.LinearLayout
 import android.content.Context
@@ -27,9 +27,10 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 import kotlinx.android.anko.internals.__internalStartActivity
 import android.content.Intent
+import kotlinx.android.anko.internals.__internalStartActivityForResult
 
 /* SECTION HELPERS */
-private fun <T : View> android.support.v4.app.Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {
+private fun <T : View> Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {
     UI { addView(v, init, this) }
     return v
 }
@@ -37,53 +38,58 @@ private fun <T : View> android.support.v4.app.Fragment.addFragmentTopLevelView(v
 public fun <T : View> __dslAddView(
     view: (ctx: Context) -> T,
     init: T.() -> Unit,
-    fragment: android.support.v4.app.Fragment): T {
+    fragment: Fragment): T {
     val ctx = fragment.getActivity()
     return fragment.addFragmentTopLevelView(view(ctx), init)
 }
 
-public fun android.support.v4.app.Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity().UI(false, init)
+public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity().UI(false, init)
 /* END SECTION */
 
 
 /* SECTION CONTEXT UTILS */
-public val android.support.v4.app.Fragment.defaultSharedPreferences: SharedPreferences
+public val Fragment.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(getActivity())
 
-public val android.support.v4.app.Fragment.act: Activity
+public val Fragment.act: Activity
     get() = getActivity()
 
-public val android.support.v4.app.Fragment.ctx: Context
+public val Fragment.ctx: Context
     get() = getActivity()
 
-public fun android.support.v4.app.Fragment.browse(url: String): Boolean = ctx.browse(url)
+public fun Fragment.browse(url: String): Boolean = ctx.browse(url)
 
-public fun android.support.v4.app.Fragment.share(text: String, subject: String = ""): Boolean = ctx.share(text, subject)
+public fun Fragment.share(text: String, subject: String = ""): Boolean = ctx.share(text, subject)
 
-public fun android.support.v4.app.Fragment.email(email: String, subject: String = "", text: String = ""): Boolean =
+public fun Fragment.email(email: String, subject: String = "", text: String = ""): Boolean =
     ctx.email(email, subject, text)
 
-public fun android.support.v4.app.Fragment.makeCall(number: String): Boolean = ctx.makeCall(number)
+public fun Fragment.makeCall(number: String): Boolean = ctx.makeCall(number)
 
-public fun android.support.v4.app.Fragment.startActivity(
-    activity: Class<out Activity>,
-    vararg params: Pair<String, Any>
-): Unit = ctx.__internalStartActivity(activity, params)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
+    getActivity().__internalStartActivity(javaClass<T>(), params)
+}
 
-public inline fun <reified T: Class<*>> android.support.v4.app.Fragment.Intent(): Intent = Intent(getActivity(), javaClass<T>())
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
+    getActivity().__internalStartActivityForResult(javaClass<T>(), requestCode, params)
+}
+
+public inline fun <reified T: Class<*>> Fragment.Intent(): Intent = Intent(getActivity(), javaClass<T>())
 /* END SECTION */
 
 
 /* SECTION DIALOGS */
-public fun android.support.v4.app.Fragment.toast(textResource: Int): Unit = ctx.toast(textResource)
+public fun Fragment.toast(textResource: Int): Unit = ctx.toast(textResource)
 
-public fun android.support.v4.app.Fragment.toast(text: String): Unit = ctx.toast(text)
+public fun Fragment.toast(text: String): Unit = ctx.toast(text)
 
-public fun android.support.v4.app.Fragment.longToast(textResource: Int): Unit = ctx.longToast(textResource)
+public fun Fragment.longToast(textResource: Int): Unit = ctx.longToast(textResource)
 
-public fun android.support.v4.app.Fragment.longToast(text: String): Unit = ctx.longToast(text)
+public fun Fragment.longToast(text: String): Unit = ctx.longToast(text)
 
-public fun android.support.v4.app.Fragment.selector(
+public fun Fragment.selector(
     title: CharSequence = "",
     items: List<CharSequence>,
     onCancel: () -> Unit = {},
@@ -93,34 +99,34 @@ public fun android.support.v4.app.Fragment.selector(
 
 
 /* SECTION ASYNC */
-public fun android.support.v4.app.Fragment.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> = getActivity().async(task)
+public fun Fragment.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> = getActivity().async(task)
 
-public fun android.support.v4.app.Fragment.async(executorService: ExecutorService, task: AnkoAsyncContext.() -> Unit): Future<Unit> =
+public fun Fragment.async(executorService: ExecutorService, task: AnkoAsyncContext.() -> Unit): Future<Unit> =
     getActivity().async(executorService, task)
 
-public fun <T> android.support.v4.app.Fragment.asyncResult(task: () -> T): Future<T> = getActivity().asyncResult(task)
+public fun <T> Fragment.asyncResult(task: () -> T): Future<T> = getActivity().asyncResult(task)
 
-public fun <T> android.support.v4.app.Fragment.asyncResult(executorService: ExecutorService, task: () -> T): Future<T> =
+public fun <T> Fragment.asyncResult(executorService: ExecutorService, task: () -> T): Future<T> =
     getActivity().asyncResult(executorService, task)
 
-public fun android.support.v4.app.Fragment.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
+public fun Fragment.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
     __dslAddView(verticalLayoutFactory, init, this)
 
-public fun <T: View> android.support.v4.app.Fragment.include(layoutId: Int, init: T.() -> Unit): T =
+public fun <T: View> Fragment.include(layoutId: Int, init: T.() -> Unit): T =
     __dslAddView(inflaterFactory(layoutId), init, this)
 
-public fun android.support.v4.app.Fragment.alert(
+public fun Fragment.alert(
     title: String,
     message: String,
     init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder =
     getActivity().alert(title, message, init)
 
-public fun android.support.v4.app.Fragment.alert(
+public fun Fragment.alert(
     title: Int,
     message: Int,
     init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder =
     getActivity().alert(title, message, init)
 
-public fun android.support.v4.app.Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder =
+public fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder =
     getActivity().alert(init)
 /* END SECTION */

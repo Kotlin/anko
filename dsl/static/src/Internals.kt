@@ -27,6 +27,17 @@ import android.database.Cursor
 
 public fun Context.__internalStartActivity(activity: Class<out Activity>, params: Array<out Pair<String, Any>>) {
     val intent = Intent(this, activity)
+    fillIntentArguments(intent, params)
+    startActivity(intent)
+}
+
+public fun Activity.__internalStartActivityForResult(activity: Class<out Activity>, requestCode: Int, params: Array<out Pair<String, Any>>) {
+    val intent = Intent(this, activity)
+    fillIntentArguments(intent, params)
+    startActivityForResult(intent, requestCode)
+}
+
+private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any>>) {
     params.forEach {
         when (it.second) {
             is Int -> intent.putExtra(it.first, it.second as Int)
@@ -44,7 +55,6 @@ public fun Context.__internalStartActivity(activity: Class<out Activity>, params
             else -> throw AnkoException("Intent extra ${it.first} has wrong type ${it.second.javaClass.getName()}")
         }
     }
-    startActivity(intent)
 }
 
 // SQLiteDatabase is not closeable in older versions of Android
