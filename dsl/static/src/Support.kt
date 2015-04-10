@@ -76,7 +76,7 @@ public inline fun <reified T: Activity> Fragment.startActivityForResult(requestC
     getActivity().__internalStartActivityForResult(javaClass<T>(), requestCode, params)
 }
 
-public inline fun <reified T: Class<*>> Fragment.Intent(): Intent = Intent(getActivity(), javaClass<T>())
+public inline fun <reified T: Any> Fragment.intentFor(): Intent = Intent(getActivity(), javaClass<T>())
 /* END SECTION */
 
 
