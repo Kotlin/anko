@@ -74,6 +74,8 @@ public fun Context.px2dip(px: Int): Float =
 public fun Context.px2sp(px: Int): Float =
     (px.toFloat() / (getResources()?.getDisplayMetrics()?.scaledDensity ?: 1f)).toFloat()
 
+public fun Context.dimen(resource: Int): Int = getResources().getDimensionPixelSize(resource)
+
 //the same for nested DSL components
 [suppress("NOTHING_TO_INLINE")]
 public inline fun UiHelper.dip(value: Int): Int = ctx.dip(value)
@@ -87,6 +89,8 @@ public inline fun UiHelper.sp(value: Float): Int = ctx.sp(value)
 public inline fun UiHelper.px2dip(px: Int): Float = ctx.px2dip(px)
 [suppress("NOTHING_TO_INLINE")]
 public inline fun UiHelper.px2sp(px: Int): Float = ctx.px2sp(px)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun UiHelper.dimen(resource: Int): Int = ctx.dimen(resource)
 
 //the same for Fragments
 [suppress("NOTHING_TO_INLINE")]
@@ -101,6 +105,8 @@ public inline fun Fragment.sp(value: Float): Int = ctx.sp(value)
 public inline fun Fragment.px2dip(px: Int): Float = ctx.px2dip(px)
 [suppress("NOTHING_TO_INLINE")]
 public inline fun Fragment.px2sp(px: Int): Float = ctx.px2sp(px)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.dimen(resource: Int): Int = ctx.dimen(resource)
 /* END SECTION */
 
 

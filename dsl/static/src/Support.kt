@@ -94,6 +94,8 @@ public inline fun Fragment.sp(value: Float): Int = ctx.sp(value)
 public inline fun Fragment.px2dip(px: Int): Float = ctx.px2dip(px)
 [suppress("NOTHING_TO_INLINE")]
 public inline fun Fragment.px2sp(px: Int): Float = ctx.px2sp(px)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.dimen(resource: Int): Int = ctx.dimen(resource)
 /* END SECTION */
 
 /* SECTION DIALOGS */
