@@ -76,12 +76,24 @@
         <delete dir="lib/kotlin-plugin" failonerror="false"/>
         <unzip src="lib/kotlin-plugin.zip"
                dest="lib/"/>
+
+        <set_unix_perms />
     </target>
 
-    <target name="set_unix_perms">
-        <chmod dir="lib/Kotlin/kotlinc/bin" perm="+x"
-               includes="**/*"/>
-    </target>
+    <macrodef name="set_unix_perms">
+        <sequential>
+            <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="lib/ant-contrib.jar"/>
+
+            <if>
+                <equals arg1="${os.tag}" arg2="win.zip"/>
+                <then />
+                <else>
+                    <chmod dir="lib/Kotlin/kotlinc/bin" perm="+x" includes="**/*"/>
+                </else>
+            </if>
+
+        </sequential>
+    </macrodef>
 
     <macrodef name="execute_update_with_id_resolve">
         <attribute name="teamcity.server.url"/>
