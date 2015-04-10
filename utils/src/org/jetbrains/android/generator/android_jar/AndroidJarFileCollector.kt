@@ -52,6 +52,7 @@ object AndroidJarCollector {
         }
 
         REQUIRED_VERSIONS.forEach { File("workdir/original/$it/").mkdirs() }
+        File("workdir/temp").mkdirs()
 
         if (ANDROID_HOME.isEmpty()) throw RuntimeException("ANDROID_HOME environment variable is not set")
 

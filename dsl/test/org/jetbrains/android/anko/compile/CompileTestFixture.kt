@@ -26,9 +26,10 @@ import java.io.InputStreamReader
 import kotlin.platform.platformStatic
 import org.jetbrains.android.anko.TestGeneratorConfiguration
 import org.junit.Assert.*
+import java.util.Arrays
+import java.util.logging.Logger
 
 public open class CompileTestFixture {
-
     class ProcResult(val stdout: String, val stderr: String, val exitCode: Int)
 
     companion object {
@@ -36,6 +37,8 @@ public open class CompileTestFixture {
 
         private val versions = File("workdir/original/").listFiles(AndroidVersionDirectoryFilter())
         private val versionJars = hashMapOf<File, File>()
+
+        private val LOG = Logger.getLogger(javaClass<CompileTestFixture>().getName())
 
         platformStatic
         public open fun setUpClass() {
@@ -66,7 +69,7 @@ public open class CompileTestFixture {
             props.files.remove(AnkoFile.INTERFACE_WORKAROUNDS)
             DSLGenerator(intVersion, version, jarFilesString, props).run()
 
-            val outputJarFile = File.createTempFile("lib-" + ver.getName(), ".jar")
+            val outputJarFile = File.createTempFile("lib-" + ver.getName(), ".jar", File("workdir/temp"))
             versionJars[ver] = outputJarFile
 
             val kotlincArgs = array(File(kotlincFilename).getAbsolutePath(), "-d", outputJarFile.getAbsolutePath(), "-classpath", classpath.toString())
@@ -86,6 +89,8 @@ public open class CompileTestFixture {
         }
 
         fun runProcess(args: Array<String>, compiler: Boolean): ProcResult {
+            LOG.info("Exec process: ${Arrays.toString(args)}")
+
             val p = Runtime.getRuntime().exec(args)
             val brInput = BufferedReader(InputStreamReader(p.getInputStream()))
             val brError = BufferedReader(InputStreamReader(p.getErrorStream()))
@@ -161,7 +166,7 @@ public open class CompileTestFixture {
                         (additionalLibraries?.map { it.getAbsolutePath() } ?: listOf()))
                 .joinToString(File.pathSeparator)
 
-        val tmpFile = File.createTempFile("compile", ".jar")
+        val tmpFile = File.createTempFile("compile", ".jar", File("workdir/temp"))
         val kotlincArgs = array(File(kotlincFilename).getAbsolutePath(), "-d", tmpFile.getAbsolutePath(),
                 "-classpath", classpath.toString(), testData.getPath())
         val args = arrayListOf(*kotlincArgs)
