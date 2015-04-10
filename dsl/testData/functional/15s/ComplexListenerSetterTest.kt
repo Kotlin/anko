@@ -1,3 +1,87 @@
+public fun android.gesture.GestureOverlayView.onGestureStarted(act: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener? =
+      props.listeners.get("android.gesture.GestureOverlayView_addOnGestureListener") as? __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener
+    if (l == null) {
+      l = __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener(this)
+      props.listeners.put("android.gesture.GestureOverlayView_addOnGestureListener", l!!)
+    }
+    l!!._onGestureStarted = act
+    l!!.apply()
+  }
+}
+
+public fun android.gesture.GestureOverlayView.onGesture(act: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener? =
+      props.listeners.get("android.gesture.GestureOverlayView_addOnGestureListener") as? __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener
+    if (l == null) {
+      l = __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener(this)
+      props.listeners.put("android.gesture.GestureOverlayView_addOnGestureListener", l!!)
+    }
+    l!!._onGesture = act
+    l!!.apply()
+  }
+}
+
+public fun android.gesture.GestureOverlayView.onGestureEnded(act: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener? =
+      props.listeners.get("android.gesture.GestureOverlayView_addOnGestureListener") as? __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener
+    if (l == null) {
+      l = __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener(this)
+      props.listeners.put("android.gesture.GestureOverlayView_addOnGestureListener", l!!)
+    }
+    l!!._onGestureEnded = act
+    l!!.apply()
+  }
+}
+
+public fun android.gesture.GestureOverlayView.onGestureCancelled(act: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener? =
+      props.listeners.get("android.gesture.GestureOverlayView_addOnGestureListener") as? __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener
+    if (l == null) {
+      l = __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener(this)
+      props.listeners.put("android.gesture.GestureOverlayView_addOnGestureListener", l!!)
+    }
+    l!!._onGestureCancelled = act
+    l!!.apply()
+  }
+}
+
+public fun android.gesture.GestureOverlayView.onGesturingStarted(act: (android.gesture.GestureOverlayView?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __GestureOverlayView_addOnGesturingListener_GestureOverlayView_OnGesturingListener? =
+      props.listeners.get("android.gesture.GestureOverlayView_addOnGesturingListener") as? __GestureOverlayView_addOnGesturingListener_GestureOverlayView_OnGesturingListener
+    if (l == null) {
+      l = __GestureOverlayView_addOnGesturingListener_GestureOverlayView_OnGesturingListener(this)
+      props.listeners.put("android.gesture.GestureOverlayView_addOnGesturingListener", l!!)
+    }
+    l!!._onGesturingStarted = act
+    l!!.apply()
+  }
+}
+
+public fun android.gesture.GestureOverlayView.onGesturingEnded(act: (android.gesture.GestureOverlayView?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __GestureOverlayView_addOnGesturingListener_GestureOverlayView_OnGesturingListener? =
+      props.listeners.get("android.gesture.GestureOverlayView_addOnGesturingListener") as? __GestureOverlayView_addOnGesturingListener_GestureOverlayView_OnGesturingListener
+    if (l == null) {
+      l = __GestureOverlayView_addOnGesturingListener_GestureOverlayView_OnGesturingListener(this)
+      props.listeners.put("android.gesture.GestureOverlayView_addOnGesturingListener", l!!)
+    }
+    l!!._onGesturingEnded = act
+    l!!.apply()
+  }
+}
+
 public fun android.inputmethodservice.KeyboardView.onPress(act: (Int) -> Unit) {
   val props = getTag() as? ViewProps
   if (props != null) {
@@ -148,6 +232,34 @@ public fun android.support.v4.view.ViewPager.onPageScrollStateChanged(act: (Int)
       props.listeners.put("android.support.v4.view.ViewPager_setOnPageChangeListener", l!!)
     }
     l!!._onPageScrollStateChanged = act
+    l!!.apply()
+  }
+}
+
+public fun android.view.View.onViewAttachedToWindow(act: (android.view.View?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __View_addOnAttachStateChangeListener_View_OnAttachStateChangeListener? =
+      props.listeners.get("android.view.View_addOnAttachStateChangeListener") as? __View_addOnAttachStateChangeListener_View_OnAttachStateChangeListener
+    if (l == null) {
+      l = __View_addOnAttachStateChangeListener_View_OnAttachStateChangeListener(this)
+      props.listeners.put("android.view.View_addOnAttachStateChangeListener", l!!)
+    }
+    l!!._onViewAttachedToWindow = act
+    l!!.apply()
+  }
+}
+
+public fun android.view.View.onViewDetachedFromWindow(act: (android.view.View?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __View_addOnAttachStateChangeListener_View_OnAttachStateChangeListener? =
+      props.listeners.get("android.view.View_addOnAttachStateChangeListener") as? __View_addOnAttachStateChangeListener_View_OnAttachStateChangeListener
+    if (l == null) {
+      l = __View_addOnAttachStateChangeListener_View_OnAttachStateChangeListener(this)
+      props.listeners.put("android.view.View_addOnAttachStateChangeListener", l!!)
+    }
+    l!!._onViewDetachedFromWindow = act
     l!!.apply()
   }
 }
@@ -470,6 +582,48 @@ public fun android.widget.TableRow.onChildViewRemoved(act: (android.view.View?, 
       props.listeners.put("android.widget.TableRow_setOnHierarchyChangeListener", l!!)
     }
     l!!._onChildViewRemoved = act
+    l!!.apply()
+  }
+}
+
+public fun android.widget.TextView.beforeTextChanged(act: (CharSequence?, Int, Int, Int) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __TextView_addTextChangedListener_TextWatcher? =
+      props.listeners.get("android.widget.TextView_addTextChangedListener") as? __TextView_addTextChangedListener_TextWatcher
+    if (l == null) {
+      l = __TextView_addTextChangedListener_TextWatcher(this)
+      props.listeners.put("android.widget.TextView_addTextChangedListener", l!!)
+    }
+    l!!._beforeTextChanged = act
+    l!!.apply()
+  }
+}
+
+public fun android.widget.TextView.onTextChanged(act: (CharSequence?, Int, Int, Int) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __TextView_addTextChangedListener_TextWatcher? =
+      props.listeners.get("android.widget.TextView_addTextChangedListener") as? __TextView_addTextChangedListener_TextWatcher
+    if (l == null) {
+      l = __TextView_addTextChangedListener_TextWatcher(this)
+      props.listeners.put("android.widget.TextView_addTextChangedListener", l!!)
+    }
+    l!!._onTextChanged = act
+    l!!.apply()
+  }
+}
+
+public fun android.widget.TextView.afterTextChanged(act: (android.text.Editable?) -> Unit) {
+  val props = getTag() as? ViewProps
+  if (props != null) {
+    var l: __TextView_addTextChangedListener_TextWatcher? =
+      props.listeners.get("android.widget.TextView_addTextChangedListener") as? __TextView_addTextChangedListener_TextWatcher
+    if (l == null) {
+      l = __TextView_addTextChangedListener_TextWatcher(this)
+      props.listeners.put("android.widget.TextView_addTextChangedListener", l!!)
+    }
+    l!!._afterTextChanged = act
     l!!.apply()
   }
 }

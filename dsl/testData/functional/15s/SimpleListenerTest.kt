@@ -1,8 +1,14 @@
+public fun android.gesture.GestureOverlayView.onGesturePerformed(l: (android.gesture.GestureOverlayView?, android.gesture.Gesture?) -> Unit): Unit =
+  addOnGesturePerformedListener(l)
+
 public fun android.support.v4.app.FragmentTabHost.onTabChanged(l: (String?) -> Unit): Unit =
   setOnTabChangedListener(l)
 
 public fun android.support.v4.widget.SwipeRefreshLayout.onRefresh(l: () -> Unit): Unit =
   setOnRefreshListener(l)
+
+public fun android.view.View.onLayoutChange(l: (android.view.View?, Int, Int, Int, Int, Int, Int, Int, Int) -> Unit): Unit =
+  addOnLayoutChangeListener(l)
 
 public fun android.view.View.onClick(l: (android.view.View?) -> Unit): Unit =
   setOnClickListener(l)

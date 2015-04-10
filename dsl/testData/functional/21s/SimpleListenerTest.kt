@@ -1,3 +1,6 @@
+public fun android.gesture.GestureOverlayView.onGesturePerformed(l: (android.gesture.GestureOverlayView?, android.gesture.Gesture?) -> Unit): Unit =
+  addOnGesturePerformedListener(l)
+
 public fun android.media.tv.TvView.onUnhandledInputEvent(l: (android.view.InputEvent?) -> Boolean): Unit =
   setOnUnhandledInputEventListener(l)
 
@@ -6,6 +9,9 @@ public fun android.support.v4.app.FragmentTabHost.onTabChanged(l: (String?) -> U
 
 public fun android.support.v4.widget.SwipeRefreshLayout.onRefresh(l: () -> Unit): Unit =
   setOnRefreshListener(l)
+
+public fun android.view.View.onLayoutChange(l: (android.view.View?, Int, Int, Int, Int, Int, Int, Int, Int) -> Unit): Unit =
+  addOnLayoutChangeListener(l)
 
 public fun android.view.View.onApplyWindowInsets(l: (android.view.View?, android.view.WindowInsets?) -> android.view.WindowInsets?): Unit =
   setOnApplyWindowInsetsListener(l)

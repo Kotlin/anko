@@ -1,3 +1,31 @@
+class __GestureOverlayView_addOnGestureListener_GestureOverlayView_OnGestureListener(val v: android.gesture.GestureOverlayView): ListenerHelper {
+  var _onGestureStarted: ((android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) = { p0, p1 ->  }
+  var _onGesture: ((android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) = { p0, p1 ->  }
+  var _onGestureEnded: ((android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) = { p0, p1 ->  }
+  var _onGestureCancelled: ((android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) = { p0, p1 ->  }
+
+  override fun apply() {
+    v.addOnGestureListener(object: android.gesture.GestureOverlayView.OnGestureListener {
+      override fun onGestureStarted(p0: android.gesture.GestureOverlayView?, p1: android.view.MotionEvent?) = _onGestureStarted(p0, p1)
+      override fun onGesture(p0: android.gesture.GestureOverlayView?, p1: android.view.MotionEvent?) = _onGesture(p0, p1)
+      override fun onGestureEnded(p0: android.gesture.GestureOverlayView?, p1: android.view.MotionEvent?) = _onGestureEnded(p0, p1)
+      override fun onGestureCancelled(p0: android.gesture.GestureOverlayView?, p1: android.view.MotionEvent?) = _onGestureCancelled(p0, p1)
+    })
+  }
+}
+
+class __GestureOverlayView_addOnGesturingListener_GestureOverlayView_OnGesturingListener(val v: android.gesture.GestureOverlayView): ListenerHelper {
+  var _onGesturingStarted: ((android.gesture.GestureOverlayView?) -> Unit) = { p0 ->  }
+  var _onGesturingEnded: ((android.gesture.GestureOverlayView?) -> Unit) = { p0 ->  }
+
+  override fun apply() {
+    v.addOnGesturingListener(object: android.gesture.GestureOverlayView.OnGesturingListener {
+      override fun onGesturingStarted(p0: android.gesture.GestureOverlayView?) = _onGesturingStarted(p0)
+      override fun onGesturingEnded(p0: android.gesture.GestureOverlayView?) = _onGesturingEnded(p0)
+    })
+  }
+}
+
 class __KeyboardView_setOnKeyboardActionListener_KeyboardView_OnKeyboardActionListener(val v: android.inputmethodservice.KeyboardView): ListenerHelper {
   var _onPress: ((Int) -> Unit) = { p0 ->  }
   var _onRelease: ((Int) -> Unit) = { p0 ->  }
@@ -32,6 +60,18 @@ class __ViewPager_setOnPageChangeListener_ViewPager_OnPageChangeListener(val v: 
       override fun onPageScrolled(p0: Int, p1: Float, p2: Int) = _onPageScrolled(p0, p1, p2)
       override fun onPageSelected(p0: Int) = _onPageSelected(p0)
       override fun onPageScrollStateChanged(p0: Int) = _onPageScrollStateChanged(p0)
+    })
+  }
+}
+
+class __View_addOnAttachStateChangeListener_View_OnAttachStateChangeListener(val v: android.view.View): ListenerHelper {
+  var _onViewAttachedToWindow: ((android.view.View?) -> Unit) = { p0 ->  }
+  var _onViewDetachedFromWindow: ((android.view.View?) -> Unit) = { p0 ->  }
+
+  override fun apply() {
+    v.addOnAttachStateChangeListener(object: android.view.View.OnAttachStateChangeListener {
+      override fun onViewAttachedToWindow(p0: android.view.View?) = _onViewAttachedToWindow(p0)
+      override fun onViewDetachedFromWindow(p0: android.view.View?) = _onViewDetachedFromWindow(p0)
     })
   }
 }
@@ -166,6 +206,20 @@ class __TableRow_setOnHierarchyChangeListener_ViewGroup_OnHierarchyChangeListene
     v.setOnHierarchyChangeListener(object: android.view.ViewGroup.OnHierarchyChangeListener {
       override fun onChildViewAdded(p0: android.view.View?, p1: android.view.View?) = _onChildViewAdded(p0, p1)
       override fun onChildViewRemoved(p0: android.view.View?, p1: android.view.View?) = _onChildViewRemoved(p0, p1)
+    })
+  }
+}
+
+class __TextView_addTextChangedListener_TextWatcher(val v: android.widget.TextView): ListenerHelper {
+  var _beforeTextChanged: ((CharSequence?, Int, Int, Int) -> Unit) = { p0, p1, p2, p3 ->  }
+  var _onTextChanged: ((CharSequence?, Int, Int, Int) -> Unit) = { p0, p1, p2, p3 ->  }
+  var _afterTextChanged: ((android.text.Editable?) -> Unit) = { p0 ->  }
+
+  override fun apply() {
+    v.addTextChangedListener(object: android.text.TextWatcher {
+      override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = _beforeTextChanged(p0, p1, p2, p3)
+      override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = _onTextChanged(p0, p1, p2, p3)
+      override fun afterTextChanged(p0: android.text.Editable?) = _afterTextChanged(p0)
     })
   }
 }

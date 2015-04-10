@@ -115,7 +115,7 @@ val MethodNode.isConstructor: Boolean
     get() = name == "<init>"
 
 val MethodNode.isListenerSetter: Boolean
-    get() = name.startsWith("setOn") && name.endsWith("Listener")
+    get() = (name.startsWith("setOn") || name.startsWith("add")) && name.endsWith("Listener")
 
 val MethodNode.isPublic: Boolean
     get() = (access and Opcodes.ACC_PUBLIC) != 0
