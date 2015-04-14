@@ -172,8 +172,10 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                         line("public fun $extendFor.$funcName(init: $className.() -> Unit = defaultInit): $typeName =")
                         line("add${extendFor}TopLevelView($className($ctx), init)")
                     }
-                    add("Context", "this")
-                    add("Activity", "this")
+                    if (clazz.isViewGroup(generator.classTree)) {
+                        add("Context", "this")
+                        add("Activity", "this")
+                    }
                 }
             }.toString()
         }
