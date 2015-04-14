@@ -8,7 +8,6 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.*
 import org.junit.Test
-import kotlin.test.*
 import org.junit.Assert.*
 
 public open class TestActivity() : Activity() {

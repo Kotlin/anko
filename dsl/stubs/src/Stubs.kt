@@ -19,4 +19,4 @@ package kotlinx.android.anko
 import android.widget.LinearLayout
 import android.content.Context
 
-class _LinearLayout(ctx: Context) : LinearLayout(ctx)
+public class _LinearLayout(ctx: Context) : LinearLayout(ctx)

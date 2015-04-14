@@ -91,21 +91,10 @@ public class UiHelper(public val ctx: Context, private val setContentView: Boole
 
     fun toView() = view!!
 
-    override fun addView(view: View, params: ViewGroup.LayoutParams) {
-        addView(view)
-    }
-
-    [suppress("USELESS_CAST_STATIC_ASSERT_IS_FINE")]
-    fun setContentView(): Unit = when (ctx) {
-        is Activity -> (ctx as Activity).setContentView(view)
-        else -> {
-        }
-    }
-
-    [suppress("USELESS_CAST_STATIC_ASSERT_IS_FINE")]
-    fun addView(view: View) {
+    override fun addView(view: View, params: ViewGroup.LayoutParams?) {
         this.view = view
         if (setContentView) {
+            [suppress("USELESS_CAST_STATIC_ASSERT_IS_FINE")]
             when (ctx) {
                 is Activity -> (ctx as Activity).setContentView(view)
                 else -> {

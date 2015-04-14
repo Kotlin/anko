@@ -1,3 +1,4 @@
+import kotlinx.android.anko.custom.*
 import android.view.ViewManager
 import android.view.ViewGroup.LayoutParams
 import android.app.Activity

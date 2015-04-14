@@ -31,6 +31,7 @@ import android.widget.RelativeLayout
 import android.text.*
 import android.util.TypedValue
 import kotlinx.android.anko.internals.UiHelper
+import kotlinx.android.anko.custom.*
 
 /* SECTION COLORS */
 //returns 0xC0C0C0 for 0xC0
@@ -44,31 +45,60 @@ public val Int.opaque: Int
 
 
 /* SECTION CUSTOM VIEWS */
-private val verticalLayoutFactory = { ctx: Context ->
-    val v = _LinearLayout(ctx)
-    v.setOrientation(LinearLayout.VERTICAL)
-    v
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.verticalLayout(): LinearLayout = verticalLayout({})
+public inline fun ViewManager.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView { ctx ->
+    val view = _LinearLayout(ctx)
+    view.setOrientation(LinearLayout.VERTICAL)
+    view.init()
+    view
 }
 
-[suppress("UNCHECKED_CAST")]
-private fun <T: View> inflaterFactory(layoutId: Int) = { ctx: Context ->
-    ctx.layoutInflater.inflate(layoutId, null) as T
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.verticalLayout(): LinearLayout = verticalLayout({})
+public inline fun Context.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView { ctx ->
+    val view = _LinearLayout(ctx)
+    view.setOrientation(LinearLayout.VERTICAL)
+    view.init()
+    view
 }
 
-public fun ViewManager.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
-    __dslAddView(verticalLayoutFactory, init, this): LinearLayout
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.verticalLayout(): LinearLayout = verticalLayout({})
+public inline fun Activity.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView { ctx ->
+    val view = _LinearLayout(ctx)
+    view.setOrientation(LinearLayout.VERTICAL)
+    view.init()
+    view
+}
 
-public fun Fragment.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
-    __dslAddView(verticalLayoutFactory, init, this): LinearLayout
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <T: View> ViewManager.include(layoutId: Int): LinearLayout = include(layoutId, {})
+public inline fun <T: View> ViewManager.include(layoutId: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+    [suppress("UNCHECKED_CAST")]
+    val view = ctx.layoutInflater.inflate(layoutId, null) as T
+    view.init()
+    view
+}
 
-public fun Context.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
-    __dslAddView(verticalLayoutFactory, init, this): LinearLayout
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <T: View> Activity.include(layoutId: Int): LinearLayout = include(layoutId, {})
+public inline fun <T: View> Activity.include(layoutId: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+    [suppress("UNCHECKED_CAST")]
+    val view = ctx.layoutInflater.inflate(layoutId, null) as T
+    view.init()
+    view
+}
 
-public fun Activity.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
-        __dslAddView(verticalLayoutFactory, init, this): LinearLayout
-
-public fun <T: View> ViewManager.include(layoutId: Int, init: T.() -> Unit): T =
-    __dslAddView(inflaterFactory(layoutId), init, this)
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <T: View> Context.include(layoutId: Int): LinearLayout = include(layoutId, {})
+public inline fun <T: View> Context.include(layoutId: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+    [suppress("UNCHECKED_CAST")]
+    val view = ctx.layoutInflater.inflate(layoutId, null) as T
+    view.init()
+    view
+}
 /* END SECTION */
 
 

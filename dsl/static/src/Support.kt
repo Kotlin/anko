@@ -27,21 +27,15 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 import kotlinx.android.anko.internals.__internalStartActivity
 import android.content.Intent
+import kotlinx.android.anko.custom.addView
 import kotlinx.android.anko.internals.__internalStartActivityForResult
 import kotlinx.android.anko.internals.UiHelper
 
 /* SECTION HELPERS */
-private fun <T : View> Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {
-    UI { addView(v, init, this) }
-    return v
-}
-
-public fun <T : View> __dslAddView(
-    view: (ctx: Context) -> T,
-    init: T.() -> Unit,
-    fragment: Fragment): T {
-    val ctx = fragment.getActivity()
-    return fragment.addFragmentTopLevelView(view(ctx), init)
+public inline fun <T : View> Fragment.addView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T): T {
+    val view = factory(getActivity())
+    UI { addView(view) }
+    return view
 }
 
 public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity().UI(false, init)
@@ -130,12 +124,6 @@ public fun <T> Fragment.asyncResult(task: () -> T): Future<T> = getActivity().as
 
 public fun <T> Fragment.asyncResult(executorService: ExecutorService, task: () -> T): Future<T> =
     getActivity().asyncResult(executorService, task)
-
-public fun Fragment.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout =
-    __dslAddView(verticalLayoutFactory, init, this)
-
-public fun <T: View> Fragment.include(layoutId: Int, init: T.() -> Unit): T =
-    __dslAddView(inflaterFactory(layoutId), init, this)
 
 public fun Fragment.alert(
     title: String,

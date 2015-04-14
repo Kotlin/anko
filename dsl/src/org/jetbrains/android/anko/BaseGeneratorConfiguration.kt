@@ -30,7 +30,7 @@ class Variable(val name: String, val type: String) {
 public enum class AnkoFile(val filename: String) {
     ASYNC : AnkoFile("Async.kt")
     CONTEXT_UTILS : AnkoFile("ContextUtils.kt")
-    OTHER : AnkoFile("Other.kt")
+    CUSTOM : AnkoFile("Custom.kt")
     DATABASE : AnkoFile("Database.kt")
     DIALOGS : AnkoFile("Dialogs.kt")
     HELPERS : AnkoFile("Helpers.kt")
@@ -39,6 +39,7 @@ public enum class AnkoFile(val filename: String) {
     LAYOUTS : AnkoFile("Layouts.kt")
     LISTENERS : AnkoFile("Listeners.kt")
     LOGGER : AnkoFile("Logger.kt")
+    OTHER : AnkoFile("Other.kt")
     PROPERTIES : AnkoFile("Properties.kt")
     SERVICES : AnkoFile("Services.kt")
     SQL_PARSER_HELPERS : AnkoFile("SqlParserHelpers.kt")

@@ -22,6 +22,7 @@ import android.view.ViewManager
 import android.view.View
 import android.app.Activity
 import android.app.Fragment
+import kotlinx.android.anko.custom.addView
 import kotlinx.android.anko.internals.UiHelper
 import java.util.HashMap
 
@@ -34,46 +35,40 @@ public fun <T : View> T.style(style: (View) -> Unit): T {
     return this
 }
 
+deprecated("Use ViewManager.addView() instead")
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, manager: ViewManager): T {
-    return addView(view(manager.dslContext), init, manager)
-}
-
-public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, ctx: Context): T {
-    return ctx.addContextTopLevelView(view(ctx), init)
-}
-
-public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, act: Activity): T {
-    return act.addActivityTopLevelView(view(act), init)
-}
-
-public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, fragment: Fragment): T {
-    val ctx = fragment.getActivity()
-    return fragment.addFragmentTopLevelView(view(ctx), init)
-}
-
-private fun <T : View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T {
-    v.init()
-    when (manager) {
-        is ViewGroup -> manager.addView(v)
-        is UiHelper -> manager.addView(v)
-        else -> throw AnkoException("$manager is the wrong parent")
+    return manager.addView { ctx ->
+        val v = view(ctx)
+        v.init()
+        v
     }
-    return v
 }
 
-private fun <T : View> Fragment.addFragmentTopLevelView(v: T, init: T.() -> Unit): T {
-    UI { addView(v, init, this) }
-    return v
+deprecated("Use Context.addView() instead")
+public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, ctx: Context): T {
+    return ctx.addView { ctx ->
+        val v = view(ctx)
+        v.init()
+        v
+    }
 }
 
-private fun <T : View> Context.addContextTopLevelView(v: T, init: T.() -> Unit): T {
-    UI { addView(v, init, this) }
-    return v
+deprecated("Use Activity.addView() instead")
+public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, act: Activity): T {
+    return act.addView { ctx ->
+        val v = view(ctx)
+        v.init()
+        v
+    }
 }
 
-private fun <T : View> Activity.addActivityTopLevelView(v: T, init: T.() -> Unit): T {
-    this.UI { addView(v, init, this) }
-    return v
+deprecated("Use Fragment.addView() instead")
+public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, fragment: Fragment): T {
+    return fragment.addView { ctx ->
+        val v = view(ctx)
+        v.init()
+        v
+    }
 }
 
 private fun applyStyle(v: View, style: (View) -> Unit) {
@@ -86,15 +81,6 @@ private fun applyStyle(v: View, style: (View) -> Unit) {
         }
     }
 }
-
-private val ViewManager.dslContext: Context
-    get() {
-        return when (this) {
-            is ViewGroup -> this.getContext()
-            is UiHelper -> this.ctx
-            else -> throw AnkoException("$this is the wrong parent")
-        }
-    }
 
 public fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
     val dsl = UiHelper(this, setContentView)

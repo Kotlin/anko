@@ -26,6 +26,10 @@ import org.objectweb.asm.Type
 import java.util.*
 
 class Renderer(private val generator: Generator) : Configurable(generator.config) {
+    companion object {
+        val NOTHING_TO_INLINE = "[suppress(\"NOTHING_TO_INLINE\")]"
+        val ONLY_LOCAL_RETURN = "inlineOptions(InlineOption.ONLY_LOCAL_RETURN)"
+    }
 
     val views = generate(VIEWS) {
         generateViews(generator.viewClasses) { it.fqName }
@@ -165,17 +169,21 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
             val funcName = clazz.simpleName.decapitalize()
 
             buffer {
-                line("public fun ViewManager.$funcName(init: $className.() -> Unit = defaultInit): $typeName =")
-                line("addView($className(dslContext), init, this)")
-                if (config[TOP_LEVEL_DSL_ITEMS]) {
-                    fun add(extendFor: String, ctx: String) {
-                        line("public fun $extendFor.$funcName(init: $className.() -> Unit = defaultInit): $typeName =")
-                        line("add${extendFor}TopLevelView($className($ctx), init)")
-                    }
-                    if (clazz.isViewGroup(generator.classTree)) {
-                        add("Context", "this")
-                        add("Activity", "this")
-                    }
+                fun Buffer.add(extendFor: String) {
+                    line(NOTHING_TO_INLINE)
+                    line("public inline fun $extendFor.$funcName(): $typeName = $funcName({})")
+                    line("public inline fun $extendFor.$funcName($ONLY_LOCAL_RETURN init: $className.() -> Unit): $typeName = addView {")
+                        line("ctx ->")
+                        line("val view = $className(ctx)")
+                        line("view.init()")
+                        line("view")
+                    line("}")
+                }
+
+                add("ViewManager")
+                if (config[TOP_LEVEL_DSL_ITEMS] && clazz.isViewGroup(generator.classTree)) {
+                    nl().add("Context")
+                    nl().add("Activity")
                 }
             }.toString()
         }
@@ -223,25 +231,38 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
         val ret = arrayListOf<String>()
         generator.viewClasses.filter { Props.helperConstructors.contains(it.fqName) }.forEach { view ->
-            val viewClassName = view.fqName
+            val className = view.fqName
             val helperConstructors = Props.helperConstructors[view.fqName]!!
 
             for (constructor in helperConstructors) {
-                val functionName = view.simpleName.decapitalize()
+                val funcName = view.simpleName.decapitalize()
                 val collected = constructor.zip(collectProperties(view, constructor))
                 val helperArguments = collected.map {
                     val argumentType = it.second.args[0].asString()
                     "${it.first.name}: $argumentType"
                 }.joinToString(", ")
-                val arguments = "$helperArguments, init: $viewClassName.() -> Unit = defaultInit"
-                val setters = collected.map { "v.${it.second.name}(${it.first.name})" }
+                val setters = collected.map { "view.${it.second.name}(${it.first.name})" }
+
+                fun Buffer.add(extendFor: String) {
+                    line(NOTHING_TO_INLINE)
+                    line("public inline fun $extendFor.$funcName($helperArguments): $className = addView {")
+                        line("ctx ->")
+                        line("val view = $className(ctx)")
+                        lines(setters)
+                        line("view")
+                    line("}")
+
+                    line("public inline fun $extendFor.$funcName($helperArguments, $ONLY_LOCAL_RETURN init: $className.() -> Unit): $className = addView {")
+                        line("ctx ->")
+                        line("val view = $className(ctx)")
+                        lines(setters)
+                        line("view.init()")
+                        line("view")
+                    line("}")
+                }
 
                 ret.add(buffer {
-                    line("public fun ViewManager.$functionName($arguments): $viewClassName {")
-                    line("val v = $viewClassName(dslContext)")
-                    lines(setters)
-                    line("return addView(v, init, this)")
-                    line("}")
+                    add("ViewManager")
                 }.toString())
             }
         }

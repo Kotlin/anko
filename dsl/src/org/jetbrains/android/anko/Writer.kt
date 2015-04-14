@@ -30,12 +30,13 @@ class Writer(private val renderer: Renderer) {
         sortedSetOf(
             ASYNC,
             CONTEXT_UTILS,
-                OTHER,
+            CUSTOM,
             DATABASE,
             DIALOGS,
             HELPERS,
             INTERNALS,
             LOGGER,
+            OTHER,
             SQL_PARSERS,
             SUPPORT
         ).forEach { if (config[it]) writeStatic(it) }
