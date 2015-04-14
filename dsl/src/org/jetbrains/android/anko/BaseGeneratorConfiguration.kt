@@ -30,7 +30,7 @@ class Variable(val name: String, val type: String) {
 public enum class AnkoFile(val filename: String) {
     ASYNC : AnkoFile("Async.kt")
     CONTEXT_UTILS : AnkoFile("ContextUtils.kt")
-    CUSTOM : AnkoFile("Custom.kt")
+    OTHER : AnkoFile("Other.kt")
     DATABASE : AnkoFile("Database.kt")
     DIALOGS : AnkoFile("Dialogs.kt")
     HELPERS : AnkoFile("Helpers.kt")
