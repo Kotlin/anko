@@ -32,18 +32,6 @@ import android.text.*
 import android.util.TypedValue
 import kotlinx.android.anko.internals.UiHelper
 
-/* SECTION VIEWS */
-//type casting is now under the hood
-[suppress("UNCHECKED_CAST")]
-public fun <T : View> View.find(id: Int): T = findViewById(id) as T
-
-[suppress("UNCHECKED_CAST")]
-public fun <T : View> Activity.find(id: Int): T = findViewById(id) as T
-
-[suppress("UNCHECKED_CAST")]
-public fun <T : View> Fragment.find(id: Int): T = getView()?.findViewById(id) as T
-/* END SECTION */
-
 /* SECTION COLORS */
 //returns 0xC0C0C0 for 0xC0
 public val Int.gray: Int
@@ -52,61 +40,6 @@ public val Int.gray: Int
 //returns 0xFFABCDEF for 0xABCDEF
 public val Int.opaque: Int
     get() = this or 0xff000000.toInt()
-/* END SECTION */
-
-
-/* SECTION DIMENSIONS */
-//returns dip(dp) dimension value in pixels
-public fun Context.dip(value: Int): Int =
-    (value * (getResources()?.getDisplayMetrics()?.density ?: 0f)).toInt()
-public fun Context.dip(value: Float): Int =
-    (value * (getResources()?.getDisplayMetrics()?.density ?: 0f)).toInt()
-
-//return sp dimension value in pixels
-public fun Context.sp(value: Int): Int =
-    (value * (getResources()?.getDisplayMetrics()?.scaledDensity ?: 0f)).toInt()
-public fun Context.sp(value: Float): Int =
-    (value * (getResources()?.getDisplayMetrics()?.scaledDensity ?: 0f)).toInt()
-
-//converts px value into dip or sp
-public fun Context.px2dip(px: Int): Float =
-    (px.toFloat() / (getResources()?.getDisplayMetrics()?.density ?: 1f)).toFloat()
-public fun Context.px2sp(px: Int): Float =
-    (px.toFloat() / (getResources()?.getDisplayMetrics()?.scaledDensity ?: 1f)).toFloat()
-
-public fun Context.dimen(resource: Int): Int = getResources().getDimensionPixelSize(resource)
-
-//the same for nested DSL components
-[suppress("NOTHING_TO_INLINE")]
-public inline fun UiHelper.dip(value: Int): Int = ctx.dip(value)
-[suppress("NOTHING_TO_INLINE")]
-public inline fun UiHelper.dip(value: Float): Int = ctx.dip(value)
-[suppress("NOTHING_TO_INLINE")]
-public inline fun UiHelper.sp(value: Int): Int = ctx.sp(value)
-[suppress("NOTHING_TO_INLINE")]
-public inline fun UiHelper.sp(value: Float): Int = ctx.sp(value)
-[suppress("NOTHING_TO_INLINE")]
-public inline fun UiHelper.px2dip(px: Int): Float = ctx.px2dip(px)
-[suppress("NOTHING_TO_INLINE")]
-public inline fun UiHelper.px2sp(px: Int): Float = ctx.px2sp(px)
-[suppress("NOTHING_TO_INLINE")]
-public inline fun UiHelper.dimen(resource: Int): Int = ctx.dimen(resource)
-
-//the same for Fragments
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.dip(value: Int): Int = getActivity().dip(value)
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.dip(value: Float): Int = getActivity().dip(value)
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.sp(value: Int): Int = getActivity().sp(value)
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.sp(value: Float): Int = getActivity().sp(value)
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.px2dip(px: Int): Float = getActivity().px2dip(px)
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.px2sp(px: Int): Float = getActivity().px2sp(px)
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Fragment.dimen(resource: Int): Int = getActivity().dimen(resource)
 /* END SECTION */
 
 
