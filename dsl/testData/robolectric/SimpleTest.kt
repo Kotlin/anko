@@ -8,7 +8,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.*
 import org.junit.Test
-import kotlin.test.*
+import org.junit.Assert.*
 
 public open class TestActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
@@ -35,6 +35,7 @@ public class RobolectricTest() {
         val textView = activity.findViewById(1) as TextView
         val button = activity.findViewById(2) as Button
 
+        assertEquals("Some text", textView.getText().toString())
         button.performClick()
         assertEquals("New text", textView.getText().toString())
 
