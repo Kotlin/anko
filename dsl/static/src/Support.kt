@@ -117,6 +117,10 @@ public fun Fragment.selector(
 
 
 /* SECTION ASYNC */
+public inline fun <T: Fragment> T.uiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
+    getActivity().uiThread { f() }
+}
+
 public fun Fragment.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> = getActivity().async(task)
 
 public fun Fragment.async(executorService: ExecutorService, task: AnkoAsyncContext.() -> Unit): Future<Unit> =

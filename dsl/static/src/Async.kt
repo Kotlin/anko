@@ -32,8 +32,12 @@ public fun AnkoAsyncContext.uiThread(f: Context.() -> Unit) {
     ctxReference.get()?.uiThread(f)
 }
 
-private fun Context.uiThread(f: Context.() -> Unit) {
+public fun Context.uiThread(f: Context.() -> Unit) {
     if (ContextHelper.uiThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
+}
+
+public inline fun <T: Fragment> T.uiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
+    getActivity()!!.uiThread { f() }
 }
 
 public fun Fragment.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> {
