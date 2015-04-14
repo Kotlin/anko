@@ -27,29 +27,12 @@ import java.util.HashMap
 
 public class AnkoException(message: String = "") : RuntimeException(message)
 
-private data class ViewProps(var listeners: HashMap<String, ListenerHelper>, var realTag: Any? = null)
-
 private val defaultInit: Any.() -> Unit = {}
-
-private trait ListenerHelper {
-    fun apply()
-}
 
 public fun <T : View> T.style(style: (View) -> Unit): T {
     applyStyle(this, style)
     return this
 }
-
-public var View.tag: Any?
-    get() = {
-        val tag = getTag()
-        val props = tag as? ViewProps
-        if (props != null) props.realTag else tag
-    }
-    set(tag) {
-        var props = getTag() as? ViewProps
-        if (props != null) props!!.realTag = tag else setTag(tag)
-    }
 
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, manager: ViewManager): T {
     return addView(view(manager.dslContext), init, manager)
@@ -69,12 +52,7 @@ public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit
 }
 
 private fun <T : View> addView(v: T, init: T.() -> Unit, manager: ViewManager): T {
-    v.setTag(ViewProps(hashMapOf(), v.getTag()))
     v.init()
-    val props = v.getTag() as? ViewProps
-    if (props != null) {
-        v.setTag(props.realTag)
-    }
     when (manager) {
         is ViewGroup -> manager.addView(v)
         is UiHelper -> manager.addView(v)

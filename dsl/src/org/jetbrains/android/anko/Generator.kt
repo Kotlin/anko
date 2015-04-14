@@ -38,6 +38,7 @@ data class SimpleListener(
 data class ComplexListener(
         setter: MethodNodeWithClass,
         clazz: ClassNode,
+        val name: String,
         val methods: List<ListenerMethod>
 ): Listener(setter, clazz)
 
@@ -139,12 +140,13 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
         val listener = classTree.findNode(setter.method.args[0].internalName)!!.data
 
         val methods = listener.methods?.filter { !it.isConstructor }
+
+        val rawName = setter.method.name
+        //delete "set" ("add") end "Listener" parts of String
+        val name = rawName.substring("set".length()).dropLast("Listener".length()).decapitalize()
+
         return when (methods?.size() ?: 0) {
-            1 -> {
-                // It is a simple listener, with just one method
-                val rawName = setter.method.name
-                //delete "setOn" end "Listener" parts of String
-                val name = rawName.substring("set".length()).dropLast("Listener".length()).decapitalize()
+            1 -> { // It is a simple listener, with just one method
                 val method = methods!![0]
                 val argumentTypes = method.fmtArgumentsTypes()
                 val returnType = method.returnType.asString()
@@ -152,15 +154,14 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
             }
             0 -> // Something weird
                 throw RuntimeException("Listener ${listener.name} contains no methods.")
-            else -> {
-                // A complex listener (with more than one method)
+            else -> { // A complex listener (with more than one method)
                 val listenerMethods = methods?.map { method ->
                     val methodName = method.name
                     val argumentTypes = method.fmtArgumentsTypes()
                     val returnType = method.returnType.asString()
                     ListenerMethod(method, methodName, argumentTypes, returnType)
                 }!!
-                ComplexListener(setter, listener, listenerMethods)
+                ComplexListener(setter, listener, name, listenerMethods)
             }
         }
     }

@@ -13,17 +13,23 @@ public open class MyActivity() : Activity() {
         UI {
             linearLayout {
                 listView {
-                    onScroll { a,b,c,d ->  }
-                    onScrollStateChanged { a,b -> }
+                    onScrollListener {
+                        onScroll { a,b,c,d ->  }
+                        onScrollStateChanged { a,b -> }
+                    }
                 }
                 searchView {
-                    onQueryTextChange { a -> true }
-                    onQueryTextSubmit { a -> true }
+                    onQueryTextListener {
+                        onQueryTextChange { a -> true }
+                        onQueryTextSubmit { a -> true }
+                    }
                 }
                 seekBar {
-                    onProgressChanged { a,b,c -> }
-                    onStartTrackingTouch { a -> }
-                    onStopTrackingTouch { a -> }
+                    onSeekBarChangeListener {
+                        onProgressChanged { a,b,c -> }
+                        onStartTrackingTouch { a -> }
+                        onStopTrackingTouch { a -> }
+                    }
                 }
             }
         }

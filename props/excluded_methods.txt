@@ -1,4 +1,3 @@
-android.view.View#getTag
 android.view.View#getPaddingTop
 android.view.View#getPaddingLeft
 android.view.View#getPaddingRight

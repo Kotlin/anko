@@ -80,4 +80,8 @@ public class Buffer(private val indentSymbol: String, indent: Int = 0, val init:
     override fun toString(): String {
         return builder.toString()
     }
+
+    fun getLines(): List<String> {
+        return toString().split('\n').toList()
+    }
 }

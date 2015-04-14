@@ -172,6 +172,10 @@ public var android.view.View.systemUiVisibility: Int
   get() = getSystemUiVisibility()
   set(v) = setSystemUiVisibility(v)
 
+public var android.view.View.tag: Any?
+  get() = getTag()
+  set(v) = setTag(v)
+
 public var android.view.View.top: Int
   get() = getTop()
   set(v) = setTop(v)

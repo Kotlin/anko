@@ -18,12 +18,12 @@ package org.jetbrains.android.anko
 
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
-import java.util.ArrayList
 import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.AnkoFile.*
 import org.jetbrains.android.anko.ConfigurationTune.*
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
+import java.util.*
 
 class Renderer(private val generator: Generator) : Configurable(generator.config) {
 
@@ -85,16 +85,23 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     // Render complex listeners (interfaces with more than one method)
+    [suppress("UNCHECKED_CAST")]
     private val complexListeners = generate(COMPLEX_LISTENER_CLASSES, COMPLEX_LISTENER_SETTERS) {
-        generator.listeners.filter { it is ComplexListener }
+        generator.listeners.filter { it is ComplexListener } as List<ComplexListener>
     }
 
     val complexListenerSetters = generate(COMPLEX_LISTENER_SETTERS) {
-        complexListeners.map { renderComplexListenerSetters(it as ComplexListener) }
+        complexListeners.map { renderComplexListenerSetter(it as ComplexListener) }
     }
 
     val complexListenerClasses = generate(COMPLEX_LISTENER_CLASSES) {
-        complexListeners.map { renderComplexListenerClass(it as ComplexListener) }
+        val generated = LinkedHashMap<String, String>()
+        for (listener in complexListeners) {
+            if (!generated.contains(listener.name)) {
+                generated.put(listener.name, renderComplexListenerClass(listener))
+            }
+        }
+        generated.values()
     }
 
     //generated layout classes with custom LayoutParams
@@ -243,39 +250,20 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     //For example, for class android.widget.SearchView.OnSuggestionListener it would be SearchView_OnSuggessionListener
     fun getHelperClassName(listener: ComplexListener): String {
         val basename = listener.clazz.name.substringAfter('.').replace("$", "_")
-        val setterClassName = listener.setter.clazz.simpleName
-        val setterName = setterClassName.replace(".", "_") + "_" + listener.setter.method.name
-        return "__" + setterName + "_" + basename.substring(basename.lastIndexOf("/") + 1)
+        return "__" + basename.substring(basename.lastIndexOf("/") + 1)
     }
 
-    private fun renderComplexListenerSetters(listener: ComplexListener): String {
-        //ListenerHelper class name (helper mutable class, generates real listener)
+    private fun renderComplexListenerSetter(listener: ComplexListener): String {
         val helperClassName = getHelperClassName(listener)
         val setterClass = listener.setter.clazz.fqNameWithTypeArguments
-        //key for storing ListenerHelper (local to this setter)
-        val hashKey = "${setterClass}_${listener.setter.method.name}"
 
-        fun renderExtensionMethods() = listener.methods.map { method ->
-            val varName = method.name.decapitalize()
-            val argumentType = "(${method.argumentTypes}) -> ${method.returnType}"
-
-            buffer {
-                line("public fun $setterClass.${method.name.decapitalize()}(act: $argumentType) {")
-                line("val props = getTag() as? ViewProps")
-                line("if (props != null) {")
-                    line("var l: $helperClassName? =")
-                    line("props.listeners.get(\"$hashKey\") as? $helperClassName")
-                    line("if (l == null) {")
-                    line("l = $helperClassName(this)")
-                    line("props.listeners.put(\"$hashKey\", l!!)")
-                line("}")
-                line("l!!._$varName = act")
-                line("l!!.apply()")
-                line("}").line("}")
-
-            }.toString()
-        }
-        return renderExtensionMethods().joinToString("\n")
+        return buffer {
+            line("public fun $setterClass.${listener.name}Listener(init: $helperClassName.() -> Unit) {")
+            line("val listener = $helperClassName()")
+            line("listener.init()")
+            line("${listener.setter.method.name}(listener)")
+            line("}")
+        }.toString()
     }
 
     //render a complex listener
@@ -283,35 +271,36 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         val listenerClassName = listener.clazz.fqName
         //ListenerHelper class name (helper mutable class, generates real listener)
         val helperClassName = getHelperClassName(listener)
-        val setterClass = listener.setter.clazz.fqNameWithTypeArguments
 
         //field list (already with indentation)
         val fields = listener.methods.map { method ->
             val varName = method.name.decapitalize()
-            val argumentNames = method.method.fmtArgumentsNames()
             val lambdaType = "((${method.argumentTypes}) -> ${method.returnType})"
-            val returnValue = method.method.returnType.getDefaultValue()
-            val initializer = "{ $argumentNames -> $returnValue }"
-            val simplifiedInitializer = if (initializer == "{  ->  }") "{}" else initializer
-            "var _$varName: $lambdaType = $simplifiedInitializer "
+            "private var _$varName: $lambdaType? = null"
         }
-        //listener methods (for produced anonymous class, already with indentation)
-        val listenerMethods = listener.methods.map { method ->
+
+        val listenerMethods = listener.methods.flatMap { method ->
             val varName = method.name.decapitalize()
             val customArgumentsKey = "$listenerClassName#${method.name}"
             val customArguments = Props.customMethodParameters.get(customArgumentsKey)
             val arguments = customArguments ?: method.method.fmtArguments()
             val substitution = method.method.fmtArgumentsNames()
-            "override fun ${method.name}($arguments) = _$varName($substitution)"
+            buffer {
+                val defaultValue = method.method.returnType.getDefaultValue()
+                val returnDefaultValue = if (defaultValue.isNotEmpty()) " ?: $defaultValue" else ""
+
+                line("override fun ${method.name}($arguments) = _$varName?.invoke($substitution)$returnDefaultValue").nl()
+                line("public fun ${method.name}(listener: (${method.argumentTypes}) -> ${method.returnType}) {")
+                line("_$varName = listener")
+                line("}").nl()
+            }.getLines()
         }
 
         return buffer {
-            line("class $helperClassName(val v: $setterClass): ListenerHelper {")
+            line("class $helperClassName : $listenerClassName {")
             lines(fields).nl()
-            line("override fun apply() {")
-            line("v.${listener.setter.method.name}(object: $listenerClassName {")
             lines(listenerMethods)
-            line("})").line("}").line("}")
+            line("}")
         }.toString()
     }
 

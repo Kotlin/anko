@@ -122,7 +122,7 @@ public fun Context.selector(
     }.show()
 }
 
-public class AlertDialogBuilder(val ctx: Context, val init: AlertDialogBuilder.() -> Unit = defaultInit) {
+public class AlertDialogBuilder(val ctx: Context, val init: AlertDialogBuilder.() -> Unit) {
     private val builder: AlertDialog.Builder = AlertDialog.Builder(ctx)
     protected var dialog: AlertDialog? = null;
 

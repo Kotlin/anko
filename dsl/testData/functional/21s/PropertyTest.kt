@@ -296,6 +296,10 @@ public var android.view.View.systemUiVisibility: Int
   get() = getSystemUiVisibility()
   set(v) = setSystemUiVisibility(v)
 
+public var android.view.View.tag: Any?
+  get() = getTag()
+  set(v) = setTag(v)
+
 public var android.view.View.textAlignment: Int
   get() = getTextAlignment()
   set(v) = setTextAlignment(v)
