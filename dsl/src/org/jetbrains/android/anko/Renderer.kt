@@ -117,7 +117,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         val propertyName = it.second!!.data.simpleName.decapitalize()
         val className = it.second!!.data.fqName
         "public val Context.$propertyName: $className\n"+
-                "${config.indent}get() = getSystemService(Context.${it.first}) as $className"
+                "${config.indent}get() = getSystemService(Context.${it.first}) as $className\n"
     }
 
     val sqLiteParserHelpers = generate(SQL_PARSER_HELPERS) {
@@ -197,8 +197,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         val returnType = listener.method.returnType
 
         return buffer {
-            line("public fun $className.${listener.method.name}(l: ($argumentTypes) -> $returnType): Unit =")
-            line("${listener.setter.method.name}(l)")
+            line("public fun $className.${listener.method.name}(l: ($argumentTypes) -> $returnType): Unit = ${listener.setter.method.name}(l)")
         }.toString()
     }
 
@@ -350,7 +349,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
         val layoutParamsFunc = lp.constructors.map { renderExtensionFunction(it) }
         return "public open class $helperClassName(ctx: Context): $layoutClassName(ctx) {\n" +
-            layoutParamsFunc.joinToString("\n") + "\n}"
+            layoutParamsFunc.joinToString("\n") + "\n}\n"
     }
 
     private fun supportsResourceSetter(typ: String): Boolean {

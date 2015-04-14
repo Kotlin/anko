@@ -21,7 +21,7 @@ import org.jetbrains.android.anko.Configurable
 fun Configurable.buffer(init: Buffer.() -> Unit) = Buffer(config.indent, 0, init)
 fun Configurable.buffer(indent: Int, init: Buffer.() -> Unit) = Buffer(config.indent, indent, init)
 
-public class Buffer(private val indentSymbol: String, indent: Int = 0, val init: Buffer.() -> Unit) {
+public class Buffer(private val indentString: String, indent: Int = 0, val init: Buffer.() -> Unit) {
 
     private val builder = StringBuilder();
     private var mainIndent = indent;
@@ -33,7 +33,7 @@ public class Buffer(private val indentSymbol: String, indent: Int = 0, val init:
         if (mainIndent > 0 && s.startsWith('}')) mainIndent = mainIndent - 1
 
         if (s.isNotEmpty()) {
-            builder.append(indentSymbol.repeat(mainIndent + tempIndent)).append(s.trim()).append('\n')
+            builder.append(indentString.repeat(mainIndent + tempIndent)).append(s.trim()).append('\n')
         } else {
             builder.append('\n')
         }

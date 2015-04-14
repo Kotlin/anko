@@ -65,7 +65,7 @@ fun <T> Configurable.generate(vararg tune: ConfigurationTune, init: () -> Collec
 }
 
 abstract class BaseGeneratorConfiguration {
-    open val indent: String = "  "
+    open val indent: String = "    "
 
     open val files: MutableSet<AnkoFile> = hashSetOf(*AnkoFile.values())
     open val tunes: MutableSet<ConfigurationTune> = hashSetOf(*ConfigurationTune.values())
