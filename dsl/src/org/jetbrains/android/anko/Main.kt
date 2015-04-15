@@ -21,7 +21,7 @@ import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 import org.jetbrains.android.anko.utils.JarFileFilter
 
 fun main(args: Array<String>) {
-    if (args.size() > 0) {
+    if (args.isNotEmpty()) {
         args.forEach { taskName ->
             println(":: $taskName")
             when (taskName) {
@@ -51,9 +51,7 @@ private fun versions() {
 }
 
 private fun deleteDirectory(f: File) {
-    if (!f.exists()) {
-        return;
-    }
+    if (!f.exists()) return
 
     if (f.isDirectory()) {
         f.listFiles()?.forEach { deleteDirectory(it) }
@@ -78,7 +76,7 @@ private fun gen() {
         val jars = getJars(version)?.map { it.getAbsolutePath() } ?: listOf<String>()
         val intVersion = parseVersion(version.getName())
         if (intVersion != null && jars.isNotEmpty()) {
-            println("Processing version=${version.getName()}, jars: ${jars.joinToString(",")}")
+            println("Processing version ${version.getName()}, jars: ${jars.joinToString()}")
 
             val outputDirectory = "workdir/gen/${version.getName()}/"
             val fileOutputDirectory = File("$outputDirectory/src/main/kotlin/")
@@ -93,7 +91,5 @@ private fun gen() {
 
 private fun parseVersion(name: String): Int? {
     val prob = name.filter { it.isDigit() }
-    return if (prob.isNotEmpty())
-        prob.toInt()
-    else null
+    return if (prob.isNotEmpty()) prob.toInt() else null
 }
