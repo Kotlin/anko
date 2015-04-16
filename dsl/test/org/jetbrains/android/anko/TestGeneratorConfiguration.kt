@@ -24,6 +24,8 @@ public open class TestGeneratorConfiguration : GeneratorConfiguration() {
     public val tmpFiles: Map<AnkoFile, File> =
         AnkoFile.values().map { it to createTempTestFile(it.filename, ".kt") }.toMap()
 
+    override var generateMavenArtifact = false
+
     override fun getOutputFile(ankoFile: AnkoFile): File {
         return tmpFiles[ankoFile]!!
     }
