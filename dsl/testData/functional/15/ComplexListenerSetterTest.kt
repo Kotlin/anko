@@ -10,12 +10,6 @@ public fun android.gesture.GestureOverlayView.onGesturingListener(init: __Gestur
     addOnGesturingListener(listener)
 }
 
-public fun android.inputmethodservice.KeyboardView.onKeyboardActionListener(init: __KeyboardView_OnKeyboardActionListener.() -> Unit) {
-    val listener = __KeyboardView_OnKeyboardActionListener()
-    listener.init()
-    setOnKeyboardActionListener(listener)
-}
-
 public fun android.view.View.onAttachStateChangeListener(init: __View_OnAttachStateChangeListener.() -> Unit) {
     val listener = __View_OnAttachStateChangeListener()
     listener.init()

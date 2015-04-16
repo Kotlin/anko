@@ -10,12 +10,6 @@ public fun android.gesture.GestureOverlayView.onGesturingListener(init: __Gestur
     addOnGesturingListener(listener)
 }
 
-public fun android.inputmethodservice.KeyboardView.onKeyboardActionListener(init: __KeyboardView_OnKeyboardActionListener.() -> Unit) {
-    val listener = __KeyboardView_OnKeyboardActionListener()
-    listener.init()
-    setOnKeyboardActionListener(listener)
-}
-
 public fun android.support.v4.view.ViewPager.onPageChangeListener(init: __ViewPager_OnPageChangeListener.() -> Unit) {
     val listener = __ViewPager_OnPageChangeListener()
     listener.init()

@@ -29,6 +29,36 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     companion object {
         val NOTHING_TO_INLINE = "[suppress(\"NOTHING_TO_INLINE\")]"
         val ONLY_LOCAL_RETURN = "inlineOptions(InlineOption.ONLY_LOCAL_RETURN)"
+
+        val CONSTRUCTOR1 = array(Type.getObjectType("android/content/Context"))
+        val CONSTRUCTOR2 = array(Type.getObjectType("android/content/Context"), Type.getObjectType("android/util/AttributeSet"))
+        val CONSTRUCTOR3 = array(Type.getObjectType("android/content/Context"), Type.getObjectType("android/util/AttributeSet"), Type.INT_TYPE)
+        val AVAILABLE_VIEW_CONSTRUCTORS = listOf(CONSTRUCTOR1, CONSTRUCTOR2, CONSTRUCTOR3)
+
+        fun renderConstructor(
+                view: ClassNode,
+                constructors: List<MethodNode?>,
+                ctxName: String,
+                argumentNames: Boolean = false
+        ): String {
+            if (constructors.size() != AVAILABLE_VIEW_CONSTRUCTORS.size()) throw IllegalArgumentException("Invalid constructors list")
+
+            return if (argumentNames) {
+                when {
+                    constructors[2] != null -> "$ctxName: Context, attrs: AttributeSet?, defStyle: Int"
+                    constructors[0] != null -> "$ctxName: Context"
+                    constructors[1] != null -> "$ctxName: Context, attrs: AttributeSet?"
+                    else -> throw IllegalArgumentException("No available constructors for ${view.fqName}.")
+                }
+            } else {
+                when {
+                    constructors[2] != null -> "$ctxName, null, 0"
+                    constructors[0] != null -> "$ctxName"
+                    constructors[1] != null -> "$ctxName, null"
+                    else -> throw IllegalArgumentException("No available constructors for ${view.fqName}.")
+                }
+            }
+        }
     }
 
     val views = generate(VIEWS) {
@@ -36,7 +66,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     val viewGroups = generate(VIEWS) {
-        generateViews(generator.viewGroupClasses) { "_" + it.simpleName }
+        generateViews(generator.viewGroupClasses, true) { "_" + it.simpleName }
     }
 
     val helperConstructors = generate(HELPER_CONSTRUCTORS) {
@@ -162,11 +192,19 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
             }.toString()
         }.joinToString("\n", "public final class InterfaceWorkarounds {\n\n", "\n\n}")
 
-    private fun generateViews(views: List<ClassNode>, nameResolver: (ClassNode) -> String): List<String> {
-        return views.filter { !it.isAbstract && it.hasSimpleConstructor() }.map { clazz ->
-            val typeName = clazz.fqName
-            val className = nameResolver(clazz)
-            val funcName = clazz.simpleName.decapitalize()
+    fun generateViews(
+            views: List<ClassNode>,
+            forceConstructor3: Boolean = false,
+            nameResolver: (ClassNode) -> String
+    ): List<String> {
+        return views.filter { !it.isAbstract }.map { view ->
+            val typeName = view.fqName
+            val className = nameResolver(view)
+            val funcName = view.simpleName.decapitalize()
+
+            val constructors = AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
+                view.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
+            }
 
             buffer {
                 fun Buffer.add(extendFor: String) {
@@ -174,14 +212,14 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                     line("public inline fun $extendFor.$funcName(): $typeName = $funcName({})")
                     line("public inline fun $extendFor.$funcName($ONLY_LOCAL_RETURN init: $className.() -> Unit): $typeName = addView {")
                         line("ctx ->")
-                        line("val view = $className(ctx)")
+                        line("val view = $className(${renderConstructor(view, constructors, "ctx")})")
                         line("view.init()")
                         line("view")
                     line("}")
                 }
 
                 add("ViewManager")
-                if (config[TOP_LEVEL_DSL_ITEMS] && clazz.isViewGroup(generator.classTree)) {
+                if (config[TOP_LEVEL_DSL_ITEMS] && view.isViewGroup(generator.classTree)) {
                     nl().add("Context")
                     nl().add("Activity")
                 }
@@ -348,7 +386,13 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         }
 
         val layoutParamsFunc = lp.constructors.map { renderExtensionFunction(it) }
-        return "public open class $helperClassName(ctx: Context): $layoutClassName(ctx) {\n" +
+        val constructors = AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
+            lp.layout.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
+        }
+
+        val constructorArguments = renderConstructor(lp.layout, constructors, "ctx", argumentNames = true)
+        val constructor = renderConstructor(lp.layout, constructors, "ctx")
+        return "public open class $helperClassName($constructorArguments): $layoutClassName($constructor) {\n" +
             layoutParamsFunc.joinToString("\n") + "\n}\n"
     }
 
@@ -358,8 +402,5 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                 (typ.matches("^android.graphics.drawable.Drawable\\??$"))
         )
     }
-
-    // Only one-argument (typically <init>(Context)) View constructors are now supported
-    private fun ClassNode.hasSimpleConstructor() = getConstructors().any { it.args.size() == 1 }
 
 }

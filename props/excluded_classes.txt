@@ -2,3 +2,5 @@ android.support.v4.app.NoSaveStateFrameLayout
 android.app.FragmentBreadCrumbs
 android.widget.MediaController
 android.provider.ContactsContract.BaseSyncColumns
+android.inputmethodservice.KeyboardView
+android.support.v4.widget.CircleImageView

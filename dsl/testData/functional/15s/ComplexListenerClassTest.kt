@@ -42,58 +42,6 @@ class __GestureOverlayView_OnGesturingListener : android.gesture.GestureOverlayV
     }
 }
 
-class __KeyboardView_OnKeyboardActionListener : android.inputmethodservice.KeyboardView.OnKeyboardActionListener {
-    private var _onPress: ((Int) -> Unit)? = null
-    private var _onRelease: ((Int) -> Unit)? = null
-    private var _onKey: ((Int, IntArray?) -> Unit)? = null
-    private var _onText: ((CharSequence?) -> Unit)? = null
-    private var _swipeLeft: (() -> Unit)? = null
-    private var _swipeRight: (() -> Unit)? = null
-    private var _swipeDown: (() -> Unit)? = null
-    private var _swipeUp: (() -> Unit)? = null
-
-    override fun onPress(p0: Int) = _onPress?.invoke(p0)
-
-    public fun onPress(listener: (Int) -> Unit) {
-        _onPress = listener
-    }
-    override fun onRelease(p0: Int) = _onRelease?.invoke(p0)
-
-    public fun onRelease(listener: (Int) -> Unit) {
-        _onRelease = listener
-    }
-    override fun onKey(p0: Int, p1: IntArray?) = _onKey?.invoke(p0, p1)
-
-    public fun onKey(listener: (Int, IntArray?) -> Unit) {
-        _onKey = listener
-    }
-    override fun onText(p0: CharSequence?) = _onText?.invoke(p0)
-
-    public fun onText(listener: (CharSequence?) -> Unit) {
-        _onText = listener
-    }
-    override fun swipeLeft() = _swipeLeft?.invoke()
-
-    public fun swipeLeft(listener: () -> Unit) {
-        _swipeLeft = listener
-    }
-    override fun swipeRight() = _swipeRight?.invoke()
-
-    public fun swipeRight(listener: () -> Unit) {
-        _swipeRight = listener
-    }
-    override fun swipeDown() = _swipeDown?.invoke()
-
-    public fun swipeDown(listener: () -> Unit) {
-        _swipeDown = listener
-    }
-    override fun swipeUp() = _swipeUp?.invoke()
-
-    public fun swipeUp(listener: () -> Unit) {
-        _swipeUp = listener
-    }
-}
-
 class __ViewPager_OnPageChangeListener : android.support.v4.view.ViewPager.OnPageChangeListener {
     private var _onPageScrolled: ((Int, Float, Int) -> Unit)? = null
     private var _onPageSelected: ((Int) -> Unit)? = null
