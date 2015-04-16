@@ -17,6 +17,7 @@
 package kotlinx.android.anko
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.LinearLayout
@@ -104,9 +105,8 @@ public fun Fragment.longToast(text: String): Unit = getActivity().longToast(text
 public fun Fragment.selector(
     title: CharSequence = "",
     items: List<CharSequence>,
-    onCancel: () -> Unit = {},
     onClick: (Int) -> Unit
-): Unit = getActivity().selector(title, items, onCancel, onClick)
+): Unit = getActivity().selector(title, items, onClick)
 /* END SECTION */
 
 
@@ -139,4 +139,12 @@ public fun Fragment.alert(
 
 public fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder =
     getActivity().alert(init)
+
+public fun Fragment.progressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+    return getActivity().progressDialog(false, message, title, init)
+}
+
+public fun Fragment.indeterminateProgressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+    return getActivity().progressDialog(true, message, title, init)
+}
 /* END SECTION */

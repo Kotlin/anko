@@ -51,61 +51,61 @@ public fun Context.longToast(text: CharSequence) {
     Toast.makeText(this, text, Toast.LENGTH_LONG).show()
 }
 
-private val defaultOnCancel = {}
-
 public fun Fragment.selector(
     title: CharSequence = "",
     items: List<CharSequence>,
-    onCancel: () -> Unit = defaultOnCancel,
-    onClick: (Int) -> Unit): Unit =
-    getActivity().selector(title, items, onCancel, onClick)
+    onClick: (Int) -> Unit
+): Unit = getActivity().selector(title, items, onClick)
 
-public fun Fragment.alert(message: String, title: String? = null, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder = getActivity().alert(message, title, init)
-public fun Context.alert(message: String, title: String? = null, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder {
-    return AlertDialogBuilder(this) {
-        if (title != null) {
-            title(title)
-        }
+public fun Fragment.alert(message: String, title: String? = null, init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder = getActivity().alert(message, title, init)
+public fun Context.alert(message: String, title: String? = null, init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder {
+    return with(AlertDialogBuilder(this)) {
+        if (title != null) title(title)
         message(message)
-        init()
+        if (init != null) init()
+        this
     }
 }
 
-public fun Fragment.alert(message: Int, title: Int, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder = getActivity().alert(message, title, init)
-public fun Context.alert(message: Int, title: Int, init: AlertDialogBuilder.() -> Unit = {}): AlertDialogBuilder {
-    return AlertDialogBuilder(this) {
-        title(title)
+public fun Fragment.alert(message: Int, title: Int? = null, init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder = getActivity().alert(message, title, init)
+public fun Context.alert(message: Int, title: Int? = null, init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder {
+    return with(AlertDialogBuilder(this)) {
+        if (title != null) title(title)
         message(message)
-        init()
+        if (init != null) init()
+        this
     }
 }
 
-public fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = AlertDialogBuilder(ctx, init)
-public fun Context.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = AlertDialogBuilder(this, init)
+public fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = getActivity().alert(init)
+public fun Context.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = with (AlertDialogBuilder(this)) {
+    init()
+    this
+}
 
-public fun Fragment.progressDialog(message: String? = null, title: String? = null, init: ProgressDialog.() -> Unit = {}): ProgressDialog {
+public fun Fragment.progressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return getActivity().progressDialog(false, message, title, init)
 }
 
-public fun Context.progressDialog(message: String? = null, title: String? = null, init: ProgressDialog.() -> Unit = {}): ProgressDialog {
+public fun Context.progressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return progressDialog(false, message, title, init)
 }
 
-public fun Fragment.indeterminateProgressDialog(message: String? = null, title: String? = null, init: ProgressDialog.() -> Unit = {}): ProgressDialog {
+public fun Fragment.indeterminateProgressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return getActivity().progressDialog(true, message, title, init)
 }
 
-public fun Context.indeterminateProgressDialog(message: String? = null, title: String? = null, init: ProgressDialog.() -> Unit = {}): ProgressDialog {
+public fun Context.indeterminateProgressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return progressDialog(true, message, title, init)
 }
 
-private fun Context.progressDialog(indeterminate: Boolean, message: String? = null, title: String? = null, init: ProgressDialog.() -> Unit = {}): ProgressDialog {
+private fun Context.progressDialog(indeterminate: Boolean, message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     val dialog = ProgressDialog(this)
     dialog.setIndeterminate(indeterminate)
     if (!indeterminate) dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
     if (message != null) dialog.setMessage(message)
     if (title != null) dialog.setTitle(title)
-    dialog.init()
+    if (init != null) dialog.init()
     dialog.show()
     return dialog
 }
@@ -113,22 +113,17 @@ private fun Context.progressDialog(indeterminate: Boolean, message: String? = nu
 public fun Context.selector(
     title: CharSequence = "",
     items: List<CharSequence>,
-    onCancel: () -> Unit = defaultOnCancel,
     onClick: (Int) -> Unit) {
-    AlertDialogBuilder(this) {
+    with(AlertDialogBuilder(this)) {
         title(title)
         items(items, onClick)
-        onCancel(onCancel)
-    }.show()
+        show()
+    }
 }
 
-public class AlertDialogBuilder(val ctx: Context, val init: AlertDialogBuilder.() -> Unit) {
+public class AlertDialogBuilder(val ctx: Context) {
     private val builder: AlertDialog.Builder = AlertDialog.Builder(ctx)
-    protected var dialog: AlertDialog? = null;
-
-    init {
-        init()
-    }
+    protected var dialog: AlertDialog? = null
 
     public fun dismiss() {
         dialog?.dismiss()
