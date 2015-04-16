@@ -25,6 +25,7 @@ import android.view.ViewManager
 import kotlinx.android.anko.AnkoException
 import kotlinx.android.anko.UI
 import kotlinx.android.anko.internals.UiHelper
+import kotlinx.android.anko.internals.initiateView
 
 public inline fun <T: View> ViewManager.addView(factory: (ctx: Context) -> T): T {
     return when (this) {
@@ -71,5 +72,11 @@ public inline fun <T : View> Context.addView(inlineOptions(InlineOption.ONLY_LOC
 public inline fun <T : View> Activity.addView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T): T {
     val view = factory(this)
     UI { addView(view) }
+    return view
+}
+
+public inline fun <reified T : View> Context.view(init: T.() -> Unit): T {
+    val view = initiateView(this, javaClass<T>())
+    view.init()
     return view
 }

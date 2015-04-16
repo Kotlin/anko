@@ -26,11 +26,11 @@ import android.app.Fragment
 import android.os.Bundle
 import android.net.Uri
 import java.io.Serializable
-import kotlinx.android.anko.internals.__internalStartActivity
+import kotlinx.android.anko.internals.internalStartActivity
 import android.os.Parcelable
 import android.view.View
 import kotlinx.android.anko.internals.UiHelper
-import kotlinx.android.anko.internals.__internalStartActivityForResult
+import kotlinx.android.anko.internals.internalStartActivityForResult
 
 public val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
 public val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
@@ -199,22 +199,22 @@ public fun Context.makeCall(number: String): Boolean {
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<String, Any>) {
-    __internalStartActivity(javaClass<T>(), params)
+    internalStartActivity(javaClass<T>(), params)
 }
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
-    __internalStartActivityForResult(javaClass<T>(), requestCode, params)
+    internalStartActivityForResult(javaClass<T>(), requestCode, params)
 }
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
-    getActivity().__internalStartActivity(javaClass<T>(), params)
+    getActivity().internalStartActivity(javaClass<T>(), params)
 }
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
-    getActivity().__internalStartActivityForResult(javaClass<T>(), requestCode, params)
+    getActivity().internalStartActivityForResult(javaClass<T>(), requestCode, params)
 }
 
 public fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {

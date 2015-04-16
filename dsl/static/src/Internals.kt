@@ -24,17 +24,18 @@ import android.os.Bundle
 import kotlinx.android.anko.*
 import android.database.sqlite.SQLiteDatabase
 import android.database.Cursor
+import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
 
-public fun Context.__internalStartActivity(activity: Class<out Activity>, params: Array<out Pair<String, Any>>) {
+public fun Context.internalStartActivity(activity: Class<out Activity>, params: Array<out Pair<String, Any>>) {
     val intent = Intent(this, activity)
     fillIntentArguments(intent, params)
     startActivity(intent)
 }
 
-public fun Activity.__internalStartActivityForResult(activity: Class<out Activity>, requestCode: Int, params: Array<out Pair<String, Any>>) {
+public fun Activity.internalStartActivityForResult(activity: Class<out Activity>, requestCode: Int, params: Array<out Pair<String, Any>>) {
     val intent = Intent(this, activity)
     fillIntentArguments(intent, params)
     startActivityForResult(intent, requestCode)
@@ -110,4 +111,24 @@ public class UiHelper(public val ctx: Context, private val setContentView: Boole
     override fun removeView(view: View) {
         throw UnsupportedOperationException()
     }
+}
+
+public fun <T : View> initiateView(ctx: Context, viewClass: Class<T>): T {
+    try {
+        val constructor1 = viewClass.getConstructor(javaClass<Context>())
+        return constructor1.newInstance(ctx)
+    } catch (e: NoSuchMethodException) {
+        try {
+            val constructor2 = viewClass.getConstructor(javaClass<Context>(), javaClass<AttributeSet>())
+            return constructor2.newInstance(ctx, null)
+        } catch (e: NoSuchMethodException) {
+            try {
+                val constructor3 = viewClass.getConstructor(javaClass<Context>(), javaClass<AttributeSet>(), javaClass<Int>())
+                return constructor3.newInstance(ctx, null, 0)
+            } catch (e: NoSuchMethodException) {
+                throw AnkoException("Can't initiate View of class ${viewClass.getName()}: can't find proper constructor")
+            }
+        }
+    }
+
 }

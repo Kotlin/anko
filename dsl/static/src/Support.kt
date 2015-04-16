@@ -26,10 +26,10 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
-import kotlinx.android.anko.internals.__internalStartActivity
+import kotlinx.android.anko.internals.internalStartActivity
 import android.content.Intent
 import kotlinx.android.anko.custom.addView
-import kotlinx.android.anko.internals.__internalStartActivityForResult
+import kotlinx.android.anko.internals.internalStartActivityForResult
 import kotlinx.android.anko.internals.UiHelper
 
 /* SECTION HELPERS */
@@ -64,12 +64,12 @@ public fun Fragment.makeCall(number: String): Boolean = getActivity().makeCall(n
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
-    getActivity().__internalStartActivity(javaClass<T>(), params)
+    getActivity().internalStartActivity(javaClass<T>(), params)
 }
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
-    getActivity().__internalStartActivityForResult(javaClass<T>(), requestCode, params)
+    getActivity().internalStartActivityForResult(javaClass<T>(), requestCode, params)
 }
 
 public inline fun <reified T: Any> Fragment.intentFor(): Intent = Intent(getActivity(), javaClass<T>())
