@@ -923,7 +923,7 @@ public var android.widget.TextView.hint: CharSequence?
     get() = getHint()
     set(v) = setHint(v)
 public var android.widget.TextView.hintResource: Int
-    get() = throw AnkoException("'android.widget.TextView.hintResource' property doesn't have a getter")
+    get() = throw AnkoException("'android.widget.TextView.hintResource' property does not have a getter")
     set(v) = setHint(v)
 
 public val android.widget.TextView.hintTextColors: android.content.res.ColorStateList?
@@ -984,7 +984,7 @@ public var android.widget.TextView.text: CharSequence?
     get() = getText()
     set(v) = setText(v)
 public var android.widget.TextView.textResource: Int
-    get() = throw AnkoException("'android.widget.TextView.textResource' property doesn't have a getter")
+    get() = throw AnkoException("'android.widget.TextView.textResource' property does not have a getter")
     set(v) = setText(v)
 
 public val android.widget.TextView.textColors: android.content.res.ColorStateList?

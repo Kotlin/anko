@@ -105,7 +105,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
             if (resourceSetter != null) {
                 line("public var ${fullPropertyName}Resource: Int")
-                indent.line("get() = throw AnkoException(\"'${fullPropertyName}Resource' property doesn't have a getter\")")
+                indent.line("get() = throw AnkoException(\"'${fullPropertyName}Resource' property does not have a getter\")")
                 indent.line("set(v) = ${resourceSetter.method.name}(v)")
             }
         }
