@@ -163,11 +163,11 @@ public class AlertDialogBuilder(val ctx: Context) {
         builder.setCustomTitle(title)
     }
 
-    public fun view(view: View) {
+    public fun customView(view: View) {
         builder.setView(view)
     }
 
-    public fun view(dsl: ViewManager.() -> Unit) {
+    public fun customView(dsl: ViewManager.() -> Unit) {
         val view = ctx.UI(dsl).toView()
         builder.setView(view)
     }
