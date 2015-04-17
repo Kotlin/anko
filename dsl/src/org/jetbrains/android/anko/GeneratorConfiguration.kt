@@ -26,11 +26,11 @@ open class GeneratorConfiguration(outputDirectory: String = "workdir/gen/") : Ba
     override val outputDirectory = outputDirectory
     override val outputPackage = "kotlinx.android.anko"
 
-    override val excludedClasses = File("props/excluded_classes.txt").readLines().toSet()
+    override val excludedClasses = File("dsl/props/excluded_classes.txt").readLines().toSet()
 
-    override val excludedMethods = File("props/excluded_methods.txt").readLines().toSet()
+    override val excludedMethods = File("dsl/props/excluded_methods.txt").readLines().toSet()
 
-    override val excludedProperties = File("props/excluded_properties.txt").readLines().toSet()
+    override val excludedProperties = File("dsl/props/excluded_properties.txt").readLines().toSet()
 
     override fun getOutputFile(ankoFile: AnkoFile): File {
         return File(outputDirectory + "src/main/kotlin/" + outputPackage.replace('.', '/') + '/', ankoFile.filename)

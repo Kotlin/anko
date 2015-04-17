@@ -25,7 +25,7 @@ object Props {
 
     val imports: Map<String, String> by Delegates.lazy {
         val map = hashMapOf<String, String>()
-        File("props")
+        File("dsl/props")
             .listFiles { it.name.startsWith("imports_") && it.name.endsWith(".txt") }
             ?.forEach {
                 val name = it.name.replace(".txt", "")
@@ -36,7 +36,7 @@ object Props {
 
     val helperConstructors: Map<String, List<List<Variable>>> by Delegates.lazy {
         val res = HashMap<String, ArrayList<List<Variable>>>()
-        val lines = File("props/helper_constructors.txt").readLines()
+        val lines = File("dsl/props/helper_constructors.txt").readLines()
         for (line in lines.filter { it.isNotEmpty() && !it.startsWith('#') }) {
             try {
                 val separator = line.indexOf(' ')
@@ -64,7 +64,7 @@ object Props {
             return Pair(trimmed.substring(0, paren), trimmed.substring(paren + 1, trimmed.size - 1))
         }
 
-        val lines = File("props/custom_method_parameters.txt").readLines()
+        val lines = File("dsl/props/custom_method_parameters.txt").readLines()
         lines.fold(hashMapOf<String, String>()) { map, line ->
             val parsed = parseLine(line)
             if (parsed != null)
