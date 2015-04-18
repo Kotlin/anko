@@ -108,7 +108,7 @@ fun MethodNode.isGetter(): Boolean {
 
 fun MethodNode.isNonListenerSetter(): Boolean {
     val isSetter = name.startsWith("set") && name.length() > 3 && Character.isUpperCase(name.charAt(3))
-    return isSetter && !isListenerSetter && args.size() == 1 && isPublic
+    return isSetter && !(isListenerSetter || name.endsWith("Listener")) && args.size() == 1 && isPublic
 }
 
 val MethodNode.isConstructor: Boolean

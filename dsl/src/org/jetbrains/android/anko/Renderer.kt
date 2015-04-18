@@ -77,15 +77,22 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     val properties = generate(PROPERTIES) {
         generator.properties.map { property ->
             val getter = property.getter
-            val fullPropertyName = "${getter.clazz.fqName}.${property.name}"
+            val className = (getter ?: property.setters.first()).clazz.fqName
+            val fullPropertyName = "$className.${property.name}"
             val bestSetter = property.setters.firstOrNull()
             val mutability = if (bestSetter != null) "var" else "val"
-            val returnType = getter.method.renderReturnType()
+            val returnType = getter?.method?.renderReturnType()
+                    ?: bestSetter?.method?.args?.get(0)?.asString()
+                    ?: "Any?"
             val otherSetters = if (property.setters.size() > 1) property.setters.drop(1) else listOf()
 
             buffer {
                 line("public $mutability $fullPropertyName: $returnType")
-                indent.line("get() = ${getter.method.name}()")
+                if (getter != null) {
+                    indent.line("get() = ${getter.method.name}()")
+                } else {
+                    indent.line("get() = throw AnkoException(\"'${fullPropertyName}' property does not have a getter\")")
+                }
                 if (bestSetter != null) indent.line("set(v) = ${bestSetter.method.name}(v)")
 
                 renderResourceProperty(otherSetters, fullPropertyName, returnType)
@@ -309,7 +316,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     //get a name for helper class. Listener interfaces are often inner so we'll separate the base class name with "_"
     //For example, for class android.widget.SearchView.OnSuggestionListener it would be SearchView_OnSuggessionListener
     fun getHelperClassName(listener: ComplexListener): String {
-        val basename = listener.clazz.name.substringAfter('.').replace("$", "_")
+        val basename = listener.clazz.name.substringAfter('/').replace("$", "_")
         return "__" + basename.substring(basename.lastIndexOf("/") + 1)
     }
 

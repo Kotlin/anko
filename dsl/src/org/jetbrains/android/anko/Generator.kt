@@ -42,7 +42,7 @@ data class ComplexListener(
         val methods: List<ListenerMethod>
 ): Listener(setter, clazz)
 
-data class ViewProperty(val name: String, val getter: MethodNodeWithClass, val setters: List<MethodNodeWithClass>)
+data class ViewProperty(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)
 
 data class LayoutParamsNode(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>)
 
@@ -123,7 +123,9 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
     private fun genProperties(
             getters: Collection<MethodNodeWithClass>,
             setters: Map<String, List<MethodNodeWithClass>>) : List<ViewProperty> {
-        return getters.map { getter ->
+        val existingProperties = hashSetOf<String>()
+
+        val propertyWithGetters = getters.map { getter ->
             val property = getter.toProperty()
             val settersList = setters.get(property.setterIdentifier) ?: listOf()
 
@@ -131,8 +133,18 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
                 it.method.args.size() == 1 && it.method.args[0] == getter.method.returnType
             }
 
+            existingProperties.add(property.setterIdentifier)
             ViewProperty(property.name, getter, best + others)
         }
+        val propertyWithoutGetters = setters.values().map { setters ->
+            val property = setters.first().toProperty()
+
+            val id = property.setterIdentifier
+            if (property.propertyFqName in config.propertiesWithoutGetters && id !in existingProperties) {
+                ViewProperty(property.name, null, setters)
+            } else null
+        }.filterNotNull()
+        return propertyWithGetters + propertyWithoutGetters
     }
 
     //suppose "setter" is a correct setOn*Listener method

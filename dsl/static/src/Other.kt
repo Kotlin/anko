@@ -159,22 +159,10 @@ public var View.padding: Int
         this.setPadding(value, value, value, value)
     }
 
-public var LinearLayout.gravity: Int
-    get() = throw AnkoException("'gravity' property does not have a getter")
-    set(value) {
-        this.setGravity(value)
-    }
-
 public var TextView.isSelectable: Boolean
     get() = isTextSelectable()
     set(value) {
         this.setTextIsSelectable(value)
-    }
-
-public var TextView.textColor: Int
-    get() = throw AnkoException("'textColor' property does not have a getter")
-    set(value) {
-        this.setTextColor(value)
     }
 
 public var TextView.textSizeDimen: Int
@@ -187,12 +175,6 @@ public var ImageView.image: Drawable?
     get() = this.getDrawable()
     set(value) {
         this.setImageDrawable(value)
-    }
-
-public var ImageView.imageResource: Int
-    get() = throw AnkoException("'textColor' property does not have a getter")
-    set(value) {
-        this.setImageResource(value)
     }
 /* END SECTION */
 

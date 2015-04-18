@@ -35,6 +35,9 @@ class Property(val node: MethodNodeWithClass) {
     val setterIdentifier: String
         get() = node.clazz.fqName + "#" + setterName
 
+    val propertyFqName: String
+        get() = node.clazz.fqName + "." + name
+
     init {
         val methodName = node.method.name
         if (methodName.startsWith("get") || methodName.startsWith("set")) {

@@ -32,6 +32,8 @@ open class GeneratorConfiguration(outputDirectory: String = "workdir/gen/") : Ba
 
     override val excludedProperties = File("dsl/props/excluded_properties.txt").readLines().toSet()
 
+    override val propertiesWithoutGetters = File("dsl/props/properties_without_getters.txt").readLines().toSet()
+
     override fun getOutputFile(ankoFile: AnkoFile): File {
         return File(outputDirectory + "src/main/kotlin/" + outputPackage.replace('.', '/') + '/', ankoFile.filename)
     }
