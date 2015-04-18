@@ -17,6 +17,7 @@
 package org.jetbrains.android.anko.utils
 
 import org.jetbrains.android.anko.MethodNodeWithClass
+import org.jetbrains.android.anko.fqName
 import org.jetbrains.android.anko.returnType
 import org.objectweb.asm.Type
 import org.objectweb.asm.tree.MethodNode
@@ -32,7 +33,7 @@ class Property(val node: MethodNodeWithClass) {
         get() = "set" + name.capitalize()
 
     val setterIdentifier: String
-        get() = node.clazz.name + "#" + setterName
+        get() = node.clazz.fqName + "#" + setterName
 
     init {
         val methodName = node.method.name
