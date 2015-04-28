@@ -20,4 +20,4 @@ import android.widget.LinearLayout
 import android.content.Context
 import android.util.AttributeSet
 
-public class _LinearLayout(ctx: Context, attrs: AttributeSet?, defStyle: Int) : LinearLayout(ctx, attrs!!, defStyle)
+public class _LinearLayout(ctx: Context) : LinearLayout(ctx)

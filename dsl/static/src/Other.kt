@@ -48,7 +48,7 @@ public val Int.opaque: Int
 [suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.verticalLayout(): LinearLayout = verticalLayout({})
 public inline fun ViewManager.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView { ctx ->
-    val view = _LinearLayout(ctx, null, 0)
+    val view = _LinearLayout(ctx)
     view.setOrientation(LinearLayout.VERTICAL)
     view.init()
     view
@@ -57,7 +57,7 @@ public inline fun ViewManager.verticalLayout(inlineOptions(InlineOption.ONLY_LOC
 [suppress("NOTHING_TO_INLINE")]
 public inline fun Context.verticalLayout(): LinearLayout = verticalLayout({})
 public inline fun Context.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView { ctx ->
-    val view = _LinearLayout(ctx, null, 0)
+    val view = _LinearLayout(ctx)
     view.setOrientation(LinearLayout.VERTICAL)
     view.init()
     view
@@ -66,7 +66,7 @@ public inline fun Context.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_R
 [suppress("NOTHING_TO_INLINE")]
 public inline fun Activity.verticalLayout(): LinearLayout = verticalLayout({})
 public inline fun Activity.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView { ctx ->
-    val view = _LinearLayout(ctx, null, 0)
+    val view = _LinearLayout(ctx)
     view.setOrientation(LinearLayout.VERTICAL)
     view.init()
     view

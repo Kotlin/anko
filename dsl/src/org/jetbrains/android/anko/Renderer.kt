@@ -45,16 +45,16 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
             return if (argumentNames) {
                 when {
-                    constructors[2] != null -> "$ctxName: Context, attrs: AttributeSet?, defStyle: Int"
                     constructors[0] != null -> "$ctxName: Context"
                     constructors[1] != null -> "$ctxName: Context, attrs: AttributeSet?"
+                    constructors[2] != null -> "$ctxName: Context, attrs: AttributeSet?, defStyle: Int"
                     else -> throw IllegalArgumentException("No available constructors for ${view.fqName}.")
                 }
             } else {
                 when {
-                    constructors[2] != null -> "$ctxName, null, 0"
                     constructors[0] != null -> "$ctxName"
                     constructors[1] != null -> "$ctxName, null"
+                    constructors[2] != null -> "$ctxName, null, 0"
                     else -> throw IllegalArgumentException("No available constructors for ${view.fqName}.")
                 }
             }
