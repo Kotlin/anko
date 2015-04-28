@@ -66,7 +66,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     val viewGroups = generate(VIEWS) {
-        generateViews(generator.viewGroupClasses, true) { "_" + it.simpleName }
+        generateViews(generator.viewGroupClasses) { "_" + it.simpleName }
     }
 
     val helperConstructors = generate(HELPER_CONSTRUCTORS) {
@@ -132,7 +132,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     val complexListenerSetters = generate(COMPLEX_LISTENER_SETTERS) {
-        complexListeners.map { renderComplexListenerSetter(it as ComplexListener) }
+        complexListeners.map { renderComplexListenerSetter(it) }
     }
 
     val complexListenerClasses = generate(COMPLEX_LISTENER_CLASSES) {
@@ -201,13 +201,12 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     fun generateViews(
             views: List<ClassNode>,
-            forceConstructor3: Boolean = false,
             nameResolver: (ClassNode) -> String
     ): List<String> {
         return views.filter { !it.isAbstract }.map { view ->
             val typeName = view.fqName
             val className = nameResolver(view)
-            val funcName = view.simpleName.decapitalize()
+            val funcName = view.simpleName.decapitalize() + (if (view.fromSupportV7) "Support" else "")
 
             val constructors = AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
                 view.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
@@ -316,8 +315,12 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     //get a name for helper class. Listener interfaces are often inner so we'll separate the base class name with "_"
     //For example, for class android.widget.SearchView.OnSuggestionListener it would be SearchView_OnSuggessionListener
     fun getHelperClassName(listener: ComplexListener): String {
-        val basename = listener.clazz.name.substringAfter('/').replace("$", "_")
-        return "__" + basename.substring(basename.lastIndexOf("/") + 1)
+        val internalName = listener.clazz.name
+        val nestedClassName = internalName.substringAfter('$', "")
+        val topLevelClassName = internalName.substringBefore('$').substringAfterLast('/') +
+                (if (listener.clazz.fromSupportV7) "Support" else "")
+
+        return "__$topLevelClassName" + (if (nestedClassName.isNotEmpty()) "_$nestedClassName" else "")
     }
 
     private fun renderComplexListenerSetter(listener: ComplexListener): String {
@@ -409,5 +412,8 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                 (typ.matches("^android.graphics.drawable.Drawable\\??$"))
         )
     }
+
+    private val ClassNode.fromSupportV7: Boolean
+        get() = fqName.startsWith("android.support.v7")
 
 }
