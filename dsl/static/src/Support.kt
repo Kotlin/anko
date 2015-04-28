@@ -31,6 +31,7 @@ import android.content.Intent
 import kotlinx.android.anko.custom.addView
 import kotlinx.android.anko.internals.internalStartActivityForResult
 import kotlinx.android.anko.internals.UiHelper
+import kotlinx.android.anko.internals.testConfiguration
 
 /* SECTION HELPERS */
 public inline fun <T : View> Fragment.addView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T): T {
@@ -40,6 +41,20 @@ public inline fun <T : View> Fragment.addView(inlineOptions(InlineOption.ONLY_LO
 }
 
 public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity().UI(false, init)
+
+public inline fun <T: Any> Fragment.configuration(
+        screenSize: ScreenSize? = null,
+        density: Range<Int>? = null,
+        language: String? = null,
+        long: Boolean? = null,
+        fromSdk: Int? = null,
+        sdk: Int? = null,
+        uiMode: UiMode? = null,
+        nightMode: Boolean? = null,
+        rightToLeft: Boolean? = null,
+        smallestWidth: Int? = null,
+        init: () -> T
+): T? = if (getActivity()?.testConfiguration(screenSize, density, language, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth) ?: false) init() else null
 /* END SECTION */
 
 

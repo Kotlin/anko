@@ -22,13 +22,31 @@ import android.view.ViewManager
 import android.view.View
 import android.app.Activity
 import android.app.Fragment
+import android.content.res.Configuration
 import kotlinx.android.anko.custom.addView
 import kotlinx.android.anko.internals.UiHelper
+import kotlinx.android.anko.internals.testConfiguration
 import java.util.HashMap
 
 public class AnkoException(message: String = "") : RuntimeException(message)
 
 private val defaultInit: Any.() -> Unit = {}
+
+public enum class ScreenSize {
+    SMALL
+    NORMAL
+    LARGE
+    XLARGE
+}
+
+public enum class UiMode {
+    NORMAL
+    CAR
+    DESK
+    TELEVISION
+    APPLIANCE
+    WATCH
+}
 
 public fun <T : View> T.style(style: (View) -> Unit): T {
     applyStyle(this, style)
@@ -98,3 +116,58 @@ public fun Activity.UI(init: UiHelper.() -> Unit): UiHelper = UI(true, init)
 
 public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity().UI(false, init)
 
+public inline fun <T: Any> Context.configuration(
+        screenSize: ScreenSize? = null,
+        density: Range<Int>? = null,
+        language: String? = null,
+        long: Boolean? = null,
+        fromSdk: Int? = null,
+        sdk: Int? = null,
+        uiMode: UiMode? = null,
+        nightMode: Boolean? = null,
+        rightToLeft: Boolean? = null,
+        smallestWidth: Int? = null,
+        init: () -> T
+): T? = if (testConfiguration(screenSize, density, language, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
+
+public inline fun <T: Any> Activity.configuration(
+        screenSize: ScreenSize? = null,
+        density: Range<Int>? = null,
+        language: String? = null,
+        long: Boolean? = null,
+        fromSdk: Int? = null,
+        sdk: Int? = null,
+        uiMode: UiMode? = null,
+        nightMode: Boolean? = null,
+        rightToLeft: Boolean? = null,
+        smallestWidth: Int? = null,
+        init: () -> T
+): T? = if (testConfiguration(screenSize, density, language, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
+
+public inline fun <T: Any> UiHelper.configuration(
+        screenSize: ScreenSize? = null,
+        density: Range<Int>? = null,
+        language: String? = null,
+        long: Boolean? = null,
+        fromSdk: Int? = null,
+        sdk: Int? = null,
+        uiMode: UiMode? = null,
+        nightMode: Boolean? = null,
+        rightToLeft: Boolean? = null,
+        smallestWidth: Int? = null,
+        init: () -> T
+): T? = if (ctx.testConfiguration(screenSize, density, language, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
+
+public inline fun <T: Any> Fragment.configuration(
+        screenSize: ScreenSize? = null,
+        density: Range<Int>? = null,
+        language: String? = null,
+        long: Boolean? = null,
+        fromSdk: Int? = null,
+        sdk: Int? = null,
+        uiMode: UiMode? = null,
+        nightMode: Boolean? = null,
+        rightToLeft: Boolean? = null,
+        smallestWidth: Int? = null,
+        init: () -> T
+): T? = if (getActivity()?.testConfiguration(screenSize, density, language, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth) ?: false) init() else null

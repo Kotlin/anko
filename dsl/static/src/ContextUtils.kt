@@ -42,6 +42,7 @@ public val XHDPI: Int = 320
 public val XXHDPI: Int = 480
 public val XXXHDPI: Int = 640
 
+public val MAXDPI: Int = 0xfffe
 
 //returns dip(dp) dimension value in pixels
 public fun Context.dip(value: Int): Int =
