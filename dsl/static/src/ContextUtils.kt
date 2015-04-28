@@ -29,7 +29,6 @@ import java.io.Serializable
 import org.jetbrains.anko.internals.internalStartActivity
 import android.os.Parcelable
 import android.view.View
-import org.jetbrains.anko.internals.UiHelper
 import org.jetbrains.anko.internals.internalStartActivityForResult
 
 public val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW

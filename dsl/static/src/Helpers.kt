@@ -24,7 +24,6 @@ import android.app.Activity
 import android.app.Fragment
 import android.content.res.Configuration
 import org.jetbrains.anko.custom.addView
-import org.jetbrains.anko.internals.UiHelper
 import org.jetbrains.anko.internals.testConfiguration
 import java.util.HashMap
 
@@ -115,6 +114,32 @@ public fun Context.UI(init: UiHelper.() -> Unit): UiHelper {
 public fun Activity.UI(init: UiHelper.() -> Unit): UiHelper = UI(true, init)
 
 public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity().UI(false, init)
+
+public class UiHelper(public val ctx: Context, private val setContentView: Boolean = true) : ViewManager {
+    private var view: View? = null
+
+    fun toView() = view!!
+
+    override fun addView(view: View, params: ViewGroup.LayoutParams?) {
+        this.view = view
+        if (setContentView) {
+            [suppress("USELESS_CAST_STATIC_ASSERT_IS_FINE")]
+            when (ctx) {
+                is Activity -> (ctx as Activity).setContentView(view)
+                else -> {
+                }
+            }
+        }
+    }
+
+    override fun updateViewLayout(view: View, params: ViewGroup.LayoutParams) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun removeView(view: View) {
+        throw UnsupportedOperationException()
+    }
+}
 
 public inline fun <T: Any> Context.configuration(
         screenSize: ScreenSize? = null,

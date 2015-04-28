@@ -24,7 +24,7 @@ import android.view.ViewGroup
 import android.view.ViewManager
 import org.jetbrains.anko.AnkoException
 import org.jetbrains.anko.UI
-import org.jetbrains.anko.internals.UiHelper
+import org.jetbrains.anko.UiHelper
 import org.jetbrains.anko.internals.initiateView
 
 public inline fun <T: View> ViewManager.addView(factory: (ctx: Context) -> T): T {

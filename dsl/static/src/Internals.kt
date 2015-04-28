@@ -91,32 +91,6 @@ public inline fun <T> Cursor.useCursor(f: (Cursor) -> T) : T {
     }
 }
 
-public class UiHelper(public val ctx: Context, private val setContentView: Boolean = true) : ViewManager {
-    private var view: View? = null
-
-    fun toView() = view!!
-
-    override fun addView(view: View, params: ViewGroup.LayoutParams?) {
-        this.view = view
-        if (setContentView) {
-            [suppress("USELESS_CAST_STATIC_ASSERT_IS_FINE")]
-            when (ctx) {
-                is Activity -> (ctx as Activity).setContentView(view)
-                else -> {
-                }
-            }
-        }
-    }
-
-    override fun updateViewLayout(view: View, params: ViewGroup.LayoutParams) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun removeView(view: View) {
-        throw UnsupportedOperationException()
-    }
-}
-
 public fun <T : View> initiateView(ctx: Context, viewClass: Class<T>): T {
     try {
         val constructor1 = viewClass.getConstructor(javaClass<Context>())

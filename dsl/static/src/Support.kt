@@ -30,7 +30,6 @@ import org.jetbrains.anko.internals.internalStartActivity
 import android.content.Intent
 import org.jetbrains.anko.custom.addView
 import org.jetbrains.anko.internals.internalStartActivityForResult
-import org.jetbrains.anko.internals.UiHelper
 import org.jetbrains.anko.internals.testConfiguration
 
 /* SECTION HELPERS */

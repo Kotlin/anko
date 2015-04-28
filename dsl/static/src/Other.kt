@@ -30,7 +30,6 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import android.text.*
 import android.util.TypedValue
-import org.jetbrains.anko.internals.UiHelper
 import org.jetbrains.anko.custom.*
 
 /* SECTION COLORS */
