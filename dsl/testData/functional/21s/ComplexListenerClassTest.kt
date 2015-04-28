@@ -64,6 +64,38 @@ class __ViewPager_OnPageChangeListener : android.support.v4.view.ViewPager.OnPag
     }
 }
 
+class __SearchViewSupport_OnQueryTextListener : android.support.v7.widget.SearchView.OnQueryTextListener {
+    private var _onQueryTextSubmit: ((String?) -> Boolean)? = null
+    private var _onQueryTextChange: ((String?) -> Boolean)? = null
+
+    override fun onQueryTextSubmit(p0: String?) = _onQueryTextSubmit?.invoke(p0) ?: false
+
+    public fun onQueryTextSubmit(listener: (String?) -> Boolean) {
+        _onQueryTextSubmit = listener
+    }
+    override fun onQueryTextChange(p0: String?) = _onQueryTextChange?.invoke(p0) ?: false
+
+    public fun onQueryTextChange(listener: (String?) -> Boolean) {
+        _onQueryTextChange = listener
+    }
+}
+
+class __SearchViewSupport_OnSuggestionListener : android.support.v7.widget.SearchView.OnSuggestionListener {
+    private var _onSuggestionSelect: ((Int) -> Boolean)? = null
+    private var _onSuggestionClick: ((Int) -> Boolean)? = null
+
+    override fun onSuggestionSelect(p0: Int) = _onSuggestionSelect?.invoke(p0) ?: false
+
+    public fun onSuggestionSelect(listener: (Int) -> Boolean) {
+        _onSuggestionSelect = listener
+    }
+    override fun onSuggestionClick(p0: Int) = _onSuggestionClick?.invoke(p0) ?: false
+
+    public fun onSuggestionClick(listener: (Int) -> Boolean) {
+        _onSuggestionClick = listener
+    }
+}
+
 class __View_OnAttachStateChangeListener : android.view.View.OnAttachStateChangeListener {
     private var _onViewAttachedToWindow: ((android.view.View?) -> Unit)? = null
     private var _onViewDetachedFromWindow: ((android.view.View?) -> Unit)? = null

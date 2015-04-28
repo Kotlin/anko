@@ -4,3 +4,5 @@ android.widget.MediaController
 android.provider.ContactsContract.BaseSyncColumns
 android.inputmethodservice.KeyboardView
 android.support.v4.widget.CircleImageView
+android.support.v7.internal.widget.*
+android.support.v7.internal.view.menu.*

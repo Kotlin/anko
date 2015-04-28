@@ -66,7 +66,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     val viewGroups = generate(VIEWS) {
-        generateViews(generator.viewGroupClasses) { "_" + it.simpleName }
+        generateViews(generator.viewGroupClasses) { "_" + it.simpleName + it.supportSuffix }
     }
 
     val helperConstructors = generate(HELPER_CONSTRUCTORS) {
@@ -136,10 +136,12 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     val complexListenerClasses = generate(COMPLEX_LISTENER_CLASSES) {
+        fun ComplexListener.id() = "${clazz.fqName}#$name"
+
         val generated = LinkedHashMap<String, String>()
         for (listener in complexListeners) {
-            if (!generated.contains(listener.name)) {
-                generated.put(listener.name, renderComplexListenerClass(listener))
+            if (!generated.contains(listener.id())) {
+                generated.put(listener.id(), renderComplexListenerClass(listener))
             }
         }
         generated.values()
@@ -206,7 +208,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         return views.filter { !it.isAbstract }.map { view ->
             val typeName = view.fqName
             val className = nameResolver(view)
-            val funcName = view.simpleName.decapitalize() + (if (view.fromSupportV7) "Support" else "")
+            val funcName = view.simpleName.decapitalize() + view.supportSuffix
 
             val constructors = AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
                 view.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
@@ -317,8 +319,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     fun getHelperClassName(listener: ComplexListener): String {
         val internalName = listener.clazz.name
         val nestedClassName = internalName.substringAfter('$', "")
-        val topLevelClassName = internalName.substringBefore('$').substringAfterLast('/') +
-                (if (listener.clazz.fromSupportV7) "Support" else "")
+        val topLevelClassName = internalName.substringBefore('$').substringAfterLast('/') + listener.clazz.supportSuffix
 
         return "__$topLevelClassName" + (if (nestedClassName.isNotEmpty()) "_$nestedClassName" else "")
     }
@@ -378,7 +379,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     fun renderLayout(lp: LayoutParamsNode): String {
         val layoutClassName = lp.layout.fqName
         val layoutParamsClassName = lp.layoutParams.fqName
-        val helperClassName = "_${lp.layout.simpleName}"
+        val helperClassName = "_${lp.layout.simpleName}${lp.layout.supportSuffix}"
 
         fun renderExtensionFunction(constructor: MethodNode): String {
             val arguments = constructor.fmtLayoutParamsArguments()
@@ -415,5 +416,8 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     private val ClassNode.fromSupportV7: Boolean
         get() = fqName.startsWith("android.support.v7")
+
+    private val ClassNode.supportSuffix: String
+        get() = if (fromSupportV7) "Support" else ""
 
 }

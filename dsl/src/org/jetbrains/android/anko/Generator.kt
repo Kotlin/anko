@@ -189,7 +189,7 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
         val lpNode = classTree.findNode(lp.name)?.data
 
         return if (lpNode != null) {
-            LayoutParamsNode(viewGroup, lpNode, lpNode.getConstructors())
+            LayoutParamsNode(viewGroup, lpNode, lpNode.getConstructors().filter { it.isPublic })
         } else null
     }
 
@@ -211,7 +211,7 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
         get() = isViewGroup(classTree) && hasLayoutParams(this)
 
     private fun ClassNode.isExcluded() =
-        this.fqName in config.excludedClasses
+        fqName in config.excludedClasses || "$packageName.*" in config.excludedClasses
 
     private fun MethodNodeWithClass.isExcluded() =
         (this.clazz.fqName + "#" + this.method.name) in config.excludedMethods

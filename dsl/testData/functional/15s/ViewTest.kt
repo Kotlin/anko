@@ -152,6 +152,42 @@ public inline fun Activity.swipeRefreshLayout(inlineOptions(InlineOption.ONLY_LO
 }
 
 [suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.searchViewSupport(): android.support.v7.widget.SearchView = searchViewSupport({})
+public inline fun ViewManager.searchViewSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView = addView {
+    ctx ->
+    val view = android.support.v7.widget.SearchView(ctx, null, 0)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.searchViewSupport(): android.support.v7.widget.SearchView = searchViewSupport({})
+public inline fun Context.searchViewSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView = addView {
+    ctx ->
+    val view = android.support.v7.widget.SearchView(ctx, null, 0)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.searchViewSupport(): android.support.v7.widget.SearchView = searchViewSupport({})
+public inline fun Activity.searchViewSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView = addView {
+    ctx ->
+    val view = android.support.v7.widget.SearchView(ctx, null, 0)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.switchCompatSupport(): android.support.v7.widget.SwitchCompat = switchCompatSupport({})
+public inline fun ViewManager.switchCompatSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.SwitchCompat.() -> Unit): android.support.v7.widget.SwitchCompat = addView {
+    ctx ->
+    val view = android.support.v7.widget.SwitchCompat(ctx, null, 0)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.surfaceView(): android.view.SurfaceView = surfaceView({})
 public inline fun ViewManager.surfaceView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.view.SurfaceView.() -> Unit): android.view.SurfaceView = addView {
     ctx ->
@@ -1002,6 +1038,87 @@ public inline fun Activity.slidingPaneLayout(): android.support.v4.widget.Slidin
 public inline fun Activity.slidingPaneLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _SlidingPaneLayout.() -> Unit): android.support.v4.widget.SlidingPaneLayout = addView {
     ctx ->
     val view = _SlidingPaneLayout(ctx, null, 0)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.actionMenuViewSupport(): android.support.v7.widget.ActionMenuView = actionMenuViewSupport({})
+public inline fun ViewManager.actionMenuViewSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ActionMenuViewSupport.() -> Unit): android.support.v7.widget.ActionMenuView = addView {
+    ctx ->
+    val view = _ActionMenuViewSupport(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.actionMenuViewSupport(): android.support.v7.widget.ActionMenuView = actionMenuViewSupport({})
+public inline fun Context.actionMenuViewSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ActionMenuViewSupport.() -> Unit): android.support.v7.widget.ActionMenuView = addView {
+    ctx ->
+    val view = _ActionMenuViewSupport(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.actionMenuViewSupport(): android.support.v7.widget.ActionMenuView = actionMenuViewSupport({})
+public inline fun Activity.actionMenuViewSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ActionMenuViewSupport.() -> Unit): android.support.v7.widget.ActionMenuView = addView {
+    ctx ->
+    val view = _ActionMenuViewSupport(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.linearLayoutCompatSupport(): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompatSupport({})
+public inline fun ViewManager.linearLayoutCompatSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayoutCompatSupport.() -> Unit): android.support.v7.widget.LinearLayoutCompat = addView {
+    ctx ->
+    val view = _LinearLayoutCompatSupport(ctx, null, 0)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.linearLayoutCompatSupport(): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompatSupport({})
+public inline fun Context.linearLayoutCompatSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayoutCompatSupport.() -> Unit): android.support.v7.widget.LinearLayoutCompat = addView {
+    ctx ->
+    val view = _LinearLayoutCompatSupport(ctx, null, 0)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.linearLayoutCompatSupport(): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompatSupport({})
+public inline fun Activity.linearLayoutCompatSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayoutCompatSupport.() -> Unit): android.support.v7.widget.LinearLayoutCompat = addView {
+    ctx ->
+    val view = _LinearLayoutCompatSupport(ctx, null, 0)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.toolbarSupport(): android.support.v7.widget.Toolbar = toolbarSupport({})
+public inline fun ViewManager.toolbarSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ToolbarSupport.() -> Unit): android.support.v7.widget.Toolbar = addView {
+    ctx ->
+    val view = _ToolbarSupport(ctx, null, 0)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.toolbarSupport(): android.support.v7.widget.Toolbar = toolbarSupport({})
+public inline fun Context.toolbarSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ToolbarSupport.() -> Unit): android.support.v7.widget.Toolbar = addView {
+    ctx ->
+    val view = _ToolbarSupport(ctx, null, 0)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.toolbarSupport(): android.support.v7.widget.Toolbar = toolbarSupport({})
+public inline fun Activity.toolbarSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ToolbarSupport.() -> Unit): android.support.v7.widget.Toolbar = addView {
+    ctx ->
+    val view = _ToolbarSupport(ctx, null, 0)
     view.init()
     view
 }

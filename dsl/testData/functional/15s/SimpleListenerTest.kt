@@ -4,6 +4,16 @@ public fun android.support.v4.app.FragmentTabHost.onTabChanged(l: (String?) -> U
 
 public fun android.support.v4.widget.SwipeRefreshLayout.onRefresh(l: () -> Unit): Unit = setOnRefreshListener(l)
 
+public fun android.support.v7.widget.ActionMenuView.onMenuItemClick(l: (android.view.MenuItem?) -> Boolean): Unit = setOnMenuItemClickListener(l)
+
+public fun android.support.v7.widget.SearchView.onClose(l: () -> Boolean): Unit = setOnCloseListener(l)
+
+public fun android.support.v7.widget.SearchView.onQueryTextFocusChange(l: (android.view.View?, Boolean) -> Unit): Unit = setOnQueryTextFocusChangeListener(l)
+
+public fun android.support.v7.widget.SearchView.onSearchClick(l: (android.view.View?) -> Unit): Unit = setOnSearchClickListener(l)
+
+public fun android.support.v7.widget.Toolbar.onMenuItemClick(l: (android.view.MenuItem?) -> Boolean): Unit = setOnMenuItemClickListener(l)
+
 public fun android.view.View.onLayoutChange(l: (android.view.View?, Int, Int, Int, Int, Int, Int, Int, Int) -> Unit): Unit = addOnLayoutChangeListener(l)
 
 public fun android.view.View.onClick(l: (android.view.View?) -> Unit): Unit = setOnClickListener(l)

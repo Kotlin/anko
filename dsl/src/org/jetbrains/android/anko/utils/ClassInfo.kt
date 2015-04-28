@@ -28,6 +28,9 @@ data class MethodNodeWithClass(var clazz: ClassNode, val method: MethodNode) {
 val ClassNode.fqName: String
     get() = name.replace('/', '.').replace('$', '.')
 
+val ClassNode.packageName: String
+    get() = fqName.substringBeforeLast('.')
+
 val ClassNode.fqNameWithTypeArguments: String
     get() = fqName + buildTypeParams()
 

@@ -24,7 +24,12 @@ object AndroidJarCollector {
             val androidJarFile = File(version, "android.jar")
             val support = version.name.endsWith("s")
 
-            fun hasSupport() = version.listFiles { it.name.startsWith("support-v4") }?.isNotEmpty() ?: false
+            fun hasSupport(): Boolean {
+                array("support-v4", "appcompat-v7").forEach { filename ->
+                    if (version.listFiles { it.name.startsWith(filename) }?.isEmpty() ?: true) return false
+                }
+                return true
+            }
 
             if (!androidJarFile.exists()) return false
             if (support && !hasSupport()) return false
@@ -61,8 +66,13 @@ object AndroidJarCollector {
         val lastSupportV4Dir = getLastSupportDirectory(supportV4Dir)
         val lastSupportV4Aar = lastSupportV4Dir?.listFiles { it.extension == "aar" }?.firstOrNull()
 
+        val appCompatV7Dir = File(ANDROID_HOME, "extras/android/m2repository/com/android/support/appcompat-v7/")
+        val lastAppCompatV7Dir = getLastSupportDirectory(appCompatV7Dir)
+        val lastAppCompatV7Aar = lastAppCompatV7Dir?.listFiles { it.extension == "aar" }?.firstOrNull()
+
         if (!platformsDir.exists()) throw RuntimeException("Platform directory was not found")
-        if (lastSupportV4Aar == null || !lastSupportV4Aar.exists()) throw RuntimeException("Support-v4 directory was not found")
+        if (lastSupportV4Aar == null || !lastSupportV4Aar.exists()) throw RuntimeException("support-v4 directory was not found")
+        if (lastAppCompatV7Aar == null || !lastAppCompatV7Aar.exists()) throw RuntimeException("appcompat-v7 directory was not found")
 
         for (version in REQUIRED_VERSIONS) {
             print("Processing version ${version}:")
@@ -83,16 +93,22 @@ object AndroidJarCollector {
 
             if (support) {
                 print(" support-v4...")
-                ZipFile(lastSupportV4Aar).use { zip ->
-                    val entries = zip.entries()
-                    var entry = entries.nextElement()
-                    while (entry != null) {
-                        if (entry.getName().toLowerCase().endsWith(".jar")) {
-                            FileOutputStream(File(versionDir, entry.getName().substringAfterLast('/'))).use { fos ->
-                                zip.getInputStream(entry).copyTo(fos)
+                array(lastSupportV4Aar, lastAppCompatV7Aar).forEach { aarFile ->
+                    val aarName = aarFile.name.substringBeforeLast('.')
+                    ZipFile(aarFile).use { zip ->
+                        val entries = zip.entries()
+                        var entry = entries.nextElement()
+                        while (entry != null) {
+                            if (entry.getName().toLowerCase().endsWith(".jar")) {
+                                val rawName = entry.getName().substringAfterLast('/')
+                                val name = if (rawName == "classes.jar") "$aarName.jar" else "$aarName-$rawName"
+
+                                FileOutputStream(File(versionDir, name)).use { fos ->
+                                    zip.getInputStream(entry).copyTo(fos)
+                                }
                             }
+                            entry = if (entries.hasMoreElements()) entries.nextElement() else null
                         }
-                        entry = if (entries.hasMoreElements()) entries.nextElement() else null
                     }
                 }
             }
