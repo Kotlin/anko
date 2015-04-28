@@ -53,7 +53,7 @@ public fun <T : View> T.style(style: (View) -> Unit): T {
     return this
 }
 
-deprecated("Use ViewManager.addView() instead")
+//deprecated("Use ViewManager.addView() instead")
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, manager: ViewManager): T {
     return manager.addView { ctx ->
         val v = view(ctx)
@@ -62,7 +62,7 @@ public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit
     }
 }
 
-deprecated("Use Context.addView() instead")
+//deprecated("Use Context.addView() instead")
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, ctx: Context): T {
     return ctx.addView { ctx ->
         val v = view(ctx)
@@ -71,7 +71,7 @@ public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit
     }
 }
 
-deprecated("Use Activity.addView() instead")
+//deprecated("Use Activity.addView() instead")
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, act: Activity): T {
     return act.addView { ctx ->
         val v = view(ctx)
@@ -80,7 +80,7 @@ public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit
     }
 }
 
-deprecated("Use Fragment.addView() instead")
+//deprecated("Use Fragment.addView() instead")
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, fragment: Fragment): T {
     return fragment.addView { ctx ->
         val v = view(ctx)
