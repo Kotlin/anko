@@ -53,7 +53,7 @@ public fun parseView(view: View): ViewNode {
     return ViewNode(view, children, parseAttributes(unwrappedClass, view, unwrappedClass.getAttrs()))
 }
 
-// There're some Koan layout helpers in our DSL, so let's unwrap such views
+// There're some Anko layout helpers in our DSL, so let's unwrap such views
 fun unwrapClass(clazz: Class<*>): Class<*> {
     val superClass = superclassResolver.getSuperclass(clazz)
   val simpleName = clazz.getSimpleName()

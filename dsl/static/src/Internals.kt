@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.anko.internals
+package org.jetbrains.anko.internals
 
 import android.content.Context
 import android.app.Activity
@@ -23,7 +23,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import java.io.Serializable
 import android.os.Bundle
-import kotlinx.android.anko.*
+import org.jetbrains.anko.*
 import android.database.sqlite.SQLiteDatabase
 import android.database.Cursor
 import android.os.Build

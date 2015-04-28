@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.anko
+package org.jetbrains.anko
 
 import android.widget.LinearLayout
 import android.content.Context

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.anko
+package org.jetbrains.anko
 
 import android.app.Activity
 import android.app.ProgressDialog
@@ -26,12 +26,12 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
-import kotlinx.android.anko.internals.internalStartActivity
+import org.jetbrains.anko.internals.internalStartActivity
 import android.content.Intent
-import kotlinx.android.anko.custom.addView
-import kotlinx.android.anko.internals.internalStartActivityForResult
-import kotlinx.android.anko.internals.UiHelper
-import kotlinx.android.anko.internals.testConfiguration
+import org.jetbrains.anko.custom.addView
+import org.jetbrains.anko.internals.internalStartActivityForResult
+import org.jetbrains.anko.internals.UiHelper
+import org.jetbrains.anko.internals.testConfiguration
 
 /* SECTION HELPERS */
 public inline fun <T : View> Fragment.addView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T): T {

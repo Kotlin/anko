@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.anko
+package org.jetbrains.anko
 
 import android.content.Context
 import android.app.Fragment

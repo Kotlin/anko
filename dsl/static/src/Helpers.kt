@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.anko
+package org.jetbrains.anko
 
 import android.content.Context
 import android.view.ViewGroup
@@ -23,9 +23,9 @@ import android.view.View
 import android.app.Activity
 import android.app.Fragment
 import android.content.res.Configuration
-import kotlinx.android.anko.custom.addView
-import kotlinx.android.anko.internals.UiHelper
-import kotlinx.android.anko.internals.testConfiguration
+import org.jetbrains.anko.custom.addView
+import org.jetbrains.anko.internals.UiHelper
+import org.jetbrains.anko.internals.testConfiguration
 import java.util.HashMap
 
 public class AnkoException(message: String = "") : RuntimeException(message)

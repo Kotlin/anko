@@ -20,10 +20,10 @@ Anko provides lots of different functions to simplify communication with SQLite 
 
 ## Db package
 
-All database-related tools are in the `kotlinx.android.anko.db` package. You could just import all children in one time:
+All database-related tools are in the `org.jetbrains.anko.db` package. You could just import all children in one time:
 
 ```kotlin
-import kotlinx.android.anko.db.*
+import org.jetbrains.anko.db.*
 ```
 
 ## Accessing database

@@ -24,7 +24,7 @@ import java.io.File
 open class GeneratorConfiguration(outputDirectory: String = "workdir/gen/") : BaseGeneratorConfiguration() {
 
     override val outputDirectory = outputDirectory
-    override val outputPackage = "kotlinx.android.anko"
+    override val outputPackage = "org.jetbrains.anko"
 
     override val excludedClasses = File("dsl/props/excluded_classes.txt").readLines().toSet()
 

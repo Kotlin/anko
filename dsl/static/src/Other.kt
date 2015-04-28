@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.anko
+package org.jetbrains.anko
 
 import android.view.View
 import android.view.ViewManager
@@ -30,8 +30,8 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import android.text.*
 import android.util.TypedValue
-import kotlinx.android.anko.internals.UiHelper
-import kotlinx.android.anko.custom.*
+import org.jetbrains.anko.internals.UiHelper
+import org.jetbrains.anko.custom.*
 
 /* SECTION COLORS */
 //returns 0xC0C0C0 for 0xC0

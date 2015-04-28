@@ -63,7 +63,7 @@ public object XmlConverter {
                 "android.app.*",
                 "android.view.*",
                 "android.widget.*",
-                "kotlinx.android.koan.*",
+                "org.jetbrains.anko.*",
                 "android.os.Bundle"
         )
 

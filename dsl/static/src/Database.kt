@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package kotlinx.android.anko.db
+package org.jetbrains.anko.db
 
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import android.database.Cursor
 import java.util.regex.Pattern
-import kotlinx.android.anko.*
+import org.jetbrains.anko.*
 import android.database.sqlite.SQLiteOpenHelper
-import kotlinx.android.anko.internals.useDatabase
-import kotlinx.android.anko.internals.useCursor
+import org.jetbrains.anko.internals.useDatabase
+import org.jetbrains.anko.internals.useCursor
 import java.util.concurrent.atomic.AtomicInteger
 import android.content.Context
 

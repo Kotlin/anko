@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package kotlinx.android.anko.db
+package org.jetbrains.anko.db
 
 import android.database.Cursor
 import android.database.sqlite.SQLiteException
 import java.util.ArrayList
 import java.lang.reflect.Modifier
-import kotlinx.android.anko.AnkoException
-import kotlinx.android.anko.internals.useDatabase
-import kotlinx.android.anko.internals.useCursor
+import org.jetbrains.anko.AnkoException
+import org.jetbrains.anko.internals.useDatabase
+import org.jetbrains.anko.internals.useCursor
 
 public trait RowParser<T> {
     fun parseRow(columns: Array<Any>): T

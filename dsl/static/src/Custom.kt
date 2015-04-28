@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.anko.custom
+package org.jetbrains.anko.custom
 
 import android.app.Activity
 import android.app.Fragment
@@ -22,10 +22,10 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
-import kotlinx.android.anko.AnkoException
-import kotlinx.android.anko.UI
-import kotlinx.android.anko.internals.UiHelper
-import kotlinx.android.anko.internals.initiateView
+import org.jetbrains.anko.AnkoException
+import org.jetbrains.anko.UI
+import org.jetbrains.anko.internals.UiHelper
+import org.jetbrains.anko.internals.initiateView
 
 public inline fun <T: View> ViewManager.addView(factory: (ctx: Context) -> T): T {
     return when (this) {

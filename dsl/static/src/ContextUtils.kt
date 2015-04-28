@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kotlinx.android.anko
+package org.jetbrains.anko
 
 import android.content.Intent
 import android.content.Context
@@ -26,11 +26,11 @@ import android.app.Fragment
 import android.os.Bundle
 import android.net.Uri
 import java.io.Serializable
-import kotlinx.android.anko.internals.internalStartActivity
+import org.jetbrains.anko.internals.internalStartActivity
 import android.os.Parcelable
 import android.view.View
-import kotlinx.android.anko.internals.UiHelper
-import kotlinx.android.anko.internals.internalStartActivityForResult
+import org.jetbrains.anko.internals.UiHelper
+import org.jetbrains.anko.internals.internalStartActivityForResult
 
 public val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
 public val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
