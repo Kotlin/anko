@@ -75,7 +75,7 @@ public inline fun <T : View> Activity.addView(inlineOptions(InlineOption.ONLY_LO
     return view
 }
 
-public inline fun <reified T : View> Context.view(init: T.() -> Unit): T {
+public inline fun <reified T : View> Context.customView(init: T.() -> Unit): T {
     val view = initiateView(this, javaClass<T>())
     view.init()
     return view
