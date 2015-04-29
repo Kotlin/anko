@@ -121,9 +121,10 @@ public fun Context.testConfiguration(
         rightToLeft: Boolean?,
         smallestWidth: Int?
 ): Boolean {
-    val config = getResources().getConfiguration()
+    val config = getResources()?.getConfiguration()
 
     if (screenSize != null) {
+        if (config == null) return false
         val currentScreenSize = config.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK
         when (currentScreenSize) {
             Configuration.SCREENLAYOUT_SIZE_UNDEFINED -> {}
@@ -135,7 +136,8 @@ public fun Context.testConfiguration(
     }
 
     if (density != null) {
-        val currentDensityDpi = getResources().getDisplayMetrics().densityDpi
+        val currentDensityDpi = getResources()?.getDisplayMetrics()?.densityDpi
+        if (currentDensityDpi == null) return false
         if (currentDensityDpi !in density || currentDensityDpi == density.end) return false
     }
 
@@ -146,6 +148,7 @@ public fun Context.testConfiguration(
     }
 
     if (orientation != null) {
+        if (config == null) return false
         when (config.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> if (orientation != Orientation.LANDSCAPE) return false
             Configuration.ORIENTATION_PORTRAIT -> if (orientation != Orientation.PORTRAIT) return false
@@ -154,6 +157,7 @@ public fun Context.testConfiguration(
     }
 
     if (long != null) {
+        if (config == null) return false
         val currentLong = config.screenLayout and Configuration.SCREENLAYOUT_LONG_MASK
         if (currentLong == Configuration.SCREENLAYOUT_LONG_YES && !long) return false
         if (currentLong == Configuration.SCREENLAYOUT_LONG_NO && long) return false
@@ -168,6 +172,7 @@ public fun Context.testConfiguration(
     }
 
     if (uiMode != null) {
+        if (config == null) return false
         when (config.uiMode and Configuration.UI_MODE_TYPE_MASK) {
             Configuration.UI_MODE_TYPE_NORMAL -> if (uiMode != UiMode.NORMAL) return false
             Configuration.UI_MODE_TYPE_DESK -> if (uiMode != UiMode.DESK) return false
@@ -180,23 +185,26 @@ public fun Context.testConfiguration(
 
     if (nightMode != null) {
         val uiModeManager = getSystemService(Context.UI_MODE_SERVICE) as? UiModeManager
-        if (uiModeManager != null) {
-            val currentMode = uiModeManager.getNightMode()
-            if (currentMode == UiModeManager.MODE_NIGHT_YES && !nightMode) return false
-            if (currentMode == UiModeManager.MODE_NIGHT_NO && nightMode) return false
-        }
+        if (uiModeManager == null) return false
+
+        val currentMode = uiModeManager.getNightMode()
+        if (currentMode == UiModeManager.MODE_NIGHT_YES && !nightMode) return false
+        if (currentMode == UiModeManager.MODE_NIGHT_NO && nightMode) return false
     }
 
     if (rightToLeft != null) {
+        if (config == null) return false
         val rtlMode = (config.screenLayout and InternalConfiguration.SCREENLAYOUT_LAYOUTDIR_MASK) == InternalConfiguration.SCREENLAYOUT_LAYOUTDIR_RTL
         if (rtlMode != rightToLeft) return false
     }
 
     if (smallestWidth != null) {
-        if (configuration.smallestScreenWidthDp == Configuration.SMALLEST_SCREEN_WIDTH_DP_UNDEFINED) {
+        if (config == null) return false
+
+        if (config.smallestScreenWidthDp == Configuration.SMALLEST_SCREEN_WIDTH_DP_UNDEFINED) {
             if (smallestWidth != Configuration.SMALLEST_SCREEN_WIDTH_DP_UNDEFINED) return false
         }
-        else if (configuration.smallestScreenWidthDp < smallestWidth) return false
+        else if (config.smallestScreenWidthDp < smallestWidth) return false
     }
 
     return true
