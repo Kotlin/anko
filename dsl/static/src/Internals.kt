@@ -94,7 +94,6 @@ public inline fun <T> Cursor.useCursor(f: (Cursor) -> T) : T {
 public fun <T : View> initiateView(ctx: Context, viewClass: Class<T>): T {
     fun getConstructor1() = viewClass.getConstructor(javaClass<Context>())
     fun getConstructor2() = viewClass.getConstructor(javaClass<Context>(), javaClass<AttributeSet>())
-    fun getConstructor3() = viewClass.getConstructor(javaClass<Context>(), javaClass<AttributeSet>(), javaClass<Int>())
 
     try {
         return getConstructor1().newInstance(ctx)
@@ -103,12 +102,7 @@ public fun <T : View> initiateView(ctx: Context, viewClass: Class<T>): T {
             return getConstructor2().newInstance(ctx, null)
         }
         catch (e: NoSuchMethodException) {
-            try {
-                return getConstructor3().newInstance(ctx, null, 0)
-            }
-            catch (e: NoSuchMethodException) {
-                throw AnkoException("Can't initiate View of class ${viewClass.getName()}: can't find proper constructor")
-            }
+            throw AnkoException("Can't initiate View of class ${viewClass.getName()}: can't find proper constructor")
         }
     }
 

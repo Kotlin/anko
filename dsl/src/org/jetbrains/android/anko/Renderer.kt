@@ -32,8 +32,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
         val CONSTRUCTOR1 = array(Type.getObjectType("android/content/Context"))
         val CONSTRUCTOR2 = array(Type.getObjectType("android/content/Context"), Type.getObjectType("android/util/AttributeSet"))
-        val CONSTRUCTOR3 = array(Type.getObjectType("android/content/Context"), Type.getObjectType("android/util/AttributeSet"), Type.INT_TYPE)
-        val AVAILABLE_VIEW_CONSTRUCTORS = listOf(CONSTRUCTOR1, CONSTRUCTOR2, CONSTRUCTOR3)
+        val AVAILABLE_VIEW_CONSTRUCTORS = listOf(CONSTRUCTOR1, CONSTRUCTOR2)
 
         fun renderConstructor(
                 view: ClassNode,
@@ -47,14 +46,12 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                 when {
                     constructors[0] != null -> "$ctxName: Context"
                     constructors[1] != null -> "$ctxName: Context, attrs: AttributeSet?"
-                    constructors[2] != null -> "$ctxName: Context, attrs: AttributeSet?, defStyle: Int"
                     else -> throw IllegalArgumentException("No available constructors for ${view.fqName}.")
                 }
             } else {
                 when {
                     constructors[0] != null -> "$ctxName"
                     constructors[1] != null -> "$ctxName, null"
-                    constructors[2] != null -> "$ctxName, null, 0"
                     else -> throw IllegalArgumentException("No available constructors for ${view.fqName}.")
                 }
             }
