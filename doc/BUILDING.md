@@ -35,4 +35,6 @@ Execute a run configuration named `Collect android.jar` and then `Generate`.
 </tr>
 </table>
 
-**4.** After doing this a number of directories with generated sources must be present in `workdir/gen` directory. You can build them all together by launching a `build-jar.sh` script. Script publishes all Anko versions in the local Maven repository and creates a zip files in `workdir/gen/zip` directory.
+**4.** After doing this a number of directories with generated sources must be present in `workdir/gen` directory.
+
+**5.** You can build them all together by launching `build_artifacts.xml` Ant script. Script creates a zip file with artifact for each Android SDK version in `workdir/gen/zip` directory.
