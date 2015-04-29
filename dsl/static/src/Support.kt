@@ -29,6 +29,7 @@ import java.util.concurrent.Future
 import org.jetbrains.anko.internals.internalStartActivity
 import android.content.Intent
 import org.jetbrains.anko.custom.addView
+import org.jetbrains.anko.internals.initiateView
 import org.jetbrains.anko.internals.internalStartActivityForResult
 import org.jetbrains.anko.internals.testConfiguration
 
@@ -91,7 +92,7 @@ public inline fun <reified T: Any> Fragment.intentFor(): Intent = Intent(getActi
 /* END SECTION */
 
 
-/* SECTION CUSTOM */
+/* SECTION OTHER */
 [suppress("NOTHING_TO_INLINE")]
 public inline fun Fragment.dip(value: Int): Int = getActivity().dip(value)
 [suppress("NOTHING_TO_INLINE")]
@@ -106,7 +107,26 @@ public inline fun Fragment.px2dip(px: Int): Float = getActivity().px2dip(px)
 public inline fun Fragment.px2sp(px: Int): Float = getActivity().px2sp(px)
 [suppress("NOTHING_TO_INLINE")]
 public inline fun Fragment.dimen(resource: Int): Int = getActivity().dimen(resource)
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.verticalLayout(): LinearLayout = verticalLayout({})
+public inline fun Fragment.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView { ctx ->
+    val view = _LinearLayout(ctx)
+    view.setOrientation(LinearLayout.VERTICAL)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <T: View> Fragment.include(layoutId: Int): LinearLayout = include(layoutId, {})
+public inline fun <T: View> Fragment.include(layoutId: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+    [suppress("UNCHECKED_CAST")]
+    val view = ctx.layoutInflater.inflate(layoutId, null) as T
+    view.init()
+    view
+}
 /* END SECTION */
+
 
 /* SECTION DIALOGS */
 public fun Fragment.toast(textResource: Int): Unit = getActivity().toast(textResource)

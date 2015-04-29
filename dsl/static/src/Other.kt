@@ -91,6 +91,15 @@ public inline fun <T: View> Activity.include(layoutId: Int, inlineOptions(Inline
 }
 
 [suppress("NOTHING_TO_INLINE")]
+public inline fun <T: View> Fragment.include(layoutId: Int): LinearLayout = include(layoutId, {})
+public inline fun <T: View> Fragment.include(layoutId: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+    [suppress("UNCHECKED_CAST")]
+    val view = ctx.layoutInflater.inflate(layoutId, null) as T
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
 public inline fun <T: View> Context.include(layoutId: Int): LinearLayout = include(layoutId, {})
 public inline fun <T: View> Context.include(layoutId: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
     [suppress("UNCHECKED_CAST")]

@@ -75,8 +75,20 @@ public inline fun <T : View> Activity.addView(inlineOptions(InlineOption.ONLY_LO
     return view
 }
 
-public inline fun <reified T : View> Context.customView(init: T.() -> Unit): T {
-    val view = initiateView(this, javaClass<T>())
+public inline fun <reified T : View> Context.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+    val view = initiateView(ctx, javaClass<T>())
     view.init()
-    return view
+    view
+}
+
+public inline fun <reified T : View> ViewManager.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+    val view = initiateView(ctx, javaClass<T>())
+    view.init()
+    view
+}
+
+public inline fun <reified T : View> Activity.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+    val view = initiateView(ctx, javaClass<T>())
+    view.init()
+    view
 }
