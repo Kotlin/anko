@@ -324,8 +324,10 @@ And now with Anko:
 
 ```kotlin
 seekBar {
-  onProgressChanged { (seekBar, progress, fromUser) ->
-    // Something
+  onSeekBarChangeListener {
+    onProgressChanged { seekBar, progress, fromUser ->
+      // Something
+    }
   }
 }
 ```
