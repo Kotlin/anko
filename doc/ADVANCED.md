@@ -6,6 +6,7 @@ Anko Advanced topics
 * [Intents](#intents)
 * [Fragments](#fragments)
 * [Services](#services)
+* [Configuration qualifiers](#configuration-qualifiers)
 * [Dialogs and toasts](#dialogs-and-toasts)
 * [Asynchronous tasks](#asynchronous-tasks)
 * [Logging](#logging)
@@ -73,6 +74,39 @@ E.g. that's the Java way for obtaining an Android service instance:
 ```
 
 In Kotlin, it's just `notificationService`. The same as for `displayManager`, `sensorManager`, `vibrator`, `layoutInflater` — bindings are available for all services, just try it out!
+
+## Configuration qualifiers
+
+[Qualifiers](http://developer.android.com/guide/topics/resources/providing-resources.html#AlternativeResources) are used to support different resources for different screens, device configurations etc.
+
+Anko supports the `configuration()` function that specifies qualifiers the code is meant for:
+
+```kotlin
+configuration(screenSize = ScreenSize.LARGE, orientation = Orientation.LANDSCAPE) {
+    /* 
+      This code will be only executed
+      if the screen is large and its orientation is landscape
+    */
+}
+```
+
+It is implemented through checking the specified qualifiers and only executing the code inside the `configuration()` if their values match. Therefore, usages of `configuration()` are not limited to DSL only: for example, you can safely call Android SDK functions which are not present in older versions of system using `configuration(fromSdk = <version>) { /* code  */ }`.
+
+Here is the full list of supported qualifiers:
+
+Qualifier         | Value type         | Description
+------------------|--------------------|-------------------------------------
+`screenSize`      | `ScreenSize`       | Device screen size (e.g. `SMALL`, `LARGE`)
+`density`         | `Range<Int>`       | Device screen density
+`language`        | `String`           | System language (`en` or `en_US` format)
+`orientation`     | `Orientation`      | Screen orientation
+`long`            | `Boolean`          | Screen aspect
+`fromSdk`         | `Int`              | Minimal Android SDK version code
+`sdk`             | `Int`              | Target Android SDK version code
+`uiMode`          | `UiMode`           | Target UI mode (e.g. `CAR`, `WATCH`)
+`nightMode`       | `Boolean`          | Screen night mode value
+`rightToLeft`     | `Boolean`          | Is RTL mode enabled
+`smallestWidth`   | `Int`              | Shortest dimension of the available screen
 
 ## Dialogs and toasts
 

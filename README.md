@@ -44,6 +44,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 * [Advanced topics](doc/ADVANCED.md)
 	* [Intents](doc/ADVANCED.md#intents)
 	* [Services](doc/ADVANCED.md#services)
+	* [Configuration qualifiers](doc/ADVANCED.md#configuration-qualifiers)
 	* [Dialogs and toasts](doc/ADVANCED.md#dialogs-and-toasts)
 	* [Asynchronous tasks](doc/ADVANCED.md#asynchronous-tasks)
 	* [Logging](doc/ADVANCED.md#logging)
