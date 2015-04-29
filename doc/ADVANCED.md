@@ -26,7 +26,7 @@ Browse the web      | `browse(url)`
 Share some text     | `share(text, [subject])`
 Send a email        | `email(email, [subject], [text])`
 
-Arguments surrounded with `[]` are optional. Methods return true if the intent was sent.
+Arguments in square brackets (`[]`) are optional. Methods return true if the intent was sent.
 
 ### Intent builder functions
 
@@ -60,8 +60,8 @@ class SomeFragment : Fragment()
 
 // On the call site:
 SomeFragment().withArguments(
-  "id" to 5,
-  "name" to "John")
+    "id" to 5,
+    "name" to "John")
 ```
 
 ## Services
@@ -124,8 +124,8 @@ longToast("Wow, such a duration")
 
 ```kotlin
 alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
-  positiveButton("Yes") {toast("Oh…")}
-  negativeButton("No") {}
+    positiveButton("Yes") {toast("Oh…")}
+    negativeButton("No") {}
 }.show()
 ```
 
@@ -133,9 +133,9 @@ Alerts seamlessly support DSL as custom views:
 
 ```kotlin
 alert {
-  customView {
-    editText()
-  }
+    customView {
+        editText()
+    }
 }.show()
 ```
 
@@ -144,7 +144,7 @@ alert {
 ```kotlin
 val countries = listOf("Russia", "USA", "Japan", "Australia")
 selector("Where are you from?", countries) { i ->
-  toast("So you're living in ${countries[i]}, right?")
+    toast("So you're living in ${countries[i]}, right?")
 }
 ```
 
@@ -157,10 +157,10 @@ There's a better way:
 
 ```kotlin
 async {
-  // Long background task
-  uiThread {
-    result.text = "Done"
-  }
+    // Long background task
+    uiThread {
+        result.text = "Done"
+    }
 }
 ```
 
@@ -169,7 +169,7 @@ You can even execute tasks using your own `ExecutorService`:
 ```kotlin
 val executor = Executors.newScheduledThreadPool(4)
 async(executor) {
-  // Some task
+    // Some task
 }
 ```
 
@@ -177,7 +177,7 @@ async(executor) {
 
 ```kotlin
 fun apiCall(): Result {
-  // Something
+    // Something
 }
 val future: Future<Result> = asyncResult(::apiCall)
 ```
@@ -196,11 +196,11 @@ Android SDK provides `android.util.Log` class which has some logging methods. Us
 
 ```kotlin
 class SomeActivity : Activity(), AnkoLogger {
-  private fun someMethod() {
-    info("London is the capital of Great Britain")
-    debug(5) // .toString() method will be executed
-    warn(null) // "null" will be printed
-  }
+    private fun someMethod() {
+        info("London is the capital of Great Britain")
+        debug(5) // .toString() method will be executed
+        warn(null) // "null" will be printed
+    }
 }
 ```
 
@@ -236,14 +236,14 @@ If you only plan to use your custom `View` in the DSL surrounded by some other `
 
 ```kotlin
 fun ViewManager.customView(init: CustomView.() -> Unit = {}) =
-  __dslAddView({CustomView(it)}, init, this)
+    __dslAddView({CustomView(it)}, init, this)
 ```
 
 So now you can write this:
 
 ```kotlin
 frameLayout {
-  customView()
+    customView()
 }
 ```
 
@@ -251,7 +251,7 @@ frameLayout {
 
 ```kotlin
 UI {
-  customView()
+    customView()
 }
 ```
 
@@ -259,12 +259,12 @@ But if you really want to use your view as a top-level widget without a UI wrapp
 
 ```kotlin
 fun Activity.customView(init: View.() -> Unit = {}) =
-  __dslAddView({View(it)}, init, this)
+    __dslAddView({View(it)}, init, this)
 
 fun Context.customView(init: View.() -> Unit = {}) =
-  __dslAddView({View(it)}, init, this)
+    __dslAddView({View(it)}, init, this)
 
 // Only if you use android.support.v4
 fun android.support.v4.app.Fragment.customView(init: View.() -> Unit = {}) =
-  __dslAddView({View(it)}, init, this)
+    __dslAddView({View(it)}, init, this)
 ```

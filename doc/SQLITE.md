@@ -105,11 +105,10 @@ Let's create a sample `Customer` table:
 
 ```kotlin
 database.use {
-  createTable("Customer", ifNotExists = true, 
-    "_id" to INT + PRIMARY_KEY + UNIQUE,
-    "name" to TEXT,
-    "photo" to BLOB
-  )
+    createTable("Customer", ifNotExists = true, 
+        "_id" to INT + PRIMARY_KEY + UNIQUE,
+        "name" to TEXT,
+        "photo" to BLOB)
 }
 ```
 
@@ -141,9 +140,9 @@ Anko lets you to eliminate ceremonies by writing values directly in `insert()` f
 
 ```kotlin
 db.insert("User", 
-  "_id" to 42,
-  "name" to "John",
-  "email" to "user@domain.org"
+    "_id" to 42,
+    "name" to "John",
+    "email" to "user@domain.org"
 )
 ```
 
@@ -172,9 +171,9 @@ Functions marked with :star: parse its arguments in a special way. They allow yo
 
 ```kotlin
 db.select("User", "name")
-  .where("(_id > {userId}) and (name = {userName})",
-    "userName" to "John",
-    "userId" to 42)
+    .where("(_id > {userId}) and (name = {userName})",
+        "userName" to "John",
+        "userId" to 42)
 ```
 
 Here, `{userId}` part will be replaced with `42` and `{userName}` — with `'John'`. Value will be escaped if its type is not numeric (`Int`, `Float` and others) or `Boolean`. For unknown types, String value will be used (this means it gets the value from `toString()` method).
@@ -205,11 +204,11 @@ Now the question is: what is `rowParser`. Well, each function support two differ
 
 ```kotlin
 public trait RowParser<T> {
-  fun parseRow(columns: Array<Any>): T
+    fun parseRow(columns: Array<Any>): T
 }
 
 public trait MapRowParser<T> {
-  fun parseRow(columns: Map<String, Any>): T
+    fun parseRow(columns: Map<String, Any>): T
 }
 ```
 
@@ -249,9 +248,9 @@ For example, you want to implement a new parser for columns (Int, String, String
 
 ```kotlin
 public class MyRowParser : RowParser<Triple<Int, String, String>> {
-  override fun parseRow(columns: Array<Any>): Triple<Int, String, String> {
-    return Triple(columns[0] as Int, columns[1] as String, columns[2] as String)
-  }
+    override fun parseRow(columns: Array<Any>): Triple<Int, String, String> {
+        return Triple(columns[0] as Int, columns[1] as String, columns[2] as String)
+    }
 }
 ```
 
@@ -259,7 +258,7 @@ But it's easier to make use of helper function `rowParser`:
 
 ```kotlin
 val parser = rowParser { (id: Int, name: String, email: String) -> 
-  Triple(id, name, email)
+    Triple(id, name, email)
 }
 ```
 
@@ -275,16 +274,16 @@ Finally you want to update some old rows in database. It's just like this:
 
 ```kotlin
 update("User", "name" to "Alice")
-  .where("_id = {userId}", "userId" to 42)
-  .exec()
+    .where("_id = {userId}", "userId" to 42)
+    .exec()
 ```
 
 Update also contains `whereSupport()` function in case you want to provide query in a traditional way:
 
 ```kotlin
 update("User", "name" to "Alice")
-  .whereSupport("_id = ?", 42)
-  .exec()
+    .whereSupport("_id = ?", 42)
+    .exec()
 ```
 
 ## Transactions
