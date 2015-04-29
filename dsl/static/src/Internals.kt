@@ -112,6 +112,7 @@ public fun Context.testConfiguration(
         screenSize: ScreenSize?,
         density: Range<Int>?,
         language: String?,
+        orientation: Orientation?,
         long: Boolean?,
         fromSdk: Int?,
         sdk: Int?,
@@ -142,6 +143,14 @@ public fun Context.testConfiguration(
         val locale = Locale.getDefault()
         val currentLanguage = if (language.indexOf('_') >= 0) locale.toString() else locale.getLanguage()
         if (currentLanguage != language) return false
+    }
+
+    if (orientation != null) {
+        when (config.orientation) {
+            Configuration.ORIENTATION_LANDSCAPE -> if (orientation != Orientation.LANDSCAPE) return false
+            Configuration.ORIENTATION_PORTRAIT -> if (orientation != Orientation.PORTRAIT) return false
+            Configuration.ORIENTATION_SQUARE -> if (orientation != Orientation.SQUARE) return false
+        }
     }
 
     if (long != null) {

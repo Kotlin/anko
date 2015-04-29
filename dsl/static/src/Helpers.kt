@@ -47,6 +47,12 @@ public enum class UiMode {
     WATCH
 }
 
+public enum class Orientation {
+    PORTRAIT
+    LANDSCAPE
+    SQUARE
+}
+
 public fun <T : View> T.style(style: (View) -> Unit): T {
     applyStyle(this, style)
     return this
@@ -145,6 +151,7 @@ public inline fun <T: Any> Context.configuration(
         screenSize: ScreenSize? = null,
         density: Range<Int>? = null,
         language: String? = null,
+        orientation: Orientation? = null,
         long: Boolean? = null,
         fromSdk: Int? = null,
         sdk: Int? = null,
@@ -153,12 +160,13 @@ public inline fun <T: Any> Context.configuration(
         rightToLeft: Boolean? = null,
         smallestWidth: Int? = null,
         init: () -> T
-): T? = if (testConfiguration(screenSize, density, language, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
+): T? = if (testConfiguration(screenSize, density, language, orientation, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
 
 public inline fun <T: Any> Activity.configuration(
         screenSize: ScreenSize? = null,
         density: Range<Int>? = null,
         language: String? = null,
+        orientation: Orientation? = null,
         long: Boolean? = null,
         fromSdk: Int? = null,
         sdk: Int? = null,
@@ -167,12 +175,13 @@ public inline fun <T: Any> Activity.configuration(
         rightToLeft: Boolean? = null,
         smallestWidth: Int? = null,
         init: () -> T
-): T? = if (testConfiguration(screenSize, density, language, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
+): T? = if (testConfiguration(screenSize, density, language, orientation, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
 
 public inline fun <T: Any> UiHelper.configuration(
         screenSize: ScreenSize? = null,
         density: Range<Int>? = null,
         language: String? = null,
+        orientation: Orientation? = null,
         long: Boolean? = null,
         fromSdk: Int? = null,
         sdk: Int? = null,
@@ -181,12 +190,13 @@ public inline fun <T: Any> UiHelper.configuration(
         rightToLeft: Boolean? = null,
         smallestWidth: Int? = null,
         init: () -> T
-): T? = if (ctx.testConfiguration(screenSize, density, language, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
+): T? = if (ctx.testConfiguration(screenSize, density, language, orientation, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
 
 public inline fun <T: Any> Fragment.configuration(
         screenSize: ScreenSize? = null,
         density: Range<Int>? = null,
         language: String? = null,
+        orientation: Orientation? = null,
         long: Boolean? = null,
         fromSdk: Int? = null,
         sdk: Int? = null,
@@ -195,4 +205,4 @@ public inline fun <T: Any> Fragment.configuration(
         rightToLeft: Boolean? = null,
         smallestWidth: Int? = null,
         init: () -> T
-): T? = if (getActivity()?.testConfiguration(screenSize, density, language, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth) ?: false) init() else null
+): T? = if (getActivity()?.testConfiguration(screenSize, density, language, orientation, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth) ?: false) init() else null

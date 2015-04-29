@@ -45,6 +45,7 @@ public inline fun <T: Any> Fragment.configuration(
         screenSize: ScreenSize? = null,
         density: Range<Int>? = null,
         language: String? = null,
+        orientation: Orientation? = null,
         long: Boolean? = null,
         fromSdk: Int? = null,
         sdk: Int? = null,
@@ -53,7 +54,7 @@ public inline fun <T: Any> Fragment.configuration(
         rightToLeft: Boolean? = null,
         smallestWidth: Int? = null,
         init: () -> T
-): T? = if (getActivity()?.testConfiguration(screenSize, density, language, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth) ?: false) init() else null
+): T? = if (getActivity()?.testConfiguration(screenSize, density, language, orientation, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth) ?: false) init() else null
 /* END SECTION */
 
 
