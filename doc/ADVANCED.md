@@ -133,7 +133,7 @@ Alerts seamlessly support DSL as custom views:
 
 ```kotlin
 alert {
-  view {
+  customView {
     editText()
   }
 }.show()
