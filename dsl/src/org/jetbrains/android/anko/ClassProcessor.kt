@@ -25,7 +25,6 @@ import java.util.jar.JarEntry
 
 class ClassProcessor(val jars: List<String>) {
 
-    private class Shirt<T>
     private class ComplexIterator<T>(iterators: List<Iterator<T>>): Iterator<T> {
 
         private val internalIterator = iterators.iterator()
@@ -59,13 +58,12 @@ class ClassProcessor(val jars: List<String>) {
 
     private fun extractClasses(jars: List<String>): Iterator<InputStream> {
         val jarFiles = jars.map { JarFile(it) }
-        return ComplexIterator(jarFiles.map { jarFile ->
-            jarFile.entries().iterator()
-            .filter {
-                it.getName().endsWith(".class")
-            }.map {
-            jarFile.getInputStream(it)
-        }})
+        return ComplexIterator(
+                jarFiles.map { jarFile ->
+                    jarFile.entries().iterator()
+                    .filter { it.getName().endsWith(".class") }
+                    .map { jarFile.getInputStream(it) }
+                })
     }
 
     private fun processClassData(classData: InputStream?): ClassNode {

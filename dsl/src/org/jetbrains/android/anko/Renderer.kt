@@ -380,12 +380,12 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
         fun renderExtensionFunction(constructor: MethodNode): String {
             val arguments = constructor.fmtLayoutParamsArguments()
-            val substituded = constructor.fmtLayoutParamsArgumentsInvoke()
+            val substituted = constructor.fmtLayoutParamsArgumentsInvoke()
             val initArgumentName = "${lp.layout.simpleName.decapitalize()}Init"
             val separator = if (arguments == "") "" else ","
             return buffer(indent = 1) {
                 line("public fun <T: View> T.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = defaultInit): T {")
-                line("val layoutParams = $layoutParamsClassName($substituded)")
+                line("val layoutParams = $layoutParamsClassName($substituted)")
                 line("layoutParams.$initArgumentName()")
                 line("this@layoutParams.setLayoutParams(layoutParams)")
                 line("return this")

@@ -58,7 +58,7 @@ object Props {
     val customMethodParameters: Map<String, String> by Delegates.lazy {
         fun parseLine(s: String): Pair<String, String>? {
             val trimmed = s.trim()
-            if (trimmed.size == 0)
+            if (trimmed.length() == 0)
                 return null
             val paren = trimmed.indexOf('(')
             return Pair(trimmed.substring(0, paren), trimmed.substring(paren + 1, trimmed.size - 1))

@@ -103,19 +103,19 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
     }
 
     val interfaceWorkarounds = generate(INTERFACE_WORKAROUNDS) {
-        availableClasses.filter {
-            it.isPublic && it.innerClasses != null && it.fields.isNotEmpty() &&
-                it.innerClasses.any { inner -> inner.isProtected && inner.isInterface && inner.name == it.name }
-        }.map {
+        availableClasses.filter { clazz ->
+            clazz.isPublic && clazz.innerClasses != null && clazz.fields.isNotEmpty() &&
+                clazz.innerClasses.any { inner -> inner.isProtected && inner.isInterface && inner.name == clazz.name }
+        }.map { clazz ->
             // We're looking for a public ancestor for this interface, but ancestor also may be protected
             val ancestor = classTree.filter { clazz ->
-                clazz.isPublic && clazz.interfaces.any { interface -> interface == it.name } &&
+                clazz.isPublic && clazz.interfaces.any { interface -> interface == clazz.name } &&
                 !clazz.innerClasses.any { it.name == clazz.name && it.isProtected }
             }
-            val innerClass = it.innerClasses.firstOrNull {
-                inner -> inner.isProtected && inner.isInterface && inner.name == it.name
+            val innerClass = clazz.innerClasses.firstOrNull {
+                inner -> inner.isProtected && inner.isInterface && inner.name == clazz.name
             }
-            Triple(it, ancestor.firstOrNull(), innerClass)
+            Triple(clazz, ancestor.firstOrNull(), innerClass)
         }.filter { it.second != null && it.third != null }
     }
 
