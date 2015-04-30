@@ -51,12 +51,6 @@ public fun Context.longToast(text: CharSequence) {
     Toast.makeText(this, text, Toast.LENGTH_LONG).show()
 }
 
-public fun Fragment.selector(
-    title: CharSequence = "",
-    items: List<CharSequence>,
-    onClick: (Int) -> Unit
-): Unit = getActivity().selector(title, items, onClick)
-
 public fun Fragment.alert(message: String, title: String? = null, init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder = getActivity().alert(message, title, init)
 public fun Context.alert(message: String, title: String? = null, init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder {
     return with(AlertDialogBuilder(this)) {
@@ -81,6 +75,22 @@ public fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuild
 public fun Context.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = with (AlertDialogBuilder(this)) {
     init()
     this
+}
+
+public fun Fragment.progressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+    return getActivity().progressDialog(false, message?.let { getString(it) }, title?.let { getString(it) }, init)
+}
+
+public fun Context.progressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+    return progressDialog(false, message?.let { getString(it) }, title?.let { getString(it) }, init)
+}
+
+public fun Fragment.indeterminateProgressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+    return getActivity().progressDialog(true, message?.let { getString(it) }, title?.let { getString(it) }, init)
+}
+
+public fun Context.indeterminateProgressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+    return progressDialog(true, message?.let { getString(it) }, title?.let { getString(it) }, init)
 }
 
 public fun Fragment.progressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
@@ -110,12 +120,19 @@ private fun Context.progressDialog(indeterminate: Boolean, message: String? = nu
     return dialog
 }
 
+public fun Fragment.selector(
+        title: CharSequence? = null,
+        items: List<CharSequence>,
+        onClick: (Int) -> Unit
+): Unit = getActivity().selector(title, items, onClick)
+
+
 public fun Context.selector(
-    title: CharSequence = "",
+    title: CharSequence? = null,
     items: List<CharSequence>,
     onClick: (Int) -> Unit) {
     with(AlertDialogBuilder(this)) {
-        title(title)
+        if (title != null) title(title)
         items(items, onClick)
         show()
     }

@@ -182,4 +182,13 @@ public fun Fragment.progressDialog(message: String? = null, title: String? = nul
 public fun Fragment.indeterminateProgressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return getActivity().progressDialog(true, message, title, init)
 }
+
+public fun Fragment.progressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+    return getActivity().progressDialog(false, message?.let { getActivity().getString(it) }, title?.let { getActivity().getString(it) }, init)
+}
+
+public fun Fragment.indeterminateProgressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+    return getActivity().progressDialog(true, message?.let { getActivity().getString(it) }, title?.let { getActivity().getString(it) }, init)
+}
+
 /* END SECTION */
