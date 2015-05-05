@@ -17,7 +17,12 @@
 package android.support.v4.app
 
 import android.app.Activity
+import android.os.Bundle
 
 public open class Fragment {
     public fun getActivity(): Activity = null!!
+
+    public fun setArguments(args: Bundle) {
+
+    }
 }
