@@ -421,6 +421,6 @@ verticalLayout {
         hint = "Password"
     }
 }.style { view -> when(view) {
-    is EditText -> v.textSize = 20f
+    is EditText -> view.textSize = 20f
 }}
 ```
