@@ -42,7 +42,7 @@ startActivity(intent)
 Four lines is too much for this. Anko offers you an easier way:
 
 ```kotlin
-startActivity(Intent<SomeOtherActivity>("id" to 5).singleTop())
+startActivity(intentFor<SomeOtherActivity>("id" to 5).singleTop())
 ```
 
 If you don't need to pass any flags, the solution is even easier:
