@@ -272,9 +272,13 @@ public val android.content.res.Configuration.landscape: Boolean
 public val android.content.res.Configuration.long: Boolean
     get() = (screenLayout and android.content.res.Configuration.SCREENLAYOUT_LONG_YES) != 0
 
-public inline fun <reified T: Any> Context.intentFor(): Intent = Intent(this, javaClass<T>())
+public inline fun <reified T: Any> Context.intentFor(vararg params: Pair<String, Any>): Intent {
+    return AnkoInternals.createIntent(this, javaClass<T>(), params)
+}
 
-public inline fun <reified T: Any> Fragment.intentFor(): Intent = Intent(getActivity(), javaClass<T>())
+public inline fun <reified T: Any> Fragment.intentFor(vararg params: Pair<String, Any>): Intent {
+    return AnkoInternals.createIntent(getActivity(), javaClass<T>(), params)
+}
 
 [suppress("NOTHING_TO_INLINE")]
 private inline fun Intent.setFlag(flag: Int): Intent {

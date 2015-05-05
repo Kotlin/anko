@@ -49,14 +49,19 @@ public object AnkoInternals {
     }
 
     platformStatic
+    public fun <T> createIntent(ctx: Context, clazz: Class<out T>, params: Array<out Pair<String, Any>>): Intent {
+        val intent = Intent(ctx, clazz)
+        if (params.isNotEmpty()) fillIntentArguments(intent, params)
+        return intent
+    }
+
+    platformStatic
     public fun internalStartActivity(
             ctx: Context,
             activity: Class<out Activity>,
             params: Array<out Pair<String, Any>>
     ) {
-        val intent = Intent(ctx, activity)
-        fillIntentArguments(intent, params)
-        ctx.startActivity(intent)
+        ctx.startActivity(createIntent(ctx, activity, params))
     }
 
     platformStatic
@@ -66,9 +71,7 @@ public object AnkoInternals {
             requestCode: Int,
             params: Array<out Pair<String, Any>>
     ) {
-        val intent = Intent(act, activity)
-        fillIntentArguments(intent, params)
-        act.startActivityForResult(intent, requestCode)
+        act.startActivityForResult(createIntent(act, activity, params), requestCode)
     }
 
     platformStatic
