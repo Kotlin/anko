@@ -26,12 +26,9 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
-import org.jetbrains.anko.internals.internalStartActivity
 import android.content.Intent
 import org.jetbrains.anko.custom.addView
-import org.jetbrains.anko.internals.initiateView
-import org.jetbrains.anko.internals.internalStartActivityForResult
-import org.jetbrains.anko.internals.testConfiguration
+import org.jetbrains.anko.internals.AnkoInternals
 
 /* SECTION HELPERS */
 public inline fun <T : View> Fragment.addView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T): T {
@@ -55,7 +52,14 @@ public inline fun <T: Any> Fragment.configuration(
         rightToLeft: Boolean? = null,
         smallestWidth: Int? = null,
         init: () -> T
-): T? = if (getActivity()?.testConfiguration(screenSize, density, language, orientation, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth) ?: false) init() else null
+): T? {
+    val act = getActivity()
+    return if (act != null) {
+        if (AnkoInternals.testConfiguration(act, screenSize, density, language, orientation, long,
+                fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
+    }
+    else null
+}
 /* END SECTION */
 
 
@@ -85,12 +89,12 @@ public fun Fragment.makeCall(number: String): Boolean = getActivity().makeCall(n
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
-    getActivity().internalStartActivity(javaClass<T>(), params)
+    AnkoInternals.internalStartActivity(getActivity(), javaClass<T>(), params)
 }
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
-    getActivity().internalStartActivityForResult(javaClass<T>(), requestCode, params)
+    AnkoInternals.internalStartActivityForResult(getActivity(), javaClass<T>(), requestCode, params)
 }
 
 public inline fun <reified T: Any> Fragment.intentFor(): Intent = Intent(getActivity(), javaClass<T>())

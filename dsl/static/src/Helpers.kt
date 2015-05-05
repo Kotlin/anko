@@ -24,7 +24,7 @@ import android.app.Activity
 import android.app.Fragment
 import android.content.res.Configuration
 import org.jetbrains.anko.custom.addView
-import org.jetbrains.anko.internals.testConfiguration
+import org.jetbrains.anko.internals.AnkoInternals
 import java.util.HashMap
 
 public class AnkoException(message: String = "") : RuntimeException(message)
@@ -160,7 +160,8 @@ public inline fun <T: Any> Context.configuration(
         rightToLeft: Boolean? = null,
         smallestWidth: Int? = null,
         init: () -> T
-): T? = if (testConfiguration(screenSize, density, language, orientation, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
+): T? = if (AnkoInternals.testConfiguration(this, screenSize, density, language, orientation, long,
+        fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
 
 public inline fun <T: Any> Activity.configuration(
         screenSize: ScreenSize? = null,
@@ -175,7 +176,8 @@ public inline fun <T: Any> Activity.configuration(
         rightToLeft: Boolean? = null,
         smallestWidth: Int? = null,
         init: () -> T
-): T? = if (testConfiguration(screenSize, density, language, orientation, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
+): T? = if (AnkoInternals.testConfiguration(this, screenSize, density, language, orientation, long,
+        fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
 
 public inline fun <T: Any> UiHelper.configuration(
         screenSize: ScreenSize? = null,
@@ -190,7 +192,8 @@ public inline fun <T: Any> UiHelper.configuration(
         rightToLeft: Boolean? = null,
         smallestWidth: Int? = null,
         init: () -> T
-): T? = if (ctx.testConfiguration(screenSize, density, language, orientation, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
+): T? = if (AnkoInternals.testConfiguration(ctx, screenSize, density, language, orientation, long,
+        fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
 
 public inline fun <T: Any> Fragment.configuration(
         screenSize: ScreenSize? = null,
@@ -205,4 +208,11 @@ public inline fun <T: Any> Fragment.configuration(
         rightToLeft: Boolean? = null,
         smallestWidth: Int? = null,
         init: () -> T
-): T? = if (getActivity()?.testConfiguration(screenSize, density, language, orientation, long, fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth) ?: false) init() else null
+): T? {
+    val act = getActivity()
+    return if (act != null) {
+        if (AnkoInternals.testConfiguration(act, screenSize, density, language, orientation, long,
+                fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
+    }
+    else null
+}

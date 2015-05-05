@@ -26,10 +26,9 @@ import android.app.Fragment
 import android.os.Bundle
 import android.net.Uri
 import java.io.Serializable
-import org.jetbrains.anko.internals.internalStartActivity
 import android.os.Parcelable
 import android.view.View
-import org.jetbrains.anko.internals.internalStartActivityForResult
+import org.jetbrains.anko.internals.AnkoInternals
 
 public val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
 public val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
@@ -199,22 +198,22 @@ public fun Context.makeCall(number: String): Boolean {
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<String, Any>) {
-    internalStartActivity(javaClass<T>(), params)
+    AnkoInternals.internalStartActivity(this, javaClass<T>(), params)
 }
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
-    internalStartActivityForResult(javaClass<T>(), requestCode, params)
+    AnkoInternals.internalStartActivityForResult(this, javaClass<T>(), requestCode, params)
 }
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
-    getActivity().internalStartActivity(javaClass<T>(), params)
+    AnkoInternals.internalStartActivity(getActivity(), javaClass<T>(), params)
 }
 
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
-    getActivity().internalStartActivityForResult(javaClass<T>(), requestCode, params)
+    AnkoInternals.internalStartActivityForResult(getActivity(), javaClass<T>(), requestCode, params)
 }
 
 public fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {

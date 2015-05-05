@@ -25,7 +25,7 @@ import android.view.ViewManager
 import org.jetbrains.anko.AnkoException
 import org.jetbrains.anko.UI
 import org.jetbrains.anko.UiHelper
-import org.jetbrains.anko.internals.initiateView
+import org.jetbrains.anko.internals.AnkoInternals
 
 public inline fun <T: View> ViewManager.addView(factory: (ctx: Context) -> T): T {
     return when (this) {
@@ -76,19 +76,19 @@ public inline fun <T : View> Activity.addView(inlineOptions(InlineOption.ONLY_LO
 }
 
 public inline fun <reified T : View> Context.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
-    val view = initiateView(ctx, javaClass<T>())
+    val view = AnkoInternals.initiateView(ctx, javaClass<T>())
     view.init()
     view
 }
 
 public inline fun <reified T : View> ViewManager.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
-    val view = initiateView(ctx, javaClass<T>())
+    val view = AnkoInternals.initiateView(ctx, javaClass<T>())
     view.init()
     view
 }
 
 public inline fun <reified T : View> Activity.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
-    val view = initiateView(ctx, javaClass<T>())
+    val view = AnkoInternals.initiateView(ctx, javaClass<T>())
     view.init()
     view
 }

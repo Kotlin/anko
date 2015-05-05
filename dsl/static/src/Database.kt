@@ -22,10 +22,9 @@ import android.database.Cursor
 import java.util.regex.Pattern
 import org.jetbrains.anko.*
 import android.database.sqlite.SQLiteOpenHelper
-import org.jetbrains.anko.internals.useDatabase
-import org.jetbrains.anko.internals.useCursor
 import java.util.concurrent.atomic.AtomicInteger
 import android.content.Context
+import org.jetbrains.anko.internals.AnkoInternals
 
 public val NULL: SqlType = SqlTypeImpl("NULL")
 public val INT: SqlType = SqlTypeImpl("INT")
@@ -296,32 +295,32 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
 
     public fun <T> exec(f: Cursor.() -> T): T {
         val cursor = execInternal()
-        return cursor.useCursor {
+        return AnkoInternals.useCursor(cursor) {
             cursor.f()
         }
     }
 
-    public fun <T: Any> parseSingle(parser: RowParser<T>): T = execInternal().useCursor {
+    public fun <T: Any> parseSingle(parser: RowParser<T>): T = AnkoInternals.useCursor(execInternal()) {
         it.parseSingle(parser)
     }
 
-    public fun <T: Any> parseOpt(parser: RowParser<T>): T? = execInternal().useCursor {
+    public fun <T: Any> parseOpt(parser: RowParser<T>): T? = AnkoInternals.useCursor(execInternal()) {
         it.parseOpt(parser)
     }
 
-    public fun <T: Any> parseList(parser: RowParser<T>): List<T> = execInternal().useCursor {
+    public fun <T: Any> parseList(parser: RowParser<T>): List<T> = AnkoInternals.useCursor(execInternal()) {
         it.parseList(parser)
     }
 
-    public fun <T: Any> parseSingle(parser: MapRowParser<T>): T = execInternal().useCursor {
+    public fun <T: Any> parseSingle(parser: MapRowParser<T>): T = AnkoInternals.useCursor(execInternal()) {
         it.parseSingle(parser)
     }
 
-    public fun <T: Any> parseOpt(parser: MapRowParser<T>): T? = execInternal().useCursor {
+    public fun <T: Any> parseOpt(parser: MapRowParser<T>): T? = AnkoInternals.useCursor(execInternal()) {
         it.parseOpt(parser)
     }
 
-    public fun <T: Any> parseList(parser: MapRowParser<T>): List<T> = execInternal().useCursor {
+    public fun <T: Any> parseList(parser: MapRowParser<T>): List<T> = AnkoInternals.useCursor(execInternal()) {
         it.parseList(parser)
     }
 
