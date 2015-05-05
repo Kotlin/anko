@@ -73,7 +73,7 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
 
     private val propertyGetters = generate(PROPERTIES) {
         availableMethods
-                .filter { it.clazz.isView && !(it.clazz.isViewGroup && it.clazz.isAbstract) &&
+                .filter { it.clazz.isView &&
                         it.method.isGetter() && !it.method.isOverridden && !it.method.isListenerGetter &&
                         !config.excludedProperties.contains(it.clazz.fqName + "#" + it.method.name) &&
                         !config.excludedProperties.contains(it.clazz.fqName + "#*")

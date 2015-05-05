@@ -723,6 +723,54 @@ public var android.view.View.verticalScrollBarEnabled: Boolean
     get() = isVerticalScrollBarEnabled()
     set(v) = setVerticalScrollBarEnabled(v)
 
+public var android.view.ViewGroup.clipChildren: Boolean
+    get() = getClipChildren()
+    set(v) = setClipChildren(v)
+
+public var android.view.ViewGroup.clipToPadding: Boolean
+    get() = getClipToPadding()
+    set(v) = setClipToPadding(v)
+
+public var android.view.ViewGroup.descendantFocusability: Int
+    get() = getDescendantFocusability()
+    set(v) = setDescendantFocusability(v)
+
+public var android.view.ViewGroup.layoutAnimation: android.view.animation.LayoutAnimationController?
+    get() = getLayoutAnimation()
+    set(v) = setLayoutAnimation(v)
+
+public var android.view.ViewGroup.layoutMode: Int
+    get() = getLayoutMode()
+    set(v) = setLayoutMode(v)
+
+public var android.view.ViewGroup.layoutTransition: android.animation.LayoutTransition?
+    get() = getLayoutTransition()
+    set(v) = setLayoutTransition(v)
+
+public var android.view.ViewGroup.persistentDrawingCache: Int
+    get() = getPersistentDrawingCache()
+    set(v) = setPersistentDrawingCache(v)
+
+public var android.view.ViewGroup.touchscreenBlocksFocus: Boolean
+    get() = getTouchscreenBlocksFocus()
+    set(v) = setTouchscreenBlocksFocus(v)
+
+public var android.view.ViewGroup.alwaysDrawnWithCacheEnabled: Boolean
+    get() = isAlwaysDrawnWithCacheEnabled()
+    set(v) = setAlwaysDrawnWithCacheEnabled(v)
+
+public var android.view.ViewGroup.animationCacheEnabled: Boolean
+    get() = isAnimationCacheEnabled()
+    set(v) = setAnimationCacheEnabled(v)
+
+public var android.view.ViewGroup.motionEventSplittingEnabled: Boolean
+    get() = isMotionEventSplittingEnabled()
+    set(v) = setMotionEventSplittingEnabled(v)
+
+public var android.view.ViewGroup.transitionGroup: Boolean
+    get() = isTransitionGroup()
+    set(v) = setTransitionGroup(v)
+
 public var android.view.ViewStub.inflatedId: Int
     get() = getInflatedId()
     set(v) = setInflatedId(v)
@@ -765,6 +813,55 @@ public val android.webkit.WebView.url: String?
 public val android.webkit.WebView.privateBrowsingEnabled: Boolean
     get() = isPrivateBrowsingEnabled()
 
+public var android.widget.AbsListView.cacheColorHint: Int
+    get() = getCacheColorHint()
+    set(v) = setCacheColorHint(v)
+
+public val android.widget.AbsListView.checkedItemIds: LongArray?
+    get() = getCheckedItemIds()
+
+public var android.widget.AbsListView.choiceMode: Int
+    get() = getChoiceMode()
+    set(v) = setChoiceMode(v)
+
+public val android.widget.AbsListView.selectedView: android.view.View?
+    get() = getSelectedView()
+
+public var android.widget.AbsListView.selector: android.graphics.drawable.Drawable?
+    get() = getSelector()
+    set(v) = setSelector(v)
+public var android.widget.AbsListView.selectorResource: Int
+    get() = throw AnkoException("'android.widget.AbsListView.selectorResource' property does not have a getter")
+    set(v) = setSelector(v)
+
+public var android.widget.AbsListView.transcriptMode: Int
+    get() = getTranscriptMode()
+    set(v) = setTranscriptMode(v)
+
+public var android.widget.AbsListView.fastScrollAlwaysVisible: Boolean
+    get() = isFastScrollAlwaysVisible()
+    set(v) = setFastScrollAlwaysVisible(v)
+
+public var android.widget.AbsListView.fastScrollEnabled: Boolean
+    get() = isFastScrollEnabled()
+    set(v) = setFastScrollEnabled(v)
+
+public var android.widget.AbsListView.scrollingCacheEnabled: Boolean
+    get() = isScrollingCacheEnabled()
+    set(v) = setScrollingCacheEnabled(v)
+
+public var android.widget.AbsListView.smoothScrollbarEnabled: Boolean
+    get() = isSmoothScrollbarEnabled()
+    set(v) = setSmoothScrollbarEnabled(v)
+
+public var android.widget.AbsListView.stackFromBottom: Boolean
+    get() = isStackFromBottom()
+    set(v) = setStackFromBottom(v)
+
+public var android.widget.AbsListView.textFilterEnabled: Boolean
+    get() = isTextFilterEnabled()
+    set(v) = setTextFilterEnabled(v)
+
 public var android.widget.AbsSeekBar.keyProgressIncrement: Int
     get() = getKeyProgressIncrement()
     set(v) = setKeyProgressIncrement(v)
@@ -798,6 +895,16 @@ public var android.widget.ActionMenuView.popupTheme: Int
 
 public val android.widget.ActionMenuView.overflowMenuShowing: Boolean
     get() = isOverflowMenuShowing()
+
+public var android.widget.AdapterView<out android.widget.Adapter?>.emptyView: android.view.View?
+    get() = getEmptyView()
+    set(v) = setEmptyView(v)
+
+public val android.widget.AdapterView<out android.widget.Adapter?>.firstVisiblePosition: Int
+    get() = getFirstVisiblePosition()
+
+public val android.widget.AdapterView<out android.widget.Adapter?>.lastVisiblePosition: Int
+    get() = getLastVisiblePosition()
 
 public var android.widget.AdapterViewFlipper.flipInterval: Int
     get() = getFlipInterval()
@@ -1338,9 +1445,6 @@ public var android.widget.ProgressBar.indeterminate: Boolean
     get() = isIndeterminate()
     set(v) = setIndeterminate(v)
 
-public val android.widget.RadioGroup.checkedRadioButtonId: Int
-    get() = getCheckedRadioButtonId()
-
 public var android.widget.RatingBar.numStars: Int
     get() = getNumStars()
     set(v) = setNumStars(v)
@@ -1771,24 +1875,6 @@ public var android.widget.TextView.textScaleX: Float
 public var android.widget.TextView.textSize: Float
     get() = getTextSize()
     set(v) = setTextSize(v)
-
-public val android.widget.TextView.totalPaddingBottom: Int
-    get() = getTotalPaddingBottom()
-
-public val android.widget.TextView.totalPaddingEnd: Int
-    get() = getTotalPaddingEnd()
-
-public val android.widget.TextView.totalPaddingLeft: Int
-    get() = getTotalPaddingLeft()
-
-public val android.widget.TextView.totalPaddingRight: Int
-    get() = getTotalPaddingRight()
-
-public val android.widget.TextView.totalPaddingStart: Int
-    get() = getTotalPaddingStart()
-
-public val android.widget.TextView.totalPaddingTop: Int
-    get() = getTotalPaddingTop()
 
 public var android.widget.TextView.transformationMethod: android.text.method.TransformationMethod?
     get() = getTransformationMethod()

@@ -62,9 +62,6 @@ public open class MyActivity() : Activity() {
                     val dp_month = month
                     val dp_year = year
                 }
-                radioGroup {
-                    val rg_checkedRadioButtonId = checkedRadioButtonId
-                }
                 timePicker {
                     currentHour = 3
                 }

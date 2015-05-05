@@ -74,7 +74,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     val properties = generate(PROPERTIES) {
         generator.properties.map { property ->
             val getter = property.getter
-            val className = (getter ?: property.setters.first()).clazz.fqName
+            val className = (getter ?: property.setters.first()).clazz.fqNameWithTypeArguments
             val fullPropertyName = "$className.${property.name}"
             val bestSetter = property.setters.firstOrNull()
             val mutability = if (bestSetter != null) "var" else "val"
