@@ -1,0 +1,5 @@
+<root>
+  <item name='android.widget.TextView java.lang.CharSequence getText()'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+</root>

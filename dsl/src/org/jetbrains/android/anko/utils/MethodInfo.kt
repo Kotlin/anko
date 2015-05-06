@@ -129,10 +129,10 @@ val MethodNode.isStatic: Boolean
 val MethodNode.returnType: Type
     get() = Type.getReturnType(desc)
 
-fun MethodNode.renderReturnType(): String {
+fun MethodNode.renderReturnType(nullable: Boolean = true): String {
     return if (signature != null) {
-        genericTypeToStr(parseGenericMethodSignature(signature).returnType)
+        genericTypeToStr(parseGenericMethodSignature(signature).returnType, nullable)
     } else {
-        returnType.asString()
+        returnType.asString(nullable)
     }
 }

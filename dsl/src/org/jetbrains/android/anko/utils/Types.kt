@@ -40,6 +40,7 @@ private fun mapJavaToKotlinType(str: String): String {
 }
 
 fun Type.asString(nullable: Boolean = true): String {
+    val nullability = if (nullable) "?" else ""
     return when (getSort()) {
         Type.BOOLEAN -> "Boolean"
         Type.INT -> "Int"
@@ -51,13 +52,13 @@ fun Type.asString(nullable: Boolean = true): String {
         Type.SHORT -> "Short"
         Type.VOID -> "Unit"
         Type.ARRAY -> when (getElementType().getSort()) {
-            Type.INT -> "IntArray?"
-            Type.FLOAT -> "FloatArray?"
-            Type.DOUBLE -> "DoubleArray?"
-            Type.LONG -> "LongArray?"
-            else -> "Array<" + mapJavaToKotlinType(getElementType().asString(nullable = false)) + ">?"
+            Type.INT -> "IntArray$nullability"
+            Type.FLOAT -> "FloatArray$nullability"
+            Type.DOUBLE -> "DoubleArray$nullability"
+            Type.LONG -> "LongArray$nullability"
+            else -> "Array<" + mapJavaToKotlinType(getElementType().asString(nullable = false)) + ">$nullability"
         }
-        else -> mapJavaToKotlinType(fqName) + if (nullable) "?" else ""
+        else -> mapJavaToKotlinType(fqName) + nullability
     }
 }
 
@@ -73,7 +74,7 @@ fun Type.asJavaString(): String {
         Type.SHORT -> "short"
         Type.VOID -> "void"
         Type.ARRAY -> getElementType().asJavaString() + "[]"
-        else -> mapJavaToKotlinType(fqName)
+        else -> fqName
     }
 }
 
@@ -99,14 +100,14 @@ fun Type.getDefaultValue() : String {
     }
 }
 
-fun genericTypeToStr(param: GenericType): String {
+fun genericTypeToStr(param: GenericType, nullable: Boolean = true): String {
     var res = StringBuilder()
 
     val classifier = param.classifier
 
     res append when(classifier) {
         is TopLevelClass -> classifier.internalName.replace('/', '.').replace('$', '.')
-        is BaseType -> Type.getType(classifier.descriptor.toString()).asString()
+        is BaseType -> Type.getType(classifier.descriptor.toString()).asString(nullable)
         else -> return ""
     }
 
@@ -128,7 +129,7 @@ fun genericTypeToStr(param: GenericType): String {
         res.delete(res.length() - 2, res.length())
         res.append(">")
     }
-    if (classifier is TopLevelClass) res.append("?")
+    if (classifier is TopLevelClass && nullable) res.append("?")
     return res.toString()
 }
 

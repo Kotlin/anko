@@ -21,6 +21,7 @@ import org.objectweb.asm.tree.MethodNode
 import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.AnkoFile.*
 import org.jetbrains.android.anko.ConfigurationTune.*
+import org.jetbrains.android.anko.annotations.ExternalAnnotation
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
 import java.util.*
@@ -78,13 +79,29 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
             val fullPropertyName = "$className.${property.name}"
             val bestSetter = property.setters.firstOrNull()
             val mutability = if (bestSetter != null) "var" else "val"
-            val returnType = getter?.method?.renderReturnType()
-                    ?: bestSetter?.method?.args?.get(0)?.asString()
-                    ?: "Any?"
+
+            val javaReturnType = getter?.method?.returnType?.asJavaString()
+                    ?: bestSetter?.method?.args?.get(0)?.asJavaString()
+                    ?: "java.lang.Object"
+
+            val rawReturnType = getter?.method?.renderReturnType(false)
+                    ?: bestSetter?.method?.args?.get(0)?.asString(false)
+                    ?: "Any"
+
+            val nullable = if (javaReturnType.indexOf('.') < 0) {
+                false // Do not look up annotations for simple types
+            } else if (getter != null) {
+                val annotationSignature = "${getter.clazz.fqName} $javaReturnType ${getter.method.name}()"
+                val foundAnnotations = config.annotationManager.findAnnotationsFor(annotationSignature)
+                ExternalAnnotation.NotNull !in foundAnnotations
+            } else true // Default is nullable
+
+            val nullability = if (nullable) "?" else ""
+
             val otherSetters = if (property.setters.size() > 1) property.setters.drop(1) else listOf()
 
             buffer {
-                line("public $mutability $fullPropertyName: $returnType")
+                line("public $mutability $fullPropertyName: $rawReturnType$nullability")
                 if (getter != null) {
                     indent.line("get() = ${getter.method.name}()")
                 } else {
@@ -92,7 +109,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                 }
                 if (bestSetter != null) indent.line("set(v) = ${bestSetter.method.name}(v)")
 
-                renderResourceProperty(otherSetters, fullPropertyName, returnType)
+                renderResourceProperty(otherSetters, fullPropertyName, rawReturnType)
             }.toString()
         }
     }
