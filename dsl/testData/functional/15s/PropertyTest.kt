@@ -306,7 +306,7 @@ public var android.view.View.contentDescription: CharSequence?
     get() = getContentDescription()
     set(v) = setContentDescription(v)
 
-public val android.view.View.drawableState: IntArray?
+public val android.view.View.drawableState: IntArray
     get() = getDrawableState()
 
 public val android.view.View.drawingCache: android.graphics.Bitmap?
@@ -668,7 +668,7 @@ public var android.widget.AbsListView.cacheColorHint: Int
     get() = getCacheColorHint()
     set(v) = setCacheColorHint(v)
 
-public val android.widget.AbsListView.checkedItemIds: LongArray?
+public val android.widget.AbsListView.checkedItemIds: LongArray
     get() = getCheckedItemIds()
 
 public var android.widget.AbsListView.choiceMode: Int
@@ -996,7 +996,7 @@ public var android.widget.ListView.adapter: android.widget.ListAdapter?
     get() = getAdapter()
     set(v) = setAdapter(v)
 
-public val android.widget.ListView.checkItemIds: LongArray?
+public val android.widget.ListView.checkItemIds: LongArray
     get() = getCheckItemIds()
 
 public var android.widget.ListView.divider: android.graphics.drawable.Drawable?
@@ -1309,7 +1309,7 @@ public var android.widget.TextView.movementMethod: android.text.method.MovementM
     get() = getMovementMethod()
     set(v) = setMovementMethod(v)
 
-public val android.widget.TextView.paint: android.text.TextPaint?
+public val android.widget.TextView.paint: android.text.TextPaint
     get() = getPaint()
 
 public var android.widget.TextView.paintFlags: Int
@@ -1326,7 +1326,7 @@ public val android.widget.TextView.selectionEnd: Int
 public val android.widget.TextView.selectionStart: Int
     get() = getSelectionStart()
 
-public var android.widget.TextView.text: CharSequence?
+public var android.widget.TextView.text: CharSequence
     get() = getText()
     set(v) = setText(v)
 public var android.widget.TextView.textResource: Int

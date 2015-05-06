@@ -368,10 +368,10 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
             val varName = method.name.decapitalize()
             val customArgumentsKey = "$listenerClassName#${method.name}"
             val customArguments = Props.customMethodParameters.get(customArgumentsKey)
-            val arguments = customArguments ?: method.method.fmtArguments()
-            val substitution = method.method.fmtArgumentsNames()
+            val arguments = customArguments ?: method.methodWithClass.formatArguments(config)
+            val substitution = method.methodWithClass.formatArgumentsNames(config)
             buffer {
-                val defaultValue = method.method.returnType.getDefaultValue()
+                val defaultValue = method.methodWithClass.method.returnType.getDefaultValue()
                 val returnDefaultValue = if (defaultValue.isNotEmpty()) " ?: $defaultValue" else ""
 
                 line("override fun ${method.name}($arguments) = _$varName?.invoke($substitution)$returnDefaultValue").nl()
@@ -395,9 +395,9 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         val layoutParamsClassName = lp.layoutParams.fqName
         val helperClassName = "_${lp.layout.simpleName}${lp.layout.supportSuffix}"
 
-        fun renderExtensionFunction(constructor: MethodNode): String {
-            val arguments = constructor.fmtLayoutParamsArguments()
-            val substituted = constructor.fmtLayoutParamsArgumentsInvoke()
+        fun renderExtensionFunction(constructor: MethodNodeWithClass): String {
+            val arguments = constructor.formatLayoutParamsArguments(config)
+            val substituted = constructor.formatLayoutParamsArgumentsInvoke(config)
             val initArgumentName = "${lp.layout.simpleName.decapitalize()}Init"
             val separator = if (arguments == "") "" else ","
             return buffer(indent = 1) {
@@ -410,7 +410,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
             }.toString()
         }
 
-        val layoutParamsFunc = lp.constructors.map { renderExtensionFunction(it) }
+        val layoutParamsFunc = lp.constructors.map { renderExtensionFunction(MethodNodeWithClass(lp.layoutParams, it)) }
         val constructors = AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
             lp.layout.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
         }

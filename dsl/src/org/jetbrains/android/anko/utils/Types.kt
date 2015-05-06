@@ -26,6 +26,13 @@ import java.util.*
 val Type.isVoid: Boolean
     get() = getSort() == Type.VOID
 
+val Type.isSimpleType: Boolean
+    get() = when (getSort()) {
+        Type.BOOLEAN, Type.INT, Type.FLOAT, Type.DOUBLE, Type.LONG, Type.BYTE, Type.CHAR, Type.SHORT -> true
+        Type.VOID -> true
+        else -> false
+    }
+
 val Type.fqName: String
     get() = getClassName().replace('/', '.').replace('$', '.')
 

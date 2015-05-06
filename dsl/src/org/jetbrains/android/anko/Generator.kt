@@ -25,7 +25,11 @@ import org.jetbrains.android.anko.AnkoFile.*
 import org.jetbrains.android.anko.utils.toProperty
 import org.objectweb.asm.tree.FieldNode
 
-data class ListenerMethod(val method: MethodNode, val name: String, val argumentTypes: String, val returnType: String)
+data class ListenerMethod(
+        val methodWithClass: MethodNodeWithClass,
+        val name: String,
+        val argumentTypes: String,
+        val returnType: String)
 
 abstract class Listener(val setter: MethodNodeWithClass, val clazz: ClassNode)
 
@@ -160,18 +164,20 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
         return when (methods?.size() ?: 0) {
             1 -> { // It is a simple listener, with just one method
                 val method = methods!![0]
-                val argumentTypes = method.fmtArgumentsTypes()
+                val methodWithClass = MethodNodeWithClass(listener, method)
+                val argumentTypes = methodWithClass.formatArgumentsTypes(config)
                 val returnType = method.returnType.asString()
-                SimpleListener(setter, listener, ListenerMethod(method, name, argumentTypes, returnType))
+                SimpleListener(setter, listener, ListenerMethod(methodWithClass, name, argumentTypes, returnType))
             }
             0 -> // Something weird
                 throw RuntimeException("Listener ${listener.name} contains no methods.")
             else -> { // A complex listener (with more than one method)
                 val listenerMethods = methods?.map { method ->
                     val methodName = method.name
-                    val argumentTypes = method.fmtArgumentsTypes()
+                    val methodWithClass = MethodNodeWithClass(listener, method)
+                    val argumentTypes = methodWithClass.formatArgumentsTypes(config)
                     val returnType = method.returnType.asString()
-                    ListenerMethod(method, methodName, argumentTypes, returnType)
+                    ListenerMethod(methodWithClass, methodName, argumentTypes, returnType)
                 }!!
                 ComplexListener(setter, listener, name, listenerMethods)
             }

@@ -16,6 +16,7 @@
 
 package org.jetbrains.android.anko
 
+import org.jetbrains.android.anko.annotations.ExternalAnnotation
 import org.objectweb.asm.*
 import org.objectweb.asm.tree.MethodNode
 import java.util.ArrayList
@@ -43,22 +44,34 @@ fun buildKotlinSignature(node: MethodNode): List<String> {
     return parsed.valueParameters.map { genericTypeToStr(it.genericType) }
 }
 
-fun MethodNode.processArguments(template: (argName: String, argType: String, explicitNotNull: String) -> String): String {
-    if (args.isEmpty()) return ""
+fun MethodNodeWithClass.processArguments(
+        config: BaseGeneratorConfiguration,
+        template: (argName: String, argType: String, explicitNotNull: String) -> String
+): String {
+    if (method.args.isEmpty()) return ""
 
-    val locals = localVariables?.map { it.index to it }?.toMap() ?: hashMapOf()
+    val locals = method.localVariables?.map { it.index to it }?.toMap() ?: hashMapOf()
     val buffer = StringBuffer()
     var argNum = 0
-    var nameIndex = if (isStatic) 0 else 1
-    val genericArgs = buildKotlinSignature(this)
+    var nameIndex = if (method.isStatic) 0 else 1
+    val genericArgs = buildKotlinSignature(method)
 
-    for (arg in args) {
-        val argType = arg.asString()
+    val javaArgs = method.args.map { it.asJavaString() }.joinToString()
+
+    for ((index, arg) in method.args.withIndex()) {
+        val rawArgType = arg.asString(false)
+
+        val annotationSignature = "${clazz.fqName} ${method.returnType.asJavaString()} ${method.name}($javaArgs) $index"
+        val nullable = !arg.isSimpleType &&
+                ExternalAnnotation.NotNull !in config.annotationManager.findAnnotationsFor(annotationSignature)
+        val argType = if (nullable) rawArgType + "?" else rawArgType
+
         val explicitNotNull = if (argType.endsWith("?")) "!!" else ""
         val local = locals[nameIndex]
         val argName = local?.name ?: "p$argNum"
         if (argType.isNotEmpty()) {
-            buffer.append(template(argName, if (signature != null) genericArgs[argNum] else argType, explicitNotNull))
+            buffer.append(template(argName,
+                    if (method.signature != null) genericArgs[argNum] else argType, explicitNotNull))
         }
         argNum++
         nameIndex += arg.getSize()
@@ -68,34 +81,34 @@ fun MethodNode.processArguments(template: (argName: String, argType: String, exp
     return buffer.toString()
 }
 
-fun MethodNode.fmtArguments(): String {
-    return processArguments { name, _type, nul -> "$name: $_type, " }
+fun MethodNodeWithClass.formatArguments(config: BaseGeneratorConfiguration): String {
+    return processArguments(config) { name, type, nul -> "$name: $type, " }
 }
 
-fun MethodNode.fmtLayoutParamsArguments(): String {
-    return processArguments { name, _type, nul ->
+fun MethodNodeWithClass.formatLayoutParamsArguments(config: BaseGeneratorConfiguration): String {
+    return processArguments(config) { name, type, nul ->
         val defaultValue = specialLayoutParamsArguments.get(name)
         val realName = specialLayoutParamsNames.getOrElse(name, {name})
         if (defaultValue == null)
-            "$realName: $_type, "
+            "$realName: $type, "
         else
-            "$realName: $_type = $defaultValue, "
+            "$realName: $type = $defaultValue, "
     }
 }
 
-fun MethodNode.fmtLayoutParamsArgumentsInvoke(): String {
-    return processArguments { name, _type, nul ->
+fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(config: BaseGeneratorConfiguration): String {
+    return processArguments(config) { name, type, nul ->
         val realName = specialLayoutParamsNames.getOrElse(name, {name})
         "$realName$nul, "
     }
 }
 
-fun MethodNode.fmtArgumentsTypes(): String {
-    return processArguments { name, _type, nul -> "$_type, " }
+fun MethodNodeWithClass.formatArgumentsTypes(config: BaseGeneratorConfiguration): String {
+    return processArguments(config) { name, type, nul -> "$type, " }
 }
 
-fun MethodNode.fmtArgumentsNames(): String {
-    return processArguments { name, _type, nul -> "$name, " }
+fun MethodNodeWithClass.formatArgumentsNames(config: BaseGeneratorConfiguration): String {
+    return processArguments(config) { name, type, nul -> "$name, " }
 }
 
 

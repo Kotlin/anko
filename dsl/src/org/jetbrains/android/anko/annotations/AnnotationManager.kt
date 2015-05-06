@@ -19,6 +19,12 @@ public trait AnnotationProvider {
     fun getExternalAnnotations(packageName: String): Map<String, Set<ExternalAnnotation>>
 }
 
+public trait BulkAnnotationProvider : AnnotationProvider {
+    override fun getExternalAnnotations(packageName: String): Map<String, Set<ExternalAnnotation>> {
+        return mapOf()
+    }
+}
+
 public class ZipFileAnnotationProvider(val zipFile: File) : AnnotationProvider {
     private val archive: ZipFile by Delegates.lazy { ZipFile(zipFile) }
 
@@ -72,9 +78,12 @@ public class CompoundAnnotationProvider(vararg providers: AnnotationProvider) : 
     }
 }
 
-public class AnnotationManager(val provider: AnnotationProvider) {
+public class AnnotationManager(private val provider: AnnotationProvider) {
     public fun findAnnotationsFor(q: String): Set<ExternalAnnotation> {
-        val packageName = q.substringBefore(' ').substringBeforeLast('.')
+        var className = q.substringBefore(' ')
+        val indexOfFirstCapital = className.indexOfFirst { it.isUpperCase() }
+        val packageName = className.substring(0, indexOfFirstCapital).substringBeforeLast('.')
+
         val annotations = provider.getExternalAnnotations(packageName)
         return annotations.get(q) ?: setOf()
     }

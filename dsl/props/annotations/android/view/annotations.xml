@@ -1,0 +1,44 @@
+<root>
+    <item name='android.view.View'>
+        <annotation name='java.lang.annotation.Deprecated'/>
+    </item>
+    <item name='android.view.View.OnAttachStateChangeListener void onViewAttachedToWindow(android.view.View) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='android.view.View.OnAttachStateChangeListener void onViewDetachedFromWindow(android.view.View) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='android.view.View.OnDragListener boolean onDrag(android.view.View, android.view.DragEvent) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='android.view.View.OnDragListener boolean onDrag(android.view.View, android.view.DragEvent) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='android.view.View.OnFocusChangeListener void onFocusChange(android.view.View, boolean) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='android.view.View.OnGenericMotionListener boolean onGenericMotion(android.view.View, android.view.MotionEvent) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='android.view.View.OnGenericMotionListener boolean onGenericMotion(android.view.View, android.view.MotionEvent) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='android.view.View.OnHoverListener boolean onHover(android.view.View, android.view.MotionEvent) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='android.view.View.OnHoverListener boolean onHover(android.view.View, android.view.MotionEvent) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='android.view.View.OnKeyListener boolean onKey(android.view.View, int, android.view.KeyEvent) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='android.view.View.OnKeyListener boolean onKey(android.view.View, int, android.view.KeyEvent) 3'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='android.view.View.OnTouchListener boolean onTouch(android.view.View, android.view.MotionEvent) 0'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+    <item name='android.view.View.OnTouchListener boolean onTouch(android.view.View, android.view.MotionEvent) 1'>
+        <annotation name='org.jetbrains.annotations.NotNull'/>
+    </item>
+</root>

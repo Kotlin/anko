@@ -8,43 +8,43 @@ public fun android.support.v7.widget.ActionMenuView.onMenuItemClick(l: (android.
 
 public fun android.support.v7.widget.SearchView.onClose(l: () -> Boolean): Unit = setOnCloseListener(l)
 
-public fun android.support.v7.widget.SearchView.onQueryTextFocusChange(l: (android.view.View?, Boolean) -> Unit): Unit = setOnQueryTextFocusChangeListener(l)
+public fun android.support.v7.widget.SearchView.onQueryTextFocusChange(l: (android.view.View, Boolean) -> Unit): Unit = setOnQueryTextFocusChangeListener(l)
 
-public fun android.support.v7.widget.SearchView.onSearchClick(l: (android.view.View?) -> Unit): Unit = setOnSearchClickListener(l)
+public fun android.support.v7.widget.SearchView.onSearchClick(l: (android.view.View) -> Unit): Unit = setOnSearchClickListener(l)
 
 public fun android.support.v7.widget.Toolbar.onMenuItemClick(l: (android.view.MenuItem?) -> Boolean): Unit = setOnMenuItemClickListener(l)
 
 public fun android.view.View.onLayoutChange(l: (android.view.View?, Int, Int, Int, Int, Int, Int, Int, Int) -> Unit): Unit = addOnLayoutChangeListener(l)
 
-public fun android.view.View.onClick(l: (android.view.View?) -> Unit): Unit = setOnClickListener(l)
+public fun android.view.View.onClick(l: (android.view.View) -> Unit): Unit = setOnClickListener(l)
 
 public fun android.view.View.onCreateContextMenu(l: (android.view.ContextMenu?, android.view.View?, android.view.ContextMenu.ContextMenuInfo?) -> Unit): Unit = setOnCreateContextMenuListener(l)
 
-public fun android.view.View.onDrag(l: (android.view.View?, android.view.DragEvent?) -> Boolean): Unit = setOnDragListener(l)
+public fun android.view.View.onDrag(l: (android.view.View, android.view.DragEvent) -> Boolean): Unit = setOnDragListener(l)
 
-public fun android.view.View.onFocusChange(l: (android.view.View?, Boolean) -> Unit): Unit = setOnFocusChangeListener(l)
+public fun android.view.View.onFocusChange(l: (android.view.View, Boolean) -> Unit): Unit = setOnFocusChangeListener(l)
 
-public fun android.view.View.onGenericMotion(l: (android.view.View?, android.view.MotionEvent?) -> Boolean): Unit = setOnGenericMotionListener(l)
+public fun android.view.View.onGenericMotion(l: (android.view.View, android.view.MotionEvent) -> Boolean): Unit = setOnGenericMotionListener(l)
 
-public fun android.view.View.onHover(l: (android.view.View?, android.view.MotionEvent?) -> Boolean): Unit = setOnHoverListener(l)
+public fun android.view.View.onHover(l: (android.view.View, android.view.MotionEvent) -> Boolean): Unit = setOnHoverListener(l)
 
-public fun android.view.View.onKey(l: (android.view.View?, Int, android.view.KeyEvent?) -> Boolean): Unit = setOnKeyListener(l)
+public fun android.view.View.onKey(l: (android.view.View, Int, android.view.KeyEvent) -> Boolean): Unit = setOnKeyListener(l)
 
-public fun android.view.View.onLongClick(l: (android.view.View?) -> Boolean): Unit = setOnLongClickListener(l)
+public fun android.view.View.onLongClick(l: (android.view.View) -> Boolean): Unit = setOnLongClickListener(l)
 
 public fun android.view.View.onSystemUiVisibilityChange(l: (Int) -> Unit): Unit = setOnSystemUiVisibilityChangeListener(l)
 
-public fun android.view.View.onTouch(l: (android.view.View?, android.view.MotionEvent?) -> Boolean): Unit = setOnTouchListener(l)
+public fun android.view.View.onTouch(l: (android.view.View, android.view.MotionEvent) -> Boolean): Unit = setOnTouchListener(l)
 
 public fun android.view.ViewStub.onInflate(l: (android.view.ViewStub?, android.view.View?) -> Unit): Unit = setOnInflateListener(l)
 
-public fun android.widget.AdapterView<out android.widget.Adapter?>.onClick(l: (android.view.View?) -> Unit): Unit = setOnClickListener(l)
+public fun android.widget.AdapterView<out android.widget.Adapter?>.onClick(l: (android.view.View) -> Unit): Unit = setOnClickListener(l)
 
 public fun android.widget.AdapterView<out android.widget.Adapter?>.onItemClick(l: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit): Unit = setOnItemClickListener(l)
 
 public fun android.widget.AdapterView<out android.widget.Adapter?>.onItemLongClick(l: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Boolean): Unit = setOnItemLongClickListener(l)
 
-public fun android.widget.AutoCompleteTextView.onClick(l: (android.view.View?) -> Unit): Unit = setOnClickListener(l)
+public fun android.widget.AutoCompleteTextView.onClick(l: (android.view.View) -> Unit): Unit = setOnClickListener(l)
 
 public fun android.widget.AutoCompleteTextView.onItemClick(l: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit): Unit = setOnItemClickListener(l)
 
@@ -66,7 +66,7 @@ public fun android.widget.ExpandableListView.onItemClick(l: (android.widget.Adap
 
 public fun android.widget.NumberPicker.onScroll(l: (android.widget.NumberPicker?, Int) -> Unit): Unit = setOnScrollListener(l)
 
-public fun android.widget.NumberPicker.onValueChanged(l: (android.widget.NumberPicker?, Int, Int) -> Unit): Unit = setOnValueChangedListener(l)
+public fun android.widget.NumberPicker.onValueChanged(l: (android.widget.NumberPicker, Int, Int) -> Unit): Unit = setOnValueChangedListener(l)
 
 public fun android.widget.RadioGroup.onCheckedChange(l: (android.widget.RadioGroup?, Int) -> Unit): Unit = setOnCheckedChangeListener(l)
 
@@ -74,9 +74,9 @@ public fun android.widget.RatingBar.onRatingBarChange(l: (android.widget.RatingB
 
 public fun android.widget.SearchView.onClose(l: () -> Boolean): Unit = setOnCloseListener(l)
 
-public fun android.widget.SearchView.onQueryTextFocusChange(l: (android.view.View?, Boolean) -> Unit): Unit = setOnQueryTextFocusChangeListener(l)
+public fun android.widget.SearchView.onQueryTextFocusChange(l: (android.view.View, Boolean) -> Unit): Unit = setOnQueryTextFocusChangeListener(l)
 
-public fun android.widget.SearchView.onSearchClick(l: (android.view.View?) -> Unit): Unit = setOnSearchClickListener(l)
+public fun android.widget.SearchView.onSearchClick(l: (android.view.View) -> Unit): Unit = setOnSearchClickListener(l)
 
 public fun android.widget.SlidingDrawer.onDrawerClose(l: () -> Unit): Unit = setOnDrawerCloseListener(l)
 
@@ -94,9 +94,9 @@ public fun android.widget.VideoView.onCompletion(l: (android.media.MediaPlayer?)
 
 public fun android.widget.VideoView.onError(l: (android.media.MediaPlayer?, Int, Int) -> Boolean): Unit = setOnErrorListener(l)
 
-public fun android.widget.VideoView.onPrepared(l: (android.media.MediaPlayer?) -> Unit): Unit = setOnPreparedListener(l)
+public fun android.widget.VideoView.onPrepared(l: (android.media.MediaPlayer) -> Unit): Unit = setOnPreparedListener(l)
 
-public fun android.widget.ZoomControls.onZoomInClick(l: (android.view.View?) -> Unit): Unit = setOnZoomInClickListener(l)
+public fun android.widget.ZoomControls.onZoomInClick(l: (android.view.View) -> Unit): Unit = setOnZoomInClickListener(l)
 
-public fun android.widget.ZoomControls.onZoomOutClick(l: (android.view.View?) -> Unit): Unit = setOnZoomOutClickListener(l)
+public fun android.widget.ZoomControls.onZoomOutClick(l: (android.view.View) -> Unit): Unit = setOnZoomOutClickListener(l)
 
