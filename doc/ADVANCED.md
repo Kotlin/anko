@@ -45,6 +45,8 @@ Four lines is too much for this. Anko offers you an easier way:
 startActivity(intentFor<SomeOtherActivity>("id" to 5).singleTop())
 ```
 
+*Note: there is currently an issue concerning `intentFor()` function. It is already fixed in master branch.*
+
 If you don't need to pass any flags, the solution is even easier:
 
 ```kotlin
