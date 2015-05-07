@@ -37,7 +37,20 @@
         <download_tools android.tools.version="24.1.2" />
         <download_build_tools android.build.tools.version="21.1.2" android.build.tools.full.version="5.0.1" />
 
+        <download_sources android.sources.versioncode="21_r01" android.sources.version="21" />
+
         <download_support_repository android.repo.version="12" />
+    </target>
+
+    <target name="download_sources">
+        <delete dir="${android.sdk.dir}" failonerror="false" />
+
+        <mkdir dir="${download.dir}"/>
+        <mkdir dir="${android.sdk.dir}"/>
+        <mkdir dir="${android.sdk.dir}/platforms"/>
+        <mkdir dir="${android.sdk.dir}/build-tools"/>
+
+        <download_sources android.sources.versioncode="21_r01" android.sources.version="21" />
     </target>
 
     <macrodef name="download_android_platform">
@@ -90,7 +103,8 @@
 
             <unzip src="${download.dir}/android-build-tools_r@{android.build.tools.version}.zip" dest="${android.sdk.dir}/build-tools"/>
 
-            <move file="${android.sdk.dir}/build-tools/android-@{android.build.tools.full.version}" tofile="${android.sdk.dir}/build-tools/@{android.build.tools.version}"/>
+            <move file="${android.sdk.dir}/build-tools/android-@{android.build.tools.full.version}"
+                  tofile="${android.sdk.dir}/build-tools/@{android.build.tools.version}"/>
 
             <if>
                 <equals arg1="${tools.os}" arg2="windows"/>
@@ -118,6 +132,24 @@
             <mkdir dir="${android.sdk.dir}/extras/android" />
 
             <unzip src="${download.dir}/android_m2repository_r@{android.repo.version}.zip" dest="${android.sdk.dir}/extras/android"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="download_sources">
+        <attribute name="android.sources.versioncode" />
+        <attribute name="android.sources.version" />
+
+        <sequential>
+            <get src="http://dl-ssl.google.com/android/repository/sources-@{android.sources.versioncode}.zip"
+                 dest="${download.dir}/android_sources_@{android.sources.versioncode}.zip" usetimestamp="true"/>
+
+            <mkdir dir="${android.sdk.dir}/sources/android-@{android.sources.version}" />
+
+            <unzip src="${download.dir}/android_sources_@{android.sources.versioncode}.zip"
+                   dest="${android.sdk.dir}/sources"/>
+
+            <move file="${android.sdk.dir}/sources/src"
+                  tofile="${android.sdk.dir}/sources/android-@{android.sources.version}"/>
         </sequential>
     </macrodef>
 
