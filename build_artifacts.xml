@@ -52,6 +52,11 @@
             </delete>
 
             <zip destfile="workdir/zip/anko-@{version}.zip" basedir="@{version.dir}/build/repo"/>
+
+            <copy file="@{version.dir}/build/libs/@{version}.jar"
+                  tofile="workdir/zip/anko-@{version}.jar"
+                  overwrite="true" />
+
         </sequential>
     </macrodef>
 
