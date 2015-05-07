@@ -166,20 +166,19 @@ public inline fun Fragment.email(email: String, subject: String = "", text: Stri
         getActivity().email(email, subject, text)
 
 public fun Context.email(email: String, subject: String = "", text: String = ""): Boolean {
-    try {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.setType("text/html")
-        intent.putExtra(Intent.EXTRA_EMAIL, email)
-        if (subject.length() > 0)
-            intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-        if (text.length() > 0)
-            intent.putExtra(Intent.EXTRA_TEXT, text)
-        startActivity(Intent.createChooser(intent, null))
+    val intent = Intent(Intent.ACTION_SENDTO)
+    intent.setData(Uri.parse("mailto:"))
+    intent.putExtra(Intent.EXTRA_EMAIL, array(email))
+    if (subject.length() > 0)
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+    if (text.length() > 0)
+        intent.putExtra(Intent.EXTRA_TEXT, text)
+    if (intent.resolveActivity(getPackageManager()) != null) {
+        startActivity(intent)
         return true
-    } catch (e: ActivityNotFoundException) {
-        e.printStackTrace()
-        return false
     }
+    return false
+
 }
 
 [suppress("NOTHING_TO_INLINE")]
