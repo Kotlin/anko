@@ -37,54 +37,12 @@ public open class CompileTestFixture {
         private val kotlincFilename = "lib/Kotlin/kotlinc/bin/kotlinc-jvm" + (if (isWindows()) ".bat" else "")
 
         private val versions = File("workdir/original/").listFiles(AndroidVersionDirectoryFilter())
-        private val versionJars = hashMapOf<File, File>()
+
+        private fun getBuiltLibraryFile(fullVersion: String): File {
+            return File("workdir/zip/anko-$fullVersion.jar")
+        }
 
         private val LOG = Logger.getLogger(javaClass<CompileTestFixture>().getName())
-
-        platformStatic
-        public open fun setUpClass() {
-            assertTrue(File(kotlincFilename).exists())
-
-            if (versionJars.isEmpty()) {
-                for (ver in versions) {
-                    compileLibrary(ver)
-                }
-            }
-        }
-
-        platformStatic
-        public open fun tearDownClass() {}
-
-        private fun compileLibrary(ver: File): TestGeneratorConfiguration {
-            val version = ver.getName()
-            val intVersion = Integer.parseInt(version.replaceAll("[^0-9]", ""))
-
-            val jarFiles = ver.listFiles(JarFileFilter())
-            val jarFilesString = jarFiles.map { it.getAbsolutePath() }
-            val classpath = jarFiles.map { it.getPath() }.joinToString(File.pathSeparator)
-
-            val props = TestGeneratorConfiguration()
-            props.files.remove(AnkoFile.INTERFACE_WORKAROUNDS)
-            DSLGenerator(intVersion, version, jarFilesString, props).run()
-
-            val outputJarFile = createTempTestFile("lib-" + ver.getName(), ".jar")
-            versionJars[ver] = outputJarFile
-
-            val kotlincArgs = array(File(kotlincFilename).getAbsolutePath(), "-d", outputJarFile.getAbsolutePath(), "-classpath", classpath.toString())
-            val args = arrayListOf(*kotlincArgs)
-            for (file in props.tmpFiles.values()) {
-                args.add(file.getAbsolutePath())
-            }
-            val res = runProcess(args.copyToArray(), compiler = true)
-
-            for (file in props.tmpFiles.values()) {
-                file.delete()
-            }
-
-            assertEquals("", res.stderr)
-            assertEquals(0, res.exitCode)
-            return props
-        }
 
         fun runProcess(args: Array<String>, compiler: Boolean): ProcResult {
             LOG.info("Exec process: ${Arrays.toString(args)}")
@@ -128,7 +86,7 @@ public open class CompileTestFixture {
         ))
 
         val cp = listOf(
-                versionJars[ver],
+                getBuiltLibraryFile(ver.name),
                 tmpFile,
                 File(lib, "Kotlin/kotlinc/lib/kotlin-runtime.jar"),
                 File(lib, "junit-4.11.jar"),
@@ -160,7 +118,7 @@ public open class CompileTestFixture {
         val jarFiles = ver.listFiles(JarFileFilter())
         val classpath = (
                 jarFiles.map { it.getPath() } +
-                        listOf(versionJars[ver]) +
+                        listOf(getBuiltLibraryFile(ver.name)) +
                         (additionalLibraries?.map { it.getAbsolutePath() } ?: listOf()))
                 .joinToString(File.pathSeparator)
 

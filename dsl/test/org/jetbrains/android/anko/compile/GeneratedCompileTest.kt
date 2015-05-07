@@ -6,11 +6,6 @@ import org.junit.*
 import kotlin.platform.platformStatic
 
 public class GeneratedCompileTest : AbstractCompileTest() {
-    companion object {
-        BeforeClass platformStatic fun setUpClass() = CompileTestFixture.setUpClass()
-        AfterClass platformStatic fun tearDownClass() = CompileTestFixture.tearDownClass()
-    }
-
     [Test] public fun testAndroidLayoutParamsTestFor15() {
         runCompileTest("AndroidLayoutParamsTest.kt", "15")
     }

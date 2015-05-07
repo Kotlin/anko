@@ -55,10 +55,6 @@ private fun Context.dslCompileTests(files: List<String>, category: String) {
             line("import org.junit.*\n")
             line("import kotlin.platform.platformStatic").nl()
             line("public class Generated${category}Test : Abstract${category}Test() {")
-            line("companion object {")
-            line("  BeforeClass platformStatic fun setUpClass() = CompileTestFixture.setUpClass()")
-            line("  AfterClass platformStatic fun tearDownClass() = CompileTestFixture.tearDownClass()")
-            line("}").nl()
             for (file in files) {
                 for (version in versions) {
                     line("[Test] public fun test${file}For$version() {")
