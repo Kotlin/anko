@@ -58,6 +58,9 @@
         <get src="https://github.com/JetBrains/kotlin/releases/download/M11.1-bootstrap/kotlin-plugin-0.11.91.1.zip"
              dest="lib/kotlin-plugin.zip" usetimestamp="true"/>
 
+        <get src="http://search.maven.org/remotecontent?filepath=com/github/javaparser/javaparser-core/2.0.0/javaparser-core-2.0.0.jar"
+             dest="lib/javaparser-core-2.0.0.jar" usetimestamp="true"/>
+
         <get src="http://heanet.dl.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-bin.zip"
              dest="lib/download/ant-contrib-1.0b3-bin.zip" usetimestamp="true"/>
 

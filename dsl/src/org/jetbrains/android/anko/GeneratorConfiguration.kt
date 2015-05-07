@@ -17,6 +17,9 @@
 package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.annotations.*
+import org.jetbrains.android.anko.sources.AndroidHomeSourceProvider
+import org.jetbrains.android.anko.sources.CachingSourceProvider
+import org.jetbrains.android.anko.sources.SourceManager
 import java.util.HashSet
 import java.util.HashMap
 import java.util.ArrayList
@@ -36,6 +39,7 @@ open class GeneratorConfiguration(outputDirectory: String = "workdir/gen/") : Ba
     override val propertiesWithoutGetters = File("dsl/props/properties_without_getters.txt").readLines().toSet()
 
     override val annotationManager: AnnotationManager
+    override val sourceManager: SourceManager
 
     init {
         val zipFileProvider = ZipFileAnnotationProvider(File("lib/Kotlin/kotlinc/lib/kotlin-android-sdk-annotations.jar"))
@@ -43,6 +47,8 @@ open class GeneratorConfiguration(outputDirectory: String = "workdir/gen/") : Ba
 
         annotationManager = AnnotationManager(CompoundAnnotationProvider(
                         CachingAnnotationProvider(zipFileProvider), CachingAnnotationProvider(directoryProvider)))
+
+        sourceManager = SourceManager(CachingSourceProvider(AndroidHomeSourceProvider(21)))
     }
 
     override fun getOutputFile(ankoFile: AnkoFile): File {

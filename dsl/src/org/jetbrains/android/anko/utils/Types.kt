@@ -142,3 +142,12 @@ fun genericTypeToStr(param: GenericType, nullable: Boolean = true): String {
 
 val Type.internalName: String
     get() = this.getInternalName()
+
+fun getPackageName(fqName: String): String {
+    val indexOfFirstCapital = fqName.indexOfFirst { it.isUpperCase() }
+    return fqName.substring(0, indexOfFirstCapital).substringBeforeLast('.')
+}
+
+fun getJavaClassName(fqName: String): String {
+    return fqName.substring(getPackageName(fqName).length() + 1)
+}

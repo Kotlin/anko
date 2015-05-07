@@ -28,7 +28,6 @@ import org.objectweb.asm.tree.FieldNode
 data class ListenerMethod(
         val methodWithClass: MethodNodeWithClass,
         val name: String,
-        val argumentTypes: String,
         val returnType: String)
 
 abstract class Listener(val setter: MethodNodeWithClass, val clazz: ClassNode)
@@ -165,9 +164,8 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
             1 -> { // It is a simple listener, with just one method
                 val method = methods!![0]
                 val methodWithClass = MethodNodeWithClass(listener, method)
-                val argumentTypes = methodWithClass.formatArgumentsTypes(config)
                 val returnType = method.returnType.asString()
-                SimpleListener(setter, listener, ListenerMethod(methodWithClass, name, argumentTypes, returnType))
+                SimpleListener(setter, listener, ListenerMethod(methodWithClass, name, returnType))
             }
             0 -> // Something weird
                 throw RuntimeException("Listener ${listener.name} contains no methods.")
@@ -175,9 +173,8 @@ class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): C
                 val listenerMethods = methods?.map { method ->
                     val methodName = method.name
                     val methodWithClass = MethodNodeWithClass(listener, method)
-                    val argumentTypes = methodWithClass.formatArgumentsTypes(config)
                     val returnType = method.returnType.asString()
-                    ListenerMethod(methodWithClass, methodName, argumentTypes, returnType)
+                    ListenerMethod(methodWithClass, methodName, returnType)
                 }!!
                 ComplexListener(setter, listener, name, listenerMethods)
             }

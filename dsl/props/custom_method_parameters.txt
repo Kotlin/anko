@@ -1,3 +1,0 @@
-android.widget.AbsListView.OnScrollListener#onScroll(p0: android.widget.AbsListView, p1: Int, p2: Int, p3: Int)
-android.widget.SeekBar.OnSeekBarChangeListener#onProgressChanged(p0: android.widget.SeekBar, p1: Int, p2: Boolean)
-android.widget.SeekBar.OnSeekBarChangeListener#onStopTrackingTouch(p0: android.widget.SeekBar)

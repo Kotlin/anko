@@ -17,6 +17,7 @@
 package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.annotations.AnnotationManager
+import org.jetbrains.android.anko.sources.SourceManager
 import java.io.File
 import java.util.HashMap
 
@@ -84,6 +85,7 @@ abstract class BaseGeneratorConfiguration {
     abstract val propertiesWithoutGetters: Set<String>
 
     abstract val annotationManager: AnnotationManager
+    abstract val sourceManager: SourceManager
 
     public fun get(file: AnkoFile): Boolean = files.contains(file)
 

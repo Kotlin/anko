@@ -56,19 +56,20 @@ fun MethodNodeWithClass.processArguments(
     var nameIndex = if (method.isStatic) 0 else 1
     val genericArgs = buildKotlinSignature(method)
 
-    val javaArgs = method.args.map { it.asJavaString() }.joinToString()
+    val javaArgs = method.args.map { it.asJavaString() }
+    val argNames = config.sourceManager.getArgumentNames(clazz.fqName, method.name, javaArgs)
+    val javaArgsString = javaArgs.joinToString()
 
     for ((index, arg) in method.args.withIndex()) {
         val rawArgType = arg.asString(false)
 
-        val annotationSignature = "${clazz.fqName} ${method.returnType.asJavaString()} ${method.name}($javaArgs) $index"
+        val annotationSignature = "${clazz.fqName} ${method.returnType.asJavaString()} ${method.name}($javaArgsString) $index"
         val nullable = !arg.isSimpleType &&
                 ExternalAnnotation.NotNull !in config.annotationManager.findAnnotationsFor(annotationSignature)
         val argType = if (nullable) rawArgType + "?" else rawArgType
 
         val explicitNotNull = if (argType.endsWith("?")) "!!" else ""
-        val local = locals[nameIndex]
-        val argName = local?.name ?: "p$argNum"
+        val argName = argNames?.get(index) ?: locals[nameIndex]?.name ?: "p$argNum"
         if (argType.isNotEmpty()) {
             buffer.append(template(argName,
                     if (method.signature != null) genericArgs[argNum] else argType, explicitNotNull))

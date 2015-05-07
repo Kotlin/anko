@@ -1,5 +1,6 @@
 package org.jetbrains.android.anko.annotations
 
+import org.jetbrains.android.anko.getPackageName
 import org.w3c.dom.Document
 import org.xml.sax.InputSource
 import java.io.File
@@ -80,10 +81,7 @@ public class CompoundAnnotationProvider(vararg providers: AnnotationProvider) : 
 
 public class AnnotationManager(private val provider: AnnotationProvider) {
     public fun findAnnotationsFor(q: String): Set<ExternalAnnotation> {
-        var className = q.substringBefore(' ')
-        val indexOfFirstCapital = className.indexOfFirst { it.isUpperCase() }
-        val packageName = className.substring(0, indexOfFirstCapital).substringBeforeLast('.')
-
+        var packageName = getPackageName(q.substringBefore(' '))
         val annotations = provider.getExternalAnnotations(packageName)
         return annotations.get(q) ?: setOf()
     }
