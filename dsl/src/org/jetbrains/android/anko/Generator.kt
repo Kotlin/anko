@@ -16,12 +16,15 @@
 
 package org.jetbrains.android.anko
 
+import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 import org.objectweb.asm.tree.InnerClassNode
 import java.util.TreeMap
 import java.util.Arrays
-import org.jetbrains.android.anko.AnkoFile.*
+import org.jetbrains.android.anko.config.AnkoFile.*
+import org.jetbrains.android.anko.config.Configurable
+import org.jetbrains.android.anko.config.generate
 import org.jetbrains.android.anko.utils.toProperty
 import org.objectweb.asm.tree.FieldNode
 
@@ -49,7 +52,7 @@ data class ViewProperty(val name: String, val getter: MethodNodeWithClass?, val 
 
 data class LayoutParamsNode(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>)
 
-class Generator(val classTree: ClassTree, config: BaseGeneratorConfiguration): Configurable(config) {
+class Generator(val classTree: ClassTree, config: AnkoConfiguration): Configurable(config) {
 
     private val availableClasses = classTree.filter { !it.isExcluded() }
 

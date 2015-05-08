@@ -17,6 +17,7 @@
 package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
+import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.objectweb.asm.*
 import org.objectweb.asm.tree.MethodNode
 import java.util.ArrayList
@@ -45,7 +46,7 @@ fun buildKotlinSignature(node: MethodNode): List<String> {
 }
 
 fun MethodNodeWithClass.processArguments(
-        config: BaseGeneratorConfiguration,
+        config: AnkoConfiguration,
         template: (argName: String, argType: String, explicitNotNull: String) -> String
 ): String {
     if (method.args.isEmpty()) return ""
@@ -82,11 +83,11 @@ fun MethodNodeWithClass.processArguments(
     return buffer.toString()
 }
 
-fun MethodNodeWithClass.formatArguments(config: BaseGeneratorConfiguration): String {
+fun MethodNodeWithClass.formatArguments(config: AnkoConfiguration): String {
     return processArguments(config) { name, type, nul -> "$name: $type, " }
 }
 
-fun MethodNodeWithClass.formatLayoutParamsArguments(config: BaseGeneratorConfiguration): String {
+fun MethodNodeWithClass.formatLayoutParamsArguments(config: AnkoConfiguration): String {
     return processArguments(config) { name, type, nul ->
         val defaultValue = specialLayoutParamsArguments.get(name)
         val realName = specialLayoutParamsNames.getOrElse(name, {name})
@@ -97,18 +98,18 @@ fun MethodNodeWithClass.formatLayoutParamsArguments(config: BaseGeneratorConfigu
     }
 }
 
-fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(config: BaseGeneratorConfiguration): String {
+fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(config: AnkoConfiguration): String {
     return processArguments(config) { name, type, nul ->
         val realName = specialLayoutParamsNames.getOrElse(name, {name})
         "$realName$nul, "
     }
 }
 
-fun MethodNodeWithClass.formatArgumentsTypes(config: BaseGeneratorConfiguration): String {
+fun MethodNodeWithClass.formatArgumentsTypes(config: AnkoConfiguration): String {
     return processArguments(config) { name, type, nul -> "$type, " }
 }
 
-fun MethodNodeWithClass.formatArgumentsNames(config: BaseGeneratorConfiguration): String {
+fun MethodNodeWithClass.formatArgumentsNames(config: AnkoConfiguration): String {
     return processArguments(config) { name, type, nul -> "$name, " }
 }
 

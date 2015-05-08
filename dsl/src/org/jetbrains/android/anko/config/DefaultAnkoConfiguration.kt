@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.anko
+package org.jetbrains.android.anko.config
 
 import org.jetbrains.android.anko.annotations.*
 import org.jetbrains.android.anko.sources.AndroidHomeSourceProvider
@@ -25,7 +25,7 @@ import java.util.HashMap
 import java.util.ArrayList
 import java.io.File
 
-open class GeneratorConfiguration(outputDirectory: String = "workdir/gen/") : BaseGeneratorConfiguration() {
+open class DefaultAnkoConfiguration(outputDirectory: String = "workdir/gen/") : AnkoConfiguration() {
 
     override val outputDirectory = outputDirectory
     override val outputPackage = "org.jetbrains.anko"
@@ -46,7 +46,7 @@ open class GeneratorConfiguration(outputDirectory: String = "workdir/gen/") : Ba
         val directoryProvider = DirectoryAnnotationProvider(File("dsl/props/annotations"))
 
         annotationManager = AnnotationManager(CompoundAnnotationProvider(
-                        CachingAnnotationProvider(zipFileProvider), CachingAnnotationProvider(directoryProvider)))
+                CachingAnnotationProvider(zipFileProvider), CachingAnnotationProvider(directoryProvider)))
 
         sourceManager = SourceManager(CachingSourceProvider(AndroidHomeSourceProvider(21)))
     }

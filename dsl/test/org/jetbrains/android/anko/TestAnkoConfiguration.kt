@@ -16,11 +16,12 @@
 
 package org.jetbrains.android.anko
 
+import org.jetbrains.android.anko.config.AnkoFile
 import java.io.File
 import java.io.IOException
 import java.util.HashMap
 
-public open class TestGeneratorConfiguration : GeneratorConfiguration() {
+public open class TestAnkoConfiguration : MainAnkoConfiguration() {
     public val tmpFiles: Map<AnkoFile, File> =
         AnkoFile.values().map { it to createTempTestFile(it.filename, ".kt") }.toMap()
 

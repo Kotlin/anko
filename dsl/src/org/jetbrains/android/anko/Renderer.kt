@@ -19,9 +19,13 @@ package org.jetbrains.android.anko
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 import org.jetbrains.android.anko.utils.Buffer
-import org.jetbrains.android.anko.AnkoFile.*
-import org.jetbrains.android.anko.ConfigurationTune.*
+import org.jetbrains.android.anko.config.AnkoFile.*
+import org.jetbrains.android.anko.config.ConfigurationTune.*
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
+import org.jetbrains.android.anko.config.Configurable
+import org.jetbrains.android.anko.config.Props
+import org.jetbrains.android.anko.config.Variable
+import org.jetbrains.android.anko.config.generate
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
 import java.util.*

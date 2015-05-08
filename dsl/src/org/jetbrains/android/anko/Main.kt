@@ -16,6 +16,7 @@
 
 package org.jetbrains.android.anko
 
+import org.jetbrains.android.anko.config.DefaultAnkoConfiguration
 import java.io.File
 import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 import org.jetbrains.android.anko.utils.JarFileFilter
@@ -84,7 +85,7 @@ private fun gen() {
                 fileOutputDirectory.mkdirs()
             }
 
-            DSLGenerator(intVersion, version.getName(), jars, GeneratorConfiguration(outputDirectory)).run()
+            DSLGenerator(intVersion, version.getName(), jars, DefaultAnkoConfiguration(outputDirectory)).run()
         }
     }
 }

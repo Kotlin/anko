@@ -1,8 +1,8 @@
 package org.jetbrains.android.generator.test
 
 import java.io.File
-import org.jetbrains.android.anko.AnkoFile
-import org.jetbrains.android.anko.ConfigurationTune
+import org.jetbrains.android.anko.config.AnkoFile
+import org.jetbrains.android.anko.config.ConfigurationTune
 import org.jetbrains.android.anko.utils.Buffer
 
 public fun Context.generate() {

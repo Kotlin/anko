@@ -14,59 +14,14 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.anko
+package org.jetbrains.android.anko.config
 
 import org.jetbrains.android.anko.annotations.AnnotationManager
 import org.jetbrains.android.anko.sources.SourceManager
 import java.io.File
 import java.util.HashMap
 
-abstract class Configurable(val config: BaseGeneratorConfiguration)
-
-class Variable(val name: String, val type: String) {
-    override fun toString(): String {
-        return "$name:$type"
-    }
-}
-
-public enum class AnkoFile(val filename: String) {
-    ASYNC : AnkoFile("Async.kt")
-    CONTEXT_UTILS : AnkoFile("ContextUtils.kt")
-    CUSTOM : AnkoFile("Custom.kt")
-    DATABASE : AnkoFile("Database.kt")
-    DIALOGS : AnkoFile("Dialogs.kt")
-    HELPERS : AnkoFile("Helpers.kt")
-    INTERFACE_WORKAROUNDS : AnkoFile("InterfaceWorkarounds.java")
-    INTERNALS : AnkoFile("Internals.kt")
-    LAYOUTS : AnkoFile("Layouts.kt")
-    LISTENERS : AnkoFile("Listeners.kt")
-    LOGGER : AnkoFile("Logger.kt")
-    OTHER : AnkoFile("Other.kt")
-    PROPERTIES : AnkoFile("Properties.kt")
-    SERVICES : AnkoFile("Services.kt")
-    SQL_PARSER_HELPERS : AnkoFile("SqlParserHelpers.kt")
-    SQL_PARSERS : AnkoFile("SqlParsers.kt")
-    SUPPORT : AnkoFile("Support.kt")
-    VIEWS : AnkoFile("Views.kt")
-}
-
-public enum class ConfigurationTune {
-    HELPER_CONSTRUCTORS
-    TOP_LEVEL_DSL_ITEMS
-    SIMPLE_LISTENERS
-    COMPLEX_LISTENER_SETTERS
-    COMPLEX_LISTENER_CLASSES
-}
-
-fun <T> Configurable.generate(vararg file: AnkoFile, init: () -> Collection<T>) : Collection<T> {
-    return if (file.any { config[it] }) init() else listOf()
-}
-
-fun <T> Configurable.generate(vararg tune: ConfigurationTune, init: () -> Collection<T>) : Collection<T> {
-    return if (tune.any { config[it] }) init() else listOf()
-}
-
-abstract class BaseGeneratorConfiguration {
+abstract class AnkoConfiguration {
     open val indent: String = "    "
 
     open val files: MutableSet<AnkoFile> = hashSetOf(*AnkoFile.values())

@@ -17,6 +17,8 @@
 package org.jetbrains.android.anko.functional
 
 import org.jetbrains.android.anko.*
+import org.jetbrains.android.anko.config.AnkoConfiguration
+import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.utils.JarFileFilter
 import java.io.File
 import java.io.FileFilter
@@ -28,7 +30,7 @@ import org.junit.Assert.*
 import org.junit.Test
 
 public abstract class AbstractFunctionalTest {
-    val config = TestGeneratorConfiguration()
+    val config = TestAnkoConfiguration()
     var classTree: ClassTree? = null
 
     protected fun loadOrCreate(file: File, data: String): String {
@@ -49,7 +51,7 @@ public abstract class AbstractFunctionalTest {
                                     inputJarFiles: List<String>,
                                     testDataFile: String,
                                     subsystem: AnkoFile,
-                                    config: TestGeneratorConfiguration) {
+                                    config: TestAnkoConfiguration) {
         if (classTree == null) {
             classTree = ClassProcessor(inputJarFiles).genClassTree()
         }
@@ -70,7 +72,7 @@ public abstract class AbstractFunctionalTest {
             testDataFile: String,
             subsystem: AnkoFile,
             version: String,
-            settings: BaseGeneratorConfiguration.() -> Unit
+            settings: AnkoConfiguration.() -> Unit
     ) {
         config.generateImports = false
         config.generatePackage = false

@@ -16,13 +16,15 @@
 
 package org.jetbrains.android.anko
 
+import org.jetbrains.android.anko.config.AnkoConfiguration
+import org.jetbrains.android.anko.config.AnkoFile
 import java.io.File
 
 class DSLGenerator(
     val version: Int,
     val fVersion: String,
     val jars: List<String>,
-    val config: BaseGeneratorConfiguration,
+    val config: AnkoConfiguration,
     val classTree: ClassTree? = null): Runnable
 {
 

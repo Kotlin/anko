@@ -16,7 +16,7 @@
 
 package org.jetbrains.android.anko.utils
 
-import org.jetbrains.android.anko.Configurable
+import org.jetbrains.android.anko.config.Configurable
 
 fun Configurable.buffer(init: Buffer.() -> Unit) = Buffer(config.indent, 0, init)
 fun Configurable.buffer(indent: Int, init: Buffer.() -> Unit) = Buffer(config.indent, indent, init)

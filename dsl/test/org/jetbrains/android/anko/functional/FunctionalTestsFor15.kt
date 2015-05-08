@@ -1,5 +1,7 @@
 package org.jetbrains.android.anko.functional
 import org.jetbrains.android.anko.*
+import org.jetbrains.android.anko.config.AnkoFile
+import org.jetbrains.android.anko.config.ConfigurationTune
 import org.junit.Test
 public class FunctionalTestsFor15 : AbstractFunctionalTest() {
     val version = "15"

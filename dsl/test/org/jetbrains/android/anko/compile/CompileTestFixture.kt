@@ -17,14 +17,14 @@
 package org.jetbrains.android.anko.compile
 
 import java.io.File
-import org.jetbrains.android.anko.AnkoFile
+import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.DSLGenerator
 import java.io.BufferedReader
 import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 import org.jetbrains.android.anko.utils.JarFileFilter
 import java.io.InputStreamReader
 import kotlin.platform.platformStatic
-import org.jetbrains.android.anko.TestGeneratorConfiguration
+import org.jetbrains.android.anko.TestAnkoConfiguration
 import org.jetbrains.android.anko.createTempTestFile
 import org.junit.Assert.*
 import java.util.Arrays
