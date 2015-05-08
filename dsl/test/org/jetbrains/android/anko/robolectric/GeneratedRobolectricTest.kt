@@ -6,6 +6,30 @@ import org.junit.*
 import kotlin.platform.platformStatic
 
 public class GeneratedRobolectricTest : AbstractRobolectricTest() {
+    [Test] public fun testDialogsTestFor15() {
+        runRobolectricTest("DialogsTest.kt", "15")
+    }
+
+    [Test] public fun testDialogsTestFor15s() {
+        runRobolectricTest("DialogsTest.kt", "15s")
+    }
+
+    [Test] public fun testDialogsTestFor19() {
+        runRobolectricTest("DialogsTest.kt", "19")
+    }
+
+    [Test] public fun testDialogsTestFor19s() {
+        runRobolectricTest("DialogsTest.kt", "19s")
+    }
+
+    [Test] public fun testDialogsTestFor21() {
+        runRobolectricTest("DialogsTest.kt", "21")
+    }
+
+    [Test] public fun testDialogsTestFor21s() {
+        runRobolectricTest("DialogsTest.kt", "21s")
+    }
+
     [Test] public fun testFindViewTestFor15() {
         runRobolectricTest("FindViewTest.kt", "15")
     }
