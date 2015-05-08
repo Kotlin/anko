@@ -31,8 +31,13 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy
 import java.util.*
 import kotlin.platform.platformStatic
+
+Retention(RetentionPolicy.SOURCE)
+public annotation class noBinding
 
 public object AnkoInternals {
 
