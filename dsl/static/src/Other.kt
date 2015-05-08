@@ -73,6 +73,15 @@ public inline fun Activity.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_
 }
 
 [suppress("NOTHING_TO_INLINE")]
+public inline fun Fragment.verticalLayout(): LinearLayout = verticalLayout({})
+public inline fun Fragment.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView { ctx ->
+    val view = _LinearLayout(ctx)
+    view.setOrientation(LinearLayout.VERTICAL)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
 public inline fun <T: View> ViewManager.include(layoutId: Int): LinearLayout = include(layoutId, {})
 public inline fun <T: View> ViewManager.include(layoutId: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
     [suppress("UNCHECKED_CAST")]

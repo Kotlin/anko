@@ -140,14 +140,14 @@ public inline fun <T: View> Fragment.include(layoutId: Int, inlineOptions(Inline
 /* SECTION DIALOGS */
 public fun Fragment.toast(textResource: Int): Unit = getActivity().toast(textResource)
 
-public fun Fragment.toast(text: String): Unit = getActivity().toast(text)
+public fun Fragment.toast(text: CharSequence): Unit = getActivity().toast(text)
 
 public fun Fragment.longToast(textResource: Int): Unit = getActivity().longToast(textResource)
 
-public fun Fragment.longToast(text: String): Unit = getActivity().longToast(text)
+public fun Fragment.longToast(text: CharSequence): Unit = getActivity().longToast(text)
 
 public fun Fragment.selector(
-    title: CharSequence = "",
+    title: CharSequence? = null,
     items: List<CharSequence>,
     onClick: (Int) -> Unit
 ): Unit = getActivity().selector(title, items, onClick)
@@ -170,16 +170,16 @@ public fun <T> Fragment.asyncResult(executorService: ExecutorService, task: () -
     getActivity().asyncResult(executorService, task)
 
 public fun Fragment.alert(
-    title: String,
     message: String,
-    init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder =
-    getActivity().alert(title, message, init)
+    title: String? = null,
+    init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder =
+    getActivity().alert(message, title, init)
 
 public fun Fragment.alert(
-    title: Int,
     message: Int,
-    init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder =
-    getActivity().alert(title, message, init)
+    title: Int? = null,
+    init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder =
+    getActivity().alert(message, title, init)
 
 public fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder =
     getActivity().alert(init)
