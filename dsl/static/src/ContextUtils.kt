@@ -217,11 +217,11 @@ public inline fun <reified T: Activity> Fragment.startActivityForResult(requestC
 }
 
 public fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
-    setArguments(Bundle(*params))
+    setArguments(bundleOf(*params))
     return this
 }
 
-private fun Bundle(vararg params: Pair<String, Any>): Bundle {
+public fun bundleOf(vararg params: Pair<String, Any>): Bundle {
     val b = Bundle()
     for (p in params) {
         val (k, v) = p

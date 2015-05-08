@@ -65,7 +65,7 @@ public inline fun <T: Any> Fragment.configuration(
 
 /* SECTION CONTEXT UTILS */
 public fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
-    setArguments(Bundle(*params))
+    setArguments(bundleOf(*params))
     return this
 }
 
