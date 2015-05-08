@@ -29,6 +29,7 @@ import java.io.Serializable
 import android.os.Parcelable
 import android.view.View
 import org.jetbrains.anko.internals.AnkoInternals
+import org.jetbrains.anko.internals.noBinding
 
 public val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
 public val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
@@ -96,7 +97,7 @@ public inline fun Fragment.px2sp(px: Int): Float = getActivity().px2sp(px)
 public inline fun Fragment.dimen(resource: Int): Int = getActivity().dimen(resource)
 
 
-public val Activity.intent: Intent
+public noBinding val Activity.intent: Intent
     get() = getIntent()
 
 public val Context.defaultSharedPreferences: SharedPreferences
@@ -256,10 +257,10 @@ private fun Bundle(vararg params: Pair<String, Any>): Bundle {
     return b
 }
 
-public val Context.displayMetrics: android.util.DisplayMetrics
+public noBinding val Context.displayMetrics: android.util.DisplayMetrics
     get() = getResources().getDisplayMetrics()
 
-public val Context.configuration: android.content.res.Configuration
+public noBinding val Context.configuration: android.content.res.Configuration
     get() = getResources().getConfiguration()
 
 public val android.content.res.Configuration.portrait: Boolean

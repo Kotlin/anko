@@ -31,6 +31,7 @@ import android.widget.RelativeLayout
 import android.text.*
 import android.util.TypedValue
 import org.jetbrains.anko.custom.*
+import org.jetbrains.anko.internals.noBinding
 
 /* SECTION COLORS */
 //returns 0xC0C0C0 for 0xC0
@@ -288,8 +289,8 @@ public inline fun android.widget.RelativeLayout.LayoutParams.centerInParent(): U
 /* END SECTION */
 
 /* SECTION SERVICES */
-public val Context.vibrator: android.os.Vibrator
+public noBinding val Context.vibrator: android.os.Vibrator
     get() = getSystemService(Context.VIBRATOR_SERVICE) as android.os.Vibrator
-public val Context.layoutInflater: android.view.LayoutInflater
+public noBinding val Context.layoutInflater: android.view.LayoutInflater
     get() = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as android.view.LayoutInflater
 /* END SECTION */

@@ -30,6 +30,7 @@ import android.graphics.drawable.Drawable
 import android.database.Cursor
 import android.view.ViewManager
 import android.app.ProgressDialog
+import org.jetbrains.anko.internals.noBinding
 
 public fun Fragment.toast(textResource: Int): Unit = getActivity().toast(textResource)
 public fun Context.toast(textResource: Int) {
@@ -109,7 +110,7 @@ public fun Context.indeterminateProgressDialog(message: String? = null, title: S
     return progressDialog(true, message, title, init)
 }
 
-private fun Context.progressDialog(indeterminate: Boolean, message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+private noBinding fun Context.progressDialog(indeterminate: Boolean, message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     val dialog = ProgressDialog(this)
     dialog.setIndeterminate(indeterminate)
     if (!indeterminate) dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)

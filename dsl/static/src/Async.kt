@@ -24,6 +24,7 @@ import android.os.Looper
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 import android.app.*
+import org.jetbrains.anko.internals.noBinding
 import java.lang.ref.WeakReference
 
 public class AnkoAsyncContext(val ctxReference: WeakReference<Context>)
@@ -32,12 +33,13 @@ public fun AnkoAsyncContext.uiThread(f: Context.() -> Unit) {
     ctxReference.get()?.uiThread(f)
 }
 
-public fun Context.uiThread(f: Context.() -> Unit) {
+// Fragment.uiThread() has a different argument list (because of inline)
+public noBinding fun Context.uiThread(f: Context.() -> Unit) {
     if (ContextHelper.uiThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
 }
 
-public inline fun <T: Fragment> T.uiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
-    getActivity()!!.uiThread { f() }
+public inline noBinding fun Fragment.uiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
+    getActivity()?.uiThread { f() }
 }
 
 public fun Fragment.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> {

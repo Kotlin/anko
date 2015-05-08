@@ -25,6 +25,7 @@ import android.app.Fragment
 import android.content.res.Configuration
 import org.jetbrains.anko.custom.addView
 import org.jetbrains.anko.internals.AnkoInternals
+import org.jetbrains.anko.internals.noBinding
 import java.util.HashMap
 
 public class AnkoException(message: String = "") : RuntimeException(message)
@@ -105,7 +106,7 @@ private fun applyStyle(v: View, style: (View) -> Unit) {
     }
 }
 
-public fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
+public noBinding fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
     val dsl = UiHelper(this, setContentView)
     dsl.init()
     return dsl
