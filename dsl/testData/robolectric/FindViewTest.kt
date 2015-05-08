@@ -4,6 +4,7 @@ import android.app.*
 import android.widget.*
 import android.os.Bundle
 import org.jetbrains.anko.*
+import org.jetbrains.anko.custom.*
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.*
@@ -20,7 +21,8 @@ public open class TestActivity() : Activity() {
             relativeLayout {
                 id = 2
 
-                button {
+                customView<Button> {
+                    text = "Button text"
                     id = 3
                 }
             }
@@ -50,6 +52,8 @@ public class RobolectricTest() {
 
         assertNotNull(button)
         assertNotNull(textView)
+
+        assertEquals("Button text", button!!.getText().toString())
 
         assertEquals(2, verticalLayout!!.getChildCount())
         assertEquals(1, relativeLayout!!.getChildCount())
