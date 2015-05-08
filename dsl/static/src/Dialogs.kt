@@ -143,6 +143,8 @@ public class AlertDialogBuilder(val ctx: Context) {
     private val builder: AlertDialog.Builder = AlertDialog.Builder(ctx)
     protected var dialog: AlertDialog? = null
 
+    public fun getBuilder(): AlertDialog.Builder = builder
+
     public fun dismiss() {
         dialog?.dismiss()
     }
