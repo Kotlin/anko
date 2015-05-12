@@ -127,10 +127,10 @@ public fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = 
     )
 }
 
-public fun SQLiteDatabase.dropTable(tableName: String, ifNotExists: Boolean = false) {
+public fun SQLiteDatabase.dropTable(tableName: String, ifExists: Boolean = false) {
     val escapedTableName = tableName.replace("`", "``")
-    val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
-    execSQL("DROP TABLE $ifNotExistsText `$escapedTableName`;")
+    val ifExistsText = if (ifExists) "IF EXISTS" else ""
+    execSQL("DROP TABLE $ifExistsText `$escapedTableName`;")
 }
 
 private fun escape(s: String): String {
