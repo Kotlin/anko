@@ -73,7 +73,7 @@ E.g. that's the Java way for obtaining an Android service instance:
 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)
 ```
 
-In Kotlin, it's just `notificationService`. The same as for `displayManager`, `sensorManager`, `vibrator`, `layoutInflater` — bindings are available for all services, just try it out!
+In Kotlin, it's just `notificationManager`. The same as for `displayManager`, `sensorManager`, `vibrator`, `layoutInflater` — bindings are available for all services, just try it out!
 
 ## Configuration qualifiers
 
