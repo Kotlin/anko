@@ -266,7 +266,7 @@ Some convenient helper properties to notice:
 
 - `horizontalMargin` sets both left and right margins, 
 - `verticalMargin` set top and bottom ones, and 
-- `margin` sets all for margins simultaneously.
+- `margin` sets all four margins simultaneously.
 
 Note that `layoutParams` are different for different layouts, for example, in the case of `RelativeLayout`:
 
