@@ -23,6 +23,7 @@ import android.content.ActivityNotFoundException
 import android.preference.PreferenceManager
 import android.app.Activity
 import android.app.Fragment
+import android.app.Service
 import android.os.Bundle
 import android.net.Uri
 import java.io.Serializable
@@ -214,6 +215,11 @@ public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pa
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartActivityForResult(getActivity(), javaClass<T>(), requestCode, params)
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Service> Context.startService(vararg params: Pair<String, Any>) {
+    AnkoInternals.internalStartService(this, javaClass<T>(), params)
 }
 
 public fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {

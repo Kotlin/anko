@@ -18,6 +18,7 @@ package org.jetbrains.anko.internals
 
 import android.content.Context
 import android.app.Activity
+import android.app.Service
 import android.app.UiModeManager
 import android.content.Intent
 import android.content.res.Configuration
@@ -77,6 +78,15 @@ public object AnkoInternals {
             params: Array<out Pair<String, Any>>
     ) {
         act.startActivityForResult(createIntent(act, activity, params), requestCode)
+    }
+
+    platformStatic
+    public fun internalStartService(
+            ctx: Context,
+            activity: Class<out Service>,
+            params: Array<out Pair<String, Any>>
+    ) {
+        ctx.startService(createIntent(ctx, activity, params))
     }
 
     platformStatic
