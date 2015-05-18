@@ -27,7 +27,7 @@ import android.content.Context
 import org.jetbrains.anko.internals.AnkoInternals
 
 public val NULL: SqlType = SqlTypeImpl("NULL")
-public val INT: SqlType = SqlTypeImpl("INT")
+public val INTEGER: SqlType = SqlTypeImpl("INTEGER")
 public val REAL: SqlType = SqlTypeImpl("REAL")
 public val TEXT: SqlType = SqlTypeImpl("TEXT")
 public val BLOB: SqlType = SqlTypeImpl("BLOB")
