@@ -22,7 +22,14 @@ import android.util.Log
 
 public trait AnkoLogger {
     protected val loggerTag: String
-        get() = javaClass.getSimpleName()
+        get(){
+            val tag = javaClass.getSimpleName()
+            return if(tag.length() <= 23){
+                tag
+            }else{
+                tag.substring(0,23)
+            }
+        }
 
     protected final fun verbose(message: Any?) {
         val tag = loggerTag
