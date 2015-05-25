@@ -9,7 +9,7 @@ public open class MyActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {
-            linearLayout {
+            verticalLayout {
                 textSwitcher {}
                 calendarView {}
                 zoomButton {}
