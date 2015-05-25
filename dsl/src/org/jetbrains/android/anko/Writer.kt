@@ -40,6 +40,7 @@ class Writer(private val renderer: Renderer) {
             INTERNALS,
             LOGGER,
             OTHER,
+            OTHER_WIDGETS,
             SQL_PARSERS,
             SUPPORT
         ).forEach { if (config[it]) writeStatic(it) }

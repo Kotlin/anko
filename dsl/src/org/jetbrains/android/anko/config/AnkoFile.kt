@@ -29,6 +29,7 @@ public enum class AnkoFile(val filename: String) {
     LISTENERS : AnkoFile("Listeners.kt")
     LOGGER : AnkoFile("Logger.kt")
     OTHER : AnkoFile("Other.kt")
+    OTHER_WIDGETS : AnkoFile("OtherWidgets.kt")
     PROPERTIES : AnkoFile("Properties.kt")
     SERVICES : AnkoFile("Services.kt")
     SQL_PARSER_HELPERS : AnkoFile("SqlParserHelpers.kt")
