@@ -18,6 +18,7 @@ package org.jetbrains.anko
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.app.Service
 import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.LinearLayout
@@ -95,6 +96,11 @@ public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pa
 [suppress("NOTHING_TO_INLINE")]
 public inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartActivityForResult(getActivity(), javaClass<T>(), requestCode, params)
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any>) {
+    AnkoInternals.internalStartService(getActivity(), javaClass<T>(), params)
 }
 
 public inline fun <reified T: Any> Fragment.intentFor(): Intent = Intent(getActivity(), javaClass<T>())

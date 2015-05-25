@@ -222,6 +222,11 @@ public inline fun <reified T: Service> Context.startService(vararg params: Pair<
     AnkoInternals.internalStartService(this, javaClass<T>(), params)
 }
 
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any>) {
+    AnkoInternals.internalStartService(getActivity(), javaClass<T>(), params)
+}
+
 public fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
     setArguments(bundleOf(*params))
     return this
