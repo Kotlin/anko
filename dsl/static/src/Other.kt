@@ -170,6 +170,27 @@ public var RelativeLayout.LayoutParams.horizontalMargin: Int
     }
 
 [suppress("NOTHING_TO_INLINE")]
+public inline fun android.widget.RelativeLayout.LayoutParams.topOf(v: View): Unit = addRule(android.widget.RelativeLayout.ABOVE, v.getId())
+[suppress("NOTHING_TO_INLINE")]
+public inline fun android.widget.RelativeLayout.LayoutParams.above(v: View): Unit = addRule(android.widget.RelativeLayout.ABOVE, v.getId())
+[suppress("NOTHING_TO_INLINE")]
+public inline fun android.widget.RelativeLayout.LayoutParams.below(v: View): Unit = addRule(android.widget.RelativeLayout.BELOW, v.getId())
+[suppress("NOTHING_TO_INLINE")]
+public inline fun android.widget.RelativeLayout.LayoutParams.bottomOf(v: View): Unit = addRule(android.widget.RelativeLayout.BELOW, v.getId())
+[suppress("NOTHING_TO_INLINE")]
+public inline fun android.widget.RelativeLayout.LayoutParams.leftOf(v: View): Unit = addRule(android.widget.RelativeLayout.LEFT_OF, v.getId())
+[suppress("NOTHING_TO_INLINE")]
+public inline fun android.widget.RelativeLayout.LayoutParams.rightOf(v: View): Unit = addRule(android.widget.RelativeLayout.RIGHT_OF, v.getId())
+[suppress("NOTHING_TO_INLINE")]
+public inline fun android.widget.RelativeLayout.LayoutParams.sameLeft(v: View): Unit = addRule(android.widget.RelativeLayout.ALIGN_LEFT, v.getId())
+[suppress("NOTHING_TO_INLINE")]
+public inline fun android.widget.RelativeLayout.LayoutParams.sameTop(v: View): Unit = addRule(android.widget.RelativeLayout.ALIGN_TOP, v.getId())
+[suppress("NOTHING_TO_INLINE")]
+public inline fun android.widget.RelativeLayout.LayoutParams.sameRight(v: View): Unit = addRule(android.widget.RelativeLayout.ALIGN_RIGHT, v.getId())
+[suppress("NOTHING_TO_INLINE")]
+public inline fun android.widget.RelativeLayout.LayoutParams.sameBottom(v: View): Unit = addRule(android.widget.RelativeLayout.ALIGN_BOTTOM, v.getId())
+
+[suppress("NOTHING_TO_INLINE")]
 public inline fun android.widget.RelativeLayout.LayoutParams.topOf(id: Int): Unit = addRule(android.widget.RelativeLayout.ABOVE, id)
 [suppress("NOTHING_TO_INLINE")]
 public inline fun android.widget.RelativeLayout.LayoutParams.above(id: Int): Unit = addRule(android.widget.RelativeLayout.ABOVE, id)
