@@ -33,7 +33,7 @@ public trait MapRowParser<T> {
 
 private class SingleColumnParser<T> : RowParser<T> {
     override fun parseRow(columns: Array<Any>): T {
-        if (columns.size() != 0)
+        if (columns.size() != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
         [suppress("UNCHECKED_CAST")]
         return columns[0] as T
@@ -42,7 +42,7 @@ private class SingleColumnParser<T> : RowParser<T> {
 
 private class ScalarColumnParser<R, T>(val modifier: ((R) -> T)? = null) : RowParser<T> {
     override fun parseRow(columns: Array<Any>): T {
-        if (columns.size() != 0)
+        if (columns.size() != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
         [suppress("UNCHECKED_CAST", "UNNECESSARY_NOT_NULL_ASSERTION")]
         return if (modifier != null)
