@@ -22,12 +22,12 @@ import android.util.Log
 
 public trait AnkoLogger {
     protected val loggerTag: String
-        get(){
+        get() {
             val tag = javaClass.getSimpleName()
-            return if(tag.length() <= 23){
+            return if (tag.length() <= 23) {
                 tag
-            }else{
-                tag.substring(0,23)
+            } else {
+                tag.substring(0, 23)
             }
         }
 
