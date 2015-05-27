@@ -24,9 +24,8 @@ import java.util.regex.*
 public fun main(args: Array<String>): Unit = AndroidJarCollector.collect()
 
 object AndroidJarCollector {
-    private val ANDROID_HOME = System.getenv().get("ANDROID_HOME") ?: ""
-
     private val REQUIRED_VERSIONS = arrayOf("15", "15s", "19", "19s", "21", "21s")
+    private val SUPPORT_VERSION = "22.1.1"
     private val VERSIONS = File("workdir/original").listFiles(AndroidVersionDirectoryFilter())
 
     fun check(): Boolean {
@@ -54,18 +53,6 @@ object AndroidJarCollector {
         return true
     }
 
-    fun getLastSupportDirectory(supportV4: File): File? {
-        val pattern = Pattern.compile("(\\d+).(\\d+).(\\d+)")
-        return supportV4.listFiles()
-                ?.filter { pattern.matcher(it.name).matches() }
-                ?.sortDescendingBy {
-                    val matcher = pattern.matcher(it.name)
-                    matcher.find()
-                    matcher.group(1).toInt() * 10000 + matcher.group(2).toInt() * 100 + matcher.group(3).toInt()
-                }
-                ?.firstOrNull()
-    }
-
     fun collect() {
         if (check()) {
             println("All required files exist. Aborting")
@@ -75,20 +62,17 @@ object AndroidJarCollector {
         REQUIRED_VERSIONS.forEach { File("workdir/original/$it/").mkdirs() }
         File("workdir/temp").mkdirs()
 
-        if (ANDROID_HOME.isEmpty()) throw RuntimeException("ANDROID_HOME environment variable is not set")
+        val androidSdk = File("lib/android-sdk")
+        val platformsDir = File(androidSdk, "platforms")
+        val supportV4Dir = File(androidSdk, "extras/android/m2repository/com/android/support/support-v4/$SUPPORT_VERSION")
+        val supportV4Aar = supportV4Dir.listFiles { it.extension == "aar" }?.firstOrNull()
 
-        val platformsDir = File(ANDROID_HOME, "platforms")
-        val supportV4Dir = File(ANDROID_HOME, "extras/android/m2repository/com/android/support/support-v4/")
-        val lastSupportV4Dir = getLastSupportDirectory(supportV4Dir)
-        val lastSupportV4Aar = lastSupportV4Dir?.listFiles { it.extension == "aar" }?.firstOrNull()
-
-        val appCompatV7Dir = File(ANDROID_HOME, "extras/android/m2repository/com/android/support/appcompat-v7/")
-        val lastAppCompatV7Dir = getLastSupportDirectory(appCompatV7Dir)
-        val lastAppCompatV7Aar = lastAppCompatV7Dir?.listFiles { it.extension == "aar" }?.firstOrNull()
+        val appCompatV7Dir = File(androidSdk, "extras/android/m2repository/com/android/support/appcompat-v7/$SUPPORT_VERSION")
+        val appCompatV7Aar = appCompatV7Dir.listFiles { it.extension == "aar" }?.firstOrNull()
 
         if (!platformsDir.exists()) throw RuntimeException("Platform directory was not found")
-        if (lastSupportV4Aar == null || !lastSupportV4Aar.exists()) throw RuntimeException("support-v4 directory was not found")
-        if (lastAppCompatV7Aar == null || !lastAppCompatV7Aar.exists()) throw RuntimeException("appcompat-v7 directory was not found")
+        if (supportV4Aar == null || !supportV4Aar.exists()) throw RuntimeException("support-v4 directory was not found")
+        if (appCompatV7Aar == null || !appCompatV7Aar.exists()) throw RuntimeException("appcompat-v7 directory was not found")
 
         for (version in REQUIRED_VERSIONS) {
             print("Processing version ${version}:")
@@ -109,7 +93,7 @@ object AndroidJarCollector {
 
             if (support) {
                 print(" support-v4...")
-                arrayOf(lastSupportV4Aar, lastAppCompatV7Aar).forEach { aarFile ->
+                arrayOf(supportV4Aar, appCompatV7Aar).forEach { aarFile ->
                     val aarName = aarFile.name.substringBeforeLast('.')
                     ZipFile(aarFile).use { zip ->
                         val entries = zip.entries()
