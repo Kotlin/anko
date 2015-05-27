@@ -55,9 +55,6 @@
         <get src="http://search.maven.org/remotecontent?filepath=org/robolectric/android-all/4.3_r2-robolectric-0/android-all-4.3_r2-robolectric-0.jar"
              dest="lib/android-all-4.1.2_r1-robolectric-0.jar" usetimestamp="true"/>
 
-        <get src="http://central.maven.org/maven2/com/google/android/support-v4/r6/support-v4-r6.jar"
-             dest="lib/android-support-v4.jar" usetimestamp="true"/>
-
         <get src="https://github.com/JetBrains/kotlin/releases/download/build-0.12.412/kotlin-plugin-0.12.412.Idea141.1.zip"
              dest="lib/kotlin-plugin.zip" usetimestamp="true"/>
 
