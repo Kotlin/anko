@@ -17,10 +17,11 @@ Required tools:
 git clone git://github.com/JetBrains/anko.git && cd anko
 ```
 
-**2.** Then get all required dependencies (this could take minute or two):
+**2.** Then get all required dependencies (this could take several minutes):
 
 ```bash
 ant -f update_dependencies.xml
+ant -f download_android_sdk.xml
 ```
 
 **3.** Now it's time to open Anko project in IntelliJ IDEA (both Community and Ultimate editions are ok).
