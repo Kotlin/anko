@@ -39,7 +39,7 @@
 
         <download_sources android.sources.versioncode="21_r01" android.sources.version="21" />
 
-        <download_support_repository android.repo.version="12" />
+        <download_support_repository android.repo.version="12" android.repo.last="22.0.0" />
     </target>
 
     <target name="download_sources">
@@ -124,6 +124,7 @@
 
     <macrodef name="download_support_repository">
         <attribute name="android.repo.version" />
+        <attribute name="android.repo.last" />
 
         <sequential>
             <get src="http://dl-ssl.google.com/android/repository/android_m2repository_r@{android.repo.version}.zip"
@@ -132,6 +133,14 @@
             <mkdir dir="${android.sdk.dir}/extras/android" />
 
             <unzip src="${download.dir}/android_m2repository_r@{android.repo.version}.zip" dest="${android.sdk.dir}/extras/android"/>
+
+            <unzip
+                    src="${android.sdk.dir}/extras/android/m2repository/com/android/support/appcompat-v7/@{android.repo.last}/appcompat-v7-@{android.repo.last}.aar"
+                    dest="${android.sdk.dir}/support/appcompat-v7" />
+
+            <unzip
+                    src="${android.sdk.dir}/extras/android/m2repository/com/android/support/support-v4/@{android.repo.last}/support-v4-@{android.repo.last}.aar"
+                    dest="${android.sdk.dir}/support/support-v4" />
         </sequential>
     </macrodef>
 
