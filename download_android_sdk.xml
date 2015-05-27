@@ -39,7 +39,7 @@
 
         <download_sources android.sources.versioncode="21_r01" android.sources.version="21" />
 
-        <download_support_repository android.repo.version="12" android.repo.last="22.0.0" />
+        <download_support_repository android.repo.version="15" android.repo.last="22.2.0" />
     </target>
 
     <target name="download_sources">
