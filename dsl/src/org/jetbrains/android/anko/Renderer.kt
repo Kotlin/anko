@@ -35,8 +35,8 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         val NOTHING_TO_INLINE = "[suppress(\"NOTHING_TO_INLINE\")]"
         val ONLY_LOCAL_RETURN = "inlineOptions(InlineOption.ONLY_LOCAL_RETURN)"
 
-        val CONSTRUCTOR1 = array(Type.getObjectType("android/content/Context"))
-        val CONSTRUCTOR2 = array(Type.getObjectType("android/content/Context"), Type.getObjectType("android/util/AttributeSet"))
+        val CONSTRUCTOR1 = arrayOf(Type.getObjectType("android/content/Context"))
+        val CONSTRUCTOR2 = arrayOf(Type.getObjectType("android/content/Context"), Type.getObjectType("android/util/AttributeSet"))
         val AVAILABLE_VIEW_CONSTRUCTORS = listOf(CONSTRUCTOR1, CONSTRUCTOR2)
 
         fun renderConstructor(
@@ -144,7 +144,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     // Render complex listeners (interfaces with more than one method)
-    [suppress("UNCHECKED_CAST")]
+    @suppress("UNCHECKED_CAST")
     private val complexListeners = generate(COMPLEX_LISTENER_CLASSES, COMPLEX_LISTENER_SETTERS) {
         generator.listeners.filter { it is ComplexListener } as List<ComplexListener>
     }
@@ -283,10 +283,8 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                 val propList = resolveAllMethods(clazz)
                 val found = propList.firstOrNull {
                     it.name.equals("set${neededProp.name.capitalize()}") && it.args.size() == 1 &&
-                        it.args[0].fqName.endsWith(neededProp.type)
-                }
-                if (found == null)
-                    throw RuntimeException("Property $neededProp for helper constructor ${clazz.fqName}.<init>$needed not found.")
+                            it.args[0].fqName.endsWith(neededProp.type)
+                } ?: throw RuntimeException("Property $neededProp for helper constructor ${clazz.fqName}.<init>$needed not found.")
                 ret.add(found)
             }
             return ret
@@ -430,8 +428,8 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     private fun supportsResourceSetter(typ: String): Boolean {
         return (
-            typ.matches("^CharSequence\\??$") ||
-                (typ.matches("^android.graphics.drawable.Drawable\\??$"))
+            typ.matches("^CharSequence\\??$".toRegex()) ||
+                (typ.matches("^android.graphics.drawable.Drawable\\??$".toRegex()))
         )
     }
 

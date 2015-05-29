@@ -136,7 +136,7 @@ private fun renderAttribute(view: View, attr: Attr?, key: String, value: Any, to
         return "@+id/gen" + (value.toString().replace('-', '_'))
     }
     if (key == "layoutParams" && value is ViewGroup.LayoutParams) {
-        return renderLayoutParams(view, value : ViewGroup.LayoutParams, topLevel)
+        return renderLayoutParams(view, value, topLevel)
     }
     if (value is ImageView.ScaleType) {
         return convertScaleType(value)

@@ -26,7 +26,7 @@ public fun main(args: Array<String>): Unit = AndroidJarCollector.collect()
 object AndroidJarCollector {
     private val ANDROID_HOME = System.getenv().get("ANDROID_HOME") ?: ""
 
-    private val REQUIRED_VERSIONS = array("15", "15s", "19", "19s", "21", "21s")
+    private val REQUIRED_VERSIONS = arrayOf("15", "15s", "19", "19s", "21", "21s")
     private val VERSIONS = File("workdir/original").listFiles(AndroidVersionDirectoryFilter())
 
     fun check(): Boolean {
@@ -41,7 +41,7 @@ object AndroidJarCollector {
             val support = version.name.endsWith("s")
 
             fun hasSupport(): Boolean {
-                array("support-v4", "appcompat-v7").forEach { filename ->
+                arrayOf("support-v4", "appcompat-v7").forEach { filename ->
                     if (version.listFiles { it.name.startsWith(filename) }?.isEmpty() ?: true) return false
                 }
                 return true
@@ -109,7 +109,7 @@ object AndroidJarCollector {
 
             if (support) {
                 print(" support-v4...")
-                array(lastSupportV4Aar, lastAppCompatV7Aar).forEach { aarFile ->
+                arrayOf(lastSupportV4Aar, lastAppCompatV7Aar).forEach { aarFile ->
                     val aarName = aarFile.name.substringBeforeLast('.')
                     ZipFile(aarFile).use { zip ->
                         val entries = zip.entries()

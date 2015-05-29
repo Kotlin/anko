@@ -37,7 +37,7 @@ import android.view.ViewGroup
 import org.jetbrains.kotlin.android.attrs.Attr
 
 Config(manifest = Config.NONE, emulateSdk = 18)
-RunWith(javaClass<RobolectricTestRunner>())
+RunWith(RobolectricTestRunner::class)
 public class ViewHierarchyParserTest() {
 
   Test
@@ -57,7 +57,7 @@ public class ViewHierarchyParserTest() {
 
     val viewNode = parseView(frameLayout)
     assertTrue(viewNode.view is FrameLayout)
-    assertEquals(1, viewNode.children.size)
+    assertEquals(1, viewNode.children.size())
     assertTrue(viewNode.children[0].view is LinearLayout)
     assertTrue(viewNode.children[0].children[0].view is TextView)
     assertTrue(viewNode.children[0].children[1].view is Button)
@@ -68,7 +68,7 @@ public class ViewHierarchyParserTest() {
     with (t.attrs.fetch("paddingLeft")) {
       assertEquals("paddingLeft", first)
       assertNotNull(second.first)
-      assertEquals(1, second.first!!.format.size)
+      assertEquals(1, second.first!!.format.size())
       assertEquals("dimension", second.first!!.format[0])
       assertEquals(10, second.second)
     }
@@ -76,7 +76,7 @@ public class ViewHierarchyParserTest() {
     with (b.attrs.fetch("text")) {
       assertEquals("text", first)
       assertNotNull(second.first)
-      assertEquals(1, second.first!!.format.size)
+      assertEquals(1, second.first!!.format.size())
       assertEquals("string", second.first!!.format[0])
       assertEquals("Button text", second.second)
     }
@@ -95,7 +95,7 @@ public class ViewHierarchyParserTest() {
     linearLayout.addView(textView, textViewLP)
 
     val viewNode = parseView(linearLayout)
-    assertEquals(1, viewNode.children.size)
+    assertEquals(1, viewNode.children.size())
     assertTrue(viewNode.children[0].view is TextView)
     val t = viewNode.children[0]
 

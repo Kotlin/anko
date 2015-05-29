@@ -169,67 +169,67 @@ public var RelativeLayout.LayoutParams.horizontalMargin: Int
         leftMargin = v; rightMargin = v
     }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.topOf(v: View): Unit = addRule(android.widget.RelativeLayout.ABOVE, v.getId())
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.above(v: View): Unit = addRule(android.widget.RelativeLayout.ABOVE, v.getId())
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.below(v: View): Unit = addRule(android.widget.RelativeLayout.BELOW, v.getId())
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.bottomOf(v: View): Unit = addRule(android.widget.RelativeLayout.BELOW, v.getId())
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.leftOf(v: View): Unit = addRule(android.widget.RelativeLayout.LEFT_OF, v.getId())
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.rightOf(v: View): Unit = addRule(android.widget.RelativeLayout.RIGHT_OF, v.getId())
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.sameLeft(v: View): Unit = addRule(android.widget.RelativeLayout.ALIGN_LEFT, v.getId())
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.sameTop(v: View): Unit = addRule(android.widget.RelativeLayout.ALIGN_TOP, v.getId())
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.sameRight(v: View): Unit = addRule(android.widget.RelativeLayout.ALIGN_RIGHT, v.getId())
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.sameBottom(v: View): Unit = addRule(android.widget.RelativeLayout.ALIGN_BOTTOM, v.getId())
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.topOf(id: Int): Unit = addRule(android.widget.RelativeLayout.ABOVE, id)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.above(id: Int): Unit = addRule(android.widget.RelativeLayout.ABOVE, id)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.below(id: Int): Unit = addRule(android.widget.RelativeLayout.BELOW, id)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.bottomOf(id: Int): Unit = addRule(android.widget.RelativeLayout.BELOW, id)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.leftOf(id: Int): Unit = addRule(android.widget.RelativeLayout.LEFT_OF, id)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.rightOf(id: Int): Unit = addRule(android.widget.RelativeLayout.RIGHT_OF, id)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.sameLeft(id: Int): Unit = addRule(android.widget.RelativeLayout.ALIGN_LEFT, id)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.sameTop(id: Int): Unit = addRule(android.widget.RelativeLayout.ALIGN_TOP, id)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.sameRight(id: Int): Unit = addRule(android.widget.RelativeLayout.ALIGN_RIGHT, id)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.sameBottom(id: Int): Unit = addRule(android.widget.RelativeLayout.ALIGN_BOTTOM, id)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.alignParentTop(): Unit = addRule(android.widget.RelativeLayout.ALIGN_PARENT_TOP)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.alignParentLeft(): Unit = addRule(android.widget.RelativeLayout.ALIGN_PARENT_LEFT)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.alignParentBottom(): Unit = addRule(android.widget.RelativeLayout.ALIGN_PARENT_BOTTOM)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.alignParentRight(): Unit = addRule(android.widget.RelativeLayout.ALIGN_PARENT_RIGHT)
 
 // Unavailable in older versions of SDK
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.alignParentStart(): Unit = addRule(20) //android.widget.RelativeLayout.ALIGN_PARENT_START)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.alignParentEnd(): Unit = addRule(21) //android.widget.RelativeLayout.ALIGN_PARENT_END)
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.centerHorizontally(): Unit = addRule(android.widget.RelativeLayout.CENTER_HORIZONTAL)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.centerVertically(): Unit = addRule(android.widget.RelativeLayout.CENTER_VERTICAL)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun android.widget.RelativeLayout.LayoutParams.centerInParent(): Unit = addRule(android.widget.RelativeLayout.CENTER_IN_PARENT)
 /* END SECTION */
 

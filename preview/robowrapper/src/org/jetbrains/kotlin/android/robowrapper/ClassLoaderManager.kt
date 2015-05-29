@@ -44,7 +44,7 @@ public class ClassLoaderManager {
 
         val setup = setupField.get(currentClassLoader)
         val urlClassLoader = urlsField.get(currentClassLoader) as URLClassLoader
-        [suppress("UNCHECKED_CAST")]
+        @suppress("UNCHECKED_CAST")
         val oldClasses = classesField.get(currentClassLoader) as Map<String, Class<Any>>
         val urls = urlClassLoader.getURLs()
 
@@ -52,7 +52,7 @@ public class ClassLoaderManager {
         val newClassLoader = asmClazz.getConstructors()[0].newInstance(setup, urls) as AsmInstrumentingClassLoader
 
         // Copy all Map entries from the old AsmInstrumentingClassLoader
-        [suppress("UNCHECKED_CAST")]
+        @suppress("UNCHECKED_CAST")
         val classes = classesField.get(newClassLoader) as MutableMap<String, Class<Any>>
         replicateCache(packageName, oldClasses, classes)
 

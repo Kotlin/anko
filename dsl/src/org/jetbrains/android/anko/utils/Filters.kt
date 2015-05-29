@@ -28,7 +28,7 @@ public class JarFileFilter : FileFilter {
 public class AndroidVersionDirectoryFilter : FileFilter {
     override fun accept(path: File): Boolean {
         return path.isDirectory() && !path.isHidden() &&
-                path.getName().matches("^[0-9]+s?$") &&
+                path.getName().matches("^[0-9]+s?$".toRegex()) &&
                 path.listFiles { it.name.endsWith(".jar") }?.isNotEmpty() ?: false
     }
 }

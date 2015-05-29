@@ -249,7 +249,7 @@ public class AlertDialogBuilder(val ctx: Context) {
     }
 
     public fun items(items: List<CharSequence>, f: (which: Int) -> Unit) {
-        items(items.copyToArray(), f)
+        items(items.toTypedArray(), f)
     }
 
     public fun items(items: Array<CharSequence>, f: (which: Int) -> Unit) {

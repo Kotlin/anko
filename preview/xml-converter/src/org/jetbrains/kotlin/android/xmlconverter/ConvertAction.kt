@@ -60,7 +60,7 @@ public class ConvertAction : AnAction() {
             }
 
             if (lastConvertedFile != null) {
-                FileEditorManager.getInstance(project).openFile(lastConvertedFile!!, true)
+                FileEditorManager.getInstance(project).openFile(lastConvertedFile, true)
             }
         }
     }

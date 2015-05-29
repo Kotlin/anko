@@ -28,7 +28,7 @@ import sun.plugin.dom.exception.InvalidStateException
 import java.io.File
 import java.util.HashMap
 
-public trait SourceProvider {
+public interface SourceProvider {
     fun parse(fqName: String): CompilationUnit?
 }
 

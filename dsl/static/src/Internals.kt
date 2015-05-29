@@ -234,8 +234,7 @@ public object AnkoInternals {
         }
 
         if (nightMode != null) {
-            val uiModeManager = ctx.getSystemService(Context.UI_MODE_SERVICE) as? UiModeManager
-            if (uiModeManager == null) return false
+            val uiModeManager = ctx.getSystemService(Context.UI_MODE_SERVICE) as? UiModeManager ?: return false
 
             val currentMode = uiModeManager.getNightMode()
             if (currentMode == UiModeManager.MODE_NIGHT_YES && !nightMode) return false

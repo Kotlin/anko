@@ -23,8 +23,7 @@ import org.jetbrains.android.uipreview.AndroidEditorSettings
 
 State(
     name = "DslAndroidEditorSettings",
-    storages = array(
-        Storage(file = StoragePathMacros.APP_CONFIG + "/dslAndroidEditors.xml")
+    storages = arrayOf(Storage(file = StoragePathMacros.APP_CONFIG + "/dslAndroidEditors.xml")
     )
 )
 public class DslAndroidEditorSettings : AndroidEditorSettings()

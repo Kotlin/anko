@@ -27,7 +27,7 @@ import android.content.Context
 import org.jetbrains.anko.internals.AnkoInternals
 
 public val NULL: SqlType = SqlTypeImpl("NULL")
-deprecated("Use INTEGER instead")
+@deprecated("Use INTEGER instead.", replaceWith = ReplaceWith("INTEGER"))
 public val INT: SqlType = SqlTypeImpl("INT")
 public val INTEGER: SqlType = SqlTypeImpl("INTEGER")
 public val REAL: SqlType = SqlTypeImpl("REAL")
@@ -46,12 +46,12 @@ public fun DEFAULT(value: String): SqlTypeModifier = SqlTypeModifierImpl("DEFAUL
 
 public class TransactionAbortException : RuntimeException()
 
-public trait SqlType {
+public interface SqlType {
     open val name: String
     open val modifier: String?
 }
 
-public trait SqlTypeModifier {
+public interface SqlTypeModifier {
     open val modifier: String
 }
 
@@ -193,7 +193,7 @@ private fun Array<out Pair<String, Any>>.toContentValues(): ContentValues {
 }
 
 public enum class SqlOrderDirection {
-    ASC
+    ASC,
     DESC
 }
 
@@ -329,7 +329,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
     private fun execInternal(): Cursor {
         val finalSelection = if (selectionApplied) selection else null
         val finalSelectionArgs = if (selectionApplied && useNativeSelection) nativeSelectionArgs else null
-        return db.query(distinct, tableName, columns.copyToArray(),
+        return db.query(distinct, tableName, columns.toTypedArray(),
             finalSelection, finalSelectionArgs,
             groupBy.joinToString(", "), having, orderBy.joinToString(", "), limit)
     }

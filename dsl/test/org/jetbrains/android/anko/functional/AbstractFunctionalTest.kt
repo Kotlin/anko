@@ -84,7 +84,7 @@ public abstract class AbstractFunctionalTest {
         config.settings()
 
         val versionDir = File("workdir/original", version)
-        val intVersion = version.replaceAll("[^0-9]", "").toInt()
+        val intVersion = version.replace("[^0-9]".toRegex(), "").toInt()
 
         val jarFiles = versionDir.listFiles(JarFileFilter()).map { it.getAbsolutePath() }
 

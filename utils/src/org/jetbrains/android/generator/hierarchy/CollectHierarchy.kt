@@ -32,7 +32,7 @@ object HierarchyCollector {
 
     platformStatic
     public fun collect() {
-        val ver = File("workdir/original").listFiles { it.name.matches("[0-9]+") }!!
+        val ver = File("workdir/original").listFiles { it.name.matches("[0-9]+".toRegex()) }!!
                 .first { it.listFiles { it.name == "android.jar" }?.isNotEmpty() ?: false }
         val androidJar = ver.listFiles { it.name == "android.jar" }!!.first().getAbsolutePath()
 

@@ -21,7 +21,7 @@ class Buffer {
     private val builder = StringBuilder()
 
     fun append(s: String): Buffer {
-        builder.append(s: String?)
+        builder.append(s)
         return this
     }
 

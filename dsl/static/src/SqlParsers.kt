@@ -23,11 +23,11 @@ import java.lang.reflect.Modifier
 import org.jetbrains.anko.AnkoException
 import org.jetbrains.anko.internals.AnkoInternals
 
-public trait RowParser<T> {
+public interface RowParser<T> {
     fun parseRow(columns: Array<Any>): T
 }
 
-public trait MapRowParser<T> {
+public interface MapRowParser<T> {
     fun parseRow(columns: Map<String, Any>): T
 }
 
@@ -35,7 +35,7 @@ private class SingleColumnParser<T> : RowParser<T> {
     override fun parseRow(columns: Array<Any>): T {
         if (columns.size() != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
-        [suppress("UNCHECKED_CAST")]
+        @suppress("UNCHECKED_CAST")
         return columns[0] as T
     }
 }
@@ -44,7 +44,7 @@ private class ScalarColumnParser<R, T>(val modifier: ((R) -> T)? = null) : RowPa
     override fun parseRow(columns: Array<Any>): T {
         if (columns.size() != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
-        [suppress("UNCHECKED_CAST", "UNNECESSARY_NOT_NULL_ASSERTION")]
+        @suppress("UNCHECKED_CAST", "UNNECESSARY_NOT_NULL_ASSERTION")
         return if (modifier != null)
             modifier!!(columns[0] as R)
         else
@@ -112,15 +112,25 @@ public fun <T: Any> Cursor.parseList(parser: MapRowParser<T>): List<T> = AnkoInt
     return list
 }
 
-public fun Cursor.stream(): Stream<Array<Any>> {
-    return CursorStream(this)
+@deprecated(value = "Use sequence() instead.", replaceWith = ReplaceWith("sequence()"))
+public fun Cursor.stream(): Sequence<Array<Any>> {
+    return CursorSequence(this)
 }
 
-public fun Cursor.mapStream(): Stream<Map<String, Any>> {
-    return CursorMapStream(this)
+@deprecated(value = "Use mapSequence() instead.", replaceWith = ReplaceWith("mapSequence()"))
+public fun Cursor.mapStream(): Sequence<Map<String, Any>> {
+    return CursorMapSequence(this)
 }
 
-[suppress("NOTHING_TO_INLINE")]
+public fun Cursor.sequence(): Sequence<Array<Any>> {
+    return CursorSequence(this)
+}
+
+public fun Cursor.mapSequence(): Sequence<Map<String, Any>> {
+    return CursorMapSequence(this)
+}
+
+@suppress("NOTHING_TO_INLINE")
 public inline fun <reified T> classParser(): RowParser<T> {
     val clazz = javaClass<T>()
     val constructors = clazz.getDeclaredConstructors().filter {
@@ -135,7 +145,7 @@ public inline fun <reified T> classParser(): RowParser<T> {
     val c = constructors[0]
 
     for (type in c.getParameterTypes()) {
-        [suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")]
+        @suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
         val valid = when (type) {
             javaClass<Long>(), javaClass<java.lang.Long>() -> true
             javaClass<Double>(), javaClass<java.lang.Double>() -> true
@@ -167,7 +177,7 @@ private fun readColumnsArray(cursor: Cursor): Array<Any> {
             else -> Unit
         }
     }
-    [suppress("CAST_NEVER_SUCCEEDS")]
+    @suppress("CAST_NEVER_SUCCEEDS")
     return arr as Array<Any>
 }
 
@@ -186,13 +196,13 @@ private fun readColumnsMap(cursor: Cursor): Map<String, Any> {
     return map
 }
 
-private class CursorMapStream(val cursor: Cursor) : Stream<Map<String, Any>> {
+private class CursorMapSequence(val cursor: Cursor) : Sequence<Map<String, Any>> {
     override fun iterator(): Iterator<Map<String, Any>> {
         return CursorMapIterator(cursor)
     }
 }
 
-private class CursorStream(val cursor: Cursor) : Stream<Array<Any>> {
+private class CursorSequence(val cursor: Cursor) : Sequence<Array<Any>> {
     override fun iterator(): Iterator<Array<Any>> {
         return CursorIterator(cursor)
     }

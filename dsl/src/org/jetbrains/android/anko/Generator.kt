@@ -115,7 +115,7 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration): Configurab
         }.map { clazz ->
             // We're looking for a public ancestor for this interface, but ancestor also may be protected
             val ancestor = classTree.filter { clazz ->
-                clazz.isPublic && clazz.interfaces.any { interface -> interface == clazz.name } &&
+                clazz.isPublic && clazz.interfaces.any { intface -> intface == clazz.name } &&
                 !clazz.innerClasses.any { it.name == clazz.name && it.isProtected }
             }
             val innerClass = clazz.innerClasses.firstOrNull {

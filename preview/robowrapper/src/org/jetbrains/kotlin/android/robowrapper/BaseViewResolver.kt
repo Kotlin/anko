@@ -30,7 +30,7 @@ public class BaseViewResolver {
     public fun getBaseView(clazz: Class<Any>): View {
         return when {
             clazz.isActivity() -> {
-                [suppress("CAST_NEVER_SUCCEEDS")]
+                @suppress("CAST_NEVER_SUCCEEDS")
                 val activity = Robolectric.buildActivity<Activity>(clazz as Class<Activity>).create().get()
                 val contentView = activity.findViewById(android.R.id.content) as ViewGroup
                 if (contentView.getChildCount() == 0) FrameLayout(activity) else contentView.getChildAt(0)
@@ -44,8 +44,8 @@ public class BaseViewResolver {
                 val fragment = clazz.newInstance() as android.support.v4.app.Fragment
                 FragmentTestUtil.startFragment(fragment)
                 var baseView = fragment.getView()
-                if (baseView is ViewGroup && (baseView as ViewGroup).getChildCount() > 0) {
-                    baseView = (baseView as ViewGroup).getChildAt(0)
+                if (baseView is ViewGroup && baseView.getChildCount() > 0) {
+                    baseView = baseView.getChildAt(0)
                 }
                 baseView
             }

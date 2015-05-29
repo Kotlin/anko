@@ -130,14 +130,14 @@ public class DslWorker(
         ApplicationManager.getApplication().invokeLater(processor)
     }
 
-    public trait Listener {
+    public interface Listener {
         public fun onXmlError(kind: ErrorKind, description: String, alive: Boolean)
         public fun onXmlReceived(cmd: RobowrapperContext, xml: String)
     }
 
     public enum class ErrorKind {
-        INVALID_ROBOWRAPPER_DIRECTORY
-        UNKNOWN
+        INVALID_ROBOWRAPPER_DIRECTORY,
+        UNKNOWN,
         UNKNOWN_ANDROID_VERSION
     }
 
@@ -186,7 +186,7 @@ public class DslWorker(
                         var robowrapperJar: JarFile? = null
                         try {
                             robowrapperJar = JarFile(File(pluginDirectory, "../robowrapper/robowrapper.jar"))
-                            robowrapperJar!!
+                            robowrapperJar
                                     .getInputStream(ZipEntry("custom.policy"))
                                     .copyTo(FileOutputStream(policyFile))
                         } finally {

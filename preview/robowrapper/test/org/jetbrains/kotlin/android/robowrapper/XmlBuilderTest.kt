@@ -38,7 +38,7 @@ import kotlin.dom.parseXml
 import org.w3c.dom.Element
 
 Config(manifest = Config.NONE, emulateSdk = 18)
-RunWith(javaClass<RobolectricTestRunner>())
+RunWith(RobolectricTestRunner::class)
 public class XmlBuilderTest {
 
   Test

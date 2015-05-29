@@ -21,25 +21,25 @@ import java.util.ArrayList
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.signature.SignatureReader
 
-trait Classifier
+interface Classifier
 data class BaseType(val descriptor: Char) : Classifier
-trait NamedClass : Classifier
+interface NamedClass : Classifier
 data class TopLevelClass(val internalName: String) : NamedClass
 data class InnerClass(val outer: GenericType, val name: String) : NamedClass
 data class TypeVariable(val name: String) : Classifier
 object ArrayC : Classifier
 
 enum class Wildcard {
-    SUPER   // ? super X
+    SUPER,  // ? super X
     EXTENDS // ? extends X
 }
 
-trait TypeArgument
+interface TypeArgument
 data class BoundedWildcard(val wildcard: Wildcard, val bound: GenericType) : TypeArgument
 object UnboundedWildcard : TypeArgument
 data class NoWildcard(val genericType: GenericType) : TypeArgument
 
-trait GenericType {
+interface GenericType {
     val classifier: Classifier
     val arguments: List<TypeArgument>
 }

@@ -67,7 +67,7 @@ private fun getVersions(): Array<File> {
     if (!original.exists() || !original.isDirectory()) {
         throw RuntimeException("\"workdir/original\" directory does not exist.")
     }
-    return original.listFiles(AndroidVersionDirectoryFilter()) ?: array<File>()
+    return original.listFiles(AndroidVersionDirectoryFilter()) ?: arrayOf<File>()
 }
 
 private fun getJars(version: File) = version.listFiles(JarFileFilter())

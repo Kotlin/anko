@@ -74,7 +74,7 @@ class Writer(private val renderer: Renderer) {
     private fun writeListeners() {
         val allListeners = ArrayList<String>()
 
-        array(
+        arrayOf(
             SIMPLE_LISTENERS to renderer.simpleListeners,
             COMPLEX_LISTENER_CLASSES to renderer.complexListenerClasses,
             COMPLEX_LISTENER_SETTERS to renderer.complexListenerSetters

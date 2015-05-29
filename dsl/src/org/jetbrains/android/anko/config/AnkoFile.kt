@@ -17,23 +17,23 @@
 package org.jetbrains.android.anko.config
 
 public enum class AnkoFile(val filename: String) {
-    ASYNC : AnkoFile("Async.kt")
-    CONTEXT_UTILS : AnkoFile("ContextUtils.kt")
-    CUSTOM : AnkoFile("Custom.kt")
-    DATABASE : AnkoFile("Database.kt")
-    DIALOGS : AnkoFile("Dialogs.kt")
-    HELPERS : AnkoFile("Helpers.kt")
-    INTERFACE_WORKAROUNDS : AnkoFile("InterfaceWorkarounds.java")
-    INTERNALS : AnkoFile("Internals.kt")
-    LAYOUTS : AnkoFile("Layouts.kt")
-    LISTENERS : AnkoFile("Listeners.kt")
-    LOGGER : AnkoFile("Logger.kt")
-    OTHER : AnkoFile("Other.kt")
-    OTHER_WIDGETS : AnkoFile("OtherWidgets.kt")
-    PROPERTIES : AnkoFile("Properties.kt")
-    SERVICES : AnkoFile("Services.kt")
-    SQL_PARSER_HELPERS : AnkoFile("SqlParserHelpers.kt")
-    SQL_PARSERS : AnkoFile("SqlParsers.kt")
-    SUPPORT : AnkoFile("Support.kt")
-    VIEWS : AnkoFile("Views.kt")
+    ASYNC("Async.kt"),
+    CONTEXT_UTILS("ContextUtils.kt"),
+    CUSTOM("Custom.kt"),
+    DATABASE("Database.kt"),
+    DIALOGS("Dialogs.kt"),
+    HELPERS("Helpers.kt"),
+    INTERFACE_WORKAROUNDS("InterfaceWorkarounds.java"),
+    INTERNALS("Internals.kt"),
+    LAYOUTS("Layouts.kt"),
+    LISTENERS("Listeners.kt"),
+    LOGGER("Logger.kt"),
+    OTHER("Other.kt"),
+    OTHER_WIDGETS("OtherWidgets.kt"),
+    PROPERTIES("Properties.kt"),
+    SERVICES("Services.kt"),
+    SQL_PARSER_HELPERS("SqlParserHelpers.kt"),
+    SQL_PARSERS("SqlParsers.kt"),
+    SUPPORT("Support.kt"),
+    VIEWS("Views.kt")
 }

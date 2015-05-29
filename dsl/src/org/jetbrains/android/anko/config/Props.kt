@@ -48,7 +48,7 @@ object Props {
                 val separator = line.indexOf(' ')
                 val className = line.substring(0, separator)
                 val props = line.substring(separator + 1).split(',').map {
-                    val nameType = it.split(":")
+                    val nameType = it.split(":".toRegex()).toTypedArray()
                     Variable(nameType[0].trim(), nameType[1].trim())
                 }.toList()
                 val constructors = res.getOrElse(className, { ArrayList<List<Variable>>() })

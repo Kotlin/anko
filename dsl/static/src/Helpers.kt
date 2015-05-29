@@ -33,24 +33,24 @@ public class AnkoException(message: String = "") : RuntimeException(message)
 private val defaultInit: Any.() -> Unit = {}
 
 public enum class ScreenSize {
-    SMALL
-    NORMAL
-    LARGE
+    SMALL,
+    NORMAL,
+    LARGE,
     XLARGE
 }
 
 public enum class UiMode {
-    NORMAL
-    CAR
-    DESK
-    TELEVISION
-    APPLIANCE
+    NORMAL,
+    CAR,
+    DESK,
+    TELEVISION,
+    APPLIANCE,
     WATCH
 }
 
 public enum class Orientation {
-    PORTRAIT
-    LANDSCAPE
+    PORTRAIT,
+    LANDSCAPE,
     SQUARE
 }
 
@@ -61,7 +61,7 @@ public fun <T : View> T.style(style: (View) -> Unit): T {
 
 //deprecated("Use ViewManager.addView() instead")
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, manager: ViewManager): T {
-    return manager.addView { ctx ->
+    return manager.addView<T> { ctx ->
         val v = view(ctx)
         v.init()
         v
@@ -130,9 +130,9 @@ public class UiHelper(public val ctx: Context, private val setContentView: Boole
     override fun addView(view: View, params: ViewGroup.LayoutParams?) {
         this.view = view
         if (setContentView) {
-            [suppress("USELESS_CAST_STATIC_ASSERT_IS_FINE")]
+            @suppress("USELESS_CAST_STATIC_ASSERT_IS_FINE")
             when (ctx) {
-                is Activity -> (ctx as Activity).setContentView(view)
+                is Activity -> ctx.setContentView(view)
                 else -> {
                 }
             }
