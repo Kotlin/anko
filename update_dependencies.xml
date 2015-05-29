@@ -55,7 +55,7 @@
         <get src="http://central.maven.org/maven2/com/google/android/support-v4/r6/support-v4-r6.jar"
              dest="lib/android-support-v4.jar" usetimestamp="true"/>
 
-        <get src="https://github.com/JetBrains/kotlin/releases/download/M11.1-bootstrap/kotlin-plugin-0.11.91.1.zip"
+        <get src="https://github.com/JetBrains/kotlin/releases/download/build-0.12.200/kotlin-plugin-0.12.200.zip"
              dest="lib/kotlin-plugin.zip" usetimestamp="true"/>
 
         <get src="http://search.maven.org/remotecontent?filepath=com/github/javaparser/javaparser-core/2.0.0/javaparser-core-2.0.0.jar"
