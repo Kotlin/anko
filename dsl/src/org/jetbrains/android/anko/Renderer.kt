@@ -236,7 +236,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                 fun Buffer.add(extendFor: String) {
                     line(NOTHING_TO_INLINE)
                     line("public inline fun $extendFor.$funcName(): $typeName = $funcName({})")
-                    line("public inline fun $extendFor.$funcName($ONLY_LOCAL_RETURN init: $className.() -> Unit): $typeName = addView {")
+                    line("public inline fun $extendFor.$funcName($ONLY_LOCAL_RETURN init: $className.() -> Unit): $typeName = addView<$typeName> {")
                         line("ctx ->")
                         line("val view = $className(${renderConstructor(view, constructors, "ctx")})")
                         line("view.init()")
@@ -306,14 +306,14 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
                 fun Buffer.add(extendFor: String) {
                     line(NOTHING_TO_INLINE)
-                    line("public inline fun $extendFor.$funcName($helperArguments): $className = addView {")
+                    line("public inline fun $extendFor.$funcName($helperArguments): $className = addView<$className> {")
                         line("ctx ->")
                         line("val view = $className(ctx)")
                         lines(setters)
                         line("view")
                     line("}")
 
-                    line("public inline fun $extendFor.$funcName($helperArguments, $ONLY_LOCAL_RETURN init: $className.() -> Unit): $className = addView {")
+                    line("public inline fun $extendFor.$funcName($helperArguments, $ONLY_LOCAL_RETURN init: $className.() -> Unit): $className = addView<$className> {")
                         line("ctx ->")
                         line("val view = $className(ctx)")
                         lines(setters)
