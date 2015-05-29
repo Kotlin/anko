@@ -382,7 +382,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                 line("override fun ${method.name}($arguments) = _$varName?.invoke($argumentNames)$returnDefaultValue").nl()
                 line("public fun ${method.name}(listener: ($argumentTypes) -> ${method.returnType}) {")
                 line("_$varName = listener")
-                line("}").nl()
+                line("}")
             }.getLines()
         }
 
