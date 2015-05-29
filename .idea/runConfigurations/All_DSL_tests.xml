@@ -16,7 +16,9 @@
     <option name="TEST_SEARCH_SCOPE">
       <value defaultName="singleModule" />
     </option>
-    <envs />
+    <envs>
+      <env name="ANDROID_HOME" value="lib/android-sdk" />
+    </envs>
     <patterns />
     <method />
   </configuration>
