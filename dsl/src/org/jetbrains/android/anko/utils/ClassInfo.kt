@@ -82,3 +82,15 @@ fun ClassNode.isViewGroup(classTree: ClassTree): Boolean {
     val isSuccessor = classTree.isSuccessorOf(this, "android/view/ViewGroup") || this.name == "android/view/ViewGroup"
     return isSuccessor && !isInner
 }
+
+fun ClassNode.isActionBar(classTree: ClassTree): Boolean {
+    val isSuccessor = ((classTree.isSuccessorOf(this, "android/app/Activity") || this.name == "android/app/Activity") ||
+                        (classTree.isSuccessorOf(this, "android/app/ActionBar") || this.name == "android/app/ActionBar"))
+    return isSuccessor && !isInner
+}
+
+fun ClassNode.isSupportActionBar(classTree: ClassTree): Boolean {
+    val isSuccessor = ((classTree.isSuccessorOf(this, "android/support/v7/app/ActionBarActivity") || this.name == "android/support/v7/app/ActionBarActivity") ||
+                        ((classTree.isSuccessorOf(this, "android/support/v7/app/ActionBar") || this.name == "android/support/v7/app/ActionBar")))
+    return isSuccessor && !isInner
+}

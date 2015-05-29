@@ -20,6 +20,7 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.app.Service
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.view.View
 import android.widget.LinearLayout
 import android.content.Context
@@ -28,6 +29,7 @@ import android.preference.PreferenceManager
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 import android.content.Intent
+import android.support.v4.app.FragmentTransaction
 import org.jetbrains.anko.custom.addView
 import org.jetbrains.anko.internals.AnkoInternals
 
@@ -204,6 +206,10 @@ public fun Fragment.progressDialog(message: Int? = null, title: Int? = null, ini
 
 public fun Fragment.indeterminateProgressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return getActivity().progressDialog(true, message?.let { getActivity().getString(it) }, title?.let { getActivity().getString(it) }, init)
+}
+
+public inline fun FragmentManager.transactions(init: FragmentTransaction.() -> FragmentTransaction): FragmentTransaction {
+    return beginTransaction().init()
 }
 
 /* END SECTION */

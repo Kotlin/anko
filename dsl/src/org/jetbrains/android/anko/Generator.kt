@@ -48,11 +48,11 @@ data class ComplexListener(
         val methods: List<ListenerMethod>
 ): Listener(setter, clazz)
 
-data class ViewProperty(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)
+data class Property(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)
 
 data class LayoutParamsNode(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>)
 
-class Generator(val classTree: ClassTree, config: AnkoConfiguration): Configurable(config) {
+class Generator(val classTree: ClassTree, config: AnkoConfiguration, isSupport: Boolean): Configurable(config) {
 
     private val availableClasses = classTree.filter { !it.isExcluded() }
 
@@ -108,6 +108,24 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration): Configurab
             ?: listOf()
     }
 
+    // Generate actionbar properties
+    val actionbarPropertyGetters = generate(PROPERTIES) {
+        availableMethods
+                .filter { ((isSupport && it.clazz.isSupportActionBar) || it.clazz.isActionBar) &&
+                        it.method.isGetter() && !it.method.isOverridden && !it.method.isListenerGetter &&
+                        !config.excludedProperties.contains(it.clazz.fqName + "#" + it.method.name) &&
+                        !config.excludedProperties.contains(it.clazz.fqName + "#*")
+                }
+                .sortBy { it.identifier }
+    }
+
+    val actionbarPropertySetters = availableMethods
+            .filter { ((isSupport && it.clazz.isSupportActionBar) || it.clazz.isActionBar) && it.method.isNonListenerSetter() && !it.method.isOverridden }
+            .groupBy { it.identifier }
+
+    val actionbarProperties = genProperties(actionbarPropertyGetters, actionbarPropertySetters)
+    // ~~~
+
     val interfaceWorkarounds = generate(INTERFACE_WORKAROUNDS) {
         availableClasses.filter { clazz ->
             clazz.isPublic && clazz.innerClasses != null && clazz.fields.isNotEmpty() &&
@@ -128,7 +146,7 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration): Configurab
     //Convert list of getters and map of setters to property list
     private fun genProperties(
             getters: Collection<MethodNodeWithClass>,
-            setters: Map<String, List<MethodNodeWithClass>>) : List<ViewProperty> {
+            setters: Map<String, List<MethodNodeWithClass>>) : List<Property> {
         val existingProperties = hashSetOf<String>()
 
         val propertyWithGetters = getters.map { getter ->
@@ -140,14 +158,14 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration): Configurab
             }
 
             existingProperties.add(property.setterIdentifier)
-            ViewProperty(property.name, getter, best + others)
+            Property(property.name, getter, best + others)
         }
         val propertyWithoutGetters = setters.values().map { setters ->
             val property = setters.first().toProperty()
 
             val id = property.setterIdentifier
             if (property.propertyFqName in config.propertiesWithoutGetters && id !in existingProperties) {
-                ViewProperty(property.name, null, setters)
+                Property(property.name, null, setters)
             } else null
         }.filterNotNull()
         return propertyWithGetters + propertyWithoutGetters
@@ -215,6 +233,11 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration): Configurab
 
     private val ClassNode.isViewGroupWithParams: Boolean
         get() = isViewGroup(classTree) && hasLayoutParams(this)
+
+    private val ClassNode.isActionBar: Boolean
+        get() = isActionBar(classTree)
+    private val ClassNode.isSupportActionBar: Boolean
+        get() = isSupportActionBar(classTree)
 
     private fun ClassNode.isExcluded() =
         fqName in config.excludedClasses || "$packageName.*" in config.excludedClasses

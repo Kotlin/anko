@@ -77,45 +77,50 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     // Generate View extension properties (with "best" setter)
     val properties = generate(PROPERTIES) {
-        generator.properties.map { property ->
-            val getter = property.getter
-            val className = (getter ?: property.setters.first()).clazz.fqNameWithTypeArguments
-            val fullPropertyName = "$className.${property.name}"
-            val bestSetter = property.setters.firstOrNull()
-            val mutability = if (bestSetter != null) "var" else "val"
+        val allProperties = arrayListOf<String>()
+        generator.properties.forEach { allProperties.add(renderProperty(it)) }
+        generator.actionbarProperties.forEach { allProperties.add(renderProperty(it)) }
+        allProperties
+    }
 
-            val javaReturnType = getter?.method?.returnType?.asJavaString()
-                    ?: bestSetter?.method?.args?.get(0)?.asJavaString()
-                    ?: "java.lang.Object"
+    private fun renderProperty(property: Property): String {
+        val getter = property.getter
+        val className = (getter ?: property.setters.first()).clazz.fqNameWithTypeArguments
+        val fullPropertyName = "$className.${property.name}"
+        val bestSetter = property.setters.firstOrNull()
+        val mutability = if (bestSetter != null) "var" else "val"
 
-            val rawReturnType = getter?.method?.renderReturnType(false)
-                    ?: bestSetter?.method?.args?.get(0)?.asString(false)
-                    ?: "Any"
+        val javaReturnType = getter?.method?.returnType?.asJavaString()
+                ?: bestSetter?.method?.args?.get(0)?.asJavaString()
+                ?: "java.lang.Object"
 
-            val nullable = if (javaReturnType.indexOf('.') < 0) {
-                false // Do not look up annotations for simple types
-            } else if (getter != null) {
-                val annotationSignature = "${getter.clazz.fqName} $javaReturnType ${getter.method.name}()"
-                val foundAnnotations = config.annotationManager.findAnnotationsFor(annotationSignature)
-                ExternalAnnotation.NotNull !in foundAnnotations
-            } else true // Default is nullable
+        val rawReturnType = getter?.method?.renderReturnType(false)
+                ?: bestSetter?.method?.args?.get(0)?.asString(false)
+                ?: "Any"
 
-            val nullability = if (nullable) "?" else ""
+        val nullable = if (javaReturnType.indexOf('.') < 0) {
+            false // Do not look up annotations for simple types
+        } else if (getter != null) {
+            val annotationSignature = "${getter.clazz.fqName} $javaReturnType ${getter.method.name}()"
+            val foundAnnotations = config.annotationManager.findAnnotationsFor(annotationSignature)
+            ExternalAnnotation.NotNull !in foundAnnotations
+        } else true // Default is nullable
 
-            val otherSetters = if (property.setters.size() > 1) property.setters.drop(1) else listOf()
+        val nullability = if (nullable) "?" else ""
 
-            buffer {
-                line("public $mutability $fullPropertyName: $rawReturnType$nullability")
-                if (getter != null) {
-                    indent.line("get() = ${getter.method.name}()")
-                } else {
-                    indent.line("get() = throw AnkoException(\"'${fullPropertyName}' property does not have a getter\")")
-                }
-                if (bestSetter != null) indent.line("set(v) = ${bestSetter.method.name}(v)")
+        val otherSetters = if (property.setters.size() > 1) property.setters.drop(1) else listOf()
 
-                renderResourceProperty(otherSetters, fullPropertyName, rawReturnType)
-            }.toString()
-        }
+        return buffer {
+            line("public $mutability $fullPropertyName: $rawReturnType$nullability")
+            if (getter != null) {
+                indent.line("get() = ${getter.method.name}()")
+            } else {
+                indent.line("get() = throw AnkoException(\"'${fullPropertyName}' property does not have a getter\")")
+            }
+            if (bestSetter != null) indent.line("set(v) = ${bestSetter.method.name}(v)")
+
+            renderResourceProperty(otherSetters, fullPropertyName, rawReturnType)
+        }.toString()
     }
 
     private fun Buffer.renderResourceProperty(
