@@ -90,17 +90,17 @@ public fun Fragment.email(email: String, subject: String = "", text: String = ""
 
 public fun Fragment.makeCall(number: String): Boolean = getActivity().makeCall(number)
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartActivity(getActivity(), javaClass<T>(), params)
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartActivityForResult(getActivity(), javaClass<T>(), requestCode, params)
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartService(getActivity(), javaClass<T>(), params)
 }
@@ -110,22 +110,22 @@ public inline fun <reified T: Any> Fragment.intentFor(): Intent = Intent(getActi
 
 
 /* SECTION OTHER */
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.dip(value: Int): Int = getActivity().dip(value)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.dip(value: Float): Int = getActivity().dip(value)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.sp(value: Int): Int = getActivity().sp(value)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.sp(value: Float): Int = getActivity().sp(value)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.px2dip(px: Int): Float = getActivity().px2dip(px)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.px2sp(px: Int): Float = getActivity().px2sp(px)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.dimen(resource: Int): Int = getActivity().dimen(resource)
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.verticalLayout(): LinearLayout = verticalLayout({})
 public inline fun Fragment.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView { ctx ->
     val view = _LinearLayout(ctx)
@@ -134,10 +134,10 @@ public inline fun Fragment.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun <T: View> Fragment.include(layoutId: Int): LinearLayout = include(layoutId, {})
 public inline fun <T: View> Fragment.include(layoutId: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
-    [suppress("UNCHECKED_CAST")]
+    @suppress("UNCHECKED_CAST")
     val view = ctx.layoutInflater.inflate(layoutId, null) as T
     view.init()
     view

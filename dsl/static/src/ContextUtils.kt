@@ -64,35 +64,35 @@ public fun Context.dimen(resource: Int): Int = getResources().getDimensionPixelS
 
 
 //the same for nested DSL components
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun UiHelper.dip(value: Int): Int = ctx.dip(value)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun UiHelper.dip(value: Float): Int = ctx.dip(value)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun UiHelper.sp(value: Int): Int = ctx.sp(value)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun UiHelper.sp(value: Float): Int = ctx.sp(value)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun UiHelper.px2dip(px: Int): Float = ctx.px2dip(px)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun UiHelper.px2sp(px: Int): Float = ctx.px2sp(px)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun UiHelper.dimen(resource: Int): Int = ctx.dimen(resource)
 
 //the same for Fragments
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.dip(value: Int): Int = getActivity().dip(value)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.dip(value: Float): Int = getActivity().dip(value)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.sp(value: Int): Int = getActivity().sp(value)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.sp(value: Float): Int = getActivity().sp(value)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.px2dip(px: Int): Float = getActivity().px2dip(px)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.px2sp(px: Int): Float = getActivity().px2sp(px)
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.dimen(resource: Int): Int = getActivity().dimen(resource)
 
 
@@ -119,17 +119,17 @@ public val Activity.act: Activity
 
 
 //type casting is now under the hood
-[suppress("UNCHECKED_CAST")]
+@suppress("UNCHECKED_CAST")
 public fun <T : View> View.find(id: Int): T = findViewById(id) as T
 
-[suppress("UNCHECKED_CAST")]
+@suppress("UNCHECKED_CAST")
 public fun <T : View> Activity.find(id: Int): T = findViewById(id) as T
 
-[suppress("UNCHECKED_CAST")]
+@suppress("UNCHECKED_CAST")
 public fun <T : View> Fragment.find(id: Int): T = getView()?.findViewById(id) as T
 
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.browse(url: String): Boolean = getActivity().browse(url)
 
 public fun Context.browse(url: String): Boolean {
@@ -144,7 +144,7 @@ public fun Context.browse(url: String): Boolean {
     }
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.share(text: String, subject: String = ""): Boolean = getActivity().share(text, subject)
 
 public fun Context.share(text: String, subject: String = ""): Boolean {
@@ -161,14 +161,14 @@ public fun Context.share(text: String, subject: String = ""): Boolean {
     }
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.email(email: String, subject: String = "", text: String = ""): Boolean =
         getActivity().email(email, subject, text)
 
 public fun Context.email(email: String, subject: String = "", text: String = ""): Boolean {
     val intent = Intent(Intent.ACTION_SENDTO)
     intent.setData(Uri.parse("mailto:"))
-    intent.putExtra(Intent.EXTRA_EMAIL, array(email))
+    intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
     if (subject.length() > 0)
         intent.putExtra(Intent.EXTRA_SUBJECT, subject)
     if (text.length() > 0)
@@ -181,7 +181,7 @@ public fun Context.email(email: String, subject: String = "", text: String = "")
 
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.makeCall(number: String): Boolean = getActivity().makeCall(number)
 
 public fun Context.makeCall(number: String): Boolean {
@@ -195,32 +195,32 @@ public fun Context.makeCall(number: String): Boolean {
     }
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartActivity(this, javaClass<T>(), params)
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartActivityForResult(this, javaClass<T>(), requestCode, params)
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartActivity(getActivity(), javaClass<T>(), params)
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartActivityForResult(getActivity(), javaClass<T>(), requestCode, params)
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Service> Context.startService(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartService(this, javaClass<T>(), params)
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartService(getActivity(), javaClass<T>(), params)
 }
@@ -289,7 +289,7 @@ public inline fun <reified T: Any> Fragment.intentFor(vararg params: Pair<String
     return AnkoInternals.createIntent(getActivity(), javaClass<T>(), params)
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 private inline fun Intent.setFlag(flag: Int): Intent {
     setFlags(flag)
     return this

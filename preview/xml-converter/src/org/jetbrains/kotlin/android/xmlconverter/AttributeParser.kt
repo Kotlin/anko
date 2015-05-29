@@ -102,7 +102,7 @@ private fun String.isDimension(): Boolean {
 }
 
 private fun String.isColor(): Boolean {
-    return toLowerCase().matches("#[0-9a-f]+")
+    return toLowerCase().matches("#[0-9a-f]+".toRegex())
 }
 
 private fun String.parseDimension(): Pair<String, String> {

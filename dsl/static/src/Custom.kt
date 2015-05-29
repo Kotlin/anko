@@ -43,7 +43,7 @@ public inline fun <T: View> ViewManager.addView(factory: (ctx: Context) -> T): T
     }
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun <T: View> ViewManager.addView(view: T): T {
     when (this) {
         is ViewGroup -> {
@@ -81,7 +81,7 @@ public inline fun <reified T : View> Context.customView(inlineOptions(InlineOpti
     view
 }
 
-public inline fun <reified T : View> ViewManager.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+public inline fun <reified T : View> ViewManager.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView<T> { ctx ->
     val view = AnkoInternals.initiateView(ctx, javaClass<T>())
     view.init()
     view

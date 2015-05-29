@@ -70,7 +70,7 @@ val InnerClassNode.isInterface: Boolean
     get() = ((access and Opcodes.ACC_INTERFACE) != 0)
 
 fun ClassNode.getConstructors(): List<MethodNode> {
-    return (methods: List<MethodNode>).filter { it.isConstructor }
+    return (methods as List<MethodNode>).filter { it.isConstructor }
 }
 
 fun ClassNode.isView(classTree: ClassTree): Boolean {

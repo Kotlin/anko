@@ -41,10 +41,9 @@ public fun parseView(view: View): ViewNode {
     val children = arrayListOf<ViewNode>()
     if (view is ViewGroup &&
             (view.javaClass.getName() !in ignoreChildrenOf || isAdapterViewChild(view.javaClass))) {
-        val viewGroup = view : ViewGroup
-        val childCount = viewGroup.getChildCount()
+        val childCount = view.getChildCount()
         for (i in 0..(childCount - 1)) {
-            val child = viewGroup.getChildAt(i)
+            val child = view.getChildAt(i)
             children.add(parseView(child))
         }
     }

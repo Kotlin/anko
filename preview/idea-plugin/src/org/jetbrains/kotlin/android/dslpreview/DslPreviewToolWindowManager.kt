@@ -206,7 +206,7 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
             throw UnsupportedClassException()
         }
 
-        val virtualFile = (editor: EditorEx).getVirtualFile()
+        val virtualFile = editor.getVirtualFile()
 
         val selectionStart = editor.getCaretModel().getPrimaryCaret().getSelectionStart()
         val cacheService = KotlinCacheService.getInstance(myProject)

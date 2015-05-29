@@ -48,7 +48,7 @@ open class DefaultAnkoConfiguration(outputDirectory: String = "workdir/gen/") : 
         annotationManager = AnnotationManager(CompoundAnnotationProvider(
                 CachingAnnotationProvider(zipFileProvider), CachingAnnotationProvider(directoryProvider)))
 
-        sourceManager = SourceManager(CachingSourceProvider(AndroidHomeSourceProvider(21)))
+        sourceManager = SourceManager(AndroidHomeSourceProvider(21))
     }
 
     override fun getOutputFile(ankoFile: AnkoFile): File {

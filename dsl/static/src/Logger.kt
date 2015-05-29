@@ -20,7 +20,7 @@ import android.content.Context
 import android.app.Fragment
 import android.util.Log
 
-public trait AnkoLogger {
+public interface AnkoLogger {
     protected val loggerTag: String
         get() {
             val tag = javaClass.getSimpleName()

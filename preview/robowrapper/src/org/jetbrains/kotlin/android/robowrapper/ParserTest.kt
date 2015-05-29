@@ -32,7 +32,7 @@ import java.io.StringWriter
 import java.nio.charset.Charset
 import kotlin.properties.Delegates
 
-RunWith(javaClass<RobolectricTestRunner>())
+RunWith(RobolectricTestRunner::class)
 Config(emulateSdk = 18)
 public class ParserTest {
 
@@ -92,7 +92,7 @@ public class ParserTest {
             val cl = Thread.currentThread().getContextClassLoader()
             val clazz = cl.loadClass(className)
 
-            [suppress("UNCHECKED_CAST")]
+            @suppress("UNCHECKED_CAST")
             val baseView = myBaseViewResolver.getBaseView(clazz as Class<Any>)
             val viewNode = parseView(baseView)
             val xml = toXml(viewNode)

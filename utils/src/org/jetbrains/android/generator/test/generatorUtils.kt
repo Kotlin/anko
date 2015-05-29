@@ -86,12 +86,12 @@ private fun Context.dslCompileTests(files: List<String>, category: String) {
 
 fun main(args: Array<String>) {
     val versions = File("./workdir/original/")
-            .listFiles { it.isDirectory() && it.name.matches("\\d+s?") }
+            .listFiles { it.isDirectory() && it.name.matches("\\d+s?".toRegex()) }
             ?.map { it.name }
             ?: listOf()
 
     val testVersions = File("./dsl/testData/functional/")
-        .listFiles { it.isDirectory() && it.name.matches("\\d+s?") }
+        .listFiles { it.isDirectory() && it.name.matches("\\d+s?".toRegex()) }
         ?.map { it.name }
         ?: listOf()
 

@@ -99,8 +99,7 @@ public open class CompileTestFixture {
         val androidRes = File("dsl/testData/robolectric/res/")
         val androidAssets = File("dsl/testData/robolectric/assets/")
 
-        val args = array(
-                "java", "-cp", cp,
+        val args = arrayOf("java", "-cp", cp,
                 "-Dapple.awt.UIElement=true",
                 "-Drobolectric.offline=true",
                 "-Drobolectric.dependency.dir=" + lib.getAbsolutePath(),
@@ -123,10 +122,10 @@ public open class CompileTestFixture {
                 .joinToString(File.pathSeparator)
 
         val tmpFile = createTempTestFile("compile", ".jar")
-        val kotlincArgs = array(File(kotlincFilename).getAbsolutePath(), "-d", tmpFile.getAbsolutePath(),
+        val kotlincArgs = arrayOf(File(kotlincFilename).getAbsolutePath(), "-d", tmpFile.getAbsolutePath(),
                 "-classpath", classpath.toString(), testData.getPath())
         val args = arrayListOf(*kotlincArgs)
-        val res = runProcess(args.copyToArray(), compiler = true)
+        val res = runProcess(args.toTypedArray(), compiler = true)
 
         assertEquals("", res.stderr)
         assertEquals(0, res.exitCode)

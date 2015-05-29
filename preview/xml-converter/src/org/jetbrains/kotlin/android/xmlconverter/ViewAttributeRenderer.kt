@@ -39,13 +39,13 @@ val viewAttributeRenderers = listOf(
         ::renderFlags
 )
 
-[suppress("UNUSED_PARAMETER")]
+@suppress("UNUSED_PARAMETER")
 fun renderGravity(attr: Attr, key: String, value: String) = if (key == "gravity") {
         val values = value.split('|').map { "Gravity.${it.toUpperCase()}" }
         key * values.joinToString(" or ")
     } else null
 
-[suppress("UNUSED_PARAMETER")]
+@suppress("UNUSED_PARAMETER")
 fun renderBackground(attr: Attr, key: String, value: String) = if (key == "background") {
     if (value.isReference()) renderReference(NoAttr, "${key}Resource", value)
     else if (value.isColor()) renderColor(NoAttr, "${key}Color", value)
@@ -56,28 +56,28 @@ fun renderLinearLayoutOrientation(attr: Attr, key: String, value: String) =
     if (key == "orientation" && attr.name == "LinearLayout")
         key * "android.widget.LinearLayout.${value.toUpperCase()}" else null
 
-[suppress("UNUSED_PARAMETER")]
+@suppress("UNUSED_PARAMETER")
 fun renderTextSize(attr: Attr, key: String, value: String) = if (key == "textSize") {
         val dimension = value.parseDimension()
         key * "${dimension.first}f"
     } else null
 
-[suppress("UNUSED_PARAMETER")]
+@suppress("UNUSED_PARAMETER")
 fun renderTag(attr: Attr, key: String, value: String) = if (key == "tag") {
     renderString(NoAttr, key, value)
 } else null
 
-[suppress("UNUSED_PARAMETER")]
+@suppress("UNUSED_PARAMETER")
 fun renderVisibility(attr: Attr, key: String, value: String) = if (key == "visibility") {
     "visibility" * "View.${value.toUpperCase()}"
 } else null
 
-[suppress("UNUSED_PARAMETER")]
+@suppress("UNUSED_PARAMETER")
 fun renderSingleLine(attr: Attr, key: String, value: String) = if (key == "singleLine") {
         "setSingleLine($value)" * ""
     } else null
 
-[suppress("UNUSED_PARAMETER")]
+@suppress("UNUSED_PARAMETER")
 fun renderOrientation(attr: Attr, key: String, value: String) = if (key == "orientation") {
     "orientation" * "LinearLayout.${value.toUpperCase()}"
 } else null
@@ -86,7 +86,7 @@ fun renderBoolean(attr: Attr, key: String, value: String) =
         if (attr accepts "boolean" && (value == "true" || value == "false")) key * value else null
 
 fun renderInteger(attr: Attr, key: String, value: String) =
-        if (attr accepts "integer" && value.matches("\\-?[0-9]+")) key * value else null
+        if (attr accepts "integer" && value.matches("\\-?[0-9]+".toRegex())) key * value else null
 
 fun renderFloat(attr: Attr, key: String, value: String) = if (attr accepts "float") key * "${value}f" else null
 

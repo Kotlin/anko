@@ -49,7 +49,7 @@ fun relativeLayoutRenderer(parentName: String, attrs: Map<String, String>) = if 
 
 ) + marginLayoutRenderer(parentName, attrs) else null
 
-[suppress("UNUSED_PARAMETER")]
+@suppress("UNUSED_PARAMETER")
 fun marginLayoutRenderer(parentName: String, attrs: Map<String, String>) =
         listOf("margin", "marginLeft", "marginTop", "marginRight", "marginBottom").map {
             attrs.prop(it) { renderDimension(NoAttr, it.key.swapCamelCase(), it.value) }

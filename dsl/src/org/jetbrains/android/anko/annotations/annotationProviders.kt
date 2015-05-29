@@ -32,11 +32,11 @@ public enum class ExternalAnnotation {
     NotNull
 }
 
-public trait AnnotationProvider {
+public interface AnnotationProvider {
     fun getExternalAnnotations(packageName: String): Map<String, Set<ExternalAnnotation>>
 }
 
-public trait BulkAnnotationProvider : AnnotationProvider {
+public interface BulkAnnotationProvider : AnnotationProvider {
     override fun getExternalAnnotations(packageName: String): Map<String, Set<ExternalAnnotation>> {
         return mapOf()
     }

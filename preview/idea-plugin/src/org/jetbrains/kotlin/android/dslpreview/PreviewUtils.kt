@@ -92,7 +92,7 @@ fun resolveJetClass(prob: PsiElement, cacheService: KotlinCacheService): JetClas
     }
 
     if (prob is JetClass && (prob.getParent() !is JetClassBody) &&
-            !prob.isEnum() && !prob.isTrait() && !prob.isAnnotation() && !prob.isInner()) {
+            !prob.isEnum() && !prob.isInterface() && !prob.isAnnotation() && !prob.isInner()) {
         try {
             val session = cacheService.getLazyResolveSession(prob)
             val memberDescriptor = session.getClassDescriptor(prob)
