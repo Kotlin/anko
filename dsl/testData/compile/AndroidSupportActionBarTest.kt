@@ -20,6 +20,11 @@ public open class MyActivity() : AppCompatActivity() {
         supportActionBar?.customView = layoutInflater.inflate(0, null)
         supportActionBar?.navigationMode = ActionBar.NAVIGATION_MODE_TABS
 
+        supportActionBar?.displayShowHomeEnabled = true
+        supportActionBar?.displayUseLogoEnabled = true
+        supportActionBar?.displayHomeAsUpEnabled = true
+        supportActionBar?.displayShowTitleEnabled = true
+
         supportActionBar?.addTab(supportActionBar?.
                 newTab()?.
                 setText("Tab 1")?.

@@ -2179,3 +2179,58 @@ public val android.support.v7.app.AppCompatActivity.menuInflater: android.view.M
 public val android.support.v7.app.AppCompatActivity.supportActionBar: android.support.v7.app.ActionBar?
     get() = getSupportActionBar()
 
+public var android.support.v7.app.ActionBar.icon: Int
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.icon' property does not have a getter")
+    set(v) = setIcon(v)
+
+public var android.support.v7.app.ActionBar.logo: Int
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.logo' property does not have a getter")
+    set(v) = setLogo(v)
+
+public var android.support.v7.app.ActionBar.selectedNavigationItem: Int
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.selectedNavigationItem' property does not have a getter")
+    set(v) = setSelectedNavigationItem(v)
+
+public var android.support.v7.app.ActionBar.displayUseLogoEnabled: Boolean
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.displayUseLogoEnabled' property does not have a getter")
+    set(v) = setDisplayUseLogoEnabled(v)
+
+public var android.support.v7.app.ActionBar.displayShowHomeEnabled: Boolean
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.displayShowHomeEnabled' property does not have a getter")
+    set(v) = setDisplayShowHomeEnabled(v)
+
+public var android.support.v7.app.ActionBar.displayHomeAsUpEnabled: Boolean
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.displayHomeAsUpEnabled' property does not have a getter")
+    set(v) = setDisplayHomeAsUpEnabled(v)
+
+public var android.support.v7.app.ActionBar.displayShowTitleEnabled: Boolean
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.displayShowTitleEnabled' property does not have a getter")
+    set(v) = setDisplayShowTitleEnabled(v)
+
+public var android.support.v7.app.ActionBar.displayShowCustomEnabled: Boolean
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.displayShowCustomEnabled' property does not have a getter")
+    set(v) = setDisplayShowCustomEnabled(v)
+
+public var android.support.v7.app.ActionBar.backgroundDrawable: android.graphics.drawable.Drawable?
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.backgroundDrawable' property does not have a getter")
+    set(v) = setBackgroundDrawable(v)
+
+public var android.support.v7.app.ActionBar.stackedBackgroundDrawable: android.graphics.drawable.Drawable?
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.stackedBackgroundDrawable' property does not have a getter")
+    set(v) = setStackedBackgroundDrawable(v)
+
+public var android.support.v7.app.ActionBar.splitBackgroundDrawable: android.graphics.drawable.Drawable?
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.splitBackgroundDrawable' property does not have a getter")
+    set(v) = setSplitBackgroundDrawable(v)
+
+public var android.support.v7.app.ActionBar.homeButtonEnabled: Boolean
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.homeButtonEnabled' property does not have a getter")
+    set(v) = setHomeButtonEnabled(v)
+
+public var android.support.v7.app.ActionBar.homeAsUpIndicator: android.graphics.drawable.Drawable?
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.homeAsUpIndicator' property does not have a getter")
+    set(v) = setHomeAsUpIndicator(v)
+public var android.support.v7.app.ActionBar.homeAsUpIndicatorResource: Int
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.homeAsUpIndicatorResource' property does not have a getter")
+    set(v) = setHomeAsUpIndicator(v)
+
