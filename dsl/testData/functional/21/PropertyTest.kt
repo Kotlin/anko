@@ -1803,3 +1803,53 @@ public var android.widget.Gallery.gravity: Int
     get() = throw AnkoException("'android.widget.Gallery.gravity' property does not have a getter")
     set(v) = setGravity(v)
 
+public var android.app.ActionBar.customView: android.view.View?
+    get() = getCustomView()
+    set(v) = setCustomView(v)
+
+public var android.app.ActionBar.displayOptions: Int
+    get() = getDisplayOptions()
+    set(v) = setDisplayOptions(v)
+
+public val android.app.ActionBar.height: Int
+    get() = getHeight()
+
+public val android.app.ActionBar.navigationItemCount: Int
+    get() = getNavigationItemCount()
+
+public var android.app.ActionBar.navigationMode: Int
+    get() = getNavigationMode()
+    set(v) = setNavigationMode(v)
+
+public val android.app.ActionBar.selectedNavigationIndex: Int
+    get() = getSelectedNavigationIndex()
+
+public val android.app.ActionBar.selectedTab: android.app.ActionBar.Tab?
+    get() = getSelectedTab()
+
+public var android.app.ActionBar.subtitle: CharSequence?
+    get() = getSubtitle()
+    set(v) = setSubtitle(v)
+public var android.app.ActionBar.subtitleResource: Int
+    get() = throw AnkoException("'android.app.ActionBar.subtitleResource' property does not have a getter")
+    set(v) = setSubtitle(v)
+
+public val android.app.ActionBar.tabCount: Int
+    get() = getTabCount()
+
+public var android.app.ActionBar.title: CharSequence?
+    get() = getTitle()
+    set(v) = setTitle(v)
+public var android.app.ActionBar.titleResource: Int
+    get() = throw AnkoException("'android.app.ActionBar.titleResource' property does not have a getter")
+    set(v) = setTitle(v)
+
+public val android.app.Activity.actionBar: android.app.ActionBar?
+    get() = getActionBar()
+
+public val android.app.Activity.fragmentManager: android.app.FragmentManager
+    get() = getFragmentManager()
+
+public val android.app.Activity.menuInflater: android.view.MenuInflater
+    get() = getMenuInflater()
+

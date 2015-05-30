@@ -309,3 +309,9 @@ public fun Intent.singleTop(): Intent = setFlag(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 public inline fun FragmentManager.transactions(init: FragmentTransaction.() -> FragmentTransaction): FragmentTransaction {
     return beginTransaction().init()
 }
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Fragment> FragmentManager.find(id: Int): T? = findFragmentById(id) as? T
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Fragment> FragmentManager.find(tag: String): T? = findFragmentByTag(tag) as? T

@@ -24,6 +24,24 @@ public val android.support.v4.view.ViewPager.fakeDragging: Boolean
 public val android.support.v4.widget.DrawerLayout.statusBarBackgroundDrawable: android.graphics.drawable.Drawable?
     get() = getStatusBarBackgroundDrawable()
 
+public val android.support.v4.widget.NestedScrollView.maxScrollAmount: Int
+    get() = getMaxScrollAmount()
+
+public val android.support.v4.widget.NestedScrollView.nestedScrollAxes: Int
+    get() = getNestedScrollAxes()
+
+public var android.support.v4.widget.NestedScrollView.fillViewport: Boolean
+    get() = isFillViewport()
+    set(v) = setFillViewport(v)
+
+public var android.support.v4.widget.NestedScrollView.nestedScrollingEnabled: Boolean
+    get() = isNestedScrollingEnabled()
+    set(v) = setNestedScrollingEnabled(v)
+
+public var android.support.v4.widget.NestedScrollView.smoothScrollingEnabled: Boolean
+    get() = isSmoothScrollingEnabled()
+    set(v) = setSmoothScrollingEnabled(v)
+
 public var android.support.v4.widget.SlidingPaneLayout.coveredFadeColor: Int
     get() = getCoveredFadeColor()
     set(v) = setCoveredFadeColor(v)
@@ -68,6 +86,52 @@ public val android.support.v7.widget.ActionMenuView.overflowMenuShowing: Boolean
 public var android.support.v7.widget.ActionMenuView.overflowReserved: Boolean
     get() = isOverflowReserved()
     set(v) = setOverflowReserved(v)
+
+public var android.support.v7.widget.AppCompatAutoCompleteTextView.supportBackgroundTintList: android.content.res.ColorStateList?
+    get() = getSupportBackgroundTintList()
+    set(v) = setSupportBackgroundTintList(v)
+
+public var android.support.v7.widget.AppCompatAutoCompleteTextView.supportBackgroundTintMode: android.graphics.PorterDuff.Mode?
+    get() = getSupportBackgroundTintMode()
+    set(v) = setSupportBackgroundTintMode(v)
+
+public var android.support.v7.widget.AppCompatButton.supportBackgroundTintList: android.content.res.ColorStateList?
+    get() = getSupportBackgroundTintList()
+    set(v) = setSupportBackgroundTintList(v)
+
+public var android.support.v7.widget.AppCompatButton.supportBackgroundTintMode: android.graphics.PorterDuff.Mode?
+    get() = getSupportBackgroundTintMode()
+    set(v) = setSupportBackgroundTintMode(v)
+
+public val android.support.v7.widget.AppCompatCheckBox.compoundPaddingLeft: Int
+    get() = getCompoundPaddingLeft()
+
+public var android.support.v7.widget.AppCompatEditText.supportBackgroundTintList: android.content.res.ColorStateList?
+    get() = getSupportBackgroundTintList()
+    set(v) = setSupportBackgroundTintList(v)
+
+public var android.support.v7.widget.AppCompatEditText.supportBackgroundTintMode: android.graphics.PorterDuff.Mode?
+    get() = getSupportBackgroundTintMode()
+    set(v) = setSupportBackgroundTintMode(v)
+
+public var android.support.v7.widget.AppCompatMultiAutoCompleteTextView.supportBackgroundTintList: android.content.res.ColorStateList?
+    get() = getSupportBackgroundTintList()
+    set(v) = setSupportBackgroundTintList(v)
+
+public var android.support.v7.widget.AppCompatMultiAutoCompleteTextView.supportBackgroundTintMode: android.graphics.PorterDuff.Mode?
+    get() = getSupportBackgroundTintMode()
+    set(v) = setSupportBackgroundTintMode(v)
+
+public val android.support.v7.widget.AppCompatRadioButton.compoundPaddingLeft: Int
+    get() = getCompoundPaddingLeft()
+
+public var android.support.v7.widget.AppCompatSpinner.supportBackgroundTintList: android.content.res.ColorStateList?
+    get() = getSupportBackgroundTintList()
+    set(v) = setSupportBackgroundTintList(v)
+
+public var android.support.v7.widget.AppCompatSpinner.supportBackgroundTintMode: android.graphics.PorterDuff.Mode?
+    get() = getSupportBackgroundTintMode()
+    set(v) = setSupportBackgroundTintMode(v)
 
 public val android.support.v7.widget.LinearLayoutCompat.baseline: Int
     get() = getBaseline()
@@ -2064,4 +2128,54 @@ public var android.widget.LinearLayout.gravity: Int
 public var android.widget.Gallery.gravity: Int
     get() = throw AnkoException("'android.widget.Gallery.gravity' property does not have a getter")
     set(v) = setGravity(v)
+
+public val android.support.v4.app.FragmentActivity.supportFragmentManager: android.support.v4.app.FragmentManager?
+    get() = getSupportFragmentManager()
+
+public var android.support.v7.app.ActionBar.customView: android.view.View?
+    get() = getCustomView()
+    set(v) = setCustomView(v)
+
+public var android.support.v7.app.ActionBar.displayOptions: Int
+    get() = getDisplayOptions()
+    set(v) = setDisplayOptions(v)
+
+public val android.support.v7.app.ActionBar.height: Int
+    get() = getHeight()
+
+public val android.support.v7.app.ActionBar.navigationItemCount: Int
+    get() = getNavigationItemCount()
+
+public var android.support.v7.app.ActionBar.navigationMode: Int
+    get() = getNavigationMode()
+    set(v) = setNavigationMode(v)
+
+public val android.support.v7.app.ActionBar.selectedNavigationIndex: Int
+    get() = getSelectedNavigationIndex()
+
+public val android.support.v7.app.ActionBar.selectedTab: android.support.v7.app.ActionBar.Tab?
+    get() = getSelectedTab()
+
+public var android.support.v7.app.ActionBar.subtitle: CharSequence?
+    get() = getSubtitle()
+    set(v) = setSubtitle(v)
+public var android.support.v7.app.ActionBar.subtitleResource: Int
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.subtitleResource' property does not have a getter")
+    set(v) = setSubtitle(v)
+
+public val android.support.v7.app.ActionBar.tabCount: Int
+    get() = getTabCount()
+
+public var android.support.v7.app.ActionBar.title: CharSequence?
+    get() = getTitle()
+    set(v) = setTitle(v)
+public var android.support.v7.app.ActionBar.titleResource: Int
+    get() = throw AnkoException("'android.support.v7.app.ActionBar.titleResource' property does not have a getter")
+    set(v) = setTitle(v)
+
+public val android.support.v7.app.AppCompatActivity.menuInflater: android.view.MenuInflater?
+    get() = getMenuInflater()
+
+public val android.support.v7.app.AppCompatActivity.supportActionBar: android.support.v7.app.ActionBar?
+    get() = getSupportActionBar()
 

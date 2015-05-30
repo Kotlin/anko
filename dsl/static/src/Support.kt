@@ -212,4 +212,10 @@ public inline fun FragmentManager.transactions(init: FragmentTransaction.() -> F
     return beginTransaction().init()
 }
 
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Fragment> FragmentManager.find(id: Int): T? = findFragmentById(id) as? T
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Fragment> FragmentManager.find(tag: String): T? = findFragmentByTag(tag) as? T
+
 /* END SECTION */

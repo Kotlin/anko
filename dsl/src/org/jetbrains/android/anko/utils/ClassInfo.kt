@@ -90,7 +90,7 @@ fun ClassNode.isActionBar(classTree: ClassTree): Boolean {
 }
 
 fun ClassNode.isSupportActionBar(classTree: ClassTree): Boolean {
-    val isSuccessor = ((classTree.isSuccessorOf(this, "android/support/v7/app/ActionBarActivity") || this.name == "android/support/v7/app/ActionBarActivity") ||
+    val isSuccessor = ((classTree.isSuccessorOf(this, "android/support/v4/app/FragmentActivity") || this.name == "android/support/v4/app/FragmentActivity") ||
                         ((classTree.isSuccessorOf(this, "android/support/v7/app/ActionBar") || this.name == "android/support/v7/app/ActionBar")))
     return isSuccessor && !isInner
 }

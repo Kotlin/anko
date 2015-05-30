@@ -111,7 +111,7 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration, isSupport: 
     // Generate actionbar properties
     val actionbarPropertyGetters = generate(PROPERTIES) {
         availableMethods
-                .filter { ((isSupport && it.clazz.isSupportActionBar) || it.clazz.isActionBar) &&
+                .filter { ((isSupport && it.clazz.isSupportActionBar) || (!isSupport && it.clazz.isActionBar)) &&
                         it.method.isGetter() && !it.method.isOverridden && !it.method.isListenerGetter &&
                         !config.excludedProperties.contains(it.clazz.fqName + "#" + it.method.name) &&
                         !config.excludedProperties.contains(it.clazz.fqName + "#*")
@@ -120,7 +120,7 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration, isSupport: 
     }
 
     val actionbarPropertySetters = availableMethods
-            .filter { ((isSupport && it.clazz.isSupportActionBar) || it.clazz.isActionBar) && it.method.isNonListenerSetter() && !it.method.isOverridden }
+            .filter { ((isSupport && it.clazz.isSupportActionBar) || (!isSupport && it.clazz.isActionBar)) && it.method.isNonListenerSetter() && !it.method.isOverridden }
             .groupBy { it.identifier }
 
     val actionbarProperties = genProperties(actionbarPropertyGetters, actionbarPropertySetters)
