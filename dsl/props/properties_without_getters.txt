@@ -1,6 +1,5 @@
 android.view.View.minimumHeight
 android.view.View.minimumWidth
-android.widget.TextView.enabled
 android.widget.TextView.textColor
 android.widget.TextView.highlightColor
 android.widget.TextView.hintTextColor

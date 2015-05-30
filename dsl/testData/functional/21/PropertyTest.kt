@@ -1771,10 +1771,6 @@ public var android.widget.ImageView.imageBitmap: android.graphics.Bitmap?
     get() = throw AnkoException("'android.widget.ImageView.imageBitmap' property does not have a getter")
     set(v) = setImageBitmap(v)
 
-public var android.widget.TextView.enabled: Boolean
-    get() = throw AnkoException("'android.widget.TextView.enabled' property does not have a getter")
-    set(v) = setEnabled(v)
-
 public var android.widget.TextView.textColor: Int
     get() = throw AnkoException("'android.widget.TextView.textColor' property does not have a getter")
     set(v) = setTextColor(v)
