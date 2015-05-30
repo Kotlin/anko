@@ -14,7 +14,7 @@ Required tools:
 **1.** Firstly, make a clone of Anko repository:
 
 ```bash
-git clone git@github.com:yanex/anko.git && cd anko
+git clone git://github.com/JetBrains/anko.git && cd anko
 ```
 
 **2.** Then get all required dependencies (this could take minute or two):
