@@ -73,7 +73,7 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration): Configurab
         .sortBy { it.name }
 
     val listeners = availableMethods
-            .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter }
+            .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter && !it.method.isDeprecated }
             .map { makeListener(it) }
             .sortBy { it.setter.identifier }
 
