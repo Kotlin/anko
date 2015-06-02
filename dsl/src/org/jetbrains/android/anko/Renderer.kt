@@ -437,10 +437,17 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         )
     }
 
+    private val ClassNode.fromSupportV4: Boolean
+        get() = fqName.startsWith("android.support.v4")
+
     private val ClassNode.fromSupportV7: Boolean
         get() = fqName.startsWith("android.support.v7")
 
     private val ClassNode.supportSuffix: String
-        get() = if (fromSupportV7) "Support" else ""
+        get() = when {
+            fromSupportV4 -> "V4"
+            fromSupportV7 -> "V7"
+            else -> ""
+        }
 
 }
