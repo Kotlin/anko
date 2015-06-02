@@ -60,6 +60,9 @@ val ClassNode.isAbstract: Boolean
 val ClassNode.isPublic: Boolean
     get() = ((access and Opcodes.ACC_PUBLIC) != 0)
 
+val ClassNode.isInterface: Boolean
+    get() = ((access and Opcodes.ACC_INTERFACE) != 0)
+
 val InnerClassNode.isPublic: Boolean
     get() = ((access and Opcodes.ACC_PUBLIC) != 0)
 
