@@ -32,7 +32,7 @@ import java.util.*
 
 class Renderer(private val generator: Generator) : Configurable(generator.config) {
     companion object {
-        val NOTHING_TO_INLINE = "[suppress(\"NOTHING_TO_INLINE\")]"
+        val NOTHING_TO_INLINE = "@suppress(\"NOTHING_TO_INLINE\")"
         val ONLY_LOCAL_RETURN = "inlineOptions(InlineOption.ONLY_LOCAL_RETURN)"
 
         val CONSTRUCTOR1 = arrayOf(Type.getObjectType("android/content/Context"))
@@ -190,7 +190,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                         line("if (columns.size() != $i)")
                         val s = if (i == 1) "" else "s"
                         indent.line("throw SQLiteException(\"Invalid row: $i column$s required\")")
-                        line("[suppress(\"UNCHECKED_CAST\")]")
+                        line("@suppress(\"UNCHECKED_CAST\")")
                         line("return parser($args)")
                         line("}")
                     line("}")
