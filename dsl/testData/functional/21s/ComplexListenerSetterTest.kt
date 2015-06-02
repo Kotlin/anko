@@ -10,20 +10,44 @@ public fun android.gesture.GestureOverlayView.onGesturingListener(init: __Gestur
     addOnGesturingListener(listener)
 }
 
-public fun android.support.v4.view.ViewPager.onPageChangeListener(init: __ViewPager_OnPageChangeListener.() -> Unit) {
-    val listener = __ViewPager_OnPageChangeListener()
+public fun android.support.design.widget.TabLayout.onTabSelectedListener(init: __TabLayout_OnTabSelectedListener.() -> Unit) {
+    val listener = __TabLayout_OnTabSelectedListener()
     listener.init()
-    setOnPageChangeListener(listener)
+    setOnTabSelectedListener(listener)
 }
 
-public fun android.support.v7.widget.SearchView.onQueryTextListener(init: __SearchViewSupport_OnQueryTextListener.() -> Unit) {
-    val listener = __SearchViewSupport_OnQueryTextListener()
+public fun android.support.v4.view.ViewPager.onPageChangeListener(init: __ViewPagerV4_OnPageChangeListener.() -> Unit) {
+    val listener = __ViewPagerV4_OnPageChangeListener()
+    listener.init()
+    addOnPageChangeListener(listener)
+}
+
+public fun android.support.v7.widget.RecyclerView.onChildAttachStateChangeListener(init: __RecyclerViewV7_OnChildAttachStateChangeListener.() -> Unit) {
+    val listener = __RecyclerViewV7_OnChildAttachStateChangeListener()
+    listener.init()
+    addOnChildAttachStateChangeListener(listener)
+}
+
+public fun android.support.v7.widget.RecyclerView.onItemTouchListener(init: __RecyclerViewV7_OnItemTouchListener.() -> Unit) {
+    val listener = __RecyclerViewV7_OnItemTouchListener()
+    listener.init()
+    addOnItemTouchListener(listener)
+}
+
+public fun android.support.v7.widget.RecyclerView.onScrollListener(init: __RecyclerViewV7_OnScrollListener.() -> Unit) {
+    val listener = __RecyclerViewV7_OnScrollListener()
+    listener.init()
+    addOnScrollListener(listener)
+}
+
+public fun android.support.v7.widget.SearchView.onQueryTextListener(init: __SearchViewV7_OnQueryTextListener.() -> Unit) {
+    val listener = __SearchViewV7_OnQueryTextListener()
     listener.init()
     setOnQueryTextListener(listener)
 }
 
-public fun android.support.v7.widget.SearchView.onSuggestionListener(init: __SearchViewSupport_OnSuggestionListener.() -> Unit) {
-    val listener = __SearchViewSupport_OnSuggestionListener()
+public fun android.support.v7.widget.SearchView.onSuggestionListener(init: __SearchViewV7_OnSuggestionListener.() -> Unit) {
+    val listener = __SearchViewV7_OnSuggestionListener()
     listener.init()
     setOnSuggestionListener(listener)
 }

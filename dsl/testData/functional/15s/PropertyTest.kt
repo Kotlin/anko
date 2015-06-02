@@ -6,6 +6,69 @@ public var android.renderscript.RSTextureView.renderScriptGL: android.renderscri
     get() = getRenderScriptGL()
     set(v) = setRenderScriptGL(v)
 
+public var android.support.design.widget.AppBarLayout.targetElevation: Float
+    get() = getTargetElevation()
+    set(v) = setTargetElevation(v)
+
+public val android.support.design.widget.AppBarLayout.totalScrollRange: Int
+    get() = getTotalScrollRange()
+
+public var android.support.design.widget.CollapsingToolbarLayout.contentScrim: android.graphics.drawable.Drawable?
+    get() = getContentScrim()
+    set(v) = setContentScrim(v)
+
+public var android.support.design.widget.CollapsingToolbarLayout.statusBarScrim: android.graphics.drawable.Drawable?
+    get() = getStatusBarScrim()
+    set(v) = setStatusBarScrim(v)
+
+public val android.support.design.widget.CoordinatorLayout.nestedScrollAxes: Int
+    get() = getNestedScrollAxes()
+
+public var android.support.design.widget.CoordinatorLayout.statusBarBackground: android.graphics.drawable.Drawable?
+    get() = getStatusBarBackground()
+    set(v) = setStatusBarBackground(v)
+
+public var android.support.design.widget.FloatingActionButton.backgroundTintList: android.content.res.ColorStateList?
+    get() = getBackgroundTintList()
+    set(v) = setBackgroundTintList(v)
+
+public var android.support.design.widget.FloatingActionButton.backgroundTintMode: android.graphics.PorterDuff.Mode?
+    get() = getBackgroundTintMode()
+    set(v) = setBackgroundTintMode(v)
+
+public var android.support.design.widget.NavigationView.itemBackground: android.graphics.drawable.Drawable?
+    get() = getItemBackground()
+    set(v) = setItemBackground(v)
+
+public var android.support.design.widget.NavigationView.itemIconTintList: android.content.res.ColorStateList?
+    get() = getItemIconTintList()
+    set(v) = setItemIconTintList(v)
+
+public var android.support.design.widget.NavigationView.itemTextColor: android.content.res.ColorStateList?
+    get() = getItemTextColor()
+    set(v) = setItemTextColor(v)
+
+public val android.support.design.widget.NavigationView.menu: android.view.Menu?
+    get() = getMenu()
+
+public val android.support.design.widget.TabLayout.tabCount: Int
+    get() = getTabCount()
+
+public var android.support.design.widget.TabLayout.tabGravity: Int
+    get() = getTabGravity()
+    set(v) = setTabGravity(v)
+
+public var android.support.design.widget.TabLayout.tabMode: Int
+    get() = getTabMode()
+    set(v) = setTabMode(v)
+
+public var android.support.design.widget.TabLayout.tabTextColors: android.content.res.ColorStateList?
+    get() = getTabTextColors()
+    set(v) = setTabTextColors(v)
+
+public val android.support.design.widget.TextInputLayout.editText: android.widget.EditText?
+    get() = getEditText()
+
 public var android.support.v4.view.PagerTitleStrip.textSpacing: Int
     get() = getTextSpacing()
     set(v) = setTextSpacing(v)
@@ -31,6 +94,24 @@ public val android.support.v4.view.ViewPager.fakeDragging: Boolean
 
 public val android.support.v4.widget.DrawerLayout.statusBarBackgroundDrawable: android.graphics.drawable.Drawable?
     get() = getStatusBarBackgroundDrawable()
+
+public val android.support.v4.widget.NestedScrollView.maxScrollAmount: Int
+    get() = getMaxScrollAmount()
+
+public val android.support.v4.widget.NestedScrollView.nestedScrollAxes: Int
+    get() = getNestedScrollAxes()
+
+public var android.support.v4.widget.NestedScrollView.fillViewport: Boolean
+    get() = isFillViewport()
+    set(v) = setFillViewport(v)
+
+public var android.support.v4.widget.NestedScrollView.nestedScrollingEnabled: Boolean
+    get() = isNestedScrollingEnabled()
+    set(v) = setNestedScrollingEnabled(v)
+
+public var android.support.v4.widget.NestedScrollView.smoothScrollingEnabled: Boolean
+    get() = isSmoothScrollingEnabled()
+    set(v) = setSmoothScrollingEnabled(v)
 
 public var android.support.v4.widget.SlidingPaneLayout.coveredFadeColor: Int
     get() = getCoveredFadeColor()
@@ -77,6 +158,84 @@ public var android.support.v7.widget.ActionMenuView.overflowReserved: Boolean
     get() = isOverflowReserved()
     set(v) = setOverflowReserved(v)
 
+public var android.support.v7.widget.AppCompatAutoCompleteTextView.supportBackgroundTintList: android.content.res.ColorStateList?
+    get() = getSupportBackgroundTintList()
+    set(v) = setSupportBackgroundTintList(v)
+
+public var android.support.v7.widget.AppCompatAutoCompleteTextView.supportBackgroundTintMode: android.graphics.PorterDuff.Mode?
+    get() = getSupportBackgroundTintMode()
+    set(v) = setSupportBackgroundTintMode(v)
+
+public var android.support.v7.widget.AppCompatButton.supportBackgroundTintList: android.content.res.ColorStateList?
+    get() = getSupportBackgroundTintList()
+    set(v) = setSupportBackgroundTintList(v)
+
+public var android.support.v7.widget.AppCompatButton.supportBackgroundTintMode: android.graphics.PorterDuff.Mode?
+    get() = getSupportBackgroundTintMode()
+    set(v) = setSupportBackgroundTintMode(v)
+
+public val android.support.v7.widget.AppCompatCheckBox.compoundPaddingLeft: Int
+    get() = getCompoundPaddingLeft()
+
+public var android.support.v7.widget.AppCompatEditText.supportBackgroundTintList: android.content.res.ColorStateList?
+    get() = getSupportBackgroundTintList()
+    set(v) = setSupportBackgroundTintList(v)
+
+public var android.support.v7.widget.AppCompatEditText.supportBackgroundTintMode: android.graphics.PorterDuff.Mode?
+    get() = getSupportBackgroundTintMode()
+    set(v) = setSupportBackgroundTintMode(v)
+
+public var android.support.v7.widget.AppCompatMultiAutoCompleteTextView.supportBackgroundTintList: android.content.res.ColorStateList?
+    get() = getSupportBackgroundTintList()
+    set(v) = setSupportBackgroundTintList(v)
+
+public var android.support.v7.widget.AppCompatMultiAutoCompleteTextView.supportBackgroundTintMode: android.graphics.PorterDuff.Mode?
+    get() = getSupportBackgroundTintMode()
+    set(v) = setSupportBackgroundTintMode(v)
+
+public val android.support.v7.widget.AppCompatRadioButton.compoundPaddingLeft: Int
+    get() = getCompoundPaddingLeft()
+
+public var android.support.v7.widget.AppCompatSpinner.supportBackgroundTintList: android.content.res.ColorStateList?
+    get() = getSupportBackgroundTintList()
+    set(v) = setSupportBackgroundTintList(v)
+
+public var android.support.v7.widget.AppCompatSpinner.supportBackgroundTintMode: android.graphics.PorterDuff.Mode?
+    get() = getSupportBackgroundTintMode()
+    set(v) = setSupportBackgroundTintMode(v)
+
+public var android.support.v7.widget.CardView.cardElevation: Float
+    get() = getCardElevation()
+    set(v) = setCardElevation(v)
+
+public val android.support.v7.widget.CardView.contentPaddingBottom: Int
+    get() = getContentPaddingBottom()
+
+public val android.support.v7.widget.CardView.contentPaddingLeft: Int
+    get() = getContentPaddingLeft()
+
+public val android.support.v7.widget.CardView.contentPaddingRight: Int
+    get() = getContentPaddingRight()
+
+public val android.support.v7.widget.CardView.contentPaddingTop: Int
+    get() = getContentPaddingTop()
+
+public var android.support.v7.widget.CardView.maxCardElevation: Float
+    get() = getMaxCardElevation()
+    set(v) = setMaxCardElevation(v)
+
+public var android.support.v7.widget.CardView.preventCornerOverlap: Boolean
+    get() = getPreventCornerOverlap()
+    set(v) = setPreventCornerOverlap(v)
+
+public var android.support.v7.widget.CardView.radius: Float
+    get() = getRadius()
+    set(v) = setRadius(v)
+
+public var android.support.v7.widget.CardView.useCompatPadding: Boolean
+    get() = getUseCompatPadding()
+    set(v) = setUseCompatPadding(v)
+
 public val android.support.v7.widget.LinearLayoutCompat.baseline: Int
     get() = getBaseline()
 
@@ -114,6 +273,43 @@ public var android.support.v7.widget.LinearLayoutCompat.baselineAligned: Boolean
 public var android.support.v7.widget.LinearLayoutCompat.measureWithLargestChildEnabled: Boolean
     get() = isMeasureWithLargestChildEnabled()
     set(v) = setMeasureWithLargestChildEnabled(v)
+
+public val android.support.v7.widget.RecyclerView.baseline: Int
+    get() = getBaseline()
+
+public val android.support.v7.widget.RecyclerView.compatAccessibilityDelegate: android.support.v7.widget.RecyclerViewAccessibilityDelegate?
+    get() = getCompatAccessibilityDelegate()
+
+public var android.support.v7.widget.RecyclerView.itemAnimator: android.support.v7.widget.RecyclerView.ItemAnimator?
+    get() = getItemAnimator()
+    set(v) = setItemAnimator(v)
+
+public var android.support.v7.widget.RecyclerView.layoutManager: android.support.v7.widget.RecyclerView.LayoutManager?
+    get() = getLayoutManager()
+    set(v) = setLayoutManager(v)
+
+public val android.support.v7.widget.RecyclerView.maxFlingVelocity: Int
+    get() = getMaxFlingVelocity()
+
+public val android.support.v7.widget.RecyclerView.minFlingVelocity: Int
+    get() = getMinFlingVelocity()
+
+public var android.support.v7.widget.RecyclerView.recycledViewPool: android.support.v7.widget.RecyclerView.RecycledViewPool?
+    get() = getRecycledViewPool()
+    set(v) = setRecycledViewPool(v)
+
+public val android.support.v7.widget.RecyclerView.scrollState: Int
+    get() = getScrollState()
+
+public val android.support.v7.widget.RecyclerView.animating: Boolean
+    get() = isAnimating()
+
+public val android.support.v7.widget.RecyclerView.attachedToWindow: Boolean
+    get() = isAttachedToWindow()
+
+public var android.support.v7.widget.RecyclerView.nestedScrollingEnabled: Boolean
+    get() = isNestedScrollingEnabled()
+    set(v) = setNestedScrollingEnabled(v)
 
 public var android.support.v7.widget.SearchView.imeOptions: Int
     get() = getImeOptions()
