@@ -16,10 +16,12 @@
 
 package org.jetbrains.android.generator.android_jar
 
-import java.io.*
-import org.jetbrains.android.anko.utils.*
-import java.util.zip.*
-import java.util.regex.*
+import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
+import java.io.File
+import java.io.FileOutputStream
+import java.util.*
+import java.util.regex.Pattern
+import java.util.zip.ZipFile
 
 public fun main(args: Array<String>): Unit = AndroidJarCollector.collect()
 
@@ -28,6 +30,14 @@ object AndroidJarCollector {
 
     private val REQUIRED_VERSIONS = arrayOf("15", "15s", "19", "19s", "21", "21s")
     private val VERSIONS = File("workdir/original").listFiles(AndroidVersionDirectoryFilter())
+
+    private val SUPPORT_LIBS = arrayOf(
+            "appcompat-v7",
+            "cardview-v7",
+            "design",
+            "recyclerview-v7",
+            "support-v4"
+    )
 
     fun check(): Boolean {
         if (VERSIONS == null || VERSIONS.isEmpty()) return false
@@ -41,7 +51,7 @@ object AndroidJarCollector {
             val support = version.name.endsWith("s")
 
             fun hasSupport(): Boolean {
-                arrayOf("support-v4", "appcompat-v7").forEach { filename ->
+                SUPPORT_LIBS.forEach { filename ->
                     if (version.listFiles { it.name.startsWith(filename) }?.isEmpty() ?: true) return false
                 }
                 return true
@@ -77,18 +87,15 @@ object AndroidJarCollector {
 
         if (ANDROID_HOME.isEmpty()) throw RuntimeException("ANDROID_HOME environment variable is not set")
 
-        val platformsDir = File(ANDROID_HOME, "platforms")
-        val supportV4Dir = File(ANDROID_HOME, "extras/android/m2repository/com/android/support/support-v4/")
-        val lastSupportV4Dir = getLastSupportDirectory(supportV4Dir)
-        val lastSupportV4Aar = lastSupportV4Dir?.listFiles { it.extension == "aar" }?.firstOrNull()
+        val platformsDir = checkAarExists("Platform", File(ANDROID_HOME, "platforms"))
 
-        val appCompatV7Dir = File(ANDROID_HOME, "extras/android/m2repository/com/android/support/appcompat-v7/")
-        val lastAppCompatV7Dir = getLastSupportDirectory(appCompatV7Dir)
-        val lastAppCompatV7Aar = lastAppCompatV7Dir?.listFiles { it.extension == "aar" }?.firstOrNull()
-
-        if (!platformsDir.exists()) throw RuntimeException("Platform directory was not found")
-        if (lastSupportV4Aar == null || !lastSupportV4Aar.exists()) throw RuntimeException("support-v4 directory was not found")
-        if (lastAppCompatV7Aar == null || !lastAppCompatV7Aar.exists()) throw RuntimeException("appcompat-v7 directory was not found")
+        val supportAars = HashMap<String, File>(SUPPORT_LIBS.size())
+        for (lib in SUPPORT_LIBS) {
+            val dir = File(ANDROID_HOME, "extras/android/m2repository/com/android/support/${lib}/")
+            val last = getLastSupportDirectory(dir)
+            val aar = checkAarExists(lib, last?.listFiles { it.extension == "aar" }?.firstOrNull())
+            supportAars.put(lib, aar)
+        }
 
         for (version in REQUIRED_VERSIONS) {
             print("Processing version ${version}:")
@@ -105,12 +112,12 @@ object AndroidJarCollector {
             print(" android...")
             val androidJar = File(platformN, "android.jar")
             assert(androidJar.exists())
-            androidJar.copyTo(File(versionDir, androidJar.name))
+            androidJar.copyTo(File(versionDir, androidJar.name), true)
 
             if (support) {
-                print(" support-v4...")
-                arrayOf(lastSupportV4Aar, lastAppCompatV7Aar).forEach { aarFile ->
-                    val aarName = aarFile.name.substringBeforeLast('.')
+                print(" support...")
+                supportAars.values().forEach { aarFile ->
+                    val aarName = aarFile!!.name.substringBeforeLast('.')
                     ZipFile(aarFile).use { zip ->
                         val entries = zip.entries()
                         var entry = entries.nextElement()
@@ -132,6 +139,15 @@ object AndroidJarCollector {
             println(" done.")
         }
         println("Complete.")
+    }
+
+    suppress("nothing_to_inline")
+    private inline fun checkAarExists(dir: String, file: File?): File {
+        return if (!(file == null || !file.exists())) {
+            file
+        } else {
+            throw RuntimeException("${dir} directory was not found")
+        }
     }
 
     private inline fun <R> ZipFile.use(block: (ZipFile) -> R): R {

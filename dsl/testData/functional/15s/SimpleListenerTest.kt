@@ -1,5 +1,7 @@
 public fun android.gesture.GestureOverlayView.onGesturePerformed(l: (overlay: android.gesture.GestureOverlayView?, gesture: android.gesture.Gesture?) -> Unit): Unit = addOnGesturePerformedListener(l)
 
+public fun android.support.design.widget.AppBarLayout.onOffsetChanged(l: (p0: android.support.design.widget.AppBarLayout?, p1: Int) -> Unit): Unit = addOnOffsetChangedListener(l)
+
 public fun android.support.v4.app.FragmentTabHost.onTabChanged(l: (tabId: String?) -> Unit): Unit = setOnTabChangedListener(l)
 
 public fun android.support.v4.widget.SwipeRefreshLayout.onRefresh(l: () -> Unit): Unit = setOnRefreshListener(l)

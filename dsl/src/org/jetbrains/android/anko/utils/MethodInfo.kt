@@ -129,6 +129,9 @@ fun MethodNode.isNonListenerSetter(): Boolean {
 val MethodNode.isConstructor: Boolean
     get() = name == "<init>"
 
+val MethodNode.isDeprecated: Boolean
+    get() = (access and Opcodes.ACC_DEPRECATED) != 0
+
 val MethodNode.isListenerSetter: Boolean
     get() = (name.startsWith("setOn") || name.startsWith("add")) && name.endsWith("Listener")
 

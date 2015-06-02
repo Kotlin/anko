@@ -43,7 +43,204 @@ public open class _AppWidgetHostView(ctx: Context): android.appwidget.AppWidgetH
 
 }
 
-public open class _FragmentTabHost(ctx: Context): android.support.v4.app.FragmentTabHost(ctx) {
+public open class _AppBarLayout(ctx: Context): android.support.design.widget.AppBarLayout(ctx) {
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, appBarLayoutInit: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(c!!, attrs!!)
+        layoutParams.appBarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, appBarLayoutInit: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(width, height)
+        layoutParams.appBarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, weight: Float, appBarLayoutInit: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(width, height, weight)
+        layoutParams.appBarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(p: android.view.ViewGroup.LayoutParams?, appBarLayoutInit: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(p!!)
+        layoutParams.appBarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.MarginLayoutParams?, appBarLayoutInit: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(source!!)
+        layoutParams.appBarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.widget.LinearLayout.LayoutParams?, appBarLayoutInit: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(source!!)
+        layoutParams.appBarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.support.design.widget.AppBarLayout.LayoutParams?, appBarLayoutInit: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(source!!)
+        layoutParams.appBarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+}
+
+public open class _CollapsingToolbarLayout(ctx: Context): android.support.design.widget.CollapsingToolbarLayout(ctx) {
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, collapsingToolbarLayoutInit: android.support.design.widget.CollapsingToolbarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.CollapsingToolbarLayout.LayoutParams(c!!, attrs!!)
+        layoutParams.collapsingToolbarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, collapsingToolbarLayoutInit: android.support.design.widget.CollapsingToolbarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.CollapsingToolbarLayout.LayoutParams(width, height)
+        layoutParams.collapsingToolbarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, gravity: Int, collapsingToolbarLayoutInit: android.support.design.widget.CollapsingToolbarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.CollapsingToolbarLayout.LayoutParams(width, height, gravity)
+        layoutParams.collapsingToolbarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(p: android.view.ViewGroup.LayoutParams?, collapsingToolbarLayoutInit: android.support.design.widget.CollapsingToolbarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.CollapsingToolbarLayout.LayoutParams(p!!)
+        layoutParams.collapsingToolbarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.MarginLayoutParams?, collapsingToolbarLayoutInit: android.support.design.widget.CollapsingToolbarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.CollapsingToolbarLayout.LayoutParams(source!!)
+        layoutParams.collapsingToolbarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.widget.FrameLayout.LayoutParams?, collapsingToolbarLayoutInit: android.support.design.widget.CollapsingToolbarLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.CollapsingToolbarLayout.LayoutParams(source!!)
+        layoutParams.collapsingToolbarLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+}
+
+public open class _CoordinatorLayout(ctx: Context): android.support.design.widget.CoordinatorLayout(ctx) {
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, coordinatorLayoutInit: android.support.design.widget.CoordinatorLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.CoordinatorLayout.LayoutParams(width, height)
+        layoutParams.coordinatorLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(p: android.support.design.widget.CoordinatorLayout.LayoutParams?, coordinatorLayoutInit: android.support.design.widget.CoordinatorLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.CoordinatorLayout.LayoutParams(p!!)
+        layoutParams.coordinatorLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(p: android.view.ViewGroup.MarginLayoutParams?, coordinatorLayoutInit: android.support.design.widget.CoordinatorLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.CoordinatorLayout.LayoutParams(p!!)
+        layoutParams.coordinatorLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(p: android.view.ViewGroup.LayoutParams?, coordinatorLayoutInit: android.support.design.widget.CoordinatorLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.design.widget.CoordinatorLayout.LayoutParams(p!!)
+        layoutParams.coordinatorLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+}
+
+public open class _TabLayout(ctx: Context): android.support.design.widget.TabLayout(ctx) {
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, tabLayoutInit: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.LinearLayout.LayoutParams(c!!, attrs!!)
+        layoutParams.tabLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, tabLayoutInit: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.LinearLayout.LayoutParams(width, height)
+        layoutParams.tabLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, weight: Float, tabLayoutInit: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.LinearLayout.LayoutParams(width, height, weight)
+        layoutParams.tabLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(p: android.view.ViewGroup.LayoutParams?, tabLayoutInit: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.LinearLayout.LayoutParams(p!!)
+        layoutParams.tabLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.MarginLayoutParams?, tabLayoutInit: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.LinearLayout.LayoutParams(source!!)
+        layoutParams.tabLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.widget.LinearLayout.LayoutParams?, tabLayoutInit: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.LinearLayout.LayoutParams(source!!)
+        layoutParams.tabLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+}
+
+public open class _TextInputLayout(ctx: Context): android.support.design.widget.TextInputLayout(ctx) {
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, textInputLayoutInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
+        layoutParams.textInputLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, textInputLayoutInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.view.ViewGroup.LayoutParams(width, height)
+        layoutParams.textInputLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, textInputLayoutInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.view.ViewGroup.LayoutParams(source!!)
+        layoutParams.textInputLayoutInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+}
+
+public open class _FragmentTabHostV4(ctx: Context): android.support.v4.app.FragmentTabHost(ctx) {
     public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, fragmentTabHostInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.fragmentTabHostInit()
@@ -88,7 +285,7 @@ public open class _FragmentTabHost(ctx: Context): android.support.v4.app.Fragmen
 
 }
 
-public open class _ViewPager(ctx: Context): android.support.v4.view.ViewPager(ctx) {
+public open class _ViewPagerV4(ctx: Context): android.support.v4.view.ViewPager(ctx) {
     public fun <T: View> T.layoutParams( viewPagerInit: android.support.v4.view.ViewPager.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.support.v4.view.ViewPager.LayoutParams()
         layoutParams.viewPagerInit()
@@ -105,7 +302,7 @@ public open class _ViewPager(ctx: Context): android.support.v4.view.ViewPager(ct
 
 }
 
-public open class _DrawerLayout(ctx: Context): android.support.v4.widget.DrawerLayout(ctx) {
+public open class _DrawerLayoutV4(ctx: Context): android.support.v4.widget.DrawerLayout(ctx) {
     public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, drawerLayoutInit: android.support.v4.widget.DrawerLayout.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.support.v4.widget.DrawerLayout.LayoutParams(c!!, attrs!!)
         layoutParams.drawerLayoutInit()
@@ -150,7 +347,31 @@ public open class _DrawerLayout(ctx: Context): android.support.v4.widget.DrawerL
 
 }
 
-public open class _SlidingPaneLayout(ctx: Context): android.support.v4.widget.SlidingPaneLayout(ctx) {
+public open class _NestedScrollViewV4(ctx: Context): android.support.v4.widget.NestedScrollView(ctx) {
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, nestedScrollViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
+        layoutParams.nestedScrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, nestedScrollViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.view.ViewGroup.LayoutParams(width, height)
+        layoutParams.nestedScrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, nestedScrollViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.view.ViewGroup.LayoutParams(source!!)
+        layoutParams.nestedScrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+}
+
+public open class _SlidingPaneLayoutV4(ctx: Context): android.support.v4.widget.SlidingPaneLayout(ctx) {
     public fun <T: View> T.layoutParams( slidingPaneLayoutInit: android.support.v4.widget.SlidingPaneLayout.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.support.v4.widget.SlidingPaneLayout.LayoutParams()
         layoutParams.slidingPaneLayoutInit()
@@ -195,7 +416,7 @@ public open class _SlidingPaneLayout(ctx: Context): android.support.v4.widget.Sl
 
 }
 
-public open class _ActionMenuViewSupport(ctx: Context): android.support.v7.widget.ActionMenuView(ctx) {
+public open class _ActionMenuViewV7(ctx: Context): android.support.v7.widget.ActionMenuView(ctx) {
     public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, actionMenuViewInit: android.support.v7.widget.ActionMenuView.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.support.v7.widget.ActionMenuView.LayoutParams(c!!, attrs!!)
         layoutParams.actionMenuViewInit()
@@ -226,7 +447,7 @@ public open class _ActionMenuViewSupport(ctx: Context): android.support.v7.widge
 
 }
 
-public open class _LinearLayoutCompatSupport(ctx: Context): android.support.v7.widget.LinearLayoutCompat(ctx) {
+public open class _LinearLayoutCompatV7(ctx: Context): android.support.v7.widget.LinearLayoutCompat(ctx) {
     public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, linearLayoutCompatInit: android.support.v7.widget.LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.support.v7.widget.LinearLayoutCompat.LayoutParams(c!!, attrs!!)
         layoutParams.linearLayoutCompatInit()
@@ -271,7 +492,45 @@ public open class _LinearLayoutCompatSupport(ctx: Context): android.support.v7.w
 
 }
 
-public open class _ToolbarSupport(ctx: Context): android.support.v7.widget.Toolbar(ctx) {
+public open class _RecyclerViewV7(ctx: Context): android.support.v7.widget.RecyclerView(ctx) {
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, recyclerViewInit: android.support.v7.widget.RecyclerView.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.v7.widget.RecyclerView.LayoutParams(c!!, attrs!!)
+        layoutParams.recyclerViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, recyclerViewInit: android.support.v7.widget.RecyclerView.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.v7.widget.RecyclerView.LayoutParams(width, height)
+        layoutParams.recyclerViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.MarginLayoutParams?, recyclerViewInit: android.support.v7.widget.RecyclerView.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.v7.widget.RecyclerView.LayoutParams(source!!)
+        layoutParams.recyclerViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, recyclerViewInit: android.support.v7.widget.RecyclerView.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.v7.widget.RecyclerView.LayoutParams(source!!)
+        layoutParams.recyclerViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.support.v7.widget.RecyclerView.LayoutParams?, recyclerViewInit: android.support.v7.widget.RecyclerView.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.support.v7.widget.RecyclerView.LayoutParams(source!!)
+        layoutParams.recyclerViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+}
+
+public open class _ToolbarV7(ctx: Context): android.support.v7.widget.Toolbar(ctx) {
     public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, toolbarInit: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.support.v7.widget.Toolbar.LayoutParams(c!!, attrs!!)
         layoutParams.toolbarInit()

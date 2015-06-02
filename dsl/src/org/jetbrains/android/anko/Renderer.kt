@@ -16,19 +16,21 @@
 
 package org.jetbrains.android.anko
 
-import org.objectweb.asm.tree.ClassNode
-import org.objectweb.asm.tree.MethodNode
-import org.jetbrains.android.anko.utils.Buffer
-import org.jetbrains.android.anko.config.AnkoFile.*
-import org.jetbrains.android.anko.config.ConfigurationTune.*
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
+import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.Configurable
+import org.jetbrains.android.anko.config.ConfigurationTune.*
 import org.jetbrains.android.anko.config.Props
 import org.jetbrains.android.anko.config.Variable
 import org.jetbrains.android.anko.config.generate
+import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
-import java.util.*
+import org.objectweb.asm.tree.ClassNode
+import org.objectweb.asm.tree.MethodNode
+import java.util.ArrayList
+import java.util.Arrays
+import java.util.LinkedHashMap
 
 class Renderer(private val generator: Generator) : Configurable(generator.config) {
     companion object {
@@ -359,6 +361,8 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         //ListenerHelper class name (helper mutable class, generates real listener)
         val helperClassName = getHelperClassName(listener)
 
+        val callSuperInit = if (!listener.clazz.isInterface) "()" else ""
+
         //field list (already with indentation)
         val fields = listener.methods.map { method ->
             val varName = method.name.decapitalize()
@@ -387,7 +391,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         }
 
         return buffer {
-            line("class $helperClassName : $listenerClassName {")
+            line("class $helperClassName : $listenerClassName$callSuperInit {")
             lines(fields).nl()
             lines(listenerMethods)
             line("}")
@@ -433,10 +437,17 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         )
     }
 
+    private val ClassNode.fromSupportV4: Boolean
+        get() = fqName.startsWith("android.support.v4")
+
     private val ClassNode.fromSupportV7: Boolean
         get() = fqName.startsWith("android.support.v7")
 
     private val ClassNode.supportSuffix: String
-        get() = if (fromSupportV7) "Support" else ""
+        get() = when {
+            fromSupportV4 -> "V4"
+            fromSupportV7 -> "V7"
+            else -> ""
+        }
 
 }

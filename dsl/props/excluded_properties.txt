@@ -1,4 +1,5 @@
 android.support.v4.view.PagerTabStrip#*
+android.support.v7.widget.RecyclerView#getAdapter
 android.app.MediaRouteButton#*
 android.appwidget.AppWidgetHostView#*
 android.gesture.GestureOverlayView#*
