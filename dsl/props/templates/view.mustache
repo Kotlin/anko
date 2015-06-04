@@ -1,0 +1,8 @@
+@suppress("NOTHING_TO_INLINE")
+public inline fun {{receiver}}.{{functionName}}(): {{returnType}} = {{functionName}}({})
+public inline fun {{receiver}}.{{functionName}}({{additionalArgs}}{{#additionalArgs}}, {{/additionalArgs}}inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: {{className}}.() -> Unit): {{returnType}} = addView<{{returnType}}> {
+    ctx ->
+    val view = {{className}}({{constructorArgs}})
+    view.init()
+    view
+}

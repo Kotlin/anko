@@ -40,7 +40,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         val CONSTRUCTOR2 = arrayOf(Type.getObjectType("android/content/Context"), Type.getObjectType("android/util/AttributeSet"))
         val AVAILABLE_VIEW_CONSTRUCTORS = listOf(CONSTRUCTOR1, CONSTRUCTOR2)
 
-        fun renderConstructor(
+        fun renderConstructorArgs(
                 view: ClassNode,
                 constructors: List<MethodNode?>,
                 ctxName: String,
@@ -224,34 +224,30 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
             views: List<ClassNode>,
             nameResolver: (ClassNode) -> String
     ): List<String> {
-        return views.filter { !it.isAbstract }.map { view ->
-            val typeName = view.fqName
-            val className = nameResolver(view)
-            val funcName = view.simpleName.decapitalize() + view.supportSuffix
+        val rendered = arrayListOf<String>()
 
+        for (view in views.filter { !it.isAbstract }) {
             val constructors = AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
                 view.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
             }
 
-            buffer {
-                fun Buffer.add(extendFor: String) {
-                    line(NOTHING_TO_INLINE)
-                    line("public inline fun $extendFor.$funcName(): $typeName = $funcName({})")
-                    line("public inline fun $extendFor.$funcName($ONLY_LOCAL_RETURN init: $className.() -> Unit): $typeName = addView<$typeName> {")
-                        line("ctx ->")
-                        line("val view = $className(${renderConstructor(view, constructors, "ctx")})")
-                        line("view.init()")
-                        line("view")
-                    line("}")
-                }
+            fun renderView(receiver: String) = render("view") {
+                "receiver" % receiver
+                "functionName" % (view.simpleName.decapitalize() + view.supportSuffix)
+                "className" % nameResolver(view)
+                "returnType" % view.fqName
+                "additionalArgs" % ""
+                "constructorArgs" % renderConstructorArgs(view, constructors, "ctx")
+            }
 
-                add("ViewManager")
-                if (config[TOP_LEVEL_DSL_ITEMS] && view.isViewGroup(generator.classTree)) {
-                    nl().add("Context")
-                    nl().add("Activity")
-                }
-            }.toString()
+            rendered.add(renderView("ViewManager"))
+            if (config[TOP_LEVEL_DSL_ITEMS] && view.isViewGroup(generator.classTree)) {
+                rendered.add(renderView("Context"))
+                rendered.add(renderView("Activity"))
+            }
         }
+
+        return rendered
     }
 
     //render a simple listener (extension function)
@@ -402,10 +398,10 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
         return render("layout") {
             "name" % "_${node.layout.simpleName}${node.layout.supportSuffix}"
-            "constructor" % renderConstructor(node.layout, constructors, "ctx", argumentNames = true)
+            "constructor" % renderConstructorArgs(node.layout, constructors, "ctx", argumentNames = true)
 
             "baseClass" % node.layout.fqName
-            "baseConstructor" % renderConstructor(node.layout, constructors, "ctx")
+            "baseConstructor" % renderConstructorArgs(node.layout, constructors, "ctx")
 
             "functions" % seq(node.constructors) { item ->
                 val function = MethodNodeWithClass(node.layoutParams, item)
