@@ -38,4 +38,18 @@ public class TemplateContext {
         args.put(this, v)
         return v
     }
+
+    public fun String.mod(v: TemplateContext.() -> Unit) {
+        val innerContext = TemplateContext()
+        innerContext.v()
+        args.put(this, innerContext.getArguments())
+    }
+
+    public fun <T> seq(items: Iterable<T>, v: TemplateContext.(item: T) -> Unit): List<Map<String, Any>> {
+        return items.map {
+            val itemContext = TemplateContext()
+            itemContext.v(it)
+            itemContext.getArguments()
+        }
+    }
 }

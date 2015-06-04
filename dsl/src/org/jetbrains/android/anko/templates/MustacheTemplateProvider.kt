@@ -29,6 +29,6 @@ public class MustacheTemplateProvider(private val baseDir: File) : TemplateProvi
 
     private fun getTemplate(templateName: String) = templateCache.getOrPut(templateName) {
         val templateText = File(baseDir, "$templateName.mustache").readText()
-        Mustache.compiler().escapeHTML(false).compile(templateText)
+        Mustache.compiler().escapeHTML(false).emptyStringIsFalse(true).compile(templateText)
     }
 }

@@ -154,7 +154,7 @@ public open class _GridLayout(ctx: Context): android.widget.GridLayout(ctx) {
         return this
     }
 
-    public fun <T: View> T.layoutParams( gridLayoutInit: android.widget.GridLayout.LayoutParams.() -> Unit = defaultInit): T {
+    public fun <T: View> T.layoutParams(gridLayoutInit: android.widget.GridLayout.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.widget.GridLayout.LayoutParams()
         layoutParams.gridLayoutInit()
         this@layoutParams.setLayoutParams(layoutParams)
@@ -392,7 +392,7 @@ public open class _TableLayout(ctx: Context): android.widget.TableLayout(ctx) {
         return this
     }
 
-    public fun <T: View> T.layoutParams( tableLayoutInit: android.widget.TableLayout.LayoutParams.() -> Unit = defaultInit): T {
+    public fun <T: View> T.layoutParams(tableLayoutInit: android.widget.TableLayout.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.widget.TableLayout.LayoutParams()
         layoutParams.tableLayoutInit()
         this@layoutParams.setLayoutParams(layoutParams)
@@ -437,7 +437,7 @@ public open class _TableRow(ctx: Context): android.widget.TableRow(ctx) {
         return this
     }
 
-    public fun <T: View> T.layoutParams( tableRowInit: android.widget.TableRow.LayoutParams.() -> Unit = defaultInit): T {
+    public fun <T: View> T.layoutParams(tableRowInit: android.widget.TableRow.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.widget.TableRow.LayoutParams()
         layoutParams.tableRowInit()
         this@layoutParams.setLayoutParams(layoutParams)

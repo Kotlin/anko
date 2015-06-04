@@ -392,35 +392,30 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     //render a layout class (only those with custom LayoutParams)
-    fun renderLayout(lp: LayoutParamsNode): String {
-        val layoutClassName = lp.layout.fqName
-        val layoutParamsClassName = lp.layoutParams.fqName
-        val helperClassName = "_${lp.layout.simpleName}${lp.layout.supportSuffix}"
-
-        fun renderExtensionFunction(constructor: MethodNodeWithClass): String {
-            val arguments = constructor.formatLayoutParamsArguments(config)
-            val substituted = constructor.formatLayoutParamsArgumentsInvoke(config)
-            val initArgumentName = "${lp.layout.simpleName.decapitalize()}Init"
-            val separator = if (arguments == "") "" else ","
-            return buffer(indent = 1) {
-                line("public fun <T: View> T.layoutParams($arguments$separator $initArgumentName: $layoutParamsClassName.() -> Unit = defaultInit): T {")
-                line("val layoutParams = $layoutParamsClassName($substituted)")
-                line("layoutParams.$initArgumentName()")
-                line("this@layoutParams.setLayoutParams(layoutParams)")
-                line("return this")
-                line("}")
-            }.toString()
-        }
-
-        val layoutParamsFunc = lp.constructors.map { renderExtensionFunction(MethodNodeWithClass(lp.layoutParams, it)) }
+    fun renderLayout(node: LayoutParamsNode): String {
         val constructors = AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
-            lp.layout.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
+            node.layout.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
         }
 
-        val constructorArguments = renderConstructor(lp.layout, constructors, "ctx", argumentNames = true)
-        val constructor = renderConstructor(lp.layout, constructors, "ctx")
-        return "public open class $helperClassName($constructorArguments): $layoutClassName($constructor) {\n" +
-            layoutParamsFunc.joinToString("\n") + "\n}\n"
+        val initArgumentName = "${node.layout.simpleName.decapitalize()}Init"
+        val layoutParamsClass = node.layoutParams.fqName
+
+        return render("layout") {
+            "name" % "_${node.layout.simpleName}${node.layout.supportSuffix}"
+            "constructor" % renderConstructor(node.layout, constructors, "ctx", argumentNames = true)
+
+            "baseClass" % node.layout.fqName
+            "baseConstructor" % renderConstructor(node.layout, constructors, "ctx")
+
+            "functions" % seq(node.constructors) { item ->
+                val function = MethodNodeWithClass(node.layoutParams, item)
+
+                "args" % function.formatLayoutParamsArguments(config)
+                "substituted" % function.formatLayoutParamsArgumentsInvoke(config)
+                "initArgumentName" % initArgumentName
+                "layoutParamsClass" % layoutParamsClass
+            }
+        }
     }
 
     private fun supportsResourceSetter(typ: String): Boolean {
