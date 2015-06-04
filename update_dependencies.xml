@@ -43,6 +43,9 @@
         <get src="http://search.maven.org/remotecontent?filepath=org/ccil/cowan/tagsoup/tagsoup/1.2/tagsoup-1.2.jar"
              dest="lib/tagsoup-1.2.jar" usetimestamp="true"/>
 
+        <get src="http://search.maven.org/remotecontent?filepath=com/samskivert/jmustache/1.10/jmustache-1.10.jar"
+             dest="lib/jmustache.jar" usetimestamp="true"/>
+
         <get src="http://search.maven.org/remotecontent?filepath=org/robolectric/robolectric/2.4/robolectric-2.4-jar-with-dependencies.jar"
              dest="lib/robolectric-with-dependencies.jar" usetimestamp="true"/>
 

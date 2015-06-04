@@ -20,6 +20,8 @@ import org.jetbrains.android.anko.annotations.*
 import org.jetbrains.android.anko.sources.AndroidHomeSourceProvider
 import org.jetbrains.android.anko.sources.CachingSourceProvider
 import org.jetbrains.android.anko.sources.SourceManager
+import org.jetbrains.android.anko.templates.MustacheTemplateProvider
+import org.jetbrains.android.anko.templates.TemplateManager
 import java.util.HashSet
 import java.util.HashMap
 import java.util.ArrayList
@@ -40,6 +42,7 @@ open class DefaultAnkoConfiguration(outputDirectory: String = "workdir/gen/") : 
 
     override val annotationManager: AnnotationManager
     override val sourceManager: SourceManager
+    override val templateManager: TemplateManager
 
     init {
         val zipFileProvider = ZipFileAnnotationProvider(File("lib/Kotlin/kotlinc/lib/kotlin-android-sdk-annotations.jar"))
@@ -49,6 +52,8 @@ open class DefaultAnkoConfiguration(outputDirectory: String = "workdir/gen/") : 
                 CachingAnnotationProvider(zipFileProvider), CachingAnnotationProvider(directoryProvider)))
 
         sourceManager = SourceManager(AndroidHomeSourceProvider(21))
+
+        templateManager = TemplateManager(MustacheTemplateProvider(File("dsl/props/templates")))
     }
 
     override fun getOutputFile(ankoFile: AnkoFile): File {

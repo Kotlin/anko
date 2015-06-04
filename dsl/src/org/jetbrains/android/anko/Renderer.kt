@@ -26,6 +26,7 @@ import org.jetbrains.android.anko.config.Configurable
 import org.jetbrains.android.anko.config.Props
 import org.jetbrains.android.anko.config.Variable
 import org.jetbrains.android.anko.config.generate
+import org.jetbrains.android.anko.templates.TemplateContext
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
 import java.util.*
@@ -341,16 +342,12 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     private fun renderComplexListenerSetter(listener: ComplexListener): String {
-        val helperClassName = getHelperClassName(listener)
-        val setterClass = listener.setter.clazz.fqNameWithTypeArguments
-
-        return buffer {
-            line("public fun $setterClass.${listener.name}Listener(init: $helperClassName.() -> Unit) {")
-            line("val listener = $helperClassName()")
-            line("listener.init()")
-            line("${listener.setter.method.name}(listener)")
-            line("}")
-        }.toString()
+        return render("complex_listener_setter") {
+            "receiver" % listener.setter.clazz.fqNameWithTypeArguments
+            "methodName" % listener.name
+            "listener" % getHelperClassName(listener)
+            "setter" % listener.setter.method.name
+        }
     }
 
     //render a complex listener
@@ -431,6 +428,10 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
             typ.matches("^CharSequence\\??$".toRegex()) ||
                 (typ.matches("^android.graphics.drawable.Drawable\\??$".toRegex()))
         )
+    }
+
+    private fun render(templateName: String, body: TemplateContext.() -> Unit): String {
+        return config.templateManager.render(templateName, body)
     }
 
     private val ClassNode.fromSupportV7: Boolean
