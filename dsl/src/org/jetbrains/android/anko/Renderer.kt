@@ -139,15 +139,13 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     // Render simple listeners (interfaces with one method)
     val simpleListeners = generate(SIMPLE_LISTENERS) {
-        generator.listeners
-            .filter { it is SimpleListener }
-            .map { renderSimpleListener(it as SimpleListener) }
+        generator.listeners.filterIsInstance<SimpleListener>().map { it.renderSimpleListener() }
     }
 
     // Render complex listeners (interfaces with more than one method)
     @suppress("UNCHECKED_CAST")
     private val complexListeners = generate(COMPLEX_LISTENER_CLASSES, COMPLEX_LISTENER_SETTERS) {
-        generator.listeners.filter { it is ComplexListener } as List<ComplexListener>
+        generator.listeners.filterIsInstance<ComplexListener>()
     }
 
     val complexListenerSetters = generate(COMPLEX_LISTENER_SETTERS) {
@@ -253,12 +251,12 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     //render a simple listener (extension function)
     //example: fun android.view.View.onClick(l: (android.view.View?) -> Unit) = setOnClickListener(l)
-    private fun renderSimpleListener(listener: SimpleListener) = render("simple_listener") {
-        "receiver" % listener.setter.clazz.fqNameWithTypeArguments
-        "name" % listener.method.name
-        "args" % listener.method.methodWithClass.formatArguments(config)
-        "returnType" % listener.method.returnType
-        "setter" % listener.setter.method.name
+    private fun SimpleListener.renderSimpleListener() = render("simple_listener") {
+        "receiver" % setter.clazz.fqNameWithTypeArguments
+        "name" % method.name
+        "args" % method.methodWithClass.formatArguments(config)
+        "returnType" % method.returnType
+        "setter" % setter.method.name
     }
 
     fun genHelperConstructors(): List<String> {
