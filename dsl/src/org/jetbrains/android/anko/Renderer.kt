@@ -172,10 +172,11 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     val services = generator.services.map {
-        val propertyName = it.second!!.data.simpleName.decapitalize()
-        val className = it.second!!.data.fqName
-        "public val Context.$propertyName: $className\n"+
-                "${config.indent}get() = getSystemService(Context.${it.first}) as $className\n"
+        render("service") {
+            "name" % it.second!!.data.simpleName.decapitalize()
+            "className" % it.second!!.data.fqName
+            "const" % it.first
+        }
     }
 
     val sqLiteParserHelpers = generate(SQL_PARSER_HELPERS) {
@@ -252,14 +253,12 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     //render a simple listener (extension function)
     //example: fun android.view.View.onClick(l: (android.view.View?) -> Unit) = setOnClickListener(l)
-    private fun renderSimpleListener(listener: SimpleListener): String {
-        val className = listener.setter.clazz.fqNameWithTypeArguments
-        val arguments = listener.method.methodWithClass.formatArguments(config)
-        val returnType = listener.method.returnType
-
-        return buffer {
-            line("public fun $className.${listener.method.name}(l: ($arguments) -> $returnType): Unit = ${listener.setter.method.name}(l)")
-        }.toString()
+    private fun renderSimpleListener(listener: SimpleListener) = render("simple_listener") {
+        "receiver" % listener.setter.clazz.fqNameWithTypeArguments
+        "name" % listener.method.name
+        "args" % listener.method.methodWithClass.formatArguments(config)
+        "returnType" % listener.method.returnType
+        "setter" % listener.setter.method.name
     }
 
     fun genHelperConstructors(): List<String> {
