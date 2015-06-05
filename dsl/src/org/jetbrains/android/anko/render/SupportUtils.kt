@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.anko.config
+package org.jetbrains.android.anko.render
 
-public enum class ConfigurationTune : ConfigurationOption {
-    HELPER_CONSTRUCTORS,
-    TOP_LEVEL_DSL_ITEMS,
-    SIMPLE_LISTENERS,
-    COMPLEX_LISTENER_SETTERS,
-    COMPLEX_LISTENER_CLASSES
+import org.jetbrains.android.anko.fqName
+import org.objectweb.asm.tree.ClassNode
+
+interface SupportUtils {
+    protected val ClassNode.supportSuffix: String
+        get() = if (fromSupportV7) "Support" else ""
+
+    private val ClassNode.fromSupportV7: Boolean
+        get() = fqName.startsWith("android.support.v7")
 }

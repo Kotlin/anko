@@ -46,14 +46,14 @@ public interface ClassTreeUtils {
             return isSuccessor && !isInner
         }
 
-    protected fun ClassNode.isLayoutParams(): Boolean {
-        return isInner &&
-                (classTree.isSuccessorOf(this, "android/view/ViewGroup\$LayoutParams") || this.name == "android/view/ViewGroup\$LayoutParams")
-    }
+    protected val ClassNode.isLayoutParams: Boolean
+        get() {
+            return isInner && (classTree.isSuccessorOf(this, "android/view/ViewGroup\$LayoutParams") || this.name == "android/view/ViewGroup\$LayoutParams")
+        }
 
-    protected fun ClassNode.isViewGroup(): Boolean {
-        return !isInner &&
-                (classTree.isSuccessorOf(this, "android/view/ViewGroup") || this.name == "android/view/ViewGroup")
-    }
+    protected val ClassNode.isViewGroup: Boolean
+        get() {
+            return !isInner && (classTree.isSuccessorOf(this, "android/view/ViewGroup") || this.name == "android/view/ViewGroup")
+        }
 
 }

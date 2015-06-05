@@ -44,9 +44,7 @@ abstract class AnkoConfiguration {
     abstract val sourceManager: SourceManager
     abstract val templateManager: TemplateManager
 
-    public fun get(file: AnkoFile): Boolean = files.contains(file)
-
-    public fun get(tune: ConfigurationTune): Boolean = tunes.contains(tune)
+    public fun get(option: ConfigurationOption): Boolean = tunes.contains(option) || files.contains(option)
 
     public abstract fun getOutputFile(ankoFile: AnkoFile): File
 }

@@ -18,6 +18,7 @@ package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
+import org.jetbrains.android.anko.render.DSLRenderer
 import java.io.File
 
 class DSLGenerator(
@@ -52,7 +53,7 @@ class DSLGenerator(
 
         val classTree = this.classTree ?: ClassProcessor(jars).genClassTree()
         val generator = Generator(classTree, config)
-        val renderer = Renderer(generator)
+        val renderer = DSLRenderer(generator)
         Writer(renderer).write()
 
         if (config.generateMavenArtifact) {

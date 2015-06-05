@@ -16,7 +16,7 @@
 
 package org.jetbrains.android.anko.config
 
-public enum class AnkoFile(val filename: String) {
+public enum class AnkoFile(val filename: String) : ConfigurationOption {
     ASYNC("Async.kt"),
     CONTEXT_UTILS("ContextUtils.kt"),
     CUSTOM("Custom.kt"),

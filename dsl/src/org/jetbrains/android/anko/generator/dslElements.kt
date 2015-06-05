@@ -14,12 +14,8 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.anko.config
+package org.jetbrains.android.anko.generator
 
-public enum class ConfigurationTune : ConfigurationOption {
-    HELPER_CONSTRUCTORS,
-    TOP_LEVEL_DSL_ITEMS,
-    SIMPLE_LISTENERS,
-    COMPLEX_LISTENER_SETTERS,
-    COMPLEX_LISTENER_CLASSES
-}
+import org.objectweb.asm.tree.ClassNode
+
+public data class ViewElement(val view: ClassNode, val isContainer: Boolean)

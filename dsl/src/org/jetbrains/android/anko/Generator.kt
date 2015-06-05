@@ -25,6 +25,8 @@ import java.util.Arrays
 import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.Configurable
 import org.jetbrains.android.anko.config.generate
+import org.jetbrains.android.anko.config.generateList
+import org.jetbrains.android.anko.generator.ViewElement
 import org.jetbrains.android.anko.utils.ClassTreeUtils
 import org.jetbrains.android.anko.utils.toProperty
 import org.objectweb.asm.tree.FieldNode
@@ -54,7 +56,7 @@ data class ViewProperty(val name: String, val getter: MethodNodeWithClass?, val 
 data class LayoutParamsNode(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>)
 
 class Generator(
-        protected override val classTree: ClassTree,
+        public override val classTree: ClassTree,
         config: AnkoConfiguration
 ) : Configurable(config), ClassTreeUtils {
 
@@ -64,18 +66,20 @@ class Generator(
     // Views and viewGroups without custom LayoutParams
     val viewClasses = availableClasses
             .filter { it.isView && !it.isViewGroupWithParams }
-            .sortBy { it.name }
+            .map { ViewElement(it, it.isViewGroup) }
+            .sortBy { it.view.name }
 
     val viewGroupClasses = availableClasses
             .filter { it.isViewGroupWithParams }
-            .sortBy { it.name }
+            .map { ViewElement(it, true) }
+            .sortBy { it.view.name }
 
     val listeners = availableMethods
             .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter }
             .map { makeListener(it) }
             .sortBy { it.setter.identifier }
 
-    private val propertyGetters = generate(PROPERTIES) {
+    private val propertyGetters = generateList(PROPERTIES) {
         availableMethods
                 .filter {
                     it.clazz.isView &&
@@ -94,11 +98,11 @@ class Generator(
 
     // Find all ancestors of ViewGroup.LayoutParams in classes that extends ViewGroup.
     val layoutParams = viewGroupClasses
-            .map { extractLayoutParams(it) }
+            .map { extractLayoutParams(it.view) }
             .filterNotNull()
             .sortBy { it.layout.name }
 
-    val services = generate(SERVICES) {
+    val services = generateList(SERVICES) {
         classTree.findNode("android/content/Context")?.data?.fields
                 ?.filter { it.name.endsWith("_SERVICE") }
                 ?.map { it.name to classTree.findNode("android", it.toServiceClassName()) }
@@ -107,7 +111,7 @@ class Generator(
                 ?: listOf()
     }
 
-    val interfaceWorkarounds = generate(INTERFACE_WORKAROUNDS) {
+    val interfaceWorkarounds = generateList(INTERFACE_WORKAROUNDS) {
         availableClasses.filter { clazz ->
             clazz.isPublic && clazz.innerClasses != null && clazz.fields.isNotEmpty() &&
                     clazz.innerClasses.any { inner -> inner.isProtected && inner.isInterface && inner.name == clazz.name }
@@ -197,7 +201,7 @@ class Generator(
 
             val returnTypeClass = classTree.findNode(generateMethod.returnType.internalName)!!.data
             if (!returnTypeClass.fqName.startsWith(viewGroup.fqName)) return findForParent()
-            return if (returnTypeClass.isLayoutParams()) returnTypeClass else findForParent()
+            return if (returnTypeClass.isLayoutParams) returnTypeClass else findForParent()
         }
 
         val lpInnerClassName = viewGroup.innerClasses?.firstOrNull { it.name.contains("LayoutParams") } ?: return null
@@ -213,7 +217,7 @@ class Generator(
     }
 
     protected val ClassNode.isViewGroupWithParams: Boolean
-        get() = isViewGroup() && hasLayoutParams(this)
+        get() = isViewGroup && hasLayoutParams(this)
 
     //returns true if the viewGroup contains custom LayoutParams class
     private fun hasLayoutParams(viewGroup: ClassNode): Boolean {
@@ -223,10 +227,10 @@ class Generator(
     private val MethodNode.isListenerGetter: Boolean
         get() = name.startsWith("get") && name.endsWith("Listener")
 
-    override fun isExcluded(node: ClassNode) =
+    public override fun isExcluded(node: ClassNode) =
             node.fqName in config.excludedClasses || "${node.packageName}.*" in config.excludedClasses
 
-    override fun isExcluded(node: MethodNodeWithClass) =
+    public override fun isExcluded(node: MethodNodeWithClass) =
             (node.clazz.fqName + "#" + node.method.name) in config.excludedMethods
 
     private fun FieldNode.toServiceClassName(): String {

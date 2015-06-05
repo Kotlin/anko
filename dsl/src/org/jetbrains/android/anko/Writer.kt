@@ -24,8 +24,9 @@ import java.util.ArrayList
 import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.ConfigurationTune.*
 import org.jetbrains.android.anko.config.Props
+import org.jetbrains.android.anko.render.DSLRenderer
 
-class Writer(private val renderer: Renderer) {
+class Writer(private val renderer: DSLRenderer) {
 
     val config = renderer.config
 
@@ -99,18 +100,13 @@ class Writer(private val renderer: Renderer) {
     }
 
     private fun writeViews() {
-        val allViews = arrayListOf<String>()
-
-        if (config[VIEWS]) {
-            allViews.addAll(renderer.views)
-            allViews.addAll(renderer.viewGroups)
-        }
-
-        if (config[HELPER_CONSTRUCTORS])
-            allViews.addAll(renderer.helperConstructors)
+        val allViews = listOf(
+                if (config[VIEWS]) renderer.views + renderer.viewGroups else null,
+                if (config[HELPER_CONSTRUCTORS]) renderer.helperConstructors.joinToString("\n") else null
+        ).filterNotNull().joinToString("")
 
         val imports = Props.imports["views"] ?: ""
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.VIEWS), allViews, imports)
+        writeToFile(config.getOutputFile(anko.config.AnkoFile.VIEWS), listOf(allViews), imports)
     }
 
     private fun writeStatic(subsystem: config.AnkoFile) {

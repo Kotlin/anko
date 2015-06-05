@@ -14,70 +14,49 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.anko
+package org.jetbrains.android.anko.render
 
+import org.jetbrains.android.anko.*
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.ConfigurationTune.*
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
-import org.jetbrains.android.anko.config.Configurable
-import org.jetbrains.android.anko.config.Props
-import org.jetbrains.android.anko.config.Variable
-import org.jetbrains.android.anko.config.generate
+import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.templates.TemplateContext
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
 import java.util.*
 
-class Renderer(private val generator: Generator) : Configurable(generator.config) {
+abstract class Renderer<T>(config: AnkoConfiguration): Configurable(config) {
+    protected abstract fun processElements(elements: T): String
+    abstract val renderIf: Array<ConfigurationOption>
+
+    public fun process(elements: T): String = generate(*renderIf) {
+        processElements(elements)
+    }
+
+    protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {
+        return config.templateManager.render(templateName, body)
+    }
+}
+
+class DSLRenderer(private val generator: Generator) : Configurable(generator.config), ViewConstructorUtils, SupportUtils {
     companion object {
         val NOTHING_TO_INLINE = "@suppress(\"NOTHING_TO_INLINE\")"
         val ONLY_LOCAL_RETURN = "inlineOptions(InlineOption.ONLY_LOCAL_RETURN)"
-
-        val CONSTRUCTOR1 = arrayOf(Type.getObjectType("android/content/Context"))
-        val CONSTRUCTOR2 = arrayOf(Type.getObjectType("android/content/Context"), Type.getObjectType("android/util/AttributeSet"))
-        val AVAILABLE_VIEW_CONSTRUCTORS = listOf(CONSTRUCTOR1, CONSTRUCTOR2)
-
-        fun renderConstructorArgs(
-                view: ClassNode,
-                constructors: List<MethodNode?>,
-                ctxName: String,
-                argumentNames: Boolean = false
-        ): String {
-            if (constructors.size() != AVAILABLE_VIEW_CONSTRUCTORS.size()) throw IllegalArgumentException("Invalid constructors list")
-
-            return if (argumentNames) {
-                when {
-                    constructors[0] != null -> "$ctxName: Context"
-                    constructors[1] != null -> "$ctxName: Context, attrs: AttributeSet?"
-                    else -> throw IllegalArgumentException("No available constructors for ${view.fqName}.")
-                }
-            } else {
-                when {
-                    constructors[0] != null -> "$ctxName"
-                    constructors[1] != null -> "$ctxName, null"
-                    else -> throw IllegalArgumentException("No available constructors for ${view.fqName}.")
-                }
-            }
-        }
     }
 
-    val views = generate(VIEWS) {
-        generateViews(generator.viewClasses) { it.fqName }
-    }
+    val views = ViewRenderer(config).process(generator.viewClasses)
+    val viewGroups = ViewGroupRenderer(config).process(generator.viewGroupClasses)
 
-    val viewGroups = generate(VIEWS) {
-        generateViews(generator.viewGroupClasses) { "_" + it.simpleName + it.supportSuffix }
-    }
-
-    val helperConstructors = generate(HELPER_CONSTRUCTORS) {
+    val helperConstructors = generateList(HELPER_CONSTRUCTORS) {
         genHelperConstructors()
     }
 
     // Generate View extension properties (with "best" setter)
-    val properties = generate(PROPERTIES) {
+    val properties = generateList(PROPERTIES) {
         generator.properties.map { property ->
             val getter = property.getter
             val className = (getter ?: property.setters.first()).clazz.fqNameWithTypeArguments
@@ -120,9 +99,9 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     private fun Buffer.renderResourceProperty(
-        otherSetters: List<MethodNodeWithClass>,
-        fullPropertyName: String,
-        returnType: String)
+            otherSetters: List<MethodNodeWithClass>,
+            fullPropertyName: String,
+            returnType: String)
     {
         if (otherSetters.isNotEmpty() && supportsResourceSetter(returnType)) {
             val resourceSetter = otherSetters.firstOrNull {
@@ -138,21 +117,21 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     // Render simple listeners (interfaces with one method)
-    val simpleListeners = generate(SIMPLE_LISTENERS) {
+    val simpleListeners = generateList(SIMPLE_LISTENERS) {
         generator.listeners.filterIsInstance<SimpleListener>().map { it.renderSimpleListener() }
     }
 
     // Render complex listeners (interfaces with more than one method)
     @suppress("UNCHECKED_CAST")
-    private val complexListeners = generate(COMPLEX_LISTENER_CLASSES, COMPLEX_LISTENER_SETTERS) {
+    private val complexListeners = generateList(COMPLEX_LISTENER_CLASSES, COMPLEX_LISTENER_SETTERS) {
         generator.listeners.filterIsInstance<ComplexListener>()
     }
 
-    val complexListenerSetters = generate(COMPLEX_LISTENER_SETTERS) {
+    val complexListenerSetters = generateList(COMPLEX_LISTENER_SETTERS) {
         complexListeners.map { renderComplexListenerSetter(it) }
     }
 
-    val complexListenerClasses = generate(COMPLEX_LISTENER_CLASSES) {
+    val complexListenerClasses = generateList(COMPLEX_LISTENER_CLASSES) {
         fun ComplexListener.id() = "${clazz.fqName}#$name"
 
         val generated = LinkedHashMap<String, String>()
@@ -165,7 +144,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
     }
 
     //generated layout classes with custom LayoutParams
-    val layouts = generate(LAYOUTS) {
+    val layouts = generateList(LAYOUTS) {
         generator.layoutParams.map { renderLayout(it) }
     }
 
@@ -177,7 +156,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         }
     }
 
-    val sqLiteParserHelpers = generate(SQL_PARSER_HELPERS) {
+    val sqLiteParserHelpers = generateList(SQL_PARSER_HELPERS) {
         val list = arrayListOf<String>()
         for (i in 1..22) {
             val types = (1..i).map { "T$it" }.joinToString(", ")
@@ -185,15 +164,15 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
             list.add(buffer {
                 line("public fun <$types, R> rowParser(parser: ($types) -> R): RowParser<R> {")
-                    line("return object : RowParser<R> {")
-                        line("override fun parseRow(columns: Array<Any>): R {")
-                        line("if (columns.size() != $i)")
-                        val s = if (i == 1) "" else "s"
-                        indent.line("throw SQLiteException(\"Invalid row: $i column$s required\")")
-                        line("@suppress(\"UNCHECKED_CAST\")")
-                        line("return parser($args)")
-                        line("}")
-                    line("}")
+                line("return object : RowParser<R> {")
+                line("override fun parseRow(columns: Array<Any>): R {")
+                line("if (columns.size() != $i)")
+                val s = if (i == 1) "" else "s"
+                indent.line("throw SQLiteException(\"Invalid row: $i column$s required\")")
+                line("@suppress(\"UNCHECKED_CAST\")")
+                line("return parser($args)")
+                line("}")
+                line("}")
                 line("}")
             }.toString())
         }
@@ -218,36 +197,6 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                 line("}")
             }.toString()
         }.joinToString("\n", "public final class InterfaceWorkarounds {\n\n", "\n\n}")
-
-    fun generateViews(
-            views: List<ClassNode>,
-            nameResolver: (ClassNode) -> String
-    ): List<String> {
-        val rendered = arrayListOf<String>()
-
-        for (view in views.filter { !it.isAbstract }) {
-            val constructors = AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
-                view.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
-            }
-
-            fun renderView(receiver: String) = render("view") {
-                "receiver" % receiver
-                "functionName" % (view.simpleName.decapitalize() + view.supportSuffix)
-                "className" % nameResolver(view)
-                "returnType" % view.fqName
-                "additionalArgs" % ""
-                "constructorArgs" % renderConstructorArgs(view, constructors, "ctx")
-            }
-
-            rendered.add(renderView("ViewManager"))
-            if (config[TOP_LEVEL_DSL_ITEMS] && view.isViewGroup(generator.classTree)) {
-                rendered.add(renderView("Context"))
-                rendered.add(renderView("Activity"))
-            }
-        }
-
-        return rendered
-    }
 
     //render a simple listener (extension function)
     //example: fun android.view.View.onClick(l: (android.view.View?) -> Unit) = setOnClickListener(l)
@@ -285,7 +234,10 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
         }
 
         val ret = arrayListOf<String>()
-        generator.viewClasses.filter { Props.helperConstructors.contains(it.fqName) }.forEach { view ->
+
+        val classesWithHelperConstructors = generator.viewClasses.filter { Props.helperConstructors.contains(it.view.fqName) }
+
+        for ((view, isContainer) in classesWithHelperConstructors) {
             val className = view.fqName
             val helperConstructors = Props.helperConstructors[view.fqName]!!
 
@@ -301,18 +253,18 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
                 fun Buffer.add(extendFor: String) {
                     line(NOTHING_TO_INLINE)
                     line("public inline fun $extendFor.$funcName($helperArguments): $className = addView<$className> {")
-                        line("ctx ->")
-                        line("val view = $className(ctx)")
-                        lines(setters)
-                        line("view")
+                    line("ctx ->")
+                    line("val view = $className(ctx)")
+                    lines(setters)
+                    line("view")
                     line("}")
 
                     line("public inline fun $extendFor.$funcName($helperArguments, $ONLY_LOCAL_RETURN init: $className.() -> Unit): $className = addView<$className> {")
-                        line("ctx ->")
-                        line("val view = $className(ctx)")
-                        lines(setters)
-                        line("view.init()")
-                        line("view")
+                    line("ctx ->")
+                    line("val view = $className(ctx)")
+                    lines(setters)
+                    line("view.init()")
+                    line("view")
                     line("}")
                 }
 
@@ -386,7 +338,7 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     //render a layout class (only those with custom LayoutParams)
     fun renderLayout(node: LayoutParamsNode): String {
-        val constructors = AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
+        val constructors = ViewConstructorUtils.AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
             node.layout.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
         }
 
@@ -413,19 +365,13 @@ class Renderer(private val generator: Generator) : Configurable(generator.config
 
     private fun supportsResourceSetter(typ: String): Boolean {
         return (
-            typ.matches("^CharSequence\\??$".toRegex()) ||
-                (typ.matches("^android.graphics.drawable.Drawable\\??$".toRegex()))
-        )
+                typ.matches("^CharSequence\\??$".toRegex()) ||
+                        (typ.matches("^android.graphics.drawable.Drawable\\??$".toRegex()))
+                )
     }
 
-    private fun render(templateName: String, body: TemplateContext.() -> Unit): String {
+    protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {
         return config.templateManager.render(templateName, body)
     }
-
-    private val ClassNode.fromSupportV7: Boolean
-        get() = fqName.startsWith("android.support.v7")
-
-    private val ClassNode.supportSuffix: String
-        get() = if (fromSupportV7) "Support" else ""
 
 }

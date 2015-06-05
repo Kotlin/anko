@@ -19,12 +19,12 @@ package org.jetbrains.android.generator.hierarchy
 import java.io.File
 import org.jetbrains.android.anko.ClassProcessor
 import org.jetbrains.android.anko.isInner
-import org.jetbrains.android.anko.isView
 import org.objectweb.asm.tree.ClassNode
 import org.jetbrains.android.anko.ClassTree
 import org.jetbrains.android.anko.ClassTreeNode
 import kotlin.platform.platformStatic
 import com.google.gson.Gson
+import org.jetbrains.android.anko.utils.ClassTreeUtils
 
 public fun main(args: Array<String>): Unit = HierarchyCollector.collect()
 
@@ -67,5 +67,10 @@ object HierarchyCollector {
     }
 
     private fun String.prettify(): String = replace("android/view/", "").replace("android/widget/", "")
+
+    private fun ClassNode.isView(classTree: ClassTree): Boolean {
+        val isSuccessor = classTree.isSuccessorOf(this, "android/view/View") || this.name == "android/view/View"
+        return isSuccessor && !isInner
+    }
 
 }
