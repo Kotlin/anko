@@ -1,4 +1,4 @@
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.button(text: CharSequence?): android.widget.Button = addView<android.widget.Button> {
     ctx ->
     val view = android.widget.Button(ctx)
@@ -13,7 +13,7 @@ public inline fun ViewManager.button(text: CharSequence?, inlineOptions(InlineOp
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.button(text: Int): android.widget.Button = addView<android.widget.Button> {
     ctx ->
     val view = android.widget.Button(ctx)
@@ -28,7 +28,7 @@ public inline fun ViewManager.button(text: Int, inlineOptions(InlineOption.ONLY_
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.checkBox(text: CharSequence?): android.widget.CheckBox = addView<android.widget.CheckBox> {
     ctx ->
     val view = android.widget.CheckBox(ctx)
@@ -43,7 +43,7 @@ public inline fun ViewManager.checkBox(text: CharSequence?, inlineOptions(Inline
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.checkBox(text: Int): android.widget.CheckBox = addView<android.widget.CheckBox> {
     ctx ->
     val view = android.widget.CheckBox(ctx)
@@ -58,7 +58,7 @@ public inline fun ViewManager.checkBox(text: Int, inlineOptions(InlineOption.ONL
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.checkBox(text: CharSequence?, checked: Boolean): android.widget.CheckBox = addView<android.widget.CheckBox> {
     ctx ->
     val view = android.widget.CheckBox(ctx)
@@ -75,7 +75,7 @@ public inline fun ViewManager.checkBox(text: CharSequence?, checked: Boolean, in
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.checkBox(text: Int, checked: Boolean): android.widget.CheckBox = addView<android.widget.CheckBox> {
     ctx ->
     val view = android.widget.CheckBox(ctx)
@@ -92,7 +92,7 @@ public inline fun ViewManager.checkBox(text: Int, checked: Boolean, inlineOption
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.editText(text: CharSequence?): android.widget.EditText = addView<android.widget.EditText> {
     ctx ->
     val view = android.widget.EditText(ctx)
@@ -107,7 +107,7 @@ public inline fun ViewManager.editText(text: CharSequence?, inlineOptions(Inline
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.editText(text: Int): android.widget.EditText = addView<android.widget.EditText> {
     ctx ->
     val view = android.widget.EditText(ctx)
@@ -122,7 +122,7 @@ public inline fun ViewManager.editText(text: Int, inlineOptions(InlineOption.ONL
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.imageButton(imageDrawable: android.graphics.drawable.Drawable?): android.widget.ImageButton = addView<android.widget.ImageButton> {
     ctx ->
     val view = android.widget.ImageButton(ctx)
@@ -137,7 +137,7 @@ public inline fun ViewManager.imageButton(imageDrawable: android.graphics.drawab
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.imageButton(imageResource: Int): android.widget.ImageButton = addView<android.widget.ImageButton> {
     ctx ->
     val view = android.widget.ImageButton(ctx)
@@ -152,7 +152,7 @@ public inline fun ViewManager.imageButton(imageResource: Int, inlineOptions(Inli
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.imageView(imageDrawable: android.graphics.drawable.Drawable?): android.widget.ImageView = addView<android.widget.ImageView> {
     ctx ->
     val view = android.widget.ImageView(ctx)
@@ -167,7 +167,7 @@ public inline fun ViewManager.imageView(imageDrawable: android.graphics.drawable
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.imageView(imageResource: Int): android.widget.ImageView = addView<android.widget.ImageView> {
     ctx ->
     val view = android.widget.ImageView(ctx)
@@ -182,7 +182,7 @@ public inline fun ViewManager.imageView(imageResource: Int, inlineOptions(Inline
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.textView(text: CharSequence?): android.widget.TextView = addView<android.widget.TextView> {
     ctx ->
     val view = android.widget.TextView(ctx)
@@ -197,7 +197,7 @@ public inline fun ViewManager.textView(text: CharSequence?, inlineOptions(Inline
     view
 }
 
-[suppress("NOTHING_TO_INLINE")]
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.textView(text: Int): android.widget.TextView = addView<android.widget.TextView> {
     ctx ->
     val view = android.widget.TextView(ctx)
