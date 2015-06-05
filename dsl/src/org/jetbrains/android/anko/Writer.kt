@@ -96,7 +96,7 @@ class Writer(private val renderer: DSLRenderer) {
 
     private fun writeSqlParserHelpers() {
         val imports = Props.imports["sqliteparserhelpers"] ?: ""
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.SQL_PARSER_HELPERS), renderer.sqLiteParserHelpers, imports, false)
+        writeToFile(config.getOutputFile(anko.config.AnkoFile.SQL_PARSER_HELPERS), listOf(renderer.sqLiteParserHelpers), imports, false)
     }
 
     private fun writeViews() {

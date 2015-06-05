@@ -91,28 +91,7 @@ class DSLRenderer(private val generator: Generator) : Configurable(generator.con
 
     val services = ServiceRenderer(config).process(generator.services)
 
-    val sqLiteParserHelpers = generateList(SQL_PARSER_HELPERS) {
-        val list = arrayListOf<String>()
-        for (i in 1..22) {
-            val types = (1..i).map { "T$it" }.joinToString(", ")
-            val args = (1..i).map { "columns[${it - 1}] as T$it" }.joinToString(", ")
-
-            list.add(buffer {
-                line("public fun <$types, R> rowParser(parser: ($types) -> R): RowParser<R> {")
-                line("return object : RowParser<R> {")
-                line("override fun parseRow(columns: Array<Any>): R {")
-                line("if (columns.size() != $i)")
-                val s = if (i == 1) "" else "s"
-                indent.line("throw SQLiteException(\"Invalid row: $i column$s required\")")
-                line("@suppress(\"UNCHECKED_CAST\")")
-                line("return parser($args)")
-                line("}")
-                line("}")
-                line("}")
-            }.toString())
-        }
-        list
-    }
+    val sqLiteParserHelpers = SqlParserHelperRenderer(config).process(1..22)
 
     val interfaceWorkarounds = InterfaceWorkaroundsRenderer(config).process(generator.interfaceWorkarounds)
 
