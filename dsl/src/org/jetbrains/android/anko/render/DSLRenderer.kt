@@ -24,6 +24,7 @@ import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.ConfigurationTune.*
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
 import org.jetbrains.android.anko.config.*
+import org.jetbrains.android.anko.generator.LayoutElement
 import org.jetbrains.android.anko.templates.TemplateContext
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
@@ -144,17 +145,9 @@ class DSLRenderer(private val generator: Generator) : Configurable(generator.con
     }
 
     //generated layout classes with custom LayoutParams
-    val layouts = generateList(LAYOUTS) {
-        generator.layoutParams.map { renderLayout(it) }
-    }
+    val layouts = LayoutRenderer(config).process(generator.layoutParams)
 
-    val services = generator.services.map {
-        render("service") {
-            "name" % it.second!!.data.simpleName.decapitalize()
-            "className" % it.second!!.data.fqName
-            "const" % it.first
-        }
-    }
+    val services = ServiceRenderer(config).process(generator.services)
 
     val sqLiteParserHelpers = generateList(SQL_PARSER_HELPERS) {
         val list = arrayListOf<String>()
@@ -334,33 +327,6 @@ class DSLRenderer(private val generator: Generator) : Configurable(generator.con
             lines(listenerMethods)
             line("}")
         }.toString()
-    }
-
-    //render a layout class (only those with custom LayoutParams)
-    fun renderLayout(node: LayoutParamsNode): String {
-        val constructors = ViewConstructorUtils.AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
-            node.layout.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
-        }
-
-        val initArgumentName = "${node.layout.simpleName.decapitalize()}Init"
-        val layoutParamsClass = node.layoutParams.fqName
-
-        return render("layout") {
-            "name" % "_${node.layout.simpleName}${node.layout.supportSuffix}"
-            "constructor" % renderConstructorArgs(node.layout, constructors, "ctx", argumentNames = true)
-
-            "baseClass" % node.layout.fqName
-            "baseConstructor" % renderConstructorArgs(node.layout, constructors, "ctx")
-
-            "functions" % seq(node.constructors) { item ->
-                val function = MethodNodeWithClass(node.layoutParams, item)
-
-                "args" % function.formatLayoutParamsArguments(config)
-                "substituted" % function.formatLayoutParamsArgumentsInvoke(config)
-                "initArgumentName" % initArgumentName
-                "layoutParamsClass" % layoutParamsClass
-            }
-        }
     }
 
     private fun supportsResourceSetter(typ: String): Boolean {

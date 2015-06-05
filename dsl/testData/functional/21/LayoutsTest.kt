@@ -769,3 +769,4 @@ public open class _ViewSwitcher(ctx: Context): android.widget.ViewSwitcher(ctx) 
 
 }
 
+

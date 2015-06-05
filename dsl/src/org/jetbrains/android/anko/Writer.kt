@@ -69,7 +69,7 @@ class Writer(private val renderer: DSLRenderer) {
 
     private fun writeLayouts() {
         val imports = Props.imports["layouts"] ?: ""
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.LAYOUTS), renderer.layouts, imports)
+        writeToFile(config.getOutputFile(anko.config.AnkoFile.LAYOUTS), listOf(renderer.layouts), imports)
     }
 
     private fun writeListeners() {
@@ -91,7 +91,7 @@ class Writer(private val renderer: DSLRenderer) {
 
     private fun writeServices() {
         val imports = Props.imports["services"] ?: ""
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.SERVICES), renderer.services, imports)
+        writeToFile(config.getOutputFile(anko.config.AnkoFile.SERVICES), listOf(renderer.services), imports)
     }
 
     private fun writeSqlParserHelpers() {

@@ -26,6 +26,8 @@ import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.Configurable
 import org.jetbrains.android.anko.config.generate
 import org.jetbrains.android.anko.config.generateList
+import org.jetbrains.android.anko.generator.LayoutElement
+import org.jetbrains.android.anko.generator.ServiceElement
 import org.jetbrains.android.anko.generator.ViewElement
 import org.jetbrains.android.anko.utils.ClassTreeUtils
 import org.jetbrains.android.anko.utils.toProperty
@@ -52,8 +54,6 @@ data class ComplexListener(
 ) : Listener(setter, clazz)
 
 data class ViewProperty(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)
-
-data class LayoutParamsNode(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>)
 
 class Generator(
         public override val classTree: ClassTree,
@@ -105,9 +105,12 @@ class Generator(
     val services = generateList(SERVICES) {
         classTree.findNode("android/content/Context")?.data?.fields
                 ?.filter { it.name.endsWith("_SERVICE") }
-                ?.map { it.name to classTree.findNode("android", it.toServiceClassName()) }
-                ?.filter { it.second != null }
-                ?.sortBy { it.first }
+                ?.map {
+                    val service = classTree.findNode("android", it.toServiceClassName())?.data
+                    if (service != null) ServiceElement(service, it.name) else null
+                }
+                ?.filterNotNull()
+                ?.sortBy { it.name }
                 ?: listOf()
     }
 
@@ -189,7 +192,7 @@ class Generator(
     }
 
     //return a pair<viewGroup, layoutParams> or null if the viewGroup doesn't contain custom LayoutParams
-    private fun extractLayoutParams(viewGroup: ClassNode): LayoutParamsNode? {
+    private fun extractLayoutParams(viewGroup: ClassNode): LayoutElement? {
         fun findActualLayoutParamsClass(viewGroup: ClassNode): ClassNode? {
             fun findForParent() = findActualLayoutParamsClass(classTree.findNode(viewGroup)!!.parent!!.data)
 
@@ -212,7 +215,7 @@ class Generator(
         }
 
         return (actualLayoutParamsClass ?: lpInnerClass).let { clazz ->
-            LayoutParamsNode(viewGroup, clazz, clazz.getConstructors().filter { it.isPublic })
+            LayoutElement(viewGroup, clazz, clazz.getConstructors().filter { it.isPublic })
         }
     }
 
