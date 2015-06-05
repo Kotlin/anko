@@ -16,6 +16,7 @@
 
 package org.jetbrains.android.anko.generator
 
+import org.jetbrains.android.anko.MethodNodeWithClass
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.InnerClassNode
 import org.objectweb.asm.tree.MethodNode
@@ -27,3 +28,5 @@ public data class LayoutElement(val layout: ClassNode, val layoutParams: ClassNo
 public data class ServiceElement(val service: ClassNode, val name: String)
 
 public data class InterfaceWorkaroundElement(val baseClass: ClassNode, val ancestor: ClassNode, val inner: InnerClassNode)
+
+data class PropertyElement(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)

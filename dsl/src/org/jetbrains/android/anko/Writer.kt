@@ -86,7 +86,7 @@ class Writer(private val renderer: DSLRenderer) {
     }
 
     private fun writeProperties() {
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.PROPERTIES), renderer.properties)
+        writeToFile(config.getOutputFile(anko.config.AnkoFile.PROPERTIES), listOf(renderer.properties))
     }
 
     private fun writeServices() {

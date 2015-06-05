@@ -26,10 +26,7 @@ import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.Configurable
 import org.jetbrains.android.anko.config.generate
 import org.jetbrains.android.anko.config.generateList
-import org.jetbrains.android.anko.generator.InterfaceWorkaroundElement
-import org.jetbrains.android.anko.generator.LayoutElement
-import org.jetbrains.android.anko.generator.ServiceElement
-import org.jetbrains.android.anko.generator.ViewElement
+import org.jetbrains.android.anko.generator.*
 import org.jetbrains.android.anko.utils.ClassTreeUtils
 import org.jetbrains.android.anko.utils.toProperty
 import org.objectweb.asm.tree.FieldNode
@@ -53,8 +50,6 @@ data class ComplexListener(
         val name: String,
         val methods: List<ListenerMethod>
 ) : Listener(setter, clazz)
-
-data class ViewProperty(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)
 
 class Generator(
         public override val classTree: ClassTree,
@@ -141,7 +136,7 @@ class Generator(
     //Convert list of getters and map of setters to property list
     private fun genProperties(
             getters: Collection<MethodNodeWithClass>,
-            setters: Map<String, List<MethodNodeWithClass>>): List<ViewProperty> {
+            setters: Map<String, List<MethodNodeWithClass>>): List<PropertyElement> {
         val existingProperties = hashSetOf<String>()
 
         val propertyWithGetters = getters.map { getter ->
@@ -153,14 +148,14 @@ class Generator(
             }
 
             existingProperties.add(property.setterIdentifier)
-            ViewProperty(property.name, getter, best + others)
+            PropertyElement(property.name, getter, best + others)
         }
         val propertyWithoutGetters = setters.values().map { setters ->
             val property = setters.first().toProperty()
 
             val id = property.setterIdentifier
             if (property.propertyFqName in config.propertiesWithoutGetters && id !in existingProperties) {
-                ViewProperty(property.name, null, setters)
+                PropertyElement(property.name, null, setters)
             } else null
         }.filterNotNull()
         return propertyWithGetters + propertyWithoutGetters

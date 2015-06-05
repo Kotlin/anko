@@ -57,65 +57,7 @@ class DSLRenderer(private val generator: Generator) : Configurable(generator.con
     }
 
     // Generate View extension properties (with "best" setter)
-    val properties = generateList(PROPERTIES) {
-        generator.properties.map { property ->
-            val getter = property.getter
-            val className = (getter ?: property.setters.first()).clazz.fqNameWithTypeArguments
-            val fullPropertyName = "$className.${property.name}"
-            val bestSetter = property.setters.firstOrNull()
-            val mutability = if (bestSetter != null) "var" else "val"
-
-            val javaReturnType = getter?.method?.returnType?.asJavaString()
-                    ?: bestSetter?.method?.args?.get(0)?.asJavaString()
-                    ?: "java.lang.Object"
-
-            val rawReturnType = getter?.method?.renderReturnType(false)
-                    ?: bestSetter?.method?.args?.get(0)?.asString(false)
-                    ?: "Any"
-
-            val nullable = if (javaReturnType.indexOf('.') < 0) {
-                false // Do not look up annotations for simple types
-            } else if (getter != null) {
-                val annotationSignature = "${getter.clazz.fqName} $javaReturnType ${getter.method.name}()"
-                val foundAnnotations = config.annotationManager.findAnnotationsFor(annotationSignature)
-                ExternalAnnotation.NotNull !in foundAnnotations
-            } else true // Default is nullable
-
-            val nullability = if (nullable) "?" else ""
-
-            val otherSetters = if (property.setters.size() > 1) property.setters.drop(1) else listOf()
-
-            buffer {
-                line("public $mutability $fullPropertyName: $rawReturnType$nullability")
-                if (getter != null) {
-                    indent.line("get() = ${getter.method.name}()")
-                } else {
-                    indent.line("get() = throw AnkoException(\"'${fullPropertyName}' property does not have a getter\")")
-                }
-                if (bestSetter != null) indent.line("set(v) = ${bestSetter.method.name}(v)")
-
-                renderResourceProperty(otherSetters, fullPropertyName, rawReturnType)
-            }.toString()
-        }
-    }
-
-    private fun Buffer.renderResourceProperty(
-            otherSetters: List<MethodNodeWithClass>,
-            fullPropertyName: String,
-            returnType: String)
-    {
-        if (otherSetters.isNotEmpty() && supportsResourceSetter(returnType)) {
-            val resourceSetter = otherSetters.firstOrNull {
-                it.method.args.size() == 1 && (it.method.args[0].getClassName() == "int")
-            }
-
-            if (resourceSetter != null) {
-                line("public var ${fullPropertyName}Resource: Int")
-                indent.line("get() = throw AnkoException(\"'${fullPropertyName}Resource' property does not have a getter\")")
-                indent.line("set(v) = ${resourceSetter.method.name}(v)")
-            }
-        }
-    }
+    val properties = PropertyRenderer(config).process(generator.properties)
 
     // Render simple listeners (interfaces with one method)
     val simpleListeners = generateList(SIMPLE_LISTENERS) {
@@ -310,13 +252,6 @@ class DSLRenderer(private val generator: Generator) : Configurable(generator.con
             lines(listenerMethods)
             line("}")
         }.toString()
-    }
-
-    private fun supportsResourceSetter(typ: String): Boolean {
-        return (
-                typ.matches("^CharSequence\\??$".toRegex()) ||
-                        (typ.matches("^android.graphics.drawable.Drawable\\??$".toRegex()))
-                )
     }
 
     protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {
