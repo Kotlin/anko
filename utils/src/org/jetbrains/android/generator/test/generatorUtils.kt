@@ -31,6 +31,7 @@ private fun Context.functionalDslTests(init: Buffer.(version: String) -> Unit) {
             testFile.writeText(buffer {
                 line("package $basePackage.functional\n")
                 line("import $basePackage.*")
+                line("import $basePackage.config.*")
                 line("import org.junit.Test\n")
                 line("public class FunctionalTestsFor$version : AbstractFunctionalTest() {")
                 line("val version = \"$version\"\n").nl()
@@ -46,7 +47,7 @@ private fun Buffer.functionalDslTest(name: String, mainAnkoFile: AnkoFile, confi
     val testConfiguration = TestConfiguration()
     testConfiguration.configInit()
 
-    line("[Test] public fun test$name() {")
+    line("@Test public fun test$name() {")
 
     line("runFunctionalTest(\"$name.kt\", AnkoFile.${mainAnkoFile.name()}, version) {")
     for (file in testConfiguration.files) {
@@ -73,7 +74,7 @@ private fun Context.dslCompileTests(files: List<String>, category: String) {
             line("public class Generated${category}Test : Abstract${category}Test() {")
             for (file in files) {
                 for (version in versions) {
-                    line("[Test] public fun test${file}For$version() {")
+                    line("@Test public fun test${file}For$version() {")
                     line("run${category}Test(\"$file.kt\", \"$version\")")
                     line("}").nl()
                 }
