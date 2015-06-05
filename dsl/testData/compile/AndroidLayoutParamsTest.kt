@@ -5,7 +5,7 @@ import android.os.Bundle
 import org.jetbrains.anko.*
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.AbsoluteLayout
+import android.widget.ScrollView
 import android.widget.FrameLayout
 import android.widget.GridLayout
 import android.view.Gravity
@@ -41,12 +41,15 @@ public open class MyActivity() : Activity() {
                     }
                 }
             }
-            absoluteLayout {
+            scrollView {
                 editText {
-                    layoutParams(-2, -2, 12, 23) {
+                    layoutParams(-2, -2) {
+                        bottomMargin = 1
+                        leftMargin = 2
+                        rightMargin = 3
+                        topMargin = 4
                         height = 9
-                        x = 100
-                        y = 200
+                        gravity = Gravity.RIGHT
                     }
                 }
             }
