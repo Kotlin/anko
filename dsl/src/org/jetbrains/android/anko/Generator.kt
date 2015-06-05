@@ -186,17 +186,32 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration): Configurab
 
     //return a pair<viewGroup, layoutParams> or null if the viewGroup doesn't contain custom LayoutParams
     private fun extractLayoutParams(viewGroup: ClassNode): LayoutParamsNode? {
-        if (viewGroup.innerClasses == null) return null
+        fun layoutParamsExtractor(vg: ClassNode): ClassNode? {
+            if (vg.methods == null) return null
+            val methods = vg.methods
+            val genMethod = methods.firstOrNull { it.name.contains("generateLayoutParams") } ?: return null
+            val lpNode = classTree.findNode(genMethod.returnType.internalName)?.data ?: return null
+            return if (lpNode.isLayoutParams(classTree)) {
+                lpNode
+            } else {
+                null
+            }
+        }
 
-        val innerClasses = viewGroup.innerClasses
-        val lp = innerClasses.firstOrNull { it.name.contains("LayoutParams") }
-        if (lp == null) return null
+        var lpNode: ClassNode?
+        var currentNode = viewGroup
+        do {
+            lpNode = layoutParamsExtractor(currentNode)
+            if (lpNode == null) {
+                currentNode = classTree.findNode(currentNode)?.parent?.data ?: break
+            }
+        } while (lpNode == null && currentNode.isViewGroup)
 
-        val lpNode = classTree.findNode(lp.name)?.data
-
-        return if (lpNode != null) {
-            LayoutParamsNode(viewGroup, lpNode, lpNode.getConstructors().filter { it.isPublic })
-        } else null
+        return if (lpNode == null || lpNode.fqName.endsWith("ViewGroup.LayoutParams")) {
+            null
+        } else {
+            return LayoutParamsNode(viewGroup, lpNode, lpNode.getConstructors().filter { it.isPublic })
+        }
     }
 
     //returns true if the viewGroup contains custom LayoutParams class
