@@ -63,4 +63,10 @@ public class FunctionalTestsFor21s : AbstractFunctionalTest() {
         }
     }
 
+    @Test public fun testSqlParserHelpersTest() {
+        runFunctionalTest("SqlParserHelpersTest.kt", AnkoFile.SQL_PARSER_HELPERS, version) {
+            files.add(AnkoFile.SQL_PARSER_HELPERS)
+        }
+    }
+
 }

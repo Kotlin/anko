@@ -63,6 +63,10 @@ public fun Context.generate() {
         functionalDslTest("InterfaceWorkaroundsTest", AnkoFile.INTERFACE_WORKAROUNDS) {
             file(AnkoFile.INTERFACE_WORKAROUNDS)
         }
+
+        functionalDslTest("SqlParserHelpersTest", AnkoFile.SQL_PARSER_HELPERS) {
+            file(AnkoFile.SQL_PARSER_HELPERS)
+        }
     }
 
     dslCompileTests(ktFiles("robolectric"), "Robolectric")
