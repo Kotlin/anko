@@ -59,6 +59,10 @@ public fun Context.generate() {
             file(AnkoFile.LISTENERS)
             tune(ConfigurationTune.SIMPLE_LISTENERS)
         }
+
+        functionalDslTest("InterfaceWorkaroundsTest", AnkoFile.INTERFACE_WORKAROUNDS) {
+            file(AnkoFile.INTERFACE_WORKAROUNDS)
+        }
     }
 
     dslCompileTests(ktFiles("robolectric"), "Robolectric")

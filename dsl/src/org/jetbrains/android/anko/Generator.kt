@@ -26,6 +26,7 @@ import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.Configurable
 import org.jetbrains.android.anko.config.generate
 import org.jetbrains.android.anko.config.generateList
+import org.jetbrains.android.anko.generator.InterfaceWorkaroundElement
 import org.jetbrains.android.anko.generator.LayoutElement
 import org.jetbrains.android.anko.generator.ServiceElement
 import org.jetbrains.android.anko.generator.ViewElement
@@ -115,21 +116,26 @@ class Generator(
     }
 
     val interfaceWorkarounds = generateList(INTERFACE_WORKAROUNDS) {
-        availableClasses.filter { clazz ->
-            clazz.isPublic && clazz.innerClasses != null && clazz.fields.isNotEmpty() &&
-                    clazz.innerClasses.any { inner -> inner.isProtected && inner.isInterface && inner.name == clazz.name }
-        }.map { clazz ->
-            // We're looking for a public ancestor for this interface, but ancestor also may be protected
-            val ancestor = classTree.filter { clazz ->
-                clazz.isPublic && clazz.interfaces.any { intface -> intface == clazz.name } &&
-                        !clazz.innerClasses.any { it.name == clazz.name && it.isProtected }
+        availableClasses.filter {
+            it.isPublic && it.innerClasses != null && it.fields != null && it.fields.notEmpty &&
+                    it.innerClasses.any { inner -> inner.isProtected && inner.isInterface && inner.name == it.name }
+        }.map {
+            // We're looking for a public ancestor for this interface, but the ancestor also may be protected inner one
+            val ancestor = classTree.filter {
+                clazz -> clazz.isPublic && clazz.interfaces.any { itf -> itf == it.name } && (
+                    clazz.innerClasses == null ||
+                            clazz.innerClasses.isEmpty() ||
+                            !clazz.innerClasses.any { it.name == clazz.name && it.isProtected }
+                    )
+            }.firstOrNull()
+            val innerClass = it.innerClasses.firstOrNull {
+                inner -> inner.isProtected && inner.isInterface && inner.name == it.name
             }
-            val innerClass = clazz.innerClasses.firstOrNull {
-                inner ->
-                inner.isProtected && inner.isInterface && inner.name == clazz.name
-            }
-            Triple(clazz, ancestor.firstOrNull(), innerClass)
-        }.filter { it.second != null && it.third != null }
+
+            if (ancestor != null && innerClass != null)
+                InterfaceWorkaroundElement(it, ancestor, innerClass)
+            else null
+        }.filterNotNull()
     }
 
     //Convert list of getters and map of setters to property list
