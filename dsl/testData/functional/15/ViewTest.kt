@@ -1,31 +1,4 @@
 [suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.gestureOverlayView(): android.gesture.GestureOverlayView = gestureOverlayView({})
-public inline fun ViewManager.gestureOverlayView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.gesture.GestureOverlayView.() -> Unit): android.gesture.GestureOverlayView = addView<android.gesture.GestureOverlayView> {
-    ctx ->
-    val view = android.gesture.GestureOverlayView(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.gestureOverlayView(): android.gesture.GestureOverlayView = gestureOverlayView({})
-public inline fun Context.gestureOverlayView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.gesture.GestureOverlayView.() -> Unit): android.gesture.GestureOverlayView = addView<android.gesture.GestureOverlayView> {
-    ctx ->
-    val view = android.gesture.GestureOverlayView(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.gestureOverlayView(): android.gesture.GestureOverlayView = gestureOverlayView({})
-public inline fun Activity.gestureOverlayView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.gesture.GestureOverlayView.() -> Unit): android.gesture.GestureOverlayView = addView<android.gesture.GestureOverlayView> {
-    ctx ->
-    val view = android.gesture.GestureOverlayView(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.extractEditText(): android.inputmethodservice.ExtractEditText = extractEditText({})
 public inline fun ViewManager.extractEditText(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.inputmethodservice.ExtractEditText.() -> Unit): android.inputmethodservice.ExtractEditText = addView<android.inputmethodservice.ExtractEditText> {
     ctx ->
@@ -98,6 +71,60 @@ public inline fun ViewManager.viewStub(inlineOptions(InlineOption.ONLY_LOCAL_RET
 }
 
 [suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.webView(): android.webkit.WebView = webView({})
+public inline fun ViewManager.webView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.webkit.WebView.() -> Unit): android.webkit.WebView = addView<android.webkit.WebView> {
+    ctx ->
+    val view = android.webkit.WebView(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.webView(): android.webkit.WebView = webView({})
+public inline fun Context.webView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.webkit.WebView.() -> Unit): android.webkit.WebView = addView<android.webkit.WebView> {
+    ctx ->
+    val view = android.webkit.WebView(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.webView(): android.webkit.WebView = webView({})
+public inline fun Activity.webView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.webkit.WebView.() -> Unit): android.webkit.WebView = addView<android.webkit.WebView> {
+    ctx ->
+    val view = android.webkit.WebView(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.absoluteLayout(): android.widget.AbsoluteLayout = absoluteLayout({})
+public inline fun ViewManager.absoluteLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.AbsoluteLayout.() -> Unit): android.widget.AbsoluteLayout = addView<android.widget.AbsoluteLayout> {
+    ctx ->
+    val view = android.widget.AbsoluteLayout(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.absoluteLayout(): android.widget.AbsoluteLayout = absoluteLayout({})
+public inline fun Context.absoluteLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.AbsoluteLayout.() -> Unit): android.widget.AbsoluteLayout = addView<android.widget.AbsoluteLayout> {
+    ctx ->
+    val view = android.widget.AbsoluteLayout(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.absoluteLayout(): android.widget.AbsoluteLayout = absoluteLayout({})
+public inline fun Activity.absoluteLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.AbsoluteLayout.() -> Unit): android.widget.AbsoluteLayout = addView<android.widget.AbsoluteLayout> {
+    ctx ->
+    val view = android.widget.AbsoluteLayout(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.adapterViewFlipper(): android.widget.AdapterViewFlipper = adapterViewFlipper({})
 public inline fun ViewManager.adapterViewFlipper(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.AdapterViewFlipper.() -> Unit): android.widget.AdapterViewFlipper = addView<android.widget.AdapterViewFlipper> {
     ctx ->
@@ -152,33 +179,6 @@ public inline fun ViewManager.button(inlineOptions(InlineOption.ONLY_LOCAL_RETUR
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.calendarView(): android.widget.CalendarView = calendarView({})
-public inline fun ViewManager.calendarView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.CalendarView.() -> Unit): android.widget.CalendarView = addView<android.widget.CalendarView> {
-    ctx ->
-    val view = android.widget.CalendarView(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.calendarView(): android.widget.CalendarView = calendarView({})
-public inline fun Context.calendarView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.CalendarView.() -> Unit): android.widget.CalendarView = addView<android.widget.CalendarView> {
-    ctx ->
-    val view = android.widget.CalendarView(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.calendarView(): android.widget.CalendarView = calendarView({})
-public inline fun Activity.calendarView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.CalendarView.() -> Unit): android.widget.CalendarView = addView<android.widget.CalendarView> {
-    ctx ->
-    val view = android.widget.CalendarView(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.checkBox(): android.widget.CheckBox = checkBox({})
 public inline fun ViewManager.checkBox(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox = addView<android.widget.CheckBox> {
     ctx ->
@@ -201,60 +201,6 @@ public inline fun ViewManager.chronometer(): android.widget.Chronometer = chrono
 public inline fun ViewManager.chronometer(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.Chronometer.() -> Unit): android.widget.Chronometer = addView<android.widget.Chronometer> {
     ctx ->
     val view = android.widget.Chronometer(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.datePicker(): android.widget.DatePicker = datePicker({})
-public inline fun ViewManager.datePicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.DatePicker.() -> Unit): android.widget.DatePicker = addView<android.widget.DatePicker> {
-    ctx ->
-    val view = android.widget.DatePicker(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.datePicker(): android.widget.DatePicker = datePicker({})
-public inline fun Context.datePicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.DatePicker.() -> Unit): android.widget.DatePicker = addView<android.widget.DatePicker> {
-    ctx ->
-    val view = android.widget.DatePicker(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.datePicker(): android.widget.DatePicker = datePicker({})
-public inline fun Activity.datePicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.DatePicker.() -> Unit): android.widget.DatePicker = addView<android.widget.DatePicker> {
-    ctx ->
-    val view = android.widget.DatePicker(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.dialerFilter(): android.widget.DialerFilter = dialerFilter({})
-public inline fun ViewManager.dialerFilter(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.DialerFilter.() -> Unit): android.widget.DialerFilter = addView<android.widget.DialerFilter> {
-    ctx ->
-    val view = android.widget.DialerFilter(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.dialerFilter(): android.widget.DialerFilter = dialerFilter({})
-public inline fun Context.dialerFilter(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.DialerFilter.() -> Unit): android.widget.DialerFilter = addView<android.widget.DialerFilter> {
-    ctx ->
-    val view = android.widget.DialerFilter(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.dialerFilter(): android.widget.DialerFilter = dialerFilter({})
-public inline fun Activity.dialerFilter(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.DialerFilter.() -> Unit): android.widget.DialerFilter = addView<android.widget.DialerFilter> {
-    ctx ->
-    val view = android.widget.DialerFilter(ctx)
     view.init()
     view
 }
@@ -305,37 +251,64 @@ public inline fun Activity.expandableListView(inlineOptions(InlineOption.ONLY_LO
 }
 
 [suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.gallery(): android.widget.Gallery = gallery({})
+public inline fun ViewManager.gallery(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.Gallery.() -> Unit): android.widget.Gallery = addView<android.widget.Gallery> {
+    ctx ->
+    val view = android.widget.Gallery(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.gallery(): android.widget.Gallery = gallery({})
+public inline fun Context.gallery(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.Gallery.() -> Unit): android.widget.Gallery = addView<android.widget.Gallery> {
+    ctx ->
+    val view = android.widget.Gallery(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.gallery(): android.widget.Gallery = gallery({})
+public inline fun Activity.gallery(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.Gallery.() -> Unit): android.widget.Gallery = addView<android.widget.Gallery> {
+    ctx ->
+    val view = android.widget.Gallery(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.gridView(): android.widget.GridView = gridView({})
+public inline fun ViewManager.gridView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.GridView.() -> Unit): android.widget.GridView = addView<android.widget.GridView> {
+    ctx ->
+    val view = android.widget.GridView(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.gridView(): android.widget.GridView = gridView({})
+public inline fun Context.gridView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.GridView.() -> Unit): android.widget.GridView = addView<android.widget.GridView> {
+    ctx ->
+    val view = android.widget.GridView(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.gridView(): android.widget.GridView = gridView({})
+public inline fun Activity.gridView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.GridView.() -> Unit): android.widget.GridView = addView<android.widget.GridView> {
+    ctx ->
+    val view = android.widget.GridView(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.imageButton(): android.widget.ImageButton = imageButton({})
 public inline fun ViewManager.imageButton(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ImageButton.() -> Unit): android.widget.ImageButton = addView<android.widget.ImageButton> {
     ctx ->
     val view = android.widget.ImageButton(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
-public inline fun ViewManager.imageSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ImageSwitcher.() -> Unit): android.widget.ImageSwitcher = addView<android.widget.ImageSwitcher> {
-    ctx ->
-    val view = android.widget.ImageSwitcher(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
-public inline fun Context.imageSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ImageSwitcher.() -> Unit): android.widget.ImageSwitcher = addView<android.widget.ImageSwitcher> {
-    ctx ->
-    val view = android.widget.ImageSwitcher(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
-public inline fun Activity.imageSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ImageSwitcher.() -> Unit): android.widget.ImageSwitcher = addView<android.widget.ImageSwitcher> {
-    ctx ->
-    val view = android.widget.ImageSwitcher(ctx)
     view.init()
     view
 }
@@ -386,33 +359,6 @@ public inline fun ViewManager.multiAutoCompleteTextView(inlineOptions(InlineOpti
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.numberPicker(): android.widget.NumberPicker = numberPicker({})
-public inline fun ViewManager.numberPicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.NumberPicker.() -> Unit): android.widget.NumberPicker = addView<android.widget.NumberPicker> {
-    ctx ->
-    val view = android.widget.NumberPicker(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.numberPicker(): android.widget.NumberPicker = numberPicker({})
-public inline fun Context.numberPicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.NumberPicker.() -> Unit): android.widget.NumberPicker = addView<android.widget.NumberPicker> {
-    ctx ->
-    val view = android.widget.NumberPicker(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.numberPicker(): android.widget.NumberPicker = numberPicker({})
-public inline fun Activity.numberPicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.NumberPicker.() -> Unit): android.widget.NumberPicker = addView<android.widget.NumberPicker> {
-    ctx ->
-    val view = android.widget.NumberPicker(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.progressBar(): android.widget.ProgressBar = progressBar({})
 public inline fun ViewManager.progressBar(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ProgressBar.() -> Unit): android.widget.ProgressBar = addView<android.widget.ProgressBar> {
     ctx ->
@@ -444,33 +390,6 @@ public inline fun ViewManager.ratingBar(): android.widget.RatingBar = ratingBar(
 public inline fun ViewManager.ratingBar(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.RatingBar.() -> Unit): android.widget.RatingBar = addView<android.widget.RatingBar> {
     ctx ->
     val view = android.widget.RatingBar(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.searchView(): android.widget.SearchView = searchView({})
-public inline fun ViewManager.searchView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.SearchView.() -> Unit): android.widget.SearchView = addView<android.widget.SearchView> {
-    ctx ->
-    val view = android.widget.SearchView(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.searchView(): android.widget.SearchView = searchView({})
-public inline fun Context.searchView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.SearchView.() -> Unit): android.widget.SearchView = addView<android.widget.SearchView> {
-    ctx ->
-    val view = android.widget.SearchView(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.searchView(): android.widget.SearchView = searchView({})
-public inline fun Activity.searchView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.SearchView.() -> Unit): android.widget.SearchView = addView<android.widget.SearchView> {
-    ctx ->
-    val view = android.widget.SearchView(ctx)
     view.init()
     view
 }
@@ -584,91 +503,10 @@ public inline fun ViewManager.switch(inlineOptions(InlineOption.ONLY_LOCAL_RETUR
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.tabHost(): android.widget.TabHost = tabHost({})
-public inline fun ViewManager.tabHost(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TabHost.() -> Unit): android.widget.TabHost = addView<android.widget.TabHost> {
-    ctx ->
-    val view = android.widget.TabHost(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.tabHost(): android.widget.TabHost = tabHost({})
-public inline fun Context.tabHost(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TabHost.() -> Unit): android.widget.TabHost = addView<android.widget.TabHost> {
-    ctx ->
-    val view = android.widget.TabHost(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.tabHost(): android.widget.TabHost = tabHost({})
-public inline fun Activity.tabHost(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TabHost.() -> Unit): android.widget.TabHost = addView<android.widget.TabHost> {
-    ctx ->
-    val view = android.widget.TabHost(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.tabWidget(): android.widget.TabWidget = tabWidget({})
-public inline fun ViewManager.tabWidget(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TabWidget.() -> Unit): android.widget.TabWidget = addView<android.widget.TabWidget> {
-    ctx ->
-    val view = android.widget.TabWidget(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.tabWidget(): android.widget.TabWidget = tabWidget({})
-public inline fun Context.tabWidget(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TabWidget.() -> Unit): android.widget.TabWidget = addView<android.widget.TabWidget> {
-    ctx ->
-    val view = android.widget.TabWidget(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.tabWidget(): android.widget.TabWidget = tabWidget({})
-public inline fun Activity.tabWidget(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TabWidget.() -> Unit): android.widget.TabWidget = addView<android.widget.TabWidget> {
-    ctx ->
-    val view = android.widget.TabWidget(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.textView(): android.widget.TextView = textView({})
 public inline fun ViewManager.textView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TextView.() -> Unit): android.widget.TextView = addView<android.widget.TextView> {
     ctx ->
     val view = android.widget.TextView(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.timePicker(): android.widget.TimePicker = timePicker({})
-public inline fun ViewManager.timePicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TimePicker.() -> Unit): android.widget.TimePicker = addView<android.widget.TimePicker> {
-    ctx ->
-    val view = android.widget.TimePicker(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.timePicker(): android.widget.TimePicker = timePicker({})
-public inline fun Context.timePicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TimePicker.() -> Unit): android.widget.TimePicker = addView<android.widget.TimePicker> {
-    ctx ->
-    val view = android.widget.TimePicker(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.timePicker(): android.widget.TimePicker = timePicker({})
-public inline fun Activity.timePicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TimePicker.() -> Unit): android.widget.TimePicker = addView<android.widget.TimePicker> {
-    ctx ->
-    val view = android.widget.TimePicker(ctx)
     view.init()
     view
 }
@@ -683,33 +521,6 @@ public inline fun ViewManager.toggleButton(inlineOptions(InlineOption.ONLY_LOCAL
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.twoLineListItem(): android.widget.TwoLineListItem = twoLineListItem({})
-public inline fun ViewManager.twoLineListItem(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TwoLineListItem.() -> Unit): android.widget.TwoLineListItem = addView<android.widget.TwoLineListItem> {
-    ctx ->
-    val view = android.widget.TwoLineListItem(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.twoLineListItem(): android.widget.TwoLineListItem = twoLineListItem({})
-public inline fun Context.twoLineListItem(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TwoLineListItem.() -> Unit): android.widget.TwoLineListItem = addView<android.widget.TwoLineListItem> {
-    ctx ->
-    val view = android.widget.TwoLineListItem(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.twoLineListItem(): android.widget.TwoLineListItem = twoLineListItem({})
-public inline fun Activity.twoLineListItem(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.TwoLineListItem.() -> Unit): android.widget.TwoLineListItem = addView<android.widget.TwoLineListItem> {
-    ctx ->
-    val view = android.widget.TwoLineListItem(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.videoView(): android.widget.VideoView = videoView({})
 public inline fun ViewManager.videoView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.VideoView.() -> Unit): android.widget.VideoView = addView<android.widget.VideoView> {
     ctx ->
@@ -719,64 +530,10 @@ public inline fun ViewManager.videoView(inlineOptions(InlineOption.ONLY_LOCAL_RE
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.viewFlipper(): android.widget.ViewFlipper = viewFlipper({})
-public inline fun ViewManager.viewFlipper(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ViewFlipper.() -> Unit): android.widget.ViewFlipper = addView<android.widget.ViewFlipper> {
-    ctx ->
-    val view = android.widget.ViewFlipper(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.viewFlipper(): android.widget.ViewFlipper = viewFlipper({})
-public inline fun Context.viewFlipper(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ViewFlipper.() -> Unit): android.widget.ViewFlipper = addView<android.widget.ViewFlipper> {
-    ctx ->
-    val view = android.widget.ViewFlipper(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.viewFlipper(): android.widget.ViewFlipper = viewFlipper({})
-public inline fun Activity.viewFlipper(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ViewFlipper.() -> Unit): android.widget.ViewFlipper = addView<android.widget.ViewFlipper> {
-    ctx ->
-    val view = android.widget.ViewFlipper(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.zoomButton(): android.widget.ZoomButton = zoomButton({})
 public inline fun ViewManager.zoomButton(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ZoomButton.() -> Unit): android.widget.ZoomButton = addView<android.widget.ZoomButton> {
     ctx ->
     val view = android.widget.ZoomButton(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.zoomControls(): android.widget.ZoomControls = zoomControls({})
-public inline fun ViewManager.zoomControls(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ZoomControls.() -> Unit): android.widget.ZoomControls = addView<android.widget.ZoomControls> {
-    ctx ->
-    val view = android.widget.ZoomControls(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.zoomControls(): android.widget.ZoomControls = zoomControls({})
-public inline fun Context.zoomControls(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ZoomControls.() -> Unit): android.widget.ZoomControls = addView<android.widget.ZoomControls> {
-    ctx ->
-    val view = android.widget.ZoomControls(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.zoomControls(): android.widget.ZoomControls = zoomControls({})
-public inline fun Activity.zoomControls(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ZoomControls.() -> Unit): android.widget.ZoomControls = addView<android.widget.ZoomControls> {
-    ctx ->
-    val view = android.widget.ZoomControls(ctx)
     view.init()
     view
 }
@@ -809,55 +566,109 @@ public inline fun Activity.appWidgetHostView(inlineOptions(InlineOption.ONLY_LOC
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.webView(): android.webkit.WebView = webView({})
-public inline fun ViewManager.webView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _WebView.() -> Unit): android.webkit.WebView = addView<android.webkit.WebView> {
+public inline fun ViewManager.gestureOverlayView(): android.gesture.GestureOverlayView = gestureOverlayView({})
+public inline fun ViewManager.gestureOverlayView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _GestureOverlayView.() -> Unit): android.gesture.GestureOverlayView = addView<android.gesture.GestureOverlayView> {
     ctx ->
-    val view = _WebView(ctx)
+    val view = _GestureOverlayView(ctx)
     view.init()
     view
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Context.webView(): android.webkit.WebView = webView({})
-public inline fun Context.webView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _WebView.() -> Unit): android.webkit.WebView = addView<android.webkit.WebView> {
+public inline fun Context.gestureOverlayView(): android.gesture.GestureOverlayView = gestureOverlayView({})
+public inline fun Context.gestureOverlayView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _GestureOverlayView.() -> Unit): android.gesture.GestureOverlayView = addView<android.gesture.GestureOverlayView> {
     ctx ->
-    val view = _WebView(ctx)
+    val view = _GestureOverlayView(ctx)
     view.init()
     view
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.webView(): android.webkit.WebView = webView({})
-public inline fun Activity.webView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _WebView.() -> Unit): android.webkit.WebView = addView<android.webkit.WebView> {
+public inline fun Activity.gestureOverlayView(): android.gesture.GestureOverlayView = gestureOverlayView({})
+public inline fun Activity.gestureOverlayView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _GestureOverlayView.() -> Unit): android.gesture.GestureOverlayView = addView<android.gesture.GestureOverlayView> {
     ctx ->
-    val view = _WebView(ctx)
+    val view = _GestureOverlayView(ctx)
     view.init()
     view
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.absoluteLayout(): android.widget.AbsoluteLayout = absoluteLayout({})
-public inline fun ViewManager.absoluteLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _AbsoluteLayout.() -> Unit): android.widget.AbsoluteLayout = addView<android.widget.AbsoluteLayout> {
+public inline fun ViewManager.calendarView(): android.widget.CalendarView = calendarView({})
+public inline fun ViewManager.calendarView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _CalendarView.() -> Unit): android.widget.CalendarView = addView<android.widget.CalendarView> {
     ctx ->
-    val view = _AbsoluteLayout(ctx)
+    val view = _CalendarView(ctx)
     view.init()
     view
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Context.absoluteLayout(): android.widget.AbsoluteLayout = absoluteLayout({})
-public inline fun Context.absoluteLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _AbsoluteLayout.() -> Unit): android.widget.AbsoluteLayout = addView<android.widget.AbsoluteLayout> {
+public inline fun Context.calendarView(): android.widget.CalendarView = calendarView({})
+public inline fun Context.calendarView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _CalendarView.() -> Unit): android.widget.CalendarView = addView<android.widget.CalendarView> {
     ctx ->
-    val view = _AbsoluteLayout(ctx)
+    val view = _CalendarView(ctx)
     view.init()
     view
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.absoluteLayout(): android.widget.AbsoluteLayout = absoluteLayout({})
-public inline fun Activity.absoluteLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _AbsoluteLayout.() -> Unit): android.widget.AbsoluteLayout = addView<android.widget.AbsoluteLayout> {
+public inline fun Activity.calendarView(): android.widget.CalendarView = calendarView({})
+public inline fun Activity.calendarView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _CalendarView.() -> Unit): android.widget.CalendarView = addView<android.widget.CalendarView> {
     ctx ->
-    val view = _AbsoluteLayout(ctx)
+    val view = _CalendarView(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.datePicker(): android.widget.DatePicker = datePicker({})
+public inline fun ViewManager.datePicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _DatePicker.() -> Unit): android.widget.DatePicker = addView<android.widget.DatePicker> {
+    ctx ->
+    val view = _DatePicker(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.datePicker(): android.widget.DatePicker = datePicker({})
+public inline fun Context.datePicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _DatePicker.() -> Unit): android.widget.DatePicker = addView<android.widget.DatePicker> {
+    ctx ->
+    val view = _DatePicker(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.datePicker(): android.widget.DatePicker = datePicker({})
+public inline fun Activity.datePicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _DatePicker.() -> Unit): android.widget.DatePicker = addView<android.widget.DatePicker> {
+    ctx ->
+    val view = _DatePicker(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.dialerFilter(): android.widget.DialerFilter = dialerFilter({})
+public inline fun ViewManager.dialerFilter(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _DialerFilter.() -> Unit): android.widget.DialerFilter = addView<android.widget.DialerFilter> {
+    ctx ->
+    val view = _DialerFilter(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.dialerFilter(): android.widget.DialerFilter = dialerFilter({})
+public inline fun Context.dialerFilter(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _DialerFilter.() -> Unit): android.widget.DialerFilter = addView<android.widget.DialerFilter> {
+    ctx ->
+    val view = _DialerFilter(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.dialerFilter(): android.widget.DialerFilter = dialerFilter({})
+public inline fun Activity.dialerFilter(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _DialerFilter.() -> Unit): android.widget.DialerFilter = addView<android.widget.DialerFilter> {
+    ctx ->
+    val view = _DialerFilter(ctx)
     view.init()
     view
 }
@@ -890,33 +701,6 @@ public inline fun Activity.frameLayout(inlineOptions(InlineOption.ONLY_LOCAL_RET
 }
 
 [suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.gallery(): android.widget.Gallery = gallery({})
-public inline fun ViewManager.gallery(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _Gallery.() -> Unit): android.widget.Gallery = addView<android.widget.Gallery> {
-    ctx ->
-    val view = _Gallery(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.gallery(): android.widget.Gallery = gallery({})
-public inline fun Context.gallery(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _Gallery.() -> Unit): android.widget.Gallery = addView<android.widget.Gallery> {
-    ctx ->
-    val view = _Gallery(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.gallery(): android.widget.Gallery = gallery({})
-public inline fun Activity.gallery(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _Gallery.() -> Unit): android.widget.Gallery = addView<android.widget.Gallery> {
-    ctx ->
-    val view = _Gallery(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.gridLayout(): android.widget.GridLayout = gridLayout({})
 public inline fun ViewManager.gridLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _GridLayout.() -> Unit): android.widget.GridLayout = addView<android.widget.GridLayout> {
     ctx ->
@@ -939,33 +723,6 @@ public inline fun Activity.gridLayout(): android.widget.GridLayout = gridLayout(
 public inline fun Activity.gridLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _GridLayout.() -> Unit): android.widget.GridLayout = addView<android.widget.GridLayout> {
     ctx ->
     val view = _GridLayout(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun ViewManager.gridView(): android.widget.GridView = gridView({})
-public inline fun ViewManager.gridView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _GridView.() -> Unit): android.widget.GridView = addView<android.widget.GridView> {
-    ctx ->
-    val view = _GridView(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Context.gridView(): android.widget.GridView = gridView({})
-public inline fun Context.gridView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _GridView.() -> Unit): android.widget.GridView = addView<android.widget.GridView> {
-    ctx ->
-    val view = _GridView(ctx)
-    view.init()
-    view
-}
-
-[suppress("NOTHING_TO_INLINE")]
-public inline fun Activity.gridView(): android.widget.GridView = gridView({})
-public inline fun Activity.gridView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _GridView.() -> Unit): android.widget.GridView = addView<android.widget.GridView> {
-    ctx ->
-    val view = _GridView(ctx)
     view.init()
     view
 }
@@ -998,6 +755,33 @@ public inline fun Activity.horizontalScrollView(inlineOptions(InlineOption.ONLY_
 }
 
 [suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
+public inline fun ViewManager.imageSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ImageSwitcher.() -> Unit): android.widget.ImageSwitcher = addView<android.widget.ImageSwitcher> {
+    ctx ->
+    val view = _ImageSwitcher(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
+public inline fun Context.imageSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ImageSwitcher.() -> Unit): android.widget.ImageSwitcher = addView<android.widget.ImageSwitcher> {
+    ctx ->
+    val view = _ImageSwitcher(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
+public inline fun Activity.imageSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ImageSwitcher.() -> Unit): android.widget.ImageSwitcher = addView<android.widget.ImageSwitcher> {
+    ctx ->
+    val view = _ImageSwitcher(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.linearLayout(): android.widget.LinearLayout = linearLayout({})
 public inline fun ViewManager.linearLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): android.widget.LinearLayout = addView<android.widget.LinearLayout> {
     ctx ->
@@ -1020,6 +804,33 @@ public inline fun Activity.linearLayout(): android.widget.LinearLayout = linearL
 public inline fun Activity.linearLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): android.widget.LinearLayout = addView<android.widget.LinearLayout> {
     ctx ->
     val view = _LinearLayout(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.numberPicker(): android.widget.NumberPicker = numberPicker({})
+public inline fun ViewManager.numberPicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _NumberPicker.() -> Unit): android.widget.NumberPicker = addView<android.widget.NumberPicker> {
+    ctx ->
+    val view = _NumberPicker(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.numberPicker(): android.widget.NumberPicker = numberPicker({})
+public inline fun Context.numberPicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _NumberPicker.() -> Unit): android.widget.NumberPicker = addView<android.widget.NumberPicker> {
+    ctx ->
+    val view = _NumberPicker(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.numberPicker(): android.widget.NumberPicker = numberPicker({})
+public inline fun Activity.numberPicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _NumberPicker.() -> Unit): android.widget.NumberPicker = addView<android.widget.NumberPicker> {
+    ctx ->
+    val view = _NumberPicker(ctx)
     view.init()
     view
 }
@@ -1106,6 +917,87 @@ public inline fun Activity.scrollView(inlineOptions(InlineOption.ONLY_LOCAL_RETU
 }
 
 [suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.searchView(): android.widget.SearchView = searchView({})
+public inline fun ViewManager.searchView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _SearchView.() -> Unit): android.widget.SearchView = addView<android.widget.SearchView> {
+    ctx ->
+    val view = _SearchView(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.searchView(): android.widget.SearchView = searchView({})
+public inline fun Context.searchView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _SearchView.() -> Unit): android.widget.SearchView = addView<android.widget.SearchView> {
+    ctx ->
+    val view = _SearchView(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.searchView(): android.widget.SearchView = searchView({})
+public inline fun Activity.searchView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _SearchView.() -> Unit): android.widget.SearchView = addView<android.widget.SearchView> {
+    ctx ->
+    val view = _SearchView(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.tabHost(): android.widget.TabHost = tabHost({})
+public inline fun ViewManager.tabHost(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TabHost.() -> Unit): android.widget.TabHost = addView<android.widget.TabHost> {
+    ctx ->
+    val view = _TabHost(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.tabHost(): android.widget.TabHost = tabHost({})
+public inline fun Context.tabHost(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TabHost.() -> Unit): android.widget.TabHost = addView<android.widget.TabHost> {
+    ctx ->
+    val view = _TabHost(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.tabHost(): android.widget.TabHost = tabHost({})
+public inline fun Activity.tabHost(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TabHost.() -> Unit): android.widget.TabHost = addView<android.widget.TabHost> {
+    ctx ->
+    val view = _TabHost(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.tabWidget(): android.widget.TabWidget = tabWidget({})
+public inline fun ViewManager.tabWidget(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TabWidget.() -> Unit): android.widget.TabWidget = addView<android.widget.TabWidget> {
+    ctx ->
+    val view = _TabWidget(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.tabWidget(): android.widget.TabWidget = tabWidget({})
+public inline fun Context.tabWidget(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TabWidget.() -> Unit): android.widget.TabWidget = addView<android.widget.TabWidget> {
+    ctx ->
+    val view = _TabWidget(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.tabWidget(): android.widget.TabWidget = tabWidget({})
+public inline fun Activity.tabWidget(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TabWidget.() -> Unit): android.widget.TabWidget = addView<android.widget.TabWidget> {
+    ctx ->
+    val view = _TabWidget(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.tableLayout(): android.widget.TableLayout = tableLayout({})
 public inline fun ViewManager.tableLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TableLayout.() -> Unit): android.widget.TableLayout = addView<android.widget.TableLayout> {
     ctx ->
@@ -1187,6 +1079,60 @@ public inline fun Activity.textSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RE
 }
 
 [suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.timePicker(): android.widget.TimePicker = timePicker({})
+public inline fun ViewManager.timePicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TimePicker.() -> Unit): android.widget.TimePicker = addView<android.widget.TimePicker> {
+    ctx ->
+    val view = _TimePicker(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.timePicker(): android.widget.TimePicker = timePicker({})
+public inline fun Context.timePicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TimePicker.() -> Unit): android.widget.TimePicker = addView<android.widget.TimePicker> {
+    ctx ->
+    val view = _TimePicker(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.timePicker(): android.widget.TimePicker = timePicker({})
+public inline fun Activity.timePicker(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TimePicker.() -> Unit): android.widget.TimePicker = addView<android.widget.TimePicker> {
+    ctx ->
+    val view = _TimePicker(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.twoLineListItem(): android.widget.TwoLineListItem = twoLineListItem({})
+public inline fun ViewManager.twoLineListItem(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TwoLineListItem.() -> Unit): android.widget.TwoLineListItem = addView<android.widget.TwoLineListItem> {
+    ctx ->
+    val view = _TwoLineListItem(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.twoLineListItem(): android.widget.TwoLineListItem = twoLineListItem({})
+public inline fun Context.twoLineListItem(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TwoLineListItem.() -> Unit): android.widget.TwoLineListItem = addView<android.widget.TwoLineListItem> {
+    ctx ->
+    val view = _TwoLineListItem(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.twoLineListItem(): android.widget.TwoLineListItem = twoLineListItem({})
+public inline fun Activity.twoLineListItem(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _TwoLineListItem.() -> Unit): android.widget.TwoLineListItem = addView<android.widget.TwoLineListItem> {
+    ctx ->
+    val view = _TwoLineListItem(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.viewAnimator(): android.widget.ViewAnimator = viewAnimator({})
 public inline fun ViewManager.viewAnimator(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ViewAnimator.() -> Unit): android.widget.ViewAnimator = addView<android.widget.ViewAnimator> {
     ctx ->
@@ -1214,6 +1160,33 @@ public inline fun Activity.viewAnimator(inlineOptions(InlineOption.ONLY_LOCAL_RE
 }
 
 [suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.viewFlipper(): android.widget.ViewFlipper = viewFlipper({})
+public inline fun ViewManager.viewFlipper(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ViewFlipper.() -> Unit): android.widget.ViewFlipper = addView<android.widget.ViewFlipper> {
+    ctx ->
+    val view = _ViewFlipper(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.viewFlipper(): android.widget.ViewFlipper = viewFlipper({})
+public inline fun Context.viewFlipper(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ViewFlipper.() -> Unit): android.widget.ViewFlipper = addView<android.widget.ViewFlipper> {
+    ctx ->
+    val view = _ViewFlipper(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.viewFlipper(): android.widget.ViewFlipper = viewFlipper({})
+public inline fun Activity.viewFlipper(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ViewFlipper.() -> Unit): android.widget.ViewFlipper = addView<android.widget.ViewFlipper> {
+    ctx ->
+    val view = _ViewFlipper(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
 public inline fun ViewManager.viewSwitcher(): android.widget.ViewSwitcher = viewSwitcher({})
 public inline fun ViewManager.viewSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ViewSwitcher.() -> Unit): android.widget.ViewSwitcher = addView<android.widget.ViewSwitcher> {
     ctx ->
@@ -1236,6 +1209,33 @@ public inline fun Activity.viewSwitcher(): android.widget.ViewSwitcher = viewSwi
 public inline fun Activity.viewSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ViewSwitcher.() -> Unit): android.widget.ViewSwitcher = addView<android.widget.ViewSwitcher> {
     ctx ->
     val view = _ViewSwitcher(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun ViewManager.zoomControls(): android.widget.ZoomControls = zoomControls({})
+public inline fun ViewManager.zoomControls(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ZoomControls.() -> Unit): android.widget.ZoomControls = addView<android.widget.ZoomControls> {
+    ctx ->
+    val view = _ZoomControls(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Context.zoomControls(): android.widget.ZoomControls = zoomControls({})
+public inline fun Context.zoomControls(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ZoomControls.() -> Unit): android.widget.ZoomControls = addView<android.widget.ZoomControls> {
+    ctx ->
+    val view = _ZoomControls(ctx)
+    view.init()
+    view
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun Activity.zoomControls(): android.widget.ZoomControls = zoomControls({})
+public inline fun Activity.zoomControls(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ZoomControls.() -> Unit): android.widget.ZoomControls = addView<android.widget.ZoomControls> {
+    ctx ->
+    val view = _ZoomControls(ctx)
     view.init()
     view
 }
