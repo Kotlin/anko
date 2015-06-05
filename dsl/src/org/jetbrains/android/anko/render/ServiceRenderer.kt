@@ -23,11 +23,11 @@ import org.jetbrains.android.anko.fqName
 import org.jetbrains.android.anko.generator.ServiceElement
 import org.jetbrains.android.anko.simpleName
 
-class ServiceRenderer(config: AnkoConfiguration) : Renderer<Collection<ServiceElement>>(config) {
+class ServiceRenderer(config: AnkoConfiguration) : Renderer<ServiceElement>(config) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.SERVICES)
 
-    override fun processElements(elements: Collection<ServiceElement>) = StringBuilder {
+    override fun processElements(elements: Iterable<ServiceElement>) = StringBuilder {
         for (element in elements) {
             append(render("service") {
                 "name" % element.service.simpleName.decapitalize()

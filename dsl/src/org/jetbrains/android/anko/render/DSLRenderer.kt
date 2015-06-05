@@ -31,10 +31,10 @@ import org.objectweb.asm.Type
 import java.util.*
 
 abstract class Renderer<T>(config: AnkoConfiguration): Configurable(config) {
-    protected abstract fun processElements(elements: T): String
+    protected abstract fun processElements(elements: Iterable<T>): String
     abstract val renderIf: Array<ConfigurationOption>
 
-    public fun process(elements: T): String = generate(*renderIf) {
+    public fun process(elements: Iterable<T>): String = generate(*renderIf) {
         processElements(elements)
     }
 
@@ -172,24 +172,7 @@ class DSLRenderer(private val generator: Generator) : Configurable(generator.con
         list
     }
 
-    val interfaceWorkarounds = if (!config[INTERFACE_WORKAROUNDS]) "" else
-        generator.interfaceWorkarounds.map {
-            val (mainClass, ancestor, innerClass) = it
-            val probInterfaceName = innerClass!!.innerName
-            val conflict = generator.interfaceWorkarounds.count { it.third!!.innerName == probInterfaceName } > 1
-            val interfaceName = (if (conflict) innerClass.outerName.substringAfterLast("/") + "_" else "") + probInterfaceName
-            val ancestorName = ancestor!!.fqName
-
-            buffer(1) {
-                line("public static interface $interfaceName {")
-                for (field in mainClass.fields.filter { it.isPublic && it.isStatic && it.isFinal }) {
-                    val name = field.name
-                    val type = Type.getType(field.desc).asJavaString()
-                    line("public static final $type $name = $ancestorName.$name;")
-                }
-                line("}")
-            }.toString()
-        }.joinToString("\n", "public final class InterfaceWorkarounds {\n\n", "\n\n}")
+    val interfaceWorkarounds = InterfaceWorkaroundsRenderer(config).process(generator.interfaceWorkarounds)
 
     //render a simple listener (extension function)
     //example: fun android.view.View.onClick(l: (android.view.View?) -> Unit) = setOnClickListener(l)

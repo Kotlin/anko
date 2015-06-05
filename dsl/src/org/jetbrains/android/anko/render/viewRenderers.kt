@@ -28,20 +28,20 @@ import org.objectweb.asm.tree.MethodNode
 import java.util.*
 
 public class ViewRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
-    override fun processElements(elements: List<ViewElement>) = generateViews(elements) { it.fqName }
+    override fun processElements(elements: Iterable<ViewElement>) = generateViews(elements) { it.fqName }
 }
 
 public class ViewGroupRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
-    override fun processElements(elements: List<ViewElement>) = generateViews(elements) { "_" + it.simpleName + it.supportSuffix }
+    override fun processElements(elements: Iterable<ViewElement>) = generateViews(elements) { "_" + it.simpleName + it.supportSuffix }
 }
 
 private abstract class AbstractViewRenderer(
         config: AnkoConfiguration
-) : Renderer<List<ViewElement>>(config), ViewConstructorUtils, SupportUtils {
+) : Renderer<ViewElement>(config), ViewConstructorUtils, SupportUtils {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.VIEWS)
 
-    protected fun generateViews(views: List<ViewElement>, nameResolver: (ClassNode) -> String): String {
+    protected fun generateViews(views: Iterable<ViewElement>, nameResolver: (ClassNode) -> String): String {
         val stringBuilder = StringBuilder()
 
         for ((view, isContainer) in views.filter { !it.view.isAbstract }) {

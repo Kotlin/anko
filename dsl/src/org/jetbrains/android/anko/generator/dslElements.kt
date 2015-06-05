@@ -17,6 +17,7 @@
 package org.jetbrains.android.anko.generator
 
 import org.objectweb.asm.tree.ClassNode
+import org.objectweb.asm.tree.InnerClassNode
 import org.objectweb.asm.tree.MethodNode
 
 public data class ViewElement(val view: ClassNode, val isContainer: Boolean)
@@ -24,3 +25,5 @@ public data class ViewElement(val view: ClassNode, val isContainer: Boolean)
 public data class LayoutElement(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>)
 
 public data class ServiceElement(val service: ClassNode, val name: String)
+
+public data class InterfaceWorkaroundElement(val baseClass: ClassNode, val ancestor: ClassNode, val inner: InnerClassNode)
