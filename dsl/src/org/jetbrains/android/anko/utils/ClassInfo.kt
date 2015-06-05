@@ -72,18 +72,3 @@ val InnerClassNode.isInterface: Boolean
 fun ClassNode.getConstructors(): List<MethodNode> {
     return (methods as List<MethodNode>).filter { it.isConstructor }
 }
-
-fun ClassNode.isLayoutParams(classTree: ClassTree): Boolean {
-    val isSuccessor = classTree.isSuccessorOf(this, "android/view/ViewGroup\$LayoutParams") || this.name == "android/view/ViewGroup\$LayoutParams"
-    return isSuccessor && isInner
-}
-
-fun ClassNode.isView(classTree: ClassTree): Boolean {
-    val isSuccessor = classTree.isSuccessorOf(this, "android/view/View") || this.name == "android/view/View"
-    return isSuccessor && !isInner
-}
-
-fun ClassNode.isViewGroup(classTree: ClassTree): Boolean {
-    val isSuccessor = classTree.isSuccessorOf(this, "android/view/ViewGroup") || this.name == "android/view/ViewGroup"
-    return isSuccessor && !isInner
-}
