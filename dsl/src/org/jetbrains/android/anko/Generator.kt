@@ -186,17 +186,30 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration): Configurab
 
     //return a pair<viewGroup, layoutParams> or null if the viewGroup doesn't contain custom LayoutParams
     private fun extractLayoutParams(viewGroup: ClassNode): LayoutParamsNode? {
-        if (viewGroup.innerClasses == null) return null
+        fun findActualLayoutParamsClass(viewGroup: ClassNode): ClassNode? {
+            fun findForParent() = findActualLayoutParamsClass(classTree.findNode(viewGroup)!!.parent!!.data)
 
-        val innerClasses = viewGroup.innerClasses
-        val lp = innerClasses.firstOrNull { it.name.contains("LayoutParams") }
-        if (lp == null) return null
+            val generateMethod = viewGroup.methods.firstOrNull { method ->
+                method.name == "generateLayoutParams"
+                        && method.args.size() == 1
+                        && method.args[0].internalName == "android/util/AttributeSet"
+            } ?: return findForParent()
 
-        val lpNode = classTree.findNode(lp.name)?.data
+            val returnTypeClass = classTree.findNode(generateMethod.returnType.internalName)!!.data
+            if (!returnTypeClass.fqName.startsWith(viewGroup.fqName)) return findForParent()
+            return if (returnTypeClass.isLayoutParams(classTree)) returnTypeClass else findForParent()
+        }
 
-        return if (lpNode != null) {
-            LayoutParamsNode(viewGroup, lpNode, lpNode.getConstructors().filter { it.isPublic })
-        } else null
+        val lpInnerClassName = viewGroup.innerClasses?.firstOrNull { it.name.contains("LayoutParams") } ?: return null
+        val lpInnerClass = classTree.findNode(lpInnerClassName.name)!!.data
+
+        val actualLayoutParamsClass = findActualLayoutParamsClass(viewGroup).let {
+            if (it != null && it.name != "android/view/ViewGroup\$LayoutParams") it else null
+        }
+
+        return (actualLayoutParamsClass ?: lpInnerClass).let { clazz ->
+            LayoutParamsNode(viewGroup, clazz, clazz.getConstructors().filter { it.isPublic })
+        }
     }
 
     //returns true if the viewGroup contains custom LayoutParams class
