@@ -24,7 +24,9 @@ import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.ConfigurationTune.*
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
 import org.jetbrains.android.anko.config.*
+import org.jetbrains.android.anko.generator.ComplexListenerElement
 import org.jetbrains.android.anko.generator.LayoutElement
+import org.jetbrains.android.anko.generator.SimpleListenerElement
 import org.jetbrains.android.anko.templates.TemplateContext
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
@@ -56,37 +58,10 @@ class DSLRenderer(private val generator: Generator) : Configurable(generator.con
         genHelperConstructors()
     }
 
-    // Generate View extension properties (with "best" setter)
     val properties = PropertyRenderer(config).process(generator.properties)
 
-    // Render simple listeners (interfaces with one method)
-    val simpleListeners = generateList(SIMPLE_LISTENERS) {
-        generator.listeners.filterIsInstance<SimpleListener>().map { it.renderSimpleListener() }
-    }
+    val listeners = ListenerRenderer(config).process(generator.listeners)
 
-    // Render complex listeners (interfaces with more than one method)
-    @suppress("UNCHECKED_CAST")
-    private val complexListeners = generateList(COMPLEX_LISTENER_CLASSES, COMPLEX_LISTENER_SETTERS) {
-        generator.listeners.filterIsInstance<ComplexListener>()
-    }
-
-    val complexListenerSetters = generateList(COMPLEX_LISTENER_SETTERS) {
-        complexListeners.map { renderComplexListenerSetter(it) }
-    }
-
-    val complexListenerClasses = generateList(COMPLEX_LISTENER_CLASSES) {
-        fun ComplexListener.id() = "${clazz.fqName}#$name"
-
-        val generated = LinkedHashMap<String, String>()
-        for (listener in complexListeners) {
-            if (!generated.contains(listener.id())) {
-                generated.put(listener.id(), renderComplexListenerClass(listener))
-            }
-        }
-        generated.values()
-    }
-
-    //generated layout classes with custom LayoutParams
     val layouts = LayoutRenderer(config).process(generator.layoutParams)
 
     val services = ServiceRenderer(config).process(generator.services)
@@ -94,16 +69,6 @@ class DSLRenderer(private val generator: Generator) : Configurable(generator.con
     val sqLiteParserHelpers = SqlParserHelperRenderer(config).process(1..22)
 
     val interfaceWorkarounds = InterfaceWorkaroundsRenderer(config).process(generator.interfaceWorkarounds)
-
-    //render a simple listener (extension function)
-    //example: fun android.view.View.onClick(l: (android.view.View?) -> Unit) = setOnClickListener(l)
-    private fun SimpleListener.renderSimpleListener() = render("simple_listener") {
-        "receiver" % setter.clazz.fqNameWithTypeArguments
-        "name" % method.name
-        "args" % method.methodWithClass.formatArguments(config)
-        "returnType" % method.returnType
-        "setter" % setter.method.name
-    }
 
     fun genHelperConstructors(): List<String> {
         fun addMethods(node: ClassTreeNode, writeTo: ArrayList<MethodNode>): ArrayList<MethodNode> {
@@ -171,66 +136,6 @@ class DSLRenderer(private val generator: Generator) : Configurable(generator.con
             }
         }
         return ret
-    }
-
-    //get a name for helper class. Listener interfaces are often inner so we'll separate the base class name with "_"
-    //For example, for class android.widget.SearchView.OnSuggestionListener it would be SearchView_OnSuggessionListener
-    fun getHelperClassName(listener: ComplexListener): String {
-        val internalName = listener.clazz.name
-        val nestedClassName = internalName.substringAfter('$', "")
-        val topLevelClassName = internalName.substringBefore('$').substringAfterLast('/') + listener.clazz.supportSuffix
-
-        return "__$topLevelClassName" + (if (nestedClassName.isNotEmpty()) "_$nestedClassName" else "")
-    }
-
-    private fun renderComplexListenerSetter(listener: ComplexListener): String {
-        return render("complex_listener_setter") {
-            "receiver" % listener.setter.clazz.fqNameWithTypeArguments
-            "methodName" % listener.name
-            "listener" % getHelperClassName(listener)
-            "setter" % listener.setter.method.name
-        }
-    }
-
-    //render a complex listener
-    private fun renderComplexListenerClass(listener: ComplexListener): String {
-        val listenerClassName = listener.clazz.fqName
-        //ListenerHelper class name (helper mutable class, generates real listener)
-        val helperClassName = getHelperClassName(listener)
-
-        //field list (already with indentation)
-        val fields = listener.methods.map { method ->
-            val varName = method.name.decapitalize()
-            val argumentTypes = method.methodWithClass.formatArgumentsTypes(config)
-            val lambdaType = "(($argumentTypes) -> ${method.returnType})"
-            "private var _$varName: $lambdaType? = null"
-        }
-
-        val listenerMethods = listener.methods.flatMap { method ->
-            val varName = method.name.decapitalize()
-            val methodWithClass = method.methodWithClass
-
-            val arguments = methodWithClass.formatArguments(config)
-            val argumentNames = methodWithClass.formatArgumentsNames(config)
-            val argumentTypes = methodWithClass.formatArgumentsTypes(config)
-
-            buffer {
-                val defaultValue = methodWithClass.method.returnType.getDefaultValue()
-                val returnDefaultValue = if (defaultValue.isNotEmpty()) " ?: $defaultValue" else ""
-
-                line("override fun ${method.name}($arguments) = _$varName?.invoke($argumentNames)$returnDefaultValue").nl()
-                line("public fun ${method.name}(listener: ($argumentTypes) -> ${method.returnType}) {")
-                line("_$varName = listener")
-                line("}")
-            }.getLines()
-        }
-
-        return buffer {
-            line("class $helperClassName : $listenerClassName {")
-            lines(fields).nl()
-            lines(listenerMethods)
-            line("}")
-        }.toString()
     }
 
     protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {

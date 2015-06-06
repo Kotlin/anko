@@ -31,26 +31,6 @@ import org.jetbrains.android.anko.utils.ClassTreeUtils
 import org.jetbrains.android.anko.utils.toProperty
 import org.objectweb.asm.tree.FieldNode
 
-data class ListenerMethod(
-        val methodWithClass: MethodNodeWithClass,
-        val name: String,
-        val returnType: String)
-
-abstract class Listener(val setter: MethodNodeWithClass, val clazz: ClassNode)
-
-data class SimpleListener(
-        setter: MethodNodeWithClass,
-        clazz: ClassNode,
-        val method: ListenerMethod
-) : Listener(setter, clazz)
-
-data class ComplexListener(
-        setter: MethodNodeWithClass,
-        clazz: ClassNode,
-        val name: String,
-        val methods: List<ListenerMethod>
-) : Listener(setter, clazz)
-
 class Generator(
         public override val classTree: ClassTree,
         config: AnkoConfiguration
@@ -162,7 +142,7 @@ class Generator(
     }
 
     //suppose "setter" is a correct setOn*Listener method
-    private fun makeListener(setter: MethodNodeWithClass): Listener {
+    private fun makeListener(setter: MethodNodeWithClass): ListenerElement {
         val listener = classTree.findNode(setter.method.args[0].internalName)!!.data
 
         val methods = listener.methods?.filter { !it.isConstructor }
@@ -176,7 +156,7 @@ class Generator(
                 val method = methods!![0]
                 val methodWithClass = MethodNodeWithClass(listener, method)
                 val returnType = method.returnType.asString()
-                SimpleListener(setter, listener, ListenerMethod(methodWithClass, name, returnType))
+                SimpleListenerElement(setter, listener, ListenerMethod(methodWithClass, name, returnType))
             }
             0 -> // Something weird
                 throw RuntimeException("Listener ${listener.name} contains no methods.")
@@ -187,7 +167,7 @@ class Generator(
                     val returnType = method.returnType.asString()
                     ListenerMethod(methodWithClass, methodName, returnType)
                 }!!
-                ComplexListener(setter, listener, name, listenerMethods)
+                ComplexListenerElement(setter, listener, name, listenerMethods)
             }
         }
     }
