@@ -45,7 +45,7 @@ abstract class Renderer<T>(config: AnkoConfiguration): Configurable(config) {
     }
 }
 
-class DSLRenderer(private val generator: Generator) : Configurable(generator.config), ViewConstructorUtils, SupportUtils {
+class RenderFacade(private val generator: Generator) : Configurable(generator.config), ViewConstructorUtils, SupportUtils {
     companion object {
         val NOTHING_TO_INLINE = "@suppress(\"NOTHING_TO_INLINE\")"
         val ONLY_LOCAL_RETURN = "inlineOptions(InlineOption.ONLY_LOCAL_RETURN)"

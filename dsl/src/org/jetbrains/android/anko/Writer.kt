@@ -24,9 +24,9 @@ import java.util.ArrayList
 import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.ConfigurationTune.*
 import org.jetbrains.android.anko.config.Props
-import org.jetbrains.android.anko.render.DSLRenderer
+import org.jetbrains.android.anko.render.RenderFacade
 
-class Writer(private val renderer: DSLRenderer) {
+class Writer(private val renderer: RenderFacade) {
 
     val config = renderer.config
 
