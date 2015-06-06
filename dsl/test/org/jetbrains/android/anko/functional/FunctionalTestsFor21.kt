@@ -1,7 +1,6 @@
 package org.jetbrains.android.anko.functional
 import org.jetbrains.android.anko.*
-import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.config.ConfigurationTune
+import org.jetbrains.android.anko.config.*
 import org.junit.Test
 public class FunctionalTestsFor21 : AbstractFunctionalTest() {
     val version = "21"
@@ -55,6 +54,18 @@ public class FunctionalTestsFor21 : AbstractFunctionalTest() {
         runFunctionalTest("SimpleListenerTest.kt", AnkoFile.LISTENERS, version) {
             files.add(AnkoFile.LISTENERS)
             tunes.add(ConfigurationTune.SIMPLE_LISTENERS)
+        }
+    }
+
+    @Test public fun testInterfaceWorkaroundsTest() {
+        runFunctionalTest("InterfaceWorkaroundsTest.kt", AnkoFile.INTERFACE_WORKAROUNDS, version) {
+            files.add(AnkoFile.INTERFACE_WORKAROUNDS)
+        }
+    }
+
+    @Test public fun testSqlParserHelpersTest() {
+        runFunctionalTest("SqlParserHelpersTest.kt", AnkoFile.SQL_PARSER_HELPERS, version) {
+            files.add(AnkoFile.SQL_PARSER_HELPERS)
         }
     }
 

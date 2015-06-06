@@ -89,7 +89,7 @@ public open class _FragmentTabHost(ctx: Context): android.support.v4.app.Fragmen
 }
 
 public open class _ViewPager(ctx: Context): android.support.v4.view.ViewPager(ctx) {
-    public fun <T: View> T.layoutParams( viewPagerInit: android.support.v4.view.ViewPager.LayoutParams.() -> Unit = defaultInit): T {
+    public fun <T: View> T.layoutParams(viewPagerInit: android.support.v4.view.ViewPager.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.support.v4.view.ViewPager.LayoutParams()
         layoutParams.viewPagerInit()
         this@layoutParams.setLayoutParams(layoutParams)
@@ -151,7 +151,7 @@ public open class _DrawerLayout(ctx: Context): android.support.v4.widget.DrawerL
 }
 
 public open class _SlidingPaneLayout(ctx: Context): android.support.v4.widget.SlidingPaneLayout(ctx) {
-    public fun <T: View> T.layoutParams( slidingPaneLayoutInit: android.support.v4.widget.SlidingPaneLayout.LayoutParams.() -> Unit = defaultInit): T {
+    public fun <T: View> T.layoutParams(slidingPaneLayoutInit: android.support.v4.widget.SlidingPaneLayout.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.support.v4.widget.SlidingPaneLayout.LayoutParams()
         layoutParams.slidingPaneLayoutInit()
         this@layoutParams.setLayoutParams(layoutParams)
@@ -486,7 +486,7 @@ public open class _GridLayout(ctx: Context): android.widget.GridLayout(ctx) {
         return this
     }
 
-    public fun <T: View> T.layoutParams( gridLayoutInit: android.widget.GridLayout.LayoutParams.() -> Unit = defaultInit): T {
+    public fun <T: View> T.layoutParams(gridLayoutInit: android.widget.GridLayout.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.widget.GridLayout.LayoutParams()
         layoutParams.gridLayoutInit()
         this@layoutParams.setLayoutParams(layoutParams)
@@ -524,22 +524,29 @@ public open class _GridLayout(ctx: Context): android.widget.GridLayout(ctx) {
 }
 
 public open class _GridView(ctx: Context): android.widget.GridView(ctx) {
-    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, gridViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, gridViewInit: android.widget.AbsListView.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.AbsListView.LayoutParams(c!!, attrs!!)
         layoutParams.gridViewInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
-    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, gridViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(width, height)
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, gridViewInit: android.widget.AbsListView.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.AbsListView.LayoutParams(width, height)
         layoutParams.gridViewInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
-    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, gridViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(source!!)
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, viewType: Int, gridViewInit: android.widget.AbsListView.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.AbsListView.LayoutParams(width, height, viewType)
+        layoutParams.gridViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, gridViewInit: android.widget.AbsListView.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.AbsListView.LayoutParams(source!!)
         layoutParams.gridViewInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
@@ -548,22 +555,43 @@ public open class _GridView(ctx: Context): android.widget.GridView(ctx) {
 }
 
 public open class _HorizontalScrollView(ctx: Context): android.widget.HorizontalScrollView(ctx) {
-    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, horizontalScrollViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, horizontalScrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.horizontalScrollViewInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
-    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, horizontalScrollViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(width, height)
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, horizontalScrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height)
         layoutParams.horizontalScrollViewInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
-    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, horizontalScrollViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(source!!)
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, gravity: Int, horizontalScrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height, gravity)
+        layoutParams.horizontalScrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, horizontalScrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.horizontalScrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.MarginLayoutParams?, horizontalScrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.horizontalScrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.widget.FrameLayout.LayoutParams?, horizontalScrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
         layoutParams.horizontalScrollViewInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
@@ -693,22 +721,43 @@ public open class _RelativeLayout(ctx: Context): android.widget.RelativeLayout(c
 }
 
 public open class _ScrollView(ctx: Context): android.widget.ScrollView(ctx) {
-    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, scrollViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, scrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.scrollViewInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
-    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, scrollViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(width, height)
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, scrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height)
         layoutParams.scrollViewInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
-    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, scrollViewInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(source!!)
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, gravity: Int, scrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height, gravity)
+        layoutParams.scrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, scrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.scrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.MarginLayoutParams?, scrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.scrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.widget.FrameLayout.LayoutParams?, scrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
         layoutParams.scrollViewInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
@@ -738,7 +787,7 @@ public open class _TableLayout(ctx: Context): android.widget.TableLayout(ctx) {
         return this
     }
 
-    public fun <T: View> T.layoutParams( tableLayoutInit: android.widget.TableLayout.LayoutParams.() -> Unit = defaultInit): T {
+    public fun <T: View> T.layoutParams(tableLayoutInit: android.widget.TableLayout.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.widget.TableLayout.LayoutParams()
         layoutParams.tableLayoutInit()
         this@layoutParams.setLayoutParams(layoutParams)
@@ -783,7 +832,7 @@ public open class _TableRow(ctx: Context): android.widget.TableRow(ctx) {
         return this
     }
 
-    public fun <T: View> T.layoutParams( tableRowInit: android.widget.TableRow.LayoutParams.() -> Unit = defaultInit): T {
+    public fun <T: View> T.layoutParams(tableRowInit: android.widget.TableRow.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.widget.TableRow.LayoutParams()
         layoutParams.tableRowInit()
         this@layoutParams.setLayoutParams(layoutParams)
@@ -814,22 +863,43 @@ public open class _TableRow(ctx: Context): android.widget.TableRow(ctx) {
 }
 
 public open class _TextSwitcher(ctx: Context): android.widget.TextSwitcher(ctx) {
-    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, textSwitcherInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, textSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.textSwitcherInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
-    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, textSwitcherInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(width, height)
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, textSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height)
         layoutParams.textSwitcherInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
-    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, textSwitcherInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(source!!)
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, gravity: Int, textSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height, gravity)
+        layoutParams.textSwitcherInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, textSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.textSwitcherInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.MarginLayoutParams?, textSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.textSwitcherInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.widget.FrameLayout.LayoutParams?, textSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
         layoutParams.textSwitcherInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
@@ -897,22 +967,43 @@ public open class _Toolbar(ctx: Context): android.widget.Toolbar(ctx) {
 }
 
 public open class _ViewAnimator(ctx: Context): android.widget.ViewAnimator(ctx) {
-    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, viewAnimatorInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, viewAnimatorInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.viewAnimatorInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
-    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, viewAnimatorInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(width, height)
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, viewAnimatorInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height)
         layoutParams.viewAnimatorInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
-    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, viewAnimatorInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(source!!)
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, gravity: Int, viewAnimatorInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height, gravity)
+        layoutParams.viewAnimatorInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, viewAnimatorInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.viewAnimatorInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.MarginLayoutParams?, viewAnimatorInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.viewAnimatorInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.widget.FrameLayout.LayoutParams?, viewAnimatorInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
         layoutParams.viewAnimatorInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
@@ -921,26 +1012,48 @@ public open class _ViewAnimator(ctx: Context): android.widget.ViewAnimator(ctx) 
 }
 
 public open class _ViewSwitcher(ctx: Context): android.widget.ViewSwitcher(ctx) {
-    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, viewSwitcherInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(c!!, attrs!!)
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, viewSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.viewSwitcherInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
-    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, viewSwitcherInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(width, height)
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, viewSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height)
         layoutParams.viewSwitcherInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
-    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, viewSwitcherInit: android.view.ViewGroup.LayoutParams.() -> Unit = defaultInit): T {
-        val layoutParams = android.view.ViewGroup.LayoutParams(source!!)
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, gravity: Int, viewSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height, gravity)
+        layoutParams.viewSwitcherInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, viewSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.viewSwitcherInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.MarginLayoutParams?, viewSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.viewSwitcherInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.widget.FrameLayout.LayoutParams?, viewSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
         layoutParams.viewSwitcherInit()
         this@layoutParams.setLayoutParams(layoutParams)
         return this
     }
 
 }
+
 

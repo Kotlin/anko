@@ -18,6 +18,7 @@ package org.jetbrains.android.anko.config
 
 import org.jetbrains.android.anko.annotations.AnnotationManager
 import org.jetbrains.android.anko.sources.SourceManager
+import org.jetbrains.android.anko.templates.TemplateManager
 import java.io.File
 import java.util.HashMap
 
@@ -41,10 +42,9 @@ abstract class AnkoConfiguration {
 
     abstract val annotationManager: AnnotationManager
     abstract val sourceManager: SourceManager
+    abstract val templateManager: TemplateManager
 
-    public fun get(file: AnkoFile): Boolean = files.contains(file)
-
-    public fun get(tune: ConfigurationTune): Boolean = tunes.contains(tune)
+    public fun get(option: ConfigurationOption): Boolean = tunes.contains(option) || files.contains(option)
 
     public abstract fun getOutputFile(ankoFile: AnkoFile): File
 }

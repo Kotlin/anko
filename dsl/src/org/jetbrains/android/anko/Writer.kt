@@ -24,8 +24,9 @@ import java.util.ArrayList
 import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.ConfigurationTune.*
 import org.jetbrains.android.anko.config.Props
+import org.jetbrains.android.anko.render.DSLRenderer
 
-class Writer(private val renderer: Renderer) {
+class Writer(private val renderer: DSLRenderer) {
 
     val config = renderer.config
 
@@ -68,7 +69,7 @@ class Writer(private val renderer: Renderer) {
 
     private fun writeLayouts() {
         val imports = Props.imports["layouts"] ?: ""
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.LAYOUTS), renderer.layouts, imports)
+        writeToFile(config.getOutputFile(anko.config.AnkoFile.LAYOUTS), listOf(renderer.layouts), imports)
     }
 
     private fun writeListeners() {
@@ -85,32 +86,27 @@ class Writer(private val renderer: Renderer) {
     }
 
     private fun writeProperties() {
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.PROPERTIES), renderer.properties)
+        writeToFile(config.getOutputFile(anko.config.AnkoFile.PROPERTIES), listOf(renderer.properties))
     }
 
     private fun writeServices() {
         val imports = Props.imports["services"] ?: ""
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.SERVICES), renderer.services, imports)
+        writeToFile(config.getOutputFile(anko.config.AnkoFile.SERVICES), listOf(renderer.services), imports)
     }
 
     private fun writeSqlParserHelpers() {
         val imports = Props.imports["sqliteparserhelpers"] ?: ""
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.SQL_PARSER_HELPERS), renderer.sqLiteParserHelpers, imports, false)
+        writeToFile(config.getOutputFile(anko.config.AnkoFile.SQL_PARSER_HELPERS), listOf(renderer.sqLiteParserHelpers), imports, false)
     }
 
     private fun writeViews() {
-        val allViews = arrayListOf<String>()
-
-        if (config[VIEWS]) {
-            allViews.addAll(renderer.views)
-            allViews.addAll(renderer.viewGroups)
-        }
-
-        if (config[HELPER_CONSTRUCTORS])
-            allViews.addAll(renderer.helperConstructors)
+        val allViews = listOf(
+                if (config[VIEWS]) renderer.views + renderer.viewGroups else null,
+                if (config[HELPER_CONSTRUCTORS]) renderer.helperConstructors.joinToString("\n") else null
+        ).filterNotNull().joinToString("")
 
         val imports = Props.imports["views"] ?: ""
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.VIEWS), allViews, imports)
+        writeToFile(config.getOutputFile(anko.config.AnkoFile.VIEWS), listOf(allViews), imports)
     }
 
     private fun writeStatic(subsystem: config.AnkoFile) {

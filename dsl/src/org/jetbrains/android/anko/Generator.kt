@@ -25,6 +25,9 @@ import java.util.Arrays
 import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.Configurable
 import org.jetbrains.android.anko.config.generate
+import org.jetbrains.android.anko.config.generateList
+import org.jetbrains.android.anko.generator.*
+import org.jetbrains.android.anko.utils.ClassTreeUtils
 import org.jetbrains.android.anko.utils.toProperty
 import org.objectweb.asm.tree.FieldNode
 
@@ -39,50 +42,47 @@ data class SimpleListener(
         setter: MethodNodeWithClass,
         clazz: ClassNode,
         val method: ListenerMethod
-): Listener(setter, clazz)
+) : Listener(setter, clazz)
 
 data class ComplexListener(
         setter: MethodNodeWithClass,
         clazz: ClassNode,
         val name: String,
         val methods: List<ListenerMethod>
-): Listener(setter, clazz)
+) : Listener(setter, clazz)
 
-data class Property(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)
+class Generator(
+        public override val classTree: ClassTree,
+        config: AnkoConfiguration,
+        isSupport: Boolean
+) : Configurable(config), ClassTreeUtils {
 
-data class LayoutParamsNode(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>)
-
-class Generator(val classTree: ClassTree, config: AnkoConfiguration, isSupport: Boolean): Configurable(config) {
-
-    private val availableClasses = classTree.filter { !it.isExcluded() }
-
-    private val availableMethods = availableClasses.flatMap { clazz ->
-        clazz.methods
-                ?.map { MethodNodeWithClass(clazz, it) }
-                ?.filter { !it.isExcluded() }
-                ?: listOf()
-    }
+    private val availableClasses = findAvailableClasses()
+    private val availableMethods = findAvailableMethods(availableClasses)
 
     // Views and viewGroups without custom LayoutParams
     val viewClasses = availableClasses
-        .filter { it.isView && !it.isViewGroupWithParams }
-        .sortBy { it.name }
+            .filter { it.isView && !it.isViewGroupWithParams }
+            .map { ViewElement(it, it.isViewGroup) }
+            .sortBy { it.view.name }
 
     val viewGroupClasses = availableClasses
-        .filter { it.isViewGroupWithParams }
-        .sortBy { it.name }
+            .filter { it.isViewGroupWithParams }
+            .map { ViewElement(it, true) }
+            .sortBy { it.view.name }
 
     val listeners = availableMethods
             .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter }
             .map { makeListener(it) }
             .sortBy { it.setter.identifier }
 
-    private val propertyGetters = generate(PROPERTIES) {
+    private val propertyGetters = generateList(PROPERTIES) {
         availableMethods
-                .filter { it.clazz.isView &&
-                        it.method.isGetter() && !it.method.isOverridden && !it.method.isListenerGetter &&
-                        !config.excludedProperties.contains(it.clazz.fqName + "#" + it.method.name) &&
-                        !config.excludedProperties.contains(it.clazz.fqName + "#*")
+                .filter {
+                    it.clazz.isView &&
+                            it.method.isGetter() && !it.method.isOverridden && !it.method.isListenerGetter &&
+                            !config.excludedProperties.contains(it.clazz.fqName + "#" + it.method.name) &&
+                            !config.excludedProperties.contains(it.clazz.fqName + "#*")
                 }
                 .sortBy { it.identifier }
     }
@@ -95,21 +95,24 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration, isSupport: 
 
     // Find all ancestors of ViewGroup.LayoutParams in classes that extends ViewGroup.
     val layoutParams = viewGroupClasses
-            .map { extractLayoutParams(it) }
+            .map { extractLayoutParams(it.view) }
             .filterNotNull()
             .sortBy { it.layout.name }
 
-    val services = generate(SERVICES) {
+    val services = generateList(SERVICES) {
         classTree.findNode("android/content/Context")?.data?.fields
-            ?.filter { it.name.endsWith("_SERVICE") }
-            ?.map { it.name to classTree.findNode("android", it.toServiceClassName()) }
-            ?.filter { it.second != null }
-            ?.sortBy { it.first }
-            ?: listOf()
+                ?.filter { it.name.endsWith("_SERVICE") }
+                ?.map {
+                    val service = classTree.findNode("android", it.toServiceClassName())?.data
+                    if (service != null) ServiceElement(service, it.name) else null
+                }
+                ?.filterNotNull()
+                ?.sortBy { it.name }
+                ?: listOf()
     }
 
     // Generate actionbar properties
-    val actionbarPropertyGetters = generate(PROPERTIES) {
+    val actionbarPropertyGetters = generateList(PROPERTIES) {
         availableMethods
                 .filter { ((isSupport && it.clazz.isSupportActionBar) || (!isSupport && it.clazz.isActionBar)) &&
                         it.method.isGetter() && !it.method.isOverridden && !it.method.isListenerGetter &&
@@ -126,27 +129,33 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration, isSupport: 
     val actionbarProperties = genProperties(actionbarPropertyGetters, actionbarPropertySetters)
     // ~~~
 
-    val interfaceWorkarounds = generate(INTERFACE_WORKAROUNDS) {
-        availableClasses.filter { clazz ->
-            clazz.isPublic && clazz.innerClasses != null && clazz.fields.isNotEmpty() &&
-                clazz.innerClasses.any { inner -> inner.isProtected && inner.isInterface && inner.name == clazz.name }
-        }.map { clazz ->
-            // We're looking for a public ancestor for this interface, but ancestor also may be protected
-            val ancestor = classTree.filter { clazz ->
-                clazz.isPublic && clazz.interfaces.any { intface -> intface == clazz.name } &&
-                !clazz.innerClasses.any { it.name == clazz.name && it.isProtected }
+    val interfaceWorkarounds = generateList(INTERFACE_WORKAROUNDS) {
+        availableClasses.filter {
+            it.isPublic && it.innerClasses != null && it.fields != null && it.fields.notEmpty &&
+                    it.innerClasses.any { inner -> inner.isProtected && inner.isInterface && inner.name == it.name }
+        }.map {
+            // We're looking for a public ancestor for this interface, but the ancestor also may be protected inner one
+            val ancestor = classTree.filter {
+                clazz -> clazz.isPublic && clazz.interfaces.any { itf -> itf == it.name } && (
+                    clazz.innerClasses == null ||
+                            clazz.innerClasses.isEmpty() ||
+                            !clazz.innerClasses.any { it.name == clazz.name && it.isProtected }
+                    )
+            }.firstOrNull()
+            val innerClass = it.innerClasses.firstOrNull {
+                inner -> inner.isProtected && inner.isInterface && inner.name == it.name
             }
-            val innerClass = clazz.innerClasses.firstOrNull {
-                inner -> inner.isProtected && inner.isInterface && inner.name == clazz.name
-            }
-            Triple(clazz, ancestor.firstOrNull(), innerClass)
-        }.filter { it.second != null && it.third != null }
+
+            if (ancestor != null && innerClass != null)
+                InterfaceWorkaroundElement(it, ancestor, innerClass)
+            else null
+        }.filterNotNull()
     }
 
     //Convert list of getters and map of setters to property list
     private fun genProperties(
             getters: Collection<MethodNodeWithClass>,
-            setters: Map<String, List<MethodNodeWithClass>>) : List<Property> {
+            setters: Map<String, List<MethodNodeWithClass>>): List<PropertyElement> {
         val existingProperties = hashSetOf<String>()
 
         val propertyWithGetters = getters.map { getter ->
@@ -158,21 +167,21 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration, isSupport: 
             }
 
             existingProperties.add(property.setterIdentifier)
-            Property(property.name, getter, best + others)
+            PropertyElement(property.name, getter, best + others)
         }
         val propertyWithoutGetters = setters.values().map { setters ->
             val property = setters.first().toProperty()
 
             val id = property.setterIdentifier
             if (property.propertyFqName in config.propertiesWithoutGetters && id !in existingProperties) {
-                Property(property.name, null, setters)
+                PropertyElement(property.name, null, setters)
             } else null
         }.filterNotNull()
         return propertyWithGetters + propertyWithoutGetters
     }
 
     //suppose "setter" is a correct setOn*Listener method
-    private fun makeListener(setter: MethodNodeWithClass) : Listener {
+    private fun makeListener(setter: MethodNodeWithClass): Listener {
         val listener = classTree.findNode(setter.method.args[0].internalName)!!.data
 
         val methods = listener.methods?.filter { !it.isConstructor }
@@ -203,19 +212,35 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration, isSupport: 
     }
 
     //return a pair<viewGroup, layoutParams> or null if the viewGroup doesn't contain custom LayoutParams
-    private fun extractLayoutParams(viewGroup: ClassNode): LayoutParamsNode? {
-        if (viewGroup.innerClasses == null) return null
+    private fun extractLayoutParams(viewGroup: ClassNode): LayoutElement? {
+        fun findActualLayoutParamsClass(viewGroup: ClassNode): ClassNode? {
+            fun findForParent() = findActualLayoutParamsClass(classTree.findNode(viewGroup)!!.parent!!.data)
 
-        val innerClasses = viewGroup.innerClasses
-        val lp = innerClasses.firstOrNull { it.name.contains("LayoutParams") }
-        if (lp == null) return null
+            val generateMethod = viewGroup.methods.firstOrNull { method ->
+                method.name == "generateLayoutParams"
+                        && method.args.size() == 1
+                        && method.args[0].internalName == "android/util/AttributeSet"
+            } ?: return findForParent()
 
-        val lpNode = classTree.findNode(lp.name)?.data
+            val returnTypeClass = classTree.findNode(generateMethod.returnType.internalName)!!.data
+            if (!returnTypeClass.fqName.startsWith(viewGroup.fqName)) return findForParent()
+            return if (returnTypeClass.isLayoutParams) returnTypeClass else findForParent()
+        }
 
-        return if (lpNode != null) {
-            LayoutParamsNode(viewGroup, lpNode, lpNode.getConstructors().filter { it.isPublic })
-        } else null
+        val lpInnerClassName = viewGroup.innerClasses?.firstOrNull { it.name.contains("LayoutParams") } ?: return null
+        val lpInnerClass = classTree.findNode(lpInnerClassName.name)!!.data
+
+        val actualLayoutParamsClass = findActualLayoutParamsClass(viewGroup).let {
+            if (it != null && it.name != "android/view/ViewGroup\$LayoutParams") it else null
+        }
+
+        return (actualLayoutParamsClass ?: lpInnerClass).let { clazz ->
+            LayoutElement(viewGroup, clazz, clazz.getConstructors().filter { it.isPublic })
+        }
     }
+
+    protected val ClassNode.isViewGroupWithParams: Boolean
+        get() = isViewGroup && hasLayoutParams(this)
 
     //returns true if the viewGroup contains custom LayoutParams class
     private fun hasLayoutParams(viewGroup: ClassNode): Boolean {
@@ -225,25 +250,11 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration, isSupport: 
     private val MethodNode.isListenerGetter: Boolean
         get() = name.startsWith("get") && name.endsWith("Listener")
 
-    private val ClassNode.isView: Boolean
-        get() = isView(classTree)
+    public override fun isExcluded(node: ClassNode) =
+            node.fqName in config.excludedClasses || "${node.packageName}.*" in config.excludedClasses
 
-    private val ClassNode.isViewGroup: Boolean
-        get() = isViewGroup(classTree)
-
-    private val ClassNode.isViewGroupWithParams: Boolean
-        get() = isViewGroup(classTree) && hasLayoutParams(this)
-
-    private val ClassNode.isActionBar: Boolean
-        get() = isActionBar(classTree)
-    private val ClassNode.isSupportActionBar: Boolean
-        get() = isSupportActionBar(classTree)
-
-    private fun ClassNode.isExcluded() =
-        fqName in config.excludedClasses || "$packageName.*" in config.excludedClasses
-
-    private fun MethodNodeWithClass.isExcluded() =
-        (this.clazz.fqName + "#" + this.method.name) in config.excludedMethods
+    public override fun isExcluded(node: MethodNodeWithClass) =
+            (node.clazz.fqName + "#" + node.method.name) in config.excludedMethods
 
     private fun FieldNode.toServiceClassName(): String {
         var nextCapital = true
@@ -251,7 +262,9 @@ class Generator(val classTree: ClassTree, config: AnkoConfiguration, isSupport: 
         for (char in name.replace("_SERVICE", "_MANAGER").toCharArray()) when (char) {
             '_' -> nextCapital = true
             else -> builder.append(
-                    if (nextCapital) { nextCapital = false; char } else Character.toLowerCase(char)
+                    if (nextCapital) {
+                        nextCapital = false; char
+                    } else Character.toLowerCase(char)
             )
         }
         return builder.toString()

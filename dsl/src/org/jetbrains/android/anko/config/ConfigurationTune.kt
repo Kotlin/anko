@@ -16,7 +16,7 @@
 
 package org.jetbrains.android.anko.config
 
-public enum class ConfigurationTune {
+public enum class ConfigurationTune : ConfigurationOption {
     HELPER_CONSTRUCTORS,
     TOP_LEVEL_DSL_ITEMS,
     SIMPLE_LISTENERS,

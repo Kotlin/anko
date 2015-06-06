@@ -266,6 +266,7 @@ public val android.support.v7.widget.Toolbar.contentInsetStart: Int
 public var android.support.v7.widget.Toolbar.logo: android.graphics.drawable.Drawable?
     get() = getLogo()
     set(v) = setLogo(v)
+
 public var android.support.v7.widget.Toolbar.logoResource: Int
     get() = throw AnkoException("'android.support.v7.widget.Toolbar.logoResource' property does not have a getter")
     set(v) = setLogo(v)
@@ -273,6 +274,7 @@ public var android.support.v7.widget.Toolbar.logoResource: Int
 public var android.support.v7.widget.Toolbar.logoDescription: CharSequence?
     get() = getLogoDescription()
     set(v) = setLogoDescription(v)
+
 public var android.support.v7.widget.Toolbar.logoDescriptionResource: Int
     get() = throw AnkoException("'android.support.v7.widget.Toolbar.logoDescriptionResource' property does not have a getter")
     set(v) = setLogoDescription(v)
@@ -283,6 +285,7 @@ public val android.support.v7.widget.Toolbar.menu: android.view.Menu?
 public var android.support.v7.widget.Toolbar.navigationContentDescription: CharSequence?
     get() = getNavigationContentDescription()
     set(v) = setNavigationContentDescription(v)
+
 public var android.support.v7.widget.Toolbar.navigationContentDescriptionResource: Int
     get() = throw AnkoException("'android.support.v7.widget.Toolbar.navigationContentDescriptionResource' property does not have a getter")
     set(v) = setNavigationContentDescription(v)
@@ -290,6 +293,7 @@ public var android.support.v7.widget.Toolbar.navigationContentDescriptionResourc
 public var android.support.v7.widget.Toolbar.navigationIcon: android.graphics.drawable.Drawable?
     get() = getNavigationIcon()
     set(v) = setNavigationIcon(v)
+
 public var android.support.v7.widget.Toolbar.navigationIconResource: Int
     get() = throw AnkoException("'android.support.v7.widget.Toolbar.navigationIconResource' property does not have a getter")
     set(v) = setNavigationIcon(v)
@@ -301,6 +305,7 @@ public var android.support.v7.widget.Toolbar.popupTheme: Int
 public var android.support.v7.widget.Toolbar.subtitle: CharSequence?
     get() = getSubtitle()
     set(v) = setSubtitle(v)
+
 public var android.support.v7.widget.Toolbar.subtitleResource: Int
     get() = throw AnkoException("'android.support.v7.widget.Toolbar.subtitleResource' property does not have a getter")
     set(v) = setSubtitle(v)
@@ -308,6 +313,7 @@ public var android.support.v7.widget.Toolbar.subtitleResource: Int
 public var android.support.v7.widget.Toolbar.title: CharSequence?
     get() = getTitle()
     set(v) = setTitle(v)
+
 public var android.support.v7.widget.Toolbar.titleResource: Int
     get() = throw AnkoException("'android.support.v7.widget.Toolbar.titleResource' property does not have a getter")
     set(v) = setTitle(v)
@@ -894,6 +900,7 @@ public val android.widget.AbsListView.selectedView: android.view.View?
 public var android.widget.AbsListView.selector: android.graphics.drawable.Drawable?
     get() = getSelector()
     set(v) = setSelector(v)
+
 public var android.widget.AbsListView.selectorResource: Int
     get() = throw AnkoException("'android.widget.AbsListView.selectorResource' property does not have a getter")
     set(v) = setSelector(v)
@@ -1056,6 +1063,7 @@ public var android.widget.CalendarView.minDate: Long
 public var android.widget.CalendarView.selectedDateVerticalBar: android.graphics.drawable.Drawable?
     get() = getSelectedDateVerticalBar()
     set(v) = setSelectedDateVerticalBar(v)
+
 public var android.widget.CalendarView.selectedDateVerticalBarResource: Int
     get() = throw AnkoException("'android.widget.CalendarView.selectedDateVerticalBarResource' property does not have a getter")
     set(v) = setSelectedDateVerticalBar(v)
@@ -1095,6 +1103,7 @@ public var android.widget.CalendarView.enabled: Boolean
 public var android.widget.CheckedTextView.checkMarkDrawable: android.graphics.drawable.Drawable?
     get() = getCheckMarkDrawable()
     set(v) = setCheckMarkDrawable(v)
+
 public var android.widget.CheckedTextView.checkMarkDrawableResource: Int
     get() = throw AnkoException("'android.widget.CheckedTextView.checkMarkDrawableResource' property does not have a getter")
     set(v) = setCheckMarkDrawable(v)
@@ -1794,6 +1803,7 @@ public var android.widget.TextView.highlightColor: Int
 public var android.widget.TextView.hint: CharSequence?
     get() = getHint()
     set(v) = setHint(v)
+
 public var android.widget.TextView.hintResource: Int
     get() = throw AnkoException("'android.widget.TextView.hintResource' property does not have a getter")
     set(v) = setHint(v)
@@ -1921,6 +1931,7 @@ public var android.widget.TextView.showSoftInputOnFocus: Boolean
 public var android.widget.TextView.text: CharSequence
     get() = getText()
     set(v) = setText(v)
+
 public var android.widget.TextView.textResource: Int
     get() = throw AnkoException("'android.widget.TextView.textResource' property does not have a getter")
     set(v) = setText(v)
@@ -1987,6 +1998,7 @@ public var android.widget.ToggleButton.textOn: CharSequence?
 public var android.widget.Toolbar.logo: android.graphics.drawable.Drawable?
     get() = getLogo()
     set(v) = setLogo(v)
+
 public var android.widget.Toolbar.logoResource: Int
     get() = throw AnkoException("'android.widget.Toolbar.logoResource' property does not have a getter")
     set(v) = setLogo(v)
@@ -1994,6 +2006,7 @@ public var android.widget.Toolbar.logoResource: Int
 public var android.widget.Toolbar.logoDescription: CharSequence?
     get() = getLogoDescription()
     set(v) = setLogoDescription(v)
+
 public var android.widget.Toolbar.logoDescriptionResource: Int
     get() = throw AnkoException("'android.widget.Toolbar.logoDescriptionResource' property does not have a getter")
     set(v) = setLogoDescription(v)
@@ -2004,6 +2017,7 @@ public val android.widget.Toolbar.menu: android.view.Menu?
 public var android.widget.Toolbar.navigationContentDescription: CharSequence?
     get() = getNavigationContentDescription()
     set(v) = setNavigationContentDescription(v)
+
 public var android.widget.Toolbar.navigationContentDescriptionResource: Int
     get() = throw AnkoException("'android.widget.Toolbar.navigationContentDescriptionResource' property does not have a getter")
     set(v) = setNavigationContentDescription(v)
@@ -2011,6 +2025,7 @@ public var android.widget.Toolbar.navigationContentDescriptionResource: Int
 public var android.widget.Toolbar.navigationIcon: android.graphics.drawable.Drawable?
     get() = getNavigationIcon()
     set(v) = setNavigationIcon(v)
+
 public var android.widget.Toolbar.navigationIconResource: Int
     get() = throw AnkoException("'android.widget.Toolbar.navigationIconResource' property does not have a getter")
     set(v) = setNavigationIcon(v)
@@ -2022,6 +2037,7 @@ public var android.widget.Toolbar.popupTheme: Int
 public var android.widget.Toolbar.subtitle: CharSequence?
     get() = getSubtitle()
     set(v) = setSubtitle(v)
+
 public var android.widget.Toolbar.subtitleResource: Int
     get() = throw AnkoException("'android.widget.Toolbar.subtitleResource' property does not have a getter")
     set(v) = setSubtitle(v)
@@ -2029,6 +2045,7 @@ public var android.widget.Toolbar.subtitleResource: Int
 public var android.widget.Toolbar.title: CharSequence?
     get() = getTitle()
     set(v) = setTitle(v)
+
 public var android.widget.Toolbar.titleResource: Int
     get() = throw AnkoException("'android.widget.Toolbar.titleResource' property does not have a getter")
     set(v) = setTitle(v)
