@@ -2176,6 +2176,7 @@ public val android.support.v7.app.ActionBar.selectedTab: android.support.v7.app.
 public var android.support.v7.app.ActionBar.subtitle: CharSequence?
     get() = getSubtitle()
     set(v) = setSubtitle(v)
+
 public var android.support.v7.app.ActionBar.subtitleResource: Int
     get() = throw AnkoException("'android.support.v7.app.ActionBar.subtitleResource' property does not have a getter")
     set(v) = setSubtitle(v)
@@ -2186,6 +2187,7 @@ public val android.support.v7.app.ActionBar.tabCount: Int
 public var android.support.v7.app.ActionBar.title: CharSequence?
     get() = getTitle()
     set(v) = setTitle(v)
+
 public var android.support.v7.app.ActionBar.titleResource: Int
     get() = throw AnkoException("'android.support.v7.app.ActionBar.titleResource' property does not have a getter")
     set(v) = setTitle(v)
@@ -2247,6 +2249,7 @@ public var android.support.v7.app.ActionBar.homeButtonEnabled: Boolean
 public var android.support.v7.app.ActionBar.homeAsUpIndicator: android.graphics.drawable.Drawable?
     get() = throw AnkoException("'android.support.v7.app.ActionBar.homeAsUpIndicator' property does not have a getter")
     set(v) = setHomeAsUpIndicator(v)
+
 public var android.support.v7.app.ActionBar.homeAsUpIndicatorResource: Int
     get() = throw AnkoException("'android.support.v7.app.ActionBar.homeAsUpIndicatorResource' property does not have a getter")
     set(v) = setHomeAsUpIndicator(v)
