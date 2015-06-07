@@ -26,3 +26,11 @@ public open class Fragment {
 
     }
 }
+
+public abstract class FragmentManager {
+    public abstract fun beginTransaction(): FragmentTransaction
+    public abstract fun findFragmentById(id: Int): Fragment
+    public abstract fun findFragmentByTag(tag: String): Fragment
+}
+
+public abstract class FragmentTransaction

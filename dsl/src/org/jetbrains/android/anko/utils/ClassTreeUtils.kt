@@ -16,10 +16,7 @@
 
 package org.jetbrains.android.anko.utils
 
-import org.jetbrains.android.anko.ClassTree
-import org.jetbrains.android.anko.MethodNodeWithClass
-import org.jetbrains.android.anko.isAbstract
-import org.jetbrains.android.anko.isInner
+import org.jetbrains.android.anko.*
 import org.objectweb.asm.tree.ClassNode
 
 public interface ClassTreeUtils {
@@ -54,6 +51,20 @@ public interface ClassTreeUtils {
     protected val ClassNode.isViewGroup: Boolean
         get() {
             return !isInner && (classTree.isSuccessorOf(this, "android/view/ViewGroup") || this.name == "android/view/ViewGroup")
+        }
+
+    protected val ClassNode.isActionBar: Boolean
+        get() {
+            val isSuccessor = ((classTree.isSuccessorOf(this, "android/app/Activity") || this.name == "android/app/Activity") ||
+                    (classTree.isSuccessorOf(this, "android/app/ActionBar") || this.name == "android/app/ActionBar"))
+            return isSuccessor && !isInner
+        }
+
+    protected val ClassNode.isSupportActionBar: Boolean
+        get() {
+            val isSuccessor = ((classTree.isSuccessorOf(this, "android/support/v4/app/FragmentActivity") || this.name == "android/support/v4/app/FragmentActivity") ||
+                    ((classTree.isSuccessorOf(this, "android/support/v7/app/ActionBar") || this.name == "android/support/v7/app/ActionBar")))
+            return isSuccessor && !isInner
         }
 
 }

@@ -16,14 +16,12 @@
 
 package org.jetbrains.anko
 
+import android.app.*
 import android.content.Intent
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.ActivityNotFoundException
 import android.preference.PreferenceManager
-import android.app.Activity
-import android.app.Fragment
-import android.app.Service
 import android.os.Bundle
 import android.net.Uri
 import java.io.Serializable
@@ -306,3 +304,14 @@ public fun Intent.newTask(): Intent = setFlag(Intent.FLAG_ACTIVITY_NEW_TASK)
 public fun Intent.noAnimation(): Intent = setFlag(Intent.FLAG_ACTIVITY_NO_ANIMATION)
 public fun Intent.noHistory(): Intent = setFlag(Intent.FLAG_ACTIVITY_NO_HISTORY)
 public fun Intent.singleTop(): Intent = setFlag(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun FragmentManager.transactions(init: FragmentTransaction.() -> FragmentTransaction): FragmentTransaction {
+    return beginTransaction().init()
+}
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Fragment> FragmentManager.find(id: Int): T? = findFragmentById(id) as? T
+
+[suppress("NOTHING_TO_INLINE")]
+public inline fun <reified T: Fragment> FragmentManager.find(tag: String): T? = findFragmentByTag(tag) as? T

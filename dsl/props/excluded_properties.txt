@@ -58,3 +58,5 @@ android.widget.AbsListView#getCheckedItemPositions
 android.widget.AbsListView#getSolidColor
 android.widget.AbsListView#getTextFilter
 android.widget.AbsListView#getVerticalScrollbarWidth
+android.support.v7.internal.app.WindowDecorActionBar#*
+android.support.v7.internal.app.ToolbarActionBar#*

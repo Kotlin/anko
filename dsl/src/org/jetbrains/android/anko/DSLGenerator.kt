@@ -46,13 +46,15 @@ class DSLGenerator(
     }
 
     override fun run() {
-        if (fVersion.contains("s"))
+        val isSupport = fVersion.contains("s")
+
+        if (isSupport)
             config.files.add(AnkoFile.SUPPORT)
         else
             config.files.remove(AnkoFile.SUPPORT)
 
         val classTree = this.classTree ?: ClassProcessor(jars).genClassTree()
-        val generator = Generator(classTree, config)
+        val generator = Generator(classTree, config, isSupport)
         val renderer = RenderFacade(generator)
         Writer(renderer).write()
 

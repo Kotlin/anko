@@ -174,4 +174,28 @@ public class GeneratedCompileTest : AbstractCompileTest() {
         runCompileTest("AndroidWidgetTest.kt", "21s")
     }
 
+    @Test public fun testAndroidActionBarTestFor15() {
+        runCompileTest("AndroidActionBarTest.kt", "15")
+    }
+
+    @Test public fun testAndroidSupportActionBarTestFor15s() {
+        runCompileTest("AndroidSupportActionBarTest.kt", "15s")
+    }
+
+    @Test public fun testAndroidActionBarTestFor19() {
+        runCompileTest("AndroidActionBarTest.kt", "19")
+    }
+
+    @Test public fun testAndroidSupportActionBarTestFor19s() {
+        runCompileTest("AndroidSupportActionBarTest.kt", "19s")
+    }
+
+    @Test public fun testAndroidActionBarTestFor21() {
+        runCompileTest("AndroidActionBarTest.kt", "21")
+    }
+
+    @Test public fun testAndroidSupportActionBarTestFor21s() {
+        runCompileTest("AndroidSupportActionBarTest.kt", "21s")
+    }
+
 }

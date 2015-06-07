@@ -33,7 +33,8 @@ import org.objectweb.asm.tree.FieldNode
 
 class Generator(
         public override val classTree: ClassTree,
-        config: AnkoConfiguration
+        config: AnkoConfiguration,
+        isSupport: Boolean
 ) : Configurable(config), ClassTreeUtils {
 
     private val availableClasses = findAvailableClasses()
@@ -55,7 +56,7 @@ class Generator(
             .map { makeListener(it) }
             .sortBy { it.setter.identifier }
 
-    private val propertyGetters = generateList(PROPERTIES) {
+    private val viewPropertyGetters = generateList(PROPERTIES) {
         availableMethods
                 .filter {
                     it.clazz.isView &&
@@ -66,11 +67,11 @@ class Generator(
                 .sortBy { it.identifier }
     }
 
-    private val propertySetters = availableMethods
+    private val viewPropertySetters = availableMethods
             .filter { it.clazz.isView && it.method.isNonListenerSetter() && !it.method.isOverridden }
             .groupBy { it.identifier }
 
-    val properties = genProperties(propertyGetters, propertySetters)
+    val viewProperties = genProperties(viewPropertyGetters, viewPropertySetters)
 
     // Find all ancestors of ViewGroup.LayoutParams in classes that extends ViewGroup.
     val layoutParams = viewGroupClasses
@@ -89,6 +90,24 @@ class Generator(
                 ?.sortBy { it.name }
                 ?: listOf()
     }
+
+    // Generate actionbar properties
+    private val actionbarPropertyGetters = generateList(PROPERTIES) {
+        availableMethods
+                .filter { ((isSupport && it.clazz.isSupportActionBar) || (!isSupport && it.clazz.isActionBar)) &&
+                        it.method.isGetter() && !it.method.isOverridden && !it.method.isListenerGetter &&
+                        !config.excludedProperties.contains(it.clazz.fqName + "#" + it.method.name) &&
+                        !config.excludedProperties.contains(it.clazz.fqName + "#*")
+                }
+                .sortBy { it.identifier }
+    }
+
+    private val actionbarPropertySetters = availableMethods
+            .filter { ((isSupport && it.clazz.isSupportActionBar) || (!isSupport && it.clazz.isActionBar)) && it.method.isNonListenerSetter() && !it.method.isOverridden }
+            .groupBy { it.identifier }
+
+    val actionbarProperties = genProperties(actionbarPropertyGetters, actionbarPropertySetters)
+    // ~~~
 
     val interfaceWorkarounds = generateList(INTERFACE_WORKAROUNDS) {
         availableClasses.filter {
