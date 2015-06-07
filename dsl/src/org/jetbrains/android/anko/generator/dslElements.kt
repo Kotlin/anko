@@ -23,10 +23,32 @@ import org.objectweb.asm.tree.MethodNode
 
 public data class ViewElement(val view: ClassNode, val isContainer: Boolean)
 
-public data class LayoutElement(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>)
+public class LayoutElement(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>)
 
-public data class ServiceElement(val service: ClassNode, val name: String)
+public class ServiceElement(val service: ClassNode, val name: String)
 
 public data class InterfaceWorkaroundElement(val baseClass: ClassNode, val ancestor: ClassNode, val inner: InnerClassNode)
 
-data class PropertyElement(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)
+public class PropertyElement(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)
+
+public class ListenerMethod(val methodWithClass: MethodNodeWithClass, val name: String, val returnType: String)
+
+public abstract class ListenerElement(val setter: MethodNodeWithClass, val clazz: ClassNode)
+
+public class SimpleListenerElement(
+        setter: MethodNodeWithClass,
+        clazz: ClassNode,
+        val method: ListenerMethod
+) : ListenerElement(setter, clazz)
+
+public class ComplexListenerElement(
+        setter: MethodNodeWithClass,
+        clazz: ClassNode,
+        val name: String,
+        val methods: List<ListenerMethod>
+) : ListenerElement(setter, clazz) {
+
+    public val id: String
+        get() = "${clazz.name}#name"
+
+}

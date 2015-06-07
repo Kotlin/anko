@@ -24,9 +24,9 @@ import java.util.ArrayList
 import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.ConfigurationTune.*
 import org.jetbrains.android.anko.config.Props
-import org.jetbrains.android.anko.render.DSLRenderer
+import org.jetbrains.android.anko.render.RenderFacade
 
-class Writer(private val renderer: DSLRenderer) {
+class Writer(private val renderer: RenderFacade) {
 
     val config = renderer.config
 
@@ -73,16 +73,7 @@ class Writer(private val renderer: DSLRenderer) {
     }
 
     private fun writeListeners() {
-        val allListeners = ArrayList<String>()
-
-        arrayOf(
-            SIMPLE_LISTENERS to renderer.simpleListeners,
-            COMPLEX_LISTENER_CLASSES to renderer.complexListenerClasses,
-            COMPLEX_LISTENER_SETTERS to renderer.complexListenerSetters
-        ).forEach { if (config[it.first]) allListeners.addAll(it.second) }
-
-        if (allListeners.isNotEmpty())
-            writeToFile(config.getOutputFile(anko.config.AnkoFile.LISTENERS), allListeners)
+        writeToFile(config.getOutputFile(anko.config.AnkoFile.LISTENERS), listOf(renderer.listeners))
     }
 
     private fun writeProperties() {
