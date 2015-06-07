@@ -58,11 +58,11 @@ class RenderFacade(private val generator: Generator) : Configurable(generator.co
         genHelperConstructors()
     }
 
-    // Generate View extension properties (with "best" setter)
+    // Generate View and ActionBar extension properties (with "best" setter)
     val properties: String
         get() {
             val propertyRender = PropertyRenderer(config)
-            return propertyRender.process(generator.properties) + propertyRender.process(generator.actionbarProperties)
+            return propertyRender.process(generator.viewProperties) + propertyRender.process(generator.actionbarProperties)
         }
 
     val listeners = ListenerRenderer(config).process(generator.listeners)

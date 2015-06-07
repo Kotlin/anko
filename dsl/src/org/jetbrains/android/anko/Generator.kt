@@ -56,7 +56,7 @@ class Generator(
             .map { makeListener(it) }
             .sortBy { it.setter.identifier }
 
-    private val propertyGetters = generateList(PROPERTIES) {
+    private val viewPropertyGetters = generateList(PROPERTIES) {
         availableMethods
                 .filter {
                     it.clazz.isView &&
@@ -67,11 +67,11 @@ class Generator(
                 .sortBy { it.identifier }
     }
 
-    private val propertySetters = availableMethods
+    private val viewPropertySetters = availableMethods
             .filter { it.clazz.isView && it.method.isNonListenerSetter() && !it.method.isOverridden }
             .groupBy { it.identifier }
 
-    val properties = genProperties(propertyGetters, propertySetters)
+    val viewProperties = genProperties(viewPropertyGetters, viewPropertySetters)
 
     // Find all ancestors of ViewGroup.LayoutParams in classes that extends ViewGroup.
     val layoutParams = viewGroupClasses
@@ -92,7 +92,7 @@ class Generator(
     }
 
     // Generate actionbar properties
-    val actionbarPropertyGetters = generateList(PROPERTIES) {
+    private val actionbarPropertyGetters = generateList(PROPERTIES) {
         availableMethods
                 .filter { ((isSupport && it.clazz.isSupportActionBar) || (!isSupport && it.clazz.isActionBar)) &&
                         it.method.isGetter() && !it.method.isOverridden && !it.method.isListenerGetter &&
@@ -102,7 +102,7 @@ class Generator(
                 .sortBy { it.identifier }
     }
 
-    val actionbarPropertySetters = availableMethods
+    private val actionbarPropertySetters = availableMethods
             .filter { ((isSupport && it.clazz.isSupportActionBar) || (!isSupport && it.clazz.isActionBar)) && it.method.isNonListenerSetter() && !it.method.isOverridden }
             .groupBy { it.identifier }
 
