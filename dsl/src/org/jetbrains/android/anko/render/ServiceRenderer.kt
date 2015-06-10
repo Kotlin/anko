@@ -28,12 +28,12 @@ class ServiceRenderer(config: AnkoConfiguration) : Renderer<ServiceElement>(conf
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.SERVICES)
 
     override fun processElements(elements: Iterable<ServiceElement>) = StringBuilder {
-        for (element in elements) {
-            append(render("service") {
-                "name" % element.service.simpleName.decapitalize()
-                "className" % element.service.fqName
-                "const" % element.name
-            })
-        }
+        append(render("services") {
+            "services" % seq(elements) {
+                "name" % it.service.simpleName.decapitalize()
+                "className" % it.service.fqName
+                "const" % it.name
+            }
+        })
     }.toString()
 }
