@@ -42,13 +42,13 @@ class Generator(
     // Views and viewGroups without custom LayoutParams
     val viewClasses = availableClasses
             .filter { it.isView && !it.isViewGroupWithParams }
-            .map { ViewElement(it, it.isViewGroup) }
-            .sortBy { it.view.name }
+            .map { ViewElement(it, it.isViewGroup, { it.resolveAllMethods() }) }
+            .sortBy { it.clazz.name }
 
     val viewGroupClasses = availableClasses
             .filter { it.isViewGroupWithParams }
-            .map { ViewElement(it, true) }
-            .sortBy { it.view.name }
+            .map { ViewElement(it, true, { it.resolveAllMethods() }) }
+            .sortBy { it.clazz.name }
 
     val listeners = availableMethods
             .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter }
@@ -74,7 +74,7 @@ class Generator(
 
     // Find all ancestors of ViewGroup.LayoutParams in classes that extends ViewGroup.
     val layoutParams = viewGroupClasses
-            .map { extractLayoutParams(it.view) }
+            .map { extractLayoutParams(it.clazz) }
             .filterNotNull()
             .sortBy { it.layout.name }
 

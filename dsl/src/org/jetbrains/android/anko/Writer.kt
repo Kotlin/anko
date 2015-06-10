@@ -91,10 +91,7 @@ class Writer(private val renderer: RenderFacade) {
     }
 
     private fun writeViews() {
-        val allViews = listOf(
-                if (config[VIEWS]) renderer.views + renderer.viewGroups else null,
-                if (config[HELPER_CONSTRUCTORS]) renderer.helperConstructors.joinToString("\n") else null
-        ).filterNotNull().joinToString("")
+        val allViews = if (config[VIEWS] || config[HELPER_CONSTRUCTORS]) renderer.views + renderer.viewGroups else ""
 
         val imports = Props.imports["views"] ?: ""
         writeToFile(config.getOutputFile(anko.config.AnkoFile.VIEWS), listOf(allViews), imports)

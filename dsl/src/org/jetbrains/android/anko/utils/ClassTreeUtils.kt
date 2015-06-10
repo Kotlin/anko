@@ -16,11 +16,9 @@
 
 package org.jetbrains.android.anko.utils
 
-import org.jetbrains.android.anko.ClassTree
-import org.jetbrains.android.anko.MethodNodeWithClass
-import org.jetbrains.android.anko.isAbstract
-import org.jetbrains.android.anko.isInner
+import org.jetbrains.android.anko.*
 import org.objectweb.asm.tree.ClassNode
+import org.objectweb.asm.tree.MethodNode
 
 public interface ClassTreeUtils {
 
@@ -55,5 +53,19 @@ public interface ClassTreeUtils {
         get() {
             return !isInner && (classTree.isSuccessorOf(this, "android/view/ViewGroup") || this.name == "android/view/ViewGroup")
         }
+
+    protected fun ClassNode.resolveAllMethods(): List<MethodNode> {
+        val node = classTree.findNode(this)
+
+        fun allMethodsTo(node: ClassTreeNode?, list: MutableList<MethodNode>) {
+            if (node == null) return
+            list.addAll(node.data.methods)
+            allMethodsTo(node.parent, list)
+        }
+
+        val list = arrayListOf<MethodNode>()
+        allMethodsTo(node, list)
+        return list
+    }
 
 }

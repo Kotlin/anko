@@ -16,12 +16,22 @@
 
 package org.jetbrains.android.anko.generator
 
+import org.jetbrains.android.anko.ClassTree
 import org.jetbrains.android.anko.MethodNodeWithClass
+import org.jetbrains.android.anko.fqName
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.InnerClassNode
 import org.objectweb.asm.tree.MethodNode
+import kotlin.properties.Delegates
 
-public data class ViewElement(val view: ClassNode, val isContainer: Boolean)
+public data class ViewElement(val clazz: ClassNode, val isContainer: Boolean, allMethods: () -> List<MethodNode>) {
+    val allMethods: List<MethodNode> by Delegates.lazy {
+        allMethods()
+    }
+
+    val fqName: String
+        get() = clazz.fqName
+}
 
 public class LayoutElement(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>)
 

@@ -65,8 +65,8 @@ public abstract class AbstractFunctionalTest {
         val expectedPath = ("dsl/testData/functional/$version/$testDataFile").replace("\r", "")
         val expected = loadOrCreate(File(expectedPath), actual).trimBlank()
 
-        assertTrue(expected.length() > 0)
-        assertTrue(actual.length() > 0)
+        assertTrue("Expected text is empty.", expected.length() > 0)
+        assertTrue("Actual text is empty.", actual.length() > 0)
         assertEquals(expected, actual)
     }
 

@@ -46,17 +46,9 @@ abstract class Renderer<T>(config: AnkoConfiguration): Configurable(config) {
 }
 
 class RenderFacade(private val generator: Generator) : Configurable(generator.config), ViewConstructorUtils, SupportUtils {
-    companion object {
-        val NOTHING_TO_INLINE = "@suppress(\"NOTHING_TO_INLINE\")"
-        val ONLY_LOCAL_RETURN = "inlineOptions(InlineOption.ONLY_LOCAL_RETURN)"
-    }
-
     val views = ViewRenderer(config).process(generator.viewClasses)
-    val viewGroups = ViewGroupRenderer(config).process(generator.viewGroupClasses)
 
-    val helperConstructors = generateList(HELPER_CONSTRUCTORS) {
-        genHelperConstructors()
-    }
+    val viewGroups = ViewGroupRenderer(config).process(generator.viewGroupClasses)
 
     val properties = PropertyRenderer(config).process(generator.properties)
 
@@ -69,74 +61,6 @@ class RenderFacade(private val generator: Generator) : Configurable(generator.co
     val sqLiteParserHelpers = SqlParserHelperRenderer(config).process(1..22)
 
     val interfaceWorkarounds = InterfaceWorkaroundsRenderer(config).process(generator.interfaceWorkarounds)
-
-    fun genHelperConstructors(): List<String> {
-        fun addMethods(node: ClassTreeNode, writeTo: ArrayList<MethodNode>): ArrayList<MethodNode> {
-            writeTo.addAll(node.data.methods)
-            if (node.parent != null)
-                addMethods(node.parent!!, writeTo)
-            return writeTo
-        }
-
-        fun resolveAllMethods(clazz: ClassNode): List<MethodNode> {
-            return addMethods(generator.classTree.findNode(clazz)!!, arrayListOf())
-        }
-
-        fun collectProperties(clazz: ClassNode, needed: List<Variable>): List<MethodNode> {
-            val ret = arrayListOf<MethodNode>()
-            needed.forEach { neededProp ->
-                val propList = resolveAllMethods(clazz)
-                val found = propList.firstOrNull {
-                    it.name.equals("set${neededProp.name.capitalize()}") && it.args.size() == 1 &&
-                            it.args[0].fqName.endsWith(neededProp.type)
-                } ?: throw RuntimeException("Property $neededProp for helper constructor ${clazz.fqName}.<init>$needed not found.")
-                ret.add(found)
-            }
-            return ret
-        }
-
-        val ret = arrayListOf<String>()
-
-        val classesWithHelperConstructors = generator.viewClasses.filter { Props.helperConstructors.contains(it.view.fqName) }
-
-        for ((view, isContainer) in classesWithHelperConstructors) {
-            val className = view.fqName
-            val helperConstructors = Props.helperConstructors[view.fqName]!!
-
-            for (constructor in helperConstructors) {
-                val funcName = view.simpleName.decapitalize()
-                val collected = constructor.zip(collectProperties(view, constructor))
-                val helperArguments = collected.map {
-                    val argumentType = it.second.args[0].asString()
-                    "${it.first.name}: $argumentType"
-                }.joinToString(", ")
-                val setters = collected.map { "view.${it.second.name}(${it.first.name})" }
-
-                fun Buffer.add(extendFor: String) {
-                    line(NOTHING_TO_INLINE)
-                    line("public inline fun $extendFor.$funcName($helperArguments): $className = addView<$className> {")
-                    line("ctx ->")
-                    line("val view = $className(ctx)")
-                    lines(setters)
-                    line("view")
-                    line("}")
-
-                    line("public inline fun $extendFor.$funcName($helperArguments, $ONLY_LOCAL_RETURN init: $className.() -> Unit): $className = addView<$className> {")
-                    line("ctx ->")
-                    line("val view = $className(ctx)")
-                    lines(setters)
-                    line("view.init()")
-                    line("view")
-                    line("}")
-                }
-
-                ret.add(buffer {
-                    add("ViewManager")
-                }.toString())
-            }
-        }
-        return ret
-    }
 
     protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {
         return config.templateManager.render(templateName, body)
