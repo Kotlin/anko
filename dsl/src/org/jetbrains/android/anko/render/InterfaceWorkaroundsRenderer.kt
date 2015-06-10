@@ -31,26 +31,23 @@ class InterfaceWorkaroundsRenderer(config: AnkoConfiguration) : Renderer<Interfa
     override fun processElements(elements: Iterable<InterfaceWorkaroundElement>) = StringBuilder {
         val elementsList = elements.toList()
 
-        append("public final class InterfaceWorkarounds {\n\n")
+        append(render("interface_workarounds") {
+            "interfaces" % seq(elementsList) {
+                val (mainClass, ancestor, innerClass) = it
+                val probInterfaceName = innerClass.innerName
+                val conflict = elementsList.count { it.inner.innerName == probInterfaceName } > 1
+                val interfaceName = (if (conflict) innerClass.outerName.substringAfterLast("/") + "_" else "") + probInterfaceName
 
-        elementsList.forEach {
-            val (mainClass, ancestor, innerClass) = it
-            val probInterfaceName = innerClass.innerName
-            val conflict = elementsList.count { it.inner.innerName == probInterfaceName } > 1
-            val interfaceName = (if (conflict) innerClass.outerName.substringAfterLast("/") + "_" else "") + probInterfaceName
-            val ancestorName = ancestor.fqName
+                "name" % interfaceName
+                "ancestor" % ancestor.fqName
 
-            append(buffer(1) {
-                line("public static interface $interfaceName {")
-                for (field in mainClass.fields.filter { it.isPublic && it.isStatic && it.isFinal }) {
-                    val name = field.name
-                    val type = Type.getType(field.desc).asJavaString()
-                    line("public static final $type $name = $ancestorName.$name;")
+                val acceptableFields = mainClass.fields.filter { it.isPublic && it.isStatic && it.isFinal }
+                "fields" % seq(acceptableFields) { field ->
+                    "type" % Type.getType(field.desc).asJavaString()
+                    "name" % field.name
                 }
-                line("}")
-            }.toString()).append("\n")
-        }
+            }
+        })
 
-        append("\n\n}")
     }.toString()
 }

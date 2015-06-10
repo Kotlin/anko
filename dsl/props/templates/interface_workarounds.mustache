@@ -1,0 +1,13 @@
+public final class InterfaceWorkarounds {
+
+    {{#interfaces}}
+    public static interface {{name}} {
+        {{#fields}}
+        public static final {{type}} {{name}} = {{ancestor}}.{{name}};
+        {{/fields}}
+    }
+
+    {{/interfaces}}
+
+
+}
