@@ -18,6 +18,7 @@ package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko
 import org.jetbrains.android.anko.config
+import org.jetbrains.android.anko.config.AnkoFile
 import java.io.PrintWriter
 import java.io.File
 import java.util.ArrayList
@@ -63,47 +64,44 @@ class Writer(private val renderer: RenderFacade) {
 
     fun writeInterfaceWorkarounds() {
         val imports = "package ${config.outputPackage}.workarounds;"
-        val contents = listOf(renderer.interfaceWorkarounds)
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.INTERFACE_WORKAROUNDS), contents, imports, false)
+        writeToFile(config.getOutputFile(AnkoFile.INTERFACE_WORKAROUNDS), renderer.interfaceWorkarounds, imports, false)
     }
 
     private fun writeLayouts() {
         val imports = Props.imports["layouts"] ?: ""
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.LAYOUTS), listOf(renderer.layouts), imports)
+        writeToFile(config.getOutputFile(AnkoFile.LAYOUTS), renderer.layouts, imports)
     }
 
     private fun writeListeners() {
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.LISTENERS), listOf(renderer.listeners))
+        writeToFile(config.getOutputFile(AnkoFile.LISTENERS), renderer.listeners)
     }
 
     private fun writeProperties() {
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.PROPERTIES), listOf(renderer.properties))
+        writeToFile(config.getOutputFile(AnkoFile.PROPERTIES), renderer.properties)
     }
 
     private fun writeServices() {
         val imports = Props.imports["services"] ?: ""
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.SERVICES), listOf(renderer.services), imports)
+        writeToFile(config.getOutputFile(AnkoFile.SERVICES), renderer.services, imports)
     }
 
     private fun writeSqlParserHelpers() {
         val imports = Props.imports["sqliteparserhelpers"] ?: ""
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.SQL_PARSER_HELPERS), listOf(renderer.sqLiteParserHelpers), imports, false)
+        writeToFile(config.getOutputFile(AnkoFile.SQL_PARSER_HELPERS), renderer.sqLiteParserHelpers, imports, false)
     }
 
     private fun writeViews() {
         val allViews = if (config[VIEWS] || config[HELPER_CONSTRUCTORS]) renderer.views + renderer.viewGroups else ""
-
         val imports = Props.imports["views"] ?: ""
-        writeToFile(config.getOutputFile(anko.config.AnkoFile.VIEWS), listOf(allViews), imports)
+        writeToFile(config.getOutputFile(AnkoFile.VIEWS), allViews, imports)
     }
 
     private fun writeStatic(subsystem: config.AnkoFile) {
         val file = File("dsl/static/src/${subsystem.filename}")
-        val contents = file.readLines()
-        writeToFile(config.getOutputFile(subsystem), contents, "", false)
+        writeToFile(config.getOutputFile(subsystem), file.readText(), "", false)
     }
 
-    private fun writeToFile(file: File, text: Collection<String>, imports: String = "", generatePackage: Boolean = true) {
+    private fun writeToFile(file: File, text: String, imports: String = "", generatePackage: Boolean = true) {
         val dir = file.getParentFile()
         if (!dir.exists())
             dir.mkdirs()
@@ -116,9 +114,7 @@ class Writer(private val renderer: RenderFacade) {
             writer.println(imports)
             writer.println()
         }
-        for (line in text) {
-            writer.println(line)
-        }
+        writer.println(text)
         writer.close()
     }
 
