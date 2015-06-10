@@ -16,6 +16,7 @@
 
 package org.jetbrains.android.anko
 
+import org.jetbrains.android.anko.annotations.ExternalAnnotation
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
@@ -30,6 +31,7 @@ import org.jetbrains.android.anko.generator.*
 import org.jetbrains.android.anko.utils.ClassTreeUtils
 import org.jetbrains.android.anko.utils.toProperty
 import org.objectweb.asm.tree.FieldNode
+import org.jetbrains.android.anko.annotations.ExternalAnnotation.GenerateLayout
 
 class Generator(
         public override val classTree: ClassTree,
@@ -188,14 +190,17 @@ class Generator(
             return if (returnTypeClass.isLayoutParams) returnTypeClass else findForParent()
         }
 
-        val lpInnerClassName = viewGroup.innerClasses?.firstOrNull { it.name.contains("LayoutParams") } ?: return null
-        val lpInnerClass = classTree.findNode(lpInnerClassName.name)!!.data
+        val lpInnerClassName = viewGroup.innerClasses?.firstOrNull { it.name.contains("LayoutParams") }
+        val lpInnerClass = lpInnerClassName?.let { classTree.findNode(it.name)!!.data }
+
+        if (lpInnerClass == null
+                && GenerateLayout !in config.annotationManager.findAnnotationsFor(viewGroup.fqName)) return null
 
         val actualLayoutParamsClass = findActualLayoutParamsClass(viewGroup).let {
             if (it != null && it.name != "android/view/ViewGroup\$LayoutParams") it else null
         }
 
-        return (actualLayoutParamsClass ?: lpInnerClass).let { clazz ->
+        return (actualLayoutParamsClass ?: lpInnerClass)?.let { clazz ->
             LayoutElement(viewGroup, clazz, clazz.getConstructors().filter { it.isPublic })
         }
     }

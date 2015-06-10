@@ -2,4 +2,7 @@
   <item name='android.widget.TextView java.lang.CharSequence getText()'>
     <annotation name='org.jetbrains.annotations.NotNull'/>
   </item>
+  <item name='android.widget.ImageSwitcher'>
+    <annotation name='org.jetbrains.anko.GenerateLayout'/>
+  </item>
 </root>

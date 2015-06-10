@@ -39,7 +39,7 @@ public abstract class AbstractFunctionalTest {
         } catch (e: Exception) {
             file.createNewFile()
             val fileWriter = FileWriter(file)
-            fileWriter.write(data)
+            fileWriter.write(data.replace("\n", System.getProperty("line.separator")))
             fileWriter.close()
             fail("Empty expected data, creating from actual")
             return data
@@ -62,8 +62,8 @@ public abstract class AbstractFunctionalTest {
         fun String.trimBlank() = trim('\n', '\t', ' ', '\r')
 
         val actual = config.getOutputFile(subsystem).readText().replace("\r", "").trimBlank()
-        val expectedPath = ("dsl/testData/functional/$version/$testDataFile").replace("\r", "")
-        val expected = loadOrCreate(File(expectedPath), actual).trimBlank()
+        val expectedPath = ("dsl/testData/functional/$version/$testDataFile")
+        val expected = loadOrCreate(File(expectedPath), actual).replace("\r", "").trimBlank()
 
         assertTrue("Expected text is empty.", expected.length() > 0)
         assertTrue("Actual text is empty.", actual.length() > 0)

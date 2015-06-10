@@ -440,33 +440,6 @@ public inline fun ViewManager.imageButton(inlineOptions(InlineOption.ONLY_LOCAL_
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
-public inline fun ViewManager.imageSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ImageSwitcher.() -> Unit): android.widget.ImageSwitcher = addView<android.widget.ImageSwitcher> {
-    ctx ->
-    val view = android.widget.ImageSwitcher(ctx)
-    view.init()
-    view
-}
-
-@suppress("NOTHING_TO_INLINE")
-public inline fun Context.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
-public inline fun Context.imageSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ImageSwitcher.() -> Unit): android.widget.ImageSwitcher = addView<android.widget.ImageSwitcher> {
-    ctx ->
-    val view = android.widget.ImageSwitcher(ctx)
-    view.init()
-    view
-}
-
-@suppress("NOTHING_TO_INLINE")
-public inline fun Activity.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
-public inline fun Activity.imageSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ImageSwitcher.() -> Unit): android.widget.ImageSwitcher = addView<android.widget.ImageSwitcher> {
-    ctx ->
-    val view = android.widget.ImageSwitcher(ctx)
-    view.init()
-    view
-}
-
-@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.imageView(): android.widget.ImageView = imageView({})
 public inline fun ViewManager.imageView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.widget.ImageView.() -> Unit): android.widget.ImageView = addView<android.widget.ImageView> {
     ctx ->
@@ -1313,6 +1286,33 @@ public inline fun Activity.horizontalScrollView(inlineOptions(InlineOption.ONLY_
 }
 
 @suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
+public inline fun ViewManager.imageSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ImageSwitcher.() -> Unit): android.widget.ImageSwitcher = addView<android.widget.ImageSwitcher> {
+    ctx ->
+    val view = _ImageSwitcher(ctx)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun Context.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
+public inline fun Context.imageSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ImageSwitcher.() -> Unit): android.widget.ImageSwitcher = addView<android.widget.ImageSwitcher> {
+    ctx ->
+    val view = _ImageSwitcher(ctx)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun Activity.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
+public inline fun Activity.imageSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ImageSwitcher.() -> Unit): android.widget.ImageSwitcher = addView<android.widget.ImageSwitcher> {
+    ctx ->
+    val view = _ImageSwitcher(ctx)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.linearLayout(): android.widget.LinearLayout = linearLayout({})
 public inline fun ViewManager.linearLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): android.widget.LinearLayout = addView<android.widget.LinearLayout> {
     ctx ->
@@ -1554,5 +1554,3 @@ public inline fun Activity.viewSwitcher(inlineOptions(InlineOption.ONLY_LOCAL_RE
     view.init()
     view
 }
-
-

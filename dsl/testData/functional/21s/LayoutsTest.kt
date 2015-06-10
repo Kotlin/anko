@@ -599,6 +599,51 @@ public open class _HorizontalScrollView(ctx: Context): android.widget.Horizontal
 
 }
 
+public open class _ImageSwitcher(ctx: Context): android.widget.ImageSwitcher(ctx) {
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, imageSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
+        layoutParams.imageSwitcherInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, imageSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height)
+        layoutParams.imageSwitcherInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, gravity: Int, imageSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height, gravity)
+        layoutParams.imageSwitcherInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, imageSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.imageSwitcherInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.MarginLayoutParams?, imageSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.imageSwitcherInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.widget.FrameLayout.LayoutParams?, imageSwitcherInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.imageSwitcherInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+}
+
 public open class _LinearLayout(ctx: Context): android.widget.LinearLayout(ctx) {
     public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, linearLayoutInit: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.widget.LinearLayout.LayoutParams(c!!, attrs!!)
@@ -1055,5 +1100,3 @@ public open class _ViewSwitcher(ctx: Context): android.widget.ViewSwitcher(ctx) 
     }
 
 }
-
-

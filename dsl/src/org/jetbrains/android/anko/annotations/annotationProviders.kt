@@ -29,7 +29,8 @@ import kotlin.dom.documentElement
 import kotlin.properties.Delegates
 
 public enum class ExternalAnnotation {
-    NotNull
+    NotNull,
+    GenerateLayout
 }
 
 public interface AnnotationProvider {

@@ -54,6 +54,7 @@ public fun parseAnnotations(doc: Document): Map<String, Set<ExternalAnnotation>>
 private fun parseAnnotation(fqName: String): ExternalAnnotation? {
     return when (fqName) {
         "org.jetbrains.annotations.NotNull" -> ExternalAnnotation.NotNull
+        "org.jetbrains.anko.GenerateLayout" -> ExternalAnnotation.GenerateLayout
         else -> null
     }
 }
