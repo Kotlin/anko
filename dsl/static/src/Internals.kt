@@ -28,6 +28,7 @@ import org.jetbrains.anko.*
 import android.database.sqlite.SQLiteDatabase
 import android.database.Cursor
 import android.os.Build
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -102,9 +103,19 @@ public object AnkoInternals {
                 is Char -> intent.putExtra(it.first, it.second as Char)
                 is Short -> intent.putExtra(it.first, it.second as Short)
                 is Boolean -> intent.putExtra(it.first, it.second as Boolean)
-                is Long -> intent.putExtra(it.first, it.second as Long)
                 is Serializable -> intent.putExtra(it.first, it.second as Serializable)
                 is Bundle -> intent.putExtra(it.first, it.second as Bundle)
+                is Parcelable -> intent.putExtra(it.first, it.second as Parcelable)
+                is Array<CharSequence> -> intent.putExtra(it.first, it.second as Array<CharSequence>)
+                is Array<out String> -> intent.putExtra(it.first, it.second as Array<out String>)
+                is Array<Parcelable> -> intent.putExtra(it.first, it.second as Array<Parcelable>)
+                is IntArray -> intent.putExtra(it.first, it.second as IntArray)
+                is LongArray -> intent.putExtra(it.first, it.second as LongArray)
+                is FloatArray -> intent.putExtra(it.first, it.second as FloatArray)
+                is Double -> intent.putExtra(it.first, it.second as DoubleArray)
+                is Char -> intent.putExtra(it.first, it.second as CharArray)
+                is Short -> intent.putExtra(it.first, it.second as ShortArray)
+                is Boolean -> intent.putExtra(it.first, it.second as BooleanArray)
                 else -> throw AnkoException("Intent extra ${it.first} has wrong type ${it.second.javaClass.getName()}")
             }
         }
