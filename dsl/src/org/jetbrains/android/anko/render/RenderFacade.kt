@@ -45,7 +45,7 @@ abstract class Renderer<T>(config: AnkoConfiguration): Configurable(config) {
     }
 }
 
-class RenderFacade(private val generator: Generator) : Configurable(generator.config), ViewConstructorUtils, SupportUtils {
+class RenderFacade(private val generator: GeneratorFacade) : Configurable(generator.config), ViewConstructorUtils, SupportUtils {
     val views = ViewRenderer(config).process(generator.viewClasses)
 
     val viewGroups = ViewGroupRenderer(config).process(generator.viewGroupClasses)

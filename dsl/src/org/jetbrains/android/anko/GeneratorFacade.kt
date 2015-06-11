@@ -33,7 +33,7 @@ import org.jetbrains.android.anko.utils.toProperty
 import org.objectweb.asm.tree.FieldNode
 import org.jetbrains.android.anko.annotations.ExternalAnnotation.GenerateLayout
 
-class Generator(
+class GeneratorFacade(
         public override val classTree: ClassTree,
         config: AnkoConfiguration
 ) : Configurable(config), ClassTreeUtils {

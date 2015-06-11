@@ -52,7 +52,7 @@ class DSLGenerator(
             config.files.remove(AnkoFile.SUPPORT)
 
         val classTree = this.classTree ?: ClassProcessor(jars).genClassTree()
-        val generator = Generator(classTree, config)
+        val generator = GeneratorFacade(classTree, config)
         val renderer = RenderFacade(generator)
         Writer(renderer).write()
 
