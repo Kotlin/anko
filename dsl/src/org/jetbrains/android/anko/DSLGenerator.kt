@@ -53,8 +53,8 @@ class DSLGenerator(
             config.files.remove(AnkoFile.SUPPORT)
 
         val classTree = this.classTree ?: ClassProcessor(jars).genClassTree()
-        val generator = GenerationState(classTree, config)
-        val renderer = RenderFacade(generator)
+        val generationState = GenerationState(classTree, config)
+        val renderer = RenderFacade(generationState)
         Writer(renderer).write()
 
         if (config.generateMavenArtifact) {
