@@ -3,15 +3,16 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/anko.iml" filepath="$PROJECT_DIR$/anko.iml" />
-      <module fileurl="file://$PROJECT_DIR$/preview/attrs/attrs.iml" filepath="$PROJECT_DIR$/preview/attrs/attrs.iml" />
-      <module fileurl="file://$PROJECT_DIR$/preview/idea-plugin/idea-plugin.iml" filepath="$PROJECT_DIR$/preview/idea-plugin/idea-plugin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/idea-runner/idea-runner.iml" filepath="$PROJECT_DIR$/idea-runner/idea-runner.iml" />
-      <module fileurl="file://$PROJECT_DIR$/preview/message-bus/message-bus.iml" filepath="$PROJECT_DIR$/preview/message-bus/message-bus.iml" />
-      <module fileurl="file://$PROJECT_DIR$/preview/robowrapper/robowrapper.iml" filepath="$PROJECT_DIR$/preview/robowrapper/robowrapper.iml" />
-      <module fileurl="file://$PROJECT_DIR$/dsl/static/static.iml" filepath="$PROJECT_DIR$/dsl/static/static.iml" />
-      <module fileurl="file://$PROJECT_DIR$/dsl/stubs/stubs.iml" filepath="$PROJECT_DIR$/dsl/stubs/stubs.iml" />
-      <module fileurl="file://$PROJECT_DIR$/utils/utils.iml" filepath="$PROJECT_DIR$/utils/utils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/preview/xml-converter/xml-converter.iml" filepath="$PROJECT_DIR$/preview/xml-converter/xml-converter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/preview/attrs/attrs.iml" filepath="$PROJECT_DIR$/preview/attrs/attrs.iml" group="preview" />
+      <module fileurl="file://$PROJECT_DIR$/preview/idea-plugin/idea-plugin.iml" filepath="$PROJECT_DIR$/preview/idea-plugin/idea-plugin.iml" group="preview" />
+      <module fileurl="file://$PROJECT_DIR$/idea-runner/idea-runner.iml" filepath="$PROJECT_DIR$/idea-runner/idea-runner.iml" group="preview" />
+      <module fileurl="file://$PROJECT_DIR$/preview/message-bus/message-bus.iml" filepath="$PROJECT_DIR$/preview/message-bus/message-bus.iml" group="preview" />
+      <module fileurl="file://$PROJECT_DIR$/preview/robowrapper/robowrapper.iml" filepath="$PROJECT_DIR$/preview/robowrapper/robowrapper.iml" group="preview" />
+      <module fileurl="file://$PROJECT_DIR$/dsl/static/static.iml" filepath="$PROJECT_DIR$/dsl/static/static.iml" group="dsl" />
+      <module fileurl="file://$PROJECT_DIR$/dsl/stubs/stubs.iml" filepath="$PROJECT_DIR$/dsl/stubs/stubs.iml" group="dsl" />
+      <module fileurl="file://$PROJECT_DIR$/dsl/testData/testData.iml" filepath="$PROJECT_DIR$/dsl/testData/testData.iml" group="dsl" />
+      <module fileurl="file://$PROJECT_DIR$/utils/utils.iml" filepath="$PROJECT_DIR$/utils/utils.iml" group="dsl" />
+      <module fileurl="file://$PROJECT_DIR$/preview/xml-converter/xml-converter.iml" filepath="$PROJECT_DIR$/preview/xml-converter/xml-converter.iml" group="preview" />
     </modules>
   </component>
 </project>
