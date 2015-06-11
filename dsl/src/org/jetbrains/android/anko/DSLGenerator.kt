@@ -18,6 +18,7 @@ package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
+import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.render.RenderFacade
 import java.io.File
 
@@ -52,7 +53,7 @@ class DSLGenerator(
             config.files.remove(AnkoFile.SUPPORT)
 
         val classTree = this.classTree ?: ClassProcessor(jars).genClassTree()
-        val generator = GeneratorFacade(classTree, config)
+        val generator = GenerationState(classTree, config)
         val renderer = RenderFacade(generator)
         Writer(renderer).write()
 

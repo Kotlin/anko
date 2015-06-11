@@ -38,23 +38,23 @@ public interface ClassTreeUtils {
         }
     }
 
-    protected val ClassNode.isView: Boolean
+    val ClassNode.isView: Boolean
         get() {
             val isSuccessor = classTree.isSuccessorOf(this, "android/view/View") || this.name == "android/view/View"
             return isSuccessor && !isInner
         }
 
-    protected val ClassNode.isLayoutParams: Boolean
+    val ClassNode.isLayoutParams: Boolean
         get() {
             return isInner && (classTree.isSuccessorOf(this, "android/view/ViewGroup\$LayoutParams") || this.name == "android/view/ViewGroup\$LayoutParams")
         }
 
-    protected val ClassNode.isViewGroup: Boolean
+    val ClassNode.isViewGroup: Boolean
         get() {
             return !isInner && (classTree.isSuccessorOf(this, "android/view/ViewGroup") || this.name == "android/view/ViewGroup")
         }
 
-    protected fun ClassNode.resolveAllMethods(): List<MethodNode> {
+    fun ClassNode.resolveAllMethods(): List<MethodNode> {
         val node = classTree.findNode(this)
 
         fun allMethodsTo(node: ClassTreeNode?, list: MutableList<MethodNode>) {

@@ -24,9 +24,7 @@ import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.ConfigurationTune.*
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
 import org.jetbrains.android.anko.config.*
-import org.jetbrains.android.anko.generator.ComplexListenerElement
-import org.jetbrains.android.anko.generator.LayoutElement
-import org.jetbrains.android.anko.generator.SimpleListenerElement
+import org.jetbrains.android.anko.generator.*
 import org.jetbrains.android.anko.templates.TemplateContext
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
@@ -45,22 +43,22 @@ abstract class Renderer<T>(config: AnkoConfiguration): Configurable(config) {
     }
 }
 
-class RenderFacade(private val generator: GeneratorFacade) : Configurable(generator.config), ViewConstructorUtils, SupportUtils {
-    val views = ViewRenderer(config).process(generator.viewClasses)
+class RenderFacade(val generationState: GenerationState) : Configurable(generationState.config), ViewConstructorUtils, SupportUtils {
+    val views = ViewRenderer(config).process(generationState[javaClass<ViewClassGenerator>()])
 
-    val viewGroups = ViewGroupRenderer(config).process(generator.viewGroupClasses)
+    val viewGroups = ViewGroupRenderer(config).process(generationState[javaClass<ViewGroupClassGenerator>()])
 
-    val properties = PropertyRenderer(config).process(generator.properties)
+    val properties = PropertyRenderer(config).process(generationState[javaClass<PropertyGenerator>()])
 
-    val listeners = ListenerRenderer(config).process(generator.listeners)
+    val listeners = ListenerRenderer(config).process(generationState[javaClass<ListenerGenerator>()])
 
-    val layouts = LayoutRenderer(config).process(generator.layoutParams)
+    val layouts = LayoutRenderer(config).process(generationState[javaClass<LayoutGenerator>()])
 
-    val services = ServiceRenderer(config).process(generator.services)
+    val services = ServiceRenderer(config).process(generationState[javaClass<ServiceGenerator>()])
 
     val sqLiteParserHelpers = SqlParserHelperRenderer(config).process(1..22)
 
-    val interfaceWorkarounds = InterfaceWorkaroundsRenderer(config).process(generator.interfaceWorkarounds)
+    val interfaceWorkarounds = InterfaceWorkaroundsRenderer(config).process(generationState[javaClass<InterfaceWorkaroundsGenerator>()])
 
     protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {
         return config.templateManager.render(templateName, body)
