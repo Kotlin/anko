@@ -16,12 +16,7 @@
 
 package org.jetbrains.android.anko
 
-import org.objectweb.asm.*
-import java.nio.ByteBuffer
-import java.io.File
-import java.io.PrintWriter
-import kotlin.platform.platformName
-import java.util.*
+import org.objectweb.asm.Type
 
 val Type.isVoid: Boolean
     get() = getSort() == Type.VOID

@@ -16,20 +16,13 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.*
-import org.objectweb.asm.tree.ClassNode
-import org.objectweb.asm.tree.MethodNode
-import org.jetbrains.android.anko.utils.Buffer
-import org.jetbrains.android.anko.config.AnkoFile.*
-import org.jetbrains.android.anko.config.ConfigurationTune.*
-import org.jetbrains.android.anko.annotations.ExternalAnnotation
-import org.jetbrains.android.anko.config.*
-import org.jetbrains.android.anko.generator.*
+import org.jetbrains.android.anko.config.AnkoConfiguration
+import org.jetbrains.android.anko.config.Configurable
+import org.jetbrains.android.anko.config.ConfigurationOption
+import org.jetbrains.android.anko.config.generate
+import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.templates.TemplateContext
 import org.jetbrains.android.anko.utils.ReflectionUtils
-import org.jetbrains.android.anko.utils.buffer
-import org.objectweb.asm.Type
-import java.util.*
 
 abstract class Renderer(config: AnkoConfiguration): Configurable(config) {
     protected abstract fun processElements(state: GenerationState): String

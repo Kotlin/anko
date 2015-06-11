@@ -16,16 +16,8 @@
 
 package org.jetbrains.android.anko.annotations
 
-import org.jetbrains.android.anko.getPackageName
-import org.w3c.dom.Document
-import org.xml.sax.InputSource
 import java.io.File
-import java.io.StringReader
 import java.util.zip.ZipFile
-import javax.xml.parsers.DocumentBuilderFactory
-import kotlin.dom.childElements
-import kotlin.dom.childNodes
-import kotlin.dom.documentElement
 import kotlin.properties.Delegates
 
 public enum class ExternalAnnotation {

@@ -21,7 +21,6 @@ import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
 import org.jetbrains.android.anko.fqName
 import org.jetbrains.android.anko.generator.GenerationState
-import org.jetbrains.android.anko.generator.ServiceElement
 import org.jetbrains.android.anko.generator.ServiceGenerator
 import org.jetbrains.android.anko.simpleName
 

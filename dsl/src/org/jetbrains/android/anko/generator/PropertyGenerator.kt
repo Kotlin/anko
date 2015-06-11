@@ -17,8 +17,6 @@
 package org.jetbrains.android.anko.generator
 
 import org.jetbrains.android.anko.*
-import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.config.generateList
 import org.jetbrains.android.anko.utils.toProperty
 import org.objectweb.asm.tree.MethodNode
 

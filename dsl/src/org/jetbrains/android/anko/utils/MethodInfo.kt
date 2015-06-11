@@ -18,11 +18,9 @@ package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
 import org.jetbrains.android.anko.config.AnkoConfiguration
-import org.objectweb.asm.*
+import org.objectweb.asm.Opcodes
+import org.objectweb.asm.Type
 import org.objectweb.asm.tree.MethodNode
-import java.util.ArrayList
-import org.objectweb.asm.tree.LocalVariableNode
-import java.util.HashMap
 
 private val specialLayoutParamsArguments = mapOf(
         "width" to "android.view.ViewGroup.LayoutParams.WRAP_CONTENT",

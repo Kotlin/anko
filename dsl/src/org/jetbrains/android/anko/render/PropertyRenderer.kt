@@ -22,7 +22,6 @@ import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
 import org.jetbrains.android.anko.generator.GenerationState
-import org.jetbrains.android.anko.generator.ListenerGenerator
 import org.jetbrains.android.anko.generator.PropertyElement
 import org.jetbrains.android.anko.generator.PropertyGenerator
 import org.jetbrains.android.anko.utils.Buffer

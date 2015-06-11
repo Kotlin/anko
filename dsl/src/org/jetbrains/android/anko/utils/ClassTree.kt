@@ -16,10 +16,10 @@
 
 package org.jetbrains.android.anko
 
-import java.util.ArrayList
 import org.objectweb.asm.tree.ClassNode
-import java.util.Queue
 import java.util.ArrayDeque
+import java.util.ArrayList
+import java.util.Queue
 
 class NoSuchClassException : Exception()
 

@@ -16,12 +16,10 @@
 
 package org.jetbrains.android.anko
 
-import java.io.InputStream
-import org.objectweb.asm.tree.ClassNode
-import java.util.jar.JarFile
 import org.objectweb.asm.ClassReader
-import java.util.Enumeration
-import java.util.jar.JarEntry
+import org.objectweb.asm.tree.ClassNode
+import java.io.InputStream
+import java.util.jar.JarFile
 
 class ClassProcessor(val jars: List<String>) {
 

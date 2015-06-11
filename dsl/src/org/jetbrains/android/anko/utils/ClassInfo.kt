@@ -16,10 +16,10 @@
 
 package org.jetbrains.android.anko
 
-import org.objectweb.asm.*
+import org.objectweb.asm.Opcodes
 import org.objectweb.asm.tree.ClassNode
-import org.objectweb.asm.tree.MethodNode
 import org.objectweb.asm.tree.InnerClassNode
+import org.objectweb.asm.tree.MethodNode
 
 data class MethodNodeWithClass(var clazz: ClassNode, val method: MethodNode) {
     val identifier = "${clazz.fqName}#${method.name}"

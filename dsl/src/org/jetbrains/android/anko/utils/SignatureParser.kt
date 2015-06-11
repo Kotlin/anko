@@ -16,10 +16,10 @@
 
 package org.jetbrains.android.anko
 
-import org.objectweb.asm.signature.SignatureVisitor
-import java.util.ArrayList
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.signature.SignatureReader
+import org.objectweb.asm.signature.SignatureVisitor
+import java.util.ArrayList
 
 interface Classifier
 data class BaseType(val descriptor: Char) : Classifier

@@ -16,8 +16,6 @@
 
 package org.jetbrains.android.anko.utils
 
-import org.jetbrains.android.anko.generator.Generator
-
 public interface ReflectionUtils {
 
     fun <T> initializeClass(clazz: Class<out T>): T {

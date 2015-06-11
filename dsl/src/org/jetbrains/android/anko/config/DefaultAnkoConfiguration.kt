@@ -18,13 +18,9 @@ package org.jetbrains.android.anko.config
 
 import org.jetbrains.android.anko.annotations.*
 import org.jetbrains.android.anko.sources.AndroidHomeSourceProvider
-import org.jetbrains.android.anko.sources.CachingSourceProvider
 import org.jetbrains.android.anko.sources.SourceManager
 import org.jetbrains.android.anko.templates.MustacheTemplateProvider
 import org.jetbrains.android.anko.templates.TemplateManager
-import java.util.HashSet
-import java.util.HashMap
-import java.util.ArrayList
 import java.io.File
 
 open class DefaultAnkoConfiguration(outputDirectory: String = "workdir/gen/") : AnkoConfiguration() {

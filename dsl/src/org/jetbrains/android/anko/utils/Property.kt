@@ -20,7 +20,6 @@ import org.jetbrains.android.anko.MethodNodeWithClass
 import org.jetbrains.android.anko.fqName
 import org.jetbrains.android.anko.returnType
 import org.objectweb.asm.Type
-import org.objectweb.asm.tree.MethodNode
 
 class Property(val node: MethodNodeWithClass) {
 

@@ -17,9 +17,9 @@
 package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.config.DefaultAnkoConfiguration
-import java.io.File
 import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 import org.jetbrains.android.anko.utils.JarFileFilter
+import java.io.File
 
 fun main(args: Array<String>) {
     if (args.isNotEmpty()) {

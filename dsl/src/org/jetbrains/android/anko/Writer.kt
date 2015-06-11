@@ -16,17 +16,15 @@
 
 package org.jetbrains.android.anko
 
-import org.jetbrains.android.anko
 import org.jetbrains.android.anko.config
 import org.jetbrains.android.anko.config.AnkoFile
-import java.io.PrintWriter
-import java.io.File
-import java.util.ArrayList
 import org.jetbrains.android.anko.config.AnkoFile.*
-import org.jetbrains.android.anko.config.ConfigurationTune.*
+import org.jetbrains.android.anko.config.ConfigurationTune.HELPER_CONSTRUCTORS
 import org.jetbrains.android.anko.config.Props
 import org.jetbrains.android.anko.render.*
 import java.io.Closeable
+import java.io.File
+import java.io.PrintWriter
 
 class Writer(private val renderFacade: RenderFacade) {
 

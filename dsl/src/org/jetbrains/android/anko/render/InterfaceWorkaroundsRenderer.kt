@@ -21,9 +21,7 @@ import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
 import org.jetbrains.android.anko.generator.GenerationState
-import org.jetbrains.android.anko.generator.InterfaceWorkaroundElement
 import org.jetbrains.android.anko.generator.InterfaceWorkaroundsGenerator
-import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
 
 class InterfaceWorkaroundsRenderer(config: AnkoConfiguration) : Renderer(config) {

@@ -19,15 +19,13 @@ package org.jetbrains.android.anko.render
 import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.generator.GenerationState
-import org.jetbrains.android.anko.generator.ViewGenerator
 import org.jetbrains.android.anko.generator.ViewElement
+import org.jetbrains.android.anko.generator.ViewGenerator
 import org.jetbrains.android.anko.generator.ViewGroupGenerator
-import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.utils.buffer
-import org.objectweb.asm.Type
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
-import java.util.*
+import java.util.Arrays
 
 public class ViewRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
     override fun processElements(state: GenerationState) =

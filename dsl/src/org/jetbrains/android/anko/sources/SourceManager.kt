@@ -16,17 +16,11 @@
 
 package org.jetbrains.android.anko.sources
 
-import com.github.javaparser.JavaParser
-import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.body.TypeDeclaration
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter
 import org.jetbrains.android.anko.getJavaClassName
-import org.jetbrains.android.anko.getPackageName
-import sun.plugin.dom.exception.InvalidStateException
-import java.io.File
-import java.util.HashMap
 
 public class SourceManager(private val provider: SourceProvider) {
 

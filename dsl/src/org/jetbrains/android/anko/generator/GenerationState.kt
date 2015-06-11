@@ -16,25 +16,15 @@
 
 package org.jetbrains.android.anko.generator
 
-import com.sun.deploy.util.ReflectionUtil
-import org.jetbrains.android.anko.*
-import org.jetbrains.android.anko.annotations.ExternalAnnotation
+import org.jetbrains.android.anko.ClassTree
+import org.jetbrains.android.anko.MethodNodeWithClass
 import org.jetbrains.android.anko.config.AnkoConfiguration
-import org.objectweb.asm.tree.ClassNode
-import org.objectweb.asm.tree.MethodNode
-import org.objectweb.asm.tree.InnerClassNode
-import java.util.TreeMap
-import java.util.Arrays
-import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.Configurable
-import org.jetbrains.android.anko.config.generate
-import org.jetbrains.android.anko.config.generateList
-import org.jetbrains.android.anko.generator.*
+import org.jetbrains.android.anko.fqName
+import org.jetbrains.android.anko.packageName
 import org.jetbrains.android.anko.utils.ClassTreeUtils
-import org.jetbrains.android.anko.utils.toProperty
-import org.objectweb.asm.tree.FieldNode
-import org.jetbrains.android.anko.annotations.ExternalAnnotation.GenerateLayout
 import org.jetbrains.android.anko.utils.ReflectionUtils
+import org.objectweb.asm.tree.ClassNode
 
 interface Generator<R> {
     fun generate(state: GenerationState): Iterable<R>
