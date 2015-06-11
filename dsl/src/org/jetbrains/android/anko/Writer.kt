@@ -25,11 +25,12 @@ import java.util.ArrayList
 import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.ConfigurationTune.*
 import org.jetbrains.android.anko.config.Props
-import org.jetbrains.android.anko.render.RenderFacade
+import org.jetbrains.android.anko.render.*
+import java.io.Closeable
 
-class Writer(private val renderer: RenderFacade) {
+class Writer(private val renderFacade: RenderFacade) {
 
-    val config = renderer.config
+    val config = renderFacade.config
 
     fun write() {
         sortedSetOf(
@@ -64,58 +65,76 @@ class Writer(private val renderer: RenderFacade) {
 
     fun writeInterfaceWorkarounds() {
         val imports = "package ${config.outputPackage}.workarounds;"
-        writeToFile(config.getOutputFile(AnkoFile.INTERFACE_WORKAROUNDS), renderer.interfaceWorkarounds, imports, false)
+        write(AnkoFile.INTERFACE_WORKAROUNDS, javaClass<InterfaceWorkaroundsRenderer>(), imports, false)
     }
 
     private fun writeLayouts() {
         val imports = Props.imports["layouts"] ?: ""
-        writeToFile(config.getOutputFile(AnkoFile.LAYOUTS), renderer.layouts, imports)
+        write(AnkoFile.LAYOUTS, javaClass<LayoutRenderer>(), imports)
     }
 
     private fun writeListeners() {
-        writeToFile(config.getOutputFile(AnkoFile.LISTENERS), renderer.listeners)
+        write(AnkoFile.LISTENERS, javaClass<ListenerRenderer>())
     }
 
     private fun writeProperties() {
-        writeToFile(config.getOutputFile(AnkoFile.PROPERTIES), renderer.properties)
+        write(AnkoFile.PROPERTIES, javaClass<PropertyRenderer>())
     }
 
     private fun writeServices() {
         val imports = Props.imports["services"] ?: ""
-        writeToFile(config.getOutputFile(AnkoFile.SERVICES), renderer.services, imports)
+        write(AnkoFile.SERVICES, javaClass<ServiceRenderer>(), imports)
     }
 
     private fun writeSqlParserHelpers() {
         val imports = Props.imports["sqliteparserhelpers"] ?: ""
-        writeToFile(config.getOutputFile(AnkoFile.SQL_PARSER_HELPERS), renderer.sqLiteParserHelpers, imports, false)
+        write(AnkoFile.SQL_PARSER_HELPERS, javaClass<SqlParserHelperRenderer>(), imports, false)
     }
 
     private fun writeViews() {
-        val allViews = if (config[VIEWS] || config[HELPER_CONSTRUCTORS]) renderer.views + renderer.viewGroups else ""
+        val allViews = if (config[VIEWS] || config[HELPER_CONSTRUCTORS]) {
+            renderFacade[javaClass<ViewRenderer>()] + renderFacade[javaClass<ViewGroupRenderer>()]
+        } else ""
         val imports = Props.imports["views"] ?: ""
-        writeToFile(config.getOutputFile(AnkoFile.VIEWS), allViews, imports)
+        write(AnkoFile.VIEWS, allViews, imports)
     }
 
     private fun writeStatic(subsystem: config.AnkoFile) {
         val file = File("dsl/static/src/${subsystem.filename}")
-        writeToFile(config.getOutputFile(subsystem), file.readText(), "", false)
+        write(subsystem, file.readText(), "", false)
     }
 
-    private fun writeToFile(file: File, text: String, imports: String = "", generatePackage: Boolean = true) {
+    private fun write(
+            subsystem: AnkoFile,
+            renderer: Class<out Renderer>,
+            imports: String = "",
+            generatePackage: Boolean = true)
+    {
+        write(subsystem, renderFacade[renderer], imports, generatePackage)
+    }
+
+    private fun write(subsystem: AnkoFile, text: String, imports: String = "", generatePackage: Boolean = true) {
+        val file = config.getOutputFile(subsystem)
+
         val dir = file.getParentFile()
-        if (!dir.exists())
+        if (!dir.exists()) {
             dir.mkdirs()
+        }
 
-        val writer = PrintWriter(file)
-        if (config.generatePackage && generatePackage) {
-            writer.println("package ${config.outputPackage}\n")
+        PrintWriter(file).useIt {
+            if (config.generatePackage && generatePackage) {
+                println("package ${config.outputPackage}\n")
+            }
+
+            if (config.generateImports && imports.isNotEmpty()) {
+                println(imports)
+                println()
+            }
+
+            print(text)
         }
-        if (config.generateImports && imports.isNotEmpty()) {
-            writer.println(imports)
-            writer.println()
-        }
-        writer.println(text)
-        writer.close()
     }
+
+    private inline fun <T : Closeable, R> T.useIt(block: T.() -> R) = use { it.block() }
 
 }

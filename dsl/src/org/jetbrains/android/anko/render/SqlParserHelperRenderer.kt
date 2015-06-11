@@ -19,14 +19,15 @@ package org.jetbrains.android.anko.render
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
+import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.utils.buffer
 
-class SqlParserHelperRenderer(config: AnkoConfiguration) : Renderer<Int>(config) {
+class SqlParserHelperRenderer(config: AnkoConfiguration) : Renderer(config) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.SQL_PARSER_HELPERS)
 
-    override fun processElements(elements: Iterable<Int>) = StringBuilder {
-        for (i in elements) {
+    override fun processElements(state: GenerationState) = StringBuilder {
+        for (i in 1..22) {
             val types = (1..i).map { "T$it" }.joinToString(", ")
             val args = (1..i).map { "columns[${it - 1}] as T$it" }.joinToString(", ")
 
@@ -46,4 +47,5 @@ class SqlParserHelperRenderer(config: AnkoConfiguration) : Renderer<Int>(config)
             }.toString())
         }
     }.toString()
+
 }

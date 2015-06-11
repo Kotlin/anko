@@ -26,16 +26,17 @@ import org.jetbrains.android.anko.annotations.ExternalAnnotation
 import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.generator.*
 import org.jetbrains.android.anko.templates.TemplateContext
+import org.jetbrains.android.anko.utils.ReflectionUtils
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
 import java.util.*
 
-abstract class Renderer<T>(config: AnkoConfiguration): Configurable(config) {
-    protected abstract fun processElements(elements: Iterable<T>): String
+abstract class Renderer(config: AnkoConfiguration): Configurable(config) {
+    protected abstract fun processElements(state: GenerationState): String
     abstract val renderIf: Array<ConfigurationOption>
 
-    public fun process(elements: Iterable<T>): String = generate(*renderIf) {
-        processElements(elements)
+    public fun process(state: GenerationState): String = generate(*renderIf) {
+        processElements(state)
     }
 
     protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {
@@ -43,22 +44,15 @@ abstract class Renderer<T>(config: AnkoConfiguration): Configurable(config) {
     }
 }
 
-class RenderFacade(val generationState: GenerationState) : Configurable(generationState.config), ViewConstructorUtils, SupportUtils {
-    val views = ViewRenderer(config).process(generationState[javaClass<ViewClassGenerator>()])
+class RenderFacade(
+        val generationState: GenerationState
+) : Configurable(generationState.config), ViewConstructorUtils, SupportUtils, ReflectionUtils {
 
-    val viewGroups = ViewGroupRenderer(config).process(generationState[javaClass<ViewGroupClassGenerator>()])
+    private val cachedResults: MutableMap<Class<out Renderer>, String> = hashMapOf()
 
-    val properties = PropertyRenderer(config).process(generationState[javaClass<PropertyGenerator>()])
-
-    val listeners = ListenerRenderer(config).process(generationState[javaClass<ListenerGenerator>()])
-
-    val layouts = LayoutRenderer(config).process(generationState[javaClass<LayoutGenerator>()])
-
-    val services = ServiceRenderer(config).process(generationState[javaClass<ServiceGenerator>()])
-
-    val sqLiteParserHelpers = SqlParserHelperRenderer(config).process(1..22)
-
-    val interfaceWorkarounds = InterfaceWorkaroundsRenderer(config).process(generationState[javaClass<InterfaceWorkaroundsGenerator>()])
+    fun get(clazz: Class<out Renderer>): String = cachedResults.getOrPut(clazz) {
+        initializeClass(clazz, config to javaClass<AnkoConfiguration>()).process(generationState)
+    }
 
     protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {
         return config.templateManager.render(templateName, body)

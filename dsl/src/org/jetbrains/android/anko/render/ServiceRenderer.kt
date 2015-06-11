@@ -20,20 +20,23 @@ import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
 import org.jetbrains.android.anko.fqName
+import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.ServiceElement
+import org.jetbrains.android.anko.generator.ServiceGenerator
 import org.jetbrains.android.anko.simpleName
 
-class ServiceRenderer(config: AnkoConfiguration) : Renderer<ServiceElement>(config) {
+class ServiceRenderer(config: AnkoConfiguration) : Renderer(config) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.SERVICES)
 
-    override fun processElements(elements: Iterable<ServiceElement>) = StringBuilder {
+    override fun processElements(state: GenerationState) = StringBuilder {
         append(render("services") {
-            "services" % seq(elements) {
+            "services" % seq(state[javaClass<ServiceGenerator>()]) {
                 "name" % it.service.simpleName.decapitalize()
                 "className" % it.service.fqName
                 "const" % it.name
             }
         })
     }.toString()
+
 }

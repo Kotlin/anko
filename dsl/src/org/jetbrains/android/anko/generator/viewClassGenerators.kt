@@ -19,12 +19,12 @@ package org.jetbrains.android.anko.generator
 import org.jetbrains.android.anko.isAbstract
 import org.objectweb.asm.tree.ClassNode
 
-abstract class BaseViewClassGenerator(private val forLayouts: Boolean) : Generator<ViewElement> {
+abstract class AbstractViewGenerator(private val forLayouts: Boolean) : Generator<ViewElement> {
 
     override fun generate(state: GenerationState) = with (state) {
         fun ClassNode.isViewGroupWithParams() = isViewGroup && hasLayoutParams(this)
 
-        return state.availableClasses
+        state.availableClasses
                 .filter { it.isView && forLayouts == it.isViewGroupWithParams() }
                 .map { ViewElement(it, if (forLayouts) true else it.isViewGroup, { it.resolveAllMethods() }) }
                 .sortBy { it.clazz.name }
@@ -35,6 +35,6 @@ abstract class BaseViewClassGenerator(private val forLayouts: Boolean) : Generat
     }
 }
 
-class ViewClassGenerator : BaseViewClassGenerator(forLayouts = false)
+class ViewGenerator : AbstractViewGenerator(forLayouts = false)
 
-class ViewGroupClassGenerator : BaseViewClassGenerator(forLayouts = true)
+class ViewGroupGenerator : AbstractViewGenerator(forLayouts = true)

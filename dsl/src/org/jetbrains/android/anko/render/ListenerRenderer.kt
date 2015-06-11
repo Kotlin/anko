@@ -20,20 +20,18 @@ import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
-import org.jetbrains.android.anko.generator.ComplexListenerElement
-import org.jetbrains.android.anko.generator.ListenerElement
-import org.jetbrains.android.anko.generator.SimpleListenerElement
 import org.jetbrains.android.anko.utils.buffer
 import org.jetbrains.android.anko.config.ConfigurationTune.*
+import org.jetbrains.android.anko.generator.*
 
-public class ListenerRenderer(config: AnkoConfiguration) : Renderer<ListenerElement>(config), SupportUtils {
+public class ListenerRenderer(config: AnkoConfiguration) : Renderer(config), SupportUtils {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.LISTENERS)
 
-    override fun processElements(elements: Iterable<ListenerElement>) = StringBuilder {
+    override fun processElements(state: GenerationState) = StringBuilder {
         val renderedClasses = hashSetOf<String>()
 
-        for (listener in elements) {
+        for (listener in state[javaClass<ListenerGenerator>()]) {
             when (listener) {
                 is SimpleListenerElement -> if (config[SIMPLE_LISTENERS]) append(listener.render())
                 is ComplexListenerElement -> {

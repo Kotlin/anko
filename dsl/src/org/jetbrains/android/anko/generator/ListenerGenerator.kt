@@ -21,7 +21,7 @@ import org.jetbrains.android.anko.*
 class ListenerGenerator : Generator<ListenerElement> {
 
     override fun generate(state: GenerationState) = with (state) {
-        return state.availableMethods
+        state.availableMethods
                 .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter }
                 .map { makeListener(it) }
                 .sortBy { it.setter.identifier }

@@ -16,6 +16,7 @@
 
 package org.jetbrains.android.anko.generator
 
+import com.sun.deploy.util.ReflectionUtil
 import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
 import org.jetbrains.android.anko.config.AnkoConfiguration
@@ -33,6 +34,7 @@ import org.jetbrains.android.anko.utils.ClassTreeUtils
 import org.jetbrains.android.anko.utils.toProperty
 import org.objectweb.asm.tree.FieldNode
 import org.jetbrains.android.anko.annotations.ExternalAnnotation.GenerateLayout
+import org.jetbrains.android.anko.utils.ReflectionUtils
 
 interface Generator<R> {
     fun generate(state: GenerationState): Iterable<R>
@@ -41,28 +43,18 @@ interface Generator<R> {
 class GenerationState(
         public override val classTree: ClassTree,
         config: AnkoConfiguration
-): ClassTreeUtils, Configurable(config) {
-
-    private val cachedResults: MutableMap<Class<*>, Any> = hashMapOf()
+): ClassTreeUtils, Configurable(config), ReflectionUtils {
 
     public val availableClasses: List<ClassNode> = findAvailableClasses()
 
     public val availableMethods: List<MethodNodeWithClass> = findAvailableMethods(availableClasses)
 
-    @suppress("UNCHECKED_CAST")
-    fun <T> get(generatorClass: Class<out Generator<T>>): Iterable<T> = cachedResults.getOrPut(generatorClass) {
-        initializeGenerator(generatorClass).generate(this)
-    } as Iterable<T>
+    private val cachedResults: MutableMap<Class<out Generator<*>>, Iterable<*>> = hashMapOf()
 
-    private fun <T> initializeGenerator(generatorClass: Class<out Generator<T>>): Generator<T> {
-        try {
-            val constructor = generatorClass.getConstructor()
-            @suppress("UNCHECKED_CAST")
-            return constructor.newInstance()
-        } catch (e: NoSuchMethodException) {
-            throw RuntimeException("Can't initialize generator ${generatorClass.getName()}", e)
-        }
-    }
+    @suppress("UNCHECKED_CAST")
+    fun <T> get(clazz: Class<out Generator<T>>): Iterable<T> = cachedResults.getOrPut(clazz) {
+        initializeClass(clazz).generate(this)
+    } as Iterable<T>
 
     public override fun isExcluded(node: ClassNode) =
             node.fqName in config.excludedClasses || "${node.packageName}.*" in config.excludedClasses

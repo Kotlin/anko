@@ -20,15 +20,17 @@ import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
+import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.LayoutElement
+import org.jetbrains.android.anko.generator.LayoutGenerator
 import java.util.*
 
-class LayoutRenderer(config: AnkoConfiguration) : Renderer<LayoutElement>(config), ViewConstructorUtils, SupportUtils {
+class LayoutRenderer(config: AnkoConfiguration) : Renderer(config), ViewConstructorUtils, SupportUtils {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.LAYOUTS)
 
-    override fun processElements(elements: Iterable<LayoutElement>) = StringBuilder {
-        elements.forEach { append(renderLayout(it)) }
+    override fun processElements(state: GenerationState) = StringBuilder {
+        state[javaClass<LayoutGenerator>()].forEach { append(renderLayout(it)) }
     }.toString()
 
     private fun renderLayout(node: LayoutElement): String {

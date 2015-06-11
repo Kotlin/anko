@@ -21,16 +21,19 @@ import org.jetbrains.android.anko.annotations.ExternalAnnotation
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
+import org.jetbrains.android.anko.generator.GenerationState
+import org.jetbrains.android.anko.generator.ListenerGenerator
 import org.jetbrains.android.anko.generator.PropertyElement
+import org.jetbrains.android.anko.generator.PropertyGenerator
 import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.utils.buffer
 
-class PropertyRenderer(config: AnkoConfiguration) : Renderer<PropertyElement>(config) {
+class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.PROPERTIES)
 
-    override fun processElements(elements: Iterable<PropertyElement>) = StringBuilder {
-        elements.forEach { append(renderProperty(it)) }
+    override fun processElements(state: GenerationState) = StringBuilder {
+        state[javaClass<PropertyGenerator>()].forEach { append(renderProperty(it)) }
     }.toString()
 
     private fun renderProperty(property: PropertyElement): String {

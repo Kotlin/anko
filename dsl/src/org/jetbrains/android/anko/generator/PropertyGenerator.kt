@@ -38,7 +38,7 @@ class PropertyGenerator : Generator<PropertyElement> {
                 .filter { it.clazz.isView && it.method.isNonListenerSetter() && !it.method.isOverridden }
                 .groupBy { it.identifier }
 
-        return genProperties(propertyGetters, propertySetters)
+        genProperties(propertyGetters, propertySetters)
     }
 
     //Convert list of getters and map of setters to property list

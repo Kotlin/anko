@@ -18,7 +18,10 @@ package org.jetbrains.android.anko.render
 
 import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.config.*
+import org.jetbrains.android.anko.generator.GenerationState
+import org.jetbrains.android.anko.generator.ViewGenerator
 import org.jetbrains.android.anko.generator.ViewElement
+import org.jetbrains.android.anko.generator.ViewGroupGenerator
 import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
@@ -27,16 +30,18 @@ import org.objectweb.asm.tree.MethodNode
 import java.util.*
 
 public class ViewRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
-    override fun processElements(elements: Iterable<ViewElement>) = renderViews(elements) { it.fqName }
+    override fun processElements(state: GenerationState) =
+            renderViews(state[javaClass<ViewGenerator>()]) { it.fqName }
 }
 
 public class ViewGroupRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
-    override fun processElements(elements: Iterable<ViewElement>) = renderViews(elements) { "_" + it.simpleName + it.supportSuffix }
+    override fun processElements(state: GenerationState) =
+            renderViews(state[javaClass<ViewGroupGenerator>()]) { "_" + it.simpleName + it.supportSuffix }
 }
 
 private abstract class AbstractViewRenderer(
         config: AnkoConfiguration
-) : Renderer<ViewElement>(config), ViewConstructorUtils, SupportUtils {
+) : Renderer(config), ViewConstructorUtils, SupportUtils {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.VIEWS, ConfigurationTune.HELPER_CONSTRUCTORS)
 

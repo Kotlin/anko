@@ -20,22 +20,24 @@ import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
+import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.InterfaceWorkaroundElement
+import org.jetbrains.android.anko.generator.InterfaceWorkaroundsGenerator
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.Type
 
-class InterfaceWorkaroundsRenderer(config: AnkoConfiguration) : Renderer<InterfaceWorkaroundElement>(config) {
+class InterfaceWorkaroundsRenderer(config: AnkoConfiguration) : Renderer(config) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.INTERFACE_WORKAROUNDS)
 
-    override fun processElements(elements: Iterable<InterfaceWorkaroundElement>) = StringBuilder {
-        val elementsList = elements.toList()
+    override fun processElements(state: GenerationState) = StringBuilder {
+        val interfaces = state[javaClass<InterfaceWorkaroundsGenerator>()].toList()
 
         append(render("interface_workarounds") {
-            "interfaces" % seq(elementsList) {
+            "interfaces" % seq(interfaces) {
                 val (mainClass, ancestor, innerClass) = it
                 val probInterfaceName = innerClass.innerName
-                val conflict = elementsList.count { it.inner.innerName == probInterfaceName } > 1
+                val conflict = interfaces.count { it.inner.innerName == probInterfaceName } > 1
                 val interfaceName = (if (conflict) innerClass.outerName.substringAfterLast("/") + "_" else "") + probInterfaceName
 
                 "name" % interfaceName
