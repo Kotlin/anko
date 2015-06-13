@@ -26,7 +26,7 @@ import org.objectweb.asm.Type
 
 class InterfaceWorkaroundsRenderer(config: AnkoConfiguration) : Renderer(config) {
 
-    override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.INTERFACE_WORKAROUNDS)
+    override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.INTERFACE_WORKAROUNDS_JAVA)
 
     override fun processElements(state: GenerationState) = StringBuilder {
         val interfaces = state[javaClass<InterfaceWorkaroundsGenerator>()].toList()

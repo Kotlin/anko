@@ -58,8 +58,8 @@ public class FunctionalTestsFor21s : AbstractFunctionalTest() {
     }
 
     @Test public fun testInterfaceWorkaroundsTest() {
-        runFunctionalTest("InterfaceWorkaroundsTest.kt", AnkoFile.INTERFACE_WORKAROUNDS, version) {
-            files.add(AnkoFile.INTERFACE_WORKAROUNDS)
+        runFunctionalTest("InterfaceWorkaroundsTest.kt", AnkoFile.INTERFACE_WORKAROUNDS_JAVA, version) {
+            files.add(AnkoFile.INTERFACE_WORKAROUNDS_JAVA)
         }
     }
 

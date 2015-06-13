@@ -16,24 +16,49 @@
 
 package org.jetbrains.android.anko.config
 
-public enum class AnkoFile(val filename: String) : ConfigurationOption {
-    ASYNC("Async.kt"),
-    CONTEXT_UTILS("ContextUtils.kt"),
-    CUSTOM("Custom.kt"),
-    DATABASE("Database.kt"),
-    DIALOGS("Dialogs.kt"),
-    HELPERS("Helpers.kt"),
-    INTERFACE_WORKAROUNDS("InterfaceWorkarounds.java"),
-    INTERNALS("Internals.kt"),
-    LAYOUTS("Layouts.kt"),
-    LISTENERS("Listeners.kt"),
-    LOGGER("Logger.kt"),
-    OTHER("Other.kt"),
-    OTHER_WIDGETS("OtherWidgets.kt"),
-    PROPERTIES("Properties.kt"),
-    SERVICES("Services.kt"),
-    SQL_PARSER_HELPERS("SqlParserHelpers.kt"),
-    SQL_PARSERS("SqlParsers.kt"),
-    SUPPORT("Support.kt"),
-    VIEWS("Views.kt")
+import kotlin.properties.Delegates
+
+public enum class AnkoFile : ConfigurationOption {
+    ASYNC,
+    CONTEXT_UTILS,
+    CUSTOM,
+    DATABASE,
+    DIALOGS,
+    HELPERS,
+    INTERFACE_WORKAROUNDS_JAVA,
+    INTERNALS,
+    LAYOUTS,
+    LISTENERS,
+    LOGGER,
+    OTHER,
+    OTHER_WIDGETS,
+    PROPERTIES,
+    SERVICES,
+    SQL_PARSER_HELPERS,
+    SQL_PARSERS,
+    SUPPORT,
+    VIEWS;
+
+    public val filename: String by Delegates.lazy {
+        val name = name()
+        val extension = if (name.endsWith("_JAVA")) ".java" else ".kt"
+        name.substringBeforeLast("_JAVA").toCamelCase() + extension
+    }
+
+    private companion object {
+        private fun String.toCamelCase(): String {
+            val builder = StringBuilder()
+            var capitalFlag = true
+            for (c in this) {
+                when (c) {
+                    '_' -> capitalFlag = true
+                    else -> {
+                        builder.append(if (capitalFlag) Character.toUpperCase(c) else Character.toLowerCase(c))
+                        capitalFlag = false
+                    }
+                }
+            }
+            return builder.toString()
+        }
+    }
 }

@@ -57,13 +57,13 @@ class Writer(private val renderFacade: RenderFacade) {
         if (config[VIEWS] || config[HELPER_CONSTRUCTORS])
             writeViews()
 
-        if (config[INTERFACE_WORKAROUNDS])
+        if (config[INTERFACE_WORKAROUNDS_JAVA])
             writeInterfaceWorkarounds()
     }
 
     fun writeInterfaceWorkarounds() {
         val imports = "package ${config.outputPackage}.workarounds;"
-        write(AnkoFile.INTERFACE_WORKAROUNDS, javaClass<InterfaceWorkaroundsRenderer>(), imports, false)
+        write(AnkoFile.INTERFACE_WORKAROUNDS_JAVA, javaClass<InterfaceWorkaroundsRenderer>(), imports, false)
     }
 
     private fun writeLayouts() {
