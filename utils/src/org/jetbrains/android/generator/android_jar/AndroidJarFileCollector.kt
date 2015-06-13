@@ -105,7 +105,7 @@ object AndroidJarCollector {
             print(" android...")
             val androidJar = File(platformN, "android.jar")
             assert(androidJar.exists())
-            androidJar.copyTo(File(versionDir, androidJar.name))
+            androidJar.copyTo(File(versionDir, androidJar.name), overwrite = true)
 
             if (support) {
                 print(" support-v4...")
