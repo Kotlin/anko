@@ -1,5 +1,5 @@
 <project name="Update Dependencies" default="update">
-    <property name="ideaVersion" value="141.175.3"/>
+    <property name="ideaVersion" value="141.1383.1"/>
     <property name="idea.sdk.fetch.needed" value="true"/>
 
     <condition property="os.tag" value="win.zip">
