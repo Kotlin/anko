@@ -21,8 +21,8 @@ import org.objectweb.asm.tree.ClassNode
 
 interface SupportUtils {
     protected val ClassNode.supportSuffix: String
-        get() = if (fromSupportV7) "Support" else ""
+        get() = if (fromSupportPackage) "Support" else ""
 
-    private val ClassNode.fromSupportV7: Boolean
-        get() = fqName.startsWith("android.support.v7")
+    private val ClassNode.fromSupportPackage: Boolean
+        get() = fqName.startsWith("android.support")
 }
