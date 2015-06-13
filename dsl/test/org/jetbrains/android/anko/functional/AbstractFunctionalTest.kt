@@ -37,6 +37,9 @@ public abstract class AbstractFunctionalTest {
         try {
             return file.readText()
         } catch (e: Exception) {
+            val parentDir = file.getParentFile()
+            if (!parentDir.exists()) parentDir.mkdirs()
+
             file.createNewFile()
             val fileWriter = FileWriter(file)
             fileWriter.write(data.replace("\n", System.getProperty("line.separator")))
