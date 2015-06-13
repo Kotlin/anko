@@ -111,4 +111,3 @@ public fun android.widget.VideoView.onPrepared(l: (mp: android.media.MediaPlayer
 public fun android.widget.ZoomControls.onZoomInClick(l: (v: android.view.View) -> Unit): Unit = setOnZoomInClickListener(l)
 
 public fun android.widget.ZoomControls.onZoomOutClick(l: (v: android.view.View) -> Unit): Unit = setOnZoomOutClickListener(l)
-

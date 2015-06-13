@@ -58,3 +58,10 @@ android.widget.AbsListView#getCheckedItemPositions
 android.widget.AbsListView#getSolidColor
 android.widget.AbsListView#getTextFilter
 android.widget.AbsListView#getVerticalScrollbarWidth
+android.support.v7.widget.AppCompatAutoCompleteTextView#*
+android.support.v7.widget.AppCompatButton#*
+android.support.v7.widget.AppCompatCheckBox#*
+android.support.v7.widget.AppCompatEditText#*
+android.support.v7.widget.AppCompatMultiAutoCompleteTextView#*
+android.support.v7.widget.AppCompatRadioButton#*
+android.support.v7.widget.AppCompatSpinner#*

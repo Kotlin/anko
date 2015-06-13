@@ -87,4 +87,3 @@ public fun android.widget.TextView.textChangedListener(init: __TextWatcher.() ->
     listener.init()
     addTextChangedListener(listener)
 }
-

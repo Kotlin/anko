@@ -48,7 +48,7 @@ class __GestureOverlayView_OnGesturingListener : android.gesture.GestureOverlayV
 
 }
 
-class __ViewPager_OnPageChangeListener : android.support.v4.view.ViewPager.OnPageChangeListener {
+class __ViewPagerSupport_OnPageChangeListener : android.support.v4.view.ViewPager.OnPageChangeListener {
     private var _onPageScrolled: ((Int, Float, Int) -> Unit)? = null
     private var _onPageSelected: ((Int) -> Unit)? = null
     private var _onPageScrollStateChanged: ((Int) -> Unit)? = null
@@ -284,4 +284,3 @@ class __TextWatcher : android.text.TextWatcher {
     }
 
 }
-

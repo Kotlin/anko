@@ -43,7 +43,7 @@ public open class _AppWidgetHostView(ctx: Context): android.appwidget.AppWidgetH
 
 }
 
-public open class _FragmentTabHost(ctx: Context): android.support.v4.app.FragmentTabHost(ctx) {
+public open class _FragmentTabHostSupport(ctx: Context): android.support.v4.app.FragmentTabHost(ctx) {
     public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, fragmentTabHostInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.fragmentTabHostInit()
@@ -88,7 +88,7 @@ public open class _FragmentTabHost(ctx: Context): android.support.v4.app.Fragmen
 
 }
 
-public open class _ViewPager(ctx: Context): android.support.v4.view.ViewPager(ctx) {
+public open class _ViewPagerSupport(ctx: Context): android.support.v4.view.ViewPager(ctx) {
     public fun <T: View> T.layoutParams(viewPagerInit: android.support.v4.view.ViewPager.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.support.v4.view.ViewPager.LayoutParams()
         layoutParams.viewPagerInit()
@@ -105,7 +105,7 @@ public open class _ViewPager(ctx: Context): android.support.v4.view.ViewPager(ct
 
 }
 
-public open class _DrawerLayout(ctx: Context): android.support.v4.widget.DrawerLayout(ctx) {
+public open class _DrawerLayoutSupport(ctx: Context): android.support.v4.widget.DrawerLayout(ctx) {
     public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, drawerLayoutInit: android.support.v4.widget.DrawerLayout.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.support.v4.widget.DrawerLayout.LayoutParams(c!!, attrs!!)
         layoutParams.drawerLayoutInit()
@@ -150,7 +150,52 @@ public open class _DrawerLayout(ctx: Context): android.support.v4.widget.DrawerL
 
 }
 
-public open class _SlidingPaneLayout(ctx: Context): android.support.v4.widget.SlidingPaneLayout(ctx) {
+public open class _NestedScrollViewSupport(ctx: Context): android.support.v4.widget.NestedScrollView(ctx) {
+    public fun <T: View> T.layoutParams(c: android.content.Context?, attrs: android.util.AttributeSet?, nestedScrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
+        layoutParams.nestedScrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, nestedScrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height)
+        layoutParams.nestedScrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT, gravity: Int, nestedScrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height, gravity)
+        layoutParams.nestedScrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.LayoutParams?, nestedScrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.nestedScrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.view.ViewGroup.MarginLayoutParams?, nestedScrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.nestedScrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+    public fun <T: View> T.layoutParams(source: android.widget.FrameLayout.LayoutParams?, nestedScrollViewInit: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.nestedScrollViewInit()
+        this@layoutParams.setLayoutParams(layoutParams)
+        return this
+    }
+
+}
+
+public open class _SlidingPaneLayoutSupport(ctx: Context): android.support.v4.widget.SlidingPaneLayout(ctx) {
     public fun <T: View> T.layoutParams(slidingPaneLayoutInit: android.support.v4.widget.SlidingPaneLayout.LayoutParams.() -> Unit = defaultInit): T {
         val layoutParams = android.support.v4.widget.SlidingPaneLayout.LayoutParams()
         layoutParams.slidingPaneLayoutInit()

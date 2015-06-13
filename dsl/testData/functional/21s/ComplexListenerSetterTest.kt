@@ -10,8 +10,14 @@ public fun android.gesture.GestureOverlayView.onGesturingListener(init: __Gestur
     addOnGesturingListener(listener)
 }
 
-public fun android.support.v4.view.ViewPager.onPageChangeListener(init: __ViewPager_OnPageChangeListener.() -> Unit) {
-    val listener = __ViewPager_OnPageChangeListener()
+public fun android.support.v4.view.ViewPager.onPageChangeListener(init: __ViewPagerSupport_OnPageChangeListener.() -> Unit) {
+    val listener = __ViewPagerSupport_OnPageChangeListener()
+    listener.init()
+    addOnPageChangeListener(listener)
+}
+
+public fun android.support.v4.view.ViewPager.onPageChangeListener(init: __ViewPagerSupport_OnPageChangeListener.() -> Unit) {
+    val listener = __ViewPagerSupport_OnPageChangeListener()
     listener.init()
     setOnPageChangeListener(listener)
 }
@@ -105,4 +111,3 @@ public fun android.widget.TextView.textChangedListener(init: __TextWatcher.() ->
     listener.init()
     addTextChangedListener(listener)
 }
-

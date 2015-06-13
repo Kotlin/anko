@@ -61,13 +61,20 @@ private abstract class AbstractViewRenderer(
             view.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
         }
 
+        val tinted = view.fqName.startsWith(APP_COMPAT_VIEW_PREFIX)
+        val className21 = if (tinted) className.substring(APP_COMPAT_VIEW_PREFIX.length()) else null
+        val functionName = if (tinted) "tinted$className21" else view.simpleName.decapitalize() + view.supportSuffix
+
         fun renderView(receiver: String) = render("view") {
             "receiver" % receiver
-            "functionName" % (view.simpleName.decapitalize() + view.supportSuffix)
+            "functionName" % functionName
             "className" % className
             "returnType" % view.fqName
             "additionalArgs" % ""
             "constructorArgs" % renderConstructorArgs(view, constructors, "ctx")
+
+            "tinted" % tinted
+            if (tinted) "className21" % className21
         }
 
         append(renderView("ViewManager"))
@@ -109,8 +116,7 @@ private abstract class AbstractViewRenderer(
                 nl()
             }.toString()
 
-            val asd = add("ViewManager")
-            append(asd)
+            append(add("ViewManager"))
         }
     }.toString()
 
@@ -134,6 +140,7 @@ private abstract class AbstractViewRenderer(
     private companion object {
         val NOTHING_TO_INLINE = "@suppress(\"NOTHING_TO_INLINE\")"
         val ONLY_LOCAL_RETURN = "inlineOptions(InlineOption.ONLY_LOCAL_RETURN)"
+        val APP_COMPAT_VIEW_PREFIX = "android.support.v7.widget.AppCompat"
     }
 
 }

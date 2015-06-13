@@ -2,7 +2,16 @@
 public inline fun {{receiver}}.{{functionName}}(): {{returnType}} = {{functionName}}({})
 public inline fun {{receiver}}.{{functionName}}({{additionalArgs}}{{#additionalArgs}}, {{/additionalArgs}}inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: {{className}}.() -> Unit): {{returnType}} = addView<{{returnType}}> {
     ctx ->
+    {{#tinted}}
+    val view = if (Build.VERSION.SDK_INT < 21)
+        {{className}}({{constructorArgs}})
+    else
+        {{className21}}({{constructorArgs}})
+
+    {{/tinted}}
+    {{^tinted}}
     val view = {{className}}({{constructorArgs}})
+    {{/tinted}}
     view.init()
     view
 }

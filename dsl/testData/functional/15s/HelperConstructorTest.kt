@@ -211,4 +211,3 @@ public inline fun ViewManager.textView(text: Int, inlineOptions(InlineOption.ONL
     view.init()
     view
 }
-

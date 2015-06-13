@@ -24,6 +24,24 @@ public val android.support.v4.view.ViewPager.fakeDragging: Boolean
 public val android.support.v4.widget.DrawerLayout.statusBarBackgroundDrawable: android.graphics.drawable.Drawable?
     get() = getStatusBarBackgroundDrawable()
 
+public val android.support.v4.widget.NestedScrollView.maxScrollAmount: Int
+    get() = getMaxScrollAmount()
+
+public val android.support.v4.widget.NestedScrollView.nestedScrollAxes: Int
+    get() = getNestedScrollAxes()
+
+public var android.support.v4.widget.NestedScrollView.fillViewport: Boolean
+    get() = isFillViewport()
+    set(v) = setFillViewport(v)
+
+public var android.support.v4.widget.NestedScrollView.nestedScrollingEnabled: Boolean
+    get() = isNestedScrollingEnabled()
+    set(v) = setNestedScrollingEnabled(v)
+
+public var android.support.v4.widget.NestedScrollView.smoothScrollingEnabled: Boolean
+    get() = isSmoothScrollingEnabled()
+    set(v) = setSmoothScrollingEnabled(v)
+
 public var android.support.v4.widget.SlidingPaneLayout.coveredFadeColor: Int
     get() = getCoveredFadeColor()
     set(v) = setCoveredFadeColor(v)

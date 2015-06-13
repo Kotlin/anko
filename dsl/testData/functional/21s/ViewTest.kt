@@ -80,8 +80,8 @@ public inline fun ViewManager.gLSurfaceView(inlineOptions(InlineOption.ONLY_LOCA
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.pagerTabStrip(): android.support.v4.view.PagerTabStrip = pagerTabStrip({})
-public inline fun ViewManager.pagerTabStrip(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTabStrip.() -> Unit): android.support.v4.view.PagerTabStrip = addView<android.support.v4.view.PagerTabStrip> {
+public inline fun ViewManager.pagerTabStripSupport(): android.support.v4.view.PagerTabStrip = pagerTabStripSupport({})
+public inline fun ViewManager.pagerTabStripSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTabStrip.() -> Unit): android.support.v4.view.PagerTabStrip = addView<android.support.v4.view.PagerTabStrip> {
     ctx ->
     val view = android.support.v4.view.PagerTabStrip(ctx)
     view.init()
@@ -89,8 +89,8 @@ public inline fun ViewManager.pagerTabStrip(inlineOptions(InlineOption.ONLY_LOCA
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Context.pagerTabStrip(): android.support.v4.view.PagerTabStrip = pagerTabStrip({})
-public inline fun Context.pagerTabStrip(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTabStrip.() -> Unit): android.support.v4.view.PagerTabStrip = addView<android.support.v4.view.PagerTabStrip> {
+public inline fun Context.pagerTabStripSupport(): android.support.v4.view.PagerTabStrip = pagerTabStripSupport({})
+public inline fun Context.pagerTabStripSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTabStrip.() -> Unit): android.support.v4.view.PagerTabStrip = addView<android.support.v4.view.PagerTabStrip> {
     ctx ->
     val view = android.support.v4.view.PagerTabStrip(ctx)
     view.init()
@@ -98,8 +98,8 @@ public inline fun Context.pagerTabStrip(inlineOptions(InlineOption.ONLY_LOCAL_RE
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Activity.pagerTabStrip(): android.support.v4.view.PagerTabStrip = pagerTabStrip({})
-public inline fun Activity.pagerTabStrip(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTabStrip.() -> Unit): android.support.v4.view.PagerTabStrip = addView<android.support.v4.view.PagerTabStrip> {
+public inline fun Activity.pagerTabStripSupport(): android.support.v4.view.PagerTabStrip = pagerTabStripSupport({})
+public inline fun Activity.pagerTabStripSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTabStrip.() -> Unit): android.support.v4.view.PagerTabStrip = addView<android.support.v4.view.PagerTabStrip> {
     ctx ->
     val view = android.support.v4.view.PagerTabStrip(ctx)
     view.init()
@@ -107,8 +107,8 @@ public inline fun Activity.pagerTabStrip(inlineOptions(InlineOption.ONLY_LOCAL_R
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.pagerTitleStrip(): android.support.v4.view.PagerTitleStrip = pagerTitleStrip({})
-public inline fun ViewManager.pagerTitleStrip(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTitleStrip.() -> Unit): android.support.v4.view.PagerTitleStrip = addView<android.support.v4.view.PagerTitleStrip> {
+public inline fun ViewManager.pagerTitleStripSupport(): android.support.v4.view.PagerTitleStrip = pagerTitleStripSupport({})
+public inline fun ViewManager.pagerTitleStripSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTitleStrip.() -> Unit): android.support.v4.view.PagerTitleStrip = addView<android.support.v4.view.PagerTitleStrip> {
     ctx ->
     val view = android.support.v4.view.PagerTitleStrip(ctx)
     view.init()
@@ -116,8 +116,8 @@ public inline fun ViewManager.pagerTitleStrip(inlineOptions(InlineOption.ONLY_LO
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Context.pagerTitleStrip(): android.support.v4.view.PagerTitleStrip = pagerTitleStrip({})
-public inline fun Context.pagerTitleStrip(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTitleStrip.() -> Unit): android.support.v4.view.PagerTitleStrip = addView<android.support.v4.view.PagerTitleStrip> {
+public inline fun Context.pagerTitleStripSupport(): android.support.v4.view.PagerTitleStrip = pagerTitleStripSupport({})
+public inline fun Context.pagerTitleStripSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTitleStrip.() -> Unit): android.support.v4.view.PagerTitleStrip = addView<android.support.v4.view.PagerTitleStrip> {
     ctx ->
     val view = android.support.v4.view.PagerTitleStrip(ctx)
     view.init()
@@ -125,8 +125,8 @@ public inline fun Context.pagerTitleStrip(inlineOptions(InlineOption.ONLY_LOCAL_
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Activity.pagerTitleStrip(): android.support.v4.view.PagerTitleStrip = pagerTitleStrip({})
-public inline fun Activity.pagerTitleStrip(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTitleStrip.() -> Unit): android.support.v4.view.PagerTitleStrip = addView<android.support.v4.view.PagerTitleStrip> {
+public inline fun Activity.pagerTitleStripSupport(): android.support.v4.view.PagerTitleStrip = pagerTitleStripSupport({})
+public inline fun Activity.pagerTitleStripSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTitleStrip.() -> Unit): android.support.v4.view.PagerTitleStrip = addView<android.support.v4.view.PagerTitleStrip> {
     ctx ->
     val view = android.support.v4.view.PagerTitleStrip(ctx)
     view.init()
@@ -134,8 +134,8 @@ public inline fun Activity.pagerTitleStrip(inlineOptions(InlineOption.ONLY_LOCAL
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.contentLoadingProgressBar(): android.support.v4.widget.ContentLoadingProgressBar = contentLoadingProgressBar({})
-public inline fun ViewManager.contentLoadingProgressBar(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.widget.ContentLoadingProgressBar.() -> Unit): android.support.v4.widget.ContentLoadingProgressBar = addView<android.support.v4.widget.ContentLoadingProgressBar> {
+public inline fun ViewManager.contentLoadingProgressBarSupport(): android.support.v4.widget.ContentLoadingProgressBar = contentLoadingProgressBarSupport({})
+public inline fun ViewManager.contentLoadingProgressBarSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.widget.ContentLoadingProgressBar.() -> Unit): android.support.v4.widget.ContentLoadingProgressBar = addView<android.support.v4.widget.ContentLoadingProgressBar> {
     ctx ->
     val view = android.support.v4.widget.ContentLoadingProgressBar(ctx)
     view.init()
@@ -143,8 +143,17 @@ public inline fun ViewManager.contentLoadingProgressBar(inlineOptions(InlineOpti
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.swipeRefreshLayout(): android.support.v4.widget.SwipeRefreshLayout = swipeRefreshLayout({})
-public inline fun ViewManager.swipeRefreshLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.widget.SwipeRefreshLayout.() -> Unit): android.support.v4.widget.SwipeRefreshLayout = addView<android.support.v4.widget.SwipeRefreshLayout> {
+public inline fun ViewManager.spaceSupport(): android.support.v4.widget.Space = spaceSupport({})
+public inline fun ViewManager.spaceSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.widget.Space.() -> Unit): android.support.v4.widget.Space = addView<android.support.v4.widget.Space> {
+    ctx ->
+    val view = android.support.v4.widget.Space(ctx)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.swipeRefreshLayoutSupport(): android.support.v4.widget.SwipeRefreshLayout = swipeRefreshLayoutSupport({})
+public inline fun ViewManager.swipeRefreshLayoutSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.widget.SwipeRefreshLayout.() -> Unit): android.support.v4.widget.SwipeRefreshLayout = addView<android.support.v4.widget.SwipeRefreshLayout> {
     ctx ->
     val view = android.support.v4.widget.SwipeRefreshLayout(ctx)
     view.init()
@@ -152,8 +161,8 @@ public inline fun ViewManager.swipeRefreshLayout(inlineOptions(InlineOption.ONLY
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Context.swipeRefreshLayout(): android.support.v4.widget.SwipeRefreshLayout = swipeRefreshLayout({})
-public inline fun Context.swipeRefreshLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.widget.SwipeRefreshLayout.() -> Unit): android.support.v4.widget.SwipeRefreshLayout = addView<android.support.v4.widget.SwipeRefreshLayout> {
+public inline fun Context.swipeRefreshLayoutSupport(): android.support.v4.widget.SwipeRefreshLayout = swipeRefreshLayoutSupport({})
+public inline fun Context.swipeRefreshLayoutSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.widget.SwipeRefreshLayout.() -> Unit): android.support.v4.widget.SwipeRefreshLayout = addView<android.support.v4.widget.SwipeRefreshLayout> {
     ctx ->
     val view = android.support.v4.widget.SwipeRefreshLayout(ctx)
     view.init()
@@ -161,10 +170,166 @@ public inline fun Context.swipeRefreshLayout(inlineOptions(InlineOption.ONLY_LOC
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Activity.swipeRefreshLayout(): android.support.v4.widget.SwipeRefreshLayout = swipeRefreshLayout({})
-public inline fun Activity.swipeRefreshLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.widget.SwipeRefreshLayout.() -> Unit): android.support.v4.widget.SwipeRefreshLayout = addView<android.support.v4.widget.SwipeRefreshLayout> {
+public inline fun Activity.swipeRefreshLayoutSupport(): android.support.v4.widget.SwipeRefreshLayout = swipeRefreshLayoutSupport({})
+public inline fun Activity.swipeRefreshLayoutSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.widget.SwipeRefreshLayout.() -> Unit): android.support.v4.widget.SwipeRefreshLayout = addView<android.support.v4.widget.SwipeRefreshLayout> {
     ctx ->
     val view = android.support.v4.widget.SwipeRefreshLayout(ctx)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedAutoCompleteTextView(): android.support.v7.widget.AppCompatAutoCompleteTextView = tintedAutoCompleteTextView({})
+public inline fun ViewManager.tintedAutoCompleteTextView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatAutoCompleteTextView.() -> Unit): android.support.v7.widget.AppCompatAutoCompleteTextView = addView<android.support.v7.widget.AppCompatAutoCompleteTextView> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21)
+        android.support.v7.widget.AppCompatAutoCompleteTextView(ctx)
+    else
+        AutoCompleteTextView(ctx)
+
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedButton(): android.support.v7.widget.AppCompatButton = tintedButton({})
+public inline fun ViewManager.tintedButton(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatButton.() -> Unit): android.support.v7.widget.AppCompatButton = addView<android.support.v7.widget.AppCompatButton> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21)
+        android.support.v7.widget.AppCompatButton(ctx)
+    else
+        Button(ctx)
+
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedCheckBox(): android.support.v7.widget.AppCompatCheckBox = tintedCheckBox({})
+public inline fun ViewManager.tintedCheckBox(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatCheckBox.() -> Unit): android.support.v7.widget.AppCompatCheckBox = addView<android.support.v7.widget.AppCompatCheckBox> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21)
+        android.support.v7.widget.AppCompatCheckBox(ctx)
+    else
+        CheckBox(ctx)
+
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedCheckedTextView(): android.support.v7.widget.AppCompatCheckedTextView = tintedCheckedTextView({})
+public inline fun ViewManager.tintedCheckedTextView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatCheckedTextView.() -> Unit): android.support.v7.widget.AppCompatCheckedTextView = addView<android.support.v7.widget.AppCompatCheckedTextView> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21)
+        android.support.v7.widget.AppCompatCheckedTextView(ctx)
+    else
+        CheckedTextView(ctx)
+
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedEditText(): android.support.v7.widget.AppCompatEditText = tintedEditText({})
+public inline fun ViewManager.tintedEditText(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatEditText.() -> Unit): android.support.v7.widget.AppCompatEditText = addView<android.support.v7.widget.AppCompatEditText> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21)
+        android.support.v7.widget.AppCompatEditText(ctx)
+    else
+        EditText(ctx)
+
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedMultiAutoCompleteTextView(): android.support.v7.widget.AppCompatMultiAutoCompleteTextView = tintedMultiAutoCompleteTextView({})
+public inline fun ViewManager.tintedMultiAutoCompleteTextView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatMultiAutoCompleteTextView.() -> Unit): android.support.v7.widget.AppCompatMultiAutoCompleteTextView = addView<android.support.v7.widget.AppCompatMultiAutoCompleteTextView> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21)
+        android.support.v7.widget.AppCompatMultiAutoCompleteTextView(ctx)
+    else
+        MultiAutoCompleteTextView(ctx)
+
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedRadioButton(): android.support.v7.widget.AppCompatRadioButton = tintedRadioButton({})
+public inline fun ViewManager.tintedRadioButton(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatRadioButton.() -> Unit): android.support.v7.widget.AppCompatRadioButton = addView<android.support.v7.widget.AppCompatRadioButton> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21)
+        android.support.v7.widget.AppCompatRadioButton(ctx)
+    else
+        RadioButton(ctx)
+
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedRatingBar(): android.support.v7.widget.AppCompatRatingBar = tintedRatingBar({})
+public inline fun ViewManager.tintedRatingBar(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatRatingBar.() -> Unit): android.support.v7.widget.AppCompatRatingBar = addView<android.support.v7.widget.AppCompatRatingBar> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21)
+        android.support.v7.widget.AppCompatRatingBar(ctx)
+    else
+        RatingBar(ctx)
+
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedSpinner(): android.support.v7.widget.AppCompatSpinner = tintedSpinner({})
+public inline fun ViewManager.tintedSpinner(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatSpinner.() -> Unit): android.support.v7.widget.AppCompatSpinner = addView<android.support.v7.widget.AppCompatSpinner> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21)
+        android.support.v7.widget.AppCompatSpinner(ctx)
+    else
+        Spinner(ctx)
+
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun Context.tintedSpinner(): android.support.v7.widget.AppCompatSpinner = tintedSpinner({})
+public inline fun Context.tintedSpinner(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatSpinner.() -> Unit): android.support.v7.widget.AppCompatSpinner = addView<android.support.v7.widget.AppCompatSpinner> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21)
+        android.support.v7.widget.AppCompatSpinner(ctx)
+    else
+        Spinner(ctx)
+
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun Activity.tintedSpinner(): android.support.v7.widget.AppCompatSpinner = tintedSpinner({})
+public inline fun Activity.tintedSpinner(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatSpinner.() -> Unit): android.support.v7.widget.AppCompatSpinner = addView<android.support.v7.widget.AppCompatSpinner> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21)
+        android.support.v7.widget.AppCompatSpinner(ctx)
+    else
+        Spinner(ctx)
+
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedTextView(): android.support.v7.widget.AppCompatTextView = tintedTextView({})
+public inline fun ViewManager.tintedTextView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatTextView.() -> Unit): android.support.v7.widget.AppCompatTextView = addView<android.support.v7.widget.AppCompatTextView> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21)
+        android.support.v7.widget.AppCompatTextView(ctx)
+    else
+        TextView(ctx)
+
     view.init()
     view
 }
@@ -935,109 +1100,136 @@ public inline fun Activity.appWidgetHostView(inlineOptions(InlineOption.ONLY_LOC
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.fragmentTabHost(): android.support.v4.app.FragmentTabHost = fragmentTabHost({})
-public inline fun ViewManager.fragmentTabHost(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _FragmentTabHost.() -> Unit): android.support.v4.app.FragmentTabHost = addView<android.support.v4.app.FragmentTabHost> {
+public inline fun ViewManager.fragmentTabHostSupport(): android.support.v4.app.FragmentTabHost = fragmentTabHostSupport({})
+public inline fun ViewManager.fragmentTabHostSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _FragmentTabHostSupport.() -> Unit): android.support.v4.app.FragmentTabHost = addView<android.support.v4.app.FragmentTabHost> {
     ctx ->
-    val view = _FragmentTabHost(ctx)
+    val view = _FragmentTabHostSupport(ctx)
     view.init()
     view
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Context.fragmentTabHost(): android.support.v4.app.FragmentTabHost = fragmentTabHost({})
-public inline fun Context.fragmentTabHost(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _FragmentTabHost.() -> Unit): android.support.v4.app.FragmentTabHost = addView<android.support.v4.app.FragmentTabHost> {
+public inline fun Context.fragmentTabHostSupport(): android.support.v4.app.FragmentTabHost = fragmentTabHostSupport({})
+public inline fun Context.fragmentTabHostSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _FragmentTabHostSupport.() -> Unit): android.support.v4.app.FragmentTabHost = addView<android.support.v4.app.FragmentTabHost> {
     ctx ->
-    val view = _FragmentTabHost(ctx)
+    val view = _FragmentTabHostSupport(ctx)
     view.init()
     view
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Activity.fragmentTabHost(): android.support.v4.app.FragmentTabHost = fragmentTabHost({})
-public inline fun Activity.fragmentTabHost(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _FragmentTabHost.() -> Unit): android.support.v4.app.FragmentTabHost = addView<android.support.v4.app.FragmentTabHost> {
+public inline fun Activity.fragmentTabHostSupport(): android.support.v4.app.FragmentTabHost = fragmentTabHostSupport({})
+public inline fun Activity.fragmentTabHostSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _FragmentTabHostSupport.() -> Unit): android.support.v4.app.FragmentTabHost = addView<android.support.v4.app.FragmentTabHost> {
     ctx ->
-    val view = _FragmentTabHost(ctx)
+    val view = _FragmentTabHostSupport(ctx)
     view.init()
     view
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.viewPager(): android.support.v4.view.ViewPager = viewPager({})
-public inline fun ViewManager.viewPager(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ViewPager.() -> Unit): android.support.v4.view.ViewPager = addView<android.support.v4.view.ViewPager> {
+public inline fun ViewManager.viewPagerSupport(): android.support.v4.view.ViewPager = viewPagerSupport({})
+public inline fun ViewManager.viewPagerSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ViewPagerSupport.() -> Unit): android.support.v4.view.ViewPager = addView<android.support.v4.view.ViewPager> {
     ctx ->
-    val view = _ViewPager(ctx)
+    val view = _ViewPagerSupport(ctx)
     view.init()
     view
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Context.viewPager(): android.support.v4.view.ViewPager = viewPager({})
-public inline fun Context.viewPager(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ViewPager.() -> Unit): android.support.v4.view.ViewPager = addView<android.support.v4.view.ViewPager> {
+public inline fun Context.viewPagerSupport(): android.support.v4.view.ViewPager = viewPagerSupport({})
+public inline fun Context.viewPagerSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ViewPagerSupport.() -> Unit): android.support.v4.view.ViewPager = addView<android.support.v4.view.ViewPager> {
     ctx ->
-    val view = _ViewPager(ctx)
+    val view = _ViewPagerSupport(ctx)
     view.init()
     view
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Activity.viewPager(): android.support.v4.view.ViewPager = viewPager({})
-public inline fun Activity.viewPager(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ViewPager.() -> Unit): android.support.v4.view.ViewPager = addView<android.support.v4.view.ViewPager> {
+public inline fun Activity.viewPagerSupport(): android.support.v4.view.ViewPager = viewPagerSupport({})
+public inline fun Activity.viewPagerSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _ViewPagerSupport.() -> Unit): android.support.v4.view.ViewPager = addView<android.support.v4.view.ViewPager> {
     ctx ->
-    val view = _ViewPager(ctx)
+    val view = _ViewPagerSupport(ctx)
     view.init()
     view
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.drawerLayout(): android.support.v4.widget.DrawerLayout = drawerLayout({})
-public inline fun ViewManager.drawerLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _DrawerLayout.() -> Unit): android.support.v4.widget.DrawerLayout = addView<android.support.v4.widget.DrawerLayout> {
+public inline fun ViewManager.drawerLayoutSupport(): android.support.v4.widget.DrawerLayout = drawerLayoutSupport({})
+public inline fun ViewManager.drawerLayoutSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _DrawerLayoutSupport.() -> Unit): android.support.v4.widget.DrawerLayout = addView<android.support.v4.widget.DrawerLayout> {
     ctx ->
-    val view = _DrawerLayout(ctx)
+    val view = _DrawerLayoutSupport(ctx)
     view.init()
     view
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Context.drawerLayout(): android.support.v4.widget.DrawerLayout = drawerLayout({})
-public inline fun Context.drawerLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _DrawerLayout.() -> Unit): android.support.v4.widget.DrawerLayout = addView<android.support.v4.widget.DrawerLayout> {
+public inline fun Context.drawerLayoutSupport(): android.support.v4.widget.DrawerLayout = drawerLayoutSupport({})
+public inline fun Context.drawerLayoutSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _DrawerLayoutSupport.() -> Unit): android.support.v4.widget.DrawerLayout = addView<android.support.v4.widget.DrawerLayout> {
     ctx ->
-    val view = _DrawerLayout(ctx)
+    val view = _DrawerLayoutSupport(ctx)
     view.init()
     view
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Activity.drawerLayout(): android.support.v4.widget.DrawerLayout = drawerLayout({})
-public inline fun Activity.drawerLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _DrawerLayout.() -> Unit): android.support.v4.widget.DrawerLayout = addView<android.support.v4.widget.DrawerLayout> {
+public inline fun Activity.drawerLayoutSupport(): android.support.v4.widget.DrawerLayout = drawerLayoutSupport({})
+public inline fun Activity.drawerLayoutSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _DrawerLayoutSupport.() -> Unit): android.support.v4.widget.DrawerLayout = addView<android.support.v4.widget.DrawerLayout> {
     ctx ->
-    val view = _DrawerLayout(ctx)
+    val view = _DrawerLayoutSupport(ctx)
     view.init()
     view
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.slidingPaneLayout(): android.support.v4.widget.SlidingPaneLayout = slidingPaneLayout({})
-public inline fun ViewManager.slidingPaneLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _SlidingPaneLayout.() -> Unit): android.support.v4.widget.SlidingPaneLayout = addView<android.support.v4.widget.SlidingPaneLayout> {
+public inline fun ViewManager.nestedScrollViewSupport(): android.support.v4.widget.NestedScrollView = nestedScrollViewSupport({})
+public inline fun ViewManager.nestedScrollViewSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _NestedScrollViewSupport.() -> Unit): android.support.v4.widget.NestedScrollView = addView<android.support.v4.widget.NestedScrollView> {
     ctx ->
-    val view = _SlidingPaneLayout(ctx)
+    val view = _NestedScrollViewSupport(ctx)
     view.init()
     view
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Context.slidingPaneLayout(): android.support.v4.widget.SlidingPaneLayout = slidingPaneLayout({})
-public inline fun Context.slidingPaneLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _SlidingPaneLayout.() -> Unit): android.support.v4.widget.SlidingPaneLayout = addView<android.support.v4.widget.SlidingPaneLayout> {
+public inline fun Context.nestedScrollViewSupport(): android.support.v4.widget.NestedScrollView = nestedScrollViewSupport({})
+public inline fun Context.nestedScrollViewSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _NestedScrollViewSupport.() -> Unit): android.support.v4.widget.NestedScrollView = addView<android.support.v4.widget.NestedScrollView> {
     ctx ->
-    val view = _SlidingPaneLayout(ctx)
+    val view = _NestedScrollViewSupport(ctx)
     view.init()
     view
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Activity.slidingPaneLayout(): android.support.v4.widget.SlidingPaneLayout = slidingPaneLayout({})
-public inline fun Activity.slidingPaneLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _SlidingPaneLayout.() -> Unit): android.support.v4.widget.SlidingPaneLayout = addView<android.support.v4.widget.SlidingPaneLayout> {
+public inline fun Activity.nestedScrollViewSupport(): android.support.v4.widget.NestedScrollView = nestedScrollViewSupport({})
+public inline fun Activity.nestedScrollViewSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _NestedScrollViewSupport.() -> Unit): android.support.v4.widget.NestedScrollView = addView<android.support.v4.widget.NestedScrollView> {
     ctx ->
-    val view = _SlidingPaneLayout(ctx)
+    val view = _NestedScrollViewSupport(ctx)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.slidingPaneLayoutSupport(): android.support.v4.widget.SlidingPaneLayout = slidingPaneLayoutSupport({})
+public inline fun ViewManager.slidingPaneLayoutSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _SlidingPaneLayoutSupport.() -> Unit): android.support.v4.widget.SlidingPaneLayout = addView<android.support.v4.widget.SlidingPaneLayout> {
+    ctx ->
+    val view = _SlidingPaneLayoutSupport(ctx)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun Context.slidingPaneLayoutSupport(): android.support.v4.widget.SlidingPaneLayout = slidingPaneLayoutSupport({})
+public inline fun Context.slidingPaneLayoutSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _SlidingPaneLayoutSupport.() -> Unit): android.support.v4.widget.SlidingPaneLayout = addView<android.support.v4.widget.SlidingPaneLayout> {
+    ctx ->
+    val view = _SlidingPaneLayoutSupport(ctx)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun Activity.slidingPaneLayoutSupport(): android.support.v4.widget.SlidingPaneLayout = slidingPaneLayoutSupport({})
+public inline fun Activity.slidingPaneLayoutSupport(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _SlidingPaneLayoutSupport.() -> Unit): android.support.v4.widget.SlidingPaneLayout = addView<android.support.v4.widget.SlidingPaneLayout> {
+    ctx ->
+    val view = _SlidingPaneLayoutSupport(ctx)
     view.init()
     view
 }
