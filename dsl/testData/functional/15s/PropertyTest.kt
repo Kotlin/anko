@@ -1,11 +1,3 @@
-public var android.renderscript.RSSurfaceView.renderScriptGL: android.renderscript.RenderScriptGL?
-    get() = getRenderScriptGL()
-    set(v) = setRenderScriptGL(v)
-
-public var android.renderscript.RSTextureView.renderScriptGL: android.renderscript.RenderScriptGL?
-    get() = getRenderScriptGL()
-    set(v) = setRenderScriptGL(v)
-
 public var android.support.v4.view.PagerTitleStrip.textSpacing: Int
     get() = getTextSpacing()
     set(v) = setTextSpacing(v)
@@ -1526,5 +1518,3 @@ public var android.widget.Spinner.gravity: Int
 public var android.widget.GridView.gravity: Int
     get() = throw AnkoException("'android.widget.GridView.gravity' property does not have a getter")
     set(v) = setGravity(v)
-
-

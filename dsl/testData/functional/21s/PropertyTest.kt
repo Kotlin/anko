@@ -2081,5 +2081,3 @@ public var android.widget.LinearLayout.gravity: Int
 public var android.widget.Gallery.gravity: Int
     get() = throw AnkoException("'android.widget.Gallery.gravity' property does not have a getter")
     set(v) = setGravity(v)
-
-

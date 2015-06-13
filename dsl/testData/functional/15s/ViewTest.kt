@@ -44,24 +44,6 @@ public inline fun ViewManager.gLSurfaceView(inlineOptions(InlineOption.ONLY_LOCA
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.rSSurfaceView(): android.renderscript.RSSurfaceView = rSSurfaceView({})
-public inline fun ViewManager.rSSurfaceView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.renderscript.RSSurfaceView.() -> Unit): android.renderscript.RSSurfaceView = addView<android.renderscript.RSSurfaceView> {
-    ctx ->
-    val view = android.renderscript.RSSurfaceView(ctx)
-    view.init()
-    view
-}
-
-@suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.rSTextureView(): android.renderscript.RSTextureView = rSTextureView({})
-public inline fun ViewManager.rSTextureView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.renderscript.RSTextureView.() -> Unit): android.renderscript.RSTextureView = addView<android.renderscript.RSTextureView> {
-    ctx ->
-    val view = android.renderscript.RSTextureView(ctx)
-    view.init()
-    view
-}
-
-@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.pagerTabStrip(): android.support.v4.view.PagerTabStrip = pagerTabStrip({})
 public inline fun ViewManager.pagerTabStrip(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v4.view.PagerTabStrip.() -> Unit): android.support.v4.view.PagerTabStrip = addView<android.support.v4.view.PagerTabStrip> {
     ctx ->
