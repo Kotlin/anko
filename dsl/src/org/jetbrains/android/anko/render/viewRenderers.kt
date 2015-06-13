@@ -50,8 +50,15 @@ private abstract class AbstractViewRenderer(
         for (view in views.filter { !it.clazz.isAbstract }) {
             if (renderViews) renderView(view.clazz, view.isContainer, nameResolver(view.clazz))
 
-            if (renderHelperConstructors && Props.helperConstructors.contains(view.fqName)) {
-                append(renderHelperConstructors(view))
+            if (renderHelperConstructors) {
+                if (Props.helperConstructors.contains(view.fqName)) {
+                    append(renderHelperConstructors(view))
+                } else if (view.clazz.isTinted()) {
+                    val (className21, _) = handleTintedView(view.clazz, nameResolver(view.clazz))
+                    if (Props.helperConstructors.contains("android.widget.$className21")) {
+                        append(renderHelperConstructors(view))
+                    }
+                }
             }
         }
     }.toString()
@@ -61,15 +68,15 @@ private abstract class AbstractViewRenderer(
             view.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
         }
 
-        val tinted = view.fqName.startsWith(APP_COMPAT_VIEW_PREFIX)
-        val className21 = if (tinted) className.substring(APP_COMPAT_VIEW_PREFIX.length()) else null
-        val functionName = if (tinted) "tinted$className21" else view.simpleName.decapitalize() + view.supportSuffix
+        val (className21, functionName) = handleTintedView(view, className)
+        val tinted = className21 != null
 
         fun renderView(receiver: String) = render("view") {
             "receiver" % receiver
             "functionName" % functionName
             "className" % className
-            "returnType" % view.fqName
+            "lambdaArgType" % if (tinted) className21 else className
+            "returnType" % if (tinted) className21 else view.fqName
             "additionalArgs" % ""
             "constructorArgs" % renderConstructorArgs(view, constructors, "ctx")
 
@@ -86,10 +93,15 @@ private abstract class AbstractViewRenderer(
 
     private fun renderHelperConstructors(view: ViewElement) = StringBuilder {
         val className = view.fqName
-        val helperConstructors = Props.helperConstructors[view.fqName]!!
+
+        val (className21, functionName) = handleTintedView(view.clazz, className)
+        val tinted = className21 != null
+        val lambdaArgType = if (tinted) className21 else className
+
+        val helperConstructors = Props.helperConstructors[if (tinted) "android.widget.$className21" else view.fqName] ?:
+                throw RuntimeException("Helper constructors not found for $className")
 
         for (constructor in helperConstructors) {
-            val funcName = view.clazz.simpleName.decapitalize()
             val collected = constructor.zip(collectProperties(view, constructor))
             val helperArguments = collected.map {
                 val argumentType = it.second.args[0].asString()
@@ -98,17 +110,25 @@ private abstract class AbstractViewRenderer(
             val setters = collected.map { "view.${it.second.name}(${it.first.name})" }
 
             fun add(extendFor: String) = buffer {
+                val makeView = if (tinted) {
+                    "val view = if (Build.VERSION.SDK_INT < 21) $className(ctx) else $className21(ctx)"
+                } else {
+                    "val view = $className(ctx)"
+                }
+
+                val returnType = if (tinted) className21 else className
+
                 line(NOTHING_TO_INLINE)
-                line("public inline fun $extendFor.$funcName($helperArguments): $className = addView<$className> {")
+                line("public inline fun $extendFor.$functionName($helperArguments): $returnType = addView<$returnType> {")
                 line("ctx ->")
-                line("val view = $className(ctx)")
+                line(makeView)
                 lines(setters)
                 line("view")
                 line("}")
 
-                line("public inline fun $extendFor.$funcName($helperArguments, $ONLY_LOCAL_RETURN init: $className.() -> Unit): $className = addView<$className> {")
+                line("public inline fun $extendFor.$functionName($helperArguments, $ONLY_LOCAL_RETURN init: $lambdaArgType.() -> Unit): $returnType = addView<$returnType> {")
                 line("ctx ->")
-                line("val view = $className(ctx)")
+                line(makeView)
                 lines(setters)
                 line("view.init()")
                 line("view")
@@ -136,6 +156,15 @@ private abstract class AbstractViewRenderer(
             methods[0]
         }
     }
+
+    private fun handleTintedView(view: ClassNode, className: String): Pair<String?, String> {
+        val tinted = view.isTinted()
+        val className21 = if (tinted) className.substring(APP_COMPAT_VIEW_PREFIX.length()) else null
+        val functionName = if (tinted) "tinted$className21" else view.simpleName.decapitalize() + view.supportSuffix
+        return className21 to functionName
+    }
+
+    private fun ClassNode.isTinted() = fqName.startsWith(APP_COMPAT_VIEW_PREFIX)
 
     private companion object {
         val NOTHING_TO_INLINE = "@suppress(\"NOTHING_TO_INLINE\")"

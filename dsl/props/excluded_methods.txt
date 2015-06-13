@@ -13,3 +13,4 @@ android.widget.EditText#getText
 android.view.View#getBackground
 android.webkit.WebView#getVisibleTitleHeight
 android.webkit.WebView#getZoomControls
+android.support.v4.view.ViewPager#setOnPageChangeListener

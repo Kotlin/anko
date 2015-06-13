@@ -1,4 +1,158 @@
 @suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedButton(text: CharSequence?): android.support.v7.widget.AppCompatButton = addView<android.support.v7.widget.AppCompatButton> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatButton(ctx) else Button(ctx)
+    view.setText(text)
+    view
+}
+public inline fun ViewManager.tintedButton(text: CharSequence?, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatButton.() -> Unit): android.support.v7.widget.AppCompatButton = addView<android.support.v7.widget.AppCompatButton> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatButton(ctx) else Button(ctx)
+    view.setText(text)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedButton(text: Int): android.support.v7.widget.AppCompatButton = addView<android.support.v7.widget.AppCompatButton> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatButton(ctx) else Button(ctx)
+    view.setText(text)
+    view
+}
+public inline fun ViewManager.tintedButton(text: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatButton.() -> Unit): android.support.v7.widget.AppCompatButton = addView<android.support.v7.widget.AppCompatButton> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatButton(ctx) else Button(ctx)
+    view.setText(text)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedCheckBox(text: CharSequence?): android.support.v7.widget.AppCompatCheckBox = addView<android.support.v7.widget.AppCompatCheckBox> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatCheckBox(ctx) else CheckBox(ctx)
+    view.setText(text)
+    view
+}
+public inline fun ViewManager.tintedCheckBox(text: CharSequence?, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatCheckBox.() -> Unit): android.support.v7.widget.AppCompatCheckBox = addView<android.support.v7.widget.AppCompatCheckBox> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatCheckBox(ctx) else CheckBox(ctx)
+    view.setText(text)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedCheckBox(text: Int): android.support.v7.widget.AppCompatCheckBox = addView<android.support.v7.widget.AppCompatCheckBox> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatCheckBox(ctx) else CheckBox(ctx)
+    view.setText(text)
+    view
+}
+public inline fun ViewManager.tintedCheckBox(text: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatCheckBox.() -> Unit): android.support.v7.widget.AppCompatCheckBox = addView<android.support.v7.widget.AppCompatCheckBox> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatCheckBox(ctx) else CheckBox(ctx)
+    view.setText(text)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedCheckBox(text: CharSequence?, checked: Boolean): android.support.v7.widget.AppCompatCheckBox = addView<android.support.v7.widget.AppCompatCheckBox> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatCheckBox(ctx) else CheckBox(ctx)
+    view.setText(text)
+    view.setChecked(checked)
+    view
+}
+public inline fun ViewManager.tintedCheckBox(text: CharSequence?, checked: Boolean, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatCheckBox.() -> Unit): android.support.v7.widget.AppCompatCheckBox = addView<android.support.v7.widget.AppCompatCheckBox> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatCheckBox(ctx) else CheckBox(ctx)
+    view.setText(text)
+    view.setChecked(checked)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedCheckBox(text: Int, checked: Boolean): android.support.v7.widget.AppCompatCheckBox = addView<android.support.v7.widget.AppCompatCheckBox> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatCheckBox(ctx) else CheckBox(ctx)
+    view.setText(text)
+    view.setChecked(checked)
+    view
+}
+public inline fun ViewManager.tintedCheckBox(text: Int, checked: Boolean, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatCheckBox.() -> Unit): android.support.v7.widget.AppCompatCheckBox = addView<android.support.v7.widget.AppCompatCheckBox> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatCheckBox(ctx) else CheckBox(ctx)
+    view.setText(text)
+    view.setChecked(checked)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedEditText(text: CharSequence?): android.support.v7.widget.AppCompatEditText = addView<android.support.v7.widget.AppCompatEditText> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatEditText(ctx) else EditText(ctx)
+    view.setText(text)
+    view
+}
+public inline fun ViewManager.tintedEditText(text: CharSequence?, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatEditText.() -> Unit): android.support.v7.widget.AppCompatEditText = addView<android.support.v7.widget.AppCompatEditText> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatEditText(ctx) else EditText(ctx)
+    view.setText(text)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedEditText(text: Int): android.support.v7.widget.AppCompatEditText = addView<android.support.v7.widget.AppCompatEditText> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatEditText(ctx) else EditText(ctx)
+    view.setText(text)
+    view
+}
+public inline fun ViewManager.tintedEditText(text: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatEditText.() -> Unit): android.support.v7.widget.AppCompatEditText = addView<android.support.v7.widget.AppCompatEditText> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatEditText(ctx) else EditText(ctx)
+    view.setText(text)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedTextView(text: CharSequence?): android.support.v7.widget.AppCompatTextView = addView<android.support.v7.widget.AppCompatTextView> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatTextView(ctx) else TextView(ctx)
+    view.setText(text)
+    view
+}
+public inline fun ViewManager.tintedTextView(text: CharSequence?, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatTextView.() -> Unit): android.support.v7.widget.AppCompatTextView = addView<android.support.v7.widget.AppCompatTextView> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatTextView(ctx) else TextView(ctx)
+    view.setText(text)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
+public inline fun ViewManager.tintedTextView(text: Int): android.support.v7.widget.AppCompatTextView = addView<android.support.v7.widget.AppCompatTextView> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatTextView(ctx) else TextView(ctx)
+    view.setText(text)
+    view
+}
+public inline fun ViewManager.tintedTextView(text: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatTextView.() -> Unit): android.support.v7.widget.AppCompatTextView = addView<android.support.v7.widget.AppCompatTextView> {
+    ctx ->
+    val view = if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatTextView(ctx) else TextView(ctx)
+    view.setText(text)
+    view.init()
+    view
+}
+
+@suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.button(text: CharSequence?): android.widget.Button = addView<android.widget.Button> {
     ctx ->
     val view = android.widget.Button(ctx)
