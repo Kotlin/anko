@@ -11,3 +11,5 @@ android.widget.ImageView#getDrawable
 android.widget.TextView#isTextSelectable
 android.widget.EditText#getText
 android.view.View#getBackground
+android.webkit.WebView#getVisibleTitleHeight
+android.webkit.WebView#getZoomControls

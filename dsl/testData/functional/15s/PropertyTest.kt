@@ -653,12 +653,6 @@ public val android.webkit.WebView.title: String?
 public val android.webkit.WebView.url: String?
     get() = getUrl()
 
-public val android.webkit.WebView.visibleTitleHeight: Int
-    get() = getVisibleTitleHeight()
-
-public val android.webkit.WebView.zoomControls: android.view.View?
-    get() = getZoomControls()
-
 public val android.webkit.WebView.privateBrowsingEnabled: Boolean
     get() = isPrivateBrowsingEnabled()
 
