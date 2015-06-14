@@ -30,6 +30,7 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import android.text.*
 import android.util.TypedValue
+import android.view.ViewGroup
 import org.jetbrains.anko.custom.*
 import org.jetbrains.anko.internals.noBinding
 
@@ -125,48 +126,26 @@ public var ImageView.image: Drawable?
 public val matchParent: Int = android.view.ViewGroup.LayoutParams.MATCH_PARENT
 public val wrapContent: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 
-public var LinearLayout.LayoutParams.margin: Int
-    get() = throw AnkoException("'LinearLayout.LayoutParams.margin' property does not have a getter")
+public var ViewGroup.MarginLayoutParams.verticalMargin: Int
+    get() = throw AnkoException("'ViewGroup.MarginLayoutParams.verticalMargin' property does not have a getter")
+    set(v) {
+        topMargin = v
+        bottomMargin = v
+    }
+
+public var ViewGroup.MarginLayoutParams.horizontalMargin: Int
+    get() = throw AnkoException("'ViewGroup.MarginLayoutParams.horizontalMargin' property does not have a getter")
+    set(v) {
+        leftMargin = v; rightMargin = v
+    }
+
+public var ViewGroup.MarginLayoutParams.margin: Int
+    get() = throw AnkoException("'ViewGroup.MarginLayoutParams.margin' property does not have a getter")
     set(v) {
         leftMargin = v
         rightMargin = v
         topMargin = v
         bottomMargin = v
-    }
-
-public var LinearLayout.LayoutParams.verticalMargin: Int
-    get() = throw AnkoException("'LinearLayout.LayoutParams.verticalMargin' property does not have a getter")
-    set(v) {
-        topMargin = v
-        bottomMargin = v
-    }
-
-public var LinearLayout.LayoutParams.horizontalMargin: Int
-    get() = throw AnkoException("'LinearLayout.LayoutParams.horizontalMargin' property does not have a getter")
-    set(v) {
-        leftMargin = v; rightMargin = v
-    }
-
-public var RelativeLayout.LayoutParams.margin: Int
-    get() = throw AnkoException("'RelativeLayout.LayoutParams.margin' property does not have a getter")
-    set(v) {
-        leftMargin = v
-        rightMargin = v
-        topMargin = v
-        bottomMargin = v
-    }
-
-public var RelativeLayout.LayoutParams.verticalMargin: Int
-    get() = throw AnkoException("'RelativeLayout.LayoutParams.verticalMargin' property does not have a getter")
-    set(v) {
-        topMargin = v
-        bottomMargin = v
-    }
-
-public var RelativeLayout.LayoutParams.horizontalMargin: Int
-    get() = throw AnkoException("'RelativeLayout.LayoutParams.horizontalMargin' property does not have a getter")
-    set(v) {
-        leftMargin = v; rightMargin = v
     }
 
 @suppress("NOTHING_TO_INLINE")
