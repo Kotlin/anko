@@ -18,63 +18,46 @@ package org.jetbrains.android.anko
 
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.tree.ClassNode
+import java.io.File
 import java.io.InputStream
 import java.util.jar.JarFile
+import java.util.zip.ZipFile
 
-class ClassProcessor(val jars: List<String>) {
+class ClassProcessor(jars: List<String>) {
 
-    private class ComplexIterator<T>(iterators: List<Iterator<T>>): Iterator<T> {
+    private val jars: List<File>
 
-        private val internalIterator = iterators.iterator()
-        private var currentIterator: Iterator<T>? = null
-
-        private fun fixIterator() {
-            if (!(currentIterator?.hasNext() ?: false)) {
-                if (internalIterator.hasNext()) {
-                    currentIterator = internalIterator.next()
-                }
-            }
-        }
-
-        override fun next(): T {
-            fixIterator()
-            return currentIterator!!.next()
-        }
-        override fun hasNext(): Boolean {
-            fixIterator()
-            return (currentIterator?.hasNext() ?: false)
-        }
+    init {
+        val (mainJar, otherJars) = jars.map { File(it) }.partition { it.name == "android.jar" }
+        this.jars = mainJar + otherJars
     }
 
     fun genClassTree(): ClassTree {
         val classTree = ClassTree()
-        for (classData in extractClasses(jars)) {
-            classTree.add(processClassData(classData))
+        for (classData in extractClasses()) {
+            classTree.add(processClassData(classData.first), classData.second)
         }
         return classTree
     }
 
-    private fun extractClasses(jars: List<String>): Iterator<InputStream> {
-        val jarFiles = jars.map { JarFile(it) }
-        return ComplexIterator(
-                jarFiles.map { jarFile ->
-                    jarFile.entries().iterator()
+    private fun extractClasses(): Sequence<Pair<InputStream, Boolean>> {
+        val jarSequences = jars.withIndex().asSequence().map { jar ->
+            val jarFile = ZipFile(jar.value)
+            jarFile.entries().asSequence()
                     .filter { it.getName().endsWith(".class") }
-                    .map { jarFile.getInputStream(it) }
-                })
+                    .map { jarFile.getInputStream(it) to (jar.index == 0) }
+        }
+
+        return jarSequences.flatten()
     }
 
-    private fun processClassData(classData: InputStream?): ClassNode {
-        val cn = ClassNode()
-        try {
+    private fun processClassData(classData: InputStream): ClassNode {
+        return classData.use {
+            val cn = ClassNode()
             val cr = ClassReader(classData)
             cr.accept(cn, 0)
-        } catch (e: Exception) {
-            //optionally log something here
-        } finally {
-            classData?.close()
+            cn
         }
-        return cn
     }
 
 }

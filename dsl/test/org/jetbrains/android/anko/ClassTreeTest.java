@@ -48,7 +48,7 @@ public class ClassTreeTest extends Assert {
 
     private void doAdd(ClassTree target) {
         for (ClassNode aClass : shuffledClasses) {
-            target.add(aClass);
+            target.add(aClass, true);
         }
     }
 

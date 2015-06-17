@@ -23,44 +23,42 @@ import java.util.Queue
 
 class NoSuchClassException : Exception()
 
-class ClassTreeNode(parent: ClassTreeNode?, data: ClassNode) {
+class ClassTreeNode(parent: ClassTreeNode?, val data: ClassNode, val fromMainJar: Boolean) {
     var parent = parent
     var children: MutableList<ClassTreeNode> = ArrayList()
-    var data = data
 }
 
 class ClassTree : Iterable<ClassNode>{
-    private val root = ClassTreeNode(null, ClassNode())
+    private val root = ClassTreeNode(null, ClassNode(), true)
 
     override fun iterator(): ClassTreeIterator {
         return ClassTreeIterator(root)
     }
 
-    public fun add(clazz: ClassNode) {
+    public fun add(clazz: ClassNode, fromMainJar: Boolean) {
         val parent = findNode(root, clazz.superName)
-        val newNode: ClassTreeNode
         val orphans = getOrphansOf(clazz.name)
+
+        val newNode: ClassTreeNode
         if (parent != null) {
-            newNode = ClassTreeNode(parent, clazz)
+            newNode = ClassTreeNode(parent, clazz, fromMainJar)
             parent.children.add(newNode)
         } else {
-            newNode = ClassTreeNode(root, clazz)
+            newNode = ClassTreeNode(root, clazz, fromMainJar)
             root.children.add(newNode)
         }
+
         newNode.children.addAll(orphans)
         orphans.forEach { it.parent = newNode }
     }
 
     public fun isChildOf(clazz: ClassNode, ancestorName: String): Boolean {
-        val treeNode = findNode(root, clazz)
-        if (treeNode == null) throw NoSuchClassException()
-
+        val treeNode = findNode(root, clazz) ?: throw NoSuchClassException()
         return treeNode.parent?.data?.name == ancestorName
     }
 
     public fun isSuccessorOf(clazz: ClassNode, ancestorName: String): Boolean {
-        val parent = findNode(ancestorName)
-        if (parent == null) throw NoSuchClassException()
+        val parent = findNode(ancestorName) ?: throw NoSuchClassException()
 
         val child = findNode(parent, clazz.name)
         return child != null && child != parent
