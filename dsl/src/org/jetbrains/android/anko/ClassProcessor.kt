@@ -23,14 +23,7 @@ import java.io.InputStream
 import java.util.jar.JarFile
 import java.util.zip.ZipFile
 
-class ClassProcessor(jars: List<String>) {
-
-    private val jars: List<File>
-
-    init {
-        val (mainJar, otherJars) = jars.map { File(it) }.partition { it.name == "android.jar" }
-        this.jars = mainJar + otherJars
-    }
+class ClassProcessor(val platformJars: List<File>, val versionJars: List<File>) {
 
     fun genClassTree(): ClassTree {
         val classTree = ClassTree()
@@ -41,11 +34,14 @@ class ClassProcessor(jars: List<String>) {
     }
 
     private fun extractClasses(): Sequence<Pair<InputStream, Boolean>> {
-        val jarSequences = jars.withIndex().asSequence().map { jar ->
-            val jarFile = ZipFile(jar.value)
+        val platformJars = this.platformJars.map { it to true }
+        val versionJars = this.versionJars.map { it to false }
+
+        val jarSequences = (platformJars + versionJars).withIndex().asSequence().map { jar ->
+            val jarFile = ZipFile(jar.value.first)
             jarFile.entries().asSequence()
                     .filter { it.getName().endsWith(".class") }
-                    .map { jarFile.getInputStream(it) to (jar.index == 0) }
+                    .map { jarFile.getInputStream(it) to jar.value.second }
         }
 
         return jarSequences.flatten()

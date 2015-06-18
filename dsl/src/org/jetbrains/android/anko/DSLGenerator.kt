@@ -25,7 +25,8 @@ import java.io.File
 class DSLGenerator(
     val version: Int,
     val fVersion: String,
-    val jars: List<String>,
+    val platformJars: List<File>,
+    val versionJars: List<File>,
     val config: AnkoConfiguration,
     val classTree: ClassTree? = null): Runnable
 {
@@ -47,12 +48,12 @@ class DSLGenerator(
     }
 
     override fun run() {
-        if (fVersion.contains("s"))
+        if (fVersion.contains("-support"))
             config.files.add(AnkoFile.SUPPORT)
         else
             config.files.remove(AnkoFile.SUPPORT)
 
-        val classTree = this.classTree ?: ClassProcessor(jars).genClassTree()
+        val classTree = this.classTree ?: ClassProcessor(platformJars, versionJars).genClassTree()
         val generationState = GenerationState(classTree, config)
         val renderer = RenderFacade(generationState)
         Writer(renderer).write()

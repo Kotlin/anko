@@ -45,9 +45,9 @@ private fun clean() {
 
 private fun versions() {
     for (version in getVersions()) {
-        val jars = getJars(version)
+        val (platformJars, versionJars) = getJars(version)
         println("${version.getName()}")
-        jars?.forEach { println("  ${it.name}") }
+        (platformJars + versionJars).forEach { println("  ${it.name}") }
     }
 }
 
@@ -70,14 +70,16 @@ private fun getVersions(): Array<File> {
     return original.listFiles(AndroidVersionDirectoryFilter()) ?: arrayOf<File>()
 }
 
-private fun getJars(version: File) = version.listFiles(JarFileFilter())
+private fun getJars(version: File) = version.listFiles(JarFileFilter()).partition { it.name.startsWith("platform.") }
 
 private fun gen() {
     for (version in getVersions()) {
-        val jars = getJars(version)?.map { it.getAbsolutePath() } ?: listOf<String>()
+        val (platformJars, versionJars) = getJars(version)
         val intVersion = parseVersion(version.getName())
-        if (intVersion != null && jars.isNotEmpty()) {
-            println("Processing version ${version.getName()}, jars: ${jars.joinToString()}")
+        if (platformJars.isNotEmpty()) {
+            println("Processing version ${version.getName()}")
+            println("    Platform jars: ${platformJars.joinToString()}")
+            if (versionJars.isNotEmpty()) println("    Version jars: ${versionJars.joinToString()}")
 
             val outputDirectory = "workdir/gen/${version.getName()}/"
             val fileOutputDirectory = File("$outputDirectory/src/main/kotlin/")
@@ -85,12 +87,10 @@ private fun gen() {
                 fileOutputDirectory.mkdirs()
             }
 
-            DSLGenerator(intVersion, version.getName(), jars, DefaultAnkoConfiguration(outputDirectory)).run()
+            DSLGenerator(intVersion, version.getName(), platformJars, versionJars,
+                    DefaultAnkoConfiguration(outputDirectory)).run()
         }
     }
 }
 
-private fun parseVersion(name: String): Int? {
-    val prob = name.filter { it.isDigit() }
-    return if (prob.isNotEmpty()) prob.toInt() else null
-}
+private fun parseVersion(name: String) = name.substringBefore('-').toInt()

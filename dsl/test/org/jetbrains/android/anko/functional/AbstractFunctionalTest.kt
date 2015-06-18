@@ -51,15 +51,17 @@ public abstract class AbstractFunctionalTest {
 
     protected fun runFunctionalTest(version: String,
                                     intVersion: Int,
-                                    inputJarFiles: List<String>,
+                                    inputJarFileNames: List<String>,
                                     testDataFile: String,
                                     subsystem: AnkoFile,
                                     config: TestAnkoConfiguration) {
+        val (platformJars, versionJars) = inputJarFileNames.map { File(it) }.partition { it.name.startsWith("platform.") }
+
         if (classTree == null) {
-            classTree = ClassProcessor(inputJarFiles).genClassTree()
+            classTree = ClassProcessor(platformJars, versionJars).genClassTree()
         }
 
-        val generator = DSLGenerator(intVersion, version, inputJarFiles, config, classTree)
+        val generator = DSLGenerator(intVersion, version, platformJars, versionJars, config, classTree)
         generator.run()
 
         fun String.trimBlank() = trim('\n', '\t', ' ', '\r')
