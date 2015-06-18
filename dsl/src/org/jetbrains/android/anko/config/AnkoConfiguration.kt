@@ -31,6 +31,8 @@ abstract class AnkoConfiguration {
     open var generatePackage: Boolean = true
     open var generateMavenArtifact: Boolean = true
 
+    abstract val version: String
+
     abstract val outputDirectory: String
     abstract val outputPackage: String
 
@@ -43,7 +45,9 @@ abstract class AnkoConfiguration {
     abstract val sourceManager: SourceManager
     abstract val templateManager: TemplateManager
 
-    public fun get(option: ConfigurationOption): Boolean = tunes.contains(option) || files.contains(option)
+    public fun get(option: ConfigurationOption): Boolean = option in tunes || option in files
 
     public abstract fun getOutputFile(ankoFile: AnkoFile): File
+
+    public fun isSupportVersion(): Boolean = version.contains('-')
 }

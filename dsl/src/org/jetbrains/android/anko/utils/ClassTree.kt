@@ -23,7 +23,7 @@ import java.util.Queue
 
 class NoSuchClassException : Exception()
 
-class ClassTreeNode(parent: ClassTreeNode?, val data: ClassNode, val fromMainJar: Boolean) {
+class ClassTreeNode(parent: ClassTreeNode?, val data: ClassNode, val fromPlatformJar: Boolean) {
     var parent = parent
     var children: MutableList<ClassTreeNode> = ArrayList()
 }

@@ -75,20 +75,22 @@ private fun getJars(version: File) = version.listFiles(JarFileFilter()).partitio
 private fun gen() {
     for (version in getVersions()) {
         val (platformJars, versionJars) = getJars(version)
-        val intVersion = parseVersion(version.getName())
-        if (platformJars.isNotEmpty()) {
-            println("Processing version ${version.getName()}")
-            println("    Platform jars: ${platformJars.joinToString()}")
-            if (versionJars.isNotEmpty()) println("    Version jars: ${versionJars.joinToString()}")
+        val versionName = version.name
 
-            val outputDirectory = "workdir/gen/${version.getName()}/"
+        val intVersion = parseVersion(versionName)
+        if (platformJars.isNotEmpty()) {
+            println("Processing version $versionName")
+            println("  Platform jars: ${platformJars.joinToString()}")
+            if (versionJars.isNotEmpty()) println("  Version jars: ${versionJars.joinToString()}")
+
+            val outputDirectory = "workdir/gen/$versionName/"
             val fileOutputDirectory = File("$outputDirectory/src/main/kotlin/")
             if (!fileOutputDirectory.exists()) {
                 fileOutputDirectory.mkdirs()
             }
 
-            DSLGenerator(intVersion, version.getName(), platformJars, versionJars,
-                    DefaultAnkoConfiguration(outputDirectory)).run()
+            DSLGenerator(intVersion, versionName, platformJars, versionJars,
+                    DefaultAnkoConfiguration(outputDirectory, versionName)).run()
         }
     }
 }

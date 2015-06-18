@@ -34,7 +34,9 @@ class ClassProcessor(val platformJars: List<File>, val versionJars: List<File>) 
     }
 
     private fun extractClasses(): Sequence<Pair<InputStream, Boolean>> {
-        val platformJars = this.platformJars.map { it to true }
+        val hasVersionJars = this.versionJars.isNotEmpty()
+
+        val platformJars = this.platformJars.map { it to hasVersionJars }
         val versionJars = this.versionJars.map { it to false }
 
         val jarSequences = (platformJars + versionJars).withIndex().asSequence().map { jar ->

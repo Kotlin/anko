@@ -35,7 +35,8 @@ class GenerationState(
         config: AnkoConfiguration
 ): ClassTreeUtils, Configurable(config), ReflectionUtils {
 
-    public val availableClasses: List<ClassNode> = findAvailableClasses()
+    public val availableClasses: List<ClassNode> =
+            classTree.filter { !isExcluded(it) && !classTree.findNode(it)!!.fromPlatformJar }
 
     public val availableMethods: List<MethodNodeWithClass> = findAvailableMethods(availableClasses)
 

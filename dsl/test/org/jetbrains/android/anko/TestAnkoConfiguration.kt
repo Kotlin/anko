@@ -22,7 +22,7 @@ import java.io.File
 import java.io.IOException
 import java.util.HashMap
 
-public open class TestAnkoConfiguration : DefaultAnkoConfiguration() {
+public open class TestAnkoConfiguration() : DefaultAnkoConfiguration(version = "") {
     public val tmpFiles: Map<AnkoFile, File> =
         AnkoFile.values().map { it to createTempTestFile(it.filename, ".kt") }.toMap()
 

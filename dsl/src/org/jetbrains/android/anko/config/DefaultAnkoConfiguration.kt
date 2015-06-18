@@ -23,7 +23,10 @@ import org.jetbrains.android.anko.templates.MustacheTemplateProvider
 import org.jetbrains.android.anko.templates.TemplateManager
 import java.io.File
 
-open class DefaultAnkoConfiguration(outputDirectory: String = "workdir/gen/") : AnkoConfiguration() {
+open class DefaultAnkoConfiguration(
+        outputDirectory: String = "workdir/gen/",
+        override val version: String
+) : AnkoConfiguration() {
 
     override val outputDirectory = outputDirectory
     override val outputPackage = "org.jetbrains.anko"
