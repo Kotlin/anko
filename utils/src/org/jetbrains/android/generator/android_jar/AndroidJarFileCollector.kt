@@ -25,55 +25,79 @@ public fun main(args: Array<String>): Unit = AndroidJarCollector().collect()
 
 class AndroidJarCollector {
     private companion object {
-        private val REQUIRED_PLATFORM_VERSIONS = arrayOf("15", "15s", "19", "19s", "21", "21s")
-        private val VERSIONS = File("workdir/original").listFiles(AndroidVersionDirectoryFilter())
+        private val REQUIRED_PLATFORM_VERSIONS = arrayOf(15, 19, 21)
 
         private val SUPPORT_PACKAGES_VERSION = "22.2.0"
-        private val SUPPORT_LIBRARIES = arrayOf("support-v4", "appcompat-v7")
+        private val SUPPORT_LIBRARIES = arrayOf("support-v4",
+                                                "appcompat-v7",
+                                                "cardview-v7",
+                                                "gridlayout-v7",
+                                                "recyclerview-v7")
 
+        private val ORIGINAL_DIR = File("workdir/original")
         private val ANDROID_SDK = File("lib/android-sdk")
         private val PLATFORMS_DIR = File(ANDROID_SDK, "platforms")
         private val SUPPORT_PACKAGES_DIR = File(ANDROID_SDK, "extras/android/m2repository/com/android/support")
+
+        private val PLATFORM_PREFIX = "platform."
 
         private val INDENT = "    "
     }
 
     fun collect() {
-        if (checkIfAlreadyCollected()) {
-            println("All required files exist. Aborting")
+        if (ORIGINAL_DIR.exists()) {
+            println("$ORIGINAL_DIR already exist. Aborting")
             return
         }
 
         createDirs()
-        val supportFiles = findSupportFiles()
 
-        for (version in REQUIRED_PLATFORM_VERSIONS) {
+        val supportFiles = findSupportFiles()
+        val supportFilesWithDependencies = supportFiles.map {
+            if (it.name.startsWith("appcompat-v7-"))
+                setOf(SupportFile(it, false), SupportFile(supportFiles.first { it.name.startsWith("support-v4-") }, true))
+            else
+                setOf(SupportFile(it, false))
+        }
+
+        for ((index, version) in REQUIRED_PLATFORM_VERSIONS.sortDescendingBy { it }.withIndex()) {
             println("Processing platform ${version}:")
 
-            val versionDir = File("workdir/original", version)
-            val versionNumber = version.replace("s", "").toInt()
-            val support = version.endsWith("s")
-            processVersion(versionDir, versionNumber, support, supportFiles)
+            val versionDir = File(ORIGINAL_DIR, version.toString())
+            processVersion(versionDir, version, false, emptySet())
+
+            if (index == 0) { // Generate support artifacts for this platform
+                supportFilesWithDependencies.forEach {
+                    val versionSuffix = it.first { !it.platformFile }.file.name.substringBeforeLast('-')
+                    println("Processing platform $version-$versionSuffix:")
+
+                    val supportVersionDir = File(ORIGINAL_DIR, "$version-$versionSuffix")
+                    processVersion(supportVersionDir, version, true, it)
+                }
+            }
         }
         println("Complete.")
     }
 
-    private fun processVersion(versionDir: File, versionNumber: Int, support: Boolean, supportFiles: List<File>) {
-        fun log(s: String) = println("$INDENT$s")
+    private fun processVersion(versionDir: File, versionNumber: Int, support: Boolean, supportFiles: Set<SupportFile>) {
+        fun log(message: String) = println("$INDENT$message")
 
         val platformDir = getPlatformDirectory(versionNumber)
 
         log("android")
 
         val androidJar = getAndroidJar(platformDir)
-        androidJar.copyTo(File(versionDir, androidJar.name))
+        androidJar.copyTo(File(versionDir, PLATFORM_PREFIX + androidJar.name))
 
         if (support) {
-            supportFiles.forEach { file ->
+            supportFiles.forEach {
+                val (file, platformFile) = it
+                val platformPrefix = if (platformFile) PLATFORM_PREFIX else ""
+
                 log(file.nameWithoutExtension)
-                
+
                 when (file.extension.toLowerCase()) {
-                    "aar" -> extractAarJars(file, versionDir)
+                    "aar" -> extractAarJars(file, versionDir, platformPrefix)
                     "jar" -> file.copyTo(File(versionDir, file.name))
                     else -> throw CollectorException("Unknown file type")
                 }
@@ -81,7 +105,7 @@ class AndroidJarCollector {
         }
     }
     
-    private fun extractAarJars(aar: File, destinationDir: File) {
+    private fun extractAarJars(aar: File, destinationDir: File, platformPrefix: String) {
         val aarName = aar.name.substringBeforeLast('.')
         
         ZipFile(aar).use { zip ->
@@ -90,7 +114,7 @@ class AndroidJarCollector {
             while (entry != null) {
                 if (entry.getName().toLowerCase().endsWith(".jar")) {
                     val rawName = entry.getName().substringAfterLast('/')
-                    val name = if (rawName == "classes.jar") "$aarName.jar" else "$aarName-$rawName"
+                    val name = platformPrefix + (if (rawName == "classes.jar") "$aarName.jar" else "$aarName-$rawName")
 
                     FileOutputStream(File(destinationDir, name)).use { fos ->
                         zip.getInputStream(entry).copyTo(fos)
@@ -131,31 +155,6 @@ class AndroidJarCollector {
         }
     }
 
-    private fun checkIfAlreadyCollected(): Boolean {
-        if (VERSIONS == null || VERSIONS.isEmpty()) return false
-
-        for (version in REQUIRED_PLATFORM_VERSIONS) {
-            if (!VERSIONS.any { it.name == version }) return false
-        }
-
-        for (version in VERSIONS) {
-            val androidJarFile = File(version, "android.jar")
-            val support = version.name.endsWith("s")
-
-            fun hasSupport(): Boolean {
-                SUPPORT_LIBRARIES.forEach { filename ->
-                    if (version.listFiles { it.name.startsWith(filename) }?.isEmpty() ?: true) return false
-                }
-                return true
-            }
-
-            if (!androidJarFile.exists()) return false
-            if (support && !hasSupport()) return false
-        }
-
-        return true
-    }
-
     private fun <R> ZipFile.use(block: (ZipFile) -> R): R {
         var closed = false
         try {
@@ -177,3 +176,5 @@ class AndroidJarCollector {
 }
 
 private class CollectorException(message: String) : RuntimeException(message)
+
+private data class SupportFile(val file: File, val platformFile: Boolean)
