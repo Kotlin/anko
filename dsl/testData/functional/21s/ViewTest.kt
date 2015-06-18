@@ -179,8 +179,8 @@ public inline fun Activity.swipeRefreshLayoutSupport(inlineOptions(InlineOption.
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.tintedAutoCompleteTextView(): android.support.v7.widget.AppCompatAutoCompleteTextView = tintedAutoCompleteTextView({})
-public inline fun ViewManager.tintedAutoCompleteTextView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatAutoCompleteTextView.() -> Unit): android.support.v7.widget.AppCompatAutoCompleteTextView = addView<android.support.v7.widget.AppCompatAutoCompleteTextView> {
+public inline fun ViewManager.tintedAutoCompleteTextView(): AutoCompleteTextView = tintedAutoCompleteTextView({})
+public inline fun ViewManager.tintedAutoCompleteTextView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: AutoCompleteTextView.() -> Unit): AutoCompleteTextView = addView<AutoCompleteTextView> {
     ctx ->
     val view = if (Build.VERSION.SDK_INT < 21)
         android.support.v7.widget.AppCompatAutoCompleteTextView(ctx)
@@ -192,8 +192,8 @@ public inline fun ViewManager.tintedAutoCompleteTextView(inlineOptions(InlineOpt
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.tintedButton(): android.support.v7.widget.AppCompatButton = tintedButton({})
-public inline fun ViewManager.tintedButton(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatButton.() -> Unit): android.support.v7.widget.AppCompatButton = addView<android.support.v7.widget.AppCompatButton> {
+public inline fun ViewManager.tintedButton(): Button = tintedButton({})
+public inline fun ViewManager.tintedButton(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: Button.() -> Unit): Button = addView<Button> {
     ctx ->
     val view = if (Build.VERSION.SDK_INT < 21)
         android.support.v7.widget.AppCompatButton(ctx)
@@ -205,8 +205,8 @@ public inline fun ViewManager.tintedButton(inlineOptions(InlineOption.ONLY_LOCAL
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.tintedCheckBox(): android.support.v7.widget.AppCompatCheckBox = tintedCheckBox({})
-public inline fun ViewManager.tintedCheckBox(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatCheckBox.() -> Unit): android.support.v7.widget.AppCompatCheckBox = addView<android.support.v7.widget.AppCompatCheckBox> {
+public inline fun ViewManager.tintedCheckBox(): CheckBox = tintedCheckBox({})
+public inline fun ViewManager.tintedCheckBox(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: CheckBox.() -> Unit): CheckBox = addView<CheckBox> {
     ctx ->
     val view = if (Build.VERSION.SDK_INT < 21)
         android.support.v7.widget.AppCompatCheckBox(ctx)
@@ -218,8 +218,8 @@ public inline fun ViewManager.tintedCheckBox(inlineOptions(InlineOption.ONLY_LOC
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.tintedCheckedTextView(): android.support.v7.widget.AppCompatCheckedTextView = tintedCheckedTextView({})
-public inline fun ViewManager.tintedCheckedTextView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatCheckedTextView.() -> Unit): android.support.v7.widget.AppCompatCheckedTextView = addView<android.support.v7.widget.AppCompatCheckedTextView> {
+public inline fun ViewManager.tintedCheckedTextView(): CheckedTextView = tintedCheckedTextView({})
+public inline fun ViewManager.tintedCheckedTextView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: CheckedTextView.() -> Unit): CheckedTextView = addView<CheckedTextView> {
     ctx ->
     val view = if (Build.VERSION.SDK_INT < 21)
         android.support.v7.widget.AppCompatCheckedTextView(ctx)
@@ -231,8 +231,8 @@ public inline fun ViewManager.tintedCheckedTextView(inlineOptions(InlineOption.O
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.tintedEditText(): android.support.v7.widget.AppCompatEditText = tintedEditText({})
-public inline fun ViewManager.tintedEditText(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatEditText.() -> Unit): android.support.v7.widget.AppCompatEditText = addView<android.support.v7.widget.AppCompatEditText> {
+public inline fun ViewManager.tintedEditText(): EditText = tintedEditText({})
+public inline fun ViewManager.tintedEditText(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: EditText.() -> Unit): EditText = addView<EditText> {
     ctx ->
     val view = if (Build.VERSION.SDK_INT < 21)
         android.support.v7.widget.AppCompatEditText(ctx)
@@ -244,8 +244,8 @@ public inline fun ViewManager.tintedEditText(inlineOptions(InlineOption.ONLY_LOC
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.tintedMultiAutoCompleteTextView(): android.support.v7.widget.AppCompatMultiAutoCompleteTextView = tintedMultiAutoCompleteTextView({})
-public inline fun ViewManager.tintedMultiAutoCompleteTextView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatMultiAutoCompleteTextView.() -> Unit): android.support.v7.widget.AppCompatMultiAutoCompleteTextView = addView<android.support.v7.widget.AppCompatMultiAutoCompleteTextView> {
+public inline fun ViewManager.tintedMultiAutoCompleteTextView(): MultiAutoCompleteTextView = tintedMultiAutoCompleteTextView({})
+public inline fun ViewManager.tintedMultiAutoCompleteTextView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: MultiAutoCompleteTextView.() -> Unit): MultiAutoCompleteTextView = addView<MultiAutoCompleteTextView> {
     ctx ->
     val view = if (Build.VERSION.SDK_INT < 21)
         android.support.v7.widget.AppCompatMultiAutoCompleteTextView(ctx)
@@ -257,8 +257,8 @@ public inline fun ViewManager.tintedMultiAutoCompleteTextView(inlineOptions(Inli
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.tintedRadioButton(): android.support.v7.widget.AppCompatRadioButton = tintedRadioButton({})
-public inline fun ViewManager.tintedRadioButton(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatRadioButton.() -> Unit): android.support.v7.widget.AppCompatRadioButton = addView<android.support.v7.widget.AppCompatRadioButton> {
+public inline fun ViewManager.tintedRadioButton(): RadioButton = tintedRadioButton({})
+public inline fun ViewManager.tintedRadioButton(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: RadioButton.() -> Unit): RadioButton = addView<RadioButton> {
     ctx ->
     val view = if (Build.VERSION.SDK_INT < 21)
         android.support.v7.widget.AppCompatRadioButton(ctx)
@@ -270,8 +270,8 @@ public inline fun ViewManager.tintedRadioButton(inlineOptions(InlineOption.ONLY_
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.tintedRatingBar(): android.support.v7.widget.AppCompatRatingBar = tintedRatingBar({})
-public inline fun ViewManager.tintedRatingBar(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatRatingBar.() -> Unit): android.support.v7.widget.AppCompatRatingBar = addView<android.support.v7.widget.AppCompatRatingBar> {
+public inline fun ViewManager.tintedRatingBar(): RatingBar = tintedRatingBar({})
+public inline fun ViewManager.tintedRatingBar(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: RatingBar.() -> Unit): RatingBar = addView<RatingBar> {
     ctx ->
     val view = if (Build.VERSION.SDK_INT < 21)
         android.support.v7.widget.AppCompatRatingBar(ctx)
@@ -283,8 +283,8 @@ public inline fun ViewManager.tintedRatingBar(inlineOptions(InlineOption.ONLY_LO
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.tintedSpinner(): android.support.v7.widget.AppCompatSpinner = tintedSpinner({})
-public inline fun ViewManager.tintedSpinner(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatSpinner.() -> Unit): android.support.v7.widget.AppCompatSpinner = addView<android.support.v7.widget.AppCompatSpinner> {
+public inline fun ViewManager.tintedSpinner(): Spinner = tintedSpinner({})
+public inline fun ViewManager.tintedSpinner(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: Spinner.() -> Unit): Spinner = addView<Spinner> {
     ctx ->
     val view = if (Build.VERSION.SDK_INT < 21)
         android.support.v7.widget.AppCompatSpinner(ctx)
@@ -296,8 +296,8 @@ public inline fun ViewManager.tintedSpinner(inlineOptions(InlineOption.ONLY_LOCA
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Context.tintedSpinner(): android.support.v7.widget.AppCompatSpinner = tintedSpinner({})
-public inline fun Context.tintedSpinner(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatSpinner.() -> Unit): android.support.v7.widget.AppCompatSpinner = addView<android.support.v7.widget.AppCompatSpinner> {
+public inline fun Context.tintedSpinner(): Spinner = tintedSpinner({})
+public inline fun Context.tintedSpinner(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: Spinner.() -> Unit): Spinner = addView<Spinner> {
     ctx ->
     val view = if (Build.VERSION.SDK_INT < 21)
         android.support.v7.widget.AppCompatSpinner(ctx)
@@ -309,8 +309,8 @@ public inline fun Context.tintedSpinner(inlineOptions(InlineOption.ONLY_LOCAL_RE
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Activity.tintedSpinner(): android.support.v7.widget.AppCompatSpinner = tintedSpinner({})
-public inline fun Activity.tintedSpinner(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatSpinner.() -> Unit): android.support.v7.widget.AppCompatSpinner = addView<android.support.v7.widget.AppCompatSpinner> {
+public inline fun Activity.tintedSpinner(): Spinner = tintedSpinner({})
+public inline fun Activity.tintedSpinner(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: Spinner.() -> Unit): Spinner = addView<Spinner> {
     ctx ->
     val view = if (Build.VERSION.SDK_INT < 21)
         android.support.v7.widget.AppCompatSpinner(ctx)
@@ -322,8 +322,8 @@ public inline fun Activity.tintedSpinner(inlineOptions(InlineOption.ONLY_LOCAL_R
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun ViewManager.tintedTextView(): android.support.v7.widget.AppCompatTextView = tintedTextView({})
-public inline fun ViewManager.tintedTextView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.AppCompatTextView.() -> Unit): android.support.v7.widget.AppCompatTextView = addView<android.support.v7.widget.AppCompatTextView> {
+public inline fun ViewManager.tintedTextView(): TextView = tintedTextView({})
+public inline fun ViewManager.tintedTextView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: TextView.() -> Unit): TextView = addView<TextView> {
     ctx ->
     val view = if (Build.VERSION.SDK_INT < 21)
         android.support.v7.widget.AppCompatTextView(ctx)

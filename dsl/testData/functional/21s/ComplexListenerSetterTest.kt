@@ -16,12 +16,6 @@ public fun android.support.v4.view.ViewPager.onPageChangeListener(init: __ViewPa
     addOnPageChangeListener(listener)
 }
 
-public fun android.support.v4.view.ViewPager.onPageChangeListener(init: __ViewPagerSupport_OnPageChangeListener.() -> Unit) {
-    val listener = __ViewPagerSupport_OnPageChangeListener()
-    listener.init()
-    setOnPageChangeListener(listener)
-}
-
 public fun android.support.v7.widget.SearchView.onQueryTextListener(init: __SearchViewSupport_OnQueryTextListener.() -> Unit) {
     val listener = __SearchViewSupport_OnQueryTextListener()
     listener.init()
