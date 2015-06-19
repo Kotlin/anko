@@ -42,8 +42,7 @@ class Writer(private val renderFacade: RenderFacade) {
                         LOGGER,
                         OTHER,
                         OTHER_WIDGETS,
-                        SQL_PARSERS,
-                        SUPPORT
+                        SQL_PARSERS
             ).forEach { if (config[it]) writeStatic(it) }
 
             if (config[SQL_PARSER_HELPERS]) writeSqlParserHelpers()
@@ -56,8 +55,8 @@ class Writer(private val renderFacade: RenderFacade) {
               SERVICES to ::writeServices
         ).forEach { if (config[it.first]) it.second() }
 
-        if (config[VIEWS] || config[HELPER_CONSTRUCTORS])
-            writeViews()
+        if (config[VIEWS] || config[HELPER_CONSTRUCTORS]) writeViews()
+        if (config.version.contains("support-v4")) writeStatic(SUPPORT)
     }
 
     fun writeInterfaceWorkarounds() {
