@@ -111,6 +111,8 @@ class Writer(private val renderFacade: RenderFacade) {
     }
 
     private fun write(subsystem: AnkoFile, text: String, imports: String = "", generatePackage: Boolean = true) {
+        if (text.trim().isEmpty()) return
+
         val file = config.getOutputFile(subsystem)
 
         val dir = file.getParentFile()
