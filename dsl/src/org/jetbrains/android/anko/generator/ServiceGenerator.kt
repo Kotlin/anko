@@ -25,7 +25,9 @@ class ServiceGenerator : Generator<ServiceElement> {
                 ?.filter { it.name.endsWith("_SERVICE") }
                 ?.map {
                     val service = state.classTree.findNode("android", it.toServiceClassName())?.data
-                    if (service != null) ServiceElement(service, it.name) else null
+                    if (service != null && service in state.availableClasses) {
+                        ServiceElement(service, it.name)
+                    } else null
                 }
                 ?.filterNotNull()
                 ?.sortBy { it.name }

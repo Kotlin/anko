@@ -31,34 +31,33 @@ class Writer(private val renderFacade: RenderFacade) {
     val config = renderFacade.config
 
     fun write() {
-        sortedSetOf(
-            ASYNC,
-            CONTEXT_UTILS,
-            CUSTOM,
-            DATABASE,
-            DIALOGS,
-            HELPERS,
-            INTERNALS,
-            LOGGER,
-            OTHER,
-            OTHER_WIDGETS,
-            SQL_PARSERS,
-            SUPPORT
-        ).forEach { if (config[it]) writeStatic(it) }
+        if (!config.isSupportVersion()) {
+            sortedSetOf(ASYNC,
+                        CONTEXT_UTILS,
+                        CUSTOM,
+                        DATABASE,
+                        DIALOGS,
+                        HELPERS,
+                        INTERNALS,
+                        LOGGER,
+                        OTHER,
+                        OTHER_WIDGETS,
+                        SQL_PARSERS,
+                        SUPPORT
+            ).forEach { if (config[it]) writeStatic(it) }
 
-        setOf(
-            LAYOUTS to ::writeLayouts,
-            LISTENERS to ::writeListeners,
-            PROPERTIES to ::writeProperties,
-            SERVICES to ::writeServices,
-            SQL_PARSER_HELPERS to ::writeSqlParserHelpers
+            if (config[SQL_PARSER_HELPERS]) writeSqlParserHelpers()
+            if (config[INTERFACE_WORKAROUNDS_JAVA]) writeInterfaceWorkarounds()
+        }
+
+        setOf(LAYOUTS to ::writeLayouts,
+              LISTENERS to ::writeListeners,
+              PROPERTIES to ::writeProperties,
+              SERVICES to ::writeServices
         ).forEach { if (config[it.first]) it.second() }
 
         if (config[VIEWS] || config[HELPER_CONSTRUCTORS])
             writeViews()
-
-        if (config[INTERFACE_WORKAROUNDS_JAVA])
-            writeInterfaceWorkarounds()
     }
 
     fun writeInterfaceWorkarounds() {
