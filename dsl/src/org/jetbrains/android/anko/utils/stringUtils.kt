@@ -16,18 +16,17 @@
 
 package org.jetbrains.android.anko.utils
 
-import java.io.File
-import java.io.FileFilter
-
-public class JarFileFilter : FileFilter {
-    override fun accept(path: File): Boolean {
-        return path.isFile() && path.getName().toLowerCase().endsWith(".jar")
+fun String.toCamelCase(separator: Char = '_'): String {
+    val builder = StringBuilder()
+    var capitalFlag = true
+    for (c in this) {
+        when (c) {
+            separator -> capitalFlag = true
+            else -> {
+                builder.append(if (capitalFlag) Character.toUpperCase(c) else Character.toLowerCase(c))
+                capitalFlag = false
+            }
+        }
     }
-}
-
-public class AndroidVersionDirectoryFilter : FileFilter {
-    override fun accept(path: File): Boolean {
-        return path.isDirectory() && !path.isHidden()
-                && path.listFiles { it.name.endsWith(".jar") }?.isNotEmpty() ?: false
-    }
+    return builder.toString()
 }

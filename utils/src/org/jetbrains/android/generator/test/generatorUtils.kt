@@ -20,12 +20,15 @@ import java.io.File
 import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationTune
+import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
+import org.jetbrains.android.anko.utils.toCamelCase
 
 private fun Context.functionalDslTests(init: Buffer.(version: String) -> Unit) {
     val dir = File("./dsl/test/" + basePackage.replace('.', '/'), "/functional")
 
-    for (version in testVersions) {
-        val testFile = File(dir, "FunctionalTestsFor$version.kt")
+    for (version in versions) {
+        val versionName = version.toCamelCase('-').capitalize()
+        val testFile = File(dir, "FunctionalTestsFor$versionName.kt")
 
         if (!testFile.exists()) {
             testFile.writeText(buffer {
@@ -33,7 +36,7 @@ private fun Context.functionalDslTests(init: Buffer.(version: String) -> Unit) {
                 line("import $basePackage.*")
                 line("import $basePackage.config.*")
                 line("import org.junit.Test\n")
-                line("public class FunctionalTestsFor$version : AbstractFunctionalTest() {")
+                line("public class FunctionalTestsFor$versionName : AbstractFunctionalTest() {")
                 line("val version = \"$version\"\n").nl()
                 init(version)
                 line("}")
@@ -87,21 +90,16 @@ private fun Context.dslCompileTests(files: List<String>, category: String) {
 
 fun main(args: Array<String>) {
     val versions = File("./workdir/original/")
-            .listFiles { it.isDirectory() && it.name.matches("\\d+s?".toRegex()) }
+            .listFiles(AndroidVersionDirectoryFilter())
             ?.map { it.name }
             ?: listOf()
 
-    val testVersions = File("./dsl/testData/functional/")
-        .listFiles { it.isDirectory() && it.name.matches("\\d+s?".toRegex()) }
-        ?.map { it.name }
-        ?: listOf()
-
-    Context(versions, testVersions, "org.jetbrains.android.anko").generate()
+    Context(versions, "org.jetbrains.android.anko").generate()
 }
 
 private fun buffer(init: Buffer.() -> Unit) = Buffer("    ", 0, init)
 
-private class Context(val versions: List<String>, val testVersions: List<String>, val basePackage: String)
+private class Context(val versions: List<String>, val basePackage: String)
 
 private class TestConfiguration {
     val files = hashSetOf<AnkoFile>()

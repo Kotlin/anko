@@ -16,6 +16,7 @@
 
 package org.jetbrains.android.anko.config
 
+import org.jetbrains.android.anko.utils.toCamelCase
 import kotlin.properties.Delegates
 
 public enum class AnkoFile : ConfigurationOption {
@@ -43,22 +44,5 @@ public enum class AnkoFile : ConfigurationOption {
         val name = name()
         val extension = if (name.endsWith("_JAVA")) ".java" else ".kt"
         name.substringBeforeLast("_JAVA").toCamelCase() + extension
-    }
-
-    private companion object {
-        private fun String.toCamelCase(): String {
-            val builder = StringBuilder()
-            var capitalFlag = true
-            for (c in this) {
-                when (c) {
-                    '_' -> capitalFlag = true
-                    else -> {
-                        builder.append(if (capitalFlag) Character.toUpperCase(c) else Character.toLowerCase(c))
-                        capitalFlag = false
-                    }
-                }
-            }
-            return builder.toString()
-        }
     }
 }

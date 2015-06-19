@@ -2,8 +2,8 @@ package org.jetbrains.android.anko.functional
 import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.config.*
 import org.junit.Test
-public class FunctionalTestsFor15s : AbstractFunctionalTest() {
-    val version = "15s"
+public class FunctionalTestsFor19 : AbstractFunctionalTest() {
+    val version = "19"
 
     @Test public fun testComplexListenerClassTest() {
         runFunctionalTest("ComplexListenerClassTest.kt", AnkoFile.LISTENERS, version) {
