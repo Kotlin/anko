@@ -46,22 +46,20 @@ public abstract class AbstractFunctionalTest {
         }
     }
 
-    protected fun runFunctionalTest(version: String,
-                                    intVersion: Int,
-                                    inputJarFileNames: List<String>,
+    protected fun runFunctionalTest(inputJarFileNames: List<String>,
                                     testDataFile: String,
                                     subsystem: AnkoFile,
                                     config: TestAnkoConfiguration) {
         val (platformJars, versionJars) = inputJarFileNames.map { File(it) }.partition { it.name.startsWith("platform.") }
         var classTree = ClassProcessor(platformJars, versionJars).genClassTree()
 
-        val generator = DSLGenerator(intVersion, version, platformJars, versionJars, config, classTree)
+        val generator = DSLGenerator(platformJars, versionJars, config, classTree)
         generator.run()
 
         fun String.trimBlank() = trim('\n', '\t', ' ', '\r')
 
         val actual = config.getOutputFile(subsystem).readText().replace("\r", "").trimBlank()
-        val expectedPath = ("dsl/testData/functional/$version/$testDataFile")
+        val expectedPath = ("dsl/testData/functional/${config.version}/$testDataFile")
 
         val expectedFile = File(expectedPath)
         if (!expectedFile.exists() && actual.isEmpty()) return
@@ -90,11 +88,8 @@ public abstract class AbstractFunctionalTest {
         config.settings()
 
         val versionDir = File("workdir/original", version)
-        val intVersion = version.replace("[^0-9]".toRegex(), "").toInt()
-
         val jarFiles = versionDir.listFiles(JarFileFilter()).map { it.getAbsolutePath() }
-
-        runFunctionalTest(version, intVersion, jarFiles, testDataFile, subsystem, config)
+        runFunctionalTest(jarFiles, testDataFile, subsystem, config)
     }
 
 }

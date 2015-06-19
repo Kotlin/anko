@@ -18,21 +18,17 @@ package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
+import org.jetbrains.android.anko.config.AnkoFileType
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.render.RenderFacade
 import java.io.File
 
 class DSLGenerator(
-    val version: Int,
-    val fVersion: String,
     val platformJars: List<File>,
     val versionJars: List<File>,
     val config: AnkoConfiguration,
     val classTree: ClassTree? = null): Runnable
 {
-
-    private val sVersion = version.toString()
-
     private val mvnManifest: String
         get() = File("dsl/props/mvn/AndroidManifest.xml").readText()
 
@@ -48,7 +44,8 @@ class DSLGenerator(
     }
 
     override fun run() {
-        if (fVersion.contains("-support"))
+        val supportVersion = config.getVersionType() == AnkoFileType.SUPPORT
+        if (supportVersion)
             config.files.add(AnkoFile.SUPPORT)
         else
             config.files.remove(AnkoFile.SUPPORT)
@@ -59,27 +56,29 @@ class DSLGenerator(
         Writer(renderer).write()
 
         if (config.generateMavenArtifact) {
-            //create res directory
+            // Create res directory
             val resDirectory = File(config.outputDirectory + "src/main/res/")
             if (!resDirectory.exists()) {
                 resDirectory.mkdirs()
             }
 
-            //write manifest
-            val manifest = mvnManifest.replace("%VERSION", sVersion)
+            val artifactVersion = if (supportVersion) config.version.substringAfter('-') else config.version
+            val platformVersion = config.version.substringBefore('-')
+
+            // Write manifest
+            val manifest = mvnManifest.replace("%VERSION", platformVersion)
             File(config.outputDirectory + "src/main/AndroidManifest.xml").writeText(manifest)
 
-            //copy gradle wrapper
+            // Copy gradle wrapper
             copy("gradlew")
             copy("gradlew.bat")
             copy("gradle/wrapper/gradle-wrapper.jar")
             copy("gradle/wrapper/gradle-wrapper.properties")
 
-            //copy gradle build files
+            // Copy gradle build files
+            fun String.substVersions() = replace("%VERSION", platformVersion).replace("%FVERSION", artifactVersion)
             copy("gradle.properties") { it.substVersions() }
             copy("build.gradle") { it.substVersions() }
         }
     }
-
-    private fun String.substVersions() = replace("%VERSION", sVersion).replace("%FVERSION", fVersion)
 }

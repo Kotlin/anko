@@ -77,7 +77,6 @@ private fun gen() {
         val (platformJars, versionJars) = getJars(version)
         val versionName = version.name
 
-        val intVersion = parseVersion(versionName)
         if (platformJars.isNotEmpty()) {
             println("Processing version $versionName")
             println("  Platform jars: ${platformJars.joinToString()}")
@@ -89,10 +88,7 @@ private fun gen() {
                 fileOutputDirectory.mkdirs()
             }
 
-            DSLGenerator(intVersion, versionName, platformJars, versionJars,
-                    DefaultAnkoConfiguration(outputDirectory, versionName)).run()
+            DSLGenerator(platformJars, versionJars, DefaultAnkoConfiguration(outputDirectory, versionName)).run()
         }
     }
 }
-
-private fun parseVersion(name: String) = name.substringBefore('-').toInt()

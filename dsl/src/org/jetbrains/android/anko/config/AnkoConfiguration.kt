@@ -49,5 +49,9 @@ abstract class AnkoConfiguration {
 
     public abstract fun getOutputFile(ankoFile: AnkoFile): File
 
-    public fun isSupportVersion(): Boolean = version.contains('-')
+    public fun getVersionType(): AnkoFileType {
+        if (version.endsWith("-common")) return AnkoFileType.COMMON
+        else if ('-' in version) return AnkoFileType.SUPPORT
+        else return AnkoFileType.PLATFORM
+    }
 }

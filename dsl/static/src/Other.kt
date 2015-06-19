@@ -34,17 +34,6 @@ import android.view.ViewGroup
 import org.jetbrains.anko.custom.*
 import org.jetbrains.anko.internals.noBinding
 
-/* SECTION COLORS */
-//returns 0xC0C0C0 for 0xC0
-public val Int.gray: Int
-    get() = this or (this shl 8) or (this shl 16)
-
-//returns 0xFFABCDEF for 0xABCDEF
-public val Int.opaque: Int
-    get() = this or 0xff000000.toInt()
-/* END SECTION */
-
-
 /* SECTION CUSTOM VIEW PROPERTIES */
 public var View.backgroundColor: Int
     get() = throw AnkoException("'padding' property does not have a getter")

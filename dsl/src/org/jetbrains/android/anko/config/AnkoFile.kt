@@ -18,27 +18,38 @@ package org.jetbrains.android.anko.config
 
 import org.jetbrains.android.anko.utils.toCamelCase
 import kotlin.properties.Delegates
+import org.jetbrains.android.anko.config.AnkoFileType.*
 
-public enum class AnkoFile : ConfigurationOption {
-    ASYNC,
-    CONTEXT_UTILS,
-    CUSTOM,
-    DATABASE,
-    DIALOGS,
-    HELPERS,
-    INTERFACE_WORKAROUNDS_JAVA,
-    INTERNALS,
-    LAYOUTS,
-    LISTENERS,
-    LOGGER,
-    OTHER,
-    OTHER_WIDGETS,
-    PROPERTIES,
-    SERVICES,
-    SQL_PARSER_HELPERS,
-    SQL_PARSERS,
-    SUPPORT,
-    VIEWS;
+public enum class AnkoFileType {
+    COMMON, PLATFORM, SUPPORT
+}
+
+public enum class AnkoFile(
+        type: Set<AnkoFileType>,
+        val shouldBeWritten: (AnkoConfiguration) -> Boolean = { true }
+) : ConfigurationOption {
+    ASYNC(setOf(COMMON)),
+    CONTEXT_UTILS(setOf(COMMON)),
+    CUSTOM(setOf(COMMON)),
+    DATABASE(setOf(COMMON)),
+    DIALOGS(setOf(COMMON)),
+    HELPERS(setOf(COMMON)),
+    INTERFACE_WORKAROUNDS_JAVA(setOf(PLATFORM)),
+    INTERNALS(setOf(COMMON)),
+    LAYOUTS(setOf(PLATFORM)),
+    LISTENERS(setOf(PLATFORM, AnkoFileType.SUPPORT)),
+    LOGGER(setOf(COMMON)),
+    OTHER(setOf(PLATFORM)),
+    OTHER_WIDGETS(setOf(PLATFORM)),
+    PROPERTIES(setOf(PLATFORM, AnkoFileType.SUPPORT)),
+    SERVICES(setOf(PLATFORM, AnkoFileType.SUPPORT)),
+    SQL_PARSER_HELPERS(setOf(COMMON)),
+    SQL_PARSERS(setOf(COMMON)),
+    SUPPORT(setOf(AnkoFileType.SUPPORT), { "support-v4" in it.version }),
+    UI(setOf(COMMON)),
+    VIEWS(setOf(PLATFORM, AnkoFileType.SUPPORT), { it[VIEWS] || it[ConfigurationTune.HELPER_CONSTRUCTORS] });
+
+    public val types: Set<AnkoFileType> = type.toSet()
 
     public val filename: String by Delegates.lazy {
         val name = name()

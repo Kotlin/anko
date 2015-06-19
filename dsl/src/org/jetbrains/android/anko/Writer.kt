@@ -25,38 +25,31 @@ import org.jetbrains.android.anko.render.*
 import java.io.Closeable
 import java.io.File
 import java.io.PrintWriter
+import kotlin.reflect.KClass
+import kotlin.reflect.jvm.java
 
 class Writer(private val renderFacade: RenderFacade) {
-
-    val config = renderFacade.config
+    private val config = renderFacade.config
 
     fun write() {
-        if (!config.isSupportVersion()) {
-            sortedSetOf(ASYNC,
-                        CONTEXT_UTILS,
-                        CUSTOM,
-                        DATABASE,
-                        DIALOGS,
-                        HELPERS,
-                        INTERNALS,
-                        LOGGER,
-                        OTHER,
-                        OTHER_WIDGETS,
-                        SQL_PARSERS
-            ).forEach { if (config[it]) writeStatic(it) }
-
-            if (config[SQL_PARSER_HELPERS]) writeSqlParserHelpers()
-            if (config[INTERFACE_WORKAROUNDS_JAVA]) writeInterfaceWorkarounds()
+        val versionType = config.getVersionType()
+        AnkoFile.values().forEach { file ->
+            if (config[file] && versionType in file.types && file.shouldBeWritten(config)) {
+                write(file)
+            }
         }
+    }
 
-        setOf(LAYOUTS to ::writeLayouts,
-              LISTENERS to ::writeListeners,
-              PROPERTIES to ::writeProperties,
-              SERVICES to ::writeServices
-        ).forEach { if (config[it.first]) it.second() }
-
-        if (config[VIEWS] || config[HELPER_CONSTRUCTORS]) writeViews()
-        if (config.version.contains("support-v4")) writeStatic(SUPPORT)
+    private fun write(file: AnkoFile): Unit = when (file) {
+        ASYNC, CONTEXT_UTILS, CUSTOM, DATABASE, DIALOGS, HELPERS, INTERNALS,
+        LOGGER, OTHER, OTHER_WIDGETS, UI, SUPPORT, SQL_PARSERS -> writeStatic(file)
+        INTERFACE_WORKAROUNDS_JAVA -> writeInterfaceWorkarounds()
+        LAYOUTS -> writeLayouts()
+        LISTENERS -> writeListeners()
+        PROPERTIES -> writeProperties()
+        SERVICES -> writeServices()
+        SQL_PARSER_HELPERS -> writeSqlParserHelpers()
+        VIEWS -> writeViews()
     }
 
     fun writeInterfaceWorkarounds() {
