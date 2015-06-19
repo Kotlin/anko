@@ -48,67 +48,6 @@ class __GestureOverlayView_OnGesturingListener : android.gesture.GestureOverlayV
 
 }
 
-class __ViewPagerSupport_OnPageChangeListener : android.support.v4.view.ViewPager.OnPageChangeListener {
-    private var _onPageScrolled: ((Int, Float, Int) -> Unit)? = null
-    private var _onPageSelected: ((Int) -> Unit)? = null
-    private var _onPageScrollStateChanged: ((Int) -> Unit)? = null
-
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = _onPageScrolled?.invoke(position, positionOffset, positionOffsetPixels)
-
-    public fun onPageScrolled(listener: (Int, Float, Int) -> Unit) {
-        _onPageScrolled = listener
-    }
-
-    override fun onPageSelected(position: Int) = _onPageSelected?.invoke(position)
-
-    public fun onPageSelected(listener: (Int) -> Unit) {
-        _onPageSelected = listener
-    }
-
-    override fun onPageScrollStateChanged(state: Int) = _onPageScrollStateChanged?.invoke(state)
-
-    public fun onPageScrollStateChanged(listener: (Int) -> Unit) {
-        _onPageScrollStateChanged = listener
-    }
-
-}
-
-class __SearchViewSupport_OnQueryTextListener : android.support.v7.widget.SearchView.OnQueryTextListener {
-    private var _onQueryTextSubmit: ((String?) -> Boolean)? = null
-    private var _onQueryTextChange: ((String?) -> Boolean)? = null
-
-    override fun onQueryTextSubmit(query: String?) = _onQueryTextSubmit?.invoke(query) ?: false
-
-    public fun onQueryTextSubmit(listener: (String?) -> Boolean) {
-        _onQueryTextSubmit = listener
-    }
-
-    override fun onQueryTextChange(newText: String?) = _onQueryTextChange?.invoke(newText) ?: false
-
-    public fun onQueryTextChange(listener: (String?) -> Boolean) {
-        _onQueryTextChange = listener
-    }
-
-}
-
-class __SearchViewSupport_OnSuggestionListener : android.support.v7.widget.SearchView.OnSuggestionListener {
-    private var _onSuggestionSelect: ((Int) -> Boolean)? = null
-    private var _onSuggestionClick: ((Int) -> Boolean)? = null
-
-    override fun onSuggestionSelect(position: Int) = _onSuggestionSelect?.invoke(position) ?: false
-
-    public fun onSuggestionSelect(listener: (Int) -> Boolean) {
-        _onSuggestionSelect = listener
-    }
-
-    override fun onSuggestionClick(position: Int) = _onSuggestionClick?.invoke(position) ?: false
-
-    public fun onSuggestionClick(listener: (Int) -> Boolean) {
-        _onSuggestionClick = listener
-    }
-
-}
-
 class __View_OnAttachStateChangeListener : android.view.View.OnAttachStateChangeListener {
     private var _onViewAttachedToWindow: ((android.view.View) -> Unit)? = null
     private var _onViewDetachedFromWindow: ((android.view.View) -> Unit)? = null

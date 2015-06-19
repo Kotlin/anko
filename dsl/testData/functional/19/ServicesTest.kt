@@ -10,8 +10,17 @@ public val Context.activityManager: android.app.ActivityManager
 public val Context.alarmManager: android.app.AlarmManager
     get() = getSystemService(Context.ALARM_SERVICE) as android.app.AlarmManager
 
+public val Context.appOpsManager: android.app.AppOpsManager
+    get() = getSystemService(Context.APP_OPS_SERVICE) as android.app.AppOpsManager
+
 public val Context.audioManager: android.media.AudioManager
     get() = getSystemService(Context.AUDIO_SERVICE) as android.media.AudioManager
+
+public val Context.bluetoothManager: android.bluetooth.BluetoothManager
+    get() = getSystemService(Context.BLUETOOTH_SERVICE) as android.bluetooth.BluetoothManager
+
+public val Context.captioningManager: android.view.accessibility.CaptioningManager
+    get() = getSystemService(Context.CAPTIONING_SERVICE) as android.view.accessibility.CaptioningManager
 
 public val Context.clipboardManager: android.text.ClipboardManager
     get() = getSystemService(Context.CLIPBOARD_SERVICE) as android.text.ClipboardManager
@@ -19,14 +28,23 @@ public val Context.clipboardManager: android.text.ClipboardManager
 public val Context.connectivityManager: android.net.ConnectivityManager
     get() = getSystemService(Context.CONNECTIVITY_SERVICE) as android.net.ConnectivityManager
 
+public val Context.consumerIrManager: android.hardware.ConsumerIrManager
+    get() = getSystemService(Context.CONSUMER_IR_SERVICE) as android.hardware.ConsumerIrManager
+
 public val Context.devicePolicyManager: android.app.admin.DevicePolicyManager
     get() = getSystemService(Context.DEVICE_POLICY_SERVICE) as android.app.admin.DevicePolicyManager
+
+public val Context.displayManager: android.hardware.display.DisplayManager
+    get() = getSystemService(Context.DISPLAY_SERVICE) as android.hardware.display.DisplayManager
 
 public val Context.downloadManager: android.app.DownloadManager
     get() = getSystemService(Context.DOWNLOAD_SERVICE) as android.app.DownloadManager
 
 public val Context.inputMethodManager: android.view.inputmethod.InputMethodManager
     get() = getSystemService(Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+
+public val Context.inputManager: android.hardware.input.InputManager
+    get() = getSystemService(Context.INPUT_SERVICE) as android.hardware.input.InputManager
 
 public val Context.keyguardManager: android.app.KeyguardManager
     get() = getSystemService(Context.KEYGUARD_SERVICE) as android.app.KeyguardManager
@@ -40,8 +58,14 @@ public val Context.nfcManager: android.nfc.NfcManager
 public val Context.notificationManager: android.app.NotificationManager
     get() = getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
 
+public val Context.nsdManager: android.net.nsd.NsdManager
+    get() = getSystemService(Context.NSD_SERVICE) as android.net.nsd.NsdManager
+
 public val Context.powerManager: android.os.PowerManager
     get() = getSystemService(Context.POWER_SERVICE) as android.os.PowerManager
+
+public val Context.printManager: android.print.PrintManager
+    get() = getSystemService(Context.PRINT_SERVICE) as android.print.PrintManager
 
 public val Context.searchManager: android.app.SearchManager
     get() = getSystemService(Context.SEARCH_SERVICE) as android.app.SearchManager
@@ -60,6 +84,9 @@ public val Context.uiModeManager: android.app.UiModeManager
 
 public val Context.usbManager: android.hardware.usb.UsbManager
     get() = getSystemService(Context.USB_SERVICE) as android.hardware.usb.UsbManager
+
+public val Context.userManager: android.os.UserManager
+    get() = getSystemService(Context.USER_SERVICE) as android.os.UserManager
 
 public val Context.wallpaperManager: android.app.WallpaperManager
     get() = getSystemService(Context.WALLPAPER_SERVICE) as android.app.WallpaperManager

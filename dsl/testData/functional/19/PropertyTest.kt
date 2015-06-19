@@ -1,289 +1,3 @@
-public var android.support.v4.view.PagerTitleStrip.textSpacing: Int
-    get() = getTextSpacing()
-    set(v) = setTextSpacing(v)
-
-public var android.support.v4.view.ViewPager.adapter: android.support.v4.view.PagerAdapter?
-    get() = getAdapter()
-    set(v) = setAdapter(v)
-
-public var android.support.v4.view.ViewPager.currentItem: Int
-    get() = getCurrentItem()
-    set(v) = setCurrentItem(v)
-
-public var android.support.v4.view.ViewPager.offscreenPageLimit: Int
-    get() = getOffscreenPageLimit()
-    set(v) = setOffscreenPageLimit(v)
-
-public var android.support.v4.view.ViewPager.pageMargin: Int
-    get() = getPageMargin()
-    set(v) = setPageMargin(v)
-
-public val android.support.v4.view.ViewPager.fakeDragging: Boolean
-    get() = isFakeDragging()
-
-public val android.support.v4.widget.DrawerLayout.statusBarBackgroundDrawable: android.graphics.drawable.Drawable?
-    get() = getStatusBarBackgroundDrawable()
-
-public val android.support.v4.widget.NestedScrollView.maxScrollAmount: Int
-    get() = getMaxScrollAmount()
-
-public val android.support.v4.widget.NestedScrollView.nestedScrollAxes: Int
-    get() = getNestedScrollAxes()
-
-public var android.support.v4.widget.NestedScrollView.fillViewport: Boolean
-    get() = isFillViewport()
-    set(v) = setFillViewport(v)
-
-public var android.support.v4.widget.NestedScrollView.nestedScrollingEnabled: Boolean
-    get() = isNestedScrollingEnabled()
-    set(v) = setNestedScrollingEnabled(v)
-
-public var android.support.v4.widget.NestedScrollView.smoothScrollingEnabled: Boolean
-    get() = isSmoothScrollingEnabled()
-    set(v) = setSmoothScrollingEnabled(v)
-
-public var android.support.v4.widget.SlidingPaneLayout.coveredFadeColor: Int
-    get() = getCoveredFadeColor()
-    set(v) = setCoveredFadeColor(v)
-
-public var android.support.v4.widget.SlidingPaneLayout.parallaxDistance: Int
-    get() = getParallaxDistance()
-    set(v) = setParallaxDistance(v)
-
-public var android.support.v4.widget.SlidingPaneLayout.sliderFadeColor: Int
-    get() = getSliderFadeColor()
-    set(v) = setSliderFadeColor(v)
-
-public val android.support.v4.widget.SlidingPaneLayout.open: Boolean
-    get() = isOpen()
-
-public val android.support.v4.widget.SlidingPaneLayout.slideable: Boolean
-    get() = isSlideable()
-
-public val android.support.v4.widget.SwipeRefreshLayout.progressCircleDiameter: Int
-    get() = getProgressCircleDiameter()
-
-public var android.support.v4.widget.SwipeRefreshLayout.refreshing: Boolean
-    get() = isRefreshing()
-    set(v) = setRefreshing(v)
-
-public val android.support.v7.widget.ActionMenuView.menu: android.view.Menu?
-    get() = getMenu()
-
-public var android.support.v7.widget.ActionMenuView.popupTheme: Int
-    get() = getPopupTheme()
-    set(v) = setPopupTheme(v)
-
-public val android.support.v7.widget.ActionMenuView.windowAnimations: Int
-    get() = getWindowAnimations()
-
-public val android.support.v7.widget.ActionMenuView.overflowMenuShowPending: Boolean
-    get() = isOverflowMenuShowPending()
-
-public val android.support.v7.widget.ActionMenuView.overflowMenuShowing: Boolean
-    get() = isOverflowMenuShowing()
-
-public var android.support.v7.widget.ActionMenuView.overflowReserved: Boolean
-    get() = isOverflowReserved()
-    set(v) = setOverflowReserved(v)
-
-public val android.support.v7.widget.LinearLayoutCompat.baseline: Int
-    get() = getBaseline()
-
-public var android.support.v7.widget.LinearLayoutCompat.baselineAlignedChildIndex: Int
-    get() = getBaselineAlignedChildIndex()
-    set(v) = setBaselineAlignedChildIndex(v)
-
-public var android.support.v7.widget.LinearLayoutCompat.dividerDrawable: android.graphics.drawable.Drawable?
-    get() = getDividerDrawable()
-    set(v) = setDividerDrawable(v)
-
-public var android.support.v7.widget.LinearLayoutCompat.dividerPadding: Int
-    get() = getDividerPadding()
-    set(v) = setDividerPadding(v)
-
-public val android.support.v7.widget.LinearLayoutCompat.dividerWidth: Int
-    get() = getDividerWidth()
-
-public var android.support.v7.widget.LinearLayoutCompat.orientation: Int
-    get() = getOrientation()
-    set(v) = setOrientation(v)
-
-public var android.support.v7.widget.LinearLayoutCompat.showDividers: Int
-    get() = getShowDividers()
-    set(v) = setShowDividers(v)
-
-public var android.support.v7.widget.LinearLayoutCompat.weightSum: Float
-    get() = getWeightSum()
-    set(v) = setWeightSum(v)
-
-public var android.support.v7.widget.LinearLayoutCompat.baselineAligned: Boolean
-    get() = isBaselineAligned()
-    set(v) = setBaselineAligned(v)
-
-public var android.support.v7.widget.LinearLayoutCompat.measureWithLargestChildEnabled: Boolean
-    get() = isMeasureWithLargestChildEnabled()
-    set(v) = setMeasureWithLargestChildEnabled(v)
-
-public var android.support.v7.widget.SearchView.imeOptions: Int
-    get() = getImeOptions()
-    set(v) = setImeOptions(v)
-
-public var android.support.v7.widget.SearchView.inputType: Int
-    get() = getInputType()
-    set(v) = setInputType(v)
-
-public var android.support.v7.widget.SearchView.maxWidth: Int
-    get() = getMaxWidth()
-    set(v) = setMaxWidth(v)
-
-public val android.support.v7.widget.SearchView.query: CharSequence?
-    get() = getQuery()
-
-public var android.support.v7.widget.SearchView.queryHint: CharSequence?
-    get() = getQueryHint()
-    set(v) = setQueryHint(v)
-
-public var android.support.v7.widget.SearchView.suggestionsAdapter: android.support.v4.widget.CursorAdapter?
-    get() = getSuggestionsAdapter()
-    set(v) = setSuggestionsAdapter(v)
-
-public val android.support.v7.widget.SearchView.iconfiedByDefault: Boolean
-    get() = isIconfiedByDefault()
-
-public var android.support.v7.widget.SearchView.iconified: Boolean
-    get() = isIconified()
-    set(v) = setIconified(v)
-
-public var android.support.v7.widget.SearchView.queryRefinementEnabled: Boolean
-    get() = isQueryRefinementEnabled()
-    set(v) = setQueryRefinementEnabled(v)
-
-public var android.support.v7.widget.SearchView.submitButtonEnabled: Boolean
-    get() = isSubmitButtonEnabled()
-    set(v) = setSubmitButtonEnabled(v)
-
-public val android.support.v7.widget.SwitchCompat.compoundPaddingLeft: Int
-    get() = getCompoundPaddingLeft()
-
-public val android.support.v7.widget.SwitchCompat.compoundPaddingRight: Int
-    get() = getCompoundPaddingRight()
-
-public var android.support.v7.widget.SwitchCompat.showText: Boolean
-    get() = getShowText()
-    set(v) = setShowText(v)
-
-public var android.support.v7.widget.SwitchCompat.splitTrack: Boolean
-    get() = getSplitTrack()
-    set(v) = setSplitTrack(v)
-
-public var android.support.v7.widget.SwitchCompat.switchMinWidth: Int
-    get() = getSwitchMinWidth()
-    set(v) = setSwitchMinWidth(v)
-
-public var android.support.v7.widget.SwitchCompat.switchPadding: Int
-    get() = getSwitchPadding()
-    set(v) = setSwitchPadding(v)
-
-public var android.support.v7.widget.SwitchCompat.textOff: CharSequence?
-    get() = getTextOff()
-    set(v) = setTextOff(v)
-
-public var android.support.v7.widget.SwitchCompat.textOn: CharSequence?
-    get() = getTextOn()
-    set(v) = setTextOn(v)
-
-public var android.support.v7.widget.SwitchCompat.thumbDrawable: android.graphics.drawable.Drawable?
-    get() = getThumbDrawable()
-    set(v) = setThumbDrawable(v)
-
-public var android.support.v7.widget.SwitchCompat.thumbTextPadding: Int
-    get() = getThumbTextPadding()
-    set(v) = setThumbTextPadding(v)
-
-public var android.support.v7.widget.SwitchCompat.trackDrawable: android.graphics.drawable.Drawable?
-    get() = getTrackDrawable()
-    set(v) = setTrackDrawable(v)
-
-public val android.support.v7.widget.Toolbar.contentInsetEnd: Int
-    get() = getContentInsetEnd()
-
-public val android.support.v7.widget.Toolbar.contentInsetLeft: Int
-    get() = getContentInsetLeft()
-
-public val android.support.v7.widget.Toolbar.contentInsetRight: Int
-    get() = getContentInsetRight()
-
-public val android.support.v7.widget.Toolbar.contentInsetStart: Int
-    get() = getContentInsetStart()
-
-public var android.support.v7.widget.Toolbar.logo: android.graphics.drawable.Drawable?
-    get() = getLogo()
-    set(v) = setLogo(v)
-
-public var android.support.v7.widget.Toolbar.logoResource: Int
-    get() = throw AnkoException("'android.support.v7.widget.Toolbar.logoResource' property does not have a getter")
-    set(v) = setLogo(v)
-
-public var android.support.v7.widget.Toolbar.logoDescription: CharSequence?
-    get() = getLogoDescription()
-    set(v) = setLogoDescription(v)
-
-public var android.support.v7.widget.Toolbar.logoDescriptionResource: Int
-    get() = throw AnkoException("'android.support.v7.widget.Toolbar.logoDescriptionResource' property does not have a getter")
-    set(v) = setLogoDescription(v)
-
-public val android.support.v7.widget.Toolbar.menu: android.view.Menu?
-    get() = getMenu()
-
-public var android.support.v7.widget.Toolbar.navigationContentDescription: CharSequence?
-    get() = getNavigationContentDescription()
-    set(v) = setNavigationContentDescription(v)
-
-public var android.support.v7.widget.Toolbar.navigationContentDescriptionResource: Int
-    get() = throw AnkoException("'android.support.v7.widget.Toolbar.navigationContentDescriptionResource' property does not have a getter")
-    set(v) = setNavigationContentDescription(v)
-
-public var android.support.v7.widget.Toolbar.navigationIcon: android.graphics.drawable.Drawable?
-    get() = getNavigationIcon()
-    set(v) = setNavigationIcon(v)
-
-public var android.support.v7.widget.Toolbar.navigationIconResource: Int
-    get() = throw AnkoException("'android.support.v7.widget.Toolbar.navigationIconResource' property does not have a getter")
-    set(v) = setNavigationIcon(v)
-
-public var android.support.v7.widget.Toolbar.popupTheme: Int
-    get() = getPopupTheme()
-    set(v) = setPopupTheme(v)
-
-public var android.support.v7.widget.Toolbar.subtitle: CharSequence?
-    get() = getSubtitle()
-    set(v) = setSubtitle(v)
-
-public var android.support.v7.widget.Toolbar.subtitleResource: Int
-    get() = throw AnkoException("'android.support.v7.widget.Toolbar.subtitleResource' property does not have a getter")
-    set(v) = setSubtitle(v)
-
-public var android.support.v7.widget.Toolbar.title: CharSequence?
-    get() = getTitle()
-    set(v) = setTitle(v)
-
-public var android.support.v7.widget.Toolbar.titleResource: Int
-    get() = throw AnkoException("'android.support.v7.widget.Toolbar.titleResource' property does not have a getter")
-    set(v) = setTitle(v)
-
-public val android.support.v7.widget.Toolbar.wrapper: android.support.v7.internal.widget.DecorToolbar?
-    get() = getWrapper()
-
-public val android.support.v7.widget.Toolbar.overflowMenuShowPending: Boolean
-    get() = isOverflowMenuShowPending()
-
-public val android.support.v7.widget.Toolbar.overflowMenuShowing: Boolean
-    get() = isOverflowMenuShowing()
-
-public val android.support.v7.widget.Toolbar.titleTruncated: Boolean
-    get() = isTitleTruncated()
-
 public val android.view.SurfaceView.holder: android.view.SurfaceHolder?
     get() = getHolder()
 
@@ -312,14 +26,6 @@ public var android.view.View.animation: android.view.animation.Animation?
     get() = getAnimation()
     set(v) = setAnimation(v)
 
-public var android.view.View.backgroundTintList: android.content.res.ColorStateList?
-    get() = getBackgroundTintList()
-    set(v) = setBackgroundTintList(v)
-
-public var android.view.View.backgroundTintMode: android.graphics.PorterDuff.Mode?
-    get() = getBackgroundTintMode()
-    set(v) = setBackgroundTintMode(v)
-
 public val android.view.View.baseline: Int
     get() = getBaseline()
 
@@ -334,10 +40,6 @@ public var android.view.View.cameraDistance: Float
 public var android.view.View.clipBounds: android.graphics.Rect?
     get() = getClipBounds()
     set(v) = setClipBounds(v)
-
-public var android.view.View.clipToOutline: Boolean
-    get() = getClipToOutline()
-    set(v) = setClipToOutline(v)
 
 public var android.view.View.contentDescription: CharSequence?
     get() = getContentDescription()
@@ -359,10 +61,6 @@ public var android.view.View.drawingCacheQuality: Int
 
 public val android.view.View.drawingTime: Long
     get() = getDrawingTime()
-
-public var android.view.View.elevation: Float
-    get() = getElevation()
-    set(v) = setElevation(v)
 
 public var android.view.View.filterTouchesWhenObscured: Boolean
     get() = getFilterTouchesWhenObscured()
@@ -434,10 +132,6 @@ public var android.view.View.minimumHeight: Int
 public var android.view.View.minimumWidth: Int
     get() = getMinimumWidth()
     set(v) = setMinimumWidth(v)
-
-public var android.view.View.outlineProvider: android.view.ViewOutlineProvider?
-    get() = getOutlineProvider()
-    set(v) = setOutlineProvider(v)
 
 public var android.view.View.overScrollMode: Int
     get() = getOverScrollMode()
@@ -523,10 +217,6 @@ public var android.view.View.scrollY: Int
 public val android.view.View.solidColor: Int
     get() = getSolidColor()
 
-public var android.view.View.stateListAnimator: android.animation.StateListAnimator?
-    get() = getStateListAnimator()
-    set(v) = setStateListAnimator(v)
-
 public var android.view.View.systemUiVisibility: Int
     get() = getSystemUiVisibility()
     set(v) = setSystemUiVisibility(v)
@@ -551,10 +241,6 @@ public var android.view.View.touchDelegate: android.view.TouchDelegate?
     get() = getTouchDelegate()
     set(v) = setTouchDelegate(v)
 
-public var android.view.View.transitionName: String?
-    get() = getTransitionName()
-    set(v) = setTransitionName(v)
-
 public var android.view.View.translationX: Float
     get() = getTranslationX()
     set(v) = setTranslationX(v)
@@ -562,10 +248,6 @@ public var android.view.View.translationX: Float
 public var android.view.View.translationY: Float
     get() = getTranslationY()
     set(v) = setTranslationY(v)
-
-public var android.view.View.translationZ: Float
-    get() = getTranslationZ()
-    set(v) = setTranslationZ(v)
 
 public val android.view.View.verticalFadingEdgeLength: Int
     get() = getVerticalFadingEdgeLength()
@@ -606,13 +288,6 @@ public var android.view.View.x: Float
 public var android.view.View.y: Float
     get() = getY()
     set(v) = setY(v)
-
-public var android.view.View.z: Float
-    get() = getZ()
-    set(v) = setZ(v)
-
-public val android.view.View.accessibilityFocused: Boolean
-    get() = isAccessibilityFocused()
 
 public var android.view.View.activated: Boolean
     get() = isActivated()
@@ -692,10 +367,6 @@ public var android.view.View.longClickable: Boolean
     get() = isLongClickable()
     set(v) = setLongClickable(v)
 
-public var android.view.View.nestedScrollingEnabled: Boolean
-    get() = isNestedScrollingEnabled()
-    set(v) = setNestedScrollingEnabled(v)
-
 public val android.view.View.opaque: Boolean
     get() = isOpaque()
 
@@ -751,10 +422,6 @@ public var android.view.ViewGroup.clipChildren: Boolean
     get() = getClipChildren()
     set(v) = setClipChildren(v)
 
-public var android.view.ViewGroup.clipToPadding: Boolean
-    get() = getClipToPadding()
-    set(v) = setClipToPadding(v)
-
 public var android.view.ViewGroup.descendantFocusability: Int
     get() = getDescendantFocusability()
     set(v) = setDescendantFocusability(v)
@@ -775,10 +442,6 @@ public var android.view.ViewGroup.persistentDrawingCache: Int
     get() = getPersistentDrawingCache()
     set(v) = setPersistentDrawingCache(v)
 
-public var android.view.ViewGroup.touchscreenBlocksFocus: Boolean
-    get() = getTouchscreenBlocksFocus()
-    set(v) = setTouchscreenBlocksFocus(v)
-
 public var android.view.ViewGroup.alwaysDrawnWithCacheEnabled: Boolean
     get() = isAlwaysDrawnWithCacheEnabled()
     set(v) = setAlwaysDrawnWithCacheEnabled(v)
@@ -790,10 +453,6 @@ public var android.view.ViewGroup.animationCacheEnabled: Boolean
 public var android.view.ViewGroup.motionEventSplittingEnabled: Boolean
     get() = isMotionEventSplittingEnabled()
     set(v) = setMotionEventSplittingEnabled(v)
-
-public var android.view.ViewGroup.transitionGroup: Boolean
-    get() = isTransitionGroup()
-    set(v) = setTransitionGroup(v)
 
 public var android.view.ViewStub.inflatedId: Int
     get() = getInflatedId()
@@ -891,10 +550,6 @@ public var android.widget.AbsSeekBar.keyProgressIncrement: Int
     get() = getKeyProgressIncrement()
     set(v) = setKeyProgressIncrement(v)
 
-public var android.widget.AbsSeekBar.splitTrack: Boolean
-    get() = getSplitTrack()
-    set(v) = setSplitTrack(v)
-
 public var android.widget.AbsSeekBar.thumb: android.graphics.drawable.Drawable?
     get() = getThumb()
     set(v) = setThumb(v)
@@ -902,24 +557,6 @@ public var android.widget.AbsSeekBar.thumb: android.graphics.drawable.Drawable?
 public var android.widget.AbsSeekBar.thumbOffset: Int
     get() = getThumbOffset()
     set(v) = setThumbOffset(v)
-
-public var android.widget.AbsSeekBar.thumbTintList: android.content.res.ColorStateList?
-    get() = getThumbTintList()
-    set(v) = setThumbTintList(v)
-
-public var android.widget.AbsSeekBar.thumbTintMode: android.graphics.PorterDuff.Mode?
-    get() = getThumbTintMode()
-    set(v) = setThumbTintMode(v)
-
-public val android.widget.ActionMenuView.menu: android.view.Menu?
-    get() = getMenu()
-
-public var android.widget.ActionMenuView.popupTheme: Int
-    get() = getPopupTheme()
-    set(v) = setPopupTheme(v)
-
-public val android.widget.ActionMenuView.overflowMenuShowing: Boolean
-    get() = isOverflowMenuShowing()
 
 public var android.widget.AdapterView<out android.widget.Adapter?>.emptyView: android.view.View?
     get() = getEmptyView()
@@ -1062,14 +699,6 @@ public var android.widget.CheckedTextView.checkMarkDrawableResource: Int
     get() = throw AnkoException("'android.widget.CheckedTextView.checkMarkDrawableResource' property does not have a getter")
     set(v) = setCheckMarkDrawable(v)
 
-public var android.widget.CheckedTextView.checkMarkTintList: android.content.res.ColorStateList?
-    get() = getCheckMarkTintList()
-    set(v) = setCheckMarkTintList(v)
-
-public var android.widget.CheckedTextView.checkMarkTintMode: android.graphics.PorterDuff.Mode?
-    get() = getCheckMarkTintMode()
-    set(v) = setCheckMarkTintMode(v)
-
 public var android.widget.CheckedTextView.checked: Boolean
     get() = isChecked()
     set(v) = setChecked(v)
@@ -1081,14 +710,6 @@ public var android.widget.Chronometer.base: Long
 public var android.widget.Chronometer.format: String?
     get() = getFormat()
     set(v) = setFormat(v)
-
-public var android.widget.CompoundButton.buttonTintList: android.content.res.ColorStateList?
-    get() = getButtonTintList()
-    set(v) = setButtonTintList(v)
-
-public var android.widget.CompoundButton.buttonTintMode: android.graphics.PorterDuff.Mode?
-    get() = getButtonTintMode()
-    set(v) = setButtonTintMode(v)
 
 public val android.widget.CompoundButton.compoundPaddingLeft: Int
     get() = getCompoundPaddingLeft()
@@ -1109,10 +730,6 @@ public var android.widget.DatePicker.calendarViewShown: Boolean
 
 public val android.widget.DatePicker.dayOfMonth: Int
     get() = getDayOfMonth()
-
-public var android.widget.DatePicker.firstDayOfWeek: Int
-    get() = getFirstDayOfWeek()
-    set(v) = setFirstDayOfWeek(v)
 
 public var android.widget.DatePicker.maxDate: Long
     get() = getMaxDate()
@@ -1175,14 +792,6 @@ public var android.widget.FrameLayout.foreground: android.graphics.drawable.Draw
 public var android.widget.FrameLayout.foregroundGravity: Int
     get() = getForegroundGravity()
     set(v) = setForegroundGravity(v)
-
-public var android.widget.FrameLayout.foregroundTintList: android.content.res.ColorStateList?
-    get() = getForegroundTintList()
-    set(v) = setForegroundTintList(v)
-
-public var android.widget.FrameLayout.foregroundTintMode: android.graphics.PorterDuff.Mode?
-    get() = getForegroundTintMode()
-    set(v) = setForegroundTintMode(v)
 
 public var android.widget.FrameLayout.measureAllChildren: Boolean
     get() = getMeasureAllChildren()
@@ -1289,14 +898,6 @@ public var android.widget.ImageView.imageMatrix: android.graphics.Matrix?
     get() = getImageMatrix()
     set(v) = setImageMatrix(v)
 
-public var android.widget.ImageView.imageTintList: android.content.res.ColorStateList?
-    get() = getImageTintList()
-    set(v) = setImageTintList(v)
-
-public var android.widget.ImageView.imageTintMode: android.graphics.PorterDuff.Mode?
-    get() = getImageTintMode()
-    set(v) = setImageTintMode(v)
-
 public var android.widget.ImageView.maxHeight: Int
     get() = getMaxHeight()
     set(v) = setMaxHeight(v)
@@ -1308,9 +909,6 @@ public var android.widget.ImageView.maxWidth: Int
 public var android.widget.ImageView.scaleType: android.widget.ImageView.ScaleType?
     get() = getScaleType()
     set(v) = setScaleType(v)
-
-public val android.widget.ImageView.opaque: Boolean
-    get() = isOpaque()
 
 public val android.widget.LinearLayout.baseline: Int
     get() = getBaseline()
@@ -1416,14 +1014,6 @@ public var android.widget.ProgressBar.indeterminateDrawable: android.graphics.dr
     get() = getIndeterminateDrawable()
     set(v) = setIndeterminateDrawable(v)
 
-public var android.widget.ProgressBar.indeterminateTintList: android.content.res.ColorStateList?
-    get() = getIndeterminateTintList()
-    set(v) = setIndeterminateTintList(v)
-
-public var android.widget.ProgressBar.indeterminateTintMode: android.graphics.PorterDuff.Mode?
-    get() = getIndeterminateTintMode()
-    set(v) = setIndeterminateTintMode(v)
-
 public var android.widget.ProgressBar.interpolator: android.view.animation.Interpolator?
     get() = getInterpolator()
     set(v) = setInterpolator(v)
@@ -1436,37 +1026,13 @@ public var android.widget.ProgressBar.progress: Int
     get() = getProgress()
     set(v) = setProgress(v)
 
-public var android.widget.ProgressBar.progressBackgroundTintList: android.content.res.ColorStateList?
-    get() = getProgressBackgroundTintList()
-    set(v) = setProgressBackgroundTintList(v)
-
-public var android.widget.ProgressBar.progressBackgroundTintMode: android.graphics.PorterDuff.Mode?
-    get() = getProgressBackgroundTintMode()
-    set(v) = setProgressBackgroundTintMode(v)
-
 public var android.widget.ProgressBar.progressDrawable: android.graphics.drawable.Drawable?
     get() = getProgressDrawable()
     set(v) = setProgressDrawable(v)
 
-public var android.widget.ProgressBar.progressTintList: android.content.res.ColorStateList?
-    get() = getProgressTintList()
-    set(v) = setProgressTintList(v)
-
-public var android.widget.ProgressBar.progressTintMode: android.graphics.PorterDuff.Mode?
-    get() = getProgressTintMode()
-    set(v) = setProgressTintMode(v)
-
 public var android.widget.ProgressBar.secondaryProgress: Int
     get() = getSecondaryProgress()
     set(v) = setSecondaryProgress(v)
-
-public var android.widget.ProgressBar.secondaryProgressTintList: android.content.res.ColorStateList?
-    get() = getSecondaryProgressTintList()
-    set(v) = setSecondaryProgressTintList(v)
-
-public var android.widget.ProgressBar.secondaryProgressTintMode: android.graphics.PorterDuff.Mode?
-    get() = getSecondaryProgressTintMode()
-    set(v) = setSecondaryProgressTintMode(v)
 
 public var android.widget.ProgressBar.indeterminate: Boolean
     get() = isIndeterminate()
@@ -1586,14 +1152,6 @@ public val android.widget.Switch.compoundPaddingLeft: Int
 
 public val android.widget.Switch.compoundPaddingRight: Int
     get() = getCompoundPaddingRight()
-
-public var android.widget.Switch.showText: Boolean
-    get() = getShowText()
-    set(v) = setShowText(v)
-
-public var android.widget.Switch.splitTrack: Boolean
-    get() = getSplitTrack()
-    set(v) = setSplitTrack(v)
 
 public var android.widget.Switch.switchMinWidth: Int
     get() = getSwitchMinWidth()
@@ -1738,10 +1296,6 @@ public var android.widget.TextView.filters: Array<android.text.InputFilter>?
     get() = getFilters()
     set(v) = setFilters(v)
 
-public var android.widget.TextView.fontFeatureSettings: String?
-    get() = getFontFeatureSettings()
-    set(v) = setFontFeatureSettings(v)
-
 public var android.widget.TextView.freezesText: Boolean
     get() = getFreezesText()
     set(v) = setFreezesText(v)
@@ -1785,10 +1339,6 @@ public var android.widget.TextView.inputType: Int
 
 public val android.widget.TextView.layout: android.text.Layout?
     get() = getLayout()
-
-public var android.widget.TextView.letterSpacing: Float
-    get() = getLetterSpacing()
-    set(v) = setLetterSpacing(v)
 
 public val android.widget.TextView.lineCount: Int
     get() = getLineCount()
@@ -1878,10 +1428,6 @@ public val android.widget.TextView.shadowDy: Float
 public val android.widget.TextView.shadowRadius: Float
     get() = getShadowRadius()
 
-public var android.widget.TextView.showSoftInputOnFocus: Boolean
-    get() = getShowSoftInputOnFocus()
-    set(v) = setShowSoftInputOnFocus(v)
-
 public var android.widget.TextView.text: CharSequence
     get() = getText()
     set(v) = setText(v)
@@ -1949,64 +1495,6 @@ public var android.widget.ToggleButton.textOn: CharSequence?
     get() = getTextOn()
     set(v) = setTextOn(v)
 
-public var android.widget.Toolbar.logo: android.graphics.drawable.Drawable?
-    get() = getLogo()
-    set(v) = setLogo(v)
-
-public var android.widget.Toolbar.logoResource: Int
-    get() = throw AnkoException("'android.widget.Toolbar.logoResource' property does not have a getter")
-    set(v) = setLogo(v)
-
-public var android.widget.Toolbar.logoDescription: CharSequence?
-    get() = getLogoDescription()
-    set(v) = setLogoDescription(v)
-
-public var android.widget.Toolbar.logoDescriptionResource: Int
-    get() = throw AnkoException("'android.widget.Toolbar.logoDescriptionResource' property does not have a getter")
-    set(v) = setLogoDescription(v)
-
-public val android.widget.Toolbar.menu: android.view.Menu?
-    get() = getMenu()
-
-public var android.widget.Toolbar.navigationContentDescription: CharSequence?
-    get() = getNavigationContentDescription()
-    set(v) = setNavigationContentDescription(v)
-
-public var android.widget.Toolbar.navigationContentDescriptionResource: Int
-    get() = throw AnkoException("'android.widget.Toolbar.navigationContentDescriptionResource' property does not have a getter")
-    set(v) = setNavigationContentDescription(v)
-
-public var android.widget.Toolbar.navigationIcon: android.graphics.drawable.Drawable?
-    get() = getNavigationIcon()
-    set(v) = setNavigationIcon(v)
-
-public var android.widget.Toolbar.navigationIconResource: Int
-    get() = throw AnkoException("'android.widget.Toolbar.navigationIconResource' property does not have a getter")
-    set(v) = setNavigationIcon(v)
-
-public var android.widget.Toolbar.popupTheme: Int
-    get() = getPopupTheme()
-    set(v) = setPopupTheme(v)
-
-public var android.widget.Toolbar.subtitle: CharSequence?
-    get() = getSubtitle()
-    set(v) = setSubtitle(v)
-
-public var android.widget.Toolbar.subtitleResource: Int
-    get() = throw AnkoException("'android.widget.Toolbar.subtitleResource' property does not have a getter")
-    set(v) = setSubtitle(v)
-
-public var android.widget.Toolbar.title: CharSequence?
-    get() = getTitle()
-    set(v) = setTitle(v)
-
-public var android.widget.Toolbar.titleResource: Int
-    get() = throw AnkoException("'android.widget.Toolbar.titleResource' property does not have a getter")
-    set(v) = setTitle(v)
-
-public val android.widget.Toolbar.overflowMenuShowing: Boolean
-    get() = isOverflowMenuShowing()
-
 public val android.widget.TwoLineListItem.text1: android.widget.TextView?
     get() = getText1()
 
@@ -2060,14 +1548,6 @@ public val android.widget.ViewFlipper.flipping: Boolean
 public val android.widget.ViewSwitcher.nextView: android.view.View?
     get() = getNextView()
 
-public var android.widget.ImageView.imageURI: android.net.Uri?
-    get() = throw AnkoException("'android.widget.ImageView.imageURI' property does not have a getter")
-    set(v) = setImageURI(v)
-
-public var android.widget.ImageView.imageBitmap: android.graphics.Bitmap?
-    get() = throw AnkoException("'android.widget.ImageView.imageBitmap' property does not have a getter")
-    set(v) = setImageBitmap(v)
-
 public var android.widget.TextView.enabled: Boolean
     get() = throw AnkoException("'android.widget.TextView.enabled' property does not have a getter")
     set(v) = setEnabled(v)
@@ -2091,6 +1571,14 @@ public var android.widget.TextView.lines: Int
 public var android.widget.TextView.singleLine: Boolean
     get() = throw AnkoException("'android.widget.TextView.singleLine' property does not have a getter")
     set(v) = setSingleLine(v)
+
+public var android.widget.ImageView.imageURI: android.net.Uri?
+    get() = throw AnkoException("'android.widget.ImageView.imageURI' property does not have a getter")
+    set(v) = setImageURI(v)
+
+public var android.widget.ImageView.imageBitmap: android.graphics.Bitmap?
+    get() = throw AnkoException("'android.widget.ImageView.imageBitmap' property does not have a getter")
+    set(v) = setImageBitmap(v)
 
 public var android.widget.LinearLayout.gravity: Int
     get() = throw AnkoException("'android.widget.LinearLayout.gravity' property does not have a getter")

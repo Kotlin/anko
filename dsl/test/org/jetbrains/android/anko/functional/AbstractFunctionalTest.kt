@@ -30,9 +30,6 @@ import org.junit.Assert.*
 import org.junit.Test
 
 public abstract class AbstractFunctionalTest {
-    val config = TestAnkoConfiguration()
-    var classTree: ClassTree? = null
-
     protected fun loadOrCreate(file: File, data: String): String {
         try {
             return file.readText()
@@ -56,10 +53,7 @@ public abstract class AbstractFunctionalTest {
                                     subsystem: AnkoFile,
                                     config: TestAnkoConfiguration) {
         val (platformJars, versionJars) = inputJarFileNames.map { File(it) }.partition { it.name.startsWith("platform.") }
-
-        if (classTree == null) {
-            classTree = ClassProcessor(platformJars, versionJars).genClassTree()
-        }
+        var classTree = ClassProcessor(platformJars, versionJars).genClassTree()
 
         val generator = DSLGenerator(intVersion, version, platformJars, versionJars, config, classTree)
         generator.run()
@@ -68,7 +62,11 @@ public abstract class AbstractFunctionalTest {
 
         val actual = config.getOutputFile(subsystem).readText().replace("\r", "").trimBlank()
         val expectedPath = ("dsl/testData/functional/$version/$testDataFile")
-        val expected = loadOrCreate(File(expectedPath), actual).replace("\r", "").trimBlank()
+
+        val expectedFile = File(expectedPath)
+        if (!expectedFile.exists() && actual.isEmpty()) return
+
+        val expected = loadOrCreate(expectedFile, actual).replace("\r", "").trimBlank()
 
         assertTrue("Expected text is empty.", expected.length() > 0)
         assertTrue("Actual text is empty.", actual.length() > 0)
@@ -81,6 +79,7 @@ public abstract class AbstractFunctionalTest {
             version: String,
             settings: AnkoConfiguration.() -> Unit
     ) {
+        val config = TestAnkoConfiguration(version)
         config.generateImports = false
         config.generatePackage = false
         config.generateMavenArtifact = false

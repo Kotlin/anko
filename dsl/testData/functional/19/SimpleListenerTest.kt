@@ -1,24 +1,6 @@
 public fun android.gesture.GestureOverlayView.onGesturePerformed(l: (overlay: android.gesture.GestureOverlayView?, gesture: android.gesture.Gesture?) -> Unit): Unit = addOnGesturePerformedListener(l)
 
-public fun android.media.tv.TvView.onUnhandledInputEvent(l: (event: android.view.InputEvent?) -> Boolean): Unit = setOnUnhandledInputEventListener(l)
-
-public fun android.support.v4.app.FragmentTabHost.onTabChanged(l: (tabId: String?) -> Unit): Unit = setOnTabChangedListener(l)
-
-public fun android.support.v4.widget.SwipeRefreshLayout.onRefresh(l: () -> Unit): Unit = setOnRefreshListener(l)
-
-public fun android.support.v7.widget.ActionMenuView.onMenuItemClick(l: (item: android.view.MenuItem?) -> Boolean): Unit = setOnMenuItemClickListener(l)
-
-public fun android.support.v7.widget.SearchView.onClose(l: () -> Boolean): Unit = setOnCloseListener(l)
-
-public fun android.support.v7.widget.SearchView.onQueryTextFocusChange(l: (v: android.view.View, hasFocus: Boolean) -> Unit): Unit = setOnQueryTextFocusChangeListener(l)
-
-public fun android.support.v7.widget.SearchView.onSearchClick(l: (v: android.view.View) -> Unit): Unit = setOnSearchClickListener(l)
-
-public fun android.support.v7.widget.Toolbar.onMenuItemClick(l: (item: android.view.MenuItem?) -> Boolean): Unit = setOnMenuItemClickListener(l)
-
 public fun android.view.View.onLayoutChange(l: (v: android.view.View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) -> Unit): Unit = addOnLayoutChangeListener(l)
-
-public fun android.view.View.onApplyWindowInsets(l: (v: android.view.View?, insets: android.view.WindowInsets?) -> android.view.WindowInsets?): Unit = setOnApplyWindowInsetsListener(l)
 
 public fun android.view.View.onClick(l: (v: android.view.View) -> Unit): Unit = setOnClickListener(l)
 
@@ -41,8 +23,6 @@ public fun android.view.View.onSystemUiVisibilityChange(l: (visibility: Int) -> 
 public fun android.view.View.onTouch(l: (v: android.view.View, event: android.view.MotionEvent) -> Boolean): Unit = setOnTouchListener(l)
 
 public fun android.view.ViewStub.onInflate(l: (stub: android.view.ViewStub?, inflated: android.view.View?) -> Unit): Unit = setOnInflateListener(l)
-
-public fun android.widget.ActionMenuView.onMenuItemClick(l: (item: android.view.MenuItem?) -> Boolean): Unit = setOnMenuItemClickListener(l)
 
 public fun android.widget.AdapterView<out android.widget.Adapter?>.onClick(l: (v: android.view.View) -> Unit): Unit = setOnClickListener(l)
 
@@ -97,8 +77,6 @@ public fun android.widget.TabHost.onTabChanged(l: (tabId: String?) -> Unit): Uni
 public fun android.widget.TextView.onEditorAction(l: (v: android.widget.TextView?, actionId: Int, event: android.view.KeyEvent?) -> Boolean): Unit = setOnEditorActionListener(l)
 
 public fun android.widget.TimePicker.onTimeChanged(l: (view: android.widget.TimePicker?, hourOfDay: Int, minute: Int) -> Unit): Unit = setOnTimeChangedListener(l)
-
-public fun android.widget.Toolbar.onMenuItemClick(l: (item: android.view.MenuItem?) -> Boolean): Unit = setOnMenuItemClickListener(l)
 
 public fun android.widget.VideoView.onCompletion(l: (mp: android.media.MediaPlayer?) -> Unit): Unit = setOnCompletionListener(l)
 
