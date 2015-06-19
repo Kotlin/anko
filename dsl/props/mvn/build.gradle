@@ -67,6 +67,22 @@ publishing {
                     name 'anko'
                     description 'Kotlin DSL for Android'
                     url projectUrl
+                    if ("%VERSION".contains("-")) {
+                        dependencies {
+                            dependency {
+                                groupId POM_ARTEFACT_GROUP
+                                artifactId "anko-common"
+                                version POM_ARTEFACT_VERSION
+                            }
+                            if ("%VERSION".contains("appcompat-v7")) {
+                                dependency {
+                                    groupId POM_ARTIFACT_GROUP
+                                    artifactId "anko-support-v4"
+                                    version POM_ARTEFACT_VERSION
+                                }
+                            }
+                        }
+                    }
                     scm {
                         url scmUrl
                         connection connectionUrl
