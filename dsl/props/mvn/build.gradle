@@ -13,11 +13,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion %VERSION
+    compileSdkVersion %SDK_VERSION
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        targetSdkVersion %VERSION
+        targetSdkVersion %SDK_VERSION
     }
 
     sourceSets {
@@ -35,8 +35,12 @@ dependencies {
         jcenter()
     }
 
-    compile fileTree(dir: '../../original/%FVERSION', include: ['*.jar'])
+    compile fileTree(dir: '../../original/%ORIGINAL_VERSION', include: ['*.jar'])
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    if ("%ARTIFACT_VERSION" != "-common") {
+        compile files('../../zip/anko-common.jar')
+    }
 }
 
 task androidReleaseJar(type: Jar, dependsOn: assembleRelease) {
@@ -67,14 +71,14 @@ publishing {
                     name 'anko'
                     description 'Kotlin DSL for Android'
                     url projectUrl
-                    if ("%VERSION".contains("-")) {
+                    if ("%ARTIFACT_VERSION" != "common") {
                         dependencies {
                             dependency {
                                 groupId POM_ARTEFACT_GROUP
                                 artifactId "anko-common"
                                 version POM_ARTEFACT_VERSION
                             }
-                            if ("%VERSION".contains("appcompat-v7")) {
+                            if ("%ARTIFACT_VERSION" == "appcompat-v7") {
                                 dependency {
                                     groupId POM_ARTIFACT_GROUP
                                     artifactId "anko-support-v4"

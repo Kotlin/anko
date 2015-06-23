@@ -21,17 +21,25 @@
     <target name="build_artifacts">
         <mkdir dir="workdir/zip" />
 
+        <delete>
+            <fileset dir="workdir/zip" includes="*" />
+        </delete>
+
+        <build_artifact version="21-common" artifact.name="common"/>
         <build_artifact version="15"/>
-        <build_artifact version="15s"/>
         <build_artifact version="19"/>
-        <build_artifact version="19s"/>
         <build_artifact version="21"/>
-        <build_artifact version="21s"/>
+        <build_artifact version="21-support-v4"/>
+        <build_artifact version="21-appcompat-v7"/>
+        <build_artifact version="21-cardview-v7"/>
+        <build_artifact version="21-gridlayout-v7"/>
+        <build_artifact version="21-recyclerview-v7"/>
     </target>
 
     <macrodef name="build_artifact">
         <attribute name="version" />
         <attribute name="version.dir" default="workdir/gen/@{version}" />
+        <attribute name="artifact.name" default="@{version}" />
 
         <sequential>
             <fail message="The directory '@{version.dir}' does not exist">
@@ -48,13 +56,13 @@
             </exec>
 
             <delete>
-                <fileset dir="@{version.dir}/build/repo/org/jetbrains/anko/anko" includes="maven-metadata.*" />
+                <fileset dir="@{version.dir}/build/repo/org/jetbrains/anko/anko-@{artifact.name}" includes="maven-metadata.*" />
             </delete>
 
-            <zip destfile="workdir/zip/anko-@{version}.zip" basedir="@{version.dir}/build/repo"/>
+            <zip destfile="workdir/zip/anko-@{artifact.name}.zip" basedir="@{version.dir}/build/repo"/>
 
             <copy file="@{version.dir}/build/libs/@{version}.jar"
-                  tofile="workdir/zip/anko-@{version}.jar"
+                  tofile="workdir/zip/anko-@{artifact.name}.jar"
                   overwrite="true" />
 
         </sequential>

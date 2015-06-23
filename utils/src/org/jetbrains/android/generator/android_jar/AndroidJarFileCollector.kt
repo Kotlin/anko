@@ -61,15 +61,20 @@ class AndroidJarCollector {
         }
 
         for ((index, version) in REQUIRED_PLATFORM_VERSIONS.sortDescendingBy { it }.withIndex()) {
-            println("Processing platform ${version}:")
+            println("Processing version '${version}':")
 
             val versionDir = File(ORIGINAL_DIR, version.toString())
             processVersion(versionDir, version, false, emptySet())
 
-            if (index == 0) { // Generate support artifacts for this platform
+            if (index == 0) {
+                // Generate common artifact
+                println("Processing version 'common':")
+                processVersion(File(ORIGINAL_DIR, "$version-common"), version, false, emptySet())
+
+                // Generate support artifacts for this platform
                 supportFilesWithDependencies.forEach {
                     val versionSuffix = it.first { !it.platformFile }.file.name.substringBeforeLast('-')
-                    println("Processing platform $version-$versionSuffix:")
+                    println("Processing version '$version-$versionSuffix':")
 
                     val supportVersionDir = File(ORIGINAL_DIR, "$version-$versionSuffix")
                     processVersion(supportVersionDir, version, true, it)

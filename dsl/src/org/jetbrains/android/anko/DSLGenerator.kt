@@ -62,11 +62,16 @@ class DSLGenerator(
                 resDirectory.mkdirs()
             }
 
-            val artifactVersion = if (supportVersion) config.version.substringAfter('-') else config.version
-            val platformVersion = config.version.substringBefore('-')
+            val artifactVersion = if (supportVersion)
+                config.version.substringAfter('-')
+            else if (config.getVersionType() == AnkoFileType.COMMON)
+                "common"
+            else config.version
+
+            val sdkVersion = config.version.substringBefore('-')
 
             // Write manifest
-            val manifest = mvnManifest.replace("%VERSION", platformVersion)
+            val manifest = mvnManifest.replace("%SDK_VERSION", sdkVersion)
             File(config.outputDirectory + "src/main/AndroidManifest.xml").writeText(manifest)
 
             // Copy gradle wrapper
@@ -76,7 +81,11 @@ class DSLGenerator(
             copy("gradle/wrapper/gradle-wrapper.properties")
 
             // Copy gradle build files
-            fun String.substVersions() = replace("%VERSION", platformVersion).replace("%FVERSION", artifactVersion)
+            fun String.substVersions(): String {
+                return replace("%SDK_VERSION", sdkVersion)
+                        .replace("%ARTIFACT_VERSION", artifactVersion)
+                        .replace("%ORIGINAL_VERSION", config.version)
+            }
             copy("gradle.properties") { it.substVersions() }
             copy("build.gradle") { it.substVersions() }
         }

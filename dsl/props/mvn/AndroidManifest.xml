@@ -26,6 +26,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.jetbrains.anko">
 	<uses-sdk
 			android:minSdkVersion="9"
-			android:targetSdkVersion="%VERSION"/>
+			android:targetSdkVersion="%SDK_VERSION"/>
     <application/>
 </manifest>
