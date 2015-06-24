@@ -21,7 +21,7 @@ import android.app.Fragment
 import android.util.Log
 
 public interface AnkoLogger {
-    protected val loggerTag: String
+    public val loggerTag: String
         get() {
             val tag = javaClass.getSimpleName()
             return if (tag.length() <= 23) {
