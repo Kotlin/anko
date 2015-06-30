@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="jeromq-0.3.4">
+  <library name="gson">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/jeromq-0.3.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/gson/gson-2.3.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

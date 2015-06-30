@@ -25,12 +25,6 @@
         <get src="http://repo1.maven.org/maven2/org/ow2/asm/asm-debug-all/4.2/asm-debug-all-4.2.jar"
              dest="lib/asm-4.2.jar" usetimestamp="true"/>
 
-        <get src="http://central.maven.org/maven2/org/zeromq/jeromq/0.3.4/jeromq-0.3.4.jar"
-             dest="lib/jeromq-0.3.4.jar" usetimestamp="true"/>
-
-        <get src="http://repo1.maven.org/maven2/com/google/code/gson/gson/2.3/gson-2.3.jar"
-             dest="lib/gson-2.3.jar" usetimestamp="true"/>
-
         <get src="http://search.maven.org/remotecontent?filepath=junit/junit/4.11/junit-4.11.jar"
              dest="lib/junit-4.11.jar" usetimestamp="true"/>
 
@@ -43,23 +37,11 @@
         <get src="http://search.maven.org/remotecontent?filepath=org/ccil/cowan/tagsoup/tagsoup/1.2/tagsoup-1.2.jar"
              dest="lib/tagsoup-1.2.jar" usetimestamp="true"/>
 
-        <get src="http://search.maven.org/remotecontent?filepath=com/samskivert/jmustache/1.10/jmustache-1.10.jar"
-             dest="lib/jmustache.jar" usetimestamp="true"/>
-
-        <get src="http://search.maven.org/remotecontent?filepath=org/robolectric/robolectric/2.4/robolectric-2.4-jar-with-dependencies.jar"
-             dest="lib/robolectric-with-dependencies.jar" usetimestamp="true"/>
-
-        <get src="http://search.maven.org/remotecontent?filepath=org/robolectric/robolectric/2.4/robolectric-2.4-sources.jar"
-             dest="lib/robolectric-sources.jar" usetimestamp="true"/>
-
         <get src="http://search.maven.org/remotecontent?filepath=org/robolectric/android-all/4.3_r2-robolectric-0/android-all-4.3_r2-robolectric-0.jar"
              dest="lib/android-all-4.1.2_r1-robolectric-0.jar" usetimestamp="true"/>
 
         <get src="https://github.com/JetBrains/kotlin/releases/download/build-0.12.412/kotlin-plugin-0.12.412.Idea141.1.zip"
              dest="lib/kotlin-plugin.zip" usetimestamp="true"/>
-
-        <get src="http://search.maven.org/remotecontent?filepath=com/github/javaparser/javaparser-core/2.1.0/javaparser-core-2.1.0.jar"
-             dest="lib/javaparser-core.jar" usetimestamp="true"/>
 
         <get src="http://heanet.dl.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-bin.zip"
              dest="lib/download/ant-contrib-1.0b3-bin.zip" usetimestamp="true"/>

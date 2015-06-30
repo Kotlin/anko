@@ -3,8 +3,8 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Plugin</output-path>
     <root id="root">
       <element id="directory" name="lib">
-        <element id="library" level="project" name="gson-2.3" />
-        <element id="library" level="project" name="jeromq-0.3.4" />
+        <element id="library" level="project" name="gson" />
+        <element id="library" level="project" name="jeromq" />
         <element id="archive" name="dsl-preview-plugin.jar">
           <element id="module-output" name="message-bus" />
           <element id="module-output" name="idea-plugin" />

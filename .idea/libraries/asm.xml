@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="gson-2.3">
+  <library name="asm">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/gson-2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/asm-4.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

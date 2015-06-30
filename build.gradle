@@ -1,0 +1,49 @@
+configurations {
+    robolectric
+    androidall
+    gson
+    jmustache
+    jeromq
+    javaparser
+}
+
+String ROBOLECTRIC_VERSION = "3.0-rc3"
+
+dependencies {
+    robolectric "org.robolectric:robolectric:${ROBOLECTRIC_VERSION}"
+    robolectric "org.robolectric:robolectric:${ROBOLECTRIC_VERSION}:sources"
+
+    robolectric "org.robolectric:shadows-core:${ROBOLECTRIC_VERSION}"
+    robolectric "org.robolectric:shadows-support-v4:${ROBOLECTRIC_VERSION}"
+
+    androidall 'org.robolectric:android-all:5.0.0_r2-robolectric-1'
+
+    gson 'com.google.code.gson:gson:2.3.1'
+    jmustache 'com.samskivert:jmustache:1.10'
+    jeromq 'org.zeromq:jeromq:0.3.4'
+    javaparser 'com.github.javaparser:javaparser-core:2.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+task(collectDependencies) << {
+    groovy.util.AntBuilder antBuilder = new groovy.util.AntBuilder()
+    for (configuration in project.getConfigurations().asList()) {
+        println("Resolving configuration " + configuration.name)
+
+        Set<File> files = configuration.resolve()
+        if (files.size() < 1) continue
+
+        File targetDirectory = new File("lib", configuration.name)
+        targetDirectory.mkdirs()
+
+        for (file in files) {
+            copy {
+                from file
+                into targetDirectory
+            }
+        }
+    }
+}
