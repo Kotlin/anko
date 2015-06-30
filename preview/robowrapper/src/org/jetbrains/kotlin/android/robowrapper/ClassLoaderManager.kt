@@ -28,21 +28,21 @@ public class ClassLoaderManager {
         // Context ClassLoader is set in RobolectricTestRunner
         val currentClassLoader = Thread.currentThread().getContextClassLoader()
         if (currentClassLoader !is InstrumentingClassLoader) {
-            throw RuntimeException("Not an AsmInstrumentingClassLoader")
+            throw RuntimeException("Not an InstrumentingClassLoader")
         }
 
         val parentClassLoader = Thread.currentThread().getContextClassLoader().getParent()
-        val asmClazz = parentClassLoader.loadClass("org.robolectric.bytecode.AsmInstrumentingClassLoader")
+        val asmClazz = parentClassLoader.loadClass("org.robolectric.internal.bytecode.InstrumentingClassLoader")
 
-        val setupField = asmClazz.getDeclaredField("setup")
+        val configField = asmClazz.getDeclaredField("config")
         val urlsField = asmClazz.getDeclaredField("urls")
         val classesField = asmClazz.getDeclaredField("classes")
 
-        setupField.setAccessible(true)
+        configField.setAccessible(true)
         urlsField.setAccessible(true)
         classesField.setAccessible(true)
 
-        val setup = setupField.get(currentClassLoader)
+        val setup = configField.get(currentClassLoader)
         val urlClassLoader = urlsField.get(currentClassLoader) as URLClassLoader
         @suppress("UNCHECKED_CAST")
         val oldClasses = classesField.get(currentClassLoader) as Map<String, Class<Any>>
@@ -69,11 +69,12 @@ public class ClassLoaderManager {
     ) {
         if (removePackage.isEmpty()) return
 
+        val oldClassesList = oldClasses.toList()
         val checkPackageName = removePackage.isNotEmpty()
-        for (clazz in oldClasses.entrySet()) {
-            val key = clazz.getKey()
+        for (clazz in oldClassesList) {
+            val key = clazz.first
             if (checkPackageName && !key.startsWith(removePackage)) {
-                newClasses.put(key, clazz.getValue())
+                newClasses.put(key, clazz.second)
             }
         }
     }
