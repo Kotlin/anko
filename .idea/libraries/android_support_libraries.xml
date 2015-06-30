@@ -6,7 +6,7 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/android-sdk/support/support-v4/classes.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/android-sdk/support/appcompat-v7/classes.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/android-sdk/support/support-v4/libs/internal_impl-22.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/android-sdk/support/support-v4/libs/internal_impl-22.2.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
