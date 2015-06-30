@@ -24,6 +24,7 @@ import android.widget.FrameLayout
 import org.robolectric.Robolectric
 import org.robolectric.util.FragmentTestUtil
 import org.jetbrains.kotlin.android.robowrapper.UnsupportedClassException
+import org.robolectric.util.SupportFragmentTestUtil
 
 public class BaseViewResolver {
 
@@ -42,7 +43,7 @@ public class BaseViewResolver {
             }
             clazz.isSupportFragment() -> {
                 val fragment = clazz.newInstance() as android.support.v4.app.Fragment
-                FragmentTestUtil.startFragment(fragment)
+                SupportFragmentTestUtil.startFragment(fragment)
                 var baseView = fragment.getView()
                 if (baseView is ViewGroup && baseView.getChildCount() > 0) {
                     baseView = baseView.getChildAt(0)

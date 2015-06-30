@@ -32,10 +32,12 @@ import android.text.TextUtils.TruncateAt
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import org.robolectric.Robolectric
-import org.robolectric.shadows.ShadowDrawable
 import android.text.SpannedString
 import android.text.SpannableStringBuilder
 import org.jetbrains.kotlin.android.attrs.Attr
+import org.robolectric.Shadows
+import org.robolectric.res.ResourceLoader
+import org.robolectric.shadows.ShadowResources
 
 // Render a ViewGroup.LayoutParams subclass, make a parameter list of (android:layout_...)
 private fun renderLayoutParams(view: View, lp: ViewGroup.LayoutParams, topLevel: Boolean): String {
@@ -184,11 +186,11 @@ private fun renderAttribute(view: View, attr: Attr?, key: String, value: Any, to
 
 private fun renderDrawableAttribute(value: android.graphics.drawable.Drawable, view: android.view.View): String? {
     // Actual resourceId is stored in a ShadowDrawable
-    val drawable = Robolectric.shadowOf_<ShadowDrawable, Drawable>(value)
+    val drawable = Shadows.shadowOf(value)
     if (drawable != null) {
         val resourceId = drawable.getCreatedFromResId()
         if (resourceId != -1) {
-            val resourceLoader = Robolectric.getResourceLoader(view.getContext())
+            val resourceLoader = Shadows.shadowOf(view.getContext()).getResourceLoader()
             // Convert Int id to a string representation (@package:resource)
             val resourceName = resourceLoader?.getNameForId(resourceId)
             if (resourceName != null) {

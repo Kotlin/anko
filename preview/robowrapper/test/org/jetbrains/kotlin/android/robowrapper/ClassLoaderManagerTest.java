@@ -25,7 +25,7 @@ import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.*;
 
-@Config(manifest= Config.NONE, emulateSdk = 18)
+@Config(manifest = Config.NONE)
 @RunWith(RobolectricTestRunner.class)
 public class ClassLoaderManagerTest {
 
@@ -49,7 +49,7 @@ public class ClassLoaderManagerTest {
         ClassLoader cl3 = getContextClassLoader();
         Object o3 = cl3.loadClass(className);
 
-        assertNotEquals(o1, o2);
+        assertNotSame(o1, o2);
         assertEquals(o2, o3);
     }
 

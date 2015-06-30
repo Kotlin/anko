@@ -37,7 +37,7 @@ import java.io.ByteArrayInputStream
 import kotlin.dom.parseXml
 import org.w3c.dom.Element
 
-Config(manifest = Config.NONE, emulateSdk = 18)
+Config(manifest = Config.NONE)
 RunWith(RobolectricTestRunner::class)
 public class XmlBuilderTest {
 

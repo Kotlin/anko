@@ -36,7 +36,7 @@ import kotlin.test.*
 import android.view.ViewGroup
 import org.jetbrains.kotlin.android.attrs.Attr
 
-Config(manifest = Config.NONE, emulateSdk = 18)
+Config(manifest = Config.NONE)
 RunWith(RobolectricTestRunner::class)
 public class ViewHierarchyParserTest() {
 

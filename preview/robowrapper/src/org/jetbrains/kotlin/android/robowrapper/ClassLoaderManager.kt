@@ -16,7 +16,7 @@
 
 package org.jetbrains.kotlin.android.robowrapper
 
-import org.robolectric.bytecode.AsmInstrumentingClassLoader
+import org.robolectric.internal.bytecode.InstrumentingClassLoader
 
 import java.lang.reflect.Field
 import java.net.URL
@@ -27,7 +27,7 @@ public class ClassLoaderManager {
     public fun replaceClassLoader(packageName: String) {
         // Context ClassLoader is set in RobolectricTestRunner
         val currentClassLoader = Thread.currentThread().getContextClassLoader()
-        if (currentClassLoader !is AsmInstrumentingClassLoader) {
+        if (currentClassLoader !is InstrumentingClassLoader) {
             throw RuntimeException("Not an AsmInstrumentingClassLoader")
         }
 
@@ -49,7 +49,7 @@ public class ClassLoaderManager {
         val urls = urlClassLoader.getURLs()
 
         // Create new ClassLoader instance
-        val newClassLoader = asmClazz.getConstructors()[0].newInstance(setup, urls) as AsmInstrumentingClassLoader
+        val newClassLoader = asmClazz.getConstructors()[0].newInstance(setup, urls) as InstrumentingClassLoader
 
         // Copy all Map entries from the old AsmInstrumentingClassLoader
         @suppress("UNCHECKED_CAST")

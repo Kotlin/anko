@@ -28,8 +28,8 @@ import org.jetbrains.kotlin.android.attrs.*
 class ViewNode(val view: View, val children: List<ViewNode>, val attrs: Set<Pair<String, Pair<Attr?, Any>>>) {
     override fun toString(): String {
         val sb = StringBuilder()
-        sb.append("${view.javaClass.getName()}: attrs: $attrs": String?)
-        children.map { it.toString() }.forEach { sb.append(("  " + it.replace("\n", "  ")) : String?) }
+        sb.append("${view.javaClass.getName()}: attrs: $attrs")
+        children.map { it.toString() }.forEach { sb.append(("  " + it.replace("\n", "  "))) }
         return sb.toString()
     }
 }
@@ -131,9 +131,8 @@ private fun parseAttributes(
         }
 
         val propertyName = method.resolveBooleanPropertyName(view)
-                ?: method.resolveGenericPropertyName(view)
+                ?: method.resolveGenericPropertyName(view) ?: continue
 
-        if (propertyName == null) continue
         if (propertyName !in attrs && propertyName != "layoutParams") continue
 
         try {

@@ -16,6 +16,7 @@
 
 package org.jetbrains.kotlin.android.robowrapper
 
+import android.os.Build
 import android.view.View
 import org.jetbrains.kotlin.android.dslpreview.Pack
 import org.junit.Before
@@ -24,6 +25,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.shadows.ShadowApplication
 import org.zeromq.ZMQ
 
 import java.io.PrintStream
@@ -33,7 +35,7 @@ import java.nio.charset.Charset
 import kotlin.properties.Delegates
 
 RunWith(RobolectricTestRunner::class)
-Config(emulateSdk = 18)
+Config(sdk = intArrayOf(Build.VERSION_CODES.LOLLIPOP))
 public class ParserTest {
 
     private var myActivityClass: String by Delegates.notNull()
@@ -45,8 +47,6 @@ public class ParserTest {
     Before
     public fun init() {
         myActivityClass = System.getProperty("robo.activityClass", "")
-
-        
     }
 
     Test
@@ -84,7 +84,7 @@ public class ParserTest {
     }
 
     private fun generate(className: String): Pack {
-        val packageName = Robolectric.getShadowApplication().getPackageName() + "."
+        val packageName = ShadowApplication.getInstance().getPackageName() + "."
 
         try {
             if (className.isEmpty()) throw IllegalArgumentException("Class name is empty")
