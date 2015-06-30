@@ -44,11 +44,7 @@ public class BaseViewResolver {
             clazz.isSupportFragment() -> {
                 val fragment = clazz.newInstance() as android.support.v4.app.Fragment
                 SupportFragmentTestUtil.startFragment(fragment)
-                var baseView = fragment.getView()
-                if (baseView is ViewGroup && baseView.getChildCount() > 0) {
-                    baseView = baseView.getChildAt(0)
-                }
-                baseView
+                fragment.getView()
             }
             else -> throw UnsupportedClassException()
         }
