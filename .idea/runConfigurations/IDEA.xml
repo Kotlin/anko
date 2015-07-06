@@ -24,7 +24,11 @@
       <option name="BuildArtifacts" enabled="true">
         <artifact name="Plugin" />
       </option>
-      <option name="BuildArtifacts" enabled="true" />
+      <option name="BuildArtifacts" enabled="true">
+        <artifact name="Plugin" />
+        <artifact name="Plugin ZIP archive" />
+        <artifact name="Robowrapper" />
+      </option>
     </method>
   </configuration>
 </component>
