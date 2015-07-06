@@ -22,6 +22,7 @@ public class Pack(
         public val xml: String,
         public val error_code: Int,
         public val error: String,
+        public val stacktrace: String,
         public val alive: Boolean,
         public var port: Int = -1
 ) {

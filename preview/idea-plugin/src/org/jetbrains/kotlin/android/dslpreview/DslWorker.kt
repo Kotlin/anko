@@ -36,11 +36,7 @@ import java.util.zip.ZipEntry
 import java.io.FileOutputStream
 import com.intellij.openapi.diagnostic.Logger
 
-public class DslWorker(
-        private val myProject: Project,
-        private val myToolWindow: ToolWindow,
-        private val myListener: DslWorker.Listener
-) {
+public class DslWorker(private val myListener: DslWorker.Listener) {
     private val GSON = Gson()
     private val START_MARKER = "" + (5.toChar()) + (7.toChar()) + (5.toChar())
     private val END_MARKER = START_MARKER + START_MARKER
@@ -52,34 +48,20 @@ public class DslWorker(
     private val ROBOWRAPPER_LOCK = Object()
     private val DOWNLOAD_LOCK = Object()
 
-    private fun downloadAndroidAll(version: Int, cmd: RobowrapperContext) {
-        val url = DependencyUtils.getAndroidAllVersionUrl(version)
-        val outputFile = DependencyUtils.getAndroidAllVersionPath(version)
-
-        val downloadTask = FileDownloadTask(cmd, url, outputFile)
-        ProgressManager.getInstance().run(downloadTask)
-    }
-
-    private fun downloadRobowrapperDependencies(cmd: RobowrapperContext, deps: List<Pair<String, String>>) {
-        val tempDirectory = File(DependencyUtils.getDependencyDirectory(), "tmp/")
-        if (!tempDirectory.exists()) {
-            tempDirectory.mkdirs()
-        }
-        val downloadTask = FileDownloadTask(cmd, deps)
+    private fun downloadRobowrapperDependencies(cmd: RobowrapperContext, deps: List<Dependency>) {
+        val downloadTask = DependencyDownloadTask(cmd, deps)
         ProgressManager.getInstance().run(downloadTask)
     }
 
     private fun checkRobowrapperDependencies(cmd: RobowrapperContext): Boolean {
-        val robowrapperDeps = DependencyUtils.getRobowrapperDependencies()
-        var downloaded = true
-        for (p in robowrapperDeps) {
-            if (!File(p.second).exists()) {
-                downloaded = false
-                break
-            }
+        val tempDirectory = File(RobowrapperDependencies.DEPENDENCIES_DIRECTORY, "tmp/")
+        if (!tempDirectory.exists()) {
+            tempDirectory.mkdirs()
         }
+
+        val downloaded = RobowrapperDependencies.DEPENDENCIES.all { it.file.exists() }
         if (!downloaded) {
-            downloadRobowrapperDependencies(cmd, robowrapperDeps)
+            downloadRobowrapperDependencies(cmd, RobowrapperDependencies.DEPENDENCIES)
         }
         return downloaded
     }
@@ -91,13 +73,7 @@ public class DslWorker(
     }
 
     public fun exec(cmd: RobowrapperContext) {
-        val sdkVersion = cmd.androidFacet.getAndroidModuleInfo().getTargetSdkVersion().getApiLevel()
-        val androidAllFile = DependencyUtils.getAndroidAllVersionPath(sdkVersion)
         if (!checkRobowrapperDependencies(cmd)) {
-            return
-        }
-        if (!File(androidAllFile).exists()) {
-            downloadAndroidAll(sdkVersion, cmd)
             return
         }
 
@@ -106,9 +82,9 @@ public class DslWorker(
             return
         }
 
-        val robowrapperDirectory = DependencyUtils.getDependencyDirectory().getAbsolutePath()
+        val robowrapperDirectory = RobowrapperDependencies.DEPENDENCIES_DIRECTORY.getAbsolutePath()
         if (robowrapperDirectory.isEmpty()) {
-            myListener.onXmlError(ErrorKind.INVALID_ROBOWRAPPER_DIRECTORY, "", false)
+            myListener.onXmlError(ErrorKind.INVALID_ROBOWRAPPER_DIRECTORY, "Robowrapper directory is empty.", false)
             return
         }
 
@@ -149,7 +125,7 @@ public class DslWorker(
 
             if (startMarker < 0 || endMarker < 0 || endMarker <= startMarker) {
                 myAlive = false
-                myListener.onXmlError(ErrorKind.UNKNOWN, "", false)
+                myListener.onXmlError(ErrorKind.UNKNOWN, "Unable to find message markers.", false)
                 return
             }
 
@@ -160,7 +136,9 @@ public class DslWorker(
             myAlive = pack.alive
 
             if (pack.error_code != 0 || pack.xml.isEmpty()) {
-                if (!alive) myListener.onXmlError(ErrorKind.UNKNOWN, "${pack.error_code}: ${pack.error}", myAlive)
+                if (!alive) {
+                    myListener.onXmlError(ErrorKind.UNKNOWN, "Unknown error ${pack.error_code}: ${pack.error}", myAlive)
+                }
                 else exec(cmd)
             }
             else {
@@ -178,7 +156,7 @@ public class DslWorker(
 
             val pluginJarFile = PathManager.getJarPathForClass(javaClass)!!
             val pluginDirectory = File(pluginJarFile).getParent()
-            val policyFile = File(DependencyUtils.getDependencyDirectory(), "custom.policy")
+            val policyFile = File(RobowrapperDependencies.DEPENDENCIES_DIRECTORY, "custom.policy")
 
             synchronized (ROBOWRAPPER_LOCK) {
                 try {
@@ -251,43 +229,37 @@ public class DslWorker(
         }
     }
 
-
-    private fun FileDownloadTask(ctx: RobowrapperContext, url: String, outputFile: String): FileDownloadTask {
-        return FileDownloadTask(ctx, Arrays.asList<Pair<String, String>>(url to outputFile))
-    }
-
-    private inner class FileDownloadTask(
+    private inner class DependencyDownloadTask(
             private val ctx: RobowrapperContext,
-            private val filesToDownload: List<Pair<String, String>>
+            private val dependencies: List<Dependency>
     ) : Task.Backgroundable(ctx.androidFacet.getModule().getProject(),
             "Downloading dependencies", false) {
 
         override fun run(progressIndicator: ProgressIndicator) {
             progressIndicator.setIndeterminate(true)
 
-            fun reportDownloadError(filename: String) {
+            fun reportDownloadError(url: String) {
                 ApplicationManager.getApplication().invokeLater(object : Runnable {
                     override fun run() {
-                        myListener.onXmlError(ErrorKind.UNKNOWN, "Failed to download " + filename, false)
+                        myListener.onXmlError(ErrorKind.UNKNOWN, "Failed to download $url", false)
                     }
                 })
             }
 
             val result = synchronized(DOWNLOAD_LOCK) {
-                filesToDownload.all { fileToDownload ->
-                    val file = File(fileToDownload.second)
+                dependencies.all { dependency ->
                     try {
-                        if (!file.exists()) {
-                            val url = URL(fileToDownload.first)
-                            Resources.asByteSource(url).copyTo(Files.asByteSink(file))
+                        if (!dependency.file.exists()) {
+                            val url = URL(dependency.downloadUrl)
+                            Resources.asByteSource(url).copyTo(Files.asByteSink(dependency.file))
                         }
                         true
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        if (file.exists()) {
-                            file.delete()
+                        if (dependency.file.exists()) {
+                            dependency.file.delete()
                         }
-                        reportDownloadError(fileToDownload.first)
+                        reportDownloadError(dependency.downloadUrl)
                         false
                     }
                 }

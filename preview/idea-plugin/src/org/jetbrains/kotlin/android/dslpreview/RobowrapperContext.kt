@@ -35,9 +35,6 @@ class RobowrapperContext(description: PreviewClassDescription) {
     private val applicationPackage = androidFacet.getManifest()
             ?.getPackage()?.getXmlAttributeValue()?.getValue() ?: "app"
 
-    private val apiLevel = androidFacet.getAndroidModuleInfo().getTargetSdkVersion().getApiLevel()
-    private val androidAll = DependencyUtils.getAndroidAllVersionPath(apiLevel)
-
     private val assetsDirectory = mainSourceProvider.getAssetsDirectories().firstOrNull()
     private val resDirectory = mainSourceProvider.getResDirectories().firstOrNull()
 
@@ -61,6 +58,7 @@ class RobowrapperContext(description: PreviewClassDescription) {
         manifestFile.writeText(
             """<?xml version="1.0" encoding="utf-8"?>
             <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="%PACKAGE%">
+              <uses-sdk android:targetSdkVersion="21"/>
               <application>
                     %ACTIVITIES%
               </application>
@@ -89,20 +87,20 @@ class RobowrapperContext(description: PreviewClassDescription) {
         val robowrapperDirectory = File(
             File(pluginJarPath).getParentFile().getParentFile(), "robowrapper/")
 
+        val mavenDependencies = RobowrapperDependencies.DEPENDENCIES.map { it.file.getAbsolutePath() }.joinToString(":")
+
         val pluginDependencies = listOf(
             "gson-2.3.jar",
             "jeromq-0.3.4.jar")
             .map { File(pluginDirectory, it).getAbsolutePath() }.joinToString(":", prefix = ":")
 
-        val robowrapperDependencies = listOf(
-                "robowrapper.jar",
-                "junit-4.11.jar",
-                "robolectric-with-dependencies.jar")
-            .map { File(robowrapperDirectory, it).getAbsolutePath() }.joinToString(":", prefix = ":")
+        val robowrapperDependencies = robowrapperDirectory
+                .listFiles { it.name.endsWith(".jar") }
+                ?.map { it.getAbsolutePath() }?.joinToString(":", prefix = ":") ?: ""
 
         val androidDependencies = resolveAndroidDependencies(roots, androidSdkDirectory)
 
-        val dependencyDirectory = DependencyUtils.getDependencyDirectory()
+        val dependencyDirectory = RobowrapperDependencies.DEPENDENCIES_DIRECTORY
 
         val sdk = ModuleRootManager.getInstance(module).getSdk()
         val sdkType = sdk?.getSdkType()
@@ -112,7 +110,7 @@ class RobowrapperContext(description: PreviewClassDescription) {
 
         val a = arrayListOf(escape(pathToJava), "-cp")
         with (a) {
-            add(androidAll + pluginDependencies + robowrapperDependencies + androidDependencies)
+            add(mavenDependencies + pluginDependencies + robowrapperDependencies + androidDependencies)
             add("-Djava.io.tmpdir=", File(dependencyDirectory, "tmp"))
             add("-Drobolectric.offline=true")
             add("-Drobolectric.dependency.dir=", dependencyDirectory)

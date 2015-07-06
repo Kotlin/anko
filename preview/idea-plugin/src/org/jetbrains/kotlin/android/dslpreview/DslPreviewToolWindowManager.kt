@@ -71,7 +71,7 @@ import org.jetbrains.kotlin.psi.JetFile
 public class DslPreviewToolWindowManager(private val myProject: Project, fileEditorManager: FileEditorManager) : AndroidLayoutPreviewToolWindowManager(myProject, fileEditorManager), DslWorker.Listener, com.intellij.openapi.Disposable {
 
     private var myDslWorker: DslWorker? = null
-    private var myActivityListModel: DefaultComboBoxModel? = null
+    private var myActivityListModel: DefaultComboBoxModel<Any>? = null
 
     private var myLastFile: PsiFile? = null
     private var myLastAndroidFacet: AndroidFacet? = null
@@ -98,7 +98,7 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
 
     override fun initToolWindow() {
         super<AndroidLayoutPreviewToolWindowManager>.initToolWindow()
-        myDslWorker = DslWorker(myProject, getToolWindow(), this)
+        myDslWorker = DslWorker(this)
 
         val panel = getToolWindowForm().getContentPanel().getComponent(1)
 
@@ -178,14 +178,7 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
     }
 
     override fun onXmlError(kind: DslWorker.ErrorKind, description: String, alive: Boolean) {
-        when (kind) {
-            DslWorker.ErrorKind.INVALID_ROBOWRAPPER_DIRECTORY ->
-                showNotification("Invalid Robowrapper directory.", MessageType.ERROR)
-            DslWorker.ErrorKind.UNKNOWN_ANDROID_VERSION ->
-                showNotification("Unknown Android version.", MessageType.ERROR)
-            else ->
-                showNotification("Dsl processing error (" + kind.name() + ").", MessageType.ERROR)
-        }
+        showNotification("Dsl processing error ($kind): $description", MessageType.ERROR)
     }
 
     override fun render(): Boolean {

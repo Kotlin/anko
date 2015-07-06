@@ -34,24 +34,22 @@ import java.io.StringWriter
 import java.nio.charset.Charset
 import kotlin.properties.Delegates
 
-RunWith(RobolectricTestRunner::class)
-Config(sdk = intArrayOf(Build.VERSION_CODES.LOLLIPOP))
+RunWith(CustomRobolectricTestRunner::class)
 public class ParserTest {
-
-    private var myActivityClass: String by Delegates.notNull()
-    private val myClassLoaderManager = ClassLoaderManager()
-    private val myBaseViewResolver = BaseViewResolver()
+    private var activityClass: String by Delegates.notNull()
+    private val classLoaderManager = ClassLoaderManager()
+    private val baseViewResolver = BaseViewResolver()
 
     private val output = PrintStream(System.out, true, "UTF-8")
 
     Before
     public fun init() {
-        myActivityClass = System.getProperty("robo.activityClass", "")
+        activityClass = System.getProperty("robo.activityClass", "")
     }
 
     Test
     public fun testParser() {
-        val first = generate(myActivityClass)
+        val first = generate(activityClass)
         if (!first.alive) {
             log(first)
             return
@@ -93,22 +91,26 @@ public class ParserTest {
             val clazz = cl.loadClass(className)
 
             @suppress("UNCHECKED_CAST")
-            val baseView = myBaseViewResolver.getBaseView(clazz as Class<Any>)
+            val baseView = baseViewResolver.getBaseView(clazz as Class<Any>)
             val viewNode = parseView(baseView)
             val xml = toXml(viewNode)
-            myClassLoaderManager.replaceClassLoader(packageName)
-            return Pack(xml, 0, "", true, -1)
+            classLoaderManager.replaceClassLoader(packageName)
+            return Pack(xml, 0, "", "", true, -1)
         } catch (e: UnsupportedClassException) {
-            myClassLoaderManager.replaceClassLoader(packageName)
-            return Pack("", 1, "Unsupported class.", true, -1)
+            classLoaderManager.replaceClassLoader(packageName)
+            return Pack("", 1, "Unsupported class.", e.renderStacktrace(), true, -1)
         } catch (e: Throwable) {
-            val sw = StringWriter()
-            val pw = PrintWriter(sw)
-            e.printStackTrace(pw)
-            log(sw.toString())
-            return Pack("", -1, sw.toString(), false, -1)
+            val stacktrace = e.renderStacktrace()
+            log(stacktrace)
+            return Pack("", -1, e.getMessage() ?: "", stacktrace, false, -1)
         }
+    }
 
+    private fun Throwable.renderStacktrace(): String {
+        val stringWriter = StringWriter()
+        val printWriter = PrintWriter(stringWriter)
+        printStackTrace(printWriter)
+        return stringWriter.toString()
     }
 
     private fun log(pack: Pack): String {
