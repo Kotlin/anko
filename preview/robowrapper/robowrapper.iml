@@ -18,5 +18,6 @@
     <orderEntry type="library" name="gson" level="project" />
     <orderEntry type="library" scope="TEST" name="hamcrest-all-1.3" level="project" />
     <orderEntry type="library" name="android-support-libraries" level="project" />
+    <orderEntry type="library" name="robolectric-shadows" level="project" />
   </component>
 </module>

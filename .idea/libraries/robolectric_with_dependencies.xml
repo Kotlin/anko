@@ -17,10 +17,7 @@
       <root url="jar://$PROJECT_DIR$/lib/robolectric/asm-5.0.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/robolectric/ant-1.8.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/robolectric/robolectric-utils-3.0-rc3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/junit-4.8.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/robolectric/ant-launcher-1.8.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/shadows-core-3.0-rc3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/shadows-support-v4-3.0-rc3.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
