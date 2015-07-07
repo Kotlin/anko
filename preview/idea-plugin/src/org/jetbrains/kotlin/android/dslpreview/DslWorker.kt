@@ -88,7 +88,7 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
             return
         }
 
-        ProgressManager.getInstance().run(RobowrapperExecTask(cmd, robowrapperDirectory))
+        ProgressManager.getInstance().run(RobowrapperExecTask(cmd))
     }
 
     private fun execAlive(cmd: RobowrapperContext) {
@@ -148,7 +148,7 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
         }
     }
 
-    private inner class RobowrapperExecTask(val ctx: RobowrapperContext, val robowrapperDirectory: String) :
+    private inner class RobowrapperExecTask(val ctx: RobowrapperContext) :
             Task.Backgroundable(ctx.androidFacet.getModule().getProject(), "Executing DSL", false) {
 
         override fun run(progressIndicator: ProgressIndicator) {
@@ -283,3 +283,4 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
     }
 
 }
+

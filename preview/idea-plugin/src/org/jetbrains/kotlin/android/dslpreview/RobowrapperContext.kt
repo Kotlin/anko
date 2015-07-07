@@ -87,14 +87,14 @@ class RobowrapperContext(description: PreviewClassDescription) {
         val robowrapperDirectory = File(
             File(pluginJarPath).getParentFile().getParentFile(), "robowrapper/")
 
-        val mavenDependencies = RobowrapperDependencies.DEPENDENCIES.map { it.file.getAbsolutePath() }.joinToString(":")
+        val robolectricMavenDependencies = RobowrapperDependencies.DEPENDENCIES.map { it.file.getAbsolutePath() }.joinToString(":")
 
-        val pluginDependencies = listOf(
+        val robowrapperDependencies = listOf(
             "gson-2.3.jar",
             "jeromq-0.3.4.jar")
             .map { File(pluginDirectory, it).getAbsolutePath() }.joinToString(":", prefix = ":")
 
-        val robowrapperDependencies = robowrapperDirectory
+        val robolectricDependencies = robowrapperDirectory
                 .listFiles { it.name.endsWith(".jar") }
                 ?.map { it.getAbsolutePath() }?.joinToString(":", prefix = ":") ?: ""
 
@@ -110,7 +110,7 @@ class RobowrapperContext(description: PreviewClassDescription) {
 
         val a = arrayListOf(escape(pathToJava), "-cp")
         with (a) {
-            add(mavenDependencies + pluginDependencies + robowrapperDependencies + androidDependencies)
+            add(robolectricMavenDependencies + robowrapperDependencies + robolectricDependencies + androidDependencies)
             add("-Djava.io.tmpdir=", File(dependencyDirectory, "tmp"))
             add("-Drobolectric.offline=true")
             add("-Drobolectric.dependency.dir=", dependencyDirectory)
