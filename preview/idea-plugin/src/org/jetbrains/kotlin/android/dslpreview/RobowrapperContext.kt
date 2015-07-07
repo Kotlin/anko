@@ -25,6 +25,7 @@ import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.projectRoots.JavaSdk
 import com.intellij.openapi.projectRoots.JavaSdkType
+import com.intellij.psi.PsiClass
 
 class RobowrapperContext(description: PreviewClassDescription) {
 
@@ -42,7 +43,6 @@ class RobowrapperContext(description: PreviewClassDescription) {
         androidFacet.getManifest()
                 ?.getApplication()
                 ?.getActivities()
-                ?.map { it.getActivityClass().toString() }
                 ?: listOf()
     }
 
@@ -53,7 +53,11 @@ class RobowrapperContext(description: PreviewClassDescription) {
     }
 
     private fun generateManifest() = runReadAction {
-        val activityEntries = activities.map { "<activity android:name=\"$it\" />" }.joinToString("\n")
+        val activityEntries = activities.map {
+            val clazz = it.getActivityClass()
+            val theme = if (clazz.getValue().isAppCompatActivity()) "theme=\"@style/Theme.AppCompat\"" else ""
+            "<activity android:name=\"${clazz.toString()}\" $theme />"
+        }.joinToString("\n")
         val manifestFile = File.createTempFile("AndroidManifest", ".xml")
         manifestFile.writeText(
             """<?xml version="1.0" encoding="utf-8"?>
@@ -151,6 +155,13 @@ class RobowrapperContext(description: PreviewClassDescription) {
 
     private fun escape(v: String?): String {
         return (v ?: "").replace("\"", "\\\"").replace(" ", "\\ ")
+    }
+
+    private fun PsiClass?.isAppCompatActivity(): Boolean {
+        if (this == null) return false
+
+        if (getQualifiedName() == "android.support.v7.app.AppCompatActivity") return true
+        else return getSuperClass()?.isAppCompatActivity() ?: false
     }
 
 }
