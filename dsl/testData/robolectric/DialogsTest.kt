@@ -8,6 +8,7 @@ import org.jetbrains.anko.*
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.*
+import org.robolectric.internal.ShadowExtractor
 import org.robolectric.*
 import org.junit.Test
 import org.junit.Assert.*
@@ -63,7 +64,7 @@ public class RobolectricTest() {
         button3.performClick()
         val alert = ShadowAlertDialog.getLatestAlertDialog()
         assertNotNull(alert)
-        val alertShadow = Robolectric.shadowOf_<ShadowAlertDialog, AlertDialog>(alert)
+        val alertShadow = ShadowExtractor.extract(alert) as ShadowAlertDialog
 
         assertEquals("Message", alertShadow.getMessage().toString())
         assertEquals("Title", alertShadow.getTitle().toString())

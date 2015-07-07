@@ -80,20 +80,19 @@ public open class CompileTestFixture {
         assertTrue(testDataFile.exists())
 
         val lib = File("lib/")
-        val tmpFile = compile(testDataFile, ver, listOf(
-                File(lib, "junit-4.11.jar"),
-                File(lib, "robolectric-with-dependencies.jar")
-        ))
+        val robolectricDir = File(lib, "robolectric/")
 
-        val cp = listOf(
+        val robolectricJars = robolectricDir.listFiles { it.extension == "jar" }?.toList() ?: listOf()
+        val androidAllJars = File(lib, "androidall").listFiles { it.extension == "jar" }?.toList() ?: listOf()
+
+        val tmpFile = compile(testDataFile, ver, robolectricJars)
+
+        val cp = (listOf(
                 getBuiltLibraryFile(ver.name),
                 tmpFile,
                 File(lib, "Kotlin/kotlinc/lib/kotlin-runtime.jar"),
-                File(lib, "junit-4.11.jar"),
-                File(lib, "hamcrest-all-1.3.jar"),
-                File(lib, "robolectric-with-dependencies.jar"),
-                File(lib, "android-all-4.1.2_r1-robolectric-0.jar")
-        ).map { it.getAbsolutePath() }.join(File.pathSeparator)
+                File(lib, "hamcrest-all-1.3.jar")
+        ) + robolectricJars + androidAllJars).map { it.getAbsolutePath() }.join(File.pathSeparator)
 
         val manifest = File("dsl/testData/robolectric/AndroidManifest.xml")
         val androidRes = File("dsl/testData/robolectric/res/")
