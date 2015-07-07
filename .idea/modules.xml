@@ -10,7 +10,6 @@
       <module fileurl="file://$PROJECT_DIR$/preview/robowrapper/robowrapper.iml" filepath="$PROJECT_DIR$/preview/robowrapper/robowrapper.iml" group="preview" />
       <module fileurl="file://$PROJECT_DIR$/dsl/static/static.iml" filepath="$PROJECT_DIR$/dsl/static/static.iml" group="dsl" />
       <module fileurl="file://$PROJECT_DIR$/dsl/stubs/stubs.iml" filepath="$PROJECT_DIR$/dsl/stubs/stubs.iml" group="dsl" />
-      <module fileurl="file://$PROJECT_DIR$/dsl/testData/testData.iml" filepath="$PROJECT_DIR$/dsl/testData/testData.iml" group="dsl" />
       <module fileurl="file://$PROJECT_DIR$/utils/utils.iml" filepath="$PROJECT_DIR$/utils/utils.iml" group="dsl" />
       <module fileurl="file://$PROJECT_DIR$/preview/xml-converter/xml-converter.iml" filepath="$PROJECT_DIR$/preview/xml-converter/xml-converter.iml" group="preview" />
     </modules>
