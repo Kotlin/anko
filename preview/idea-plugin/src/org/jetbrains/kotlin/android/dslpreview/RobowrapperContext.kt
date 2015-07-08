@@ -55,7 +55,7 @@ class RobowrapperContext(description: PreviewClassDescription) {
     private fun generateManifest() = runReadAction {
         val activityEntries = activities.map {
             val clazz = it.getActivityClass()
-            val theme = if (clazz.getValue().isAppCompatActivity()) "theme=\"@style/Theme.AppCompat\"" else ""
+            val theme = if (clazz.getValue().isAppCompatActivity()) "android:theme=\"@style/Theme.AppCompat\"" else ""
             "<activity android:name=\"${clazz.toString()}\" $theme />"
         }.joinToString("\n")
         val manifestFile = File.createTempFile("AndroidManifest", ".xml")
