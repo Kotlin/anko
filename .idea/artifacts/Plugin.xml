@@ -12,6 +12,7 @@
           <element id="module-output" name="xml-converter" />
           <element id="file-copy" path="$PROJECT_DIR$/preview/attrs.json" />
           <element id="file-copy" path="$PROJECT_DIR$/preview/views.json" />
+          <element id="module-output" name="intentions" />
         </element>
       </element>
       <element id="directory" name="robowrapper">

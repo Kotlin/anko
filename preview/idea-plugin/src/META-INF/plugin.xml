@@ -15,39 +15,53 @@
   -->
 
 <idea-plugin version="2">
-  <id>org.jetbrains.kotlin.android.dsl</id>
-  <name>Anko DSL Preview</name>
-  <description>Displays a layout preview for the Anko Android DSL.</description>
-  <version>0.6.2</version>
-  <vendor url="http://www.jetbrains.com">JetBrains s.r.o.</vendor>
+    <id>org.jetbrains.kotlin.android.dsl</id>
+    <name>Anko DSL Preview</name>
+    <description>Displays a layout preview for the Anko Android DSL.</description>
+    <version>0.6.2</version>
+    <vendor url="http://www.jetbrains.com">JetBrains s.r.o.</vendor>
 
-  <idea-version since-build="135.1" until-build="142.9999"/>
+    <idea-version since-build="135.1" until-build="142.9999"/>
 
-  <application-components>
-  </application-components>
+    <application-components>
+    </application-components>
 
-  <project-components>
-  </project-components>
+    <project-components>
+    </project-components>
 
-  <depends>org.jetbrains.kotlin</depends>
-  <depends>org.jetbrains.android</depends>
+    <depends>org.jetbrains.kotlin</depends>
+    <depends>org.jetbrains.android</depends>
 
-  <actions>
-      <action id="XmlConvertAction" class="org.jetbrains.kotlin.android.xmlconverter.ConvertAction" text="Convert to Koan DSL" description="Convert XML layout to Koan DSL code (Kotlin)">
-          <add-to-group group-id="CodeMenu" anchor="last"/>
-      </action>
-  </actions>
+    <actions>
+        <action id="XmlConvertAction" class="org.jetbrains.kotlin.android.xmlconverter.ConvertAction"
+                text="Convert to Koan DSL" description="Convert XML layout to Koan DSL code (Kotlin)">
+            <add-to-group group-id="CodeMenu" anchor="last"/>
+        </action>
+    </actions>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <psi.treeChangePreprocessor implementation="org.jetbrains.kotlin.android.dslpreview.SourceFileModificationTracker"/>
-    <applicationService
-                    overrides="true"
-                    serviceInterface="org.jetbrains.android.uipreview.AndroidEditorSettings"
-                    serviceImplementation="org.jetbrains.kotlin.android.dslpreview.DslAndroidEditorSettings"/>
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <psi.treeChangePreprocessor
+                implementation="org.jetbrains.kotlin.android.dslpreview.SourceFileModificationTracker"/>
+        <applicationService
+                overrides="true"
+                serviceInterface="org.jetbrains.android.uipreview.AndroidEditorSettings"
+                serviceImplementation="org.jetbrains.kotlin.android.dslpreview.DslAndroidEditorSettings"/>
+
+        <intentionAction>
+            <className>org.jetbrains.anko.idea.intentions.ToastMakeTextShowIntention</className>
+            <category>Anko</category>
+        </intentionAction>
+
+        <intentionAction>
+            <className>org.jetbrains.anko.idea.intentions.FindViewByIdIntention</className>
+            <category>Anko</category>
+        </intentionAction>
+    </extensions>
+
     <project-components>
         <component>
-            <implementation-class>org.jetbrains.kotlin.android.dslpreview.DslPreviewToolWindowManager</implementation-class>
+            <implementation-class>org.jetbrains.kotlin.android.dslpreview.DslPreviewToolWindowManager
+            </implementation-class>
             <skipForDefaultProject/>
             <headless-implementation-class/>
         </component>

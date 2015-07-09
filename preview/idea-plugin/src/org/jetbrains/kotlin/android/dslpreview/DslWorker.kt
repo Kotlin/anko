@@ -232,8 +232,7 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
     private inner class DependencyDownloadTask(
             private val ctx: RobowrapperContext,
             private val dependencies: List<Dependency>
-    ) : Task.Backgroundable(ctx.androidFacet.getModule().getProject(),
-            "Downloading dependencies", false) {
+    ) : Task.Backgroundable(ctx.androidFacet.getModule().getProject(), "Downloading dependencies", false) {
 
         override fun run(progressIndicator: ProgressIndicator) {
             progressIndicator.setIndeterminate(true)
