@@ -133,7 +133,7 @@ abstract class AnkoIntention<TElement : JetElement>(
         val explicitlyImportedSymbols = newElement.newFqNames.flatMap { fqName ->
             resolutionFacade.resolveImportReference(jetFile, FqName("$ANKO_PACKAGE$fqName"), false)
         }
-        val symbolScope = getResolutionScope(containingDeclaration)
+        val symbolScope = getResolutionScope(containingDeclaration) ?: return
         val scope = ChainedScope(containingDeclaration, "SimplifyToastIntention resolution scope", ExplicitImportsScope(explicitlyImportedSymbols), symbolScope)
         var bindingContext = newExpression.analyzeInContext(scope)
         val functionDescriptor = newExpression.getResolvedCall(bindingContext)?.getResultingDescriptor() ?: return
