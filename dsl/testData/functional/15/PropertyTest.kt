@@ -1165,10 +1165,6 @@ public var android.view.View.minimumWidth: Int
     get() = throw AnkoException("'android.view.View.minimumWidth' property does not have a getter")
     set(v) = setMinimumWidth(v)
 
-public var android.widget.TextView.enabled: Boolean
-    get() = throw AnkoException("'android.widget.TextView.enabled' property does not have a getter")
-    set(v) = setEnabled(v)
-
 public var android.widget.TextView.textColor: Int
     get() = throw AnkoException("'android.widget.TextView.textColor' property does not have a getter")
     set(v) = setTextColor(v)
