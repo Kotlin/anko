@@ -39,13 +39,12 @@ class PropertyGenerator : Generator<PropertyElement> {
         genProperties(propertyGetters, propertySetters)
     }
 
-    //Convert list of getters and map of setters to property list
     private fun GenerationState.genProperties(
             getters: Collection<MethodNodeWithClass>,
             setters: Map<String, List<MethodNodeWithClass>>): List<PropertyElement> {
         val existingProperties = hashSetOf<String>()
 
-        val propertyWithGetters = getters.map { getter ->
+        getters.map { getter ->
             val property = getter.toProperty()
             val settersList = setters.get(property.setterIdentifier) ?: listOf()
 
@@ -64,7 +63,7 @@ class PropertyGenerator : Generator<PropertyElement> {
                 PropertyElement(property.name, null, setters)
             } else null
         }.filterNotNull()
-        return propertyWithGetters + propertyWithoutGetters
+        return propertyWithoutGetters
     }
 
     private val MethodNode.isListenerGetter: Boolean
