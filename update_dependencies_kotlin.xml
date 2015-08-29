@@ -1,0 +1,979 @@
+<project name="Update Dependencies" default="update_idea_bootstrap" xmlns:if="ant:if" xmlns:unless="ant:unless">
+    <property name="ideaVersion" value="142.4465.2"/>
+
+    <property name="kotlin.bootstrap.locator" value="buildType:bt345,tag:bootstrap,status:SUCCESS"/>
+    <property name="kotlin.bootstrap.locator.force" value="false"/>
+
+    <property name="markdown.locator" value="buildType:IntelliJMarkdownParser_Build,status:SUCCESS"/>
+
+    <property name="bootstrap.build.no.tests" value="false"/>
+
+    <condition property="os.tag" value="win.zip">
+        <os family="windows"/>
+    </condition>
+
+    <condition property="os.tag" value="mac.zip">
+        <os family="mac"/>
+    </condition>
+
+    <condition property="os.tag" value="tar.gz">
+        <and>
+            <os family="unix"/>
+            <not>
+                <os family="mac"/>
+            </not>
+        </and>
+    </condition>
+
+    <condition property="kotlinc.executable.path" value="kotlinc.bat" else="kotlinc">
+        <os family="windows"/>
+    </condition>
+
+    <property name="idea.dir" value="ideaSDK"/>
+    <property name="idea.sdk.fetch.needed" value="true"/>
+
+    <property name="dependencies.info.file" value="lib/dependencies.properties"/>
+
+    <property file="${dependencies.info.file}" prefix="dependencies.info.prev"/>
+
+    <target name="update_idea_bootstrap" depends="fetch-kotlin-bootstrap" description="Update IDEA and Kotlin bootstrap plugin">
+        <execute_update_with_idea_maven_artifacts
+                base.url="https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea"
+                idea.maven.version="${ideaVersion}"/>
+    </target>
+
+    <target name="update" depends="fetch-third-party,fetch-annotations" description="Update dependencies">
+        <execute_update_with_idea_maven_artifacts
+                base.url="https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea"
+                idea.maven.version="${ideaVersion}"/>
+    </target>
+
+    <target name="jb_update" depends="fetch-third-party,fetch-annotations" description="Update dependencies for JB local network">
+        <execute_update_with_idea_maven_artifacts
+                base.url="http://jetbrains-com-mirror.labs.intellij.net/intellij-repository/releases/com/jetbrains/intellij/idea"
+                idea.maven.version="${ideaVersion}"/>
+    </target>
+
+    <target name="update_continuous_141" depends="fetch-third-party,fetch-annotations">
+        <execute_update_with_idea_maven_artifacts
+                base.url="https://www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/idea"
+                idea.maven.version="141-SNAPSHOT"/>
+    </target>
+
+    <target name="jb_update_continuous_141" depends="fetch-third-party,fetch-annotations">
+        <execute_update_with_idea_maven_artifacts
+                base.url="http://jetbrains-com-mirror.labs.intellij.net/intellij-repository/snapshots/com/jetbrains/intellij/idea"
+                idea.maven.version="141-SNAPSHOT"/>
+    </target>
+
+    <target name="update_continuous_142" depends="fetch-third-party,fetch-annotations">
+        <execute_update_with_idea_maven_artifacts
+                base.url="https://www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/idea"
+                idea.maven.version="142-SNAPSHOT"/>
+    </target>
+
+    <target name="jb_update_continuous_142" depends="fetch-third-party,fetch-annotations">
+        <execute_update_with_idea_maven_artifacts
+                base.url="http://jetbrains-com-mirror.labs.intellij.net/intellij-repository/snapshots/com/jetbrains/intellij/idea"
+                idea.maven.version="142-SNAPSHOT"/>
+    </target>
+
+    <macrodef name="get-maven-library">
+        <attribute name="prefix"/>
+        <attribute name="lib"/>
+        <attribute name="version"/>
+        <attribute name="bin" default="true"/>
+        <attribute name="src" default="true"/>
+        <attribute name="server" default="http://repository.jetbrains.com/remote-repos"/>
+        <attribute name="jar.name.base" default="@{lib}-@{version}"/>
+        <attribute name="target.jar.name.base" default="@{jar.name.base}"/>
+        <attribute name="path" default="@{prefix}/@{lib}/@{version}/@{jar.name.base}"/>
+        <attribute name="download" default="dependencies/download"/>
+        <attribute name="dependencies" default="dependencies"/>
+        <sequential>
+            <sequential if:true="@{bin}">
+                <get src="@{server}/@{path}.jar" dest="@{download}/@{jar.name.base}.jar" usetimestamp="true"/>
+                <copy file="@{download}/@{jar.name.base}.jar" tofile="@{dependencies}/@{target.jar.name.base}.jar" overwrite="true"/>
+            </sequential>
+
+            <sequential if:true="@{src}">
+                <get src="@{server}/@{path}-sources.jar" dest="@{download}/@{jar.name.base}-sources.jar" usetimestamp="true"/>
+                <copy file="@{download}/@{jar.name.base}-sources.jar" tofile="@{dependencies}/@{target.jar.name.base}-sources.jar"
+                      overwrite="true"/>
+            </sequential>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="get-ant-library">
+        <attribute name="version"/>
+        <attribute name="folderName"/>
+        <sequential>
+            <get src="http://archive.apache.org/dist/ant/binaries/apache-ant-@{version}-bin.tar.gz"
+                 dest="dependencies/download/apache-ant-@{version}-bin.tar.gz" usetimestamp="true"/>
+
+            <get src="http://archive.apache.org/dist/ant/source/apache-ant-@{version}-src.zip"
+                 dest="dependencies/apache-ant-@{version}-src.zip" usetimestamp="true"/>
+
+            <delete dir="dependencies/@{folderName}" failonerror="false"/>
+            <untar src="dependencies/download/apache-ant-@{version}-bin.tar.gz" dest="dependencies" compression="gzip"/>
+            <move file="dependencies/apache-ant-@{version}" tofile="dependencies/@{folderName}"/>
+        </sequential>
+    </macrodef>
+
+    <target name="fetch-kotlin-bootstrap">
+        <local name="download.bootstrap.compiler"/>
+        <condition property="download.bootstrap.compiler">
+            <or>
+                <not>
+                    <isset property="teamcity.version"/>
+                </not>
+                <and>
+                    <istrue value="${kotlin.bootstrap.locator.force}"/>
+                    <istrue value="${bootstrap.build.no.tests}"/>
+                </and>
+            </or>
+        </condition>
+
+        <sequential if:set="download.bootstrap.compiler">
+            <!-- Download bootstrap compiler for local build -->
+            <download_teamcity_artifact
+                    teamcity.server.url="https://teamcity.jetbrains.com"
+                    build.locator.request="${kotlin.bootstrap.locator}"
+                    artifact.path="kotlin-plugin-{build.number}.zip"
+                    dest="lib/kotlin-plugin.zip"
+                    usetimestamp="true"/>
+
+            <delete dir="lib/Kotlin" failonerror="false"/>
+            <unzip src="lib/kotlin-plugin.zip" dest="lib"/>
+        </sequential>
+
+        <sequential unless:set="download.bootstrap.compiler">
+            <available file="lib/Kotlin" property="have.bootstrap.compiler"/>
+            <fail message="Bootstrap compiler is expected to be downloaded to 'dependencies/bootstrap-compiler' by TeamCity" unless:set="have.bootstrap.compiler"/>
+            <echo message="Bootstrap compiler found in 'dependencies/bootstrap-compiler'" if:set="have.bootstrap.compiler"/>
+
+        </sequential>
+
+        <local name="bootstrap.need.chmod"/>
+        <condition property="bootstrap.need.chmod">
+            <matches pattern="mac\.zip|tar\.gz" string="${os.tag}"/>
+        </condition>
+
+        <!-- Java can't manipulate permissions -->
+        <exec executable="find" if:set="bootstrap.need.chmod">
+            <arg value="lib/Kotlin/kotlinc/bin"/>
+            <arg line="-name 'kotlin*' ! -name '*.bat' -exec chmod a+x '{}' ;"/>
+        </exec>
+    </target>
+
+    <target name="fetch-third-party">
+        <mkdir dir="dependencies"/>
+        <mkdir dir="dependencies/download"/>
+
+        <!-- ProGuard -->
+        <get-maven-library prefix="net/sf/proguard" lib="proguard-base" version="5.1" target.jar.name.base="proguard" src="false"/>
+        <get-maven-library prefix="net/sf/proguard" lib="proguard-anttask" version="5.1" target.jar.name.base="proguard-anttask" src="false"/>
+
+        <!-- JarJar -->
+        <get src="http://jarjar.googlecode.com/files/jarjar-1.4.jar" dest="dependencies/download/jarjar-1.4.jar" usetimestamp="true"/>
+        <copy file="dependencies/download/jarjar-1.4.jar" tofile="dependencies/jarjar.jar" overwrite="true"/>
+
+        <!-- ant 1.8.2 -->
+        <get-ant-library version="1.8.2" folderName="ant-1.8"/>
+
+        <!-- dx.jar -->
+        <property name="android-build-tools.zip" value="build-tools_r21.1.1-linux.zip"/>
+        <get
+                src="https://dl-ssl.google.com/android/repository/${android-build-tools.zip}"
+                dest="dependencies/download/${android-build-tools.zip}"
+                usetimestamp="true"/>
+        <unzip src="dependencies/download/${android-build-tools.zip}" dest="dependencies"/>
+
+        <property name="android-sources.tgz" value="dx.tar.gz"/>
+        <get
+                src="https://android.googlesource.com/platform/dalvik/+archive/android-5.0.0_r2/${android-sources.tgz}"
+                dest="dependencies/download/${android-sources.tgz}"
+                usetimestamp="true"/>
+        <delete dir="dependencies/dx-src" failonerror="false"/>
+        <untar src="dependencies/download/${android-sources.tgz}" dest="dependencies/dx-src" compression="gzip"/>
+
+        <!-- jflex 1.4 -->
+        <mkdir dir="dependencies/jflex"/>
+        <get src="https://raw.github.com/JetBrains/intellij-community/master/tools/lexer/jflex-1.4/lib/JFlex.jar"
+             dest="dependencies/jflex/JFlex.jar" usetimestamp="true"/>
+        <get src="https://raw.github.com/JetBrains/intellij-community/master/tools/lexer/idea-flex.skeleton"
+             dest="dependencies/jflex/idea-flex.skeleton" usetimestamp="true"/>
+
+        <!-- jline -->
+        <get-maven-library prefix="jline" lib="jline" version="2.12.1" target.jar.name.base="jline"/>
+
+        <!-- jansi -->
+        <get-maven-library prefix="org/fusesource/jansi" lib="jansi" version="1.11" target.jar.name.base="jansi"/>
+
+        <!-- Guava 17 sources-->
+        <get-maven-library prefix="com/google/guava" lib="guava" version="17.0" bin="false"/>
+
+        <!-- ASM -->
+        <get src="https://raw.github.com/JetBrains/intellij-community/master/lib/src/asm5-src.zip"
+             dest="dependencies/asm5-src.zip"/>
+        <!-- <get-asm-sources-and-rename-packages asm.version="5.0.1"/> -->
+
+        <!-- Junit Sources -->
+        <get-maven-library prefix="junit" lib="junit" version="4.12" bin="false"/>
+        <get-maven-library prefix="org/hamcrest" lib="hamcrest-core" version="1.3" bin="false"/>
+
+        <!-- Protocol Buffers -->
+        <get-maven-library prefix="com/google/protobuf" lib="protobuf-java" version="2.5.0" bin="false"/>
+
+        <!-- Android SDK platform -->
+        <get_android_sdk version.full="21_r01" version.number="21" version.buildtools="21.1.1"/>
+
+        <!-- CLI Parser -->
+        <get-maven-library prefix="com/github/spullara/cli-parser" lib="cli-parser" version="1.1.1"/>
+
+        <!-- Rhino -->
+        <get-maven-library prefix="org/mozilla" lib="rhino" version="1.7.6"/>
+
+        <!-- Closure Compiler -->
+        <!-- A download url taken from http://code.google.com/p/closure-compiler/wiki/BinaryDownloads -->
+        <get src="http://dl.google.com/closure-compiler/compiler-20131014.zip"
+             dest="dependencies/download/closure-compiler.zip" usetimestamp="true"/>
+
+        <delete file="dependencies/closure-compiler.jar" failonerror="false"/>
+        <unzip src="dependencies/download/closure-compiler.zip" dest="dependencies">
+            <patternset>
+                <include name="compiler.jar"/>
+            </patternset>
+            <mapper type="merge" to="closure-compiler.jar"/>
+        </unzip>
+
+        <delete file="dependencies/android.jar" failonerror="false"/>
+        <get src="http://dl-ssl.google.com/android/repository/android-19_r02.zip"
+             dest="dependencies/download/android-sdk.zip" usetimestamp="true"/>
+        <unzip src="dependencies/download/android-sdk.zip" dest="dependencies">
+            <patternset>
+                <include name="**/android.jar"/>
+            </patternset>
+            <mapper type="flatten"/>
+        </unzip>
+
+        <local name="download.bootstrap.compiler"/>
+        <condition property="download.bootstrap.compiler">
+            <or>
+                <not>
+                    <isset property="teamcity.version"/>
+                </not>
+                <and>
+                    <istrue value="${kotlin.bootstrap.locator.force}"/>
+                    <istrue value="${bootstrap.build.no.tests}"/>
+                </and>
+            </or>
+        </condition>
+
+        <sequential if:set="download.bootstrap.compiler">
+            <!-- Download bootstrap compiler for local build -->
+            <download_teamcity_artifact
+                    teamcity.server.url="https://teamcity.jetbrains.com"
+                    build.locator.request="${kotlin.bootstrap.locator}"
+                    artifact.path="kotlin-plugin-{build.number}.zip"
+                    dest="dependencies/download/bootstrap-compiler.zip"
+                    usetimestamp="true"/>
+
+            <delete dir="dependencies/bootstrap-compiler" failonerror="false"/>
+            <unzip src="dependencies/download/bootstrap-compiler.zip" dest="dependencies/bootstrap-compiler"/>
+        </sequential>
+
+        <sequential unless:set="download.bootstrap.compiler">
+            <available file="dependencies/bootstrap-compiler/Kotlin" property="have.bootstrap.compiler"/>
+            <fail message="Bootstrap compiler is expected to be downloaded to 'dependencies/bootstrap-compiler' by TeamCity" unless:set="have.bootstrap.compiler"/>
+            <echo message="Bootstrap compiler found in 'dependencies/bootstrap-compiler'" if:set="have.bootstrap.compiler"/>
+
+        </sequential>
+
+        <local name="bootstrap.need.chmod"/>
+        <condition property="bootstrap.need.chmod">
+            <matches pattern="mac\.zip|tar\.gz" string="${os.tag}"/>
+        </condition>
+
+        <!-- Java can't manipulate permissions -->
+        <exec executable="find" if:set="bootstrap.need.chmod">
+            <arg value="dependencies/bootstrap-compiler/Kotlin/kotlinc/bin"/>
+            <arg line="-name 'kotlin*' ! -name '*.bat' -exec chmod a+x '{}' ;"/>
+        </exec>
+
+        <download-or-build-markdown-parser/>
+    </target>
+
+    <macrodef name="get_android_sdk">
+        <attribute name="version.full"/>
+        <attribute name="version.number"/>
+        <attribute name="version.buildtools"/>
+        <sequential>
+            <condition property="android.os.tag" value="windows">
+                <os family="windows"/>
+            </condition>
+
+            <condition property="android.os.tag" value="macosx">
+                <os family="mac"/>
+            </condition>
+
+            <condition property="android.os.tag" value="linux">
+                <and>
+                    <os family="unix"/>
+                    <not>
+                        <os family="mac"/>
+                    </not>
+                </and>
+            </condition>
+
+            <delete dir="dependencies/androidSDK" failonerror="false"/>
+            <get
+                    src="https://dl-ssl.google.com/android/repository/android-@{version.full}.zip"
+                    dest="dependencies/android_sdk.zip" usetimestamp="true"/>
+
+            <unzip src="dependencies/android_sdk.zip" dest="dependencies/androidSDK/platforms/android-@{version.number}/">
+                <cutdirsmapper dirs="1"/>
+            </unzip>
+
+            <get
+                    src="https://dl-ssl.google.com/android/repository/build-tools_r@{version.buildtools}-${android.os.tag}.zip"
+                    dest="dependencies/android_buildtools.zip" usetimestamp="true"/>
+
+            <unzip src="dependencies/android_buildtools.zip" dest="dependencies/androidSDK/build-tools/@{version.buildtools}/">
+                <cutdirsmapper dirs="1"/>
+            </unzip>
+
+            <condition property="android.need.chmod">
+                <not>
+                    <equals arg1="${android.os.tag}" arg2="windows"/>
+                </not>
+            </condition>
+
+            <exec executable="chmod" if:set="android.need.chmod">
+                <arg value="a+x"/>
+                <arg path="dependencies/androidSDK/build-tools/@{version.buildtools}/aapt"/>
+                <arg path="dependencies/androidSDK/build-tools/@{version.buildtools}/aidl"/>
+                <arg path="dependencies/androidSDK/build-tools/@{version.buildtools}/dx"/>
+                <arg path="dependencies/androidSDK/build-tools/@{version.buildtools}/zipalign"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="build-protobuf-java-lite">
+        <sequential>
+            <exec executable="lib/Kotlin/kotlinc/bin/${kotlinc.executable.path}" failonerror="true">
+                <arg value="-script"/>
+                <arg value="generators/infrastructure/build-protobuf-lite.kts"/>
+                <arg value="${basedir}/ideaSDK/lib/protobuf-2.5.0.jar"/>
+                <arg value="${basedir}/dependencies/protobuf-2.5.0-lite.jar"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="download-or-build-markdown-parser">
+        <sequential>
+            <download_teamcity_artifact
+                    teamcity.server.url="https://teamcity.jetbrains.com"
+                    build.locator.request="${markdown.locator}"
+                    artifact.path="markdown_jar/markdown.jar"
+                    dest="dependencies/markdown.jar"
+                    usetimestamp="true"
+                    build.number.pattern="\d+\s-\sKotlin\s[\d\.]+"
+                    />
+
+            <!-- When ABI version changes, the second build should compile markdown-parser manually instead of using the old version -->
+
+            <exec executable="dependencies/bootstrap-compiler/Kotlin/kotlinc/bin/${kotlinc.executable.path}" failonerror="false"
+                  resultproperty="markdown.abi.incompatible">
+                <arg value="-cp"/>
+                <arg value="dependencies/bootstrap-compiler/Kotlin/kotlinc/lib/kotlin-compiler.jar"/>
+                <arg value="-script"/>
+                <arg value="generators/infrastructure/check-library-abi-version.kts"/>
+                <arg value="${basedir}/dependencies/markdown.jar"/>
+                <arg value="${basedir}/dependencies/bootstrap-compiler/Kotlin/kotlinc/lib/kotlin-runtime.jar"/>
+            </exec>
+
+            <local name="markdown.need.recompile"/>
+            <condition property="markdown.need.recompile">
+                <not>
+                    <equals arg1="${markdown.abi.incompatible}" arg2="0"/>
+                </not>
+            </condition>
+
+            <sequential if:set="markdown.need.recompile">
+                <echo message="Recompiling intellij-markdown manually"/>
+                <length file="dependencies/markdown.jar" property="old.markdown.size"/>
+                <echo message="Size of the incompatible jar: ${old.markdown.size} bytes"/>
+
+                <get src="https://github.com/valich/intellij-markdown/archive/master.zip"
+                     dest="dependencies/download/markdown-sources.zip" usetimestamp="true"/>
+
+                <delete dir="dependencies/intellij-markdown-master" failonerror="false"/>
+                <unzip src="dependencies/download/markdown-sources.zip" dest="dependencies"/>
+                <exec executable="dependencies/bootstrap-compiler/Kotlin/kotlinc/bin/${kotlinc.executable.path}" failonerror="true">
+                    <arg value="dependencies/intellij-markdown-master/src"/>
+                    <arg value="-d"/>
+                    <arg value="dependencies/intellij-markdown-master/out"/>
+                </exec>
+
+                <javac srcdir="dependencies/intellij-markdown-master/src"
+                       destdir="dependencies/intellij-markdown-master/out" includeantruntime="false">
+                    <classpath>
+                        <path location="dependencies/bootstrap-compiler/Kotlin/kotlinc/lib/kotlin-runtime.jar"/>
+                    </classpath>
+                </javac>
+
+                <delete file="dependencies/markdown.jar" failonerror="false"/>
+                <jar jarfile="dependencies/markdown.jar">
+                    <fileset dir="dependencies/intellij-markdown-master/out" includes="**"/>
+                </jar>
+
+                <echo message="Compilation of intellij-markdown finished"/>
+                <length file="dependencies/markdown.jar" property="new.markdown.size"/>
+                <echo message="Size of the new jar: ${new.markdown.size} bytes"/>
+            </sequential>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="get-asm-sources-and-rename-packages">
+        <attribute name="asm.version"/>
+        <sequential>
+            <!-- Download ASM sources -->
+            <get-maven-library prefix="org/ow2/asm" lib="asm-debug-all" version="@{asm.version}" bin="false"/>
+
+            <!-- Rename packages in the sources -->
+            <delete dir="dependencies/download/asm-src" failonerror="false"/>
+            <unzip src="dependencies/download/asm-debug-all-@{asm.version}-sources.jar" dest="dependencies/download/asm-src">
+                <patternset>
+                    <include name="**/*"/>
+                </patternset>
+            </unzip>
+
+            <replaceregexp match="org\.objectweb\.asm" replace="org.jetbrains.org.objectweb.asm" flags="g">
+                <fileset dir="dependencies/download/asm-src/">
+                    <include name="**/*.java"/>
+                </fileset>
+            </replaceregexp>
+
+            <move file="dependencies/download/asm-src/org/objectweb/asm"
+                  tofile="dependencies/download/asm-src/org/jetbrains/org/objectweb/asm"/>
+
+            <zip destfile="dependencies/jetbrains-asm-all-@{asm.version}-src.zip" basedir="dependencies/download/asm-src"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="execute_update_with_idea_maven_artifacts">
+        <attribute name="base.url"/>
+        <attribute name="idea.maven.version"/>
+
+        <sequential>
+            <loadresource property="execute.build.id">
+                <url url="@{base.url}/BUILD/@{idea.maven.version}/BUILD-@{idea.maven.version}.txt"/>
+            </loadresource>
+
+            <local name="idea.already.downloaded"/>
+            <condition property="idea.already.downloaded">
+                <equals arg1="${dependencies.info.prev.idea.build.id}" arg2="${execute.build.id}"/>
+            </condition>
+
+            <echo message="IDEA build id: ${execute.build.id}. Already downloaded." if:set="idea.already.downloaded"/>
+
+            <sequential unless:set="idea.already.downloaded">
+                <echo message="IDEA build id: ${execute.build.id}, previous build id: ${dependencies.info.prev.idea.build.id}"/>
+                <download_and_update_idea idea.maven.version="@{idea.maven.version}" base.repository.url="@{base.url}"/>
+
+                <propertyfile file="${dependencies.info.file}">
+                    <entry key="idea.build.id" value="${execute.build.id}"/>
+                </propertyfile>
+            </sequential>
+        </sequential>
+    </macrodef>
+
+    <!-- deprecated -->
+    <macrodef name="execute_update_with_id_resolve">
+        <attribute name="teamcity.server.url"/>
+        <attribute name="build.locator.request"/>
+
+        <sequential>
+            <loadresource property="execute.build.id">
+                <url url="@{teamcity.server.url}/guestAuth/app/rest/builds/?locator=@{build.locator.request},count:1"/>
+                <filterchain>
+                    <tokenfilter>
+                        <filetokenizer/>
+                        <replaceregex pattern="^(.*)\sid=&quot;(\d+)&quot;(.*)$" replace="\2" flags="s"/>
+                    </tokenfilter>
+                </filterchain>
+            </loadresource>
+
+            <local name="idea.already.downloaded"/>
+            <condition property="idea.already.downloaded">
+                <equals arg1="${dependencies.info.prev.idea.build.id}" arg2="${execute.build.id}"/>
+            </condition>
+
+            <echo message="IDEA build id: ${execute.build.id}. Already downloaded." if:set="idea.already.downloaded"/>
+
+            <sequential unless:set="idea.already.downloaded">
+                <echo message="IDEA build id: ${execute.build.id}, previous build id: ${dependencies.info.prev.idea.build.id}"/>
+                <execute_update base.url="@{teamcity.server.url}/guestAuth/app/rest/builds/id:${execute.build.id}"/>
+
+                <propertyfile file="${dependencies.info.file}">
+                    <entry key="idea.build.id" value="${execute.build.id}"/>
+                </propertyfile>
+            </sequential>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="download_teamcity_artifact">
+        <attribute name="teamcity.server.url"/>
+        <attribute name="build.locator.request"/>
+        <attribute name="artifact.path"/>
+        <attribute name="dest"/>
+        <attribute name="usetimestamp"/>
+        <attribute name="build.number.pattern" default="[\d\.]+"/>
+
+        <sequential>
+            <local name="artifact.build.id"/>
+
+            <local name="build.request.url"/>
+            <property name="build.request.url"
+                      value="@{teamcity.server.url}/guestAuth/app/rest/builds/?locator=@{build.locator.request},count:1"/>
+
+            <echo message="Requested URL ${build.request.url}"/>
+
+            <loadresource property="artifact.build.id">
+                <url url="${build.request.url}"/>
+                <filterchain>
+                    <tokenfilter>
+                        <filetokenizer/>
+                        <replaceregex pattern="^(.*)\sid=&quot;(\d+)&quot;(.*)$" replace="\2" flags="s"/>
+                    </tokenfilter>
+                </filterchain>
+            </loadresource>
+
+            <local name="processed.artifact.path"/>
+
+            <local name="artifact.build.number"/>
+            <loadresource property="artifact.build.number">
+                <url url="${build.request.url}"/>
+                <filterchain>
+                    <tokenfilter>
+                        <filetokenizer/>
+                        <replaceregex pattern="^(.*)\snumber=&quot;(@{build.number.pattern})&quot;(.*)$" replace="\2" flags="s"/>
+                    </tokenfilter>
+                </filterchain>
+            </loadresource>
+
+            <loadresource property="processed.artifact.path">
+                <string value="@{artifact.path}"/>
+                <filterchain>
+                    <replacestring from="{build.number}" to="${artifact.build.number}"/>
+                </filterchain>
+            </loadresource>
+
+            <echo message="Build Number: ${artifact.build.number} Build Id: ${artifact.build.id}"/>
+
+            <get
+                    src="@{teamcity.server.url}/guestAuth/app/rest/builds/id:${artifact.build.id}/artifacts/content/${processed.artifact.path}"
+                    dest="@{dest}" usetimestamp="@{usetimestamp}"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="configure_idea_sdk_dir">
+        <attribute name="idea.dir"/>
+        <attribute name="idea.sdk.fetch.needed"/>
+
+        <attribute name="download.dir.intellij-core"/>
+        <attribute name="download.dir.jps-standalone"/>
+
+        <attribute name="download.file.archive.idea"/>
+        <attribute name="download.file.archive.idea.win.only"/>
+
+        <attribute name="download.file.archive.sources"/>
+        <attribute name="download.file.archive.jps-build-test"/>
+
+        <attribute name="core" default="@{idea.dir}/core"/>
+        <attribute name="core-analysis" default="@{idea.dir}/core-analysis"/>
+        <attribute name="jps" default="@{idea.dir}/jps"/>
+        <attribute name="jps-test" default="@{jps}/test"/>
+        <attribute name="sources" default="@{idea.dir}/sources"/>
+
+        <sequential>
+            <sequential if:true="@{idea.sdk.fetch.needed}">
+                <delete dir="@{idea.dir}" failonerror="false">
+                    <exclude name="config-idea/**"/>
+                    <exclude name="system-idea/**"/>
+                </delete>
+
+                <local name="unpack.idea.sdk.windows"/>
+                <condition property="unpack.idea.sdk.windows">
+                    <or>
+                        <matches pattern=".+\.win\.zip" string="${idea.archive.name}"/>
+                        <istrue value="@{download.file.archive.idea.win.only}"/>
+                    </or>
+                </condition>
+
+                <local name="unpack.idea.sdk.mac"/>
+                <condition property="unpack.idea.sdk.mac">
+                    <and>
+                        <not>
+                            <isset property="unpack.idea.sdk.windows"/>
+                        </not>
+                        <matches pattern=".+\.mac\.zip" string="${idea.archive.name}"/>
+                    </and>
+                </condition>
+
+                <local name="unpack.idea.sdk.unix"/>
+                <condition property="unpack.idea.sdk.unix">
+                    <not>
+                        <or>
+                            <isset property="unpack.idea.sdk.windows"/>
+                            <isset property="unpack.idea.sdk.mac"/>
+                        </or>
+                    </not>
+                </condition>
+
+                <unzip src="@{download.file.archive.idea}" dest="@{idea.dir}" if:set="unpack.idea.sdk.windows"/>
+
+                <sequential if:set="unpack.idea.sdk.mac">
+                    <unzip src="@{download.file.archive.idea}" dest="@{idea.dir}">
+                        <cutdirsmapper dirs="2"/>
+                    </unzip>
+                    <!-- Java can't manipulate permissions -->
+                    <exec executable="chmod">
+                        <arg value="a+x"/>
+                        <arg path="@{idea.dir}/bin/fsnotifier"/>
+                        <arg path="@{idea.dir}/bin/inspect.sh"/>
+                        <arg path="@{idea.dir}/bin/printenv.py"/>
+                        <arg path="@{idea.dir}/bin/restarter"/>
+                    </exec>
+                </sequential>
+
+                <sequential if:set="unpack.idea.sdk.unix">
+                    <untar src="@{download.file.archive.idea}" dest="@{idea.dir}" compression="gzip">
+                        <cutdirsmapper dirs="1"/>
+                    </untar>
+                    <!-- Java can't manipulate permissions -->
+                    <exec executable="chmod">
+                        <arg value="a+x"/>
+                        <arg path="@{idea.dir}/bin/fsnotifier"/>
+                        <arg path="@{idea.dir}/bin/fsnotifier64"/>
+                        <arg path="@{idea.dir}/bin/inspect.sh"/>
+                        <arg path="@{idea.dir}/bin/idea.sh"/>
+                    </exec>
+                </sequential>
+
+                <!--
+                     This one needs to be deleted because otherwise it gets onto the classpath
+                     together with junit-4.10.jar and the classloading goes crazy that breaks
+                     many nice features of IDEA including diffs in the test console.
+                -->
+                <delete file="@{idea.dir}/lib/junit.jar"/>
+
+                <!--
+                Plugin depends on newer runtime and reflect jar from our bootstrap compiler.
+                Avoid depending on old runtime during build phase but attach original runtime when idea starts.
+                -->
+                <mkdir dir="@{idea.dir}/idea-kotlin-runtime"/>
+                <move file="@{idea.dir}/lib/kotlin-runtime.jar" todir="@{idea.dir}/idea-kotlin-runtime"/>
+                <move file="@{idea.dir}/lib/kotlin-reflect.jar" todir="@{idea.dir}/idea-kotlin-runtime"/>
+
+                <delete dir="@{idea.dir}/plugins/Kotlin"/>
+
+                <echo message="@{download.dir.intellij-core}/intellij-core-analysis.jar"/>
+
+                <mkdir dir="@{core-analysis}"/>
+                <copy file="@{download.dir.intellij-core}/intellij-core-analysis.jar"
+                      tofile="@{core-analysis}/intellij-core-analysis.jar"
+                      verbose="true"/>
+
+                <mkdir dir="@{core}"/>
+                <copy todir="@{core}" flatten="true" verbose="true">
+                    <resources>
+                        <file file="@{download.dir.intellij-core}/intellij-core.jar"/>
+                        <file file="@{download.dir.intellij-core}/annotations.jar"/>
+                        <file file="@{download.dir.intellij-core}/guava-17.0.jar"/>
+                        <file file="@{download.dir.intellij-core}/picocontainer.jar"/>
+                        <file file="@{download.dir.intellij-core}/trove4j.jar"/>
+
+                        <file file="@{idea.dir}/lib/jdom.jar"/>
+                        <file file="@{idea.dir}/lib/jna.jar"/>
+                        <file file="@{idea.dir}/lib/log4j.jar"/>
+                        <file file="@{idea.dir}/lib/xstream-1.4.3.jar"/>
+                        <file file="@{idea.dir}/lib/xpp3-1.1.4-min.jar"/>
+                        <file file="@{idea.dir}/lib/jsr166e.jar"/>
+                        <file file="@{idea.dir}/lib/asm-all.jar"/>
+                        <file file="@{idea.dir}/lib/snappy-in-java-0.3.1.jar"/>
+
+                        <!-- TODO temporary workaround since util-rt is not packaged into intellij-core.jar -->
+                        <file file="@{idea.dir}/lib/util.jar"/>
+                    </resources>
+                </copy>
+
+                <mkdir dir="@{jps}"/>
+                <copy todir="@{jps}" flatten="true" verbose="true">
+                    <resources>
+                        <file file="@{download.dir.jps-standalone}/groovy-jps-plugin.jar"/>
+                        <file file="@{download.dir.jps-standalone}/groovy_rt.jar"/>
+                        <file file="@{download.dir.jps-standalone}/jdom.jar"/>
+                        <file file="@{download.dir.jps-standalone}/jgoodies-forms.jar"/>
+                        <file file="@{download.dir.jps-standalone}/jna.jar"/>
+                        <file file="@{download.dir.jps-standalone}/jps-builders.jar"/>
+                        <file file="@{download.dir.jps-standalone}/jps-model.jar"/>
+                        <file file="@{download.dir.jps-standalone}/log4j.jar"/>
+                        <file file="@{download.dir.jps-standalone}/nanoxml-2.2.3.jar"/>
+                        <file file="@{download.dir.jps-standalone}/protobuf-2.5.0.jar"/>
+                        <file file="@{download.dir.jps-standalone}/trove4j.jar"/>
+                        <file file="@{download.dir.jps-standalone}/ui-designer-jps-plugin.jar"/>
+                        <file file="@{download.dir.jps-standalone}/util.jar"/>
+                    </resources>
+                </copy>
+
+                <mkdir dir="@{jps-test}"/>
+                <copy file="@{download.file.archive.jps-build-test}" tofile="@{jps-test}/jps-build-test.jar"/>
+
+                <mkdir dir="@{sources}"/>
+                <copy file="@{download.file.archive.sources}" tofile="@{sources}/sources.jar" overwrite="true"/>
+            </sequential>
+
+            <!--<build-protobuf-java-lite/>-->
+        </sequential>
+    </macrodef>
+
+    <macrodef name="download_and_update_idea">
+        <attribute name="idea.maven.version"/>
+        <attribute name="base.repository.url"/>
+
+        <attribute name="download.dir" default="lib/idea"/>
+
+        <sequential>
+            <delete dir="@{download.dir}"/>
+            <mkdir dir="@{download.dir}"/>
+
+            <get src="@{base.repository.url}/ideaIC/@{idea.maven.version}/ideaIC-@{idea.maven.version}-sources.jar"
+                 dest="@{download.dir}/ideaIC-@{idea.maven.version}-sources.jar" usetimestamp="true"/>
+
+            <get src="@{base.repository.url}/ideaIC/@{idea.maven.version}/ideaIC-@{idea.maven.version}.zip"
+                 dest="@{download.dir}/ideaIC-@{idea.maven.version}.zip" usetimestamp="true"/>
+
+            <download_and_unzip
+                    dir="@{download.dir}/intellij-core-@{idea.maven.version}"
+                    url="@{base.repository.url}/intellij-core/@{idea.maven.version}/intellij-core-@{idea.maven.version}.zip"
+                    usetimestamp="true"/>
+
+            <get src="@{base.repository.url}/jps-build-test/@{idea.maven.version}/jps-build-test-@{idea.maven.version}.jar"
+                 dest="@{download.dir}/jps-build-test-@{idea.maven.version}.jar" usetimestamp="true"/>
+
+            <download_and_unzip
+                    dir="@{download.dir}/jps-standalone-@{idea.maven.version}"
+                    url="@{base.repository.url}/jps-standalone/@{idea.maven.version}/jps-standalone-@{idea.maven.version}.zip"
+                    usetimestamp="true"/>
+
+            <configure_idea_sdk_dir
+                    idea.dir="${idea.dir}"
+                    idea.sdk.fetch.needed="${idea.sdk.fetch.needed}"
+
+                    download.dir.intellij-core="@{download.dir}/intellij-core-@{idea.maven.version}"
+                    download.dir.jps-standalone="@{download.dir}/jps-standalone-@{idea.maven.version}"
+                    download.file.archive.idea="@{download.dir}/ideaIC-@{idea.maven.version}.zip"
+                    download.file.archive.idea.win.only="true"
+                    download.file.archive.sources="@{download.dir}/ideaIC-@{idea.maven.version}-sources.jar"
+                    download.file.archive.jps-build-test="@{download.dir}/jps-build-test-@{idea.maven.version}.jar"/>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="download_and_unzip">
+        <attribute name="url"/>
+        <attribute name="dir"/>
+        <attribute name="usetimestamp"/>
+
+        <sequential>
+            <get src="@{url}" dest="@{dir}.zip" usetimestamp="@{usetimestamp}"/>
+
+            <local name="need.unpack"/>
+            <condition property="need.unpack">
+                <not>
+                    <available file="@{dir}" type="dir"/>
+                </not>
+            </condition>
+
+            <unzip src="@{dir}.zip" dest="@{dir}" if:set="need.unpack"/>
+            <echo message="Folder exist - so not unpacked @{dir}" unless:set="need.unpack"/>
+        </sequential>
+    </macrodef>
+
+    <!-- deprecated -->
+    <macrodef name="execute_update">
+        <attribute name="base.url"/>
+
+        <sequential>
+            <loadresource property="idea.build.number">
+                <url url="@{base.url}/artifacts/children"/>
+                <filterchain>
+                    <tokenfilter>
+                        <filetokenizer/>
+
+                        <replaceregex pattern="^(.*)ideaIC-([\w\.]+)\.win\.zip(.*)$" replace="\2" flags="s"/>
+                    </tokenfilter>
+                </filterchain>
+            </loadresource>
+
+            <property name="idea.archive.name" value="ideaIC-${idea.build.number}.${os.tag}"/>
+
+            <echo message="IDEA build number: ${idea.build.number}"/>
+            <echo message="IDEA archive file: ${idea.archive.name}"/>
+
+            <property name="content.base.url" value="@{base.url}/artifacts/content"/>
+            <property name="idea.download.dir" value="dependencies/idea" />
+            <property name="jps.extracted.dir" value="${idea.download.dir}/standalone-jps"/>
+            <property name="core.dir" value="${idea.download.dir}/core"/>
+
+            <sequential if:true="${idea.sdk.fetch.needed}">
+                <delete dir="${idea.download.dir}"/>
+                <mkdir dir="${idea.download.dir}"/>
+
+                <get src="${content.base.url}/jps/standalone-jps-IC-${idea.build.number}.zip"
+                     dest="${idea.download.dir}/standalone-jps.zip"/>
+                <unzip src="${idea.download.dir}/standalone-jps.zip"
+                       dest="${jps.extracted.dir}"/>
+
+                <delete file="${idea.download.dir}/${idea.archive.name}" failonerror="false"/>
+                <get src="${content.base.url}/${idea.archive.name}"
+                     dest="${idea.download.dir}/${idea.archive.name}"/>
+
+                <get src="${content.base.url}/jps/jps-build-test-IC-${idea.build.number}.jar"
+                     dest="${idea.download.dir}/jps-build-test.jar"
+                     usetimestamp="true"/>
+
+                <mkdir dir="${core.dir}"/>
+                <get src="${content.base.url}/core/intellij-core.jar" dest="${core.dir}/intellij-core.jar"/>
+                <get src="${content.base.url}/core/annotations.jar" dest="${core.dir}/annotations.jar"/>
+                <get src="${content.base.url}/core/guava-17.0.jar" dest="${core.dir}/guava-17.0.jar"/>
+                <get src="${content.base.url}/core/picocontainer.jar" dest="${core.dir}/picocontainer.jar"/>
+                <get src="${content.base.url}/core/trove4j.jar" dest="${core.dir}/trove4j.jar"/>
+
+                <get src="${content.base.url}/core/intellij-core-analysis.jar" dest="${core.dir}/intellij-core-analysis.jar"/>
+
+                <delete file="${idea.download.dir}/idea-sdk-sources.jar" failonerror="false"/>
+                <get src="${content.base.url}/sources.jar" dest="${idea.download.dir}/idea-sdk-sources.jar"/>
+            </sequential>
+
+            <configure_idea_sdk_dir
+                    idea.dir="${idea.dir}"
+                    idea.sdk.fetch.needed="${idea.sdk.fetch.needed}"
+
+                    download.dir.intellij-core="${core.dir}"
+                    download.dir.jps-standalone="${jps.extracted.dir}"
+                    download.file.archive.idea="${idea.download.dir}/${idea.archive.name}"
+                    download.file.archive.idea.win.only="false"
+                    download.file.archive.sources="${idea.download.dir}/idea-sdk-sources.jar"
+                    download.file.archive.jps-build-test="${idea.download.dir}/jps-build-test.jar"/>
+        </sequential>
+    </macrodef>
+
+    <!--
+    Currently we use empty annotations.
+    Future options are:
+      - Drop the target when will be sure that custom annotations are unneeded
+      - Fill the target with downloading correct annotations
+    -->
+    <target name="fetch-annotations"/>
+
+    <target name="get_android_studio">
+        <condition property="android.os.tag" value="windows">
+            <os family="windows"/>
+        </condition>
+
+        <condition property="android.os.tag" value="mac">
+            <os family="mac"/>
+        </condition>
+
+        <condition property="android.os.tag" value="linux">
+            <and>
+                <os family="unix"/>
+                <not>
+                    <os family="mac"/>
+                </not>
+            </and>
+        </condition>
+
+        <local name="have.android.version"/>
+        <condition property="have.android.version">
+            <and>
+                <isset property="android.version"/>
+                <isset property="android.build.version"/>
+            </and>
+        </condition>
+
+        <sequential unless:set="have.android.version">
+            <loadresource property="android.version">
+                <url url="http://tools.android.com/download/studio/canary/latest"/>
+                <filterchain>
+                    <tokenfilter>
+                        <filetokenizer/>
+                        <replaceregex
+                                pattern="^(.*)https?://dl\.google\.com/dl/android/studio/ide-zips/([\d\.]+)/android-studio-ide(.*)$"
+                                replace="\2" flags="s"/>
+                    </tokenfilter>
+                </filterchain>
+            </loadresource>
+            <loadresource property="android.build.version">
+                <url url="http://tools.android.com/download/studio/canary/latest"/>
+                <filterchain>
+                    <tokenfilter>
+                        <filetokenizer/>
+                        <replaceregex
+                                pattern="^(.*)https?://dl\.google\.com/dl/android/studio/ide-zips/[\d\.]+/android-studio-ide-([\d\.]+)-(.*)$"
+                                replace="\2" flags="s"/>
+                    </tokenfilter>
+                </filterchain>
+            </loadresource>
+        </sequential>
+
+        <echo message="Download android studio: ${android.version} ${android.build.version}"/>
+
+        <property name="android.file.name" value="android-studio-ide-${android.build.version}-${android.os.tag}.zip"/>
+        <property name="android.studio.url"
+                  value="http://dl.google.com/dl/android/studio/ide-zips/${android.version}/${android.file.name}"/>
+        <property name="android.destination.dir" value="android-studio/sdk"/>
+
+        <mkdir dir="dependencies/download"/>
+
+        <get src="${android.studio.url}" dest="dependencies/download" usetimestamp="true"/>
+
+        <delete dir="${android.destination.dir}" failonerror="false" includeemptydirs="true">
+            <exclude name="config/**"/>
+            <exclude name="system/**"/>
+        </delete>
+
+        <unzip src="dependencies/download/${android.file.name}" dest="${android.destination.dir}">
+            <cutdirsmapper dirs="1"/>
+        </unzip>
+
+        <local name="android.studio.mac"/>
+        <condition property="android.studio.mac">
+            <matches pattern=".+mac\.zip" string="${android.file.name}"/>
+        </condition>
+
+        <local name="android.studio.linux"/>
+        <condition property="android.studio.linux">
+            <matches pattern=".+linux\.zip" string="${android.file.name}"/>
+        </condition>
+
+        <exec executable="chmod" if:set="android.studio.mac">
+            <arg value="a+x"/>
+            <arg path="${android.destination.dir}/bin/fsnotifier"/>
+            <arg path="${android.destination.dir}/bin/inspect.sh"/>
+            <arg path="${android.destination.dir}/bin/printenv.py"/>
+            <arg path="${android.destination.dir}/bin/update_studio.sh"/>
+        </exec>
+
+        <exec executable="chmod" if:set="android.studio.linux">
+            <arg value="a+x"/>
+            <arg path="${android.destination.dir}/bin/fsnotifier"/>
+            <arg path="${android.destination.dir}/bin/fsnotifier64"/>
+            <arg path="${android.destination.dir}/bin/inspect.sh"/>
+            <arg path="${android.destination.dir}/bin/studio.sh"/>
+            <arg path="${android.destination.dir}/bin/update_studio.sh"/>
+        </exec>
+    </target>
+</project>

@@ -6,5 +6,6 @@
     <buildFile url="file://$PROJECT_DIR$/build_artifacts.xml">
       <maximumHeapSize value="512" />
     </buildFile>
+    <buildFile url="file://$PROJECT_DIR$/update_dependencies_kotlin.xml" />
   </component>
 </project>
