@@ -20,6 +20,7 @@ import org.jetbrains.android.anko.annotations.AnnotationManager
 import org.jetbrains.android.anko.sources.SourceManager
 import org.jetbrains.android.anko.templates.TemplateManager
 import java.io.File
+import org.jetbrains.android.anko.config.TargetArtifactType.*
 
 abstract class AnkoConfiguration {
     open val indent: String = "    "
@@ -33,8 +34,10 @@ abstract class AnkoConfiguration {
 
     abstract val version: String
 
-    abstract val outputDirectory: String
     abstract val outputPackage: String
+
+    abstract val outputDirectory: File
+    abstract val sourceOutputDirectory: File
 
     abstract val excludedClasses: Set<String>
     abstract val excludedMethods: Set<String>
@@ -49,9 +52,12 @@ abstract class AnkoConfiguration {
 
     public abstract fun getOutputFile(ankoFile: AnkoFile): File
 
-    public fun getVersionType(): AnkoFileType {
-        if (version.endsWith("-common")) return AnkoFileType.COMMON
-        else if ('-' in version) return AnkoFileType.SUPPORT
-        else return AnkoFileType.PLATFORM
+    public fun getTargetArtifactType(): TargetArtifactType {
+        return when {
+            "common" == version -> COMMON
+            "support-v4" == version -> SUPPORT_V4
+            version.matches("sdk\\d{2}".toRegex()) -> PLATFORM
+            else -> TOOLKIT
+        }
     }
 }

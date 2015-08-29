@@ -16,9 +16,9 @@
 
 package org.jetbrains.android.anko.utils
 
-fun String.toCamelCase(separator: Char = '_'): String {
+fun String.toCamelCase(separator: Char = '_', firstCapital: Boolean = true): String {
     val builder = StringBuilder()
-    var capitalFlag = true
+    var capitalFlag = firstCapital
     for (c in this) {
         when (c) {
             separator -> capitalFlag = true

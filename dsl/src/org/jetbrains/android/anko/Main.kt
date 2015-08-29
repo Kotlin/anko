@@ -82,8 +82,8 @@ private fun gen() {
             println("  Platform jars: ${platformJars.joinToString()}")
             if (versionJars.isNotEmpty()) println("  Version jars: ${versionJars.joinToString()}")
 
-            val outputDirectory = "workdir/gen/$versionName/"
-            val fileOutputDirectory = File("$outputDirectory/src/main/kotlin/")
+            val outputDirectory = File("workdir/gen/$versionName/")
+            val fileOutputDirectory = File(outputDirectory, "src/main/kotlin/")
             if (!fileOutputDirectory.exists()) {
                 fileOutputDirectory.mkdirs()
             }

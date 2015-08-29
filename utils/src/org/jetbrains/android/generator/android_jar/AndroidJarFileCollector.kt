@@ -63,20 +63,20 @@ class AndroidJarCollector {
         for ((index, version) in REQUIRED_PLATFORM_VERSIONS.sortDescendingBy { it }.withIndex()) {
             println("Processing version '${version}':")
 
-            val versionDir = File(ORIGINAL_DIR, version.toString())
+            val versionDir = File(ORIGINAL_DIR, "sdk$version")
             processVersion(versionDir, version, false, emptySet())
 
             if (index == 0) {
                 // Generate common artifact
                 println("Processing version 'common':")
-                processVersion(File(ORIGINAL_DIR, "$version-common"), version, false, emptySet())
+                processVersion(File(ORIGINAL_DIR, "common"), version, false, emptySet())
 
-                // Generate support artifacts for this platform
+                // Generate toolkit artifacts for this platform
                 supportFilesWithDependencies.forEach {
                     val versionSuffix = it.first { !it.platformFile }.file.name.substringBeforeLast('-')
                     println("Processing version '$version-$versionSuffix':")
 
-                    val supportVersionDir = File(ORIGINAL_DIR, "$version-$versionSuffix")
+                    val supportVersionDir = File(ORIGINAL_DIR, "$versionSuffix")
                     processVersion(supportVersionDir, version, true, it)
                 }
             }
@@ -84,7 +84,7 @@ class AndroidJarCollector {
         println("Complete.")
     }
 
-    private fun processVersion(versionDir: File, versionNumber: Int, support: Boolean, supportFiles: Set<SupportFile>) {
+    private fun processVersion(versionDir: File, versionNumber: Int, toolkit: Boolean, toolkitFiles: Set<SupportFile>) {
         fun log(message: String) = println("$INDENT$message")
 
         val platformDir = getPlatformDirectory(versionNumber)
@@ -94,8 +94,8 @@ class AndroidJarCollector {
         val androidJar = getAndroidJar(platformDir)
         androidJar.copyTo(File(versionDir, PLATFORM_PREFIX + androidJar.name))
 
-        if (support) {
-            supportFiles.forEach {
+        if (toolkit) {
+            toolkitFiles.forEach {
                 val (file, platformFile) = it
                 val platformPrefix = if (platformFile) PLATFORM_PREFIX else ""
 

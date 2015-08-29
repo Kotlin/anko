@@ -39,7 +39,7 @@ import java.util.*
 import kotlin.platform.platformStatic
 
 Retention(RetentionPolicy.SOURCE)
-public annotation class noBinding
+internal annotation class noBinding
 
 public object AnkoInternals {
 

@@ -21,7 +21,9 @@ import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.ConfigurationTune.HELPER_CONSTRUCTORS
 import org.jetbrains.android.anko.config.Props
+import org.jetbrains.android.anko.config.TargetArtifactType
 import org.jetbrains.android.anko.render.*
+import org.jetbrains.android.anko.utils.toCamelCase
 import java.io.Closeable
 import java.io.File
 import java.io.PrintWriter
@@ -32,17 +34,26 @@ class Writer(private val renderFacade: RenderFacade) {
     private val config = renderFacade.config
 
     fun write() {
-        val versionType = config.getVersionType()
+        val versionType = config.getTargetArtifactType()
         AnkoFile.values().forEach { file ->
             if (config[file] && versionType in file.types && file.shouldBeWritten(config)) {
                 write(file)
             }
         }
+
+        val staticFilesDir = File("dsl/static/src", when (versionType) {
+            TargetArtifactType.PLATFORM -> "platform"
+            else -> config.version.toCamelCase('-')
+        })
+
+        staticFilesDir.listFiles()?.forEach { file ->
+            if (file.isFile()) {
+                file.copyTo(File(config.sourceOutputDirectory, file.name))
+            }
+        }
     }
 
     private fun write(file: AnkoFile): Unit = when (file) {
-        ASYNC, CONTEXT_UTILS, CUSTOM, DATABASE, DIALOGS, HELPERS, INTERNALS,
-        LOGGER, OTHER, OTHER_WIDGETS, UI, SUPPORT, SQL_PARSERS -> writeStatic(file)
         INTERFACE_WORKAROUNDS_JAVA -> writeInterfaceWorkarounds()
         LAYOUTS -> writeLayouts()
         LISTENERS -> writeListeners()
@@ -86,11 +97,6 @@ class Writer(private val renderFacade: RenderFacade) {
         } else ""
         val imports = Props.imports["views"] ?: ""
         write(AnkoFile.VIEWS, allViews, imports)
-    }
-
-    private fun writeStatic(subsystem: config.AnkoFile) {
-        val file = File("dsl/static/src/${subsystem.filename}")
-        write(subsystem, file.readText(), "", false)
     }
 
     private fun write(

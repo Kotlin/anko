@@ -24,12 +24,14 @@ import org.jetbrains.android.anko.templates.TemplateManager
 import java.io.File
 
 open class DefaultAnkoConfiguration(
-        outputDirectory: String = "workdir/gen/",
+        outputDirectory: File = File("workdir/gen/"),
         override val version: String
 ) : AnkoConfiguration() {
 
-    override val outputDirectory = outputDirectory
     override val outputPackage = "org.jetbrains.anko"
+
+    override val outputDirectory = outputDirectory
+    override val sourceOutputDirectory = File(outputDirectory, "src/main/kotlin/" + outputPackage.replace('.', '/'))
 
     override val excludedClasses = File("dsl/props/excluded_classes.txt").readLines().toSet()
 
@@ -56,6 +58,6 @@ open class DefaultAnkoConfiguration(
     }
 
     override fun getOutputFile(ankoFile: AnkoFile): File {
-        return File(outputDirectory + "src/main/kotlin/" + outputPackage.replace('.', '/') + '/', ankoFile.filename)
+        return File(sourceOutputDirectory, ankoFile.filename)
     }
 }

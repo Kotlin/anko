@@ -18,7 +18,7 @@ package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.config.AnkoFileType
+import org.jetbrains.android.anko.config.TargetArtifactType
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.render.RenderFacade
 import java.io.File
@@ -34,22 +34,16 @@ class DSLGenerator(
 
     private fun copy(original: String) {
         val originalFile = File("dsl/props/mvn/$original")
-        val toCreateFile = File((config.outputDirectory + original))
+        val toCreateFile = File(config.outputDirectory, original)
         originalFile.copyTo(toCreateFile)
     }
 
     private fun copy(original: String, process: (String) -> String) {
         val contents = process(File("dsl/props/mvn/$original").readText())
-        File(config.outputDirectory + original).writeText(contents)
+        File(config.outputDirectory, original).writeText(contents)
     }
 
     override fun run() {
-        val supportVersion = config.getVersionType() == AnkoFileType.SUPPORT
-        if (supportVersion)
-            config.files.add(AnkoFile.SUPPORT)
-        else
-            config.files.remove(AnkoFile.SUPPORT)
-
         val classTree = this.classTree ?: ClassProcessor(platformJars, versionJars).genClassTree()
         val generationState = GenerationState(classTree, config)
         val renderer = RenderFacade(generationState)
@@ -57,22 +51,17 @@ class DSLGenerator(
 
         if (config.generateMavenArtifact) {
             // Create res directory
-            val resDirectory = File(config.outputDirectory + "src/main/res/")
+            val resDirectory = File(config.outputDirectory, "src/main/res/")
             if (!resDirectory.exists()) {
                 resDirectory.mkdirs()
             }
 
-            val artifactVersion = if (supportVersion)
-                config.version.substringAfter('-')
-            else if (config.getVersionType() == AnkoFileType.COMMON)
-                "common"
-            else config.version
-
+            val artifactVersion = config.version
             val sdkVersion = config.version.substringBefore('-')
 
             // Write manifest
             val manifest = mvnManifest.replace("%SDK_VERSION", sdkVersion)
-            File(config.outputDirectory + "src/main/AndroidManifest.xml").writeText(manifest)
+            File(config.outputDirectory, "src/main/AndroidManifest.xml").writeText(manifest)
 
             // Copy gradle wrapper
             copy("gradlew")
