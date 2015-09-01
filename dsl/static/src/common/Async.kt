@@ -29,16 +29,26 @@ import java.util.concurrent.Future
 public class AnkoAsyncContext(val ctxReference: WeakReference<Context>)
 
 public fun AnkoAsyncContext.uiThread(f: Context.() -> Unit) {
-    ctxReference.get()?.uiThread(f)
+    ctxReference.get()?.onUiThread(f)
+}
+
+@deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
+public noBinding fun Context.uiThread(f: Context.() -> Unit) {
+    if (ContextHelper.mainThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
+}
+
+@deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
+public inline noBinding fun Fragment.uiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
+    activity?.onUiThread { f() }
 }
 
 // Fragment.uiThread() has a different argument list (because of inline)
-public noBinding fun Context.uiThread(f: Context.() -> Unit) {
-    if (ContextHelper.uiThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
+public noBinding fun Context.onUiThread(f: Context.() -> Unit) {
+    if (ContextHelper.mainThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
 }
 
-public inline noBinding fun Fragment.uiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
-    activity?.uiThread { f() }
+public inline noBinding fun Fragment.onUiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
+    activity?.onUiThread { f() }
 }
 
 public fun Fragment.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> {
@@ -92,5 +102,5 @@ object BackgroundExecutor {
 
 private object ContextHelper {
     val handler = Handler(Looper.getMainLooper())
-    val uiThread = Looper.getMainLooper().thread
+    val mainThread = Looper.getMainLooper().thread
 }

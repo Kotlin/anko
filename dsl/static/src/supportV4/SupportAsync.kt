@@ -20,8 +20,13 @@ import android.support.v4.app.Fragment
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 
+@deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
 public inline fun Fragment.uiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
-    activity.uiThread { f() }
+    activity.onUiThread { f() }
+}
+
+public inline fun Fragment.onUiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
+    activity.onUiThread { f() }
 }
 
 public fun Fragment.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> = activity.async(task)
