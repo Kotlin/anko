@@ -57,37 +57,49 @@ public inline fun <T: View> ViewManager.addView(view: T): T {
     return view
 }
 
-public inline fun <T : View> Fragment.addView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T): T {
+public inline fun <T : View> Fragment.addView(
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T
+): T {
     val view = factory(activity)
     UI { addView(view) }
     return view
 }
 
-public inline fun <T : View> Context.addView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T): T {
+public inline fun <T : View> Context.addView(
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T
+): T {
     val view = factory(this)
     UI { addView(view) }
     return view
 }
 
-public inline fun <T : View> Activity.addView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T): T {
+public inline fun <T : View> Activity.addView(
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T
+): T {
     val view = factory(this)
     UI { addView(view) }
     return view
 }
 
-public inline fun <reified T : View> Context.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+public inline fun <reified T : View> Context.customView(
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
+): T = addView { ctx ->
     val view = AnkoInternals.initiateView(ctx, T::class.java)
     view.init()
     view
 }
 
-public inline fun <reified T : View> ViewManager.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView<T> { ctx ->
+public inline fun <reified T : View> ViewManager.customView(
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
+): T = addView<T> { ctx ->
     val view = AnkoInternals.initiateView(ctx, T::class.java)
     view.init()
     view
 }
 
-public inline fun <reified T : View> Activity.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+public inline fun <reified T : View> Activity.customView(
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
+): T = addView { ctx ->
     val view = AnkoInternals.initiateView(ctx, T::class.java)
     view.init()
     view

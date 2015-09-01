@@ -34,12 +34,9 @@ import org.jetbrains.anko.Orientation
 import org.jetbrains.anko.ScreenSize
 import org.jetbrains.anko.UiMode
 import java.io.Serializable
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
 import java.util.*
 
-Retention(RetentionPolicy.SOURCE)
-internal annotation class noBinding
+internal annotation(AnnotationRetention.SOURCE) class noBinding
 
 public object AnkoInternals {
 

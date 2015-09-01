@@ -26,7 +26,10 @@ import org.jetbrains.anko.custom.addView
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun ViewManager.verticalLayout(): LinearLayout = verticalLayout({})
-public inline fun ViewManager.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView<_LinearLayout> { ctx ->
+
+public inline fun ViewManager.verticalLayout(
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit
+): LinearLayout = addView<_LinearLayout> { ctx ->
     val view = _LinearLayout(ctx)
     view.orientation = LinearLayout.VERTICAL
     view.init()
@@ -35,7 +38,10 @@ public inline fun ViewManager.verticalLayout(inlineOptions(InlineOption.ONLY_LOC
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun Context.verticalLayout(): LinearLayout = verticalLayout({})
-public inline fun Context.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView { ctx ->
+
+public inline fun Context.verticalLayout(
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit
+): LinearLayout = addView { ctx ->
     val view = _LinearLayout(ctx)
     view.orientation = LinearLayout.VERTICAL
     view.init()
@@ -44,7 +50,10 @@ public inline fun Context.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_R
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun Activity.verticalLayout(): LinearLayout = verticalLayout({})
-public inline fun Activity.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView { ctx ->
+
+public inline fun Activity.verticalLayout(
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit
+): LinearLayout = addView { ctx ->
     val view = _LinearLayout(ctx)
     view.orientation = LinearLayout.VERTICAL
     view.init()
@@ -53,7 +62,10 @@ public inline fun Activity.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.verticalLayout(): LinearLayout = verticalLayout({})
-public inline fun Fragment.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit): LinearLayout = addView { ctx ->
+
+public inline fun Fragment.verticalLayout(
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit
+): LinearLayout = addView { ctx ->
     val view = _LinearLayout(ctx)
     view.orientation = LinearLayout.VERTICAL
     view.init()
@@ -62,7 +74,11 @@ public inline fun Fragment.verticalLayout(inlineOptions(InlineOption.ONLY_LOCAL_
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun <T: View> ViewManager.include(layoutId: Int): T = include(layoutId, {})
-public inline fun <T: View> ViewManager.include(layoutId: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView<T> { ctx ->
+
+public inline fun <T: View> ViewManager.include(
+        layoutId: Int,
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
+): T = addView<T> { ctx ->
     @suppress("UNCHECKED_CAST")
     val view = ctx.layoutInflater.inflate(layoutId, null) as T
     view.init()
@@ -71,7 +87,11 @@ public inline fun <T: View> ViewManager.include(layoutId: Int, inlineOptions(Inl
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun <T: View> Activity.include(layoutId: Int): T = include(layoutId, {})
-public inline fun <T: View> Activity.include(layoutId: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+
+public inline fun <T: View> Activity.include(
+        layoutId: Int,
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
+): T = addView { ctx ->
     @suppress("UNCHECKED_CAST")
     val view = ctx.layoutInflater.inflate(layoutId, null) as T
     view.init()
@@ -80,7 +100,11 @@ public inline fun <T: View> Activity.include(layoutId: Int, inlineOptions(Inline
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun <T: View> Fragment.include(layoutId: Int): T = include(layoutId, {})
-public inline fun <T: View> Fragment.include(layoutId: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+
+public inline fun <T: View> Fragment.include(
+        layoutId: Int,
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
+): T = addView { ctx ->
     @suppress("UNCHECKED_CAST")
     val view = ctx.layoutInflater.inflate(layoutId, null) as T
     view.init()
@@ -89,7 +113,10 @@ public inline fun <T: View> Fragment.include(layoutId: Int, inlineOptions(Inline
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun <T: View> Context.include(layoutId: Int): T = include(layoutId, {})
-public inline fun <T: View> Context.include(layoutId: Int, inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
+public inline fun <T: View> Context.include(
+        layoutId: Int,
+        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
+): T = addView { ctx ->
     @suppress("UNCHECKED_CAST")
     val view = ctx.layoutInflater.inflate(layoutId, null) as T
     view.init()

@@ -16,101 +16,148 @@
 
 package org.jetbrains.anko
 
-import android.app.AlertDialog
 import android.app.Fragment
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
-import android.content.DialogInterface.OnClickListener
-import android.content.DialogInterface.OnKeyListener
-import android.database.Cursor
-import android.graphics.drawable.Drawable
-import android.view.KeyEvent
-import android.view.View
-import android.view.ViewManager
-import android.widget.ListAdapter
 import android.widget.Toast
 import org.jetbrains.anko.internals.noBinding
 
 public fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
+
 public fun Context.toast(textResource: Int) {
     Toast.makeText(this, textResource, Toast.LENGTH_SHORT).show()
 }
 
 public fun Fragment.toast(text: CharSequence): Unit = activity.toast(text)
+
 public fun Context.toast(text: CharSequence) {
     Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 }
 
 public fun Fragment.longToast(textResource: Int): Unit = activity.longToast(textResource)
+
 public fun Context.longToast(textResource: Int) {
     Toast.makeText(this, textResource, Toast.LENGTH_LONG).show()
 }
 
 public fun Fragment.longToast(text: CharSequence): Unit = activity.longToast(text)
+
 public fun Context.longToast(text: CharSequence) {
     Toast.makeText(this, text, Toast.LENGTH_LONG).show()
 }
 
-public fun Fragment.alert(message: String, title: String? = null, init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder = activity.alert(message, title, init)
-public fun Context.alert(message: String, title: String? = null, init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder {
-    return with(AlertDialogBuilder(this)) {
+public fun Fragment.alert(
+        message: String,
+        title: String? = null,
+        init: (AlertDialogBuilder.() -> Unit)? = null
+): AlertDialogBuilder = activity.alert(message, title, init)
+
+public fun Context.alert(
+        message: String,
+        title: String? = null,
+        init: (AlertDialogBuilder.() -> Unit)? = null
+): AlertDialogBuilder {
+    return AlertDialogBuilder(this).apply {
         if (title != null) title(title)
         message(message)
         if (init != null) init()
-        this
     }
 }
 
-public fun Fragment.alert(message: Int, title: Int? = null, init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder = activity.alert(message, title, init)
-public fun Context.alert(message: Int, title: Int? = null, init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder {
-    return with(AlertDialogBuilder(this)) {
+public fun Fragment.alert(
+        message: Int,
+        title: Int? = null,
+        init: (AlertDialogBuilder.() -> Unit)? = null
+): AlertDialogBuilder = activity.alert(message, title, init)
+
+public fun Context.alert(
+        message: Int,
+        title: Int? = null,
+        init: (AlertDialogBuilder.() -> Unit)? = null
+): AlertDialogBuilder {
+    return AlertDialogBuilder(this).apply {
         if (title != null) title(title)
         message(message)
         if (init != null) init()
-        this
     }
 }
 
 public fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = activity.alert(init)
-public fun Context.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = with (AlertDialogBuilder(this)) {
-    init()
-    this
+
+public fun Context.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder {
+    return AlertDialogBuilder(this).apply { init() }
 }
 
-public fun Fragment.progressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+public fun Fragment.progressDialog(
+        message: Int? = null,
+        title: Int? = null,
+        init: (ProgressDialog.() -> Unit)? = null
+): ProgressDialog {
     return activity.progressDialog(false, message?.let { getString(it) }, title?.let { getString(it) }, init)
 }
 
-public fun Context.progressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+public fun Context.progressDialog(
+        message: Int? = null,
+        title: Int? = null,
+        init: (ProgressDialog.() -> Unit)? = null
+): ProgressDialog {
     return progressDialog(false, message?.let { getString(it) }, title?.let { getString(it) }, init)
 }
 
-public fun Fragment.indeterminateProgressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+public fun Fragment.indeterminateProgressDialog(
+        message: Int? = null,
+        title: Int? = null,
+        init: (ProgressDialog.() -> Unit)? = null
+): ProgressDialog {
     return activity.progressDialog(true, message?.let { getString(it) }, title?.let { getString(it) }, init)
 }
 
-public fun Context.indeterminateProgressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+public fun Context.indeterminateProgressDialog(
+        message: Int? = null,
+        title: Int? = null,
+        init: (ProgressDialog.() -> Unit)? = null
+): ProgressDialog {
     return progressDialog(true, message?.let { getString(it) }, title?.let { getString(it) }, init)
 }
 
-public fun Fragment.progressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+public fun Fragment.progressDialog(
+        message: String? = null,
+        title: String? = null,
+        init: (ProgressDialog.() -> Unit)? = null
+): ProgressDialog {
     return activity.progressDialog(false, message, title, init)
 }
 
-public fun Context.progressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+public fun Context.progressDialog(
+        message: String? = null,
+        title: String? = null,
+        init: (ProgressDialog.() -> Unit)? = null
+): ProgressDialog {
     return progressDialog(false, message, title, init)
 }
 
-public fun Fragment.indeterminateProgressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+public fun Fragment.indeterminateProgressDialog(
+        message: String? = null,
+        title: String? = null,
+        init: (ProgressDialog.() -> Unit)? = null
+): ProgressDialog {
     return activity.progressDialog(true, message, title, init)
 }
 
-public fun Context.indeterminateProgressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+public fun Context.indeterminateProgressDialog(
+        message: String? = null,
+        title: String? = null,
+        init: (ProgressDialog.() -> Unit)? = null
+): ProgressDialog {
     return progressDialog(true, message, title, init)
 }
 
-private noBinding fun Context.progressDialog(indeterminate: Boolean, message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+private noBinding fun Context.progressDialog(
+        indeterminate: Boolean,
+        message: String? = null,
+        title: String? = null,
+        init: (ProgressDialog.() -> Unit)? = null
+): ProgressDialog {
     val dialog = ProgressDialog(this)
     dialog.isIndeterminate = indeterminate
     if (!indeterminate) dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
@@ -131,149 +178,11 @@ public fun Fragment.selector(
 public fun Context.selector(
     title: CharSequence? = null,
     items: List<CharSequence>,
-    onClick: (Int) -> Unit) {
+    onClick: (Int) -> Unit
+) {
     with(AlertDialogBuilder(this)) {
         if (title != null) title(title)
         items(items, onClick)
         show()
     }
-}
-
-public class AlertDialogBuilder(val ctx: Context) {
-    private val builder: AlertDialog.Builder = AlertDialog.Builder(ctx)
-    protected var dialog: AlertDialog? = null
-
-    public fun getBuilder(): AlertDialog.Builder = builder
-
-    public fun dismiss() {
-        dialog?.dismiss()
-    }
-
-    public fun show(): AlertDialogBuilder {
-        dialog = builder.create()
-        dialog!!.show()
-        return this
-    }
-
-    public fun title(title: CharSequence) {
-        builder.setTitle(title)
-    }
-
-    public fun title(resource: Int) {
-        builder.setTitle(resource)
-    }
-
-    public fun message(title: CharSequence) {
-        builder.setMessage(title)
-    }
-
-    public fun message(resource: Int) {
-        builder.setMessage(resource)
-    }
-
-    public fun icon(icon: Int) {
-        builder.setIcon(icon)
-    }
-
-    public fun icon(icon: Drawable) {
-        builder.setIcon(icon)
-    }
-
-    public fun customTitle(title: View) {
-        builder.setCustomTitle(title)
-    }
-
-    public fun customView(view: View) {
-        builder.setView(view)
-    }
-
-    public fun customView(dsl: ViewManager.() -> Unit) {
-        val view = ctx.UI(dsl).toView()
-        builder.setView(view)
-    }
-
-    public fun cancellable(value: Boolean = true) {
-        builder.setCancelable(value)
-    }
-
-    public fun onCancel(f: () -> Unit) {
-        builder.setOnCancelListener { f() }
-    }
-
-    public fun onKey(f: (keyCode: Int, e: KeyEvent) -> Boolean) {
-        builder.setOnKeyListener(object : OnKeyListener {
-            override fun onKey(dialog: DialogInterface?, keyCode: Int, event: KeyEvent): Boolean {
-                return f(keyCode, event)
-            }
-        })
-    }
-
-    public fun neutralButton(textResource: Int = android.R.string.ok, f: DialogInterface.() -> Unit = { dismiss() }) {
-        neutralButton(ctx.getString(textResource), f)
-    }
-
-    public fun neutralButton(title: String, f: DialogInterface.() -> Unit = { dismiss() }) {
-        builder.setNeutralButton(title, object : OnClickListener {
-            override public fun onClick(dialog: DialogInterface, which: Int) {
-                dialog.f()
-            }
-        })
-    }
-
-    public fun positiveButton(textResource: Int = android.R.string.ok, f: DialogInterface.() -> Unit) {
-        positiveButton(ctx.getString(textResource), f)
-    }
-
-    public fun positiveButton(title: String, f: DialogInterface.() -> Unit) {
-        builder.setPositiveButton(title, object : OnClickListener {
-            override public fun onClick(dialog: DialogInterface, which: Int) {
-                dialog.f()
-            }
-        })
-    }
-
-    public fun negativeButton(textResource: Int = android.R.string.ok, f: DialogInterface.() -> Unit = { dismiss() }) {
-        negativeButton(ctx.getString(textResource), f)
-    }
-
-    public fun negativeButton(title: String, f: DialogInterface.() -> Unit = { dismiss() }) {
-        builder.setNegativeButton(title, object : OnClickListener {
-            override public fun onClick(dialog: DialogInterface, which: Int) {
-                dialog.f()
-            }
-        })
-    }
-
-    public fun items(itemsId: Int, f: (which: Int) -> Unit) {
-        items(ctx.resources!!.getTextArray(itemsId), f)
-    }
-
-    public fun items(items: List<CharSequence>, f: (which: Int) -> Unit) {
-        items(items.toTypedArray(), f)
-    }
-
-    public fun items(items: Array<CharSequence>, f: (which: Int) -> Unit) {
-        builder.setItems(items, object : OnClickListener {
-            override public fun onClick(dialog: DialogInterface, which: Int) {
-                f(which)
-            }
-        })
-    }
-
-    public fun adapter(adapter: ListAdapter, f: (which: Int) -> Unit) {
-        builder.setAdapter(adapter, object : OnClickListener {
-            override public fun onClick(dialog: DialogInterface, which: Int) {
-                f(which)
-            }
-        })
-    }
-
-    public fun adapter(cursor: Cursor, labelColumn: String, f: (which: Int) -> Unit) {
-        builder.setCursor(cursor, object : OnClickListener {
-            override public fun onClick(dialog: DialogInterface, which: Int) {
-                f(which)
-            }
-        }, labelColumn)
-    }
-
 }

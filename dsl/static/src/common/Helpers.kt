@@ -21,7 +21,8 @@ import android.app.Fragment
 import android.content.Context
 import org.jetbrains.anko.internals.AnkoInternals
 
-public class AnkoException(message: String = "") : RuntimeException(message)
+public open class AnkoException(message: String = "") : RuntimeException(message)
+public class PropertyWithoutGetterException(name: String) : AnkoException("'$name' property does not have a getter")
 
 //returns 0xC0C0C0 for 0xC0
 public val Int.gray: Int

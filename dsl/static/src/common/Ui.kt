@@ -71,10 +71,9 @@ public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit
 private fun applyStyle(v: View, style: (View) -> Unit) {
     style(v)
     if (v is ViewGroup) {
-        val maxId = v.childCount - 1
-        for (i in 0..maxId) {
-            val maybeChild = v.getChildAt(i)
-            if (maybeChild != null) applyStyle(maybeChild, style)
+        val maxIndex = v.childCount - 1
+        for (i in 0 .. maxIndex) {
+            v.getChildAt(i)?.let { applyStyle(it, style) }
         }
     }
 }
