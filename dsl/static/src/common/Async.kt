@@ -16,16 +16,15 @@
 
 package org.jetbrains.anko
 
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
+import android.app.Fragment
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Future
-import android.app.*
 import org.jetbrains.anko.internals.noBinding
 import java.lang.ref.WeakReference
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
 
 public class AnkoAsyncContext(val ctxReference: WeakReference<Context>)
 
@@ -39,15 +38,15 @@ public noBinding fun Context.uiThread(f: Context.() -> Unit) {
 }
 
 public inline noBinding fun Fragment.uiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
-    getActivity()?.uiThread { f() }
+    activity?.uiThread { f() }
 }
 
 public fun Fragment.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> {
-    return getActivity().async(task)
+    return activity.async(task)
 }
 
 public fun Fragment.async(executorService: ExecutorService, task: AnkoAsyncContext.() -> Unit): Future<Unit> {
-    return getActivity().async(executorService, task)
+    return activity.async(executorService, task)
 }
 
 public fun Context.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> {
@@ -61,7 +60,7 @@ public fun Context.async(executorService: ExecutorService, task: AnkoAsyncContex
 }
 
 public fun <T> Fragment.asyncResult(task: () -> T): Future<T> {
-    return getActivity().asyncResult(task)
+    return activity.asyncResult(task)
 }
 
 public fun <T> Fragment.asyncResult(executorService: ExecutorService, task: () -> T): Future<T> {
@@ -93,5 +92,5 @@ object BackgroundExecutor {
 
 private object ContextHelper {
     val handler = Handler(Looper.getMainLooper())
-    val uiThread = Looper.getMainLooper().getThread()
+    val uiThread = Looper.getMainLooper().thread
 }

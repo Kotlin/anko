@@ -16,9 +16,11 @@
 
 package org.jetbrains.android.anko.config
 
+import org.jetbrains.android.anko.config.TargetArtifactType.COMMON
+import org.jetbrains.android.anko.config.TargetArtifactType.PLATFORM
+import org.jetbrains.android.anko.config.TargetArtifactType.SUPPORT_V4
+import org.jetbrains.android.anko.config.TargetArtifactType.TOOLKIT
 import org.jetbrains.android.anko.utils.toCamelCase
-import kotlin.properties.Delegates
-import org.jetbrains.android.anko.config.TargetArtifactType.*
 
 public enum class TargetArtifactType {
     COMMON, // Common stuff (does not contain platform-dependent functions)
@@ -43,7 +45,7 @@ public enum class AnkoFile(
 
     public val types: Set<TargetArtifactType> = type.toSet()
 
-    public val filename: String by Delegates.lazy {
+    public val filename: String by lazy {
         val name = name()
         val extension = if (name.endsWith("_JAVA")) ".java" else ".kt"
         name.substringBeforeLast("_JAVA").toCamelCase() + extension

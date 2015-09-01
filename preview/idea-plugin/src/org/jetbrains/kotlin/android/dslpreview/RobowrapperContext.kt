@@ -16,37 +16,31 @@
 
 package org.jetbrains.kotlin.android.dslpreview
 
-import java.io.File
-import kotlin.properties.Delegates
-import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.openapi.roots.ModuleRootManager
-import java.util.ArrayList
-import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.projectRoots.JavaSdk
+import com.intellij.openapi.application.PathManager
 import com.intellij.openapi.projectRoots.JavaSdkType
+import com.intellij.openapi.roots.ModuleRootManager
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiClass
+import java.io.File
+import java.util.*
 
 class RobowrapperContext(description: PreviewClassDescription) {
 
     val androidFacet = description.androidFacet
     val activityClassName = description.qualifiedName
 
-    private val mainSourceProvider = androidFacet.getMainIdeaSourceProvider()
-    private val applicationPackage = androidFacet.getManifest()
-            ?.getPackage()?.getXmlAttributeValue()?.getValue() ?: "app"
+    private val mainSourceProvider = androidFacet.mainIdeaSourceProvider
+    private val applicationPackage = androidFacet.manifest?.`package`?.xmlAttributeValue?.value ?: "app"
 
-    private val assetsDirectory = mainSourceProvider.getAssetsDirectories().firstOrNull()
-    private val resDirectory = mainSourceProvider.getResDirectories().firstOrNull()
+    private val assetsDirectory = mainSourceProvider.assetsDirectories.firstOrNull()
+    private val resDirectory = mainSourceProvider.resDirectories.firstOrNull()
 
-    private val activities by Delegates.lazy {
-        androidFacet.getManifest()
-                ?.getApplication()
-                ?.getActivities()
-                ?: listOf()
+    private val activities by lazy {
+        androidFacet.manifest?.application?.activities ?: listOf()
     }
 
-    private val manifest by Delegates.lazy { generateManifest() }
+    private val manifest by lazy { generateManifest() }
 
     private fun runReadAction<T>(action: () -> T): T {
         return ApplicationManager.getApplication().runReadAction<T>(action)
@@ -54,8 +48,8 @@ class RobowrapperContext(description: PreviewClassDescription) {
 
     private fun generateManifest() = runReadAction {
         val activityEntries = activities.map {
-            val clazz = it.getActivityClass()
-            val theme = if (clazz.getValue().isAppCompatActivity()) "android:theme=\"@style/Theme.AppCompat\"" else ""
+            val clazz = it.activityClass
+            val theme = if (clazz.value.isAppCompatActivity()) "android:theme=\"@style/Theme.AppCompat\"" else ""
             "<activity android:name=\"${clazz.toString()}\" $theme />"
         }.joinToString("\n")
         val manifestFile = File.createTempFile("AndroidManifest", ".xml")
@@ -78,36 +72,36 @@ class RobowrapperContext(description: PreviewClassDescription) {
     }
 
     private fun ArrayList<String>.add(name: String, value: String) = add(name + escape(value))
-    private fun ArrayList<String>.add(name: String, value: VirtualFile) = add(name + escape(value.getPath()))
-    private fun ArrayList<String>.add(name: String, value: File) = add(name + escape(value.getAbsolutePath()))
+    private fun ArrayList<String>.add(name: String, value: VirtualFile) = add(name + escape(value.path))
+    private fun ArrayList<String>.add(name: String, value: File) = add(name + escape(value.absolutePath))
 
     public fun makeArguments(): List<String> {
-        val module = androidFacet.getModule()
-        val roots = ModuleRootManager.getInstance(module).orderEntries().classes().getRoots()
-        val androidSdkDirectory = androidFacet.getSdkData()?.getLocation()?.getPath()
+        val module = androidFacet.module
+        val roots = ModuleRootManager.getInstance(module).orderEntries().classes().roots
+        val androidSdkDirectory = androidFacet.sdkData?.location?.getPath()
 
         val pluginJarPath = PathManager.getJarPathForClass(javaClass)!!
         val pluginDirectory = File(pluginJarPath).getParent()
         val robowrapperDirectory = File(
-            File(pluginJarPath).getParentFile().getParentFile(), "robowrapper/")
+            File(pluginJarPath).parentFile.parentFile, "robowrapper/")
 
-        val robolectricMavenDependencies = RobowrapperDependencies.DEPENDENCIES.map { it.file.getAbsolutePath() }.joinToString(":")
+        val robolectricMavenDependencies = RobowrapperDependencies.DEPENDENCIES.map { it.file.absolutePath }.joinToString(":")
 
         val robowrapperDependencies = listOf(
             "gson-2.3.jar",
             "jeromq-0.3.4.jar")
-            .map { File(pluginDirectory, it).getAbsolutePath() }.joinToString(":", prefix = ":")
+            .map { File(pluginDirectory, it).absolutePath }.joinToString(":", prefix = ":")
 
         val robolectricDependencies = robowrapperDirectory
                 .listFiles { it.name.endsWith(".jar") }
-                ?.map { it.getAbsolutePath() }?.joinToString(":", prefix = ":") ?: ""
+                ?.map { it.absolutePath }?.joinToString(":", prefix = ":") ?: ""
 
         val androidDependencies = resolveAndroidDependencies(roots, androidSdkDirectory)
 
         val dependencyDirectory = RobowrapperDependencies.DEPENDENCIES_DIRECTORY
 
-        val sdk = ModuleRootManager.getInstance(module).getSdk()
-        val sdkType = sdk?.getSdkType()
+        val sdk = ModuleRootManager.getInstance(module).sdk
+        val sdkType = sdk?.sdkType
         val pathToJava = if (sdk != null && sdkType is JavaSdkType) {
             sdkType.getVMExecutablePath(sdk)
         } else "java"
@@ -125,7 +119,7 @@ class RobowrapperContext(description: PreviewClassDescription) {
             if (assetsDirectory != null) {
                 add("-Dandroid.assets=", assetsDirectory)
             } else {
-                add("-Dandroid.assets=", File(resDirectory.getParent().getPath(), "assets"))
+                add("-Dandroid.assets=", File(resDirectory.parent.path, "assets"))
             }
             //TODO: check policy file loading
             //add("-Djava.security.manager=default")
@@ -140,7 +134,7 @@ class RobowrapperContext(description: PreviewClassDescription) {
         val sb = StringBuilder()
 
         for (root in roots) {
-            var item = root.getPath()
+            var item = root.path
             if (androidSdkDirectory != null && item.startsWith(androidSdkDirectory)) {
                 continue
             }
@@ -160,8 +154,8 @@ class RobowrapperContext(description: PreviewClassDescription) {
     private fun PsiClass?.isAppCompatActivity(): Boolean {
         if (this == null) return false
 
-        if (getQualifiedName() == "android.support.v7.app.AppCompatActivity") return true
-        else return getSuperClass()?.isAppCompatActivity() ?: false
+        if (qualifiedName == "android.support.v7.app.AppCompatActivity") return true
+        else return superClass?.isAppCompatActivity() ?: false
     }
 
 }

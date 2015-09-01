@@ -16,18 +16,14 @@
 
 package org.jetbrains.android.anko.compile
 
-import java.io.File
-import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.DSLGenerator
-import java.io.BufferedReader
-import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
-import org.jetbrains.android.anko.utils.JarFileFilter
-import java.io.InputStreamReader
-import kotlin.platform.platformStatic
-import org.jetbrains.android.anko.TestAnkoConfiguration
 import org.jetbrains.android.anko.createTempTestFile
-import org.junit.Assert.*
-import java.util.Arrays
+import org.jetbrains.android.anko.utils.JarFileFilter
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import java.io.BufferedReader
+import java.io.File
+import java.io.InputStreamReader
+import java.util.*
 import java.util.logging.Logger
 
 public open class CompileTestFixture {
@@ -36,24 +32,22 @@ public open class CompileTestFixture {
     companion object {
         private val kotlincFilename = "lib/Kotlin/kotlinc/bin/kotlinc-jvm" + (if (isWindows()) ".bat" else "")
 
-        private val versions = File("workdir/original/").listFiles(AndroidVersionDirectoryFilter())
-
         private fun getBuiltLibraryFile(fullVersion: String): File {
             return File("workdir/zip/anko-$fullVersion.jar")
         }
 
-        private val LOG = Logger.getLogger(javaClass<CompileTestFixture>().getName())
+        private val LOG = Logger.getLogger(CompileTestFixture::class.java.name)
 
         fun runProcess(args: Array<String>, compiler: Boolean): ProcResult {
             LOG.info("Exec process: ${Arrays.toString(args)}")
 
             val p = Runtime.getRuntime().exec(args)
-            val brInput = BufferedReader(InputStreamReader(p.getInputStream()))
-            val brError = BufferedReader(InputStreamReader(p.getErrorStream()))
+            val brInput = BufferedReader(InputStreamReader(p.inputStream))
+            val brError = BufferedReader(InputStreamReader(p.errorStream))
             val errors = StringBuilder()
             val output = StringBuilder()
 
-            (brInput.lines() + brError.lines()).forEach { line ->
+            (brInput.lineSequence() + brError.lineSequence()).forEach { line ->
                 if (compiler && line.startsWith("ERROR")) {
                     errors.append(line).append("\n")
                 } else {
@@ -92,7 +86,7 @@ public open class CompileTestFixture {
                 tmpFile,
                 File(lib, "Kotlin/kotlinc/lib/kotlin-runtime.jar"),
                 File(lib, "hamcrest-all-1.3.jar")
-        ) + robolectricJars + androidAllJars).map { it.getAbsolutePath() }.join(File.pathSeparator)
+        ) + robolectricJars + androidAllJars).map { it.absolutePath }.join(File.pathSeparator)
 
         val manifest = File("dsl/testData/robolectric/AndroidManifest.xml")
         val androidRes = File("dsl/testData/robolectric/res/")
@@ -101,10 +95,10 @@ public open class CompileTestFixture {
         val args = arrayOf("java", "-cp", cp,
                 "-Dapple.awt.UIElement=true",
                 "-Drobolectric.offline=true",
-                "-Drobolectric.dependency.dir=" + lib.getAbsolutePath(),
-                "-Dandroid.manifest=" + manifest.getAbsolutePath(),
-                "-Dandroid.resources=" + androidRes.getAbsolutePath(),
-                "-Dandroid.assets=" + androidAssets.getAbsolutePath(),
+                "-Drobolectric.dependency.dir=" + lib.absolutePath,
+                "-Dandroid.manifest=" + manifest.absolutePath,
+                "-Dandroid.resources=" + androidRes.absolutePath,
+                "-Dandroid.assets=" + androidAssets.absolutePath,
                 "org.junit.runner.JUnitCore", "test.RobolectricTest"
         )
 
@@ -117,11 +111,11 @@ public open class CompileTestFixture {
         val classpath = (
                 jarFiles.map { it.getPath() } +
                         listOf(getBuiltLibraryFile(ver.name)) +
-                        (additionalLibraries?.map { it.getAbsolutePath() } ?: listOf()))
+                        (additionalLibraries?.map { it.absolutePath } ?: listOf()))
                 .joinToString(File.pathSeparator)
 
         val tmpFile = createTempTestFile("compile", ".jar")
-        val kotlincArgs = arrayOf(File(kotlincFilename).getAbsolutePath(), "-d", tmpFile.getAbsolutePath(),
+        val kotlincArgs = arrayOf(File(kotlincFilename).absolutePath, "-d", tmpFile.absolutePath,
                 "-classpath", classpath.toString(), testData.getPath())
         val args = arrayListOf(*kotlincArgs)
         val res = runProcess(args.toTypedArray(), compiler = true)

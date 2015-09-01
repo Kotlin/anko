@@ -26,14 +26,6 @@ public interface SourceProvider {
     fun parse(fqName: String): CompilationUnit?
 }
 
-public class CachingSourceProvider(private val underlyingProvider: SourceProvider) : SourceProvider {
-    private val cache = hashMapOf<String, CompilationUnit>()
-
-    override fun parse(fqName: String) = cache.getOrPut(fqName) {
-        underlyingProvider.parse(fqName)
-    }
-}
-
 public class AndroidHomeSourceProvider(version: Int) : SourceProvider {
     private val baseDir: File
 
@@ -41,7 +33,7 @@ public class AndroidHomeSourceProvider(version: Int) : SourceProvider {
         val androidHome = System.getenv("ANDROID_HOME")
                 ?: throw InvalidStateException("ANDROID_HOME environment variable is not defined")
         baseDir = File(androidHome, "sources/android-$version")
-        if (!baseDir.exists()) throw InvalidStateException("${baseDir.getAbsolutePath()} does not exist")
+        if (!baseDir.exists()) throw InvalidStateException("${baseDir.absolutePath} does not exist")
     }
 
     override fun parse(fqName: String): CompilationUnit? {

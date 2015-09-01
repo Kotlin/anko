@@ -21,10 +21,9 @@ import org.jetbrains.android.anko.fqName
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.InnerClassNode
 import org.objectweb.asm.tree.MethodNode
-import kotlin.properties.Delegates
 
 public data class ViewElement(val clazz: ClassNode, val isContainer: Boolean, allMethods: () -> List<MethodNode>) {
-    val allMethods: List<MethodNode> by Delegates.lazy {
+    val allMethods: List<MethodNode> by lazy {
         allMethods()
     }
 

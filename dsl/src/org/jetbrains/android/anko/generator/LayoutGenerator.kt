@@ -19,9 +19,9 @@ package org.jetbrains.android.anko.generator
 class LayoutGenerator : Generator<LayoutElement> {
 
     override fun generate(state: GenerationState): Iterable<LayoutElement> {
-        return state[javaClass<ViewGroupGenerator>()]
+        return state[ViewGroupGenerator::class.java]
                 .map { state.extractLayoutParams(it.clazz) }
                 .filterNotNull()
-                .sortBy { it.layout.name }
+                .sortedBy { it.layout.name }
     }
 }

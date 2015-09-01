@@ -17,7 +17,7 @@
 package org.jetbrains.android.anko.templates
 
 public interface TemplateProvider {
-    fun render(templateName: String, args: Map<String, Any>): String
+    fun render(templateName: String, args: Map<String, Any?>): String
 }
 
 public class TemplateManager(private val templateProvider: TemplateProvider) {
@@ -30,11 +30,11 @@ public class TemplateManager(private val templateProvider: TemplateProvider) {
 }
 
 public class TemplateContext {
-    private val args: MutableMap<String, Any> = hashMapOf()
+    private val args: MutableMap<String, Any?> = hashMapOf()
 
-    public fun getArguments(): Map<String, Any> = args
+    public fun getArguments(): Map<String, Any?> = args
 
-    public fun <T> String.mod(v: T): T {
+    public fun <T: Any?> String.mod(v: T): T {
         args.put(this, v)
         return v
     }
@@ -45,7 +45,7 @@ public class TemplateContext {
         args.put(this, innerContext.getArguments())
     }
 
-    public fun <T> seq(items: Iterable<T>, v: TemplateContext.(item: T) -> Unit): List<Map<String, Any>> {
+    public fun <T> seq(items: Iterable<T>, v: TemplateContext.(item: T) -> Unit): List<Map<String, Any?>> {
         return items.map {
             val itemContext = TemplateContext()
             itemContext.v(it)

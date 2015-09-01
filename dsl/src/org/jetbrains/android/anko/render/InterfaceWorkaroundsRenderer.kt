@@ -29,7 +29,7 @@ class InterfaceWorkaroundsRenderer(config: AnkoConfiguration) : Renderer(config)
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.INTERFACE_WORKAROUNDS_JAVA)
 
     override fun processElements(state: GenerationState) = StringBuilder {
-        val interfaces = state[javaClass<InterfaceWorkaroundsGenerator>()].toList()
+        val interfaces = state[InterfaceWorkaroundsGenerator::class.java].toList()
 
         append(render("interface_workarounds") {
             "interfaces" % seq(interfaces) {

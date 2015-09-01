@@ -16,18 +16,12 @@
 
 package org.jetbrains.kotlin.android.robowrapper
 
-import android.os.Build
-import android.view.View
 import org.jetbrains.kotlin.android.dslpreview.Pack
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
-import org.robolectric.Robolectric
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.shadows.ShadowApplication
 import org.zeromq.ZMQ
-
 import java.io.PrintStream
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -65,10 +59,10 @@ public class ParserTest {
         first.port = port
         log(first)
 
-        while (!Thread.currentThread().isInterrupted()) {
+        while (!Thread.currentThread().isInterrupted) {
             val request = responder.recv(0)
             val data = String(request, "UTF-8").trim()
-            log("Got activity class name: " + data)
+            log("Got activity class name: $data")
             val pack = generate(data)
             pack.port = port
             responder.send(log(pack).toByteArray(Charset.forName("UTF-8")), 0)
@@ -82,12 +76,12 @@ public class ParserTest {
     }
 
     private fun generate(className: String): Pack {
-        val packageName = ShadowApplication.getInstance().getPackageName() + "."
+        val packageName = ShadowApplication.getInstance().packageName + "."
 
         try {
             if (className.isEmpty()) throw IllegalArgumentException("Class name is empty")
 
-            val cl = Thread.currentThread().getContextClassLoader()
+            val cl = Thread.currentThread().contextClassLoader
             val clazz = cl.loadClass(className)
 
             @suppress("UNCHECKED_CAST")

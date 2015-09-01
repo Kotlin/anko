@@ -16,18 +16,24 @@
 
 package org.jetbrains.kotlin.android.dslpreview
 
+import com.android.tools.idea.configurations.ConfigurationListener
+import com.intellij.compiler.impl.ProjectCompileScope
 import com.intellij.facet.FacetManager
 import com.intellij.icons.AllIcons
 import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.openapi.actionSystem.AnAction
+import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.compiler.CompileContext
 import com.intellij.openapi.compiler.CompileStatusNotification
 import com.intellij.openapi.compiler.CompilerManager
+import com.intellij.openapi.editor.ex.EditorEx
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.module.Module
+import com.intellij.openapi.project.IndexNotReadyException
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.MessageType
 import com.intellij.openapi.ui.popup.Balloon
@@ -35,31 +41,17 @@ import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.openapi.util.Computable
 import com.intellij.openapi.wm.WindowManager
 import com.intellij.psi.*
+import com.intellij.psi.impl.PsiTreeChangePreprocessor
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.searches.ClassInheritorsSearch
 import com.intellij.psi.xml.XmlFile
 import com.intellij.ui.awt.RelativePoint
 import com.intellij.uiDesigner.core.GridConstraints
 import com.intellij.uiDesigner.core.GridLayoutManager
-import org.jetbrains.android.facet.AndroidFacet
-import org.jetbrains.android.uipreview.AndroidLayoutPreviewToolWindowManager
-
-import com.android.tools.idea.configurations.ConfigurationListener
-import com.intellij.compiler.impl.ModuleCompileScope
-import com.intellij.compiler.impl.ProjectCompileScope
-import com.intellij.openapi.actionSystem.AnActionEvent
-import org.jetbrains.android.sdk.AndroidTargetData
-
-import javax.swing.*
-
 import com.intellij.util.Alarm.ThreadToUse.SWING_THREAD
-import com.intellij.openapi.module.ModuleManager
-import com.intellij.openapi.roots.ProjectRootManager
-import com.intellij.openapi.project.IndexNotReadyException
-import com.intellij.openapi.editor.ex.EditorEx
-import com.intellij.psi.util.CachedValueProvider
-import kotlin.properties.Delegates
-import com.intellij.psi.impl.PsiTreeChangePreprocessor
+import org.jetbrains.android.facet.AndroidFacet
+import org.jetbrains.android.sdk.AndroidTargetData
+import org.jetbrains.android.uipreview.AndroidLayoutPreviewToolWindowManager
 import org.jetbrains.kotlin.idea.caches.resolve.KotlinCacheService
 import org.jetbrains.kotlin.idea.internal.Location
 import org.jetbrains.kotlin.idea.util.InfinitePeriodicalTask
@@ -67,6 +59,8 @@ import org.jetbrains.kotlin.idea.util.LongRunningReadTask
 import org.jetbrains.kotlin.idea.util.ProjectRootsUtil
 import org.jetbrains.kotlin.psi.JetClass
 import org.jetbrains.kotlin.psi.JetFile
+import javax.swing.DefaultComboBoxModel
+import javax.swing.JPanel
 
 public class DslPreviewToolWindowManager(private val myProject: Project, fileEditorManager: FileEditorManager) : AndroidLayoutPreviewToolWindowManager(myProject, fileEditorManager), DslWorker.Listener, com.intellij.openapi.Disposable {
 
@@ -76,7 +70,7 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
     private var myLastFile: PsiFile? = null
     private var myLastAndroidFacet: AndroidFacet? = null
 
-    private val sourceFileModificationTracker by Delegates.lazy {
+    private val sourceFileModificationTracker by lazy {
         myProject.getExtensions(PsiTreeChangePreprocessor.EP_NAME)
                 .first { it is SourceFileModificationTracker } as SourceFileModificationTracker
     }
@@ -97,10 +91,10 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
     }
 
     override fun initToolWindow() {
-        super<AndroidLayoutPreviewToolWindowManager>.initToolWindow()
+        super.initToolWindow()
         myDslWorker = DslWorker(this)
 
-        val panel = getToolWindowForm().getContentPanel().getComponent(1)
+        val panel = toolWindowForm.contentPanel.getComponent(1)
 
         if (panel is JPanel) {
             val firstToolbar = panel.getComponent(0)
@@ -109,7 +103,7 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
             panel.remove(firstToolbar)
             panel.remove(secondToolbar)
             val manager = GridLayoutManager(3, 1)
-            panel.setLayout(manager)
+            panel.layout = manager
 
             myActivityListModel = DefaultComboBoxModel()
             val comboBox = ComboBox(myActivityListModel)
@@ -124,16 +118,16 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
             }
 
             panel.add(firstToolbar, constraints(0, 0) {
-                setFill(GridConstraints.FILL_BOTH)
+                fill = GridConstraints.FILL_BOTH
             })
 
             panel.add(secondToolbar, constraints(1, 0) {
-                setFill(GridConstraints.FILL_VERTICAL)
-                setAnchor(GridConstraints.ANCHOR_EAST)
+                fill = GridConstraints.FILL_VERTICAL
+                anchor = GridConstraints.ANCHOR_EAST
             })
 
             panel.add(comboBox, constraints(2, 0) {
-                setFill(GridConstraints.FILL_BOTH)
+                fill = GridConstraints.FILL_BOTH
             })
         }
 
@@ -149,7 +143,7 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
     }
 
     override fun disposeComponent() {
-        super<AndroidLayoutPreviewToolWindowManager>.disposeComponent()
+        super.disposeComponent()
         myDslWorker?.finishWorkingProcess()
     }
 
@@ -192,22 +186,22 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
     }
 
     private fun getOnCursorPreviewClassDescription(): PreviewClassDescription? {
-        val editor = FileEditorManager.getInstance(myProject).getSelectedTextEditor() ?: return null
-        val psiFile = PsiDocumentManager.getInstance(myProject).getPsiFile(editor.getDocument())
+        val editor = FileEditorManager.getInstance(myProject).selectedTextEditor ?: return null
+        val psiFile = PsiDocumentManager.getInstance(myProject).getPsiFile(editor.document)
 
         if (psiFile !is JetFile || editor !is EditorEx) {
             throw UnsupportedClassException()
         }
 
-        val virtualFile = editor.getVirtualFile()
+        val virtualFile = editor.virtualFile
 
-        val selectionStart = editor.getCaretModel().getPrimaryCaret().getSelectionStart()
+        val selectionStart = editor.caretModel.primaryCaret.selectionStart
         val cacheService = KotlinCacheService.getInstance(myProject)
         val psiElement = psiFile.findElementAt(selectionStart)
         val jetClass = if (psiElement != null) resolveJetClass(psiElement, cacheService) else null
 
         val module = ProjectRootManager.getInstance(myProject)
-                .getFileIndex().getModuleForFile(virtualFile) ?: return null
+                .fileIndex.getModuleForFile(virtualFile) ?: return null
         val androidFacet = module.resolveAndroidFacet()
 
         if (jetClass == null || androidFacet == null) {
@@ -219,7 +213,7 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
 
     override fun render(psiFile: PsiFile?, facet: AndroidFacet?, forceFullRender: Boolean): Boolean {
         if (!forceFullRender) {
-            val result = super<AndroidLayoutPreviewToolWindowManager>.render(psiFile, facet, false)
+            val result = super.render(psiFile, facet, false)
             if (result) {
                 myLastFile = psiFile
                 myLastAndroidFacet = facet
@@ -233,7 +227,7 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
 
         var ctx: RobowrapperContext?
         try {
-            val description = myActivityListModel?.getSelectedItem() as? PreviewClassDescription
+            val description = myActivityListModel?.selectedItem as? PreviewClassDescription
                     ?: getOnCursorPreviewClassDescription() ?: return false
             ctx = RobowrapperContext(description)
         }
@@ -250,7 +244,7 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
             return false
         }
 
-        val actualSourceFileModification = sourceFileModificationTracker.getModificationCount()
+        val actualSourceFileModification = sourceFileModificationTracker.modificationCount
         if (actualSourceFileModification != lastSourceFileModification) {
             val notification = object : CompileStatusNotification {
 
@@ -263,10 +257,10 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
                     }
                 }
             }
-            if (ctx!!.androidFacet.isGradleProject()) {
+            if (ctx!!.androidFacet.isGradleProject) {
                 CompilerManager.getInstance(myProject).make(ProjectCompileScope(myProject), notification)
             } else {
-                val module = ctx!!.androidFacet.getModule()
+                val module = ctx!!.androidFacet.module
                 CompilerManager.getInstance(myProject).make(module, notification)
             }
         }
@@ -298,10 +292,10 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
 
         if (myActivityListModel != null) {
             with(myActivityListModel!!) {
-                setSelectedItem(null)
+                selectedItem = null
                 removeAllElements()
                 val items = activityClasses + fragmentClasses + supportFragmentClasses
-                items.sortBy { it.toString() }.forEach { addElement(it) }
+                items.sortedBy { it.toString() }.forEach { addElement(it) }
             }
         }
     }
@@ -327,13 +321,13 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
     override fun isApplicableEditor(textEditor: TextEditor) = true
 
     private fun PsiClass.getModule(): Module? {
-        return ProjectRootManager.getInstance(myProject).getFileIndex()
-                .getModuleForFile(getContainingFile().getVirtualFile())
+        return ProjectRootManager.getInstance(myProject).fileIndex
+                .getModuleForFile(containingFile.virtualFile)
     }
 
     private fun Module.resolveAndroidFacet(): AndroidFacet? {
         val facetManager = FacetManager.getInstance(this)
-        for (facet in facetManager.getAllFacets()) {
+        for (facet in facetManager.allFacets) {
             if (facet is AndroidFacet) {
                 return facet
             }
@@ -348,23 +342,23 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
                 .createHtmlTextBalloonBuilder(text, messageType, null)
                 .setFadeoutTime(3000)
                 .createBalloon()
-                .show(RelativePoint.getCenterOf(statusBar.getComponent()), Balloon.Position.atRight)
+                .show(RelativePoint.getCenterOf(statusBar.component), Balloon.Position.atRight)
     }
 
     private inner class RefreshDslAction : AnAction("Refresh", null, AllIcons.Actions.Refresh) {
 
         override fun actionPerformed(e: AnActionEvent) {
-            val configuration = getToolWindowForm().getConfiguration()
+            val configuration = toolWindowForm.configuration
 
             if (configuration != null) {
                 // Clear layoutlib bitmap cache (in case files have been modified externally)
-                val target = configuration.getTarget()
-                val module = configuration.getModule()
+                val target = configuration.target
+                val module = configuration.module
                 if (target != null && module != null) {
                     AndroidTargetData.getTargetData(target, module)?.clearLayoutBitmapCache(module)
                 }
 
-                AndroidFacet.getInstance(configuration.getModule())?.refreshResources()
+                AndroidFacet.getInstance(configuration.module)?.refreshResources()
                 configuration.updated(ConfigurationListener.MASK_RENDERING)
             }
 
@@ -374,24 +368,24 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
 
     public inner class UpdateActivityNameTask : LongRunningReadTask<Pair<JetClass, String>, String>() {
         override fun prepareRequestInfo(): Pair<JetClass, String>? {
-            val toolWindow = getToolWindow()
-            if (toolWindow == null || !toolWindow.isVisible()) {
+            val toolWindow = toolWindow
+            if (toolWindow == null || !toolWindow.isVisible) {
                 return null
             }
 
-            val editor = FileEditorManager.getInstance(myProject).getSelectedTextEditor()
+            val editor = FileEditorManager.getInstance(myProject).selectedTextEditor
             val location = Location.fromEditor(editor, myProject)
-            if (location.getEditor() == null) {
+            if (location.editor == null) {
                 return null
             }
 
-            val file = location.getJetFile()
+            val file = location.jetFile
             if (file == null || !ProjectRootsUtil.isInProjectSource(file)) {
                 return null
             }
 
             val cacheService = KotlinCacheService.getInstance(myProject)
-            val psiElement = file.findElementAt(location.getStartOffset())
+            val psiElement = file.findElementAt(location.startOffset)
             val resolvedClass = if (psiElement != null) resolveJetClass(psiElement, cacheService) else null
             if (resolvedClass == null || resolvedClass !is JetClass) {
                 return null
@@ -422,10 +416,10 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
             fun setSelection(): Boolean {
                 var found = false
                 if (myActivityListModel != null) with (myActivityListModel!!) {
-                    for (i in 0 .. (getSize() - 1)) {
+                    for (i in 0 .. (size - 1)) {
                         val item = getElementAt(i)
                         if (item != null && resultText == (item as PreviewClassDescription).qualifiedName) {
-                            setSelectedItem(item)
+                            selectedItem = item
                             found = true
                             break
                         }

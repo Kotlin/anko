@@ -16,27 +16,27 @@
 
 package org.jetbrains.anko.internals
 
-import android.content.Context
 import android.app.Activity
 import android.app.Service
 import android.app.UiModeManager
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import java.io.Serializable
-import android.os.Bundle
-import org.jetbrains.anko.*
-import android.database.sqlite.SQLiteDatabase
 import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.os.Build
+import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewManager
+import org.jetbrains.anko.AnkoException
+import org.jetbrains.anko.Orientation
+import org.jetbrains.anko.ScreenSize
+import org.jetbrains.anko.UiMode
+import java.io.Serializable
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 import java.util.*
-import kotlin.platform.platformStatic
 
 Retention(RetentionPolicy.SOURCE)
 internal annotation class noBinding
@@ -55,14 +55,14 @@ public object AnkoInternals {
         val DENSITY_DPI_NONE = 0xffff
     }
 
-    platformStatic
+    @jvmStatic
     public fun <T> createIntent(ctx: Context, clazz: Class<out T>, params: Array<out Pair<String, Any>>): Intent {
         val intent = Intent(ctx, clazz)
         if (params.isNotEmpty()) fillIntentArguments(intent, params)
         return intent
     }
 
-    platformStatic
+    @jvmStatic
     public fun internalStartActivity(
             ctx: Context,
             activity: Class<out Activity>,
@@ -71,7 +71,7 @@ public object AnkoInternals {
         ctx.startActivity(createIntent(ctx, activity, params))
     }
 
-    platformStatic
+    @jvmStatic
     public fun internalStartActivityForResult(
             act: Activity,
             activity: Class<out Activity>,
@@ -81,7 +81,7 @@ public object AnkoInternals {
         act.startActivityForResult(createIntent(act, activity, params), requestCode)
     }
 
-    platformStatic
+    @jvmStatic
     public fun internalStartService(
             ctx: Context,
             activity: Class<out Service>,
@@ -90,7 +90,7 @@ public object AnkoInternals {
         ctx.startService(createIntent(ctx, activity, params))
     }
 
-    platformStatic
+    @jvmStatic
     private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any>>) {
         params.forEach {
             when (it.second) {
@@ -116,13 +116,13 @@ public object AnkoInternals {
                 is Char -> intent.putExtra(it.first, it.second as CharArray)
                 is Short -> intent.putExtra(it.first, it.second as ShortArray)
                 is Boolean -> intent.putExtra(it.first, it.second as BooleanArray)
-                else -> throw AnkoException("Intent extra ${it.first} has wrong type ${it.second.javaClass.getName()}")
+                else -> throw AnkoException("Intent extra ${it.first} has wrong type ${it.second.javaClass.name}")
             }
         }
     }
 
     // SQLiteDatabase is not closeable in older versions of Android
-    platformStatic
+    @jvmStatic
     public inline fun <T> useDatabase(db: SQLiteDatabase, f: (SQLiteDatabase) -> T) : T {
         try {
             return f(db)
@@ -136,7 +136,7 @@ public object AnkoInternals {
     }
 
     // Cursor is not closeable in older versions of Android
-    platformStatic
+    @jvmStatic
     public inline fun <T> useCursor(cursor: Cursor, f: (Cursor) -> T) : T {
         try {
             return f(cursor)
@@ -149,10 +149,10 @@ public object AnkoInternals {
         }
     }
 
-    platformStatic
+    @jvmStatic
     public fun <T : View> initiateView(ctx: Context, viewClass: Class<T>): T {
-        fun getConstructor1() = viewClass.getConstructor(javaClass<Context>())
-        fun getConstructor2() = viewClass.getConstructor(javaClass<Context>(), javaClass<AttributeSet>())
+        fun getConstructor1() = viewClass.getConstructor(Context::class.java)
+        fun getConstructor2() = viewClass.getConstructor(Context::class.java, AttributeSet::class.java)
 
         try {
             return getConstructor1().newInstance(ctx)
@@ -161,13 +161,13 @@ public object AnkoInternals {
                 return getConstructor2().newInstance(ctx, null)
             }
             catch (e: NoSuchMethodException) {
-                throw AnkoException("Can't initiate View of class ${viewClass.getName()}: can't find proper constructor")
+                throw AnkoException("Can't initiate View of class ${viewClass.name}: can't find proper constructor")
             }
         }
 
     }
 
-    platformStatic
+    @jvmStatic
     public fun testConfiguration(
             ctx: Context,
             screenSize: ScreenSize?,
@@ -182,7 +182,7 @@ public object AnkoInternals {
             rightToLeft: Boolean?,
             smallestWidth: Int?
     ): Boolean {
-        val config = ctx.getResources()?.getConfiguration()
+        val config = ctx.resources?.configuration
 
         if (screenSize != null) {
             if (config == null) return false
@@ -197,14 +197,13 @@ public object AnkoInternals {
         }
 
         if (density != null) {
-            val currentDensityDpi = ctx.getResources()?.getDisplayMetrics()?.densityDpi
-            if (currentDensityDpi == null) return false
+            val currentDensityDpi = ctx.resources?.displayMetrics?.densityDpi ?: return false
             if (currentDensityDpi !in density || currentDensityDpi == density.end) return false
         }
 
         if (language != null) {
             val locale = Locale.getDefault()
-            val currentLanguage = if (language.indexOf('_') >= 0) locale.toString() else locale.getLanguage()
+            val currentLanguage = if (language.indexOf('_') >= 0) locale.toString() else locale.language
             if (currentLanguage != language) return false
         }
 
@@ -247,14 +246,15 @@ public object AnkoInternals {
         if (nightMode != null) {
             val uiModeManager = ctx.getSystemService(Context.UI_MODE_SERVICE) as? UiModeManager ?: return false
 
-            val currentMode = uiModeManager.getNightMode()
+            val currentMode = uiModeManager.nightMode
             if (currentMode == UiModeManager.MODE_NIGHT_YES && !nightMode) return false
             if (currentMode == UiModeManager.MODE_NIGHT_NO && nightMode) return false
         }
 
         if (rightToLeft != null) {
             if (config == null) return false
-            val rtlMode = (config.screenLayout and InternalConfiguration.SCREENLAYOUT_LAYOUTDIR_MASK) == InternalConfiguration.SCREENLAYOUT_LAYOUTDIR_RTL
+            val rtlMode = (config.screenLayout and
+                    InternalConfiguration.SCREENLAYOUT_LAYOUTDIR_MASK) == InternalConfiguration.SCREENLAYOUT_LAYOUTDIR_RTL
             if (rtlMode != rightToLeft) return false
         }
 

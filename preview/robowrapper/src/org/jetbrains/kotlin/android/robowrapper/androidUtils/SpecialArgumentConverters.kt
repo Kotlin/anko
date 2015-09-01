@@ -16,10 +16,10 @@
 
 package org.jetbrains.kotlin.android.robowrapper
 
-import android.widget.ImageView
-import android.widget.ImageView.ScaleType
 import android.text.TextUtils.TruncateAt
 import android.view.View
+import android.widget.ImageView
+import android.widget.ImageView.ScaleType
 
 fun convertScaleType(value: ImageView.ScaleType) = when (value) {
     ScaleType.CENTER -> "center"

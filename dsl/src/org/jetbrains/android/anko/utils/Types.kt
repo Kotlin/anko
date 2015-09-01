@@ -19,17 +19,17 @@ package org.jetbrains.android.anko
 import org.objectweb.asm.Type
 
 val Type.isVoid: Boolean
-    get() = getSort() == Type.VOID
+    get() = sort == Type.VOID
 
 val Type.isSimpleType: Boolean
-    get() = when (getSort()) {
+    get() = when (sort) {
         Type.BOOLEAN, Type.INT, Type.FLOAT, Type.DOUBLE, Type.LONG, Type.BYTE, Type.CHAR, Type.SHORT -> true
         Type.VOID -> true
         else -> false
     }
 
 val Type.fqName: String
-    get() = getClassName().replace('/', '.').replace('$', '.')
+    get() = className.replace('/', '.').replace('$', '.')
 
 private fun mapJavaToKotlinType(str: String): String {
     return when (str) {
@@ -43,7 +43,7 @@ private fun mapJavaToKotlinType(str: String): String {
 
 fun Type.asString(nullable: Boolean = true): String {
     val nullability = if (nullable) "?" else ""
-    return when (getSort()) {
+    return when (sort) {
         Type.BOOLEAN -> "Boolean"
         Type.INT -> "Int"
         Type.FLOAT -> "Float"
@@ -53,19 +53,19 @@ fun Type.asString(nullable: Boolean = true): String {
         Type.CHAR -> "Char"
         Type.SHORT -> "Short"
         Type.VOID -> "Unit"
-        Type.ARRAY -> when (getElementType().getSort()) {
+        Type.ARRAY -> when (elementType.sort) {
             Type.INT -> "IntArray$nullability"
             Type.FLOAT -> "FloatArray$nullability"
             Type.DOUBLE -> "DoubleArray$nullability"
             Type.LONG -> "LongArray$nullability"
-            else -> "Array<" + mapJavaToKotlinType(getElementType().asString(nullable = false)) + ">$nullability"
+            else -> "Array<" + mapJavaToKotlinType(elementType.asString(nullable = false)) + ">$nullability"
         }
         else -> mapJavaToKotlinType(fqName) + nullability
     }
 }
 
 fun Type.asJavaString(): String {
-    return when (getSort()) {
+    return when (sort) {
         Type.BOOLEAN -> "boolean"
         Type.INT -> "int"
         Type.FLOAT -> "float"
@@ -75,13 +75,13 @@ fun Type.asJavaString(): String {
         Type.CHAR -> "char"
         Type.SHORT -> "short"
         Type.VOID -> "void"
-        Type.ARRAY -> getElementType().asJavaString() + "[]"
+        Type.ARRAY -> elementType.asJavaString() + "[]"
         else -> fqName
     }
 }
 
 fun Type.getDefaultValue() : String {
-    return when (getSort()) {
+    return when (sort) {
         Type.BOOLEAN -> "false"
         Type.INT -> "0"
         Type.FLOAT -> "0.0"
@@ -91,12 +91,12 @@ fun Type.getDefaultValue() : String {
         Type.CHAR -> "\'\\u0000\'" //default value of a char
         Type.SHORT -> "0"
         Type.VOID -> ""
-        Type.ARRAY -> when (getElementType().getSort()) {
+        Type.ARRAY -> when (elementType.sort) {
             Type.INT -> "IntArray()"
             Type.FLOAT -> "FloatArray()"
             Type.DOUBLE -> "DoubleArray()"
             Type.LONG -> "LongArray()"
-            else -> "Array<" + mapJavaToKotlinType(getElementType().asString(nullable = false)) + ">()"
+            else -> "Array<" + mapJavaToKotlinType(elementType.asString(nullable = false)) + ">()"
         }
         else -> mapJavaToKotlinType(fqName) + "()"
     }
@@ -134,9 +134,6 @@ fun genericTypeToStr(param: GenericType, nullable: Boolean = true): String {
     if (classifier is TopLevelClass && nullable) res.append("?")
     return res.toString()
 }
-
-val Type.internalName: String
-    get() = this.getInternalName()
 
 fun getPackageName(fqName: String): String {
     val indexOfFirstCapital = fqName.indexOfFirst { it.isUpperCase() }

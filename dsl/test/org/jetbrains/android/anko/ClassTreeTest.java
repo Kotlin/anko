@@ -16,10 +16,10 @@
 
 package org.jetbrains.android.anko;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.objectweb.asm.tree.ClassNode;
-import org.junit.*;
-
-import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Collections;

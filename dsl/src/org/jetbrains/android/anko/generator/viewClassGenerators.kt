@@ -27,7 +27,7 @@ abstract class AbstractViewGenerator(private val forLayouts: Boolean) : Generato
         state.availableClasses
                 .filter { it.isView && forLayouts == it.isViewGroupWithParams() }
                 .map { ViewElement(it, if (forLayouts) true else it.isViewGroup, { it.resolveAllMethods() }) }
-                .sortBy { it.clazz.name }
+                .sortedBy { it.clazz.name }
     }
 
     private fun GenerationState.hasLayoutParams(viewGroup: ClassNode): Boolean {

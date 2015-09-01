@@ -16,14 +16,12 @@
 
 package org.jetbrains.anko
 
-import android.content.Context
-import android.app.Fragment
 import android.util.Log
 
 public interface AnkoLogger {
     public val loggerTag: String
         get() {
-            val tag = javaClass.getSimpleName()
+            val tag = javaClass.simpleName
             return if (tag.length() <= 23) {
                 tag
             } else {

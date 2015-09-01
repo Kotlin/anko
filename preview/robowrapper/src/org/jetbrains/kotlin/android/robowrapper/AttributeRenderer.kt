@@ -16,28 +16,20 @@
 
 package org.jetbrains.kotlin.android.robowrapper
 
-import android.view.View
-import android.view.ViewGroup
-import android.widget.RelativeLayout
-import android.widget.LinearLayout
-import android.view.ViewGroup.MarginLayoutParams
-import android.widget.TableRow
-import android.widget.FrameLayout
-import android.widget.AbsoluteLayout
-import android.support.v4.widget.SlidingPaneLayout
 import android.content.Context
-import android.util.TypedValue
-import android.widget.ImageView
-import android.text.TextUtils.TruncateAt
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import org.robolectric.Robolectric
-import android.text.SpannedString
+import android.support.v4.widget.SlidingPaneLayout
 import android.text.SpannableStringBuilder
+import android.text.SpannedString
+import android.text.TextUtils.TruncateAt
+import android.util.TypedValue
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
+import android.widget.*
 import org.jetbrains.kotlin.android.attrs.Attr
 import org.robolectric.Shadows
-import org.robolectric.res.ResourceLoader
-import org.robolectric.shadows.ShadowResources
 
 // Render a ViewGroup.LayoutParams subclass, make a parameter list of (android:layout_...)
 private fun renderLayoutParams(view: View, lp: ViewGroup.LayoutParams, topLevel: Boolean): String {
@@ -88,11 +80,11 @@ private fun renderLayoutParams(view: View, lp: ViewGroup.LayoutParams, topLevel:
         addDimension("marginLeft", lp.leftMargin, "0dp")
         addDimension("marginRight", lp.rightMargin, "0dp")
         addDimension("marginBottom", lp.bottomMargin, "0dp")
-        addDimension("marginStart", lp.getMarginStart(), "0dp")
-        addDimension("marginEnd", lp.getMarginEnd(), "0dp")
+        addDimension("marginStart", lp.marginStart, "0dp")
+        addDimension("marginEnd", lp.marginEnd, "0dp")
     }
     if (lp is RelativeLayout.LayoutParams) {
-        val rules = lp.getRules()
+        val rules = lp.rules
         relativeLayoutProperties.forEach { addRLProp(it.getKey(), rules[it.getValue()]) }
     }
     if (lp is TableRow.LayoutParams) {
@@ -118,7 +110,7 @@ private fun renderLayoutParams(view: View, lp: ViewGroup.LayoutParams, topLevel:
 
 // Convert px value to dp (independent to screen size)
 private fun Context.px2dip(value: Int): Float {
-    val metrics = getResources().getDisplayMetrics()
+    val metrics = resources.displayMetrics
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, value.toFloat(), metrics)
 }
 
@@ -147,7 +139,7 @@ private fun renderAttribute(view: View, attr: Attr?, key: String, value: Any, to
         return convertEllipsize(value)
     }
     if (value is ColorDrawable) { //just return a color if value is a ColorDrawable
-        val hex = Integer.toHexString(value.getColor())
+        val hex = Integer.toHexString(value.color)
         //omit transparency part if not transparent
         return "#" + if (hex.startsWith("ff")) hex.substring(2) else hex
     }
@@ -188,13 +180,13 @@ private fun renderDrawableAttribute(value: android.graphics.drawable.Drawable, v
     // Actual resourceId is stored in a ShadowDrawable
     val drawable = Shadows.shadowOf(value)
     if (drawable != null) {
-        val resourceId = drawable.getCreatedFromResId()
+        val resourceId = drawable.createdFromResId
         if (resourceId != -1) {
-            val resourceLoader = Shadows.shadowOf(view.getContext()).getResourceLoader()
+            val resourceLoader = Shadows.shadowOf(view.context).resourceLoader
             // Convert Int id to a string representation (@package:resource)
             val resourceName = resourceLoader?.getNameForId(resourceId)
             if (resourceName != null) {
-                return "@" + resourceName
+                return "@$resourceName"
             }
         }
     }
@@ -230,7 +222,7 @@ fun basicRenderAttr(key: String, value: Any): String? {
         is Boolean -> return if (value) "true" else "false"
         else -> {
             if (DEBUG) {
-                System.err.println("Failed to parse property key=$key type ${value.javaClass.getName()}")
+                System.err.println("Failed to parse property key=$key type ${value.javaClass.name}")
             }
             return null
         }

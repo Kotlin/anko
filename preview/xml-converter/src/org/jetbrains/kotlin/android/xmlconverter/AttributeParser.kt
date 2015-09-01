@@ -16,8 +16,9 @@
 
 package org.jetbrains.kotlin.android.xmlconverter
 
+import org.jetbrains.kotlin.android.attrs.Attr
+import org.jetbrains.kotlin.android.attrs.NoAttr
 import java.util.regex.Pattern
-import org.jetbrains.kotlin.android.attrs.*
 
 private fun renderLayoutAttributes(attributes: List<KeyValuePair>, parentName: String): String {
     val map = attributes.map { it.key.replace("android:layout_", "") to it.value }.toMap()

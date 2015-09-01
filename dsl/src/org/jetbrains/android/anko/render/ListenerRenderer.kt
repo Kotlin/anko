@@ -36,7 +36,7 @@ public class ListenerRenderer(config: AnkoConfiguration) : Renderer(config), Sup
     override fun processElements(state: GenerationState) = StringBuilder {
         val renderedClasses = hashSetOf<String>()
 
-        for (listener in state[javaClass<ListenerGenerator>()]) {
+        for (listener in state[ListenerGenerator::class.java]) {
             when (listener) {
                 is SimpleListenerElement -> if (config[SIMPLE_LISTENERS]) append(listener.render())
                 is ComplexListenerElement -> {
@@ -46,7 +46,7 @@ public class ListenerRenderer(config: AnkoConfiguration) : Renderer(config), Sup
                         renderedClasses.add(listener.id)
                     }
                 }
-                else -> throw RuntimeException("Invalid listener type: ${listener.javaClass.getName()}")
+                else -> throw RuntimeException("Invalid listener type: ${listener.javaClass.name}")
             }
         }
     }.toString()

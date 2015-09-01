@@ -39,6 +39,6 @@ public data class Attrs(
         val styleables: Map<String, Styleable> = mapOf())
 
 public fun readResource(filename: String): String {
-    return javaClass<Attrs>().getClassLoader().getResourceAsStream(filename)?.reader()?.readText() ?:
-        File(filename).readText()
+    return Attrs::class.java.classLoader.getResourceAsStream(filename)?.reader()?.readText()
+            ?: File(filename).readText()
 }

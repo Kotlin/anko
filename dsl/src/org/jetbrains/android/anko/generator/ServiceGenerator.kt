@@ -30,7 +30,7 @@ class ServiceGenerator : Generator<ServiceElement> {
                     } else null
                 }
                 ?.filterNotNull()
-                ?.sortBy { it.name }
+                ?.sortedBy { it.name }
                 ?: listOf()
     }
 

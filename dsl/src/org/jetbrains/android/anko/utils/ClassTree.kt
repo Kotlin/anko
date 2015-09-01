@@ -17,9 +17,7 @@
 package org.jetbrains.android.anko
 
 import org.objectweb.asm.tree.ClassNode
-import java.util.ArrayDeque
-import java.util.ArrayList
-import java.util.Queue
+import java.util.*
 
 class NoSuchClassException : Exception()
 
@@ -96,7 +94,7 @@ class ClassTree : Iterable<ClassNode>{
     }
 
     public fun findNode(parentPackage: String, className: String): ClassTreeNode? {
-        return findNode(root, parentPackage + '/', '/' + className)
+        return findNode(root, "$parentPackage/", "/$className")
     }
 
     public fun findNode(name: String): ClassTreeNode? {

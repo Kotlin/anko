@@ -17,39 +17,36 @@
 package org.jetbrains.kotlin.android.robowrapper
 
 import org.robolectric.internal.bytecode.InstrumentingClassLoader
-
-import java.lang.reflect.Field
-import java.net.URL
 import java.net.URLClassLoader
 
 public class ClassLoaderManager {
 
     public fun replaceClassLoader(packageName: String) {
         // Context ClassLoader is set in RobolectricTestRunner
-        val currentClassLoader = Thread.currentThread().getContextClassLoader()
+        val currentClassLoader = Thread.currentThread().contextClassLoader
         if (currentClassLoader !is InstrumentingClassLoader) {
             throw RuntimeException("Not an InstrumentingClassLoader")
         }
 
-        val parentClassLoader = Thread.currentThread().getContextClassLoader().getParent()
+        val parentClassLoader = Thread.currentThread().contextClassLoader.parent
         val asmClazz = parentClassLoader.loadClass("org.robolectric.internal.bytecode.InstrumentingClassLoader")
 
         val configField = asmClazz.getDeclaredField("config")
         val urlsField = asmClazz.getDeclaredField("urls")
         val classesField = asmClazz.getDeclaredField("classes")
 
-        configField.setAccessible(true)
-        urlsField.setAccessible(true)
-        classesField.setAccessible(true)
+        configField.isAccessible = true
+        urlsField.isAccessible = true
+        classesField.isAccessible = true
 
         val setup = configField.get(currentClassLoader)
         val urlClassLoader = urlsField.get(currentClassLoader) as URLClassLoader
         @suppress("UNCHECKED_CAST")
         val oldClasses = classesField.get(currentClassLoader) as Map<String, Class<Any>>
-        val urls = urlClassLoader.getURLs()
+        val urls = urlClassLoader.urLs
 
         // Create new ClassLoader instance
-        val newClassLoader = asmClazz.getConstructors()[0].newInstance(setup, urls) as InstrumentingClassLoader
+        val newClassLoader = asmClazz.constructors[0].newInstance(setup, urls) as InstrumentingClassLoader
 
         // Copy all Map entries from the old AsmInstrumentingClassLoader
         @suppress("UNCHECKED_CAST")
@@ -57,7 +54,7 @@ public class ClassLoaderManager {
         replicateCache(packageName, oldClasses, classes)
 
         // We're now able to get newClassLoader using Thread.currentThread().getContextClassLoader()
-        Thread.currentThread().setContextClassLoader(newClassLoader)
+        Thread.currentThread().contextClassLoader = newClassLoader
 
         System.gc()
     }

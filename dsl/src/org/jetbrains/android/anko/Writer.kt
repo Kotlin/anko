@@ -16,7 +16,6 @@
 
 package org.jetbrains.android.anko
 
-import org.jetbrains.android.anko.config
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.ConfigurationTune.HELPER_CONSTRUCTORS
@@ -27,8 +26,6 @@ import org.jetbrains.android.anko.utils.toCamelCase
 import java.io.Closeable
 import java.io.File
 import java.io.PrintWriter
-import kotlin.reflect.KClass
-import kotlin.reflect.jvm.java
 
 class Writer(private val renderFacade: RenderFacade) {
     private val config = renderFacade.config
@@ -47,7 +44,7 @@ class Writer(private val renderFacade: RenderFacade) {
         })
 
         staticFilesDir.listFiles()?.forEach { file ->
-            if (file.isFile()) {
+            if (file.isFile) {
                 file.copyTo(File(config.sourceOutputDirectory, file.name))
             }
         }
@@ -65,35 +62,35 @@ class Writer(private val renderFacade: RenderFacade) {
 
     fun writeInterfaceWorkarounds() {
         val imports = "package ${config.outputPackage}.workarounds;"
-        write(AnkoFile.INTERFACE_WORKAROUNDS_JAVA, javaClass<InterfaceWorkaroundsRenderer>(), imports, false)
+        write(AnkoFile.INTERFACE_WORKAROUNDS_JAVA, InterfaceWorkaroundsRenderer::class.java, imports, false)
     }
 
     private fun writeLayouts() {
         val imports = Props.imports["layouts"] ?: ""
-        write(AnkoFile.LAYOUTS, javaClass<LayoutRenderer>(), imports)
+        write(AnkoFile.LAYOUTS, LayoutRenderer::class.java, imports)
     }
 
     private fun writeListeners() {
-        write(AnkoFile.LISTENERS, javaClass<ListenerRenderer>())
+        write(AnkoFile.LISTENERS, ListenerRenderer::class.java)
     }
 
     private fun writeProperties() {
-        write(AnkoFile.PROPERTIES, javaClass<PropertyRenderer>())
+        write(AnkoFile.PROPERTIES, PropertyRenderer::class.java)
     }
 
     private fun writeServices() {
         val imports = Props.imports["services"] ?: ""
-        write(AnkoFile.SERVICES, javaClass<ServiceRenderer>(), imports)
+        write(AnkoFile.SERVICES, ServiceRenderer::class.java, imports)
     }
 
     private fun writeSqlParserHelpers() {
         val imports = Props.imports["sqliteparserhelpers"] ?: ""
-        write(AnkoFile.SQL_PARSER_HELPERS, javaClass<SqlParserHelperRenderer>(), imports, false)
+        write(AnkoFile.SQL_PARSER_HELPERS, SqlParserHelperRenderer::class.java, imports, false)
     }
 
     private fun writeViews() {
         val allViews = if (config[VIEWS] || config[HELPER_CONSTRUCTORS]) {
-            renderFacade[javaClass<ViewRenderer>()] + renderFacade[javaClass<ViewGroupRenderer>()]
+            renderFacade[ViewRenderer::class.java] + renderFacade[ViewGroupRenderer::class.java]
         } else ""
         val imports = Props.imports["views"] ?: ""
         write(AnkoFile.VIEWS, allViews, imports)

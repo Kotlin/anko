@@ -17,25 +17,8 @@
 package org.jetbrains.kotlin.android.robowrapper
 
 import android.view.View
-import android.view.ViewGroup
-import java.io.File
-import java.nio.charset.Charset
-import android.view.Gravity
-import android.widget.*
-import android.view.ViewGroup.MarginLayoutParams
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.ColorDrawable
-import android.content.Context
-import android.util.TypedValue
-import org.robolectric.Robolectric
-import org.robolectric.shadows.ShadowDrawable
-import android.support.v4.widget.SlidingPaneLayout
-import android.widget.ImageView.ScaleType
-import android.text.SpannedString
-import android.text.SpannableStringBuilder
-import android.text.TextUtils.TruncateAt
+import org.jetbrains.kotlin.android.attrs.Attr
 import java.util.regex.Pattern
-import org.jetbrains.kotlin.android.attrs.*
 
 // Serialize a ViewNode to xml
 fun toXml(v: ViewNode): String {

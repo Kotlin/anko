@@ -30,7 +30,7 @@ import org.jetbrains.anko.internals.AnkoInternals
 public inline fun <T: View> ViewManager.addView(factory: (ctx: Context) -> T): T {
     return when (this) {
         is ViewGroup -> {
-            val view = factory(this.getContext())
+            val view = factory(this.context)
             addView(view)
             view
         }
@@ -58,7 +58,7 @@ public inline fun <T: View> ViewManager.addView(view: T): T {
 }
 
 public inline fun <T : View> Fragment.addView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T): T {
-    val view = factory(getActivity())
+    val view = factory(activity)
     UI { addView(view) }
     return view
 }
@@ -76,19 +76,19 @@ public inline fun <T : View> Activity.addView(inlineOptions(InlineOption.ONLY_LO
 }
 
 public inline fun <reified T : View> Context.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
-    val view = AnkoInternals.initiateView(ctx, javaClass<T>())
+    val view = AnkoInternals.initiateView(ctx, T::class.java)
     view.init()
     view
 }
 
 public inline fun <reified T : View> ViewManager.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView<T> { ctx ->
-    val view = AnkoInternals.initiateView(ctx, javaClass<T>())
+    val view = AnkoInternals.initiateView(ctx, T::class.java)
     view.init()
     view
 }
 
 public inline fun <reified T : View> Activity.customView(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit): T = addView { ctx ->
-    val view = AnkoInternals.initiateView(ctx, javaClass<T>())
+    val view = AnkoInternals.initiateView(ctx, T::class.java)
     view.init()
     view
 }

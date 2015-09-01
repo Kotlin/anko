@@ -2,7 +2,6 @@ package org.jetbrains.android.anko.uniformity
 
 import org.junit.Test
 import java.io.File
-import java.util.regex.Pattern
 
 public class ContextButNotFragmentUniformityTest {
 

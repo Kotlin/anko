@@ -16,12 +16,12 @@
 
 package org.jetbrains.android.generator.test
 
-import java.io.File
-import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationTune
 import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
+import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.utils.toCamelCase
+import java.io.File
 
 private fun Context.functionalDslTests(init: Buffer.(version: String) -> Unit) {
     val dir = File("./dsl/test/" + basePackage.replace('.', '/'), "/functional")

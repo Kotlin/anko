@@ -16,36 +16,34 @@
 
 package org.jetbrains.kotlin.android.xmlconverter
 
+import com.intellij.facet.FacetManager
+import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.ui.Messages
-import java.io.File
-import com.intellij.ide.highlighter.XmlFileType
-import com.intellij.openapi.module.ModuleManager
-import com.intellij.openapi.roots.ModuleFileIndex
-import com.intellij.openapi.roots.ProjectRootManager
-import com.intellij.openapi.module.Module
-import org.jetbrains.android.facet.AndroidFacet
-import com.intellij.facet.FacetManager
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.project.Project
-import java.io.IOException
-import com.intellij.openapi.ui.ex.MessagesEx
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.fileEditor.FileEditorManager
+import com.intellij.openapi.module.Module
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ModuleRootManager
-import com.intellij.openapi.fileEditor.*
-import com.intellij.openapi.vfs.*
-import com.intellij.psi.PsiJavaFile
-import com.intellij.psi.PsiManager
+import com.intellij.openapi.roots.ProjectRootManager
+import com.intellij.openapi.ui.ex.MessagesEx
+import com.intellij.openapi.vfs.LocalFileSystem
+import com.intellij.openapi.vfs.VfsUtilCore
+import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.VirtualFileVisitor
+import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
+import java.io.File
+import java.io.IOException
 
 public class ConvertAction : AnAction() {
 
     private class FileToConvert(val xmlFile: VirtualFile, val ktFile: File)
 
     override fun actionPerformed(e: AnActionEvent) {
-        val virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY)
-        val project = CommonDataKeys.PROJECT.getData(e.getDataContext())
+        val virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY) ?: return
+        val project = CommonDataKeys.PROJECT.getData(e.dataContext) ?: return
 
         val files = allFilesToConvert(virtualFiles, project)
         if (files.isEmpty()) return
@@ -54,7 +52,7 @@ public class ConvertAction : AnAction() {
             var lastConvertedFile: VirtualFile? = null
 
             for (file in files) {
-                System.err.println("Converting file " + file.xmlFile.getPath())
+                System.err.println("Converting file " + file.xmlFile.path)
                 file.convert(project)
                 lastConvertedFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(file.ktFile)
             }
@@ -66,53 +64,53 @@ public class ConvertAction : AnAction() {
     }
 
     private fun VirtualFile.getFileToConvert(project: Project): FileToConvert? {
-        if (getFileType() !is XmlFileType) return null
-        if (!getParent().getName().startsWith("layout")) return null
+        if (fileType !is XmlFileType) return null
+        if (!parent.name.startsWith("layout")) return null
+        val androidFacet = resolveAndroidFacet(project) ?: return null
 
-        val androidFacet = resolveAndroidFacet(project)
-        if (androidFacet == null) return null
-
-        val probResourceDirectory = getParent()?.getParent()?.getPath()
-        val resourceDirectories = androidFacet.getAllResourceDirectories()
-        if (!resourceDirectories.any { it.getCanonicalPath() == probResourceDirectory }) return null
+        val probResourceDirectory = parent?.parent?.path
+        val resourceDirectories = androidFacet.allResourceDirectories
+        if (!resourceDirectories.any { it.canonicalPath == probResourceDirectory }) return null
 
         val targetDirectory = getActivityDirectory(androidFacet) ?: getMainAndroidSourceRoot(androidFacet)
-        val ktFileNameBase = getNameWithoutExtension().firstCapital()
+        val ktFileNameBase = nameWithoutExtension.firstCapital()
 
         var candidateKtFile = File(targetDirectory, ktFileNameBase + "LayoutActivity.kt")
         var counter = 0
         while (candidateKtFile.exists()) {
             candidateKtFile = File(targetDirectory, ktFileNameBase + "LayoutActivity$counter.kt")
-            counter = counter + 1
+            counter++
         }
 
         return FileToConvert(this, candidateKtFile)
     }
 
     private fun getActivityDirectory(androidFacet: AndroidFacet): String? {
-        val manifest = androidFacet.getManifest()
-        val appPackage = manifest?.getPackage()?.getValue()
-        val activities = manifest?.getApplication()?.getActivities()
+        val manifest = androidFacet.manifest
+        val appPackage = manifest?.`package`?.value
+        val activities = manifest?.application?.activities
 
         if (appPackage == null || activities == null) return null
 
-        val activityClasses = activities.map { it.getActivityClass().getValue() }
-        val activity = activityClasses.filter { it.getKotlinFqName()?.asString()?.startsWith(appPackage) ?: false }.firstOrNull()
-        return activity?.getContainingFile()?.getContainingDirectory()?.getVirtualFile()?.getCanonicalPath()
+        val activityClasses = activities.map { it.activityClass.value }
+        val activity = activityClasses
+                .filter { it?.getKotlinFqName()?.asString()?.startsWith(appPackage) ?: false }
+                .firstOrNull()
+        return activity?.containingFile?.containingDirectory?.virtualFile?.canonicalPath
     }
 
     private fun getMainAndroidSourceRoot(androidFacet: AndroidFacet): String? {
-        return ModuleRootManager.getInstance(androidFacet.getModule())
-                .getContentRoots().filter { !it.getCanonicalPath()!!.endsWith("/gen") }.first().getCanonicalPath()
+        return ModuleRootManager.getInstance(androidFacet.module)
+                .contentRoots.filter { !it.canonicalPath!!.endsWith("/gen") }.first().canonicalPath
     }
 
     override fun update(e: AnActionEvent) {
-        e.getPresentation().setEnabled(selectedLayoutFiles(e).any())
+        e.presentation.isEnabled = selectedLayoutFiles(e).any()
     }
 
     private fun selectedLayoutFiles(e: AnActionEvent): List<FileToConvert> {
         val virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY) ?: return listOf()
-        val project = CommonDataKeys.PROJECT.getData(e.getDataContext()) ?: return listOf()
+        val project = CommonDataKeys.PROJECT.getData(e.dataContext) ?: return listOf()
         return allFilesToConvert(virtualFiles, project)
     }
 
@@ -131,12 +129,12 @@ public class ConvertAction : AnAction() {
     }
 
     private fun VirtualFile.resolveAndroidFacet(project: Project): AndroidFacet? {
-        return ProjectRootManager.getInstance(project).getFileIndex().getModuleForFile(this)?.resolveAndroidFacet()
+        return ProjectRootManager.getInstance(project).fileIndex.getModuleForFile(this)?.resolveAndroidFacet()
     }
 
     private fun Module.resolveAndroidFacet(): AndroidFacet? {
         val facetManager = FacetManager.getInstance(this)
-        for (facet in facetManager.getAllFacets()) {
+        for (facet in facetManager.allFacets) {
             if (facet is AndroidFacet) {
                 return facet
             }

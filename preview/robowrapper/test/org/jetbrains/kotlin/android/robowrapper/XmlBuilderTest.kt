@@ -43,11 +43,11 @@ public class XmlBuilderTest {
 
   Test
   public fun testXml() {
-    val a = Robolectric.setupActivity<Activity>(javaClass<Activity>())
+    val a = Robolectric.setupActivity<Activity>(Activity::class.java)
 
     val frameLayout = FrameLayout(a)
     val linearLayout = LinearLayout(a)
-    linearLayout.setOrientation(LinearLayout.VERTICAL)
+    linearLayout.orientation = LinearLayout.VERTICAL
 
     val textView = TextView(a)
     textView.setPadding(10, 20, 30, 40)
@@ -55,7 +55,7 @@ public class XmlBuilderTest {
     textViewLP.gravity = Gravity.CENTER
 
     val button = Button(a)
-    button.setText("Button text")
+    button.text = "Button text"
 
     linearLayout.addView(textView, textViewLP)
     linearLayout.addView(button)
@@ -65,15 +65,15 @@ public class XmlBuilderTest {
     val inputStream = ByteArrayInputStream(xml.toByteArray("UTF-8"))
     val document = parseXml(inputStream)
 
-    val rootElement = document.getDocumentElement()!!
-    assertEquals("FrameLayout", rootElement.getTagName())
+    val rootElement = document.documentElement!!
+    assertEquals("FrameLayout", rootElement.tagName)
 
     val linearLayoutElement = rootElement.getElementsByTagName("LinearLayout")?.item(0) as Element
-    assertEquals("LinearLayout", linearLayoutElement.getTagName())
+    assertEquals("LinearLayout", linearLayoutElement.tagName)
     assertEquals("vertical", linearLayoutElement.getAttribute("android:orientation"))
 
     val textViewElement = linearLayoutElement.getElementsByTagName("TextView")?.item(0) as Element
-    assertEquals("TextView", textViewElement.getTagName())
+    assertEquals("TextView", textViewElement.tagName)
     assertEquals("10dp", textViewElement.getAttribute("android:paddingLeft"))
     assertEquals("20dp", textViewElement.getAttribute("android:paddingTop"))
     assertEquals("30dp", textViewElement.getAttribute("android:paddingRight"))
@@ -83,13 +83,13 @@ public class XmlBuilderTest {
     assertEquals("center_vertical|center_horizontal", textViewElement.getAttribute("android:layout_gravity"))
 
     val buttonElement = linearLayoutElement.getElementsByTagName("Button")?.item(0) as Element
-    assertEquals("Button", buttonElement.getTagName())
+    assertEquals("Button", buttonElement.tagName)
     assertEquals("Button text", buttonElement.getAttribute("android:text"))
   }
 
   Test
   public fun testGravity() {
-    Robolectric.setupActivity<Activity>(javaClass<Activity>())
+    Robolectric.setupActivity<Activity>(Activity::class.java)
     assertEquals("center_vertical|center_horizontal", resolveGravity(Gravity.CENTER))
     assertEquals("left|right", resolveGravity(Gravity.FILL_HORIZONTAL))
     assertEquals("top|bottom", resolveGravity(Gravity.FILL_VERTICAL))
@@ -104,7 +104,7 @@ public class XmlBuilderTest {
 
   Test
   public fun testBasicRenderAttr() {
-    Robolectric.setupActivity<Activity>(javaClass<Activity>())
+    Robolectric.setupActivity<Activity>(Activity::class.java)
     val key = "someKey" //used only for debug print
 
     assertEquals("1", basicRenderAttr(key, 1))
@@ -121,7 +121,7 @@ public class XmlBuilderTest {
 
   Test
   public fun testResolveEllipsize() {
-    Robolectric.setupActivity<Activity>(javaClass<Activity>())
+    Robolectric.setupActivity<Activity>(Activity::class.java)
 
     assertEquals("end", convertEllipsize(TruncateAt.END))
     assertEquals("marquee", convertEllipsize(TruncateAt.MARQUEE))
@@ -143,7 +143,7 @@ public class XmlBuilderTest {
 
   Test
   public fun testresolveDimension() {
-    val a = Robolectric.setupActivity<Activity>(javaClass<Activity>())
+    val a = Robolectric.setupActivity<Activity>(Activity::class.java)
     val v = View(a)
 
     assertEquals("17sp", resolveDimension(TextView(a), "textSize", "17"))

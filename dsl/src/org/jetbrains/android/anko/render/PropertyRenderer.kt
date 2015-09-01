@@ -32,7 +32,7 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.PROPERTIES)
 
     override fun processElements(state: GenerationState) = StringBuilder {
-        state[javaClass<PropertyGenerator>()].forEach { append(renderProperty(it)) }
+        state[PropertyGenerator::class.java].forEach { append(renderProperty(it)) }
     }.toString()
 
     private fun renderProperty(property: PropertyElement): String {
@@ -67,7 +67,7 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
             if (getter != null) {
                 indent.line("get() = ${getter.method.name}()")
             } else {
-                indent.line("get() = throw AnkoException(\"'${fullPropertyName}' property does not have a getter\")")
+                indent.line("get() = throw AnkoException(\"'$fullPropertyName' property does not have a getter\")")
             }
             if (bestSetter != null) indent.line("set(v) = ${bestSetter.method.name}(v)")
             nl()
@@ -83,7 +83,7 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
     {
         if (otherSetters.isNotEmpty() && supportsResourceSetter(returnType)) {
             val resourceSetter = otherSetters.firstOrNull {
-                it.method.args.size() == 1 && (it.method.args[0].getClassName() == "int")
+                it.method.args.size() == 1 && (it.method.args[0].className == "int")
             }
 
             if (resourceSetter != null) {

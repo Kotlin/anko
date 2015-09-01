@@ -16,19 +16,14 @@
 
 package org.jetbrains.kotlin.android.xmlconverter
 
-import java.io.File
 import org.w3c.dom.Document
-import javax.xml.parsers.DocumentBuilderFactory
-import org.xml.sax.InputSource
-import java.io.StringReader
-import kotlin.dom.*
 import org.w3c.dom.Element
-import com.google.gson.Gson
-import org.jetbrains.kotlin.android.attrs.readResource
-import org.jetbrains.kotlin.android.attrs.Attrs
-import java.util.regex.Pattern
-import java.util.SortedSet
-import java.util.TreeSet
+import org.xml.sax.InputSource
+import java.io.File
+import java.io.StringReader
+import java.util.*
+import javax.xml.parsers.DocumentBuilderFactory
+import kotlin.dom.childElements
 
 private class Widget(val name: String, val attrs: List<KeyValuePair>, val layoutParams: String, val children: List<Widget>) {
 
@@ -53,7 +48,7 @@ public object XmlConverter {
 
     public fun convert(xml: String, options: Set<String> = setOf()): String {
         val layout = xml.parseXml()
-        val root = layout.getDocumentElement()
+        val root = layout.documentElement
         val ids = TreeSet<String>()
         val widget = parseView(root, null, ids)
 
@@ -85,7 +80,7 @@ public object XmlConverter {
     }
 
     private fun parseView(widget: Element, parentName: String?, idsCollector: SortedSet<String>): Widget {
-        val name = widget.getTagName()
+        val name = widget.tagName
         val displayName = Character.toLowerCase(name[0]) + name.substring(1)
 
         val (attributes, layoutParams) = widget.getWidgetAttributes(name, parentName)
@@ -107,10 +102,10 @@ public object XmlConverter {
 
     private fun Element.getWidgetAttributes(name: String, parentName: String?): Pair<List<KeyValuePair>, String> {
         val original = arrayListOf<KeyValuePair>()
-        val attributesNodeMap = getAttributes()
-        for (i in 0..(attributesNodeMap.getLength() - 1)) {
+        val attributesNodeMap = attributes
+        for (i in 0..(attributesNodeMap.length - 1)) {
             val attribute = attributesNodeMap.item(i)
-            original.add(attribute.getNodeName() * attribute.getNodeValue())
+            original.add(attribute.nodeName * attribute.nodeValue)
         }
         val (layoutAttributes, ordinaryAttributes) = original.partition { it.key.startsWith("android:layout_") }
         val layoutParams = if (parentName != null) renderLayoutAttributes(layoutAttributes, parentName) else ""

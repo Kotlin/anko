@@ -16,17 +16,14 @@
 
 package org.jetbrains.anko
 
-import android.content.Context
-import android.view.ViewGroup
-import android.view.ViewManager
-import android.view.View
 import android.app.Activity
 import android.app.Fragment
-import android.content.res.Configuration
+import android.content.Context
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewManager
 import org.jetbrains.anko.custom.addView
-import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.internals.noBinding
-import java.util.HashMap
 
 private val defaultInit: Any.() -> Unit = {}
 
@@ -74,7 +71,7 @@ public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit
 private fun applyStyle(v: View, style: (View) -> Unit) {
     style(v)
     if (v is ViewGroup) {
-        val maxId = v.getChildCount() - 1
+        val maxId = v.childCount - 1
         for (i in 0..maxId) {
             val maybeChild = v.getChildAt(i)
             if (maybeChild != null) applyStyle(maybeChild, style)
@@ -96,7 +93,7 @@ public fun Context.UI(init: UiHelper.() -> Unit): UiHelper {
 
 public fun Activity.UI(init: UiHelper.() -> Unit): UiHelper = UI(true, init)
 
-public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = getActivity().UI(false, init)
+public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = activity.UI(false, init)
 
 public class UiHelper(public val ctx: Context, private val setContentView: Boolean = true) : ViewManager {
     private var view: View? = null

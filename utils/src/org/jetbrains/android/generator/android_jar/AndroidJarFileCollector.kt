@@ -16,10 +16,9 @@
 
 package org.jetbrains.android.generator.android_jar
 
-import java.io.*
-import org.jetbrains.android.anko.utils.*
-import java.util.zip.*
-import java.util.regex.*
+import java.io.File
+import java.io.FileOutputStream
+import java.util.zip.ZipFile
 
 public fun main(args: Array<String>): Unit = AndroidJarCollector().collect()
 
@@ -60,7 +59,7 @@ class AndroidJarCollector {
                 setOf(SupportFile(it, false))
         }
 
-        for ((index, version) in REQUIRED_PLATFORM_VERSIONS.sortDescendingBy { it }.withIndex()) {
+        for ((index, version) in REQUIRED_PLATFORM_VERSIONS.sortedByDescending { it }.withIndex()) {
             println("Processing version '${version}':")
 
             val versionDir = File(ORIGINAL_DIR, "sdk$version")
@@ -117,8 +116,8 @@ class AndroidJarCollector {
             val entries = zip.entries()
             var entry = entries.nextElement()
             while (entry != null) {
-                if (entry.getName().toLowerCase().endsWith(".jar")) {
-                    val rawName = entry.getName().substringAfterLast('/')
+                if (entry.name.toLowerCase().endsWith(".jar")) {
+                    val rawName = entry.name.substringAfterLast('/')
                     val name = platformPrefix + (if (rawName == "classes.jar") "$aarName.jar" else "$aarName-$rawName")
 
                     FileOutputStream(File(destinationDir, name)).use { fos ->
@@ -132,7 +131,7 @@ class AndroidJarCollector {
 
     private fun getPlatformDirectory(versionNumber: Int): File {
         val platformDirectory = File(PLATFORMS_DIR, "android-$versionNumber")
-        if (!platformDirectory.exists() || !platformDirectory.isDirectory()) {
+        if (!platformDirectory.exists() || !platformDirectory.isDirectory) {
             throw CollectorException("Android SDK platform $versionNumber not found")
         }
         return platformDirectory

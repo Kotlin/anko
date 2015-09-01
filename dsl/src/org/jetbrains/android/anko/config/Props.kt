@@ -17,9 +17,7 @@
 package org.jetbrains.android.anko.config
 
 import java.io.File
-import java.util.ArrayList
-import java.util.HashMap
-import kotlin.properties.Delegates
+import java.util.*
 
 class Variable(val name: String, val type: String) {
     override fun toString(): String {
@@ -29,7 +27,7 @@ class Variable(val name: String, val type: String) {
 
 object Props {
 
-    val imports: Map<String, String> by Delegates.lazy {
+    val imports: Map<String, String> by lazy {
         val map = hashMapOf<String, String>()
         File("dsl/props")
                 .listFiles { it.name.startsWith("imports_") && it.name.endsWith(".txt") }
@@ -40,7 +38,7 @@ object Props {
         map
     }
 
-    val helperConstructors: Map<String, List<List<Variable>>> by Delegates.lazy {
+    val helperConstructors: Map<String, List<List<Variable>>> by lazy {
         val res = HashMap<String, ArrayList<List<Variable>>>()
         val lines = File("dsl/props/helper_constructors.txt").readLines()
         for (line in lines.filter { it.isNotEmpty() && !it.startsWith('#') }) {

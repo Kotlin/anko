@@ -30,20 +30,20 @@ public class Buffer(private val indentString: String, indent: Int = 0, val init:
     init { init() }
 
     public fun line(s: String): Buffer {
-        if (mainIndent > 0 && s.startsWith('}')) mainIndent = mainIndent - 1
+        if (mainIndent > 0 && s.startsWith('}')) mainIndent -= 1
 
         if (s.isNotEmpty()) {
-            builder.append(indentString.repeat(mainIndent + tempIndent)).append(s.trim()).append('\n')
+            builder.append(indentString.repeat(mainIndent + tempIndent)).append(s.trim()).appendln()
         } else {
-            builder.append('\n')
+            builder.appendln()
         }
 
-        if (tempIndent > 0) tempIndent = tempIndent - 1
+        if (tempIndent > 0) tempIndent -= 1
 
         if (s.endsWith('{')) {
-            mainIndent = mainIndent + 1
+            mainIndent += 1
         } else if (s.endsWith('=')) {
-            tempIndent = tempIndent + 1
+            tempIndent += 1
         }
 
         return this
@@ -53,7 +53,7 @@ public class Buffer(private val indentString: String, indent: Int = 0, val init:
 
     public val indent: Buffer
         get() {
-            tempIndent = tempIndent + 1
+            tempIndent += 1
             return this
         }
 

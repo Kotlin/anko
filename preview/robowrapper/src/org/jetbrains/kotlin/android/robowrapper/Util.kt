@@ -17,9 +17,8 @@
 package org.jetbrains.kotlin.android.robowrapper
 
 import java.text.DecimalFormat
-import android.app.Application
 import java.text.DecimalFormatSymbols
-import java.util.Locale
+import java.util.*
 
 private val DEBUG = false
 
@@ -29,7 +28,7 @@ private fun Float.prettifyNumber() = toDouble().prettifyNumber()
 
 private fun Double.prettifyNumber(): String {
     val df = DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH))
-    df.setMaximumFractionDigits(8)
+    df.maximumFractionDigits = 8
     var value = df.format(this)
     if (value.startsWith(".")) value = "0$value"
     return if (value.endsWith(".0")) value.replace(".0", "") else value

@@ -17,18 +17,16 @@
 package org.jetbrains.anko.db
 
 import android.content.ContentValues
-import android.database.sqlite.SQLiteDatabase
-import android.database.Cursor
-import java.util.regex.Pattern
-import org.jetbrains.anko.*
-import android.database.sqlite.SQLiteOpenHelper
-import java.util.concurrent.atomic.AtomicInteger
 import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import org.jetbrains.anko.AnkoException
 import org.jetbrains.anko.internals.AnkoInternals
+import java.util.concurrent.atomic.AtomicInteger
+import java.util.regex.Pattern
 
 public val NULL: SqlType = SqlTypeImpl("NULL")
-@deprecated("Use INTEGER instead.", replaceWith = ReplaceWith("INTEGER"))
-public val INT: SqlType = SqlTypeImpl("INT")
 public val INTEGER: SqlType = SqlTypeImpl("INTEGER")
 public val REAL: SqlType = SqlTypeImpl("REAL")
 public val TEXT: SqlType = SqlTypeImpl("TEXT")
@@ -136,7 +134,7 @@ public fun SQLiteDatabase.dropTable(tableName: String, ifExists: Boolean = false
 }
 
 private fun escape(s: String): String {
-    return '\''+s.replace("'", "''")+'\''
+    return '\'' + s.replace("'", "''") + '\''
 }
 
 private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^\\{}]+)\\}")
@@ -154,9 +152,7 @@ private fun applyArguments(whereClause: String, args: Map<String, Any>): String 
     val buffer = StringBuffer(whereClause.length())
     while (matcher.find()) {
         val key = matcher.group(2)
-        val value = args.get(key)
-        if (value == null)
-            throw IllegalStateException("Can't find a value for key " + key)
+        val value = args.get(key) ?: throw IllegalStateException("Can't find a value for key $key")
 
         val valueString = if (value is Int || value is Long || value is Byte || value is Short) {
             value.toString()
@@ -186,7 +182,7 @@ private fun Array<out Pair<String, Any>>.toContentValues(): ContentValues {
             is Long -> values.put(key, value)
             is Short -> values.put(key, value)
             is String -> values.put(key, value)
-            else -> throw IllegalArgumentException("Non-supported value type: ${value.javaClass.getName()}")
+            else -> throw IllegalArgumentException("Non-supported value type: ${value.javaClass.name}")
         }
     }
     return values
@@ -217,7 +213,7 @@ public abstract class ManagedSQLiteOpenHelper(
 
     private synchronized fun openDatabase(): SQLiteDatabase {
         if (counter.incrementAndGet() == 1) {
-            db = getWritableDatabase()
+            db = writableDatabase
         }
         return db!!
     }

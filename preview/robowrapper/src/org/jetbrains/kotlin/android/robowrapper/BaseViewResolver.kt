@@ -23,7 +23,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import org.robolectric.Robolectric
 import org.robolectric.util.FragmentTestUtil
-import org.jetbrains.kotlin.android.robowrapper.UnsupportedClassException
 import org.robolectric.util.SupportFragmentTestUtil
 
 public class BaseViewResolver {
@@ -34,24 +33,24 @@ public class BaseViewResolver {
                 @suppress("CAST_NEVER_SUCCEEDS")
                 val activity = Robolectric.buildActivity<Activity>(clazz as Class<Activity>).create().get()
                 val contentView = activity.findViewById(android.R.id.content) as ViewGroup
-                if (contentView.getChildCount() == 0) FrameLayout(activity) else contentView.getChildAt(0)
+                if (contentView.childCount == 0) FrameLayout(activity) else contentView.getChildAt(0)
             }
             clazz.isFragment() -> {
                 val fragment = clazz.newInstance() as Fragment
                 FragmentTestUtil.startFragment(fragment)
-                fragment.getView()
+                fragment.view
             }
             clazz.isSupportFragment() -> {
                 val fragment = clazz.newInstance() as android.support.v4.app.Fragment
                 SupportFragmentTestUtil.startFragment(fragment)
-                fragment.getView()
+                fragment.view
             }
             else -> throw UnsupportedClassException()
         }
     }
 
-    private fun Class<*>.isActivity() = javaClass<Activity>().isAssignableFrom(this)
-    private fun Class<*>.isFragment() = javaClass<Fragment>().isAssignableFrom(this)
-    private fun Class<*>.isSupportFragment() = javaClass<android.support.v4.app.Fragment>().isAssignableFrom(this)
+    private fun Class<*>.isActivity() = Activity::class.java.isAssignableFrom(this)
+    private fun Class<*>.isFragment() = Fragment::class.java.isAssignableFrom(this)
+    private fun Class<*>.isSupportFragment() = android.support.v4.app.Fragment::class.java.isAssignableFrom(this)
 
 }

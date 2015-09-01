@@ -30,7 +30,7 @@ class ServiceRenderer(config: AnkoConfiguration) : Renderer(config) {
 
     override fun processElements(state: GenerationState) = StringBuilder {
         append(render("services") {
-            "services" % seq(state[javaClass<ServiceGenerator>()]) {
+            "services" % seq(state[ServiceGenerator::class.java]) {
                 "name" % it.service.simpleName.decapitalize()
                 "className" % it.service.fqName
                 "const" % it.name

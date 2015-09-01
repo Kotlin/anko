@@ -16,21 +16,19 @@
 
 package org.jetbrains.android.generator.hierarchy
 
-import java.io.File
+import com.google.gson.Gson
 import org.jetbrains.android.anko.ClassProcessor
-import org.jetbrains.android.anko.isInner
-import org.objectweb.asm.tree.ClassNode
 import org.jetbrains.android.anko.ClassTree
 import org.jetbrains.android.anko.ClassTreeNode
-import kotlin.platform.platformStatic
-import com.google.gson.Gson
-import org.jetbrains.android.anko.utils.ClassTreeUtils
+import org.jetbrains.android.anko.isInner
+import org.objectweb.asm.tree.ClassNode
+import java.io.File
 
 public fun main(args: Array<String>): Unit = HierarchyCollector.collect()
 
 object HierarchyCollector {
 
-    platformStatic
+    @jvmStatic
     public fun collect() {
         val ver = File("workdir/original").listFiles { it.name.matches("[0-9]+".toRegex()) }!!
                 .first { it.listFiles { it.name == "android.jar" }?.isNotEmpty() ?: false }

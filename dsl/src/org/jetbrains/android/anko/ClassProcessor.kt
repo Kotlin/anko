@@ -20,7 +20,6 @@ import org.objectweb.asm.ClassReader
 import org.objectweb.asm.tree.ClassNode
 import java.io.File
 import java.io.InputStream
-import java.util.jar.JarFile
 import java.util.zip.ZipFile
 
 class ClassProcessor(val platformJars: List<File>, val versionJars: List<File>) {
@@ -42,7 +41,7 @@ class ClassProcessor(val platformJars: List<File>, val versionJars: List<File>) 
         val jarSequences = (platformJars + versionJars).withIndex().asSequence().map { jar ->
             val jarFile = ZipFile(jar.value.first)
             jarFile.entries().asSequence()
-                    .filter { it.getName().endsWith(".class") }
+                    .filter { it.name.endsWith(".class") }
                     .map { jarFile.getInputStream(it) to jar.value.second }
         }
 

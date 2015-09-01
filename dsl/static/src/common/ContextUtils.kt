@@ -16,21 +16,21 @@
 
 package org.jetbrains.anko
 
-import android.content.Intent
-import android.content.Context
-import android.content.SharedPreferences
-import android.content.ActivityNotFoundException
-import android.preference.PreferenceManager
 import android.app.Activity
 import android.app.Fragment
 import android.app.Service
-import android.os.Bundle
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
-import java.io.Serializable
+import android.os.Bundle
 import android.os.Parcelable
+import android.preference.PreferenceManager
 import android.view.View
 import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.internals.noBinding
+import java.io.Serializable
 
 public val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
 public val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
@@ -46,23 +46,23 @@ public val MAXDPI: Int = 0xfffe
 
 //returns dip(dp) dimension value in pixels
 public fun Context.dip(value: Int): Int =
-    (value * (getResources()?.getDisplayMetrics()?.density ?: 0f)).toInt()
+    (value * (resources?.displayMetrics?.density ?: 0f)).toInt()
 public fun Context.dip(value: Float): Int =
-    (value * (getResources()?.getDisplayMetrics()?.density ?: 0f)).toInt()
+    (value * (resources?.displayMetrics?.density ?: 0f)).toInt()
 
 //return sp dimension value in pixels
 public fun Context.sp(value: Int): Int =
-    (value * (getResources()?.getDisplayMetrics()?.scaledDensity ?: 0f)).toInt()
+    (value * (resources?.displayMetrics?.scaledDensity ?: 0f)).toInt()
 public fun Context.sp(value: Float): Int =
-    (value * (getResources()?.getDisplayMetrics()?.scaledDensity ?: 0f)).toInt()
+    (value * (resources?.displayMetrics?.scaledDensity ?: 0f)).toInt()
 
 //converts px value into dip or sp
 public fun Context.px2dip(px: Int): Float =
-    (px.toFloat() / (getResources()?.getDisplayMetrics()?.density ?: 1f)).toFloat()
+    (px.toFloat() / (resources?.displayMetrics?.density ?: 1f)).toFloat()
 public fun Context.px2sp(px: Int): Float =
-    (px.toFloat() / (getResources()?.getDisplayMetrics()?.scaledDensity ?: 1f)).toFloat()
+    (px.toFloat() / (resources?.displayMetrics?.scaledDensity ?: 1f)).toFloat()
 
-public fun Context.dimen(resource: Int): Int = getResources().getDimensionPixelSize(resource)
+public fun Context.dimen(resource: Int): Int = resources.getDimensionPixelSize(resource)
 
 
 //the same for nested DSL components
@@ -83,19 +83,19 @@ public inline fun UiHelper.dimen(resource: Int): Int = ctx.dimen(resource)
 
 //the same for Fragments
 @suppress("NOTHING_TO_INLINE")
-public inline fun Fragment.dip(value: Int): Int = getActivity().dip(value)
+public inline fun Fragment.dip(value: Int): Int = activity.dip(value)
 @suppress("NOTHING_TO_INLINE")
-public inline fun Fragment.dip(value: Float): Int = getActivity().dip(value)
+public inline fun Fragment.dip(value: Float): Int = activity.dip(value)
 @suppress("NOTHING_TO_INLINE")
-public inline fun Fragment.sp(value: Int): Int = getActivity().sp(value)
+public inline fun Fragment.sp(value: Int): Int = activity.sp(value)
 @suppress("NOTHING_TO_INLINE")
-public inline fun Fragment.sp(value: Float): Int = getActivity().sp(value)
+public inline fun Fragment.sp(value: Float): Int = activity.sp(value)
 @suppress("NOTHING_TO_INLINE")
-public inline fun Fragment.px2dip(px: Int): Float = getActivity().px2dip(px)
+public inline fun Fragment.px2dip(px: Int): Float = activity.px2dip(px)
 @suppress("NOTHING_TO_INLINE")
-public inline fun Fragment.px2sp(px: Int): Float = getActivity().px2sp(px)
+public inline fun Fragment.px2sp(px: Int): Float = activity.px2sp(px)
 @suppress("NOTHING_TO_INLINE")
-public inline fun Fragment.dimen(resource: Int): Int = getActivity().dimen(resource)
+public inline fun Fragment.dimen(resource: Int): Int = activity.dimen(resource)
 
 
 public noBinding val Activity.intent: Intent
@@ -105,13 +105,13 @@ public val Context.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(this)
 
 public val Fragment.defaultSharedPreferences: SharedPreferences
-    get() = PreferenceManager.getDefaultSharedPreferences(getActivity())
+    get() = PreferenceManager.getDefaultSharedPreferences(activity)
 
 public val Fragment.act: Activity
-    get() = getActivity()
+    get() = activity
 
 public val Fragment.ctx: Context
-    get() = getActivity()
+    get() = activity
 
 public val Context.ctx: Context
     get() = this
@@ -128,11 +128,11 @@ public fun <T : View> View.find(id: Int): T = findViewById(id) as T
 public fun <T : View> Activity.find(id: Int): T = findViewById(id) as T
 
 @suppress("UNCHECKED_CAST")
-public fun <T : View> Fragment.find(id: Int): T = getView()?.findViewById(id) as T
+public fun <T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
 
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Fragment.browse(url: String): Boolean = getActivity().browse(url)
+public inline fun Fragment.browse(url: String): Boolean = activity.browse(url)
 
 public fun Context.browse(url: String): Boolean {
     try {
@@ -147,7 +147,7 @@ public fun Context.browse(url: String): Boolean {
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Fragment.share(text: String, subject: String = ""): Boolean = getActivity().share(text, subject)
+public inline fun Fragment.share(text: String, subject: String = ""): Boolean = activity.share(text, subject)
 
 public fun Context.share(text: String, subject: String = ""): Boolean {
     try {
@@ -165,7 +165,7 @@ public fun Context.share(text: String, subject: String = ""): Boolean {
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun Fragment.email(email: String, subject: String = "", text: String = ""): Boolean =
-        getActivity().email(email, subject, text)
+        activity.email(email, subject, text)
 
 public fun Context.email(email: String, subject: String = "", text: String = ""): Boolean {
     val intent = Intent(Intent.ACTION_SENDTO)
@@ -175,7 +175,7 @@ public fun Context.email(email: String, subject: String = "", text: String = "")
         intent.putExtra(Intent.EXTRA_SUBJECT, subject)
     if (text.length() > 0)
         intent.putExtra(Intent.EXTRA_TEXT, text)
-    if (intent.resolveActivity(getPackageManager()) != null) {
+    if (intent.resolveActivity(packageManager) != null) {
         startActivity(intent)
         return true
     }
@@ -184,7 +184,7 @@ public fun Context.email(email: String, subject: String = "", text: String = "")
 }
 
 @suppress("NOTHING_TO_INLINE")
-public inline fun Fragment.makeCall(number: String): Boolean = getActivity().makeCall(number)
+public inline fun Fragment.makeCall(number: String): Boolean = activity.makeCall(number)
 
 public fun Context.makeCall(number: String): Boolean {
     try {
@@ -199,36 +199,36 @@ public fun Context.makeCall(number: String): Boolean {
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<String, Any>) {
-    AnkoInternals.internalStartActivity(this, javaClass<T>(), params)
+    AnkoInternals.internalStartActivity(this, T::class.java, params)
 }
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
-    AnkoInternals.internalStartActivityForResult(this, javaClass<T>(), requestCode, params)
+    AnkoInternals.internalStartActivityForResult(this, T::class.java, requestCode, params)
 }
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
-    AnkoInternals.internalStartActivity(getActivity(), javaClass<T>(), params)
+    AnkoInternals.internalStartActivity(activity, T::class.java, params)
 }
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
-    AnkoInternals.internalStartActivityForResult(getActivity(), javaClass<T>(), requestCode, params)
+    AnkoInternals.internalStartActivityForResult(activity, T::class.java, requestCode, params)
 }
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Service> Context.startService(vararg params: Pair<String, Any>) {
-    AnkoInternals.internalStartService(this, javaClass<T>(), params)
+    AnkoInternals.internalStartService(this, T::class.java, params)
 }
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any>) {
-    AnkoInternals.internalStartService(getActivity(), javaClass<T>(), params)
+    AnkoInternals.internalStartService(activity, T::class.java, params)
 }
 
 public fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
-    setArguments(bundleOf(*params))
+    arguments = bundleOf(*params)
     return this
 }
 
@@ -269,10 +269,10 @@ public fun bundleOf(vararg params: Pair<String, Any>): Bundle {
 }
 
 public noBinding val Context.displayMetrics: android.util.DisplayMetrics
-    get() = getResources().getDisplayMetrics()
+    get() = resources.displayMetrics
 
 public noBinding val Context.configuration: android.content.res.Configuration
-    get() = getResources().getConfiguration()
+    get() = resources.configuration
 
 public val android.content.res.Configuration.portrait: Boolean
     get() = orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT
@@ -284,11 +284,11 @@ public val android.content.res.Configuration.long: Boolean
     get() = (screenLayout and android.content.res.Configuration.SCREENLAYOUT_LONG_YES) != 0
 
 public inline fun <reified T: Any> Context.intentFor(vararg params: Pair<String, Any>): Intent {
-    return AnkoInternals.createIntent(this, javaClass<T>(), params)
+    return AnkoInternals.createIntent(this, T::class.java, params)
 }
 
 public inline fun <reified T: Any> Fragment.intentFor(vararg params: Pair<String, Any>): Intent {
-    return AnkoInternals.createIntent(getActivity(), javaClass<T>(), params)
+    return AnkoInternals.createIntent(activity, T::class.java, params)
 }
 
 @suppress("NOTHING_TO_INLINE")

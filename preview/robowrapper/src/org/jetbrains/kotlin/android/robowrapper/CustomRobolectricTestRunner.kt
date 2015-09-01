@@ -20,15 +20,14 @@ import android.os.Build
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.manifest.AndroidManifest
-import org.robolectric.res.Fs
 
 public class CustomRobolectricTestRunner(clazz: Class<*>) : RobolectricTestRunner(clazz) {
 
     override fun getAppManifest(config: Config?): AndroidManifest? {
         val manifest = super.getAppManifest(config) ?: return null
 
-        return if (manifest.getTargetSdkVersion() < 10) {
-            object : AndroidManifest(manifest.getAndroidManifestFile(), manifest.getResDirectory(), manifest.getAssetsDirectory()) {
+        return if (manifest.targetSdkVersion < 10) {
+            object : AndroidManifest(manifest.androidManifestFile, manifest.resDirectory, manifest.assetsDirectory) {
                 override fun getTargetSdkVersion(): Int {
                     return Build.VERSION_CODES.LOLLIPOP
                 }

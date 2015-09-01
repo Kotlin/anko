@@ -18,10 +18,10 @@ package org.jetbrains.anko.db
 
 import android.database.Cursor
 import android.database.sqlite.SQLiteException
-import java.util.ArrayList
-import java.lang.reflect.Modifier
 import org.jetbrains.anko.AnkoException
 import org.jetbrains.anko.internals.AnkoInternals
+import java.lang.reflect.Modifier
+import java.util.*
 
 public interface RowParser<T> {
     fun parseRow(columns: Array<Any>): T
@@ -61,25 +61,25 @@ public val StringParser: RowParser<String> = SingleColumnParser()
 public val BlobParser: RowParser<ByteArray> = SingleColumnParser()
 
 public fun <T: Any> Cursor.parseSingle(parser: RowParser<T>): T = AnkoInternals.useCursor(this) {
-    if (getCount() != 1)
+    if (count != 1)
         throw SQLiteException("parseSingle accepts only cursors with a single entry")
     moveToFirst()
     return parser.parseRow(readColumnsArray(this))
 }
 
 public fun <T: Any> Cursor.parseOpt(parser: RowParser<T>): T? = AnkoInternals.useCursor(this) {
-    if (getCount() > 1)
+    if (count > 1)
         throw SQLiteException("parseSingle accepts only cursors with a single entry or empty cursors")
-    if (getCount() == 0)
+    if (count == 0)
         return null
     moveToFirst()
     return parser.parseRow(readColumnsArray(this))
 }
 
 public fun <T: Any> Cursor.parseList(parser: RowParser<T>): List<T> = AnkoInternals.useCursor(this) {
-    val list = ArrayList<T>(getCount())
+    val list = ArrayList<T>(count)
     moveToFirst()
-    while (!isAfterLast()) {
+    while (!isAfterLast) {
         list.add(parser.parseRow(readColumnsArray(this)))
         moveToNext()
     }
@@ -87,39 +87,29 @@ public fun <T: Any> Cursor.parseList(parser: RowParser<T>): List<T> = AnkoIntern
 }
 
 public fun <T: Any> Cursor.parseSingle(parser: MapRowParser<T>): T = AnkoInternals.useCursor(this) {
-    if (getCount() != 1)
+    if (count != 1)
         throw SQLiteException("parseSingle accepts only cursors with getCount() == 1")
     moveToFirst()
     return parser.parseRow(readColumnsMap(this))
 }
 
 public fun <T: Any> Cursor.parseOpt(parser: MapRowParser<T>): T? = AnkoInternals.useCursor(this) {
-    if (getCount() > 1)
+    if (count > 1)
         throw SQLiteException("parseSingle accepts only cursors with getCount() == 1 or empty cursors")
-    if (getCount() == 0)
+    if (count == 0)
         return null
     moveToFirst()
     return parser.parseRow(readColumnsMap(this))
 }
 
 public fun <T: Any> Cursor.parseList(parser: MapRowParser<T>): List<T> = AnkoInternals.useCursor(this) {
-    val list = ArrayList<T>(getCount())
+    val list = ArrayList<T>(count)
     moveToFirst()
-    while (!isAfterLast()) {
+    while (!isAfterLast) {
         list.add(parser.parseRow(readColumnsMap(this)))
         moveToNext()
     }
     return list
-}
-
-@deprecated(value = "Use sequence() instead.", replaceWith = ReplaceWith("sequence()"))
-public fun Cursor.stream(): Sequence<Array<Any>> {
-    return CursorSequence(this)
-}
-
-@deprecated(value = "Use mapSequence() instead.", replaceWith = ReplaceWith("mapSequence()"))
-public fun Cursor.mapStream(): Sequence<Map<String, Any>> {
-    return CursorMapSequence(this)
 }
 
 public fun Cursor.sequence(): Sequence<Array<Any>> {
@@ -132,29 +122,29 @@ public fun Cursor.mapSequence(): Sequence<Map<String, Any>> {
 
 @suppress("NOTHING_TO_INLINE")
 public inline fun <reified T> classParser(): RowParser<T> {
-    val clazz = javaClass<T>()
-    val constructors = clazz.getDeclaredConstructors().filter {
-        val types = it.getParameterTypes()
-        it.isAccessible() && !it.isVarArgs() && Modifier.isPublic(it.getModifiers()) &&
+    val clazz = T::class.java
+    val constructors = clazz.declaredConstructors.filter {
+        val types = it.parameterTypes
+        it.isAccessible && !it.isVarArgs && Modifier.isPublic(it.modifiers) &&
             types != null && types.size() > 0
     }
     if (constructors.isEmpty())
         throw AnkoException(
-            "Can't initialize object parser for ${clazz.getCanonicalName()}, no acceptable constructors found")
+            "Can't initialize object parser for ${clazz.canonicalName}, no acceptable constructors found")
 
     val c = constructors[0]
 
-    for (type in c.getParameterTypes()) {
+    for (type in c.parameterTypes) {
         @suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
         val valid = when (type) {
-            javaClass<Long>(), javaClass<java.lang.Long>() -> true
-            javaClass<Double>(), javaClass<java.lang.Double>() -> true
-            javaClass<String>(), javaClass<ByteArray>() -> true
+            Long::class.java, java.lang.Long::class.java -> true
+            Double::class.java, java.lang.Double::class.java -> true
+            String::class.java, ByteArray::class.java -> true
             else -> false
         }
         if (!valid)
             throw AnkoException(
-                "Invalid argument type ${type.getCanonicalName()} in ${clazz.getCanonicalName()} constructor." +
+                "Invalid argument type ${type.canonicalName} in ${clazz.canonicalName} constructor." +
                 "Supported types are: Long, Double, String, Array<Byte>.")
     }
 
@@ -166,7 +156,7 @@ public inline fun <reified T> classParser(): RowParser<T> {
 }
 
 private fun readColumnsArray(cursor: Cursor): Array<Any> {
-    val count = cursor.getColumnCount()
+    val count = cursor.columnCount
     val arr = arrayOfNulls<Any>(count)
     for (i in 0..(count - 1)) {
         arr[i] = when (cursor.getType(i)) {
@@ -182,7 +172,7 @@ private fun readColumnsArray(cursor: Cursor): Array<Any> {
 }
 
 private fun readColumnsMap(cursor: Cursor): Map<String, Any> {
-    val count = cursor.getColumnCount()
+    val count = cursor.columnCount
     val map = hashMapOf<String, Any>()
     for (i in 0..(count - 1)) {
         map.put(cursor.getColumnName(i), when (cursor.getType(i)) {
@@ -215,7 +205,7 @@ private class CursorIterator(val cursor: Cursor) : Iterator<Array<Any>> {
     }
 
     override fun hasNext(): Boolean {
-        return cursor.getPosition() < cursor.getCount() - 1
+        return cursor.position < cursor.count - 1
     }
 }
 
@@ -226,6 +216,6 @@ private class CursorMapIterator(val cursor: Cursor) : Iterator<Map<String, Any>>
     }
 
     override fun hasNext(): Boolean {
-        return cursor.getPosition() < cursor.getCount() - 1
+        return cursor.position < cursor.count - 1
     }
 }

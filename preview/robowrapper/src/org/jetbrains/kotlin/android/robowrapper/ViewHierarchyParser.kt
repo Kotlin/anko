@@ -18,17 +18,14 @@ package org.jetbrains.kotlin.android.robowrapper
 
 import android.view.View
 import android.view.ViewGroup
-import com.google.gson.Gson
-import java.io.File
-import java.nio.charset.Charset
 import android.widget.ImageView
+import org.jetbrains.kotlin.android.attrs.Attr
 import java.lang.reflect.Method
-import org.jetbrains.kotlin.android.attrs.*
 
 class ViewNode(val view: View, val children: List<ViewNode>, val attrs: Set<Pair<String, Pair<Attr?, Any>>>) {
     override fun toString(): String {
         val sb = StringBuilder()
-        sb.append("${view.javaClass.getName()}: attrs: $attrs")
+        sb.append("${view.javaClass.name}: attrs: $attrs")
         children.map { it.toString() }.forEach { sb.append(("  " + it.replace("\n", "  "))) }
         return sb.toString()
     }
@@ -40,8 +37,8 @@ private val superclassResolver = SuperclassResolver()
 public fun parseView(view: View): ViewNode {
     val children = arrayListOf<ViewNode>()
     if (view is ViewGroup &&
-            (view.javaClass.getName() !in ignoreChildrenOf || isAdapterViewChild(view.javaClass))) {
-        val childCount = view.getChildCount()
+            (view.javaClass.name !in ignoreChildrenOf || isAdapterViewChild(view.javaClass))) {
+        val childCount = view.childCount
         for (i in 0..(childCount - 1)) {
             val child = view.getChildAt(i)
             children.add(parseView(child))
@@ -55,18 +52,18 @@ public fun parseView(view: View): ViewNode {
 // There're some Anko layout helpers in our DSL, so let's unwrap such views
 fun unwrapClass(clazz: Class<*>): Class<*> {
     val superClass = superclassResolver.getSuperclass(clazz)
-  val simpleName = clazz.getSimpleName()
+  val simpleName = clazz.simpleName
     return if (simpleName.startsWith("_") &&
-            superClass.getSimpleName() == simpleName.substring(1) &&
-            javaClass<ViewGroup>().isAssignableFrom(clazz) &&
-            androidViewPaths.any { superClass.getName().startsWith(it) })
+            superClass.simpleName == simpleName.substring(1) &&
+            ViewGroup::class.java.isAssignableFrom(clazz) &&
+            androidViewPaths.any { superClass.name.startsWith(it) })
         superClass else clazz
 }
 
 private fun isAdapterViewChild(c: Class<*>?): Boolean {
-    if (c == null || (c.javaClass.getName()) == "java.lang.Object")
+    if (c == null || (c.javaClass.name) == "java.lang.Object")
         return false
-    if ((c.javaClass.getName()) == "android.widget.AdapterView")
+    if ((c.javaClass.name) == "android.widget.AdapterView")
         return true
     else return isAdapterViewChild(superclassResolver.getSuperclass(c))
 }
@@ -83,7 +80,7 @@ private fun Class<*>.getAttrs(): Map<String, Attr> {
 }
 
 fun Class<*>.getStyleableNames(): List<String> {
-    val name = getName()
+    val name = this.name
     if (name.equals("android.view.ViewGroup\$LayoutParams")) {
         return listOf("ViewGroup_Layout", "ViewGroup_MarginLayout")
     }
@@ -102,7 +99,7 @@ fun Class<*>.getStyleableNames(): List<String> {
 // Unwrap our layout helper classes and remove the package name if not necessary
 fun ViewNode.getXmlName(): String {
     val unwrappedClass = unwrapClass(view.javaClass)
-    val name = unwrappedClass.getName()
+    val name = unwrappedClass.name
     return name.replace("android.view.", "").replace("android.widget.", "")
 }
 
@@ -122,10 +119,10 @@ private fun parseAttributes(
 ): Set<Pair<String, Pair<Attr?, Any>>> {
     val attributes = hashSetOf<Pair<String, Pair<Attr?, Any>>>()
 
-    for (method in clazz.getMethods().iterator()) {
-        val name = method.getName()
+    for (method in clazz.methods.iterator()) {
+        val name = method.name
 
-        val parameterTypes = method.getParameterTypes()
+        val parameterTypes = method.parameterTypes
         if ((parameterTypes != null && parameterTypes.size() > 0) || name in ignoredMethods) {
             continue
         }
@@ -142,13 +139,13 @@ private fun parseAttributes(
             }
         } catch (e: Exception) {
             // Ignore method
-            System.err.println("Error while calling ${clazz.getName()}#$name: ")
+            System.err.println("Error while calling ${clazz.name}#$name: ")
             e.printStackTrace()
         }
     }
     // Parse also a parent (attrs already contains attributes for it)
     val superClass = superclassResolver.getSuperclass(clazz)
-    if (superClass != null && javaClass<View>().isInstance(view)) {
+    if (superClass != null && View::class.java.isInstance(view)) {
         attributes.addAll(parseAttributes(superClass, view, attrs))
     }
 
@@ -156,7 +153,7 @@ private fun parseAttributes(
 }
 
 private fun Method.resolveBooleanPropertyName(view: View): String? {
-    val name = getName()
+    val name = name
     return if (name.startsWith("is") && name.length() > 2 && Character.isUpperCase(name.charAt(2)))
         resolveSpecialProperty(view, decapitalize(name.substring(2)))
     else
@@ -164,7 +161,7 @@ private fun Method.resolveBooleanPropertyName(view: View): String? {
 }
 
 private fun Method.resolveGenericPropertyName(view: View): String? {
-    val name = getName()
+    val name = name
     return if (name.startsWith("get") && name.length() > 3 && Character.isUpperCase(name.charAt(3)))
         resolveSpecialProperty(view, decapitalize(name.substring(3)))
     else

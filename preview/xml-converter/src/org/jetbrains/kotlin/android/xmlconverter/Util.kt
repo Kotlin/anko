@@ -17,17 +17,16 @@
 package org.jetbrains.kotlin.android.xmlconverter
 
 import com.google.gson.Gson
-import org.jetbrains.kotlin.android.attrs.*
 import com.google.gson.reflect.TypeToken
-import java.util
-import java.util.HashMap
+import org.jetbrains.kotlin.android.attrs.Attrs
+import org.jetbrains.kotlin.android.attrs.readResource
 
 private val INTENT = "    "
 
-private val attrs = Gson().fromJson(readResource("attrs.json"), javaClass<Attrs>())
+private val attrs = Gson().fromJson(readResource("attrs.json"), Attrs::class.java)
 
 private val viewHierarchy = Gson().fromJson<Map<String, List<String>>>(readResource("views.json"),
-        (object : TypeToken<Map<String, List<String>>>() {}).getType())
+        (object : TypeToken<Map<String, List<String>>>() {}).type)
 
 public data class KeyValuePair(val key: String, val value: String) {
     override fun toString() = if (value.isNotEmpty()) "$key = $value" else key

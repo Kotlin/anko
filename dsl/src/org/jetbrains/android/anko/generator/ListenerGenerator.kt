@@ -24,7 +24,7 @@ class ListenerGenerator : Generator<ListenerElement> {
         state.availableMethods
                 .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter }
                 .map { makeListener(it) }
-                .sortBy { it.setter.identifier }
+                .sortedBy { it.setter.identifier }
     }
 
     //suppose "setter" is a correct setOn*Listener method

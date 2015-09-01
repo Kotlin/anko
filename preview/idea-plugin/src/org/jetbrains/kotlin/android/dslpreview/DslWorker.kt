@@ -20,21 +20,18 @@ import com.google.common.io.Files
 import com.google.common.io.Resources
 import com.google.gson.Gson
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.application.PathManager
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.progress.Task
-import com.intellij.openapi.project.Project
-import com.intellij.openapi.wm.ToolWindow
+import org.jetbrains.kotlin.android.dslpreview
 import org.zeromq.ZMQ
 import java.io.File
+import java.io.FileOutputStream
 import java.net.URL
-import java.util.*
-import org.jetbrains.kotlin.android.dslpreview
-import com.intellij.openapi.application.PathManager
 import java.util.jar.JarFile
 import java.util.zip.ZipEntry
-import java.io.FileOutputStream
-import com.intellij.openapi.diagnostic.Logger
 
 public class DslWorker(private val myListener: DslWorker.Listener) {
     private val GSON = Gson()
@@ -82,7 +79,7 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
             return
         }
 
-        val robowrapperDirectory = RobowrapperDependencies.DEPENDENCIES_DIRECTORY.getAbsolutePath()
+        val robowrapperDirectory = RobowrapperDependencies.DEPENDENCIES_DIRECTORY.absolutePath
         if (robowrapperDirectory.isEmpty()) {
             myListener.onXmlError(ErrorKind.INVALID_ROBOWRAPPER_DIRECTORY, "Robowrapper directory is empty.", false)
             return
@@ -130,7 +127,7 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
             }
 
             val rawData = outputText.substring(startMarker + START_MARKER.length(), endMarker)
-            val pack = GSON.fromJson<dslpreview.Pack>(rawData, javaClass<dslpreview.Pack>())
+            val pack = GSON.fromJson<dslpreview.Pack>(rawData, dslpreview.Pack::class.java)
 
             myPort = pack.port
             myAlive = pack.alive
@@ -149,10 +146,10 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
     }
 
     private inner class RobowrapperExecTask(val ctx: RobowrapperContext) :
-            Task.Backgroundable(ctx.androidFacet.getModule().getProject(), "Executing DSL", false) {
+            Task.Backgroundable(ctx.androidFacet.module.project, "Executing DSL", false) {
 
         override fun run(progressIndicator: ProgressIndicator) {
-            progressIndicator.setIndeterminate(true)
+            progressIndicator.isIndeterminate = true
 
             val pluginJarFile = PathManager.getJarPathForClass(javaClass)!!
             val pluginDirectory = File(pluginJarFile).getParent()
@@ -177,7 +174,7 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
 
                     val process = builder.start()
                     myLastProcess = process
-                    val text = process.getInputStream().reader("UTF-8").useLines {
+                    val text = process.inputStream.reader("UTF-8").useLines {
                         it.takeWhile { !it.contains(END_MARKER) }.joinToString("\n", postfix = END_MARKER)
                     }
 
@@ -191,15 +188,15 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
     }
 
     private inner class RobowrapperExecAliveTask(private val ctx: RobowrapperContext) :
-            Task.Backgroundable(ctx.androidFacet.getModule().getProject(), "Executing DSL", false) {
+            Task.Backgroundable(ctx.androidFacet.module.project, "Executing DSL", false) {
         override fun run(progressIndicator: ProgressIndicator) {
-            progressIndicator.setIndeterminate(true)
+            progressIndicator.isIndeterminate = true
             synchronized (ROBOWRAPPER_LOCK) {
                 try {
                     val context = ZMQ.context(1)
                     val requester = context.socket(ZMQ.REQ)
-                    requester.setSendTimeOut(1000)
-                    requester.setReceiveTimeOut(20000)
+                    requester.sendTimeOut = 1000
+                    requester.receiveTimeOut = 20000
                     requester.connect("tcp://localhost:" + myPort)
 
                     requester.send(ctx.activityClassName.toByteArray("UTF-8"), 0)
@@ -232,10 +229,10 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
     private inner class DependencyDownloadTask(
             private val ctx: RobowrapperContext,
             private val dependencies: List<Dependency>
-    ) : Task.Backgroundable(ctx.androidFacet.getModule().getProject(), "Downloading dependencies", false) {
+    ) : Task.Backgroundable(ctx.androidFacet.module.project, "Downloading dependencies", false) {
 
         override fun run(progressIndicator: ProgressIndicator) {
-            progressIndicator.setIndeterminate(true)
+            progressIndicator.isIndeterminate = true
 
             fun reportDownloadError(url: String) {
                 ApplicationManager.getApplication().invokeLater(object : Runnable {

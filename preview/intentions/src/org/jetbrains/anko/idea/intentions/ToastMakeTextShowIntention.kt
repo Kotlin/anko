@@ -16,42 +16,9 @@
 
 package org.jetbrains.anko.idea.intentions
 
-import com.intellij.openapi.editor.Editor
-import com.intellij.psi.PsiDocumentManager
-import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiWhiteSpace
-import org.jetbrains.kotlin.analyzer.analyzeInContext
-import org.jetbrains.kotlin.descriptors.*
-import org.jetbrains.kotlin.descriptors.impl.LocalVariableDescriptor
-import org.jetbrains.kotlin.idea.caches.resolve.analyze
-import org.jetbrains.kotlin.idea.caches.resolve.getResolutionFacade
-import org.jetbrains.kotlin.idea.core.replaced
-import org.jetbrains.kotlin.idea.intentions.JetSelfTargetingIntention
-import org.jetbrains.kotlin.idea.intentions.description
-import org.jetbrains.kotlin.idea.quickfix.ReplaceWithAnnotationAnalyzer
-import org.jetbrains.kotlin.idea.quickfix.moveCaret
-import org.jetbrains.kotlin.idea.util.ImportInsertHelper
-import org.jetbrains.kotlin.j2k.getContainingMethod
-import org.jetbrains.kotlin.name.FqName
-import org.jetbrains.kotlin.name.FqNameUnsafe
-import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.psi.*
-import org.jetbrains.kotlin.psi.psiUtil.startOffset
-import org.jetbrains.kotlin.resolve.BindingContext
-import org.jetbrains.kotlin.resolve.DescriptorToSourceUtils
-import org.jetbrains.kotlin.resolve.DescriptorUtils
-import org.jetbrains.kotlin.resolve.FunctionDescriptorUtil
-import org.jetbrains.kotlin.resolve.calls.callUtil.getResolvedCall
-import org.jetbrains.kotlin.resolve.descriptorUtil.getSuperClassNotAny
-import org.jetbrains.kotlin.resolve.descriptorUtil.getSuperClassOrAny
-import org.jetbrains.kotlin.resolve.scopes.*
-import org.jetbrains.kotlin.resolve.scopes.receivers.ClassReceiver
-import org.jetbrains.kotlin.types.lowerIfFlexible
-import org.jetbrains.kotlin.utils.Printer
-import org.jetbrains.kotlin.utils.addToStdlib.firstIsInstanceOrNull
-import kotlin.properties.Delegates
 
-public class ToastMakeTextShowIntention : AnkoIntention<JetExpression>(javaClass(), "Simplify Toast.makeText().show() with Anko") {
+public class ToastMakeTextShowIntention : AnkoIntention<JetExpression>(JetExpression::class.java, "Simplify Toast.makeText().show() with Anko") {
 
     override fun isApplicableTo(element: JetExpression, caretOffset: Int): Boolean {
         return element.require<JetDotQualifiedExpression> {
@@ -66,7 +33,7 @@ public class ToastMakeTextShowIntention : AnkoIntention<JetExpression>(javaClass
     }
 
     private fun JetCallExpression.isLongToast(): Boolean? {
-        return when (getValueArguments()[2].getText()) {
+        return when (valueArguments[2].getText()) {
             "Toast.LENGTH_SHORT", "LENGTH_SHORT" -> false
             "Toast.LENGTH_LONG", "LENGTH_LONG" -> true
             else -> null
@@ -77,7 +44,7 @@ public class ToastMakeTextShowIntention : AnkoIntention<JetExpression>(javaClass
         element.require<JetDotQualifiedExpression> {
             receiver.require<JetDotQualifiedExpression> {
                 selector.requireCall("makeText") {
-                    val args = getValueArguments()
+                    val args = valueArguments
                     val ctxArg = args[0].text
                     val textArg = args[1].text
 

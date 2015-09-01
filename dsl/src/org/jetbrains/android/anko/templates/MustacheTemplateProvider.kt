@@ -23,7 +23,7 @@ import java.io.File
 public class MustacheTemplateProvider(private val baseDir: File) : TemplateProvider {
     private val templateCache = hashMapOf<String, Template>()
 
-    override fun render(templateName: String, args: Map<String, Any>): String {
+    override fun render(templateName: String, args: Map<String, Any?>): String {
         return getTemplate(templateName).execute(args)
     }
 

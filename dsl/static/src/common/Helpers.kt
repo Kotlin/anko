@@ -16,17 +16,10 @@
 
 package org.jetbrains.anko
 
-import android.content.Context
-import android.view.ViewGroup
-import android.view.ViewManager
-import android.view.View
 import android.app.Activity
 import android.app.Fragment
-import android.content.res.Configuration
-import org.jetbrains.anko.custom.addView
+import android.content.Context
 import org.jetbrains.anko.internals.AnkoInternals
-import org.jetbrains.anko.internals.noBinding
-import java.util.HashMap
 
 public class AnkoException(message: String = "") : RuntimeException(message)
 
@@ -123,7 +116,7 @@ public inline fun <T: Any> Fragment.configuration(
         smallestWidth: Int? = null,
         init: () -> T
 ): T? {
-    val act = getActivity()
+    val act = activity
     return if (act != null) {
         if (AnkoInternals.testConfiguration(act, screenSize, density, language, orientation, long,
                 fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null

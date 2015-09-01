@@ -16,25 +16,24 @@
 
 package org.jetbrains.android.anko.functional
 
-import org.jetbrains.android.anko.*
+import org.jetbrains.android.anko.ClassProcessor
+import org.jetbrains.android.anko.DSLGenerator
+import org.jetbrains.android.anko.TestAnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.utils.JarFileFilter
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import java.io.File
-import java.io.FileFilter
 import java.io.FileWriter
-import java.io.IOException
-import java.util.ArrayList
-import java.util.Arrays
-import org.junit.Assert.*
-import org.junit.Test
 
 public abstract class AbstractFunctionalTest {
     protected fun loadOrCreate(file: File, data: String): String {
         try {
             return file.readText()
         } catch (e: Exception) {
-            val parentDir = file.getParentFile()
+            val parentDir = file.parentFile
             if (!parentDir.exists()) parentDir.mkdirs()
 
             file.createNewFile()
@@ -88,7 +87,7 @@ public abstract class AbstractFunctionalTest {
         config.settings()
 
         val versionDir = File("workdir/original", version)
-        val jarFiles = versionDir.listFiles(JarFileFilter()).map { it.getAbsolutePath() }
+        val jarFiles = versionDir.listFiles(JarFileFilter()).map { it.absolutePath }
         runFunctionalTest(jarFiles, testDataFile, subsystem, config)
     }
 

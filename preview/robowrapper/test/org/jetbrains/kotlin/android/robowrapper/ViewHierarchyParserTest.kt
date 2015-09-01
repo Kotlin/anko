@@ -42,14 +42,14 @@ public class ViewHierarchyParserTest() {
 
   Test
   public fun testGetViewHierarchy() {
-    val a = Robolectric.setupActivity(javaClass<Activity>())
+    val a = Robolectric.setupActivity(Activity::class.java)
 
     val frameLayout = FrameLayout(a)
     val linearLayout = LinearLayout(a)
     val textView = TextView(a)
     textView.setPadding(10, 20, 30, 40)
     val button = Button(a)
-    button.setText("Button text")
+    button.text = "Button text"
 
     linearLayout.addView(textView)
     linearLayout.addView(button)
@@ -84,7 +84,7 @@ public class ViewHierarchyParserTest() {
 
   Test
   public fun testLayoutParams() {
-    val a = Robolectric.setupActivity(javaClass<Activity>())
+    val a = Robolectric.setupActivity(Activity::class.java)
 
     val linearLayout = LinearLayout(a)
     val textView = TextView(a)
@@ -112,7 +112,7 @@ public class ViewHierarchyParserTest() {
 
   Test
   public fun testSpecialProperty() {
-    val a = Robolectric.setupActivity(javaClass<Activity>())
+    val a = Robolectric.setupActivity(Activity::class.java)
 
     val textView = TextView(a)
     val imageView = ImageView(a)
@@ -127,7 +127,7 @@ public class ViewHierarchyParserTest() {
 
   Test
   public fun testXmlName() {
-    val a = Robolectric.setupActivity(javaClass<Activity>())
+    val a = Robolectric.setupActivity(Activity::class.java)
 
     val linearLayout = LinearLayout(a)
     val view = View(a)
@@ -142,29 +142,29 @@ public class ViewHierarchyParserTest() {
 
   Test
   public fun testStyleableNames() {
-    Robolectric.setupActivity(javaClass<Activity>())
+    Robolectric.setupActivity(Activity::class.java)
 
-    assertEquals(listOf("TextView"), javaClass<TextView>().getStyleableNames())
-    assertEquals(listOf("View"), javaClass<View>().getStyleableNames())
-    assertEquals(listOf("ViewGroup"), javaClass<ViewGroup>().getStyleableNames())
+    assertEquals(listOf("TextView"), TextView::class.java.getStyleableNames())
+    assertEquals(listOf("View"), View::class.java.getStyleableNames())
+    assertEquals(listOf("ViewGroup"), ViewGroup::class.java.getStyleableNames())
     assertEquals(listOf("LinearLayout_Layout"),
-      javaClass<LinearLayout.LayoutParams>().getStyleableNames())
+      LinearLayout.LayoutParams::class.java.getStyleableNames())
     assertEquals(listOf("ViewGroup_Layout", "ViewGroup_MarginLayout"),
-      javaClass<ViewGroup.LayoutParams>().getStyleableNames())
+      ViewGroup.LayoutParams::class.java.getStyleableNames())
   }
 
   Test
   public fun testUnwrapClass() {
-    Robolectric.setupActivity(javaClass<Activity>())
+    Robolectric.setupActivity(Activity::class.java)
 
     assertEquals("android.widget.LinearLayout",
-      unwrapClass(javaClass<_LinearLayout>()).getName())
+      unwrapClass(_LinearLayout::class.java).name)
 
     assertEquals("org.jetbrains.kotlin.android.robowrapper._NonWrapper1Class",
-      unwrapClass(javaClass<_NonWrapper1Class>()).getName())
+      unwrapClass(_NonWrapper1Class::class.java).name)
 
     assertEquals("org.jetbrains.kotlin.android.robowrapper._NonWrapper2Class",
-      unwrapClass(javaClass<_NonWrapper2Class>()).getName())
+      unwrapClass(_NonWrapper2Class::class.java).name)
   }
 
   private fun Set<Pair<String, Pair<Attr?, Any>>>.fetch(name: String): Pair<String, Pair<Attr?, Any>> {

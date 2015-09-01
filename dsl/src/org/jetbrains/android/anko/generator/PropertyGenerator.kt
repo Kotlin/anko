@@ -30,7 +30,7 @@ class PropertyGenerator : Generator<PropertyElement> {
                             !config.excludedProperties.contains(it.clazz.fqName + "#" + it.method.name) &&
                             !config.excludedProperties.contains(it.clazz.fqName + "#*")
                 }
-                .sortBy { it.identifier }
+                .sortedBy { it.identifier }
 
         val propertySetters = availableMethods
                 .filter { it.clazz.isView && it.method.isNonListenerSetter() && !it.method.isOverridden }

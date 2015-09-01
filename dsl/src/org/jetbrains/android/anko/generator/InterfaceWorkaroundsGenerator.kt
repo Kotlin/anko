@@ -24,7 +24,7 @@ class InterfaceWorkaroundsGenerator : Generator<InterfaceWorkaroundElement> {
 
     override fun generate(state: GenerationState): Iterable<InterfaceWorkaroundElement> {
         return state.availableClasses.filter {
-            it.isPublic && it.innerClasses != null && it.fields != null && it.fields.notEmpty &&
+            it.isPublic && it.innerClasses != null && it.fields != null && it.fields.isNotEmpty() &&
                     it.innerClasses.any { inner -> inner.isProtected && inner.isInterface && inner.name == it.name }
         }.map {
             // We're looking for a public ancestor for this interface, but the ancestor also may be protected inner one

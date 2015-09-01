@@ -25,16 +25,16 @@ import org.jetbrains.android.anko.generator.ViewGroupGenerator
 import org.jetbrains.android.anko.utils.buffer
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
-import java.util.Arrays
+import java.util.*
 
 public class ViewRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
     override fun processElements(state: GenerationState) =
-            renderViews(state[javaClass<ViewGenerator>()]) { it.fqName }
+            renderViews(state[ViewGenerator::class.java]) { it.fqName }
 }
 
 public class ViewGroupRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
     override fun processElements(state: GenerationState) =
-            renderViews(state[javaClass<ViewGroupGenerator>()]) { "_" + it.simpleName + it.supportSuffix }
+            renderViews(state[ViewGroupGenerator::class.java]) { "_" + it.simpleName + it.supportSuffix }
 }
 
 private abstract class AbstractViewRenderer(

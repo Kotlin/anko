@@ -18,7 +18,6 @@ package org.jetbrains.android.anko.robolectric
 
 import org.jetbrains.android.anko.compile.CompileTestFixture
 import java.io.File
-import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 
 public abstract class AbstractRobolectricTest : CompileTestFixture() {
 

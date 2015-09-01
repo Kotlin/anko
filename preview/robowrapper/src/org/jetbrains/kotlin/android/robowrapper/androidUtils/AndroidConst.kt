@@ -16,12 +16,12 @@
 
 package org.jetbrains.kotlin.android.robowrapper
 
-import android.view.Gravity
-import java.util.regex.Pattern
 import com.google.gson.Gson
-import org.jetbrains.kotlin.android.attrs.*
+import org.jetbrains.kotlin.android.attrs.Attrs
+import org.jetbrains.kotlin.android.attrs.readResource
+import java.util.regex.Pattern
 
-private val XML_HEADER = """<?xml version="1.0" encoding="utf-8"?>"""+"\n\n"
+private val XML_HEADER = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\n"
 private val XML_SCHEMA = """ xmlns:android="http://schemas.android.com/apk/res/android" """
 
 /*
@@ -41,7 +41,7 @@ private val defaultValues = readResource("default_values.txt")
     hmap
 }
 
-private val attrs = Gson().fromJson(readResource("attrs.json"), javaClass<Attrs>())
+private val attrs = Gson().fromJson(readResource("attrs.json"), Attrs::class.java)
 
 private val ignoredMethods = setOf(
         "getX", "getY", "getInputType", "getTextScaleX", "getTextScaleY",

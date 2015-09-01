@@ -18,7 +18,6 @@ package org.jetbrains.android.anko.annotations
 
 import java.io.File
 import java.util.zip.ZipFile
-import kotlin.properties.Delegates
 
 public enum class ExternalAnnotation {
     NotNull,
@@ -36,7 +35,7 @@ public interface BulkAnnotationProvider : AnnotationProvider {
 }
 
 public class ZipFileAnnotationProvider(val zipFile: File) : AnnotationProvider {
-    private val archive: ZipFile by Delegates.lazy { ZipFile(zipFile) }
+    private val archive: ZipFile by lazy { ZipFile(zipFile) }
 
     override fun getExternalAnnotations(packageName: String): Map<String, Set<ExternalAnnotation>> {
         val entryName = packageName.replace('.', '/') + "/annotations.xml"

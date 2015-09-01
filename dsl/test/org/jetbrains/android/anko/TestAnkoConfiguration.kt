@@ -19,8 +19,6 @@ package org.jetbrains.android.anko
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.DefaultAnkoConfiguration
 import java.io.File
-import java.io.IOException
-import java.util.HashMap
 
 public open class TestAnkoConfiguration(version: String) : DefaultAnkoConfiguration(version = version) {
     public val tmpFiles: Map<AnkoFile, File> =
