@@ -112,11 +112,21 @@ public fun <T: Any> Cursor.parseList(parser: MapRowParser<T>): List<T> = AnkoInt
     return list
 }
 
+@deprecated("Use asSequence() instead", ReplaceWith("asSequence()"))
 public fun Cursor.sequence(): Sequence<Array<Any>> {
     return CursorSequence(this)
 }
 
+@deprecated("Use asMapSequence() instead", ReplaceWith("asMapSequence()"))
 public fun Cursor.mapSequence(): Sequence<Map<String, Any>> {
+    return CursorMapSequence(this)
+}
+
+public fun Cursor.asSequence(): Sequence<Array<Any>> {
+    return CursorSequence(this)
+}
+
+public fun Cursor.asMapSequence(): Sequence<Map<String, Any>> {
     return CursorMapSequence(this)
 }
 
