@@ -16,6 +16,11 @@
 
 package org.jetbrains.anko.collections
 
+import android.util.SparseArray
+import android.util.SparseBooleanArray
+import android.util.SparseIntArray
+import java.util.*
+
 inline fun <T> Array<T>.forEachByIndex(f: (T) -> Unit) {
     val lastIndex = size() - 1
     for (i in 0..lastIndex) {
@@ -43,5 +48,59 @@ inline fun <T> Array<T>.forEachReversedWithIndex(f: (Int, T) -> Unit) {
     while (i >= 0) {
         f(i, get(i))
         i--
+    }
+}
+
+fun <T> SparseArray<T>.asSequence(): Sequence<T> = SparseArraySequence(this)
+
+fun <T> SparseBooleanArray.asSequence(): Sequence<Boolean> = SparseBooleanArraySequence(this)
+
+fun <T> SparseIntArray.asSequence(): Sequence<Int> = SparseIntArraySequence(this)
+
+private class SparseArraySequence<T>(private val a: SparseArray<T>) : Sequence<T> {
+    override fun iterator() = SparseArrayIterator()
+
+    private inner class SparseArrayIterator : Iterator<T> {
+        private var index = 0
+        private val size = a.size()
+
+        override fun hasNext() = size > index
+
+        override fun next(): T {
+            if (a.size() != size) throw ConcurrentModificationException()
+            return a.get(index++)
+        }
+    }
+}
+
+private class SparseBooleanArraySequence(private val a: SparseBooleanArray) : Sequence<Boolean> {
+    override fun iterator() = SparseIntArrayIterator()
+
+    private inner class SparseIntArrayIterator : Iterator<Boolean> {
+        private var index = 0
+        private val size = a.size()
+
+        override fun hasNext() = size > index
+
+        override fun next(): Boolean {
+            if (a.size() != size) throw ConcurrentModificationException()
+            return a.get(index++)
+        }
+    }
+}
+
+private class SparseIntArraySequence(private val a: SparseIntArray) : Sequence<Int> {
+    override fun iterator() = SparseIntArrayIterator()
+
+    private inner class SparseIntArrayIterator : Iterator<Int> {
+        private var index = 0
+        private val size = a.size()
+
+        override fun hasNext() = size > index
+
+        override fun next(): Int {
+            if (a.size() != size) throw ConcurrentModificationException()
+            return a.get(index++)
+        }
     }
 }
