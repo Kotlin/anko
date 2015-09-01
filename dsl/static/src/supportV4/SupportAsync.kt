@@ -17,8 +17,13 @@
 package org.jetbrains.anko
 
 import android.support.v4.app.Fragment
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Future
+
+public fun <T: Fragment> AnkoAsyncContext<T>.supportFragmentUiThread(f: (T) -> Unit) {
+    val fragment = weakRef.get() ?: return
+    if (fragment.isDetached) return
+    val activity = fragment.getActivity() ?: return
+    activity.runOnUiThread { f(fragment) }
+}
 
 @deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
 public inline fun Fragment.uiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
@@ -27,15 +32,4 @@ public inline fun Fragment.uiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN
 
 public inline fun Fragment.onUiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
     activity.onUiThread { f() }
-}
-
-public fun Fragment.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> = activity.async(task)
-
-public fun Fragment.async(executorService: ExecutorService, task: AnkoAsyncContext.() -> Unit): Future<Unit> =
-        activity.async(executorService, task)
-
-public fun <T> Fragment.asyncResult(task: () -> T): Future<T> = activity.asyncResult(task)
-
-public fun <T> Fragment.asyncResult(executorService: ExecutorService, task: () -> T): Future<T> {
-    return activity.asyncResult(executorService, task)
 }

@@ -13,4 +13,8 @@ public class Fragment {
 
     }
 
+    public boolean isDetached() {
+        return false;
+    }
+
 }

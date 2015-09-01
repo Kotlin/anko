@@ -16,6 +16,7 @@
 
 package org.jetbrains.anko
 
+import android.app.Activity
 import android.app.Fragment
 import android.content.Context
 import android.os.Handler
@@ -25,12 +26,6 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
-
-public class AnkoAsyncContext(val ctxReference: WeakReference<Context>)
-
-public fun AnkoAsyncContext.uiThread(f: Context.() -> Unit) {
-    ctxReference.get()?.onUiThread(f)
-}
 
 @deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
 public noBinding fun Context.uiThread(f: Context.() -> Unit) {
@@ -51,38 +46,48 @@ public inline noBinding fun Fragment.onUiThread(inlineOptions(InlineOption.ONLY_
     activity?.onUiThread { f() }
 }
 
-public fun Fragment.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> {
-    return activity.async(task)
+public class AnkoAsyncContext<T>(val weakRef: WeakReference<T>)
+
+public fun <T> AnkoAsyncContext<T>.uiThread(f: (T) -> Unit) {
+    val ref = weakRef.get() ?: return
+    if (ContextHelper.mainThread == Thread.currentThread()) {
+        f(ref)
+    } else {
+        ContextHelper.handler.post { f(ref) }
+    }
 }
 
-public fun Fragment.async(executorService: ExecutorService, task: AnkoAsyncContext.() -> Unit): Future<Unit> {
-    return activity.async(executorService, task)
+public fun <T: Activity> AnkoAsyncContext<T>.activityUiThread(f: (T) -> Unit) {
+    val activity = weakRef.get() ?: return
+    if (activity.isFinishing) return
+    activity.runOnUiThread { f(activity) }
 }
 
-public fun Context.async(task: AnkoAsyncContext.() -> Unit): Future<Unit> {
+public fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThread(f: (T) -> Unit) {
+    val fragment = weakRef.get() ?: return
+    if (fragment.isDetached) return
+    val activity = fragment.getActivity() ?: return
+    activity.runOnUiThread { f(fragment) }
+}
+
+public fun <T> T.async(task: AnkoAsyncContext<T>.() -> Unit): Future<Unit> {
     val context = AnkoAsyncContext(WeakReference(this))
     return BackgroundExecutor.submit { context.task() }
 }
 
-public fun Context.async(executorService: ExecutorService, task: AnkoAsyncContext.() -> Unit): Future<Unit> {
+public fun <T> T.async(executorService: ExecutorService, task: AnkoAsyncContext<T>.() -> Unit): Future<Unit> {
     val context = AnkoAsyncContext(WeakReference(this))
     return executorService.submit<Unit> { context.task() }
 }
 
-public fun <T> Fragment.asyncResult(task: () -> T): Future<T> {
-    return activity.asyncResult(task)
+public fun <T, R> T.asyncResult(task: AnkoAsyncContext<T>.() -> R): Future<R> {
+    val context = AnkoAsyncContext(WeakReference(this))
+    return BackgroundExecutor.submit { context.task() }
 }
 
-public fun <T> Fragment.asyncResult(executorService: ExecutorService, task: () -> T): Future<T> {
-    return executorService.submit(task)
-}
-
-public fun <T> Context.asyncResult(task: () -> T): Future<T> {
-    return BackgroundExecutor.submit(task)
-}
-
-public fun <T> Context.asyncResult(executorService: ExecutorService, task: () -> T): Future<T> {
-    return executorService.submit(task)
+public fun <T, R> T.asyncResult(executorService: ExecutorService, task: AnkoAsyncContext<T>.() -> R): Future<R> {
+    val context = AnkoAsyncContext(WeakReference(this))
+    return executorService.submit<R> { context.task() }
 }
 
 object BackgroundExecutor {
