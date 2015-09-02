@@ -3,7 +3,7 @@ Building Anko
 
 Required tools:
 
-* JDK 1.6
+* JDK 1.7
 * Android SDK (with platforms 15, 19, 21 installed)
 * IntelliJ IDEA 14.0+
 * Maven
@@ -17,7 +17,7 @@ Required tools:
 git clone git://github.com/JetBrains/anko.git && cd anko
 ```
 
-**2.** Then get all required dependencies (this could take several minutes):
+**2.** Then get all required dependencies (this usually takes several minutes):
 
 ```bash
 ant -f update_dependencies.xml
@@ -36,6 +36,6 @@ Execute a run configuration named `Collect android.jar` and then `Generate`.
 </tr>
 </table>
 
-**4.** After doing this a number of directories with generated sources must be present in `workdir/gen` directory.
+**4.** After doing this a number of directories with generated sources should be present in `workdir/gen` directory.
 
-**5.** You can build them all together by launching `build_artifacts.xml` Ant script. Script creates a zip file with artifact for each Android SDK version in `workdir/gen/zip` directory.
+**5.** You can build them all together by launching `build_artifacts.xml` Ant script. This script creates a zip file with an artifact for each Android SDK version in `workdir/gen/zip` directory.

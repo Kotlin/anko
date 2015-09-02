@@ -276,7 +276,7 @@ update("User", "name" to "Alice")
 
 ## Transactions
 
-There's a special function `transaction()` which allows you to enclose some operations in a single SQLite transaction.
+There is a special function called `transaction()` which allows you to enclose several database operations in a single SQLite transaction.
 
 ```kotlin
 transaction {
