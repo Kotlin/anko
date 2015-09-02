@@ -21,22 +21,25 @@ import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 import org.jetbrains.android.anko.utils.JarFileFilter
 import java.io.File
 
-fun main(args: Array<String>) {
-    if (args.isNotEmpty()) {
-        args.forEach { taskName ->
-            println(":: $taskName")
-            when (taskName) {
-                "gen", "generate" -> gen()
-                "clean" -> clean()
-                "versions" -> versions()
-                else -> {
-                    println("Invalid task $taskName")
-                    return
+public object Launcher {
+    @jvmStatic
+    fun main(args: Array<String>) {
+        if (args.isNotEmpty()) {
+            args.forEach { taskName ->
+                println(":: $taskName")
+                when (taskName) {
+                    "gen", "generate" -> gen()
+                    "clean" -> clean()
+                    "versions" -> versions()
+                    else -> {
+                        println("Invalid task $taskName")
+                        return
+                    }
                 }
             }
-        }
-        println("Done.")
-    } else gen()
+            println("Done.")
+        } else gen()
+    }
 }
 
 private fun clean() {

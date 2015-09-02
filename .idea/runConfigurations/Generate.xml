@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Generate" type="Application" factoryName="Application">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-    <option name="MAIN_CLASS_NAME" value="org.jetbrains.android.anko.AnkoPackage" />
+    <option name="MAIN_CLASS_NAME" value="org.jetbrains.android.anko.Launcher" />
     <option name="VM_PARAMETERS" value="-Xmx1024M" />
     <option name="PROGRAM_PARAMETERS" value="clean versions gen" />
     <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
