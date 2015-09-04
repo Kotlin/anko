@@ -22,6 +22,7 @@ import org.jetbrains.android.anko.render.RenderFacade
 import java.io.File
 
 class DSLGenerator(
+    val sourceDirectory: File,
     val platformJars: List<File>,
     val versionJars: List<File>,
     val config: AnkoConfiguration,
@@ -55,7 +56,7 @@ class DSLGenerator(
             }
 
             val artifactVersion = config.version
-            val sdkVersion = config.version.substringBefore('-')
+            val sdkVersion = File(sourceDirectory, "version.txt").readText()
 
             // Write manifest
             val manifest = mvnManifest.replace("%SDK_VERSION", sdkVersion)

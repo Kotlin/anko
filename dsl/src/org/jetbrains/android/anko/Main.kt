@@ -47,7 +47,7 @@ private fun clean() {
 }
 
 private fun versions() {
-    for (version in getVersions()) {
+    for (version in getVersionDirs()) {
         val (platformJars, versionJars) = getJars(version)
         println("${version.getName()}")
         (platformJars + versionJars).forEach { println("  ${it.name}") }
@@ -65,7 +65,7 @@ private fun deleteDirectory(f: File) {
     }
 }
 
-private fun getVersions(): Array<File> {
+private fun getVersionDirs(): Array<File> {
     val original = File("workdir/original/")
     if (!original.exists() || !original.isDirectory()) {
         throw RuntimeException("\"workdir/original\" directory does not exist.")
@@ -76,9 +76,9 @@ private fun getVersions(): Array<File> {
 private fun getJars(version: File) = version.listFiles(JarFileFilter()).partition { it.name.startsWith("platform.") }
 
 private fun gen() {
-    for (version in getVersions()) {
-        val (platformJars, versionJars) = getJars(version)
-        val versionName = version.name
+    for (versionDir in getVersionDirs()) {
+        val (platformJars, versionJars) = getJars(versionDir)
+        val versionName = versionDir.name
 
         if (platformJars.isNotEmpty()) {
             println("Processing version $versionName")
@@ -91,7 +91,8 @@ private fun gen() {
                 fileOutputDirectory.mkdirs()
             }
 
-            DSLGenerator(platformJars, versionJars, DefaultAnkoConfiguration(outputDirectory, versionName)).run()
+            DSLGenerator(versionDir, platformJars, versionJars,
+                    DefaultAnkoConfiguration(outputDirectory, versionName)).run()
         }
     }
 }

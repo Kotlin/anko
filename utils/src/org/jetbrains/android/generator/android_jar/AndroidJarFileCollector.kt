@@ -33,6 +33,10 @@ class AndroidJarCollector {
                                                 "gridlayout-v7",
                                                 "recyclerview-v7")
 
+        private val LIBRARY_DEPENDENCIES = mapOf(
+                "appcompat-v7" to listOf("support-v4"),
+                "recyclerview-v7" to listOf("support-v4", "appcompat-v7"))
+
         private val ORIGINAL_DIR = File("workdir/original")
         private val ANDROID_SDK = File("lib/android-sdk")
         private val PLATFORMS_DIR = File(ANDROID_SDK, "platforms")
@@ -52,11 +56,14 @@ class AndroidJarCollector {
         createDirs()
 
         val supportFiles = findSupportFiles()
-        val supportFilesWithDependencies = supportFiles.map {
-            if (it.name.startsWith("appcompat-v7-"))
-                setOf(SupportFile(it, false), SupportFile(supportFiles.first { it.name.startsWith("support-v4-") }, true))
-            else
-                setOf(SupportFile(it, false))
+        val supportFilesWithDependencies = supportFiles.map { supportFile ->
+            val dependencies = LIBRARY_DEPENDENCIES.entrySet()
+                    .firstOrNull { supportFile.name.startsWith(it.key) }?.getValue()
+                    ?.mapTo(hashSetOf()) { name -> SupportFile(supportFiles.first { it.name.startsWith(name) }, true) }
+                    ?: hashSetOf<SupportFile>()
+
+            dependencies += SupportFile(supportFile, false)
+            dependencies as Set<SupportFile>
         }
 
         for ((index, version) in REQUIRED_PLATFORM_VERSIONS.sortedByDescending { it }.withIndex()) {
@@ -92,6 +99,8 @@ class AndroidJarCollector {
 
         val androidJar = getAndroidJar(platformDir)
         androidJar.copyTo(File(versionDir, PLATFORM_PREFIX + androidJar.name))
+
+        File(versionDir, "version.txt").writeText(versionNumber.toString())
 
         if (toolkit) {
             toolkitFiles.forEach {
@@ -146,7 +155,7 @@ class AndroidJarCollector {
     }
 
     private fun createDirs() {
-        REQUIRED_PLATFORM_VERSIONS.forEach { File("workdir/original/$it/").mkdirs() }
+        File("workdir/original").mkdirs()
         File("workdir/temp").mkdirs()
     }
 

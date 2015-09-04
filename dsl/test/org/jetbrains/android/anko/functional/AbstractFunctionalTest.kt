@@ -45,14 +45,15 @@ public abstract class AbstractFunctionalTest {
         }
     }
 
-    protected fun runFunctionalTest(inputJarFileNames: List<String>,
+    protected fun runFunctionalTest(versionDir: File,
+                                    inputJarFileNames: List<String>,
                                     testDataFile: String,
                                     subsystem: AnkoFile,
                                     config: TestAnkoConfiguration) {
         val (platformJars, versionJars) = inputJarFileNames.map { File(it) }.partition { it.name.startsWith("platform.") }
         var classTree = ClassProcessor(platformJars, versionJars).genClassTree()
 
-        val generator = DSLGenerator(platformJars, versionJars, config, classTree)
+        val generator = DSLGenerator(versionDir, platformJars, versionJars, config, classTree)
         generator.run()
 
         fun String.trimBlank() = trim('\n', '\t', ' ', '\r')
@@ -88,7 +89,7 @@ public abstract class AbstractFunctionalTest {
 
         val versionDir = File("workdir/original", version)
         val jarFiles = versionDir.listFiles(JarFileFilter()).map { it.absolutePath }
-        runFunctionalTest(jarFiles, testDataFile, subsystem, config)
+        runFunctionalTest(versionDir, jarFiles, testDataFile, subsystem, config)
     }
 
 }
