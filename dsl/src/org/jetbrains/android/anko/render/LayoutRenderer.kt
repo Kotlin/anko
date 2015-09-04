@@ -30,6 +30,7 @@ class LayoutRenderer(config: AnkoConfiguration) : Renderer(config), ViewConstruc
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.LAYOUTS)
 
     override fun processElements(state: GenerationState) = StringBuilder {
+        append("private val defaultInit: Any.() -> Unit = {}").appendln().appendln()
         state[LayoutGenerator::class.java].forEach { append(renderLayout(it)) }
     }.toString()
 

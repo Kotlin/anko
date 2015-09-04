@@ -25,8 +25,6 @@ import android.view.ViewManager
 import org.jetbrains.anko.custom.addView
 import org.jetbrains.anko.internals.noBinding
 
-private val defaultInit: Any.() -> Unit = {}
-
 public fun <T : View> T.style(style: (View) -> Unit): T {
     applyStyle(this, style)
     return this
