@@ -74,7 +74,7 @@ fun MethodNodeWithClass.processArguments(
                     if (method.signature != null) genericArgs[argNum] else argType, explicitNotNull))
         }
         argNum++
-        nameIndex += arg.getSize()
+        nameIndex += arg.size
     }
 
     if ( buffer.length() >= 2) buffer.delete(buffer.length() - 2, buffer.length())
@@ -121,14 +121,15 @@ fun MethodNode.isGetter(): Boolean {
 
 fun MethodNode.isNonListenerSetter(): Boolean {
     val isSetter = name.startsWith("set") && name.length() > 3 && Character.isUpperCase(name.charAt(3))
-    return isSetter && !(isListenerSetter || name.endsWith("Listener")) && args.size() == 1 && isPublic
+    return isSetter && !(isListenerSetter() || name.endsWith("Listener")) && args.size() == 1 && isPublic
 }
 
 val MethodNode.isConstructor: Boolean
     get() = name == "<init>"
 
-val MethodNode.isListenerSetter: Boolean
-    get() = (name.startsWith("setOn") || name.startsWith("add")) && name.endsWith("Listener")
+fun MethodNode.isListenerSetter(set: Boolean = true, add: Boolean = true): Boolean {
+    return ((set && name.startsWith("setOn")) || (add && name.startsWith("add"))) && name.endsWith("Listener")
+}
 
 val MethodNode.isPublic: Boolean
     get() = (access and Opcodes.ACC_PUBLIC) != 0

@@ -17,14 +17,31 @@
 package org.jetbrains.android.anko.generator
 
 import org.jetbrains.android.anko.*
+import org.objectweb.asm.tree.ClassNode
 
 class ListenerGenerator : Generator<ListenerElement> {
 
     override fun generate(state: GenerationState) = with (state) {
-        state.availableMethods
-                .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter }
+        val complexAddListeners = hashSetOf<Pair<ClassNode, String>>()
+
+        val addListeners = state.availableMethods
+                .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter(set = false) }
                 .map { makeListener(it) }
+
+        for (listener in addListeners) {
+            if (listener is ComplexListenerElement) {
+                complexAddListeners.add(Pair(listener.clazz, listener.name))
+            }
+        }
+
+        val setListeners = state.availableMethods
+                .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter(add = false) }
+                .map { makeListener(it) }
+                .filter { it !is ComplexListenerElement || Pair(it.clazz, it.name) !in complexAddListeners }
                 .sortedBy { it.setter.identifier }
+                .toArrayList()
+        
+        addListeners + setListeners
     }
 
     //suppose "setter" is a correct setOn*Listener method
@@ -41,7 +58,7 @@ class ListenerGenerator : Generator<ListenerElement> {
             1 -> { // It is a simple listener, with just one method
                 val method = methods!![0]
                 val methodWithClass = MethodNodeWithClass(listener, method)
-                val returnType = method.returnType.asString()
+                val returnType = method.returnType
                 SimpleListenerElement(setter, listener, ListenerMethod(methodWithClass, name, returnType))
             }
             0 -> // Something weird
@@ -50,7 +67,7 @@ class ListenerGenerator : Generator<ListenerElement> {
                 val listenerMethods = methods?.map { method ->
                     val methodName = method.name
                     val methodWithClass = MethodNodeWithClass(listener, method)
-                    val returnType = method.returnType.asString()
+                    val returnType = method.returnType
                     ListenerMethod(methodWithClass, methodName, returnType)
                 }!!
                 ComplexListenerElement(setter, listener, name, listenerMethods)
