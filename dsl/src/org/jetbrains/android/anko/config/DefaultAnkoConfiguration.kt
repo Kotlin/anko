@@ -24,7 +24,7 @@ import org.jetbrains.android.anko.templates.TemplateManager
 import java.io.File
 
 open class DefaultAnkoConfiguration(
-        outputDirectory: File = File("workdir/gen/"),
+        outputDirectory: File,
         override val version: String
 ) : AnkoConfiguration() {
 

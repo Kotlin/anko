@@ -39,7 +39,6 @@ class LayoutRenderer(config: AnkoConfiguration) : Renderer(config), ViewConstruc
             node.layout.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
         }
 
-        val initArgumentName = "${node.layout.simpleName.decapitalize()}Init"
         val layoutParamsClass = node.layoutParams.fqName
 
         return render("layout") {
@@ -51,10 +50,8 @@ class LayoutRenderer(config: AnkoConfiguration) : Renderer(config), ViewConstruc
 
             "functions" % seq(node.constructors) { item ->
                 val function = MethodNodeWithClass(node.layoutParams, item)
-
-                "args" % function.formatLayoutParamsArguments(config)
+                "params" % function.formatLayoutParamsArguments(config)
                 "substituted" % function.formatLayoutParamsArgumentsInvoke(config)
-                "initArgumentName" % initArgumentName
                 "layoutParamsClass" % layoutParamsClass
             }
         }

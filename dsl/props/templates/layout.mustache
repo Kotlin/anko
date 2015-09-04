@@ -1,8 +1,11 @@
 public open class {{name}}({{constructor}}): {{baseClass}}({{baseConstructor}}) {
 {{#functions}}
-    public fun <T: View> T.layoutParams({{args}}{{#args}}, {{/args}}{{initArgumentName}}: {{layoutParamsClass}}.() -> Unit = defaultInit): T {
+    public fun <T: View> T.layoutParams(
+            {{#params}}{{this}},
+            {{/params}}init: {{layoutParamsClass}}.() -> Unit = defaultInit
+    ): T {
         val layoutParams = {{layoutParamsClass}}({{substituted}})
-        layoutParams.{{initArgumentName}}()
+        layoutParams.init()
         this@layoutParams.layoutParams = layoutParams
         return this
     }

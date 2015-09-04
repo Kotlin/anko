@@ -43,9 +43,11 @@ class Writer(private val renderFacade: RenderFacade) {
             else -> config.version.toCamelCase('-')
         })
 
-        staticFilesDir.listFiles()?.forEach { file ->
-            if (file.isFile) {
-                file.copyTo(File(config.sourceOutputDirectory, file.name))
+        if (config.generateStaticFiles) {
+            staticFilesDir.listFiles()?.forEach { file ->
+                if (file.isFile) {
+                    file.copyTo(File(config.sourceOutputDirectory, file.name))
+                }
             }
         }
     }

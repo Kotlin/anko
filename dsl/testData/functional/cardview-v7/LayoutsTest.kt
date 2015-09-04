@@ -1,0 +1,1 @@
+private val defaultInit: Any.() -> Unit = {}

@@ -33,7 +33,6 @@ private fun Context.functionalDslTests(init: Buffer.(version: String) -> Unit) {
         if (!testFile.exists()) {
             testFile.writeText(buffer {
                 line("package $basePackage.functional\n")
-                line("import $basePackage.*")
                 line("import $basePackage.config.*")
                 line("import org.junit.Test\n")
                 line("public class FunctionalTestsFor$versionName : AbstractFunctionalTest() {")
@@ -70,14 +69,12 @@ private fun Context.dslCompileTests(files: List<String>, category: String) {
     if (!testFile.exists()) {
         testFile.writeText(buffer {
             line("package $basePackage.${category.toLowerCase()}\n").nl()
-            line("import $basePackage.*")
-            line("import $basePackage.compile.CompileTestFixture")
-            line("import org.junit.*\n")
-            line("import kotlin.platform.platformStatic").nl()
+            line("import org.junit.*\n").nl()
             line("public class Generated${category}Test : Abstract${category}Test() {")
             for (file in files) {
                 for (version in versions) {
-                    line("@Test public fun test${file}For$version() {")
+                    val funcSuffix = version.toCamelCase('-').capitalize()
+                    line("@Test public fun test${file}For$funcSuffix() {")
                     line("run${category}Test(\"$file.kt\", \"$version\")")
                     line("}").nl()
                 }

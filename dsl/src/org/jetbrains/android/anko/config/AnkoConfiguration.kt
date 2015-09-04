@@ -31,6 +31,8 @@ abstract class AnkoConfiguration {
     open val files: MutableSet<AnkoFile> = hashSetOf(*AnkoFile.values())
     open val tunes: MutableSet<ConfigurationTune> = hashSetOf(*ConfigurationTune.values())
 
+    open val generateStaticFiles: Boolean = true
+
     open var generateImports: Boolean = true
     open var generatePackage: Boolean = true
     open var generateMavenArtifact: Boolean = true
