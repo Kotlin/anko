@@ -49,17 +49,17 @@ public fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuild
         activity.alert(init)
 
 public fun Fragment.progressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
-    return activity.progressDialog(false, message, title, init)
+    return activity.progressDialog(message, title, init)
 }
 
 public fun Fragment.indeterminateProgressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
-    return activity.progressDialog(true, message, title, init)
+    return activity.indeterminateProgressDialog(message, title, init)
 }
 
 public fun Fragment.progressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
-    return activity.progressDialog(false, message?.let { activity.getString(it) }, title?.let { activity.getString(it) }, init)
+    return activity.progressDialog(message?.let { activity.getString(it) }, title?.let { activity.getString(it) }, init)
 }
 
 public fun Fragment.indeterminateProgressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
-    return activity.progressDialog(true, message?.let { activity.getString(it) }, title?.let { activity.getString(it) }, init)
+    return activity.indeterminateProgressDialog(message?.let { activity.getString(it) }, title?.let { activity.getString(it) }, init)
 }

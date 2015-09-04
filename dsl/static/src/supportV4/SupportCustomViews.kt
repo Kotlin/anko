@@ -18,6 +18,7 @@
 
 package org.jetbrains.anko
 
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.LinearLayout
@@ -37,8 +38,9 @@ public inline fun <T: View> Fragment.include(
         layoutId: Int,
         inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
 ): T = addView { ctx ->
+    val layoutInflater = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as android.view.LayoutInflater
     @suppress("UNCHECKED_CAST")
-    val view = ctx.layoutInflater.inflate(layoutId, null) as T
+    val view = layoutInflater.inflate(layoutId, null) as T
     view.init()
     view
 }
