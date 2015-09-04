@@ -25,15 +25,18 @@
             <fileset dir="workdir/zip" includes="*" />
         </delete>
 
-        <build_artifact version="21-common" artifact.name="common"/>
-        <build_artifact version="15"/>
-        <build_artifact version="19"/>
-        <build_artifact version="21"/>
-        <build_artifact version="21-support-v4"/>
-        <build_artifact version="21-appcompat-v7"/>
-        <build_artifact version="21-cardview-v7"/>
-        <build_artifact version="21-gridlayout-v7"/>
-        <build_artifact version="21-recyclerview-v7"/>
+        <build_artifact version="common"/>
+        <build_artifact version="sdk15"/>
+        <build_artifact version="sdk19"/>
+        <build_artifact version="sdk21"/>
+        <build_artifact version="sdk23"/>
+        <build_artifact version="support-v4"/>
+        <build_artifact version="appcompat-v7"/>
+        <build_artifact version="cardview-v7"/>
+        <build_artifact version="gridlayout-v7"/>
+        <build_artifact version="recyclerview-v7"/>
+        <build_artifact version="design"/>
+        <build_artifact version="percent"/>
     </target>
 
     <macrodef name="build_artifact">
