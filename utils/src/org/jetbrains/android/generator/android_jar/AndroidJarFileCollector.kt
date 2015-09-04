@@ -24,18 +24,23 @@ public fun main(args: Array<String>): Unit = AndroidJarCollector().collect()
 
 class AndroidJarCollector {
     private companion object {
-        private val REQUIRED_PLATFORM_VERSIONS = arrayOf(15, 19, 21)
+        private val REQUIRED_PLATFORM_VERSIONS = arrayOf(15, 19, 21, 23)
 
         private val SUPPORT_PACKAGES_VERSION = "22.2.0"
         private val SUPPORT_LIBRARIES = arrayOf("support-v4",
                                                 "appcompat-v7",
                                                 "cardview-v7",
                                                 "gridlayout-v7",
-                                                "recyclerview-v7")
+                                                "recyclerview-v7",
+                                                "design",
+                                                "percent")
 
         private val LIBRARY_DEPENDENCIES = mapOf(
+                "gridlayout-v7" to listOf("support-v4"),
                 "appcompat-v7" to listOf("support-v4"),
-                "recyclerview-v7" to listOf("support-v4", "appcompat-v7"))
+                "recyclerview-v7" to listOf("support-v4", "appcompat-v7"),
+                "design" to listOf("support-v4", "appcompat-v7"),
+                "percent" to listOf("support-v4"))
 
         private val ORIGINAL_DIR = File("workdir/original")
         private val ANDROID_SDK = File("lib/android-sdk")
