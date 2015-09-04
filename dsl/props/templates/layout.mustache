@@ -3,7 +3,7 @@ public open class {{name}}({{constructor}}): {{baseClass}}({{baseConstructor}}) 
     public fun <T: View> T.layoutParams({{args}}{{#args}}, {{/args}}{{initArgumentName}}: {{layoutParamsClass}}.() -> Unit = defaultInit): T {
         val layoutParams = {{layoutParamsClass}}({{substituted}})
         layoutParams.{{initArgumentName}}()
-        this@layoutParams.setLayoutParams(layoutParams)
+        this@layoutParams.layoutParams = layoutParams
         return this
     }
 
