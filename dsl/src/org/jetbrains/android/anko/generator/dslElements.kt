@@ -18,6 +18,7 @@ package org.jetbrains.android.anko.generator
 
 import org.jetbrains.android.anko.MethodNodeWithClass
 import org.jetbrains.android.anko.fqName
+import org.objectweb.asm.Type
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.InnerClassNode
 import org.objectweb.asm.tree.MethodNode
@@ -39,7 +40,7 @@ public data class InterfaceWorkaroundElement(val baseClass: ClassNode, val ances
 
 public class PropertyElement(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)
 
-public class ListenerMethod(val methodWithClass: MethodNodeWithClass, val name: String, val returnType: String)
+public class ListenerMethod(val methodWithClass: MethodNodeWithClass, val name: String, val returnType: Type)
 
 public abstract class ListenerElement(val setter: MethodNodeWithClass, val clazz: ClassNode)
 

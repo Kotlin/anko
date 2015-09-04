@@ -55,7 +55,7 @@ public class ListenerRenderer(config: AnkoConfiguration) : Renderer(config), Sup
         "receiver" % setter.clazz.fqNameWithTypeArguments
         "name" % method.name
         "args" % method.methodWithClass.formatArguments(config)
-        "returnType" % method.returnType
+        "returnType" % method.returnType.asString()
         "setter" % setter.method.name
     }
 
@@ -77,7 +77,7 @@ public class ListenerRenderer(config: AnkoConfiguration) : Renderer(config), Sup
         val fields = methods.map { method ->
             val varName = method.name.decapitalize()
             val argumentTypes = method.methodWithClass.formatArgumentsTypes(config)
-            val lambdaType = "(($argumentTypes) -> ${method.returnType})"
+            val lambdaType = "(($argumentTypes) -> ${method.returnType.asString()})"
             "private var _$varName: $lambdaType? = null"
         }
 
@@ -93,15 +93,23 @@ public class ListenerRenderer(config: AnkoConfiguration) : Renderer(config), Sup
                 val defaultValue = methodWithClass.method.returnType.getDefaultValue()
                 val returnDefaultValue = if (defaultValue.isNotEmpty()) " ?: $defaultValue" else ""
 
-                line("override fun ${method.name}($arguments) = _$varName?.invoke($argumentNames)$returnDefaultValue").nl()
-                line("public fun ${method.name}(listener: ($argumentTypes) -> ${method.returnType}) {")
+                if (!method.returnType.isVoid) {
+                    line("override fun ${method.name}($arguments) = _$varName?.invoke($argumentNames)$returnDefaultValue").nl()
+                } else {
+                    line("override fun ${method.name}($arguments) {")
+                    line("_$varName?.invoke($argumentNames)$returnDefaultValue")
+                    line("}").nl()
+                }
+
+                line("public fun ${method.name}(listener: ($argumentTypes) -> ${method.returnType.asString()}) {")
                 line("_$varName = listener")
                 line("}")
             }.getLines()
         }
 
         return buffer {
-            line("class $helperClassName : $listenerClassName {")
+            val superConstructorCall = if (clazz.getConstructors().isNotEmpty()) "()" else ""
+            line("class $helperClassName : $listenerClassName$superConstructorCall {")
             lines(fields).nl()
             lines(listenerMethods)
             line("}")
