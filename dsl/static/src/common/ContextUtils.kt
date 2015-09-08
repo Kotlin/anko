@@ -24,7 +24,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.preference.PreferenceManager
 import android.view.View
-import org.jetbrains.anko.internals.noBinding
+import org.jetbrains.anko.internals.NoBinding
 import java.io.Serializable
 
 public val Context.defaultSharedPreferences: SharedPreferences
@@ -46,13 +46,13 @@ public val Activity.act: Activity
     get() = this
 
 //type casting is now under the hood
-@suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST")
 public fun <T : View> View.find(id: Int): T = findViewById(id) as T
 
-@suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST")
 public fun <T : View> Activity.find(id: Int): T = findViewById(id) as T
 
-@suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST")
 public fun <T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
 
 public fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
@@ -96,10 +96,10 @@ public fun bundleOf(vararg params: Pair<String, Any>): Bundle {
     return b
 }
 
-public noBinding val Context.displayMetrics: android.util.DisplayMetrics
+public NoBinding val Context.displayMetrics: android.util.DisplayMetrics
     get() = resources.displayMetrics
 
-public noBinding val Context.configuration: android.content.res.Configuration
+public NoBinding val Context.configuration: android.content.res.Configuration
     get() = resources.configuration
 
 public val android.content.res.Configuration.portrait: Boolean

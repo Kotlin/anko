@@ -68,7 +68,7 @@ private class ViewChildrenRecursiveSequence(private val view: View) : Sequence<V
             }
         }
 
-        @suppress("NOTHING_TO_INLINE")
+        @Suppress("NOTHING_TO_INLINE")
         private inline fun <T: Any> MutableList<T>.removeLast(): T? {
             if (isEmpty()) return null
             return remove(size() - 1)

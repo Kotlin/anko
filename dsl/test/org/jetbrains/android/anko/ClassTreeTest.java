@@ -16,6 +16,8 @@
 
 package org.jetbrains.android.anko;
 
+import org.jetbrains.android.anko.utils.ClassTree;
+import org.jetbrains.android.anko.utils.NoSuchClassException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

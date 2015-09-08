@@ -16,12 +16,12 @@
 
 package org.jetbrains.android.anko.generator
 
-import org.jetbrains.android.anko.ClassTree
-import org.jetbrains.android.anko.MethodNodeWithClass
+import org.jetbrains.android.anko.utils.ClassTree
+import org.jetbrains.android.anko.utils.MethodNodeWithClass
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.Configurable
-import org.jetbrains.android.anko.fqName
-import org.jetbrains.android.anko.packageName
+import org.jetbrains.android.anko.utils.fqName
+import org.jetbrains.android.anko.utils.packageName
 import org.jetbrains.android.anko.utils.ClassTreeUtils
 import org.jetbrains.android.anko.utils.ReflectionUtils
 import org.objectweb.asm.tree.ClassNode

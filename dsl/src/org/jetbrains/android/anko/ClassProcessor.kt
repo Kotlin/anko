@@ -16,6 +16,7 @@
 
 package org.jetbrains.android.anko
 
+import org.jetbrains.android.anko.utils.ClassTree
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.tree.ClassNode
 import java.io.File

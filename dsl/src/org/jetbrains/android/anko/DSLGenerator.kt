@@ -19,6 +19,7 @@ package org.jetbrains.android.anko
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.render.RenderFacade
+import org.jetbrains.android.anko.utils.ClassTree
 import java.io.File
 
 class DSLGenerator(

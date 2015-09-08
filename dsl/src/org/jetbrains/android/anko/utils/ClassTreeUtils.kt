@@ -16,10 +16,8 @@
 
 package org.jetbrains.android.anko.utils
 
-import org.jetbrains.android.anko.ClassTree
-import org.jetbrains.android.anko.ClassTreeNode
-import org.jetbrains.android.anko.MethodNodeWithClass
-import org.jetbrains.android.anko.isInner
+import org.jetbrains.android.anko.utils.ClassTree
+import org.jetbrains.android.anko.utils.ClassTreeNode
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 

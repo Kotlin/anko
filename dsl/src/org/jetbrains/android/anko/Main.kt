@@ -49,7 +49,7 @@ private fun clean() {
 private fun versions() {
     for (version in getVersionDirs()) {
         val (platformJars, versionJars) = getJars(version)
-        println("${version.getName()}")
+        println("${version.name}")
         (platformJars + versionJars).forEach { println("  ${it.name}") }
     }
 }
@@ -57,17 +57,17 @@ private fun versions() {
 private fun deleteDirectory(f: File) {
     if (!f.exists()) return
 
-    if (f.isDirectory()) {
+    if (f.isDirectory) {
         f.listFiles()?.forEach { deleteDirectory(it) }
     }
     if (!f.delete()) {
-        throw RuntimeException("Failed to delete ${f.getAbsolutePath()}")
+        throw RuntimeException("Failed to delete ${f.absolutePath}")
     }
 }
 
 private fun getVersionDirs(): Array<File> {
     val original = File("workdir/original/")
-    if (!original.exists() || !original.isDirectory()) {
+    if (!original.exists() || !original.isDirectory) {
         throw RuntimeException("\"workdir/original\" directory does not exist.")
     }
     return original.listFiles(AndroidVersionDirectoryFilter()) ?: arrayOf<File>()

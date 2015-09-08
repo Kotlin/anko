@@ -30,33 +30,43 @@ public var View.backgroundResource: Int
     get() = throw PropertyWithoutGetterException("backgroundResource")
     set(value) = setBackgroundResource(value)
 
-public var View.background: Drawable
-    get() = getBackground()
+public var View.backgroundDrawable: Drawable
+    get() = background
     set(value) = setBackgroundDrawable(value)
 
-public var View.paddingLeft: Int
-    get() = getPaddingLeft()
-    set(value) = setPadding(value, getPaddingTop(), getPaddingRight(), getPaddingBottom())
+public var View.leftPadding: Int
+    get() = paddingLeft
+    set(value) = setPadding(value, paddingTop, paddingRight, paddingBottom)
 
-public var View.paddingTop: Int
-    get() = getPaddingTop()
-    set(value) = setPadding(getPaddingLeft(), value, getPaddingRight(), getPaddingBottom())
+public var View.topPadding: Int
+    get() = paddingTop
+    set(value) = setPadding(paddingLeft, value, paddingRight, paddingBottom)
 
-public var View.paddingRight: Int
-    get() = getPaddingRight()
-    set(value) = setPadding(getPaddingLeft(), getPaddingTop(), value, getPaddingBottom())
+public var View.rightPadding: Int
+    get() = paddingRight
+    set(value) = setPadding(paddingLeft, paddingTop, value, paddingBottom)
 
-public var View.paddingBottom: Int
-    get() = getPaddingBottom()
-    set(value) = setPadding(getPaddingLeft(), getPaddingTop(), getPaddingRight(), value)
+public var View.bottomPadding: Int
+    get() = paddingBottom
+    set(value) = setPadding(paddingLeft, paddingTop, paddingRight, value)
 
+@Deprecated("Use horizontalPadding instead", ReplaceWith("horizontalPadding"))
 public var View.paddingHorizontal: Int
     get() = throw PropertyWithoutGetterException("paddingHorizontal")
-    set(value) = setPadding(value, getPaddingTop(), value, getPaddingBottom())
+    set(value) = setPadding(value, paddingTop, value, paddingBottom)
 
+public var View.horizontalPadding: Int
+    get() = throw PropertyWithoutGetterException("horizontalPadding")
+    set(value) = setPadding(value, paddingTop, value, paddingBottom)
+
+@Deprecated("Use verticalPadding instead", ReplaceWith("verticalPadding"))
 public var View.paddingVertical: Int
     get() = throw PropertyWithoutGetterException("paddingVertical")
-    set(value) = setPadding(getPaddingLeft(), value, getPaddingRight(), value)
+    set(value) = setPadding(paddingLeft, value, paddingRight, value)
+
+public var View.verticalPadding: Int
+    get() = throw PropertyWithoutGetterException("verticalPadding")
+    set(value) = setPadding(paddingLeft, value, paddingRight, value)
 
 public var View.padding: Int
     get() = throw PropertyWithoutGetterException("padding")

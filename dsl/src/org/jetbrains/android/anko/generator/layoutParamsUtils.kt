@@ -18,10 +18,12 @@ package org.jetbrains.android.anko.generator
 
 import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
+import org.jetbrains.android.anko.utils.fqName
+import org.jetbrains.android.anko.utils.getConstructors
 import org.objectweb.asm.tree.ClassNode
 
 //return a pair<viewGroup, layoutParams> or null if the viewGroup doesn't contain custom LayoutParams
-private fun GenerationState.extractLayoutParams(viewGroup: ClassNode): LayoutElement? {
+fun GenerationState.extractLayoutParams(viewGroup: ClassNode): LayoutElement? {
     fun findActualLayoutParamsClass(viewGroup: ClassNode): ClassNode? {
         fun findForParent() = findActualLayoutParamsClass(classTree.findNode(viewGroup)!!.parent!!.data)
 

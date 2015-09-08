@@ -14,8 +14,8 @@ public open class MyActivity() : Activity() {
             linearLayout {
                 listView {
                     onScrollListener {
-                        onScroll { a,b,c,d ->  }
-                        onScrollStateChanged { a,b -> }
+                        onScroll { a, b, c, d ->  }
+                        onScrollStateChanged { a, b -> }
                     }
                 }
                 searchView {
@@ -26,7 +26,7 @@ public open class MyActivity() : Activity() {
                 }
                 seekBar {
                     onSeekBarChangeListener {
-                        onProgressChanged { a,b,c -> }
+                        onProgressChanged { a, b, c -> }
                         onStartTrackingTouch { a -> }
                         onStopTrackingTouch { a -> }
                     }

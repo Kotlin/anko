@@ -34,10 +34,10 @@ public open class TestActivity() : Activity() {
     }
 }
 
-RunWith(javaClass<RobolectricTestRunner>())
+@RunWith(RobolectricTestRunner::class)
 public class RobolectricTest() {
 
-    Test
+    @Test
     public fun test() {
         val activity = Robolectric.buildActivity(javaClass<TestActivity>()).create().get()
 

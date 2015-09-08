@@ -22,7 +22,7 @@ import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.ViewElement
 import org.jetbrains.android.anko.generator.ViewGenerator
 import org.jetbrains.android.anko.generator.ViewGroupGenerator
-import org.jetbrains.android.anko.utils.buffer
+import org.jetbrains.android.anko.utils.*
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 import java.util.*

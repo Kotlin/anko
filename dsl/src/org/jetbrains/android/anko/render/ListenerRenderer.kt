@@ -27,7 +27,7 @@ import org.jetbrains.android.anko.generator.ComplexListenerElement
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.ListenerGenerator
 import org.jetbrains.android.anko.generator.SimpleListenerElement
-import org.jetbrains.android.anko.utils.buffer
+import org.jetbrains.android.anko.utils.*
 
 public class ListenerRenderer(config: AnkoConfiguration) : Renderer(config), SupportUtils {
 

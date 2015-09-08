@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.anko
+package org.jetbrains.android.anko.utils
 
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.tree.FieldNode

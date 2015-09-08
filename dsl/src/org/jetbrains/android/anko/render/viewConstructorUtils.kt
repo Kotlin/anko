@@ -16,7 +16,7 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.fqName
+import org.jetbrains.android.anko.utils.fqName
 import org.objectweb.asm.Type
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode

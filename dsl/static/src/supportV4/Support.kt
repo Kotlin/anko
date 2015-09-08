@@ -22,9 +22,7 @@ import android.view.View
 import org.jetbrains.anko.custom.addView
 import org.jetbrains.anko.internals.AnkoInternals
 
-public inline fun <T : View> Fragment.addView(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T
-): T {
+public fun <T : View> Fragment.addView(factory: (ctx: Context) -> T): T {
     val view = factory(activity)
     UI { addView(view) }
     return view

@@ -20,8 +20,8 @@ import java.io.File
 
 public open class AbstractCompileTest : CompileTestFixture() {
 
-    protected fun runCompileTest(testDataFile: String, version: String) {
-        runCompileTest(File("dsl/testData/compile/$testDataFile"), File("workdir/original/$version/"))
+    protected fun runCompileTest(testDataFile: String, artifactOriginalDir: String) {
+        runCompileTest(File("dsl/testData/compile/$testDataFile"), File("workdir/original/$artifactOriginalDir/"))
     }
 
 }

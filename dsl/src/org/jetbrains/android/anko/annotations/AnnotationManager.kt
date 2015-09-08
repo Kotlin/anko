@@ -16,13 +16,12 @@
 
 package org.jetbrains.android.anko.annotations
 
-import org.jetbrains.android.anko.getPackageName
+import org.jetbrains.android.anko.utils.getPackageName
 import org.w3c.dom.Document
 import org.xml.sax.InputSource
 import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.dom.childElements
-import kotlin.dom.documentElement
 
 public class AnnotationManager(private val provider: AnnotationProvider) {
     public fun findAnnotationsFor(q: String): Set<ExternalAnnotation> {
@@ -55,7 +54,7 @@ private fun parseAnnotation(fqName: String): ExternalAnnotation? {
     }
 }
 
-private fun parseXml(xmlText: String): Document {
+internal fun parseXml(xmlText: String): Document {
     val factory = DocumentBuilderFactory.newInstance()
     val builder = factory.newDocumentBuilder()
     val inputSource = InputSource(StringReader(xmlText))

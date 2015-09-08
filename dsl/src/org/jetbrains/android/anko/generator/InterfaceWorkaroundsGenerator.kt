@@ -16,9 +16,9 @@
 
 package org.jetbrains.android.anko.generator
 
-import org.jetbrains.android.anko.isInterface
-import org.jetbrains.android.anko.isProtected
-import org.jetbrains.android.anko.isPublic
+import org.jetbrains.android.anko.utils.isInterface
+import org.jetbrains.android.anko.utils.isProtected
+import org.jetbrains.android.anko.utils.isPublic
 
 class InterfaceWorkaroundsGenerator : Generator<InterfaceWorkaroundElement> {
 

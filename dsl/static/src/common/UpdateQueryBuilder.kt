@@ -66,7 +66,7 @@ public class UpdateQueryBuilder(
         return this
     }
 
-    @deprecated("Use `where?`() instead", replaceWith = ReplaceWith("`where?`(select, *args)"))
+    @Deprecated("Use `where?`() instead", replaceWith = ReplaceWith("`where?`(select, *args)"))
     public fun whereSupport(select: String, vararg args: String): UpdateQueryBuilder {
         return `where?`(select, *args)
     }

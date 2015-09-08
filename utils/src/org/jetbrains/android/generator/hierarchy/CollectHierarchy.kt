@@ -18,9 +18,9 @@ package org.jetbrains.android.generator.hierarchy
 
 import com.google.gson.Gson
 import org.jetbrains.android.anko.ClassProcessor
-import org.jetbrains.android.anko.ClassTree
-import org.jetbrains.android.anko.ClassTreeNode
-import org.jetbrains.android.anko.isInner
+import org.jetbrains.android.anko.utils.ClassTree
+import org.jetbrains.android.anko.utils.ClassTreeNode
+import org.jetbrains.android.anko.utils.isInner
 import org.objectweb.asm.tree.ClassNode
 import java.io.File
 

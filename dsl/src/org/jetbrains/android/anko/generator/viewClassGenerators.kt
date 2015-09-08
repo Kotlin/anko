@@ -16,7 +16,7 @@
 
 package org.jetbrains.android.anko.generator
 
-import org.jetbrains.android.anko.isAbstract
+import org.jetbrains.android.anko.utils.isAbstract
 import org.objectweb.asm.tree.ClassNode
 
 abstract class AbstractViewGenerator(private val forLayouts: Boolean) : Generator<ViewElement> {

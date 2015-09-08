@@ -91,7 +91,7 @@ public fun SQLiteDatabase.dropTable(tableName: String, ifExists: Boolean = false
 
 private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^\\{}]+)\\}")
 
-private fun applyArguments(whereClause: String, vararg args: Pair<String, Any>): String {
+internal fun applyArguments(whereClause: String, vararg args: Pair<String, Any>): String {
     val argsMap = args.fold(hashMapOf<String, Any>()) { map, arg ->
         map.put(arg.first, arg.second)
         map
@@ -99,7 +99,7 @@ private fun applyArguments(whereClause: String, vararg args: Pair<String, Any>):
     return applyArguments(whereClause, argsMap)
 }
 
-private fun applyArguments(whereClause: String, args: Map<String, Any>): String {
+fun applyArguments(whereClause: String, args: Map<String, Any>): String {
     val matcher = ARG_PATTERN.matcher(whereClause)
     val buffer = StringBuffer(whereClause.length())
     while (matcher.find()) {
@@ -121,7 +121,7 @@ private fun applyArguments(whereClause: String, args: Map<String, Any>): String 
     return buffer.toString()
 }
 
-private fun Array<out Pair<String, Any>>.toContentValues(): ContentValues {
+internal fun Array<out Pair<String, Any>>.toContentValues(): ContentValues {
     val values = ContentValues()
     for ((key, value) in this) {
         when(value) {
@@ -158,14 +158,16 @@ public abstract class ManagedSQLiteOpenHelper(
         }
     }
 
-    private synchronized fun openDatabase(): SQLiteDatabase {
+    @Synchronized
+    private fun openDatabase(): SQLiteDatabase {
         if (counter.incrementAndGet() == 1) {
             db = writableDatabase
         }
         return db!!
     }
 
-    private synchronized fun closeDatabase() {
+    @Synchronized
+    private fun closeDatabase() {
         if (counter.decrementAndGet() == 0) {
             db?.close()
         }

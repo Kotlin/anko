@@ -17,6 +17,7 @@
 package org.jetbrains.android.anko.generator
 
 import org.jetbrains.android.anko.*
+import org.jetbrains.android.anko.utils.MethodNodeWithClass
 import org.objectweb.asm.tree.ClassNode
 
 class ListenerGenerator : Generator<ListenerElement> {

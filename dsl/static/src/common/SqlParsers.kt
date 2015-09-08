@@ -35,7 +35,7 @@ private class SingleColumnParser<T> : RowParser<T> {
     override fun parseRow(columns: Array<Any>): T {
         if (columns.size() != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
-        @suppress("UNCHECKED_CAST")
+        @Suppress("UNCHECKED_CAST")
         return columns[0] as T
     }
 }
@@ -44,7 +44,7 @@ private class ScalarColumnParser<R, T>(val modifier: ((R) -> T)? = null) : RowPa
     override fun parseRow(columns: Array<Any>): T {
         if (columns.size() != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
-        @suppress("UNCHECKED_CAST", "UNNECESSARY_NOT_NULL_ASSERTION")
+        @Suppress("UNCHECKED_CAST", "UNNECESSARY_NOT_NULL_ASSERTION")
         return if (modifier != null)
             modifier!!(columns[0] as R)
         else
@@ -130,7 +130,7 @@ public fun Cursor.asMapSequence(): Sequence<Map<String, Any>> {
     return CursorMapSequence(this)
 }
 
-@suppress("NOTHING_TO_INLINE")
+@Suppress("NOTHING_TO_INLINE")
 public inline fun <reified T: Any> classParser(): RowParser<T> {
     val clazz = T::class.java
     val constructors = clazz.declaredConstructors.filter {
@@ -145,7 +145,7 @@ public inline fun <reified T: Any> classParser(): RowParser<T> {
     val c = constructors[0]
 
     for (type in c.parameterTypes) {
-        @suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
+        @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
         val valid = when (type) {
             Long::class.java, java.lang.Long::class.java -> true
             Double::class.java, java.lang.Double::class.java -> true
@@ -177,7 +177,7 @@ private fun readColumnsArray(cursor: Cursor): Array<Any> {
             else -> Unit
         }
     }
-    @suppress("CAST_NEVER_SUCCEEDS")
+    @Suppress("CAST_NEVER_SUCCEEDS")
     return arr as Array<Any>
 }
 

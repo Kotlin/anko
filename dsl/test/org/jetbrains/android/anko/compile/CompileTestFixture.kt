@@ -32,14 +32,28 @@ public open class CompileTestFixture {
     companion object {
         private val kotlincFilename = "lib/Kotlin/kotlinc/bin/kotlinc-jvm" + (if (isWindows()) ".bat" else "")
 
-        private fun getBuiltLibraryFile(fullVersion: String): File {
-            return File("workdir/zip/anko-$fullVersion.jar")
+        private fun getAnkoJars(androidSdkVersion: Int): List<File> {
+            val baseDir = File("workdir/zip")
+            val files = listOf(
+                    File(baseDir, "anko-common.jar"),
+                    File(baseDir, "anko-sdk$androidSdkVersion.jar"),
+                    File(baseDir, "anko-support-v4.jar"))
+
+            files.forEach {
+                assertTrue("File $it does not exist", it.exists())
+            }
+            return files
+        }
+
+        private fun getAnkoJars(artifactOriginalDir: File): List<File> {
+            val androidSdkVer = File(artifactOriginalDir, "version.txt").readText().toInt()
+            return getAnkoJars(androidSdkVer)
         }
 
         private val LOG = Logger.getLogger(CompileTestFixture::class.java.name)
 
         fun runProcess(args: Array<String>, compiler: Boolean): ProcResult {
-            LOG.info("Exec process: ${Arrays.toString(args)}")
+            LOG.info("Exec process: ${args.joinToString(" ")}")
 
             val p = Runtime.getRuntime().exec(args)
             val brInput = BufferedReader(InputStreamReader(p.inputStream))
@@ -65,12 +79,12 @@ public open class CompileTestFixture {
         }
     }
 
-    protected fun runCompileTest(testData: File, ver: File) {
+    protected fun runCompileTest(testData: File, artifactOriginalDir: File) {
         assertTrue(testData.exists())
-        compile(testData, ver).delete()
+        compile(testData, artifactOriginalDir).delete()
     }
 
-    protected fun runRobolectricTest(testDataFile: File, ver: File) {
+    protected fun runRobolectricTest(testDataFile: File, artifactOriginalDir: File) {
         assertTrue(testDataFile.exists())
 
         val lib = File("lib/")
@@ -79,20 +93,21 @@ public open class CompileTestFixture {
         val robolectricJars = robolectricDir.listFiles { it.extension == "jar" }?.toList() ?: listOf()
         val androidAllJars = File(lib, "androidall").listFiles { it.extension == "jar" }?.toList() ?: listOf()
 
-        val tmpFile = compile(testDataFile, ver, robolectricJars)
+        val compiledJarFile = compile(testDataFile, artifactOriginalDir, robolectricJars)
 
-        val cp = (listOf(
-                getBuiltLibraryFile(ver.name),
-                tmpFile,
+        val classpath = (listOf(
+                compiledJarFile,
                 File(lib, "Kotlin/kotlinc/lib/kotlin-runtime.jar"),
                 File(lib, "hamcrest-all-1.3.jar")
-        ) + robolectricJars + androidAllJars).map { it.absolutePath }.join(File.pathSeparator)
+        ) + getAnkoJars(artifactOriginalDir) + robolectricJars + androidAllJars)
+                .map { it.absolutePath }
+                .join(File.pathSeparator)
 
         val manifest = File("dsl/testData/robolectric/AndroidManifest.xml")
         val androidRes = File("dsl/testData/robolectric/res/")
         val androidAssets = File("dsl/testData/robolectric/assets/")
 
-        val args = arrayOf("java", "-cp", cp,
+        val args = arrayOf("java", "-cp", classpath,
                 "-Dapple.awt.UIElement=true",
                 "-Drobolectric.offline=true",
                 "-Drobolectric.dependency.dir=" + lib.absolutePath,
@@ -106,23 +121,26 @@ public open class CompileTestFixture {
         assertTrue(result.stderr.isEmpty())
     }
 
-    private fun compile(testData: File, ver: File, additionalLibraries: List<File>? = null): File {
-        val jarFiles = ver.listFiles(JarFileFilter())
-        val classpath = (
-                jarFiles.map { it.getPath() } +
-                        listOf(getBuiltLibraryFile(ver.name)) +
-                        (additionalLibraries?.map { it.absolutePath } ?: listOf()))
+    private fun compile(testData: File, artifactOriginalDir: File, additionalJars: List<File> = emptyList()): File {
+        val platformAndToolkitJars = artifactOriginalDir.listFiles(JarFileFilter())
+
+        val classpath = (platformAndToolkitJars + getAnkoJars(artifactOriginalDir) + additionalJars)
+                .map { it.absolutePath }
                 .joinToString(File.pathSeparator)
 
-        val tmpFile = createTempTestFile("compile", ".jar")
-        val kotlincArgs = arrayOf(File(kotlincFilename).absolutePath, "-d", tmpFile.absolutePath,
-                "-classpath", classpath.toString(), testData.getPath())
-        val args = arrayListOf(*kotlincArgs)
-        val res = runProcess(args.toTypedArray(), compiler = true)
+        val outputJar = createTempTestFile("compile", ".jar")
 
-        assertEquals("", res.stderr)
-        assertEquals(0, res.exitCode)
+        val args = arrayOf(
+                File(kotlincFilename).absolutePath,
+                "-d", outputJar.absolutePath,
+                "-classpath", classpath.toString(),
+                testData.getPath())
 
-        return tmpFile
+        val res = runProcess(args, compiler = true)
+
+        assertEquals(res.stderr, "", res.stderr)
+        assertEquals(res.stdout, 0, res.exitCode)
+
+        return outputJar
     }
 }

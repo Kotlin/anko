@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.anko
+package org.jetbrains.android.anko.utils
 
+import org.jetbrains.android.anko.utils.genericTypeToStr
+import org.jetbrains.android.anko.isConstructor
+import org.jetbrains.android.anko.utils.parseGenericMethodSignature
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.InnerClassNode

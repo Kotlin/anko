@@ -23,6 +23,10 @@ import org.jetbrains.android.anko.config.ConfigurationOption
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.LayoutElement
 import org.jetbrains.android.anko.generator.LayoutGenerator
+import org.jetbrains.android.anko.utils.MethodNodeWithClass
+import org.jetbrains.android.anko.utils.fqName
+import org.jetbrains.android.anko.utils.getConstructors
+import org.jetbrains.android.anko.utils.simpleName
 import java.util.*
 
 class LayoutRenderer(config: AnkoConfiguration) : Renderer(config), ViewConstructorUtils, SupportUtils {

@@ -112,7 +112,7 @@ class Writer(private val renderFacade: RenderFacade) {
 
         val file = config.getOutputFile(subsystem)
 
-        val dir = file.getParentFile()
+        val dir = file.parentFile
         if (!dir.exists()) {
             dir.mkdirs()
         }

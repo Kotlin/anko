@@ -36,7 +36,8 @@ import org.jetbrains.anko.UiMode
 import java.io.Serializable
 import java.util.*
 
-internal annotation(AnnotationRetention.SOURCE) class noBinding
+@Retention(AnnotationRetention.SOURCE)
+internal annotation class NoBinding
 
 public object AnkoInternals {
 
@@ -52,14 +53,14 @@ public object AnkoInternals {
         val DENSITY_DPI_NONE = 0xffff
     }
 
-    @jvmStatic
+    @JvmStatic
     public fun <T> createIntent(ctx: Context, clazz: Class<out T>, params: Array<out Pair<String, Any>>): Intent {
         val intent = Intent(ctx, clazz)
         if (params.isNotEmpty()) fillIntentArguments(intent, params)
         return intent
     }
 
-    @jvmStatic
+    @JvmStatic
     public fun internalStartActivity(
             ctx: Context,
             activity: Class<out Activity>,
@@ -68,7 +69,7 @@ public object AnkoInternals {
         ctx.startActivity(createIntent(ctx, activity, params))
     }
 
-    @jvmStatic
+    @JvmStatic
     public fun internalStartActivityForResult(
             act: Activity,
             activity: Class<out Activity>,
@@ -78,7 +79,7 @@ public object AnkoInternals {
         act.startActivityForResult(createIntent(act, activity, params), requestCode)
     }
 
-    @jvmStatic
+    @JvmStatic
     public fun internalStartService(
             ctx: Context,
             activity: Class<out Service>,
@@ -87,7 +88,7 @@ public object AnkoInternals {
         ctx.startService(createIntent(ctx, activity, params))
     }
 
-    @jvmStatic
+    @JvmStatic
     private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any>>) {
         params.forEach {
             when (it.second) {
@@ -119,7 +120,7 @@ public object AnkoInternals {
     }
 
     // SQLiteDatabase is not closeable in older versions of Android
-    @jvmStatic
+    @JvmStatic
     public inline fun <T> useDatabase(db: SQLiteDatabase, f: (SQLiteDatabase) -> T) : T {
         try {
             return f(db)
@@ -133,7 +134,7 @@ public object AnkoInternals {
     }
 
     // Cursor is not closeable in older versions of Android
-    @jvmStatic
+    @JvmStatic
     public inline fun <T> useCursor(cursor: Cursor, f: (Cursor) -> T) : T {
         try {
             return f(cursor)
@@ -146,7 +147,7 @@ public object AnkoInternals {
         }
     }
 
-    @jvmStatic
+    @JvmStatic
     public fun <T : View> initiateView(ctx: Context, viewClass: Class<T>): T {
         fun getConstructor1() = viewClass.getConstructor(Context::class.java)
         fun getConstructor2() = viewClass.getConstructor(Context::class.java, AttributeSet::class.java)
@@ -164,7 +165,7 @@ public object AnkoInternals {
 
     }
 
-    @jvmStatic
+    @JvmStatic
     public fun testConfiguration(
             ctx: Context,
             screenSize: ScreenSize?,

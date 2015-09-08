@@ -20,7 +20,7 @@ import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.body.TypeDeclaration
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter
-import org.jetbrains.android.anko.getJavaClassName
+import org.jetbrains.android.anko.utils.getJavaClassName
 
 public class SourceManager(private val provider: SourceProvider) {
 
@@ -34,15 +34,15 @@ public class SourceManager(private val provider: SourceProvider) {
         object : VoidVisitorAdapter<Any>() {
             override fun visit(method: MethodDeclaration, arg: Any?) {
                 if (done) return
-                if (methodName != method.getName() || argumentJavaTypes.size() != method.getParameters().size()) return
+                if (methodName != method.name || argumentJavaTypes.size() != method.parameters.size()) return
                 if (method.getParentClassName() != className) return
 
-                val parameters = method.getParameters()
+                val parameters = method.parameters
                 for ((argumentFqType, param) in argumentJavaTypes.zip(parameters)) {
-                    if (argumentFqType.substringAfterLast('.') != param.getType().toString()) return
+                    if (argumentFqType.substringAfterLast('.') != param.type.toString()) return
                 }
 
-                parameters.forEach { argumentNames.add(it.getId().getName()) }
+                parameters.forEach { argumentNames.add(it.id.name) }
                 done = true
             }
         }.visit(parsed, null)
@@ -51,10 +51,10 @@ public class SourceManager(private val provider: SourceProvider) {
     }
 
     private fun Node.getParentClassName(): String {
-        val parent = getParentNode()
+        val parent = parentNode
         return if (parent is TypeDeclaration) {
             val outerName = parent.getParentClassName()
-            if (outerName.isNotEmpty()) "$outerName.${parent.getName()}" else parent.getName()
+            if (outerName.isNotEmpty()) "$outerName.${parent.name}" else parent.name
         } else ""
     }
 

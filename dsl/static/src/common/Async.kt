@@ -21,28 +21,32 @@ import android.app.Fragment
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import org.jetbrains.anko.internals.noBinding
+import org.jetbrains.anko.internals.NoBinding
 import java.lang.ref.WeakReference
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
-@deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
-public noBinding fun Context.uiThread(f: Context.() -> Unit) {
+@Deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
+@NoBinding
+public fun Context.uiThread(f: Context.() -> Unit) {
     if (ContextHelper.mainThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
 }
 
-@deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
-public inline noBinding fun Fragment.uiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
+@Deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
+@NoBinding
+public inline fun Fragment.uiThread(@inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
     activity?.onUiThread { f() }
 }
 
 // Fragment.uiThread() has a different argument list (because of inline)
-public noBinding fun Context.onUiThread(f: Context.() -> Unit) {
+@NoBinding
+public fun Context.onUiThread(f: Context.() -> Unit) {
     if (ContextHelper.mainThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
 }
 
-public inline noBinding fun Fragment.onUiThread(inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
+@NoBinding
+public inline fun Fragment.onUiThread(@inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
     activity?.onUiThread { f() }
 }
 

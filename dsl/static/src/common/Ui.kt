@@ -23,7 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
 import org.jetbrains.anko.custom.addView
-import org.jetbrains.anko.internals.noBinding
+import org.jetbrains.anko.internals.NoBinding
 
 public fun <T : View> T.style(style: (View) -> Unit): T {
     applyStyle(this, style)
@@ -76,7 +76,8 @@ private fun applyStyle(v: View, style: (View) -> Unit) {
     }
 }
 
-public noBinding fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
+@NoBinding
+public fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
     val dsl = UiHelper(this, setContentView)
     dsl.init()
     return dsl
@@ -93,14 +94,14 @@ public fun Activity.UI(init: UiHelper.() -> Unit): UiHelper = UI(true, init)
 public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = activity.UI(false, init)
 
 public class UiHelper(public val ctx: Context, private val setContentView: Boolean = true) : ViewManager {
-    private var view: View? = null
+    private lateinit var view: View
 
-    fun toView() = view!!
+    fun toView() = view
 
     override fun addView(view: View, params: ViewGroup.LayoutParams?) {
         this.view = view
         if (setContentView) {
-            @suppress("USELESS_CAST_STATIC_ASSERT_IS_FINE")
+            @Suppress("USELESS_CAST_STATIC_ASSERT_IS_FINE")
             when (ctx) {
                 is Activity -> ctx.setContentView(view)
                 else -> {

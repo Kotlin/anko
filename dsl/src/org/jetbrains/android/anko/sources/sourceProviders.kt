@@ -18,7 +18,7 @@ package org.jetbrains.android.anko.sources
 
 import com.github.javaparser.JavaParser
 import com.github.javaparser.ast.CompilationUnit
-import org.jetbrains.android.anko.getPackageName
+import org.jetbrains.android.anko.utils.getPackageName
 import sun.plugin.dom.exception.InvalidStateException
 import java.io.File
 

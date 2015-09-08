@@ -20,7 +20,7 @@ import android.app.Fragment
 import android.app.ProgressDialog
 import android.content.Context
 import android.widget.Toast
-import org.jetbrains.anko.internals.noBinding
+import org.jetbrains.anko.internals.NoBinding
 
 public fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
 
@@ -152,7 +152,8 @@ public fun Context.indeterminateProgressDialog(
     return progressDialog(true, message, title, init)
 }
 
-private noBinding fun Context.progressDialog(
+@NoBinding
+private fun Context.progressDialog(
         indeterminate: Boolean,
         message: String? = null,
         title: String? = null,
