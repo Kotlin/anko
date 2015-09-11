@@ -26,7 +26,7 @@ class AndroidJarCollector {
     private companion object {
         private val REQUIRED_PLATFORM_VERSIONS = arrayOf(15, 19, 21, 23)
 
-        private val SUPPORT_PACKAGES_VERSION = "22.2.0"
+        private val SUPPORT_PACKAGES_VERSION = "23.0.0"
         private val SUPPORT_LIBRARIES = arrayOf("support-v4",
                                                 "appcompat-v7",
                                                 "cardview-v7",
