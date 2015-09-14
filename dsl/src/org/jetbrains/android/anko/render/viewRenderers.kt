@@ -37,6 +37,22 @@ public class ViewGroupRenderer(config: AnkoConfiguration) : AbstractViewRenderer
             renderViews(state[ViewGroupGenerator::class.java]) { "_" + it.simpleName + it.supportSuffix }
 }
 
+public class ViewFactoryClass(val config: AnkoConfiguration, val suffix: String) {
+    public val entries = arrayListOf<String>()
+    private val name = config.version.toCamelCase('-').capitalize()
+    public val fullName = "`${'$'}${'$'}Anko${'$'}Factories${'$'}$name$suffix`"
+
+    public fun render(): String {
+        if (entries.isEmpty()) return ""
+
+        return StringBuilder {
+            appendln("public object $fullName {")
+            entries.forEach { append(config.indent).appendln(it) }
+            appendln("}").appendln()
+        }.toString()
+    }
+}
+
 private abstract class AbstractViewRenderer(
         config: AnkoConfiguration
 ) : Renderer(config), ViewConstructorUtils, SupportUtils {
@@ -47,23 +63,34 @@ private abstract class AbstractViewRenderer(
         val renderViews = config[AnkoFile.VIEWS]
         val renderHelperConstructors = config[ConfigurationTune.HELPER_CONSTRUCTORS]
 
-        for (view in views.filter { !it.clazz.isAbstract }) {
-            if (renderViews) renderView(view.clazz, view.isContainer, nameResolver(view.clazz))
+        val factoryClass = ViewFactoryClass(config, this@AbstractViewRenderer.javaClass.simpleName.replace("Renderer", ""))
+        val functions = StringBuilder {
+            for (view in views.filter { !it.clazz.isAbstract }) {
+                if (renderViews) renderView(view.clazz, view.isContainer, nameResolver(view.clazz), factoryClass)
 
-            if (renderHelperConstructors) {
-                if (Props.helperConstructors.contains(view.fqName)) {
-                    append(renderHelperConstructors(view))
-                } else if (view.clazz.isTinted()) {
-                    val (className21, _) = handleTintedView(view.clazz, nameResolver(view.clazz))
-                    if (Props.helperConstructors.contains("android.widget.$className21")) {
-                        append(renderHelperConstructors(view))
+                if (renderHelperConstructors) {
+                    if (Props.helperConstructors.contains(view.fqName)) {
+                        append(renderHelperConstructors(view, factoryClass))
+                    } else if (view.clazz.isTinted()) {
+                        val (className21, _) = handleTintedView(view.clazz, nameResolver(view.clazz))
+                        if (Props.helperConstructors.contains("android.widget.$className21")) {
+                            append(renderHelperConstructors(view, factoryClass))
+                        }
                     }
                 }
             }
-        }
+        }.toString()
+
+        append(factoryClass.render())
+        append(functions)
     }.toString()
 
-    private fun StringBuilder.renderView(view: ClassNode, isContainer: Boolean, className: String) {
+    private fun StringBuilder.renderView(
+            view: ClassNode,
+            isContainer: Boolean,
+            className: String,
+            factoryClass: ViewFactoryClass
+    ) {
         val constructors = ViewConstructorUtils.AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
             view.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
         }
@@ -71,17 +98,24 @@ private abstract class AbstractViewRenderer(
         val (className21, functionName) = handleTintedView(view, className)
         val tinted = className21 != null
 
+        val factoryPropertyName = functionName.capitalize().toUPPER_CASE()
+        with (factoryClass.entries) {
+            val constructorArgs = renderConstructorArgs(view, constructors, "ctx")
+            val constructorCall = if (tinted)
+                "if (Build.VERSION.SDK_INT < 21) $className($constructorArgs) else $className21($constructorArgs)"
+            else
+                "$className($constructorArgs)"
+            add("public val $factoryPropertyName = { ctx: Context -> $constructorCall }")
+        }
+
         fun renderView(receiver: String) = render("view") {
             "receiver" % receiver
             "functionName" % functionName
             "className" % className
             "lambdaArgType" % if (tinted) className21 else className
             "returnType" % if (tinted) className21 else view.fqName
-            "additionalArgs" % ""
-            "constructorArgs" % renderConstructorArgs(view, constructors, "ctx")
-
-            "tinted" % tinted
-            if (tinted) "className21" % className21
+            "additionalParams" % ""
+            "factory" % (factoryClass.fullName + ".$factoryPropertyName")
         }
 
         append(renderView("ViewManager"))
@@ -91,7 +125,7 @@ private abstract class AbstractViewRenderer(
         }
     }
 
-    private fun renderHelperConstructors(view: ViewElement) = StringBuilder {
+    private fun renderHelperConstructors(view: ViewElement, factoryClass: ViewFactoryClass) = StringBuilder {
         val className = view.fqName
 
         val (className21, functionName) = handleTintedView(view.clazz, className)
@@ -100,6 +134,7 @@ private abstract class AbstractViewRenderer(
 
         val helperConstructors = Props.helperConstructors[if (tinted) "android.widget.$className21" else view.fqName] ?:
                 throw RuntimeException("Helper constructors not found for $className")
+        val factory = factoryClass.fullName + "." + functionName.capitalize().toUPPER_CASE()
 
         for (constructor in helperConstructors) {
             val collected = constructor.zip(collectProperties(view, constructor))
@@ -107,31 +142,21 @@ private abstract class AbstractViewRenderer(
                 val argumentType = it.second.args[0].asString()
                 "${it.first.name}: $argumentType"
             }.joinToString(", ")
-            val setters = collected.map { "view.${it.second.name}(${it.first.name})" }
+            val setters = collected.map { "${it.second.name}(${it.first.name})" }
 
             fun add(extendFor: String) = buffer {
-                val makeView = if (tinted) {
-                    "val view = if (Build.VERSION.SDK_INT < 21) $className(ctx) else $className21(ctx)"
-                } else {
-                    "val view = $className(ctx)"
-                }
-
                 val returnType = if (tinted) className21 else className
 
-                line(NOTHING_TO_INLINE)
-                line("public inline fun $extendFor.$functionName($helperArguments): $returnType = addView<$returnType> {")
-                line("ctx ->")
-                line(makeView)
+                line("public inline fun $extendFor.$functionName($helperArguments): $returnType {")
+                line("return ankoView($factory) {")
                 lines(setters)
-                line("view")
+                line("}")
                 line("}")
 
-                line("public inline fun $extendFor.$functionName($helperArguments, $ONLY_LOCAL_RETURN init: $lambdaArgType.() -> Unit): $returnType = addView<$returnType> {")
-                line("ctx ->")
-                line(makeView)
+                line("public inline fun $extendFor.$functionName($helperArguments, init: $lambdaArgType.() -> Unit): $returnType {")
+                line("return ankoView($factory) {")
                 lines(setters)
-                line("view.init()")
-                line("view")
+                line("}")
                 line("}")
                 nl()
             }.toString()
@@ -167,8 +192,6 @@ private abstract class AbstractViewRenderer(
     private fun ClassNode.isTinted() = fqName.startsWith(APP_COMPAT_VIEW_PREFIX)
 
     private companion object {
-        val NOTHING_TO_INLINE = "@suppress(\"NOTHING_TO_INLINE\")"
-        val ONLY_LOCAL_RETURN = "inlineOptions(InlineOption.ONLY_LOCAL_RETURN)"
         val APP_COMPAT_VIEW_PREFIX = "android.support.v7.widget.AppCompat"
     }
 

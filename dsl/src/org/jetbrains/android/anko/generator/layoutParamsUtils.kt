@@ -41,8 +41,10 @@ fun GenerationState.extractLayoutParams(viewGroup: ClassNode): LayoutElement? {
     val lpInnerClassName = viewGroup.innerClasses?.firstOrNull { it.name.contains("LayoutParams") }
     val lpInnerClass = lpInnerClassName?.let { classTree.findNode(it.name)!!.data }
 
-    if (lpInnerClass == null
-            && ExternalAnnotation.GenerateLayout !in config.annotationManager.findAnnotationsFor(viewGroup.fqName)) return null
+    val externalAnnotations = config.annotationManager.findAnnotationsFor(viewGroup.fqName)
+    val hasGenerateLayoutAnnotation = ExternalAnnotation.GenerateLayout in externalAnnotations
+    val hasGenerateViewAnnotation = ExternalAnnotation.GenerateView in externalAnnotations
+    if (hasGenerateViewAnnotation || (lpInnerClass == null && !hasGenerateLayoutAnnotation)) return null
 
     val actualLayoutParamsClass = findActualLayoutParamsClass(viewGroup).let {
         if (it != null && it.name != "android/view/ViewGroup\$LayoutParams") it else null

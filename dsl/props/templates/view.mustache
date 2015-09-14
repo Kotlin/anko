@@ -1,21 +1,5 @@
-@suppress("NOTHING_TO_INLINE")
 public inline fun {{receiver}}.{{functionName}}(): {{returnType}} = {{functionName}}({})
-public inline fun {{receiver}}.{{functionName}}(
-        {{additionalArgs}}{{#additionalArgs}},
-        {{/additionalArgs}}inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: {{lambdaArgType}}.() -> Unit
-): {{returnType}} = addView<{{returnType}}> {
-    ctx ->
-    {{#tinted}}
-    val view = if (Build.VERSION.SDK_INT < 21)
-        {{className}}({{constructorArgs}})
-    else
-        {{className21}}({{constructorArgs}})
-
-    {{/tinted}}
-    {{^tinted}}
-    val view = {{className}}({{constructorArgs}})
-    {{/tinted}}
-    view.init()
-    view
+public inline fun {{receiver}}.{{functionName}}({{additionalParams}}{{#additionalParams}}, {{/additionalParams}}init: {{lambdaArgType}}.() -> Unit): {{returnType}} {
+    return ankoView({{factory}}) { init() }
 }
 

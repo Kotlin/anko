@@ -21,7 +21,8 @@ import java.util.zip.ZipFile
 
 public enum class ExternalAnnotation {
     NotNull,
-    GenerateLayout
+    GenerateLayout,
+    GenerateView
 }
 
 public interface AnnotationProvider {

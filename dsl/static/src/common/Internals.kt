@@ -29,10 +29,9 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
-import org.jetbrains.anko.AnkoException
-import org.jetbrains.anko.Orientation
-import org.jetbrains.anko.ScreenSize
-import org.jetbrains.anko.UiMode
+import android.view.ViewGroup
+import android.view.ViewManager
+import org.jetbrains.anko.*
 import java.io.Serializable
 import java.util.*
 
@@ -40,6 +39,28 @@ import java.util.*
 internal annotation class NoBinding
 
 public object AnkoInternals {
+
+    public fun <T : View> addView(manager: ViewManager, view: T) {
+        return when (manager) {
+            is ViewGroup -> manager.addView(view)
+            is UiHelper -> manager.addView(view, null)
+            else -> throw AnkoException("$manager is the wrong parent")
+        }
+    }
+
+    public fun <T : View> addView(ctx: Context, view: T) {
+        ctx.UI { AnkoInternals.addView(this, view) }
+    }
+
+    public fun <T : View> addView(activity: Activity, view: T) {
+        activity.UI { AnkoInternals.addView(this, view) }
+    }
+
+    public fun getContext(manager: ViewManager): Context = when (manager) {
+        is ViewGroup -> manager.context
+        is UiHelper -> manager.ctx
+        else -> throw AnkoException("$manager is the wrong parent")
+    }
 
     // Some constants not present in Android SDK v.15
     private object InternalConfiguration {

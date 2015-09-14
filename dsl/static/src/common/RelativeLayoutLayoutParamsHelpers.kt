@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE")
 
 package org.jetbrains.anko
 

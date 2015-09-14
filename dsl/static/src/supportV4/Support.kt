@@ -19,13 +19,12 @@ package org.jetbrains.anko
 import android.content.Context
 import android.support.v4.app.Fragment
 import android.view.View
-import org.jetbrains.anko.custom.addView
+import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.internals.AnkoInternals
 
+@Deprecated("Use Context.addView() instead")
 public fun <T : View> Fragment.addView(factory: (ctx: Context) -> T): T {
-    val view = factory(activity)
-    UI { addView(view) }
-    return view
+    return (activity as Context).ankoView(factory) {}
 }
 
 public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = activity.UI(false, init)

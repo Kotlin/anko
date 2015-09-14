@@ -52,7 +52,7 @@ open class DefaultAnkoConfiguration(
         annotationManager = AnnotationManager(CompoundAnnotationProvider(
                 CachingAnnotationProvider(zipFileProvider), CachingAnnotationProvider(directoryProvider)))
 
-        sourceManager = SourceManager(AndroidHomeSourceProvider(21))
+        sourceManager = SourceManager(AndroidHomeSourceProvider(23))
 
         templateManager = TemplateManager(MustacheTemplateProvider(File("dsl/props/templates")))
     }

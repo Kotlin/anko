@@ -22,7 +22,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
-import org.jetbrains.anko.custom.addView
+import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.internals.NoBinding
 
 public fun <T : View> T.style(style: (View) -> Unit): T {
@@ -30,40 +30,24 @@ public fun <T : View> T.style(style: (View) -> Unit): T {
     return this
 }
 
-//deprecated("Use ViewManager.addView() instead")
+@Deprecated("Use ViewManager.ankoView() instead")
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, manager: ViewManager): T {
-    return manager.addView<T> { ctx ->
-        val v = view(ctx)
-        v.init()
-        v
-    }
+    return manager.ankoView({ ctx -> view(ctx) }) { init() }
 }
 
-//deprecated("Use Context.addView() instead")
+@Deprecated("Use Context.ankoView() instead")
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, ctx: Context): T {
-    return ctx.addView { ctx ->
-        val v = view(ctx)
-        v.init()
-        v
-    }
+    return ctx.ankoView({ ctx -> view(ctx) }) { init() }
 }
 
-//deprecated("Use Activity.addView() instead")
+@Deprecated("Use Activity.ankoView() instead")
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, act: Activity): T {
-    return act.addView { ctx ->
-        val v = view(ctx)
-        v.init()
-        v
-    }
+    return act.ankoView({ ctx -> view(ctx) }) { init() }
 }
 
-//deprecated("Use Fragment.addView() instead")
+@Deprecated("Use Context.ankoView() instead")
 public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, fragment: Fragment): T {
-    return fragment.addView { ctx ->
-        val v = view(ctx)
-        v.init()
-        v
-    }
+    return (fragment.activity as Context).ankoView({ ctx -> view(ctx) }) { init() }
 }
 
 private fun applyStyle(v: View, style: (View) -> Unit) {
@@ -101,11 +85,9 @@ public class UiHelper(public val ctx: Context, private val setContentView: Boole
     override fun addView(view: View, params: ViewGroup.LayoutParams?) {
         this.view = view
         if (setContentView) {
-            @Suppress("USELESS_CAST_STATIC_ASSERT_IS_FINE")
             when (ctx) {
                 is Activity -> ctx.setContentView(view)
-                else -> {
-                }
+                else -> {}
             }
         }
     }

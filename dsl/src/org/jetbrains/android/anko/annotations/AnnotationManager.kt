@@ -50,6 +50,7 @@ private fun parseAnnotation(fqName: String): ExternalAnnotation? {
     return when (fqName) {
         "org.jetbrains.annotations.NotNull" -> ExternalAnnotation.NotNull
         "org.jetbrains.anko.GenerateLayout" -> ExternalAnnotation.GenerateLayout
+        "org.jetbrains.anko.GenerateView" -> ExternalAnnotation.GenerateView
         else -> null
     }
 }

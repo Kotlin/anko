@@ -1,0 +1,5 @@
+<root>
+  <item name='android.support.v7.widget.AppCompatSpinner'>
+    <annotation name='org.jetbrains.anko.GenerateView'/>
+  </item>
+</root>
