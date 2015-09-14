@@ -23,7 +23,7 @@ import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.utils.toCamelCase
 import java.io.File
 
-private fun Context.functionalDslTests(init: Buffer.(version: String) -> Unit) {
+fun Context.functionalDslTests(init: Buffer.(version: String) -> Unit) {
     val dir = File("./dsl/test/" + basePackage.replace('.', '/'), "/functional")
 
     for (version in versions) {
@@ -45,7 +45,7 @@ private fun Context.functionalDslTests(init: Buffer.(version: String) -> Unit) {
     }
 }
 
-private fun Buffer.functionalDslTest(name: String, mainAnkoFile: AnkoFile, configInit: TestConfiguration.() -> Unit = {}) {
+fun Buffer.functionalDslTest(name: String, mainAnkoFile: AnkoFile, configInit: TestConfiguration.() -> Unit = {}) {
     val testConfiguration = TestConfiguration()
     testConfiguration.configInit()
 
@@ -62,7 +62,7 @@ private fun Buffer.functionalDslTest(name: String, mainAnkoFile: AnkoFile, confi
     line("}").nl()
 }
 
-private fun Context.dslCompileTests(files: List<String>, category: String) {
+fun Context.dslCompileTests(files: List<String>, category: String) {
     val dir = File("./dsl/test/" + basePackage.replace('.', '/'), "/${category.toLowerCase()}")
     val testFile = File(dir, "Generated${category}Test.kt")
 
@@ -96,9 +96,9 @@ fun main(args: Array<String>) {
 
 private fun buffer(init: Buffer.() -> Unit) = Buffer("    ", 0, init)
 
-private class Context(val versions: List<String>, val basePackage: String)
+class Context(val versions: List<String>, val basePackage: String)
 
-private class TestConfiguration {
+class TestConfiguration {
     val files = hashSetOf<AnkoFile>()
     val tunes = hashSetOf<ConfigurationTune>()
 

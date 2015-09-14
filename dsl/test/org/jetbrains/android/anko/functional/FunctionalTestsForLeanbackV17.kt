@@ -18,12 +18,6 @@ public class FunctionalTestsForLeanbackV17 : AbstractFunctionalTest() {
         }
     }
 
-    @Test public fun testHelperConstructorTest() {
-        runFunctionalTest("HelperConstructorTest.kt", AnkoFile.VIEWS, version) {
-            tunes.add(ConfigurationTune.HELPER_CONSTRUCTORS)
-        }
-    }
-
     @Test public fun testLayoutsTest() {
         runFunctionalTest("LayoutsTest.kt", AnkoFile.LAYOUTS, version) {
             files.add(AnkoFile.LAYOUTS)
@@ -33,6 +27,7 @@ public class FunctionalTestsForLeanbackV17 : AbstractFunctionalTest() {
     @Test public fun testViewTest() {
         runFunctionalTest("ViewTest.kt", AnkoFile.VIEWS, version) {
             files.add(AnkoFile.VIEWS)
+            tunes.add(ConfigurationTune.HELPER_CONSTRUCTORS)
             tunes.add(ConfigurationTune.TOP_LEVEL_DSL_ITEMS)
         }
     }
