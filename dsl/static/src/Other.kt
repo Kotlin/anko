@@ -47,11 +47,11 @@ public val Int.opaque: Int
 
 /* SECTION CUSTOM VIEW PROPERTIES */
 public var View.backgroundColor: Int
-    get() = throw AnkoException("'padding' property does not have a getter")
+    get() = throw AnkoException("'backgroundColor' property does not have a getter")
     set(value) {this.setBackgroundColor(value)}
 
 public var View.backgroundResource: Int
-    get() = throw AnkoException("'padding' property does not have a getter")
+    get() = throw AnkoException("'backgroundResource' property does not have a getter")
     set(value) {
         this.setBackgroundResource(value)
     }
