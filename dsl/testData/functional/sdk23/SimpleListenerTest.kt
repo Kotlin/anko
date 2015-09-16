@@ -18,7 +18,7 @@ public fun android.view.View.onClick(l: (v: android.view.View?) -> Unit) {
     setOnClickListener(l)
 }
 
-public fun android.view.View.onContextClick(l: (p0: android.view.View?) -> Boolean) {
+public fun android.view.View.onContextClick(l: (v: android.view.View?) -> Boolean) {
     setOnContextClickListener(l)
 }
 
@@ -50,7 +50,7 @@ public fun android.view.View.onLongClick(l: (v: android.view.View?) -> Boolean) 
     setOnLongClickListener(l)
 }
 
-public fun android.view.View.onScrollChange(l: (p0: android.view.View?, p1: Int, p2: Int, p3: Int, p4: Int) -> Unit) {
+public fun android.view.View.onScrollChange(l: (v: android.view.View?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) -> Unit) {
     setOnScrollChangeListener(l)
 }
 

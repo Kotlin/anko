@@ -100,7 +100,7 @@ public class BaseViewResolverTest {
     public static class MySupportFragment extends android.support.v4.app.Fragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return genSimpleHierarchy(getActivity());
+            return genSimpleHierarchy(getContext());
         }
     }
 

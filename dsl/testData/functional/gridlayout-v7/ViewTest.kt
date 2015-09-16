@@ -1,43 +1,27 @@
-@suppress("NOTHING_TO_INLINE")
+public object `$$Anko$Factories$GridlayoutV7View` {
+    public val SPACE_SUPPORT = { ctx: Context -> android.support.v7.widget.Space(ctx) }
+}
+
 public inline fun ViewManager.spaceSupport(): android.support.v7.widget.Space = spaceSupport({})
-public inline fun ViewManager.spaceSupport(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: android.support.v7.widget.Space.() -> Unit
-): android.support.v7.widget.Space = addView<android.support.v7.widget.Space> {
-    ctx ->
-    val view = android.support.v7.widget.Space(ctx)
-    view.init()
-    view
+public inline fun ViewManager.spaceSupport(init: android.support.v7.widget.Space.() -> Unit): android.support.v7.widget.Space {
+    return ankoView(`$$Anko$Factories$GridlayoutV7View`.SPACE_SUPPORT) { init() }
 }
 
-@suppress("NOTHING_TO_INLINE")
+public object `$$Anko$Factories$GridlayoutV7ViewGroup` {
+    public val GRID_LAYOUT_SUPPORT = { ctx: Context -> _GridLayoutSupport(ctx) }
+}
+
 public inline fun ViewManager.gridLayoutSupport(): android.support.v7.widget.GridLayout = gridLayoutSupport({})
-public inline fun ViewManager.gridLayoutSupport(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _GridLayoutSupport.() -> Unit
-): android.support.v7.widget.GridLayout = addView<android.support.v7.widget.GridLayout> {
-    ctx ->
-    val view = _GridLayoutSupport(ctx)
-    view.init()
-    view
+public inline fun ViewManager.gridLayoutSupport(init: _GridLayoutSupport.() -> Unit): android.support.v7.widget.GridLayout {
+    return ankoView(`$$Anko$Factories$GridlayoutV7ViewGroup`.GRID_LAYOUT_SUPPORT) { init() }
 }
 
-@suppress("NOTHING_TO_INLINE")
 public inline fun Context.gridLayoutSupport(): android.support.v7.widget.GridLayout = gridLayoutSupport({})
-public inline fun Context.gridLayoutSupport(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _GridLayoutSupport.() -> Unit
-): android.support.v7.widget.GridLayout = addView<android.support.v7.widget.GridLayout> {
-    ctx ->
-    val view = _GridLayoutSupport(ctx)
-    view.init()
-    view
+public inline fun Context.gridLayoutSupport(init: _GridLayoutSupport.() -> Unit): android.support.v7.widget.GridLayout {
+    return ankoView(`$$Anko$Factories$GridlayoutV7ViewGroup`.GRID_LAYOUT_SUPPORT) { init() }
 }
 
-@suppress("NOTHING_TO_INLINE")
 public inline fun Activity.gridLayoutSupport(): android.support.v7.widget.GridLayout = gridLayoutSupport({})
-public inline fun Activity.gridLayoutSupport(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _GridLayoutSupport.() -> Unit
-): android.support.v7.widget.GridLayout = addView<android.support.v7.widget.GridLayout> {
-    ctx ->
-    val view = _GridLayoutSupport(ctx)
-    view.init()
-    view
+public inline fun Activity.gridLayoutSupport(init: _GridLayoutSupport.() -> Unit): android.support.v7.widget.GridLayout {
+    return ankoView(`$$Anko$Factories$GridlayoutV7ViewGroup`.GRID_LAYOUT_SUPPORT) { init() }
 }

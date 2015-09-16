@@ -17,90 +17,42 @@
 package org.jetbrains.anko.custom
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.Context
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewManager
-import org.jetbrains.anko.AnkoException
-import org.jetbrains.anko.UI
-import org.jetbrains.anko.UiHelper
 import org.jetbrains.anko.internals.AnkoInternals
 
-public inline fun <T: View> ViewManager.addView(factory: (ctx: Context) -> T): T {
-    return when (this) {
-        is ViewGroup -> {
-            val view = factory(this.context)
-            addView(view)
-            view
-        }
-        is UiHelper -> {
-            val view = factory(ctx)
-            addView(view, null)
-            view
-        }
-        else -> throw AnkoException("$this is the wrong parent")
-    }
-}
 
-@suppress("NOTHING_TO_INLINE")
-public inline fun <T: View> ViewManager.addView(view: T): T {
-    when (this) {
-        is ViewGroup -> {
-            addView(view)
-        }
-        is UiHelper -> {
-            addView(view, null)
-        }
-        else -> throw AnkoException("$this is the wrong parent")
-    }
+public inline fun <T : View> ViewManager.ankoView(factory: (ctx: Context) -> T, init: T.() -> Unit): T {
+    val ctx = AnkoInternals.getContext(this)
+    val view = factory(ctx)
+    view.init()
+    AnkoInternals.addView(this, view)
     return view
 }
 
-public inline fun <T : View> Fragment.addView(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T
-): T {
-    val view = factory(activity)
-    UI { addView(view) }
-    return view
-}
-
-public inline fun <T : View> Context.addView(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T
-): T {
+public inline fun <T : View> Context.ankoView(factory: (ctx: Context) -> T, init: T.() -> Unit): T {
     val view = factory(this)
-    UI { addView(view) }
+    view.init()
+    AnkoInternals.addView(this, view)
     return view
 }
 
-public inline fun <T : View> Activity.addView(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) factory: (ctx: Context) -> T
-): T {
+public inline fun <T : View> Activity.ankoView(factory: (ctx: Context) -> T, init: T.() -> Unit): T {
     val view = factory(this)
-    UI { addView(view) }
+    view.init()
+    AnkoInternals.addView(this, view)
     return view
 }
 
-public inline fun <reified T : View> Context.customView(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
-): T = addView { ctx ->
-    val view = AnkoInternals.initiateView(ctx, T::class.java)
-    view.init()
-    view
+public inline fun <reified T : View> ViewManager.customView(init: T.() -> Unit): T {
+    return ankoView({ ctx -> AnkoInternals.initiateView(ctx, T::class.java) }) { init() }
 }
 
-public inline fun <reified T : View> ViewManager.customView(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
-): T = addView<T> { ctx ->
-    val view = AnkoInternals.initiateView(ctx, T::class.java)
-    view.init()
-    view
+public inline fun <reified T : View> Context.customView(init: T.() -> Unit): T {
+    return ankoView({ ctx -> AnkoInternals.initiateView(ctx, T::class.java) }) { init() }
 }
 
-public inline fun <reified T : View> Activity.customView(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
-): T = addView { ctx ->
-    val view = AnkoInternals.initiateView(ctx, T::class.java)
-    view.init()
-    view
+public inline fun <reified T : View> Activity.customView(init: T.() -> Unit): T {
+    return ankoView({ ctx -> AnkoInternals.initiateView(ctx, T::class.java) }) { init() }
 }

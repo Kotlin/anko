@@ -27,8 +27,8 @@ public class FunctionalTestsForPercent : AbstractFunctionalTest() {
     @Test public fun testViewTest() {
         runFunctionalTest("ViewTest.kt", AnkoFile.VIEWS, version) {
             files.add(AnkoFile.VIEWS)
-            tunes.add(ConfigurationTune.HELPER_CONSTRUCTORS)
             tunes.add(ConfigurationTune.TOP_LEVEL_DSL_ITEMS)
+            tunes.add(ConfigurationTune.HELPER_CONSTRUCTORS)
         }
     }
 

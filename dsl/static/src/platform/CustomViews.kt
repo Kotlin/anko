@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:suppress("NOTHING_TO_INLINE")
+
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -22,103 +24,45 @@ import android.content.Context
 import android.view.View
 import android.view.ViewManager
 import android.widget.LinearLayout
-import org.jetbrains.anko.custom.addView
+import org.jetbrains.anko.custom.ankoView
 
-@suppress("NOTHING_TO_INLINE")
+public object `$$Anko$Factories$CustomViews` {
+    public val VERTICAL_LAYOUT_FACTORY = { ctx: Context ->
+        val view = _LinearLayout(ctx)
+        view.orientation = LinearLayout.VERTICAL
+        view
+    }
+}
+
 public inline fun ViewManager.verticalLayout(): LinearLayout = verticalLayout({})
-
-public inline fun ViewManager.verticalLayout(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit
-): LinearLayout = addView<_LinearLayout> { ctx ->
-    val view = _LinearLayout(ctx)
-    view.orientation = LinearLayout.VERTICAL
-    view.init()
-    view
+public inline fun ViewManager.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout {
+    return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, init)
 }
 
-@suppress("NOTHING_TO_INLINE")
 public inline fun Context.verticalLayout(): LinearLayout = verticalLayout({})
-
-public inline fun Context.verticalLayout(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit
-): LinearLayout = addView { ctx ->
-    val view = _LinearLayout(ctx)
-    view.orientation = LinearLayout.VERTICAL
-    view.init()
-    view
+public inline fun Context.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout {
+    return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, init)
 }
 
-@suppress("NOTHING_TO_INLINE")
 public inline fun Activity.verticalLayout(): LinearLayout = verticalLayout({})
-
-public inline fun Activity.verticalLayout(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit
-): LinearLayout = addView { ctx ->
-    val view = _LinearLayout(ctx)
-    view.orientation = LinearLayout.VERTICAL
-    view.init()
-    view
+public inline fun Activity.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout {
+    return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, init)
 }
 
-@suppress("NOTHING_TO_INLINE")
-public inline fun Fragment.verticalLayout(): LinearLayout = verticalLayout({})
-
-public inline fun Fragment.verticalLayout(
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: _LinearLayout.() -> Unit
-): LinearLayout = addView { ctx ->
-    val view = _LinearLayout(ctx)
-    view.orientation = LinearLayout.VERTICAL
-    view.init()
-    view
-}
-
-@suppress("NOTHING_TO_INLINE")
 public inline fun <T: View> ViewManager.include(layoutId: Int): T = include(layoutId, {})
-
-public inline fun <T: View> ViewManager.include(
-        layoutId: Int,
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
-): T = addView<T> { ctx ->
+public inline fun <T: View> ViewManager.include(layoutId: Int, init: T.() -> Unit): T {
     @suppress("UNCHECKED_CAST")
-    val view = ctx.layoutInflater.inflate(layoutId, null) as T
-    view.init()
-    view
+    return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }) { init() }
 }
 
-@suppress("NOTHING_TO_INLINE")
-public inline fun <T: View> Activity.include(layoutId: Int): T = include(layoutId, {})
-
-public inline fun <T: View> Activity.include(
-        layoutId: Int,
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
-): T = addView { ctx ->
-    @suppress("UNCHECKED_CAST")
-    val view = ctx.layoutInflater.inflate(layoutId, null) as T
-    view.init()
-    view
-}
-
-@suppress("NOTHING_TO_INLINE")
-public inline fun <T: View> Fragment.include(layoutId: Int): T = include(layoutId, {})
-
-public inline fun <T: View> Fragment.include(
-        layoutId: Int,
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
-): T = addView { ctx ->
-    @suppress("UNCHECKED_CAST")
-    val view = ctx.layoutInflater.inflate(layoutId, null) as T
-    view.init()
-    view
-}
-
-@suppress("NOTHING_TO_INLINE")
 public inline fun <T: View> Context.include(layoutId: Int): T = include(layoutId, {})
-public inline fun <T: View> Context.include(
-        layoutId: Int,
-        inlineOptions(InlineOption.ONLY_LOCAL_RETURN) init: T.() -> Unit
-): T = addView { ctx ->
+public inline fun <T: View> Context.include(layoutId: Int, init: T.() -> Unit): T {
     @suppress("UNCHECKED_CAST")
-    val view = ctx.layoutInflater.inflate(layoutId, null) as T
-    view.init()
-    view
+    return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }) { init() }
+}
+
+public inline fun <T: View> Activity.include(layoutId: Int): T = include(layoutId, {})
+public inline fun <T: View> Activity.include(layoutId: Int, init: T.() -> Unit): T {
+    @suppress("UNCHECKED_CAST")
+    return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }) { init() }
 }

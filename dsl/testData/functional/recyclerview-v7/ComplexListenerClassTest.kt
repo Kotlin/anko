@@ -2,16 +2,16 @@ class __RecyclerViewSupport_OnChildAttachStateChangeListener : android.support.v
     private var _onChildViewAttachedToWindow: ((android.view.View?) -> Unit)? = null
     private var _onChildViewDetachedFromWindow: ((android.view.View?) -> Unit)? = null
 
-    override fun onChildViewAttachedToWindow(p0: android.view.View?) {
-        _onChildViewAttachedToWindow?.invoke(p0)
+    override fun onChildViewAttachedToWindow(view: android.view.View?) {
+        _onChildViewAttachedToWindow?.invoke(view)
     }
 
     public fun onChildViewAttachedToWindow(listener: (android.view.View?) -> Unit) {
         _onChildViewAttachedToWindow = listener
     }
 
-    override fun onChildViewDetachedFromWindow(p0: android.view.View?) {
-        _onChildViewDetachedFromWindow?.invoke(p0)
+    override fun onChildViewDetachedFromWindow(view: android.view.View?) {
+        _onChildViewDetachedFromWindow?.invoke(view)
     }
 
     public fun onChildViewDetachedFromWindow(listener: (android.view.View?) -> Unit) {
@@ -61,8 +61,8 @@ class __RecyclerViewSupport_OnItemTouchListener : android.support.v7.widget.Recy
         _onTouchEvent = listener
     }
 
-    override fun onRequestDisallowInterceptTouchEvent(p0: Boolean) {
-        _onRequestDisallowInterceptTouchEvent?.invoke(p0)
+    override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+        _onRequestDisallowInterceptTouchEvent?.invoke(disallowIntercept)
     }
 
     public fun onRequestDisallowInterceptTouchEvent(listener: (Boolean) -> Unit) {

@@ -26,7 +26,7 @@ public open class MyActivity() : Activity() {
                 digitalClock {}
                 multiAutoCompleteTextView {}
                 checkBox {
-                    checked = true
+                    isChecked = true
                 }
                 imageButton {}
                 videoView {
