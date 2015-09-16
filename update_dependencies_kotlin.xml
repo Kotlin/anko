@@ -1,5 +1,5 @@
 <project name="Update Dependencies" default="update_idea_bootstrap" xmlns:if="ant:if" xmlns:unless="ant:unless">
-    <property name="ideaVersion" value="142.4465.2"/>
+    <property name="ideaVersion" value="142.4675.3"/>
 
     <property name="kotlin.bootstrap.locator" value="buildType:bt345,tag:bootstrap,status:SUCCESS"/>
     <property name="kotlin.bootstrap.locator.force" value="false"/>
@@ -36,7 +36,7 @@
 
     <property file="${dependencies.info.file}" prefix="dependencies.info.prev"/>
 
-    <target name="update_idea_bootstrap" depends="fetch-kotlin-bootstrap" description="Update IDEA and Kotlin bootstrap plugin">
+    <target name="update_idea_bootstrap" description="Update IDEA and Kotlin bootstrap plugin">
         <execute_update_with_idea_maven_artifacts
                 base.url="https://www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/idea"
                 idea.maven.version="${ideaVersion}"/>
