@@ -25,6 +25,9 @@ import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.*
 
+public inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
+public inline fun <reified T : View> Fragment.findOptional(id: Int): T? = view?.findViewById(id) as? T
+
 @Deprecated("Use Context.addView() instead")
 public fun <T : View> Fragment.addView(factory: (ctx: Context) -> T): T {
     return (activity as Context).ankoView(factory) {}

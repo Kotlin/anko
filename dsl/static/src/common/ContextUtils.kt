@@ -47,15 +47,13 @@ public val Context.ctx: Context
 public val Activity.act: Activity
     get() = this
 
-//type casting is now under the hood
-@Suppress("UNCHECKED_CAST")
-public fun <T : View> View.find(id: Int): T = findViewById(id) as T
+public inline fun <reified T : View> View.find(id: Int): T = findViewById(id) as T
+public inline fun <reified T : View> Activity.find(id: Int): T = findViewById(id) as T
+public inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
 
-@Suppress("UNCHECKED_CAST")
-public fun <T : View> Activity.find(id: Int): T = findViewById(id) as T
-
-@Suppress("UNCHECKED_CAST")
-public fun <T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
+public inline fun <reified T : View> View.findOptional(id: Int): T? = findViewById(id) as? T
+public inline fun <reified T : View> Activity.findOptional(id: Int): T? = findViewById(id) as? T
+public inline fun <reified T : View> Fragment.findOptional(id: Int): T? = view?.findViewById(id) as? T
 
 public fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
     arguments = bundleOf(*params)

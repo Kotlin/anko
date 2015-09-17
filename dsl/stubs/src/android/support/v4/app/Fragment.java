@@ -2,6 +2,7 @@ package android.support.v4.app;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 
 public class Fragment {
 
@@ -15,6 +16,10 @@ public class Fragment {
 
     public boolean isDetached() {
         return false;
+    }
+
+    public View getView() {
+        return new View(getActivity());
     }
 
 }
