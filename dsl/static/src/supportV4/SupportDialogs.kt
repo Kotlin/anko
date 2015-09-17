@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package org.jetbrains.anko
+package org.jetbrains.anko.support.v4
 
 import android.app.ProgressDialog
 import android.support.v4.app.Fragment
+import org.jetbrains.anko.*
 
 public fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
 

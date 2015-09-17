@@ -29,7 +29,7 @@ import org.jetbrains.android.anko.utils.getConstructors
 import org.jetbrains.android.anko.utils.simpleName
 import java.util.*
 
-class LayoutRenderer(config: AnkoConfiguration) : Renderer(config), ViewConstructorUtils, SupportUtils {
+class LayoutRenderer(config: AnkoConfiguration) : Renderer(config), ViewConstructorUtils {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.LAYOUTS)
 
@@ -46,7 +46,7 @@ class LayoutRenderer(config: AnkoConfiguration) : Renderer(config), ViewConstruc
         val layoutParamsClass = node.layoutParams.fqName
 
         return render("layout") {
-            "name" % "_${node.layout.simpleName}${node.layout.supportSuffix}"
+            "name" % "_${node.layout.simpleName}"
             "constructor" % renderConstructorArgs(node.layout, constructors, "ctx", argumentNames = true)
 
             "baseClass" % node.layout.fqName

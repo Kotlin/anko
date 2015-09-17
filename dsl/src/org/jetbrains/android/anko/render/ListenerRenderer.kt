@@ -29,7 +29,7 @@ import org.jetbrains.android.anko.generator.ListenerGenerator
 import org.jetbrains.android.anko.generator.SimpleListenerElement
 import org.jetbrains.android.anko.utils.*
 
-public class ListenerRenderer(config: AnkoConfiguration) : Renderer(config), SupportUtils {
+public class ListenerRenderer(config: AnkoConfiguration) : Renderer(config) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.LISTENERS)
 
@@ -122,7 +122,7 @@ public class ListenerRenderer(config: AnkoConfiguration) : Renderer(config), Sup
     fun getHelperClassName(listener: ComplexListenerElement): String {
         val internalName = listener.clazz.name
         val nestedClassName = internalName.substringAfter('$', "")
-        val topLevelClassName = internalName.substringBefore('$').substringAfterLast('/') + listener.clazz.supportSuffix
+        val topLevelClassName = internalName.substringBefore('$').substringAfterLast('/')
 
         return "__$topLevelClassName" + (if (nestedClassName.isNotEmpty()) "_$nestedClassName" else "")
     }

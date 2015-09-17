@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package org.jetbrains.anko
+package org.jetbrains.anko.support.v4
 
 import android.app.Activity
 import android.app.Service
 import android.content.Intent
 import android.support.v4.app.Fragment
 import org.jetbrains.anko.internals.AnkoInternals
+import org.jetbrains.anko.*
 
 public fun Fragment.browse(url: String): Boolean = activity.browse(url)
 

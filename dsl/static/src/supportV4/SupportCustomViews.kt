@@ -16,12 +16,13 @@
 
 @file:suppress("NOTHING_TO_INLINE")
 
-package org.jetbrains.anko
+package org.jetbrains.anko.support.v4
 
 import android.content.Context
 import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.LinearLayout
+import org.jetbrains.anko.*
 
 public inline fun Fragment.verticalLayout(): LinearLayout = verticalLayout({})
 public inline fun Fragment.verticalLayout(

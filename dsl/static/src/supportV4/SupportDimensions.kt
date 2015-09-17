@@ -16,9 +16,10 @@
 
 @file:suppress("NOTHING_TO_INLINE")
 
-package org.jetbrains.anko
+package org.jetbrains.anko.support.v4
 
 import android.support.v4.app.Fragment
+import org.jetbrains.anko.*
 
 public inline fun Fragment.dip(value: Int): Int = activity.dip(value)
 

@@ -27,11 +27,7 @@ open class DefaultAnkoConfiguration(
         outputDirectory: File,
         override val version: String
 ) : AnkoConfiguration() {
-
-    override val outputPackage = "org.jetbrains.anko"
-
-    override val outputDirectory = outputDirectory
-    override val sourceOutputDirectory = File(outputDirectory, "src/main/kotlin/" + outputPackage.replace('.', '/'))
+    override val outputPackage: String
 
     override val excludedClasses = File("dsl/props/excluded_classes.txt").readLines().toSet()
 
@@ -55,7 +51,16 @@ open class DefaultAnkoConfiguration(
         sourceManager = SourceManager(AndroidHomeSourceProvider(23))
 
         templateManager = TemplateManager(MustacheTemplateProvider(File("dsl/props/templates")))
+
+        val artifactType = getTargetArtifactType()
+        outputPackage = "org.jetbrains.anko" + when (artifactType) {
+            TargetArtifactType.COMMON, TargetArtifactType.PLATFORM -> ""
+            else -> "." + version.replace('-', '.').toLowerCase()
+        }
     }
+
+    override val outputDirectory = outputDirectory
+    override val sourceOutputDirectory = File(outputDirectory, "src/main/kotlin/" + outputPackage.replace('.', '/'))
 
     override fun getOutputFile(ankoFile: AnkoFile): File {
         return File(sourceOutputDirectory, ankoFile.filename)

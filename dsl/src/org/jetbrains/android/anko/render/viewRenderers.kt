@@ -34,7 +34,7 @@ public class ViewRenderer(config: AnkoConfiguration) : AbstractViewRenderer(conf
 
 public class ViewGroupRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
     override fun processElements(state: GenerationState) =
-            renderViews(state[ViewGroupGenerator::class.java]) { "_" + it.simpleName + it.supportSuffix }
+            renderViews(state[ViewGroupGenerator::class.java]) { "_" + it.simpleName }
 }
 
 public class ViewFactoryClass(val config: AnkoConfiguration, val suffix: String) {
@@ -55,7 +55,7 @@ public class ViewFactoryClass(val config: AnkoConfiguration, val suffix: String)
 
 private abstract class AbstractViewRenderer(
         config: AnkoConfiguration
-) : Renderer(config), ViewConstructorUtils, SupportUtils {
+) : Renderer(config), ViewConstructorUtils {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.VIEWS, ConfigurationTune.HELPER_CONSTRUCTORS)
 
@@ -155,6 +155,7 @@ private abstract class AbstractViewRenderer(
 
                 line("public inline fun $extendFor.$functionName($helperArguments, init: $lambdaArgType.() -> Unit): $returnType {")
                 line("return ankoView($factory) {")
+                line("init()")
                 lines(setters)
                 line("}")
                 line("}")
@@ -185,7 +186,7 @@ private abstract class AbstractViewRenderer(
     private fun handleTintedView(view: ClassNode, className: String): Pair<String?, String> {
         val tinted = view.isTinted()
         val className21 = if (tinted) className.substring(APP_COMPAT_VIEW_PREFIX.length()) else null
-        val functionName = if (tinted) "tinted$className21" else view.simpleName.decapitalize() + view.supportSuffix
+        val functionName = if (tinted) "tinted$className21" else view.simpleName.decapitalize()
         return className21 to functionName
     }
 

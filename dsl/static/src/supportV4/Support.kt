@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package org.jetbrains.anko
+package org.jetbrains.anko.support.v4
 
 import android.content.Context
 import android.support.v4.app.Fragment
 import android.view.View
 import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.internals.AnkoInternals
+import org.jetbrains.anko.*
 
 @Deprecated("Use Context.addView() instead")
 public fun <T : View> Fragment.addView(factory: (ctx: Context) -> T): T {

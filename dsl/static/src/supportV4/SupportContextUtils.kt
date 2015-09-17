@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.anko
+package org.jetbrains.anko.support.v4
 
 import android.app.Activity
 import android.content.Context

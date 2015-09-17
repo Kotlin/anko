@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.jetbrains.anko
+package org.jetbrains.anko.support.v4
 
 import android.support.v4.app.Fragment
+import org.jetbrains.anko.*
 
 public fun <T: Fragment> AnkoAsyncContext<T>.supportFragmentUiThread(f: (T) -> Unit) {
     val fragment = weakRef.get() ?: return

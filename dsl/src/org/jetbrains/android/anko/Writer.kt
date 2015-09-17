@@ -77,7 +77,8 @@ class Writer(private val renderFacade: RenderFacade) {
     }
 
     private fun writeProperties() {
-        write(AnkoFile.PROPERTIES, PropertyRenderer::class.java)
+        val imports = Props.imports["properties"] ?: ""
+        write(AnkoFile.PROPERTIES, PropertyRenderer::class.java, imports)
     }
 
     private fun writeServices() {
@@ -122,8 +123,8 @@ class Writer(private val renderFacade: RenderFacade) {
                 println("package ${config.outputPackage}\n")
             }
 
-            if (config.generateImports && imports.isNotEmpty()) {
-                println(imports)
+            if (config.generateImports) {
+                if (imports.isNotEmpty()) println(imports)
                 println()
             }
 
