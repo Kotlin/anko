@@ -157,7 +157,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
         return this
     }
 
-    public fun `where?`(select: String, vararg args: String): SelectQueryBuilder {
+    public fun whereSimple(select: String, vararg args: String): SelectQueryBuilder {
         if (selectionApplied) {
             throw AnkoException("Query selection was already applied.")
         }
@@ -169,8 +169,8 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
         return this
     }
 
-    @deprecated("Use `where?`() instead", replaceWith = ReplaceWith("`where?`(select, *args)"))
+    @Deprecated("Use whereSimple() instead", replaceWith = ReplaceWith("whereSimple(select, *args)"))
     public fun whereSupport(select: String, vararg args: String): SelectQueryBuilder {
-        return `where?`(select, *args)
+        return whereSimple(select, *args)
     }
 }

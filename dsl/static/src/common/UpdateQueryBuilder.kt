@@ -55,7 +55,7 @@ public class UpdateQueryBuilder(
         return this
     }
 
-    public fun `where?`(select: String, vararg args: String): UpdateQueryBuilder {
+    public fun whereSimple(select: String, vararg args: String): UpdateQueryBuilder {
         if (selectionApplied)
             throw AnkoException("Query selection was already applied.")
 
@@ -66,9 +66,9 @@ public class UpdateQueryBuilder(
         return this
     }
 
-    @Deprecated("Use `where?`() instead", replaceWith = ReplaceWith("`where?`(select, *args)"))
+    @Deprecated("Use whereSimple() instead", replaceWith = ReplaceWith("whereSimple(select, *args)"))
     public fun whereSupport(select: String, vararg args: String): UpdateQueryBuilder {
-        return `where?`(select, *args)
+        return whereSimple(select, *args)
     }
 
     public fun exec(): Int {
