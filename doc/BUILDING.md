@@ -4,22 +4,22 @@ Building Anko
 Required tools:
 
 * JDK 1.7
-* Android SDK (with platforms 15, 19, 21 installed)
 * IntelliJ IDEA 14.0+
 * Maven
 * Gradle
 
 ***
 
-**1.** Firstly, make a clone of Anko repository:
+**1.** Make a clone of the Anko repository:
 
 ```bash
 git clone git://github.com/JetBrains/anko.git && cd anko
 ```
 
-**2.** Then get all required dependencies (this usually takes several minutes):
+**2.** Then fetch the all required dependencies (this usually takes several minutes):
 
 ```bash
+./gradlew collectDependencies
 ant -f update_dependencies.xml
 ant -f download_android_sdk.xml
 ```
@@ -28,14 +28,6 @@ ant -f download_android_sdk.xml
 
 Execute a run configuration named `Collect android.jar` and then `Generate`.
 
-<table>
-<tr><td width="50px" align="center">:penguin:</td>
-<td>
-<i><code>ANDROID_HOME</code> variable must be set before launching <code>Collect android.jar</code>.</i>
-</td>
-</tr>
-</table>
+**4.** After doing this a number of directories with generated Kotlin source files should be present in `workdir/gen` directory.
 
-**4.** After doing this a number of directories with generated sources should be present in `workdir/gen` directory.
-
-**5.** You can build them all together by launching `build_artifacts.xml` Ant script. This script creates a zip file with an artifact for each Android SDK version in `workdir/gen/zip` directory.
+**5.** You can build them all together by launching `build_artifacts.xml` Ant script. This script creates a zip file with an artifact for each artifact in `workdir/gen/zip` directory.
