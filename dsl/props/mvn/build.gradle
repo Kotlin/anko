@@ -30,6 +30,10 @@ android {
     }
 }
 
+gradle.projectsEvaluated {
+    tasks.generateReleaseBuildConfig.enabled = false
+}
+
 dependencies {
     repositories {
         jcenter()
