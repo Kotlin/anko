@@ -144,7 +144,7 @@ Basically, all you have to do is to add an additional repository and a compile d
 
 ```gradle
 dependencies {
-    compile 'org.jetbrains.anko:anko:0.6.3-15'
+    compile 'org.jetbrains.anko:anko-sdk15:0.7'
 }
 ```
 
