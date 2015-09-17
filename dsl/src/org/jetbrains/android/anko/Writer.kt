@@ -40,7 +40,7 @@ class Writer(private val renderFacade: RenderFacade) {
 
         val staticFilesDir = File("dsl/static/src", when (versionType) {
             TargetArtifactType.PLATFORM -> "platform"
-            else -> config.version.toCamelCase('-')
+            else -> config.version.toCamelCase('-', firstCapital = false)
         })
 
         if (config.generateStaticFiles) {

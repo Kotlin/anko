@@ -39,7 +39,24 @@
         <unzip src="lib/kotlin-plugin.zip"
                dest="lib/"/>
 
+        <set_unix_perms />
+
         <ant antfile="update_dependencies_kotlin.xml" target="update_idea_bootstrap"/>
     </target>
+
+    <macrodef name="set_unix_perms">
+        <sequential>
+            <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="lib/ant-contrib.jar"/>
+
+            <if>
+                <equals arg1="${os.tag}" arg2="win.zip"/>
+                <then />
+                <else>
+                    <chmod dir="lib/Kotlin/kotlinc/bin" perm="+x" includes="**/*"/>
+                </else>
+            </if>
+
+        </sequential>
+    </macrodef>
 
 </project>
