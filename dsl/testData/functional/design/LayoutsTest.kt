@@ -1,6 +1,6 @@
 private val defaultInit: Any.() -> Unit = {}
 
-public open class _AppBarLayoutSupport(ctx: Context): android.support.design.widget.AppBarLayout(ctx) {
+public open class _AppBarLayout(ctx: Context): android.support.design.widget.AppBarLayout(ctx) {
     public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
@@ -8,7 +8,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
     ): T {
         val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -19,7 +19,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
     ): T {
         val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(width, height)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -31,7 +31,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
     ): T {
         val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(width, height, weight)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -41,7 +41,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
     ): T {
         val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(p!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -51,7 +51,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
     ): T {
         val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -61,7 +61,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
     ): T {
         val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -71,13 +71,13 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
     ): T {
         val layoutParams = android.support.design.widget.AppBarLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
 }
 
-public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support.design.widget.CollapsingToolbarLayout(ctx) {
+public open class _CollapsingToolbarLayout(ctx: Context): android.support.design.widget.CollapsingToolbarLayout(ctx) {
     public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
@@ -85,7 +85,7 @@ public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support
     ): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -96,7 +96,7 @@ public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support
     ): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(width, height)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -108,7 +108,7 @@ public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support
     ): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(width, height, gravity)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -118,7 +118,7 @@ public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support
     ): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -128,7 +128,7 @@ public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support
     ): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -138,13 +138,13 @@ public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support
     ): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
 }
 
-public open class _CoordinatorLayoutSupport(ctx: Context): android.support.design.widget.CoordinatorLayout(ctx) {
+public open class _CoordinatorLayout(ctx: Context): android.support.design.widget.CoordinatorLayout(ctx) {
     public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -152,7 +152,7 @@ public open class _CoordinatorLayoutSupport(ctx: Context): android.support.desig
     ): T {
         val layoutParams = android.support.design.widget.CoordinatorLayout.LayoutParams(width, height)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -162,7 +162,7 @@ public open class _CoordinatorLayoutSupport(ctx: Context): android.support.desig
     ): T {
         val layoutParams = android.support.design.widget.CoordinatorLayout.LayoutParams(p!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -172,7 +172,7 @@ public open class _CoordinatorLayoutSupport(ctx: Context): android.support.desig
     ): T {
         val layoutParams = android.support.design.widget.CoordinatorLayout.LayoutParams(p!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -182,13 +182,13 @@ public open class _CoordinatorLayoutSupport(ctx: Context): android.support.desig
     ): T {
         val layoutParams = android.support.design.widget.CoordinatorLayout.LayoutParams(p!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
 }
 
-public open class _TabLayoutSupport(ctx: Context): android.support.design.widget.TabLayout(ctx) {
+public open class _TabLayout(ctx: Context): android.support.design.widget.TabLayout(ctx) {
     public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
@@ -196,7 +196,7 @@ public open class _TabLayoutSupport(ctx: Context): android.support.design.widget
     ): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -207,7 +207,7 @@ public open class _TabLayoutSupport(ctx: Context): android.support.design.widget
     ): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(width, height)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -219,7 +219,7 @@ public open class _TabLayoutSupport(ctx: Context): android.support.design.widget
     ): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(width, height, gravity)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -229,7 +229,7 @@ public open class _TabLayoutSupport(ctx: Context): android.support.design.widget
     ): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -239,7 +239,7 @@ public open class _TabLayoutSupport(ctx: Context): android.support.design.widget
     ): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -249,13 +249,13 @@ public open class _TabLayoutSupport(ctx: Context): android.support.design.widget
     ): T {
         val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
 }
 
-public open class _TextInputLayoutSupport(ctx: Context): android.support.design.widget.TextInputLayout(ctx) {
+public open class _TextInputLayout(ctx: Context): android.support.design.widget.TextInputLayout(ctx) {
     public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
@@ -263,7 +263,7 @@ public open class _TextInputLayoutSupport(ctx: Context): android.support.design.
     ): T {
         val layoutParams = android.widget.LinearLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -274,7 +274,7 @@ public open class _TextInputLayoutSupport(ctx: Context): android.support.design.
     ): T {
         val layoutParams = android.widget.LinearLayout.LayoutParams(width, height)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -286,7 +286,7 @@ public open class _TextInputLayoutSupport(ctx: Context): android.support.design.
     ): T {
         val layoutParams = android.widget.LinearLayout.LayoutParams(width, height, weight)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -296,7 +296,7 @@ public open class _TextInputLayoutSupport(ctx: Context): android.support.design.
     ): T {
         val layoutParams = android.widget.LinearLayout.LayoutParams(p!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -306,7 +306,7 @@ public open class _TextInputLayoutSupport(ctx: Context): android.support.design.
     ): T {
         val layoutParams = android.widget.LinearLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -316,7 +316,7 @@ public open class _TextInputLayoutSupport(ctx: Context): android.support.design.
     ): T {
         val layoutParams = android.widget.LinearLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 

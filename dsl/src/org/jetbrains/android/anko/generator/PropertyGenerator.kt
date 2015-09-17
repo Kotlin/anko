@@ -46,7 +46,7 @@ class PropertyGenerator : Generator<PropertyElement> {
             setters: Map<String, List<MethodNodeWithClass>>): List<PropertyElement> {
         val existingProperties = hashSetOf<String>()
 
-        getters.map { getter ->
+        val propertyWithGetters = getters.map { getter ->
             val property = getter.toProperty()
             val settersList = setters.get(property.setterIdentifier) ?: listOf()
 
@@ -65,7 +65,7 @@ class PropertyGenerator : Generator<PropertyElement> {
                 PropertyElement(property.name, null, setters)
             } else null
         }.filterNotNull()
-        return propertyWithoutGetters
+        return propertyWithoutGetters + propertyWithGetters
     }
 
     private val MethodNode.isListenerGetter: Boolean

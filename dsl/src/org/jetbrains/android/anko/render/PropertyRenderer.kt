@@ -31,7 +31,9 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.PROPERTIES)
 
     override fun processElements(state: GenerationState) = StringBuilder {
-        state[PropertyGenerator::class.java].forEach { append(renderProperty(it)) }
+        state[PropertyGenerator::class.java].forEach {
+            append(renderProperty(it))
+        }
     }.toString()
 
     private fun renderProperty(property: PropertyElement): String {
@@ -61,6 +63,12 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
 
         val otherSetters = if (property.setters.size() > 1) property.setters.drop(1) else listOf()
 
+        if (property.getter != null) {
+            return buffer {
+                renderResourceProperty(otherSetters, fullPropertyName, rawReturnType)
+            }.toString()
+        }
+
         return buffer {
             line("public $mutability $fullPropertyName: $rawReturnType$nullability")
             if (getter != null) {
@@ -70,8 +78,6 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
             }
             if (bestSetter != null) indent.line("set(v) = ${bestSetter.method.name}(v)")
             nl()
-
-            renderResourceProperty(otherSetters, fullPropertyName, rawReturnType)
         }.toString()
     }
 

@@ -85,3 +85,15 @@ public var android.widget.Spinner.gravity: Int
 public var android.widget.GridView.gravity: Int
     get() = throw AnkoException("'android.widget.GridView.gravity' property does not have a getter")
     set(v) = setGravity(v)
+
+public var android.widget.AbsListView.selectorResource: Int
+    get() = throw AnkoException("'android.widget.AbsListView.selectorResource' property does not have a getter")
+    set(v) = setSelector(v)
+
+public var android.widget.TextView.hintResource: Int
+    get() = throw AnkoException("'android.widget.TextView.hintResource' property does not have a getter")
+    set(v) = setHint(v)
+
+public var android.widget.TextView.textResource: Int
+    get() = throw AnkoException("'android.widget.TextView.textResource' property does not have a getter")
+    set(v) = setText(v)

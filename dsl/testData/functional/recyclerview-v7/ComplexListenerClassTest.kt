@@ -1,4 +1,4 @@
-class __RecyclerViewSupport_OnChildAttachStateChangeListener : android.support.v7.widget.RecyclerView.OnChildAttachStateChangeListener {
+class __RecyclerView_OnChildAttachStateChangeListener : android.support.v7.widget.RecyclerView.OnChildAttachStateChangeListener {
     private var _onChildViewAttachedToWindow: ((android.view.View?) -> Unit)? = null
     private var _onChildViewDetachedFromWindow: ((android.view.View?) -> Unit)? = null
 
@@ -20,7 +20,7 @@ class __RecyclerViewSupport_OnChildAttachStateChangeListener : android.support.v
 
 }
 
-class __RecyclerViewSupport_OnScrollListener : android.support.v7.widget.RecyclerView.OnScrollListener() {
+class __RecyclerView_OnScrollListener : android.support.v7.widget.RecyclerView.OnScrollListener() {
     private var _onScrollStateChanged: ((android.support.v7.widget.RecyclerView?, Int) -> Unit)? = null
     private var _onScrolled: ((android.support.v7.widget.RecyclerView?, Int, Int) -> Unit)? = null
 
@@ -42,7 +42,7 @@ class __RecyclerViewSupport_OnScrollListener : android.support.v7.widget.Recycle
 
 }
 
-class __RecyclerViewSupport_OnItemTouchListener : android.support.v7.widget.RecyclerView.OnItemTouchListener {
+class __RecyclerView_OnItemTouchListener : android.support.v7.widget.RecyclerView.OnItemTouchListener {
     private var _onInterceptTouchEvent: ((android.support.v7.widget.RecyclerView?, android.view.MotionEvent?) -> Boolean)? = null
     private var _onTouchEvent: ((android.support.v7.widget.RecyclerView?, android.view.MotionEvent?) -> Unit)? = null
     private var _onRequestDisallowInterceptTouchEvent: ((Boolean) -> Unit)? = null

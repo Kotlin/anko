@@ -9,8 +9,8 @@ public object `$$Anko$Factories$AppcompatV7View` {
     public val TINTED_RATING_BAR = { ctx: Context -> if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatRatingBar(ctx) else RatingBar(ctx) }
     public val TINTED_SPINNER = { ctx: Context -> if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatSpinner(ctx) else Spinner(ctx) }
     public val TINTED_TEXT_VIEW = { ctx: Context -> if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatTextView(ctx) else TextView(ctx) }
-    public val SEARCH_VIEW_SUPPORT = { ctx: Context -> android.support.v7.widget.SearchView(ctx) }
-    public val SWITCH_COMPAT_SUPPORT = { ctx: Context -> android.support.v7.widget.SwitchCompat(ctx) }
+    public val SEARCH_VIEW = { ctx: Context -> android.support.v7.widget.SearchView(ctx) }
+    public val SWITCH_COMPAT = { ctx: Context -> android.support.v7.widget.SwitchCompat(ctx) }
 }
 
 public inline fun ViewManager.tintedAutoCompleteTextView(): AutoCompleteTextView = tintedAutoCompleteTextView({})
@@ -30,6 +30,7 @@ public inline fun ViewManager.tintedButton(text: CharSequence?): Button {
 }
 public inline fun ViewManager.tintedButton(text: CharSequence?, init: Button.() -> Unit): Button {
     return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_BUTTON) {
+        init()
         setText(text)
     }
 }
@@ -41,6 +42,7 @@ public inline fun ViewManager.tintedButton(text: Int): Button {
 }
 public inline fun ViewManager.tintedButton(text: Int, init: Button.() -> Unit): Button {
     return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_BUTTON) {
+        init()
         setText(text)
     }
 }
@@ -57,6 +59,7 @@ public inline fun ViewManager.tintedCheckBox(text: CharSequence?): CheckBox {
 }
 public inline fun ViewManager.tintedCheckBox(text: CharSequence?, init: CheckBox.() -> Unit): CheckBox {
     return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) {
+        init()
         setText(text)
     }
 }
@@ -68,6 +71,7 @@ public inline fun ViewManager.tintedCheckBox(text: Int): CheckBox {
 }
 public inline fun ViewManager.tintedCheckBox(text: Int, init: CheckBox.() -> Unit): CheckBox {
     return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) {
+        init()
         setText(text)
     }
 }
@@ -80,6 +84,7 @@ public inline fun ViewManager.tintedCheckBox(text: CharSequence?, checked: Boole
 }
 public inline fun ViewManager.tintedCheckBox(text: CharSequence?, checked: Boolean, init: CheckBox.() -> Unit): CheckBox {
     return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) {
+        init()
         setText(text)
         setChecked(checked)
     }
@@ -93,6 +98,7 @@ public inline fun ViewManager.tintedCheckBox(text: Int, checked: Boolean): Check
 }
 public inline fun ViewManager.tintedCheckBox(text: Int, checked: Boolean, init: CheckBox.() -> Unit): CheckBox {
     return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) {
+        init()
         setText(text)
         setChecked(checked)
     }
@@ -115,6 +121,7 @@ public inline fun ViewManager.tintedEditText(text: CharSequence?): EditText {
 }
 public inline fun ViewManager.tintedEditText(text: CharSequence?, init: EditText.() -> Unit): EditText {
     return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_EDIT_TEXT) {
+        init()
         setText(text)
     }
 }
@@ -126,6 +133,7 @@ public inline fun ViewManager.tintedEditText(text: Int): EditText {
 }
 public inline fun ViewManager.tintedEditText(text: Int, init: EditText.() -> Unit): EditText {
     return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_EDIT_TEXT) {
+        init()
         setText(text)
     }
 }
@@ -172,6 +180,7 @@ public inline fun ViewManager.tintedTextView(text: CharSequence?): TextView {
 }
 public inline fun ViewManager.tintedTextView(text: CharSequence?, init: TextView.() -> Unit): TextView {
     return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_TEXT_VIEW) {
+        init()
         setText(text)
     }
 }
@@ -183,77 +192,78 @@ public inline fun ViewManager.tintedTextView(text: Int): TextView {
 }
 public inline fun ViewManager.tintedTextView(text: Int, init: TextView.() -> Unit): TextView {
     return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_TEXT_VIEW) {
+        init()
         setText(text)
     }
 }
 
-public inline fun ViewManager.searchViewSupport(): android.support.v7.widget.SearchView = searchViewSupport({})
-public inline fun ViewManager.searchViewSupport(init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.SEARCH_VIEW_SUPPORT) { init() }
+public inline fun ViewManager.searchView(): android.support.v7.widget.SearchView = searchView({})
+public inline fun ViewManager.searchView(init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.SEARCH_VIEW) { init() }
 }
 
-public inline fun Context.searchViewSupport(): android.support.v7.widget.SearchView = searchViewSupport({})
-public inline fun Context.searchViewSupport(init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.SEARCH_VIEW_SUPPORT) { init() }
+public inline fun Context.searchView(): android.support.v7.widget.SearchView = searchView({})
+public inline fun Context.searchView(init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.SEARCH_VIEW) { init() }
 }
 
-public inline fun Activity.searchViewSupport(): android.support.v7.widget.SearchView = searchViewSupport({})
-public inline fun Activity.searchViewSupport(init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.SEARCH_VIEW_SUPPORT) { init() }
+public inline fun Activity.searchView(): android.support.v7.widget.SearchView = searchView({})
+public inline fun Activity.searchView(init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.SEARCH_VIEW) { init() }
 }
 
-public inline fun ViewManager.switchCompatSupport(): android.support.v7.widget.SwitchCompat = switchCompatSupport({})
-public inline fun ViewManager.switchCompatSupport(init: android.support.v7.widget.SwitchCompat.() -> Unit): android.support.v7.widget.SwitchCompat {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.SWITCH_COMPAT_SUPPORT) { init() }
+public inline fun ViewManager.switchCompat(): android.support.v7.widget.SwitchCompat = switchCompat({})
+public inline fun ViewManager.switchCompat(init: android.support.v7.widget.SwitchCompat.() -> Unit): android.support.v7.widget.SwitchCompat {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.SWITCH_COMPAT) { init() }
 }
 
 public object `$$Anko$Factories$AppcompatV7ViewGroup` {
-    public val ACTION_MENU_VIEW_SUPPORT = { ctx: Context -> _ActionMenuViewSupport(ctx) }
-    public val LINEAR_LAYOUT_COMPAT_SUPPORT = { ctx: Context -> _LinearLayoutCompatSupport(ctx) }
-    public val TOOLBAR_SUPPORT = { ctx: Context -> _ToolbarSupport(ctx) }
+    public val ACTION_MENU_VIEW = { ctx: Context -> _ActionMenuView(ctx) }
+    public val LINEAR_LAYOUT_COMPAT = { ctx: Context -> _LinearLayoutCompat(ctx) }
+    public val TOOLBAR = { ctx: Context -> _Toolbar(ctx) }
 }
 
-public inline fun ViewManager.actionMenuViewSupport(): android.support.v7.widget.ActionMenuView = actionMenuViewSupport({})
-public inline fun ViewManager.actionMenuViewSupport(init: _ActionMenuViewSupport.() -> Unit): android.support.v7.widget.ActionMenuView {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_MENU_VIEW_SUPPORT) { init() }
+public inline fun ViewManager.actionMenuView(): android.support.v7.widget.ActionMenuView = actionMenuView({})
+public inline fun ViewManager.actionMenuView(init: _ActionMenuView.() -> Unit): android.support.v7.widget.ActionMenuView {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_MENU_VIEW) { init() }
 }
 
-public inline fun Context.actionMenuViewSupport(): android.support.v7.widget.ActionMenuView = actionMenuViewSupport({})
-public inline fun Context.actionMenuViewSupport(init: _ActionMenuViewSupport.() -> Unit): android.support.v7.widget.ActionMenuView {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_MENU_VIEW_SUPPORT) { init() }
+public inline fun Context.actionMenuView(): android.support.v7.widget.ActionMenuView = actionMenuView({})
+public inline fun Context.actionMenuView(init: _ActionMenuView.() -> Unit): android.support.v7.widget.ActionMenuView {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_MENU_VIEW) { init() }
 }
 
-public inline fun Activity.actionMenuViewSupport(): android.support.v7.widget.ActionMenuView = actionMenuViewSupport({})
-public inline fun Activity.actionMenuViewSupport(init: _ActionMenuViewSupport.() -> Unit): android.support.v7.widget.ActionMenuView {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_MENU_VIEW_SUPPORT) { init() }
+public inline fun Activity.actionMenuView(): android.support.v7.widget.ActionMenuView = actionMenuView({})
+public inline fun Activity.actionMenuView(init: _ActionMenuView.() -> Unit): android.support.v7.widget.ActionMenuView {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_MENU_VIEW) { init() }
 }
 
-public inline fun ViewManager.linearLayoutCompatSupport(): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompatSupport({})
-public inline fun ViewManager.linearLayoutCompatSupport(init: _LinearLayoutCompatSupport.() -> Unit): android.support.v7.widget.LinearLayoutCompat {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.LINEAR_LAYOUT_COMPAT_SUPPORT) { init() }
+public inline fun ViewManager.linearLayoutCompat(): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompat({})
+public inline fun ViewManager.linearLayoutCompat(init: _LinearLayoutCompat.() -> Unit): android.support.v7.widget.LinearLayoutCompat {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.LINEAR_LAYOUT_COMPAT) { init() }
 }
 
-public inline fun Context.linearLayoutCompatSupport(): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompatSupport({})
-public inline fun Context.linearLayoutCompatSupport(init: _LinearLayoutCompatSupport.() -> Unit): android.support.v7.widget.LinearLayoutCompat {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.LINEAR_LAYOUT_COMPAT_SUPPORT) { init() }
+public inline fun Context.linearLayoutCompat(): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompat({})
+public inline fun Context.linearLayoutCompat(init: _LinearLayoutCompat.() -> Unit): android.support.v7.widget.LinearLayoutCompat {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.LINEAR_LAYOUT_COMPAT) { init() }
 }
 
-public inline fun Activity.linearLayoutCompatSupport(): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompatSupport({})
-public inline fun Activity.linearLayoutCompatSupport(init: _LinearLayoutCompatSupport.() -> Unit): android.support.v7.widget.LinearLayoutCompat {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.LINEAR_LAYOUT_COMPAT_SUPPORT) { init() }
+public inline fun Activity.linearLayoutCompat(): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompat({})
+public inline fun Activity.linearLayoutCompat(init: _LinearLayoutCompat.() -> Unit): android.support.v7.widget.LinearLayoutCompat {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.LINEAR_LAYOUT_COMPAT) { init() }
 }
 
-public inline fun ViewManager.toolbarSupport(): android.support.v7.widget.Toolbar = toolbarSupport({})
-public inline fun ViewManager.toolbarSupport(init: _ToolbarSupport.() -> Unit): android.support.v7.widget.Toolbar {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR_SUPPORT) { init() }
+public inline fun ViewManager.toolbar(): android.support.v7.widget.Toolbar = toolbar({})
+public inline fun ViewManager.toolbar(init: _Toolbar.() -> Unit): android.support.v7.widget.Toolbar {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR) { init() }
 }
 
-public inline fun Context.toolbarSupport(): android.support.v7.widget.Toolbar = toolbarSupport({})
-public inline fun Context.toolbarSupport(init: _ToolbarSupport.() -> Unit): android.support.v7.widget.Toolbar {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR_SUPPORT) { init() }
+public inline fun Context.toolbar(): android.support.v7.widget.Toolbar = toolbar({})
+public inline fun Context.toolbar(init: _Toolbar.() -> Unit): android.support.v7.widget.Toolbar {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR) { init() }
 }
 
-public inline fun Activity.toolbarSupport(): android.support.v7.widget.Toolbar = toolbarSupport({})
-public inline fun Activity.toolbarSupport(init: _ToolbarSupport.() -> Unit): android.support.v7.widget.Toolbar {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR_SUPPORT) { init() }
+public inline fun Activity.toolbar(): android.support.v7.widget.Toolbar = toolbar({})
+public inline fun Activity.toolbar(init: _Toolbar.() -> Unit): android.support.v7.widget.Toolbar {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR) { init() }
 }

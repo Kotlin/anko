@@ -4,8 +4,8 @@ public fun android.support.design.widget.CoordinatorLayout.onHierarchyChangeList
     setOnHierarchyChangeListener(listener)
 }
 
-public fun android.support.design.widget.TabLayout.onTabSelectedListener(init: __TabLayoutSupport_OnTabSelectedListener.() -> Unit) {
-    val listener = __TabLayoutSupport_OnTabSelectedListener()
+public fun android.support.design.widget.TabLayout.onTabSelectedListener(init: __TabLayout_OnTabSelectedListener.() -> Unit) {
+    val listener = __TabLayout_OnTabSelectedListener()
     listener.init()
     setOnTabSelectedListener(listener)
 }

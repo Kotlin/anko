@@ -1,6 +1,6 @@
 private val defaultInit: Any.() -> Unit = {}
 
-public open class _PercentFrameLayoutSupport(ctx: Context): android.support.percent.PercentFrameLayout(ctx) {
+public open class _PercentFrameLayout(ctx: Context): android.support.percent.PercentFrameLayout(ctx) {
     public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
@@ -8,7 +8,7 @@ public open class _PercentFrameLayoutSupport(ctx: Context): android.support.perc
     ): T {
         val layoutParams = android.support.percent.PercentFrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -19,7 +19,7 @@ public open class _PercentFrameLayoutSupport(ctx: Context): android.support.perc
     ): T {
         val layoutParams = android.support.percent.PercentFrameLayout.LayoutParams(width, height)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -31,7 +31,7 @@ public open class _PercentFrameLayoutSupport(ctx: Context): android.support.perc
     ): T {
         val layoutParams = android.support.percent.PercentFrameLayout.LayoutParams(width, height, gravity)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -41,7 +41,7 @@ public open class _PercentFrameLayoutSupport(ctx: Context): android.support.perc
     ): T {
         val layoutParams = android.support.percent.PercentFrameLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -51,7 +51,7 @@ public open class _PercentFrameLayoutSupport(ctx: Context): android.support.perc
     ): T {
         val layoutParams = android.support.percent.PercentFrameLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -61,7 +61,7 @@ public open class _PercentFrameLayoutSupport(ctx: Context): android.support.perc
     ): T {
         val layoutParams = android.support.percent.PercentFrameLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -71,13 +71,13 @@ public open class _PercentFrameLayoutSupport(ctx: Context): android.support.perc
     ): T {
         val layoutParams = android.support.percent.PercentFrameLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
 }
 
-public open class _PercentRelativeLayoutSupport(ctx: Context): android.support.percent.PercentRelativeLayout(ctx) {
+public open class _PercentRelativeLayout(ctx: Context): android.support.percent.PercentRelativeLayout(ctx) {
     public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
@@ -85,7 +85,7 @@ public open class _PercentRelativeLayoutSupport(ctx: Context): android.support.p
     ): T {
         val layoutParams = android.support.percent.PercentRelativeLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -96,7 +96,7 @@ public open class _PercentRelativeLayoutSupport(ctx: Context): android.support.p
     ): T {
         val layoutParams = android.support.percent.PercentRelativeLayout.LayoutParams(width, height)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -106,7 +106,7 @@ public open class _PercentRelativeLayoutSupport(ctx: Context): android.support.p
     ): T {
         val layoutParams = android.support.percent.PercentRelativeLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -116,7 +116,7 @@ public open class _PercentRelativeLayoutSupport(ctx: Context): android.support.p
     ): T {
         val layoutParams = android.support.percent.PercentRelativeLayout.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 

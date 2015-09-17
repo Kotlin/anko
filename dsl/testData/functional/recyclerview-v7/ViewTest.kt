@@ -1,18 +1,18 @@
 public object `$$Anko$Factories$RecyclerviewV7ViewGroup` {
-    public val RECYCLER_VIEW_SUPPORT = { ctx: Context -> _RecyclerViewSupport(ctx) }
+    public val RECYCLER_VIEW = { ctx: Context -> _RecyclerView(ctx) }
 }
 
-public inline fun ViewManager.recyclerViewSupport(): android.support.v7.widget.RecyclerView = recyclerViewSupport({})
-public inline fun ViewManager.recyclerViewSupport(init: _RecyclerViewSupport.() -> Unit): android.support.v7.widget.RecyclerView {
-    return ankoView(`$$Anko$Factories$RecyclerviewV7ViewGroup`.RECYCLER_VIEW_SUPPORT) { init() }
+public inline fun ViewManager.recyclerView(): android.support.v7.widget.RecyclerView = recyclerView({})
+public inline fun ViewManager.recyclerView(init: _RecyclerView.() -> Unit): android.support.v7.widget.RecyclerView {
+    return ankoView(`$$Anko$Factories$RecyclerviewV7ViewGroup`.RECYCLER_VIEW) { init() }
 }
 
-public inline fun Context.recyclerViewSupport(): android.support.v7.widget.RecyclerView = recyclerViewSupport({})
-public inline fun Context.recyclerViewSupport(init: _RecyclerViewSupport.() -> Unit): android.support.v7.widget.RecyclerView {
-    return ankoView(`$$Anko$Factories$RecyclerviewV7ViewGroup`.RECYCLER_VIEW_SUPPORT) { init() }
+public inline fun Context.recyclerView(): android.support.v7.widget.RecyclerView = recyclerView({})
+public inline fun Context.recyclerView(init: _RecyclerView.() -> Unit): android.support.v7.widget.RecyclerView {
+    return ankoView(`$$Anko$Factories$RecyclerviewV7ViewGroup`.RECYCLER_VIEW) { init() }
 }
 
-public inline fun Activity.recyclerViewSupport(): android.support.v7.widget.RecyclerView = recyclerViewSupport({})
-public inline fun Activity.recyclerViewSupport(init: _RecyclerViewSupport.() -> Unit): android.support.v7.widget.RecyclerView {
-    return ankoView(`$$Anko$Factories$RecyclerviewV7ViewGroup`.RECYCLER_VIEW_SUPPORT) { init() }
+public inline fun Activity.recyclerView(): android.support.v7.widget.RecyclerView = recyclerView({})
+public inline fun Activity.recyclerView(init: _RecyclerView.() -> Unit): android.support.v7.widget.RecyclerView {
+    return ankoView(`$$Anko$Factories$RecyclerviewV7ViewGroup`.RECYCLER_VIEW) { init() }
 }

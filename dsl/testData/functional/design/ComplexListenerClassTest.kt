@@ -20,7 +20,7 @@ class __ViewGroup_OnHierarchyChangeListener : android.view.ViewGroup.OnHierarchy
 
 }
 
-class __TabLayoutSupport_OnTabSelectedListener : android.support.design.widget.TabLayout.OnTabSelectedListener {
+class __TabLayout_OnTabSelectedListener : android.support.design.widget.TabLayout.OnTabSelectedListener {
     private var _onTabSelected: ((android.support.design.widget.TabLayout.Tab?) -> Unit)? = null
     private var _onTabUnselected: ((android.support.design.widget.TabLayout.Tab?) -> Unit)? = null
     private var _onTabReselected: ((android.support.design.widget.TabLayout.Tab?) -> Unit)? = null

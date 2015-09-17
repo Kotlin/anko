@@ -129,6 +129,7 @@ public inline fun ViewManager.button(text: CharSequence?): android.widget.Button
 }
 public inline fun ViewManager.button(text: CharSequence?, init: android.widget.Button.() -> Unit): android.widget.Button {
     return ankoView(`$$Anko$Factories$Sdk15View`.BUTTON) {
+        init()
         setText(text)
     }
 }
@@ -140,6 +141,7 @@ public inline fun ViewManager.button(text: Int): android.widget.Button {
 }
 public inline fun ViewManager.button(text: Int, init: android.widget.Button.() -> Unit): android.widget.Button {
     return ankoView(`$$Anko$Factories$Sdk15View`.BUTTON) {
+        init()
         setText(text)
     }
 }
@@ -171,6 +173,7 @@ public inline fun ViewManager.checkBox(text: CharSequence?): android.widget.Chec
 }
 public inline fun ViewManager.checkBox(text: CharSequence?, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
     return ankoView(`$$Anko$Factories$Sdk15View`.CHECK_BOX) {
+        init()
         setText(text)
     }
 }
@@ -182,6 +185,7 @@ public inline fun ViewManager.checkBox(text: Int): android.widget.CheckBox {
 }
 public inline fun ViewManager.checkBox(text: Int, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
     return ankoView(`$$Anko$Factories$Sdk15View`.CHECK_BOX) {
+        init()
         setText(text)
     }
 }
@@ -194,6 +198,7 @@ public inline fun ViewManager.checkBox(text: CharSequence?, checked: Boolean): a
 }
 public inline fun ViewManager.checkBox(text: CharSequence?, checked: Boolean, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
     return ankoView(`$$Anko$Factories$Sdk15View`.CHECK_BOX) {
+        init()
         setText(text)
         setChecked(checked)
     }
@@ -207,6 +212,7 @@ public inline fun ViewManager.checkBox(text: Int, checked: Boolean): android.wid
 }
 public inline fun ViewManager.checkBox(text: Int, checked: Boolean, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
     return ankoView(`$$Anko$Factories$Sdk15View`.CHECK_BOX) {
+        init()
         setText(text)
         setChecked(checked)
     }
@@ -269,6 +275,7 @@ public inline fun ViewManager.editText(text: CharSequence?): android.widget.Edit
 }
 public inline fun ViewManager.editText(text: CharSequence?, init: android.widget.EditText.() -> Unit): android.widget.EditText {
     return ankoView(`$$Anko$Factories$Sdk15View`.EDIT_TEXT) {
+        init()
         setText(text)
     }
 }
@@ -280,6 +287,7 @@ public inline fun ViewManager.editText(text: Int): android.widget.EditText {
 }
 public inline fun ViewManager.editText(text: Int, init: android.widget.EditText.() -> Unit): android.widget.EditText {
     return ankoView(`$$Anko$Factories$Sdk15View`.EDIT_TEXT) {
+        init()
         setText(text)
     }
 }
@@ -311,6 +319,7 @@ public inline fun ViewManager.imageButton(imageDrawable: android.graphics.drawab
 }
 public inline fun ViewManager.imageButton(imageDrawable: android.graphics.drawable.Drawable?, init: android.widget.ImageButton.() -> Unit): android.widget.ImageButton {
     return ankoView(`$$Anko$Factories$Sdk15View`.IMAGE_BUTTON) {
+        init()
         setImageDrawable(imageDrawable)
     }
 }
@@ -322,6 +331,7 @@ public inline fun ViewManager.imageButton(imageResource: Int): android.widget.Im
 }
 public inline fun ViewManager.imageButton(imageResource: Int, init: android.widget.ImageButton.() -> Unit): android.widget.ImageButton {
     return ankoView(`$$Anko$Factories$Sdk15View`.IMAGE_BUTTON) {
+        init()
         setImageResource(imageResource)
     }
 }
@@ -338,6 +348,7 @@ public inline fun ViewManager.imageView(imageDrawable: android.graphics.drawable
 }
 public inline fun ViewManager.imageView(imageDrawable: android.graphics.drawable.Drawable?, init: android.widget.ImageView.() -> Unit): android.widget.ImageView {
     return ankoView(`$$Anko$Factories$Sdk15View`.IMAGE_VIEW) {
+        init()
         setImageDrawable(imageDrawable)
     }
 }
@@ -349,6 +360,7 @@ public inline fun ViewManager.imageView(imageResource: Int): android.widget.Imag
 }
 public inline fun ViewManager.imageView(imageResource: Int, init: android.widget.ImageView.() -> Unit): android.widget.ImageView {
     return ankoView(`$$Anko$Factories$Sdk15View`.IMAGE_VIEW) {
+        init()
         setImageResource(imageResource)
     }
 }
@@ -525,6 +537,7 @@ public inline fun ViewManager.textView(text: CharSequence?): android.widget.Text
 }
 public inline fun ViewManager.textView(text: CharSequence?, init: android.widget.TextView.() -> Unit): android.widget.TextView {
     return ankoView(`$$Anko$Factories$Sdk15View`.TEXT_VIEW) {
+        init()
         setText(text)
     }
 }
@@ -536,6 +549,7 @@ public inline fun ViewManager.textView(text: Int): android.widget.TextView {
 }
 public inline fun ViewManager.textView(text: Int, init: android.widget.TextView.() -> Unit): android.widget.TextView {
     return ankoView(`$$Anko$Factories$Sdk15View`.TEXT_VIEW) {
+        init()
         setText(text)
     }
 }

@@ -1,6 +1,6 @@
 private val defaultInit: Any.() -> Unit = {}
 
-public open class _RecyclerViewSupport(ctx: Context): android.support.v7.widget.RecyclerView(ctx) {
+public open class _RecyclerView(ctx: Context): android.support.v7.widget.RecyclerView(ctx) {
     public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
@@ -8,7 +8,7 @@ public open class _RecyclerViewSupport(ctx: Context): android.support.v7.widget.
     ): T {
         val layoutParams = android.support.v7.widget.RecyclerView.LayoutParams(c!!, attrs!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -19,7 +19,7 @@ public open class _RecyclerViewSupport(ctx: Context): android.support.v7.widget.
     ): T {
         val layoutParams = android.support.v7.widget.RecyclerView.LayoutParams(width, height)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -29,7 +29,7 @@ public open class _RecyclerViewSupport(ctx: Context): android.support.v7.widget.
     ): T {
         val layoutParams = android.support.v7.widget.RecyclerView.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -39,7 +39,7 @@ public open class _RecyclerViewSupport(ctx: Context): android.support.v7.widget.
     ): T {
         val layoutParams = android.support.v7.widget.RecyclerView.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 
@@ -49,7 +49,7 @@ public open class _RecyclerViewSupport(ctx: Context): android.support.v7.widget.
     ): T {
         val layoutParams = android.support.v7.widget.RecyclerView.LayoutParams(source!!)
         layoutParams.init()
-        this@layoutParams.layoutParams = layoutParams
+        this@lparams.layoutParams = layoutParams
         return this
     }
 

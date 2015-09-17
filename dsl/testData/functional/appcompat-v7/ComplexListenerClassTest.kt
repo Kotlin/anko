@@ -1,4 +1,4 @@
-class __SearchViewSupport_OnQueryTextListener : android.support.v7.widget.SearchView.OnQueryTextListener {
+class __SearchView_OnQueryTextListener : android.support.v7.widget.SearchView.OnQueryTextListener {
     private var _onQueryTextSubmit: ((String?) -> Boolean)? = null
     private var _onQueryTextChange: ((String?) -> Boolean)? = null
 
@@ -16,7 +16,7 @@ class __SearchViewSupport_OnQueryTextListener : android.support.v7.widget.Search
 
 }
 
-class __SearchViewSupport_OnSuggestionListener : android.support.v7.widget.SearchView.OnSuggestionListener {
+class __SearchView_OnSuggestionListener : android.support.v7.widget.SearchView.OnSuggestionListener {
     private var _onSuggestionSelect: ((Int) -> Boolean)? = null
     private var _onSuggestionClick: ((Int) -> Boolean)? = null
 
