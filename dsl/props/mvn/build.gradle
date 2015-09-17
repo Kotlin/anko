@@ -35,14 +35,14 @@ dependencies {
         jcenter()
     }
 
-    compile fileTree(dir: '../../original/%ORIGINAL_VERSION', include: ['*.jar'])
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    provided fileTree(dir: '../../original/%ORIGINAL_VERSION', include: ['*.jar'])
+    provided "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     if ("%ARTIFACT_VERSION" != "common") {
-        compile files('../../zip/anko-common.jar')
+        provided files('../../zip/anko-common.jar')
     }
     if ("%ARTIFACT_VERSION" != "common" && !"%ARTIFACT_VERSION".startsWith("sdk")) {
-        compile files('../../zip/anko-sdk%SDK_VERSION.jar')
+        provided files('../../zip/anko-sdk%SDK_VERSION.jar')
     }
 }
 
