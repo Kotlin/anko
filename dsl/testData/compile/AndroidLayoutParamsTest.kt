@@ -17,7 +17,7 @@ public open class MyActivity() : Activity() {
         UI {
             linearLayout {
                 editText {
-                    layoutParams(-2, -2) {
+                    lparams(-2, -2) {
                         bottomMargin = 1
                         leftMargin = 2
                         rightMargin = 3
@@ -30,7 +30,7 @@ public open class MyActivity() : Activity() {
             }
             relativeLayout {
                 editText {
-                    layoutParams(-2, -2) {
+                    lparams(-2, -2) {
                         bottomMargin = 1
                         leftMargin = 2
                         rightMargin = 3
@@ -43,7 +43,7 @@ public open class MyActivity() : Activity() {
             }
             absoluteLayout {
                 editText {
-                    layoutParams(-2, -2, 12, 23) {
+                    lparams(-2, -2, 12, 23) {
                         height = 9
                         x = 100
                         y = 200
@@ -52,7 +52,7 @@ public open class MyActivity() : Activity() {
             }
             frameLayout {
                 editText {
-                    layoutParams(-2, -2) {
+                    lparams(-2, -2) {
                         bottomMargin = 1
                         leftMargin = 2
                         rightMargin = 3
@@ -64,7 +64,7 @@ public open class MyActivity() : Activity() {
             }
             gridLayout {
                 editText {
-                    layoutParams() {
+                    lparams() {
                         bottomMargin = 1
                         leftMargin = 2
                         rightMargin = 3

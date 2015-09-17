@@ -1,7 +1,7 @@
 private val defaultInit: Any.() -> Unit = {}
 
 public open class _GridLayoutSupport(ctx: Context): android.support.v7.widget.GridLayout(ctx) {
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             rowSpec: android.support.v7.widget.GridLayout.Spec?,
             columnSpec: android.support.v7.widget.GridLayout.Spec?,
             init: android.support.v7.widget.GridLayout.LayoutParams.() -> Unit = defaultInit
@@ -12,7 +12,7 @@ public open class _GridLayoutSupport(ctx: Context): android.support.v7.widget.Gr
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             init: android.support.v7.widget.GridLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
         val layoutParams = android.support.v7.widget.GridLayout.LayoutParams()
@@ -21,7 +21,7 @@ public open class _GridLayoutSupport(ctx: Context): android.support.v7.widget.Gr
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             params: android.view.ViewGroup.LayoutParams?,
             init: android.support.v7.widget.GridLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -31,7 +31,7 @@ public open class _GridLayoutSupport(ctx: Context): android.support.v7.widget.Gr
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             params: android.view.ViewGroup.MarginLayoutParams?,
             init: android.support.v7.widget.GridLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -41,7 +41,7 @@ public open class _GridLayoutSupport(ctx: Context): android.support.v7.widget.Gr
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.support.v7.widget.GridLayout.LayoutParams?,
             init: android.support.v7.widget.GridLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -51,7 +51,7 @@ public open class _GridLayoutSupport(ctx: Context): android.support.v7.widget.Gr
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             context: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.support.v7.widget.GridLayout.LayoutParams.() -> Unit = defaultInit

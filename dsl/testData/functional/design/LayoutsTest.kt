@@ -1,7 +1,7 @@
 private val defaultInit: Any.() -> Unit = {}
 
 public open class _AppBarLayoutSupport(ctx: Context): android.support.design.widget.AppBarLayout(ctx) {
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit
@@ -12,7 +12,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit
@@ -23,7 +23,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             weight: Float,
@@ -35,7 +35,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             p: android.view.ViewGroup.LayoutParams?,
             init: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -45,7 +45,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.MarginLayoutParams?,
             init: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -55,7 +55,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.widget.LinearLayout.LayoutParams?,
             init: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -65,7 +65,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.support.design.widget.AppBarLayout.LayoutParams?,
             init: android.support.design.widget.AppBarLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -78,7 +78,7 @@ public open class _AppBarLayoutSupport(ctx: Context): android.support.design.wid
 }
 
 public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support.design.widget.CollapsingToolbarLayout(ctx) {
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
@@ -89,7 +89,7 @@ public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
@@ -100,7 +100,7 @@ public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int,
@@ -112,7 +112,7 @@ public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.LayoutParams?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -122,7 +122,7 @@ public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.MarginLayoutParams?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -132,7 +132,7 @@ public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.widget.FrameLayout.LayoutParams?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -145,7 +145,7 @@ public open class _CollapsingToolbarLayoutSupport(ctx: Context): android.support
 }
 
 public open class _CoordinatorLayoutSupport(ctx: Context): android.support.design.widget.CoordinatorLayout(ctx) {
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.support.design.widget.CoordinatorLayout.LayoutParams.() -> Unit = defaultInit
@@ -156,7 +156,7 @@ public open class _CoordinatorLayoutSupport(ctx: Context): android.support.desig
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             p: android.support.design.widget.CoordinatorLayout.LayoutParams?,
             init: android.support.design.widget.CoordinatorLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -166,7 +166,7 @@ public open class _CoordinatorLayoutSupport(ctx: Context): android.support.desig
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             p: android.view.ViewGroup.MarginLayoutParams?,
             init: android.support.design.widget.CoordinatorLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -176,7 +176,7 @@ public open class _CoordinatorLayoutSupport(ctx: Context): android.support.desig
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             p: android.view.ViewGroup.LayoutParams?,
             init: android.support.design.widget.CoordinatorLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -189,7 +189,7 @@ public open class _CoordinatorLayoutSupport(ctx: Context): android.support.desig
 }
 
 public open class _TabLayoutSupport(ctx: Context): android.support.design.widget.TabLayout(ctx) {
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
@@ -200,7 +200,7 @@ public open class _TabLayoutSupport(ctx: Context): android.support.design.widget
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
@@ -211,7 +211,7 @@ public open class _TabLayoutSupport(ctx: Context): android.support.design.widget
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int,
@@ -223,7 +223,7 @@ public open class _TabLayoutSupport(ctx: Context): android.support.design.widget
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.LayoutParams?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -233,7 +233,7 @@ public open class _TabLayoutSupport(ctx: Context): android.support.design.widget
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.MarginLayoutParams?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -243,7 +243,7 @@ public open class _TabLayoutSupport(ctx: Context): android.support.design.widget
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.widget.FrameLayout.LayoutParams?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -256,7 +256,7 @@ public open class _TabLayoutSupport(ctx: Context): android.support.design.widget
 }
 
 public open class _TextInputLayoutSupport(ctx: Context): android.support.design.widget.TextInputLayout(ctx) {
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit
@@ -267,7 +267,7 @@ public open class _TextInputLayoutSupport(ctx: Context): android.support.design.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit
@@ -278,7 +278,7 @@ public open class _TextInputLayoutSupport(ctx: Context): android.support.design.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             weight: Float,
@@ -290,7 +290,7 @@ public open class _TextInputLayoutSupport(ctx: Context): android.support.design.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             p: android.view.ViewGroup.LayoutParams?,
             init: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -300,7 +300,7 @@ public open class _TextInputLayoutSupport(ctx: Context): android.support.design.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.MarginLayoutParams?,
             init: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -310,7 +310,7 @@ public open class _TextInputLayoutSupport(ctx: Context): android.support.design.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.widget.LinearLayout.LayoutParams?,
             init: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit
     ): T {

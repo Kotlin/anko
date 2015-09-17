@@ -1,7 +1,7 @@
 private val defaultInit: Any.() -> Unit = {}
 
 public open class _FragmentTabHostSupport(ctx: Context): android.support.v4.app.FragmentTabHost(ctx) {
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
@@ -12,7 +12,7 @@ public open class _FragmentTabHostSupport(ctx: Context): android.support.v4.app.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
@@ -23,7 +23,7 @@ public open class _FragmentTabHostSupport(ctx: Context): android.support.v4.app.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int,
@@ -35,7 +35,7 @@ public open class _FragmentTabHostSupport(ctx: Context): android.support.v4.app.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.LayoutParams?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -45,7 +45,7 @@ public open class _FragmentTabHostSupport(ctx: Context): android.support.v4.app.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.MarginLayoutParams?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -55,7 +55,7 @@ public open class _FragmentTabHostSupport(ctx: Context): android.support.v4.app.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.widget.FrameLayout.LayoutParams?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -68,7 +68,7 @@ public open class _FragmentTabHostSupport(ctx: Context): android.support.v4.app.
 }
 
 public open class _ViewPagerSupport(ctx: Context): android.support.v4.view.ViewPager(ctx) {
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             init: android.support.v4.view.ViewPager.LayoutParams.() -> Unit = defaultInit
     ): T {
         val layoutParams = android.support.v4.view.ViewPager.LayoutParams()
@@ -77,7 +77,7 @@ public open class _ViewPagerSupport(ctx: Context): android.support.v4.view.ViewP
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             context: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.support.v4.view.ViewPager.LayoutParams.() -> Unit = defaultInit
@@ -91,7 +91,7 @@ public open class _ViewPagerSupport(ctx: Context): android.support.v4.view.ViewP
 }
 
 public open class _DrawerLayoutSupport(ctx: Context): android.support.v4.widget.DrawerLayout(ctx) {
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.support.v4.widget.DrawerLayout.LayoutParams.() -> Unit = defaultInit
@@ -102,7 +102,7 @@ public open class _DrawerLayoutSupport(ctx: Context): android.support.v4.widget.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.support.v4.widget.DrawerLayout.LayoutParams.() -> Unit = defaultInit
@@ -113,7 +113,7 @@ public open class _DrawerLayoutSupport(ctx: Context): android.support.v4.widget.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int,
@@ -125,7 +125,7 @@ public open class _DrawerLayoutSupport(ctx: Context): android.support.v4.widget.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.support.v4.widget.DrawerLayout.LayoutParams?,
             init: android.support.v4.widget.DrawerLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -135,7 +135,7 @@ public open class _DrawerLayoutSupport(ctx: Context): android.support.v4.widget.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.LayoutParams?,
             init: android.support.v4.widget.DrawerLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -145,7 +145,7 @@ public open class _DrawerLayoutSupport(ctx: Context): android.support.v4.widget.
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.MarginLayoutParams?,
             init: android.support.v4.widget.DrawerLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -158,7 +158,7 @@ public open class _DrawerLayoutSupport(ctx: Context): android.support.v4.widget.
 }
 
 public open class _NestedScrollViewSupport(ctx: Context): android.support.v4.widget.NestedScrollView(ctx) {
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
@@ -169,7 +169,7 @@ public open class _NestedScrollViewSupport(ctx: Context): android.support.v4.wid
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
@@ -180,7 +180,7 @@ public open class _NestedScrollViewSupport(ctx: Context): android.support.v4.wid
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int,
@@ -192,7 +192,7 @@ public open class _NestedScrollViewSupport(ctx: Context): android.support.v4.wid
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.LayoutParams?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -202,7 +202,7 @@ public open class _NestedScrollViewSupport(ctx: Context): android.support.v4.wid
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.MarginLayoutParams?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -212,7 +212,7 @@ public open class _NestedScrollViewSupport(ctx: Context): android.support.v4.wid
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.widget.FrameLayout.LayoutParams?,
             init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -225,7 +225,7 @@ public open class _NestedScrollViewSupport(ctx: Context): android.support.v4.wid
 }
 
 public open class _SlidingPaneLayoutSupport(ctx: Context): android.support.v4.widget.SlidingPaneLayout(ctx) {
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             init: android.support.v4.widget.SlidingPaneLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
         val layoutParams = android.support.v4.widget.SlidingPaneLayout.LayoutParams()
@@ -234,7 +234,7 @@ public open class _SlidingPaneLayoutSupport(ctx: Context): android.support.v4.wi
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.support.v4.widget.SlidingPaneLayout.LayoutParams.() -> Unit = defaultInit
@@ -245,7 +245,7 @@ public open class _SlidingPaneLayoutSupport(ctx: Context): android.support.v4.wi
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.LayoutParams?,
             init: android.support.v4.widget.SlidingPaneLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -255,7 +255,7 @@ public open class _SlidingPaneLayoutSupport(ctx: Context): android.support.v4.wi
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.view.ViewGroup.MarginLayoutParams?,
             init: android.support.v4.widget.SlidingPaneLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -265,7 +265,7 @@ public open class _SlidingPaneLayoutSupport(ctx: Context): android.support.v4.wi
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             source: android.support.v4.widget.SlidingPaneLayout.LayoutParams?,
             init: android.support.v4.widget.SlidingPaneLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -275,7 +275,7 @@ public open class _SlidingPaneLayoutSupport(ctx: Context): android.support.v4.wi
         return this
     }
 
-    public fun <T: View> T.layoutParams(
+    public fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.support.v4.widget.SlidingPaneLayout.LayoutParams.() -> Unit = defaultInit
