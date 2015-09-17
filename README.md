@@ -120,11 +120,13 @@ Short answer: **yes**.
 
 For example, you might want to use a `MapView` in the DSL. Then just write this in any Kotlin file from where you could import it:
 ```kotlin
-fun ViewManager.mapView(init: MapView.() -> Unit = {}) =
-    __dslAddView({MapView(it)}, init, this)
+public inline fun ViewManager.mapView() = mapView {}
+public inline fun ViewManager.mapView(init: MapView.() -> Unit): MapView {
+    return ankoView({ MapView(it) }, init)
+}
 ```
 
-``{MapView(it)}`` is a factory function for your custom `View`. It accepts a `Context` instance.
+``{ MapView(it) }`` is a factory function for your custom `View`. It accepts a `Context` instance.
 
 So now you can write this:
 
@@ -144,15 +146,14 @@ Basically, all you have to do is to add an additional repository and a compile d
 
 ```gradle
 dependencies {
-    compile 'org.jetbrains.anko:anko-sdk15:0.7'
+    compile 'org.jetbrains.anko:anko-sdk15:0.7' // sdk19, sdk21, sdk23 are also available
+    compile 'org.jetbrains.anko:anko-support-v4:0.7' // In case you need support.v4 bindings
 }
 ```
 
-This loads Anko for Android SDK v. 15 (Android 4.0.3) without `support.v4` package bindings. If you use `support.v4`, replace `15` with `15s`.  
-
 ### Using as Jar library
 
-If your project is not based on Gradle, you don't have to jump around with Maven artifacts. Just attach the **jar** from the [releases page](https://github.com/JetBrains/anko/releases) as a project library and that's it.
+If your project is not based on Gradle, you don't have to jump around with Maven artifacts. Just attach jars from the [releases page](https://github.com/JetBrains/anko/releases) as project library dependencies and that's it.
 
 ### Building Anko
 
