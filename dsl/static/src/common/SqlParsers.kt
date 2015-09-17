@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmMultifileClass
+@file:JvmName("SqlParsersKt")
 package org.jetbrains.anko.db
 
 import android.database.Cursor

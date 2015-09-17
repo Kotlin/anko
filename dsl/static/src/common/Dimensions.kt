@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-@file:suppress("NOTHING_TO_INLINE")
-
+@file:Suppress("NOTHING_TO_INLINE")
+@file:JvmMultifileClass
+@file:JvmName("DimensionsKt")
 package org.jetbrains.anko
 
 import android.app.Fragment

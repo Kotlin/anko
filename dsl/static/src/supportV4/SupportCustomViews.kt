@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-@file:suppress("NOTHING_TO_INLINE")
-
+@file:Suppress("NOTHING_TO_INLINE")
+@file:JvmMultifileClass
+@file:JvmName("SupportCustomViewsKt")
 package org.jetbrains.anko.support.v4
 
 import android.content.Context

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmMultifileClass
+@file:JvmName("CustomKt")
 package org.jetbrains.anko.custom
 
 import android.app.Activity

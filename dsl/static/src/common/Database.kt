@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmMultifileClass
+@file:JvmName("DatabaseKt")
 package org.jetbrains.anko.db
 
 import android.content.ContentValues

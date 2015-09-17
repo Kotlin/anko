@@ -1,3 +1,5 @@
+@file:JvmMultifileClass
+@file:JvmName("SQLiteParserHelpersKt")
 package org.jetbrains.anko.db
 
 import android.database.sqlite.SQLiteException

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmMultifileClass
+@file:JvmName("ArraysKt")
 package org.jetbrains.anko.collections
 
 import android.util.SparseArray

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmMultifileClass
+@file:JvmName("LoggerKt")
 package org.jetbrains.anko
 
 import android.util.Log

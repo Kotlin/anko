@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmMultifileClass
+@file:JvmName("SupportIntentsKt")
 package org.jetbrains.anko.support.v4
 
 import android.app.Activity

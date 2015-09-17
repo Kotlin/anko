@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmMultifileClass
+@file:JvmName("SupportAsyncKt")
 package org.jetbrains.anko.support.v4
 
 import android.support.v4.app.Fragment

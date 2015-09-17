@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmMultifileClass
+@file:JvmName("DialogsKt")
 package org.jetbrains.anko
 
 import android.app.Fragment

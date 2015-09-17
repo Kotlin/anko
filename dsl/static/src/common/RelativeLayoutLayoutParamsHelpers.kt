@@ -15,7 +15,8 @@
  */
 
 @file:Suppress("NOTHING_TO_INLINE")
-
+@file:JvmMultifileClass
+@file:JvmName("RelativeLayoutLayoutParamsHelpersKt")
 package org.jetbrains.anko
 
 import android.view.View
