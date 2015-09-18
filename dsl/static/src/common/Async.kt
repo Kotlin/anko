@@ -36,7 +36,7 @@ public fun Context.uiThread(f: Context.() -> Unit) {
 
 @Deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
 @NoBinding
-public inline fun Fragment.uiThread(@inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
+public inline fun Fragment.uiThread(crossinline f: () -> Unit) {
     activity?.onUiThread { f() }
 }
 
@@ -47,7 +47,7 @@ public fun Context.onUiThread(f: Context.() -> Unit) {
 }
 
 @NoBinding
-public inline fun Fragment.onUiThread(@inlineOptions(InlineOption.ONLY_LOCAL_RETURN) f: () -> Unit) {
+public inline fun Fragment.onUiThread(crossinline f: () -> Unit) {
     activity?.onUiThread { f() }
 }
 
@@ -71,7 +71,7 @@ public fun <T: Activity> AnkoAsyncContext<T>.activityUiThread(f: (T) -> Unit) {
 public fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThread(f: (T) -> Unit) {
     val fragment = weakRef.get() ?: return
     if (fragment.isDetached) return
-    val activity = fragment.getActivity() ?: return
+    val activity = fragment.activity ?: return
     activity.runOnUiThread { f(fragment) }
 }
 

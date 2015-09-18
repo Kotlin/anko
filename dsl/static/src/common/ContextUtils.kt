@@ -96,10 +96,10 @@ public fun bundleOf(vararg params: Pair<String, Any>): Bundle {
     return b
 }
 
-public NoBinding val Context.displayMetrics: android.util.DisplayMetrics
+public @NoBinding val Context.displayMetrics: android.util.DisplayMetrics
     get() = resources.displayMetrics
 
-public NoBinding val Context.configuration: android.content.res.Configuration
+public @NoBinding val Context.configuration: android.content.res.Configuration
     get() = resources.configuration
 
 public val android.content.res.Configuration.portrait: Boolean

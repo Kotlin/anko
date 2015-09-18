@@ -52,18 +52,18 @@ public inline fun Activity.verticalLayout(init: _LinearLayout.() -> Unit): Linea
 
 public inline fun <T: View> ViewManager.include(layoutId: Int): T = include(layoutId, {})
 public inline fun <T: View> ViewManager.include(layoutId: Int, init: T.() -> Unit): T {
-    @suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST")
     return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }) { init() }
 }
 
 public inline fun <T: View> Context.include(layoutId: Int): T = include(layoutId, {})
 public inline fun <T: View> Context.include(layoutId: Int, init: T.() -> Unit): T {
-    @suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST")
     return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }) { init() }
 }
 
 public inline fun <T: View> Activity.include(layoutId: Int): T = include(layoutId, {})
 public inline fun <T: View> Activity.include(layoutId: Int, init: T.() -> Unit): T {
-    @suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST")
     return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }) { init() }
 }
