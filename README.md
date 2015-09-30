@@ -132,7 +132,7 @@ So now you can write this:
 
 ```kotlin
 frameLayout {
-    val mapView = mapView().layoutParams(width = matchParent)
+    val mapView = mapView().lparams(width = matchParent)
 }
 ```
 
@@ -248,20 +248,20 @@ Positioning of widgets inside parent containers can be tuned using `LayoutParams
     android:src="@drawable/something" />
 ```
 
-In Anko, you specify `LayoutParams` right after a `View` description:
+In Anko, you specify `LayoutParams` right after a `View` description using `lparams`:
 
 ```kotlin
 linearLayout {
     button("Login") {
         textSize = 26f
-    }.layoutParams(width = wrapContent) {
+    }.lparams(width = wrapContent) {
         horizontalMargin = dip(5)
         topMargin = dip(10)
     }
 }
 ```
 
-If you specify `layoutParams`, but omit `width` and/or `height`, their default values are both `WRAP_CONTENT`. But you always can pass them explicitly: use [named arguments](http://kotlinlang.org/docs/reference/functions.html#named-arguments).
+If you specify `lparams`, but omit `width` and/or `height`, their default values are both `WRAP_CONTENT`. But you always can pass them explicitly: use [named arguments](http://kotlinlang.org/docs/reference/functions.html#named-arguments).
 
 Some convenient helper properties to notice:
 
@@ -269,7 +269,7 @@ Some convenient helper properties to notice:
 - `verticalMargin` set top and bottom ones, and 
 - `margin` sets all four margins simultaneously.
 
-Note that `layoutParams` are different for different layouts, for example, in the case of `RelativeLayout`:
+Note that `lparams` are different for different layouts, for example, in the case of `RelativeLayout`:
 
 ```kotlin
 val ID_OK = 1
@@ -277,9 +277,9 @@ val ID_OK = 1
 relativeLayout {
     button("Ok") {
         id = ID_OK
-    }.layoutParams { alignParentTop() }
+    }.lparams { alignParentTop() }
   
-    button("Cancel").layoutParams { below(ID_OK) }
+    button("Cancel").lparams { below(ID_OK) }
 }
 ```
 
@@ -398,10 +398,10 @@ It is easy to insert an XML layout into DSL. Use the `include` tag:
 ```kotlin
 include<View>(R.layout.something) {
     backgroundColor = Color.RED
-}.layoutParams(width = matchParent) { margin = dip(12) }
+}.lparams(width = matchParent) { margin = dip(12) }
 ```
 
-You can use `layoutParams` as usual, and if you provide a specific type instead of `View`, you can also use this type inside `{}`:
+You can use `lparams` as usual, and if you provide a specific type instead of `View`, you can also use this type inside `{}`:
 
 ```kotlin
 include<TextView>(R.layout.textfield) {
