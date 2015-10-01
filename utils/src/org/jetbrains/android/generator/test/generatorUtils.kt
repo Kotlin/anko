@@ -28,20 +28,18 @@ fun Context.functionalDslTests(init: Buffer.(version: String) -> Unit) {
 
     for (version in versions) {
         val versionName = version.toCamelCase('-').capitalize()
-        val testFile = File(dir, "FunctionalTestsFor$versionName.kt")
 
-        if (!testFile.exists()) {
-            testFile.writeText(buffer {
-                line("package $basePackage.functional\n")
-                line("import $basePackage.config.*")
-                line("import org.junit.Test\n")
-                line("public class FunctionalTestsFor$versionName : AbstractFunctionalTest() {")
-                line("val version = \"$version\"\n").nl()
-                init(version)
-                line("}")
-            }.toString())
-            println("File $testFile written")
-        }
+        val contents = buffer {
+            line("package $basePackage.functional\n")
+            line("import $basePackage.config.*")
+            line("import org.junit.Test\n")
+            line("class FunctionalTestsFor$versionName : AbstractFunctionalTest() {")
+            line("val version = \"$version\"\n").nl()
+            init(version)
+            line("}")
+        }.toString()
+
+        writeTestFile(File(dir, "FunctionalTestsFor$versionName.kt"), contents)
     }
 }
 
@@ -49,7 +47,7 @@ fun Buffer.functionalDslTest(name: String, mainAnkoFile: AnkoFile, configInit: T
     val testConfiguration = TestConfiguration()
     testConfiguration.configInit()
 
-    line("@Test public fun test$name() {")
+    line("@Test fun test$name() {")
 
     line("runFunctionalTest(\"$name.kt\", AnkoFile.${mainAnkoFile.name()}, version) {")
     for (file in testConfiguration.files) {
@@ -64,23 +62,28 @@ fun Buffer.functionalDslTest(name: String, mainAnkoFile: AnkoFile, configInit: T
 
 fun Context.dslCompileTests(files: List<String>, category: String) {
     val dir = File("./dsl/test/" + basePackage.replace('.', '/'), "/${category.toLowerCase()}")
-    val testFile = File(dir, "Generated${category}Test.kt")
 
-    if (!testFile.exists()) {
-        testFile.writeText(buffer {
-            line("package $basePackage.${category.toLowerCase()}\n").nl()
-            line("import org.junit.*\n").nl()
-            line("public class Generated${category}Test : Abstract${category}Test() {")
-            for (file in files) {
-                for (version in versions) {
-                    val funcSuffix = version.toCamelCase('-').capitalize()
-                    line("@Test public fun test${file}For$funcSuffix() {")
-                    line("run${category}Test(\"$file.kt\", \"$version\")")
-                    line("}").nl()
-                }
+    val contents = buffer {
+        line("package $basePackage.${category.toLowerCase()}\n").nl()
+        line("import org.junit.*\n").nl()
+        line("class Generated${category}Test : Abstract${category}Test() {")
+        for (file in files) {
+            for (version in versions) {
+                val funcSuffix = version.toCamelCase('-').capitalize()
+                line("@Test fun test${file}For$funcSuffix() {")
+                line("run${category}Test(\"$file.kt\", \"$version\")")
+                line("}").nl()
             }
-            line("}")
-        }.toString())
+        }
+        line("}")
+    }.toString()
+
+    writeTestFile(File(dir, "Generated${category}Test.kt"), contents)
+}
+
+private fun writeTestFile(testFile: File, contents: String) {
+    if (!testFile.exists() || testFile.readText().trim() != contents) {
+        testFile.writeText(contents)
         println("File $testFile written")
     }
 }
