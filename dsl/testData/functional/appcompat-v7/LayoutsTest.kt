@@ -1,7 +1,7 @@
 private val defaultInit: Any.() -> Unit = {}
 
-public open class _ActionMenuView(ctx: Context): android.support.v7.widget.ActionMenuView(ctx) {
-    public fun <T: View> T.lparams(
+open class _ActionMenuView(ctx: Context): android.support.v7.widget.ActionMenuView(ctx) {
+    fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.support.v7.widget.ActionMenuView.LayoutParams.() -> Unit = defaultInit
@@ -12,7 +12,7 @@ public open class _ActionMenuView(ctx: Context): android.support.v7.widget.Actio
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             other: android.view.ViewGroup.LayoutParams?,
             init: android.support.v7.widget.ActionMenuView.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -22,7 +22,7 @@ public open class _ActionMenuView(ctx: Context): android.support.v7.widget.Actio
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             other: android.support.v7.widget.ActionMenuView.LayoutParams?,
             init: android.support.v7.widget.ActionMenuView.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -32,7 +32,7 @@ public open class _ActionMenuView(ctx: Context): android.support.v7.widget.Actio
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.support.v7.widget.ActionMenuView.LayoutParams.() -> Unit = defaultInit
@@ -45,8 +45,8 @@ public open class _ActionMenuView(ctx: Context): android.support.v7.widget.Actio
 
 }
 
-public open class _LinearLayoutCompat(ctx: Context): android.support.v7.widget.LinearLayoutCompat(ctx) {
-    public fun <T: View> T.lparams(
+open class _LinearLayoutCompat(ctx: Context): android.support.v7.widget.LinearLayoutCompat(ctx) {
+    fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.support.v7.widget.LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
@@ -57,7 +57,7 @@ public open class _LinearLayoutCompat(ctx: Context): android.support.v7.widget.L
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.support.v7.widget.LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
@@ -68,7 +68,7 @@ public open class _LinearLayoutCompat(ctx: Context): android.support.v7.widget.L
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             weight: Float,
@@ -80,7 +80,7 @@ public open class _LinearLayoutCompat(ctx: Context): android.support.v7.widget.L
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             p: android.view.ViewGroup.LayoutParams?,
             init: android.support.v7.widget.LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -90,7 +90,7 @@ public open class _LinearLayoutCompat(ctx: Context): android.support.v7.widget.L
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             source: android.view.ViewGroup.MarginLayoutParams?,
             init: android.support.v7.widget.LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -100,7 +100,7 @@ public open class _LinearLayoutCompat(ctx: Context): android.support.v7.widget.L
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             source: android.support.v7.widget.LinearLayoutCompat.LayoutParams?,
             init: android.support.v7.widget.LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -112,8 +112,8 @@ public open class _LinearLayoutCompat(ctx: Context): android.support.v7.widget.L
 
 }
 
-public open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx) {
-    public fun <T: View> T.lparams(
+open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx) {
+    fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
@@ -124,7 +124,7 @@ public open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx)
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
@@ -135,7 +135,7 @@ public open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx)
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int,
@@ -147,7 +147,7 @@ public open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx)
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             gravity: Int,
             init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -157,7 +157,7 @@ public open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx)
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             source: android.support.v7.widget.Toolbar.LayoutParams?,
             init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -167,7 +167,7 @@ public open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx)
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             source: android.support.v7.app.ActionBar.LayoutParams?,
             init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -177,7 +177,7 @@ public open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx)
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             source: android.view.ViewGroup.MarginLayoutParams?,
             init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -187,7 +187,7 @@ public open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx)
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             source: android.view.ViewGroup.LayoutParams?,
             init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {

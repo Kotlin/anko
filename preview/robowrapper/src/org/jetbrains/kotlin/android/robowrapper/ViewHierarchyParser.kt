@@ -22,7 +22,7 @@ import android.widget.ImageView
 import org.jetbrains.kotlin.android.attrs.Attr
 import java.lang.reflect.Method
 
-class ViewNode(val view: View, val children: List<ViewNode>, val attrs: Set<Pair<String, Pair<Attr?, Any>>>) {
+internal class ViewNode(val view: View, val children: List<ViewNode>, val attrs: Set<Pair<String, Pair<Attr?, Any>>>) {
     override fun toString(): String {
         val sb = StringBuilder()
         sb.append("${view.javaClass.name}: attrs: $attrs")
@@ -34,7 +34,7 @@ class ViewNode(val view: View, val children: List<ViewNode>, val attrs: Set<Pair
 private val superclassResolver = SuperclassResolver()
 
 // Parse view with it's children, get all attributes from getters and make a ViewNode
-public fun parseView(view: View): ViewNode {
+fun parseView(view: View): ViewNode {
     val children = arrayListOf<ViewNode>()
     if (view is ViewGroup &&
             (view.javaClass.name !in ignoreChildrenOf || isAdapterViewChild(view.javaClass))) {
@@ -50,7 +50,7 @@ public fun parseView(view: View): ViewNode {
 }
 
 // There're some Anko layout helpers in our DSL, so let's unwrap such views
-fun unwrapClass(clazz: Class<*>): Class<*> {
+internal fun unwrapClass(clazz: Class<*>): Class<*> {
     val superClass = superclassResolver.getSuperclass(clazz)
   val simpleName = clazz.simpleName
     return if (simpleName.startsWith("_") &&
@@ -79,7 +79,7 @@ private fun Class<*>.getAttrs(): Map<String, Attr> {
     return map
 }
 
-fun Class<*>.getStyleableNames(): List<String> {
+internal fun Class<*>.getStyleableNames(): List<String> {
     val name = this.name
     if (name.equals("android.view.ViewGroup\$LayoutParams")) {
         return listOf("ViewGroup_Layout", "ViewGroup_MarginLayout")
@@ -97,14 +97,14 @@ fun Class<*>.getStyleableNames(): List<String> {
 }
 
 // Unwrap our layout helper classes and remove the package name if not necessary
-fun ViewNode.getXmlName(): String {
+internal fun ViewNode.getXmlName(): String {
     val unwrappedClass = unwrapClass(view.javaClass)
     val name = unwrappedClass.name
     return name.replace("android.view.", "").replace("android.widget.", "")
 }
 
 // Resolve XML property name if that name differs from setter name. ex: getDrawable() -> src=""
-fun resolveSpecialProperty(view: View, property: String): String {
+internal fun resolveSpecialProperty(view: View, property: String): String {
   if (view is ImageView && property == "drawable")
     return "src"
   return property

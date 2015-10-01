@@ -20,7 +20,7 @@ import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationTune
 import java.io.File
 
-public fun Context.generate() {
+fun Context.generate() {
 
     functionalDslTests {
         functionalDslTest("ComplexListenerClassTest", AnkoFile.LISTENERS) {

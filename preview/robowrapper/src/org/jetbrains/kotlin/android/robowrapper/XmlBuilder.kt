@@ -21,10 +21,10 @@ import org.jetbrains.kotlin.android.attrs.Attr
 import java.util.regex.Pattern
 
 // Serialize a ViewNode to xml
-fun toXml(v: ViewNode): String {
+internal fun toXml(v: ViewNode): String {
     val sb = Buffer().append(XML_HEADER)
 
-    fun ViewNode.invoke(indent: Int) {
+    operator fun ViewNode.invoke(indent: Int) {
         val name = getXmlName()
         // Insert schema if top-level node
         val schema = if (indent == 0) XML_SCHEMA else ""
@@ -48,7 +48,7 @@ fun toXml(v: ViewNode): String {
 // Render attributes
 // @param v used for resolving dimensions (and some Robolectric-related work)
 // @param attrs set of attrs that should be parsed
-fun genAttributes(v: View, className: String, attrs: Set<Pair<String, Pair<Attr?, Any>>>, topLevel: Boolean): String {
+internal fun genAttributes(v: View, className: String, attrs: Set<Pair<String, Pair<Attr?, Any>>>, topLevel: Boolean): String {
     val present = hashSetOf<String>()
     var layoutParamsPresent = false
     val sb = Buffer()

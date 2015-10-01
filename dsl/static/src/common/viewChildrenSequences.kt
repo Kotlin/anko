@@ -21,9 +21,9 @@ package org.jetbrains.anko
 import android.view.*
 import java.util.*
 
-public fun View.childrenSequence(): Sequence<View> = ViewChildrenSequence(this)
+fun View.childrenSequence(): Sequence<View> = ViewChildrenSequence(this)
 
-public fun View.childrenRecursiveSequence(): Sequence<View> = ViewChildrenRecursiveSequence(this)
+fun View.childrenRecursiveSequence(): Sequence<View> = ViewChildrenRecursiveSequence(this)
 
 private class ViewChildrenSequence(private val view: View) : Sequence<View> {
     override fun iterator(): Iterator<View> {

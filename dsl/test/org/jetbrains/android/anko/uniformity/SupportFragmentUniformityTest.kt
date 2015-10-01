@@ -23,7 +23,7 @@ public class SupportFragmentUniformityTest {
         }
     }
 
-    Test
+    @Test
     public fun supportFragmentFunctionsExistTest() {
         val receiver = "Fragment"
 

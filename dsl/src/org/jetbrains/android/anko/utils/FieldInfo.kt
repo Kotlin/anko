@@ -19,11 +19,11 @@ package org.jetbrains.android.anko.utils
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.tree.FieldNode
 
-val FieldNode.isPublic: Boolean
+internal val FieldNode.isPublic: Boolean
     get() = ((access and Opcodes.ACC_PUBLIC) != 0)
 
-val FieldNode.isFinal: Boolean
+internal val FieldNode.isFinal: Boolean
     get() = ((access and Opcodes.ACC_FINAL) != 0)
 
-val FieldNode.isStatic: Boolean
+internal val FieldNode.isStatic: Boolean
     get() = ((access and Opcodes.ACC_STATIC) != 0)

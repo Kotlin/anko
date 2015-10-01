@@ -24,12 +24,12 @@ import org.jetbrains.android.anko.utils.isInner
 import org.objectweb.asm.tree.ClassNode
 import java.io.File
 
-public fun main(args: Array<String>): Unit = HierarchyCollector.collect()
+fun main(args: Array<String>): Unit = HierarchyCollector.collect()
 
 object HierarchyCollector {
 
-    @jvmStatic
-    public fun collect() {
+    @JvmStatic
+    fun collect() {
         val ver = File("workdir/original").listFiles { it.name.matches("[0-9]+".toRegex()) }!!
                 .first { it.listFiles { it.name == "android.jar" }?.isNotEmpty() ?: false }
         val androidJar = ver.listFiles { it.name == "android.jar" }!!.first()

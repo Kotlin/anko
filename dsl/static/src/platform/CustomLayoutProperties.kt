@@ -22,23 +22,23 @@ package org.jetbrains.anko
 
 import android.view.ViewGroup
 
-public val matchParent: Int = android.view.ViewGroup.LayoutParams.MATCH_PARENT
-public val wrapContent: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+val matchParent: Int = android.view.ViewGroup.LayoutParams.MATCH_PARENT
+val wrapContent: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 
-public var ViewGroup.MarginLayoutParams.verticalMargin: Int
+var ViewGroup.MarginLayoutParams.verticalMargin: Int
     get() = throw AnkoException("'ViewGroup.MarginLayoutParams.verticalMargin' property does not have a getter")
     set(v) {
         topMargin = v
         bottomMargin = v
     }
 
-public var ViewGroup.MarginLayoutParams.horizontalMargin: Int
+var ViewGroup.MarginLayoutParams.horizontalMargin: Int
     get() = throw AnkoException("'ViewGroup.MarginLayoutParams.horizontalMargin' property does not have a getter")
     set(v) {
         leftMargin = v; rightMargin = v
     }
 
-public var ViewGroup.MarginLayoutParams.margin: Int
+var ViewGroup.MarginLayoutParams.margin: Int
     get() = throw AnkoException("'ViewGroup.MarginLayoutParams.margin' property does not have a getter")
     set(v) {
         leftMargin = v

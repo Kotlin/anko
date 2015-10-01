@@ -22,9 +22,9 @@ import com.github.javaparser.ast.body.TypeDeclaration
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter
 import org.jetbrains.android.anko.utils.getJavaClassName
 
-public class SourceManager(private val provider: SourceProvider) {
+class SourceManager(private val provider: SourceProvider) {
 
-    public fun getArgumentNames(classFqName: String, methodName: String, argumentJavaTypes: List<String>): List<String>? {
+    fun getArgumentNames(classFqName: String, methodName: String, argumentJavaTypes: List<String>): List<String>? {
         val parsed = provider.parse(classFqName) ?: return null
         val className = getJavaClassName(classFqName)
 

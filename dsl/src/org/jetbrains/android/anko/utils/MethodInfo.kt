@@ -34,17 +34,17 @@ private val specialLayoutParamsNames = mapOf(
         "w" to "width", "h" to "height"
 )
 
-val MethodNode.args: Array<Type>
+internal val MethodNode.args: Array<Type>
     get() = Type.getArgumentTypes(desc)
 
-fun buildKotlinSignature(node: MethodNode): List<String> {
+internal fun buildKotlinSignature(node: MethodNode): List<String> {
     if (node.signature == null) return listOf()
 
     val parsed = parseGenericMethodSignature(node.signature)
     return parsed.valueParameters.map { genericTypeToStr(it.genericType) }
 }
 
-fun MethodNodeWithClass.processArguments(
+internal fun MethodNodeWithClass.processArguments(
         config: AnkoConfiguration,
         template: (argName: String, argType: String, explicitNotNull: String) -> String
 ): String {
@@ -82,11 +82,11 @@ fun MethodNodeWithClass.processArguments(
     return buffer.toString()
 }
 
-fun MethodNodeWithClass.formatArguments(config: AnkoConfiguration): String {
+internal fun MethodNodeWithClass.formatArguments(config: AnkoConfiguration): String {
     return processArguments(config) { name, type, nul -> "$name: $type, " }
 }
 
-fun MethodNodeWithClass.formatLayoutParamsArguments(config: AnkoConfiguration): List<String> {
+internal fun MethodNodeWithClass.formatLayoutParamsArguments(config: AnkoConfiguration): List<String> {
     val args = arrayListOf<String>()
     processArguments(config) { name, type, nul ->
         val defaultValue = specialLayoutParamsArguments.get(name)
@@ -101,18 +101,18 @@ fun MethodNodeWithClass.formatLayoutParamsArguments(config: AnkoConfiguration): 
     return args
 }
 
-fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(config: AnkoConfiguration): String {
+internal fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(config: AnkoConfiguration): String {
     return processArguments(config) { name, type, nul ->
         val realName = specialLayoutParamsNames.getOrElse(name, {name})
         "$realName$nul, "
     }
 }
 
-fun MethodNodeWithClass.formatArgumentsTypes(config: AnkoConfiguration): String {
+internal fun MethodNodeWithClass.formatArgumentsTypes(config: AnkoConfiguration): String {
     return processArguments(config) { name, type, nul -> "$type, " }
 }
 
-fun MethodNodeWithClass.formatArgumentsNames(config: AnkoConfiguration): String {
+internal fun MethodNodeWithClass.formatArgumentsNames(config: AnkoConfiguration): String {
     return processArguments(config) { name, type, nul -> "$name, " }
 }
 
@@ -124,31 +124,31 @@ fun MethodNode.isGetter(): Boolean {
     return (isNonBooleanGetter || isBooleanGetter) && args.isEmpty() && !returnType.isVoid && isPublic
 }
 
-fun MethodNode.isNonListenerSetter(): Boolean {
+internal fun MethodNode.isNonListenerSetter(): Boolean {
     val isSetter = name.startsWith("set") && name.length() > 3 && Character.isUpperCase(name.charAt(3))
     return isSetter && !(isListenerSetter() || name.endsWith("Listener")) && args.size() == 1 && isPublic
 }
 
-val MethodNode.isConstructor: Boolean
+internal val MethodNode.isConstructor: Boolean
     get() = name == "<init>"
 
-fun MethodNode.isListenerSetter(set: Boolean = true, add: Boolean = true): Boolean {
+internal fun MethodNode.isListenerSetter(set: Boolean = true, add: Boolean = true): Boolean {
     return ((set && name.startsWith("setOn")) || (add && name.startsWith("add"))) && name.endsWith("Listener")
 }
 
-val MethodNode.isPublic: Boolean
+internal val MethodNode.isPublic: Boolean
     get() = (access and Opcodes.ACC_PUBLIC) != 0
 
-val MethodNode.isOverridden: Boolean
+internal val MethodNode.isOverridden: Boolean
     get() = (access and Opcodes.ACC_BRIDGE) != 0
 
-val MethodNode.isStatic: Boolean
+internal val MethodNode.isStatic: Boolean
     get() = (access and Opcodes.ACC_STATIC) != 0
 
-val MethodNode.returnType: Type
+internal val MethodNode.returnType: Type
     get() = Type.getReturnType(desc)
 
-fun MethodNode.renderReturnType(nullable: Boolean = true): String {
+internal fun MethodNode.renderReturnType(nullable: Boolean = true): String {
     return if (signature != null) {
         genericTypeToStr(parseGenericMethodSignature(signature).returnType, nullable)
     } else {

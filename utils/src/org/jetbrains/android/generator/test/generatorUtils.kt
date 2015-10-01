@@ -47,7 +47,7 @@ fun Buffer.functionalDslTest(name: String, mainAnkoFile: AnkoFile, configInit: T
     val testConfiguration = TestConfiguration()
     testConfiguration.configInit()
 
-    line("@Test fun test$name() {")
+    line("@Test").line("fun test$name() {")
 
     line("runFunctionalTest(\"$name.kt\", AnkoFile.${mainAnkoFile.name()}, version) {")
     for (file in testConfiguration.files) {
@@ -70,7 +70,7 @@ fun Context.dslCompileTests(files: List<String>, category: String) {
         for (file in files) {
             for (version in versions) {
                 val funcSuffix = version.toCamelCase('-').capitalize()
-                line("@Test fun test${file}For$funcSuffix() {")
+                line("@Test").line("fun test${file}For$funcSuffix() {")
                 line("run${category}Test(\"$file.kt\", \"$version\")")
                 line("}").nl()
             }
@@ -82,7 +82,7 @@ fun Context.dslCompileTests(files: List<String>, category: String) {
 }
 
 private fun writeTestFile(testFile: File, contents: String) {
-    if (!testFile.exists() || testFile.readText().trim() != contents) {
+    if (!testFile.exists() || testFile.readText().trim() != contents.trim()) {
         testFile.writeText(contents)
         println("File $testFile written")
     }

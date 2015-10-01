@@ -19,7 +19,7 @@ package org.jetbrains.android.anko.utils
 import org.objectweb.asm.tree.ClassNode
 import java.util.*
 
-class NoSuchClassException : Exception()
+internal class NoSuchClassException : Exception()
 
 class ClassTreeNode(parent: ClassTreeNode?, val data: ClassNode, val fromPlatformJar: Boolean) {
     var parent = parent
@@ -33,7 +33,7 @@ class ClassTree : Iterable<ClassNode>{
         return ClassTreeIterator(root)
     }
 
-    public fun add(clazz: ClassNode, fromMainJar: Boolean) {
+    fun add(clazz: ClassNode, fromMainJar: Boolean) {
         val parent = findNode(root, clazz.superName)
         val orphans = getOrphansOf(clazz.name)
 
@@ -50,12 +50,12 @@ class ClassTree : Iterable<ClassNode>{
         orphans.forEach { it.parent = newNode }
     }
 
-    public fun isChildOf(clazz: ClassNode, ancestorName: String): Boolean {
+    fun isChildOf(clazz: ClassNode, ancestorName: String): Boolean {
         val treeNode = findNode(root, clazz) ?: throw NoSuchClassException()
         return treeNode.parent?.data?.name == ancestorName
     }
 
-    public fun isSuccessorOf(clazz: ClassNode, ancestorName: String): Boolean {
+    fun isSuccessorOf(clazz: ClassNode, ancestorName: String): Boolean {
         val parent = findNode(ancestorName) ?: throw NoSuchClassException()
 
         val child = findNode(parent, clazz.name)
@@ -93,15 +93,15 @@ class ClassTree : Iterable<ClassNode>{
         return null
     }
 
-    public fun findNode(parentPackage: String, className: String): ClassTreeNode? {
+    fun findNode(parentPackage: String, className: String): ClassTreeNode? {
         return findNode(root, "$parentPackage/", "/$className")
     }
 
-    public fun findNode(name: String): ClassTreeNode? {
+    fun findNode(name: String): ClassTreeNode? {
         return findNode(root, name)
     }
 
-    public fun findNode(clazz: ClassNode): ClassTreeNode? {
+    fun findNode(clazz: ClassNode): ClassTreeNode? {
         return findNode(root, clazz.name)
     }
 
@@ -110,7 +110,7 @@ class ClassTree : Iterable<ClassNode>{
     }
 }
 
-class ClassTreeIterator(var next: ClassTreeNode) : Iterator<ClassNode> {
+internal class ClassTreeIterator(var next: ClassTreeNode) : Iterator<ClassNode> {
 
     var nodeQueue: Queue<ClassTreeNode> = ArrayDeque(next.children)
 

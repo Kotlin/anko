@@ -35,12 +35,11 @@ import org.jetbrains.anko.*
 import java.io.Serializable
 import java.util.*
 
-@Retention(AnnotationRetention.SOURCE)
-internal annotation class NoBinding
+object AnkoInternals {
+    @Retention(AnnotationRetention.SOURCE)
+    annotation class NoBinding
 
-public object AnkoInternals {
-
-    public fun <T : View> addView(manager: ViewManager, view: T) {
+    fun <T : View> addView(manager: ViewManager, view: T) {
         return when (manager) {
             is ViewGroup -> manager.addView(view)
             is UiHelper -> manager.addView(view, null)
@@ -48,15 +47,15 @@ public object AnkoInternals {
         }
     }
 
-    public fun <T : View> addView(ctx: Context, view: T) {
+    fun <T : View> addView(ctx: Context, view: T) {
         ctx.UI { AnkoInternals.addView(this, view) }
     }
 
-    public fun <T : View> addView(activity: Activity, view: T) {
+    fun <T : View> addView(activity: Activity, view: T) {
         activity.UI { AnkoInternals.addView(this, view) }
     }
 
-    public fun getContext(manager: ViewManager): Context = when (manager) {
+    fun getContext(manager: ViewManager): Context = when (manager) {
         is ViewGroup -> manager.context
         is UiHelper -> manager.ctx
         else -> throw AnkoException("$manager is the wrong parent")
@@ -75,14 +74,14 @@ public object AnkoInternals {
     }
 
     @JvmStatic
-    public fun <T> createIntent(ctx: Context, clazz: Class<out T>, params: Array<out Pair<String, Any>>): Intent {
+    fun <T> createIntent(ctx: Context, clazz: Class<out T>, params: Array<out Pair<String, Any>>): Intent {
         val intent = Intent(ctx, clazz)
         if (params.isNotEmpty()) fillIntentArguments(intent, params)
         return intent
     }
 
     @JvmStatic
-    public fun internalStartActivity(
+    fun internalStartActivity(
             ctx: Context,
             activity: Class<out Activity>,
             params: Array<out Pair<String, Any>>
@@ -91,7 +90,7 @@ public object AnkoInternals {
     }
 
     @JvmStatic
-    public fun internalStartActivityForResult(
+    fun internalStartActivityForResult(
             act: Activity,
             activity: Class<out Activity>,
             requestCode: Int,
@@ -101,7 +100,7 @@ public object AnkoInternals {
     }
 
     @JvmStatic
-    public fun internalStartService(
+    fun internalStartService(
             ctx: Context,
             activity: Class<out Service>,
             params: Array<out Pair<String, Any>>
@@ -112,37 +111,38 @@ public object AnkoInternals {
     @JvmStatic
     private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any>>) {
         params.forEach {
-            when (it.second) {
-                is Int -> intent.putExtra(it.first, it.second as Int)
-                is Long -> intent.putExtra(it.first, it.second as Long)
-                is CharSequence -> intent.putExtra(it.first, it.second as CharSequence)
-                is String -> intent.putExtra(it.first, it.second as String)
-                is Float -> intent.putExtra(it.first, it.second as Float)
-                is Double -> intent.putExtra(it.first, it.second as Double)
-                is Char -> intent.putExtra(it.first, it.second as Char)
-                is Short -> intent.putExtra(it.first, it.second as Short)
-                is Boolean -> intent.putExtra(it.first, it.second as Boolean)
-                is Serializable -> intent.putExtra(it.first, it.second as Serializable)
-                is Bundle -> intent.putExtra(it.first, it.second as Bundle)
-                is Parcelable -> intent.putExtra(it.first, it.second as Parcelable)
-                is Array<CharSequence> -> intent.putExtra(it.first, it.second as Array<CharSequence>)
-                is Array<out String> -> intent.putExtra(it.first, it.second as Array<out String>)
-                is Array<Parcelable> -> intent.putExtra(it.first, it.second as Array<Parcelable>)
-                is IntArray -> intent.putExtra(it.first, it.second as IntArray)
-                is LongArray -> intent.putExtra(it.first, it.second as LongArray)
-                is FloatArray -> intent.putExtra(it.first, it.second as FloatArray)
-                is Double -> intent.putExtra(it.first, it.second as DoubleArray)
-                is Char -> intent.putExtra(it.first, it.second as CharArray)
-                is Short -> intent.putExtra(it.first, it.second as ShortArray)
-                is Boolean -> intent.putExtra(it.first, it.second as BooleanArray)
-                else -> throw AnkoException("Intent extra ${it.first} has wrong type ${it.second.javaClass.name}")
+            val value = it.second
+            when (value) {
+                is Int -> intent.putExtra(it.first, value)
+                is Long -> intent.putExtra(it.first, value)
+                is CharSequence -> intent.putExtra(it.first, value)
+                is String -> intent.putExtra(it.first, value)
+                is Float -> intent.putExtra(it.first, value)
+                is Double -> intent.putExtra(it.first, value)
+                is Char -> intent.putExtra(it.first, value)
+                is Short -> intent.putExtra(it.first, value)
+                is Boolean -> intent.putExtra(it.first, value)
+                is Serializable -> intent.putExtra(it.first, value)
+                is Bundle -> intent.putExtra(it.first, value)
+                is Parcelable -> intent.putExtra(it.first, value)
+                is Array<CharSequence> -> intent.putExtra(it.first, value)
+                is Array<out String> -> intent.putExtra(it.first, value)
+                is Array<Parcelable> -> intent.putExtra(it.first, value)
+                is IntArray -> intent.putExtra(it.first, value)
+                is LongArray -> intent.putExtra(it.first, value)
+                is FloatArray -> intent.putExtra(it.first, value)
+                is DoubleArray -> intent.putExtra(it.first, value)
+                is CharArray -> intent.putExtra(it.first, value)
+                is ShortArray -> intent.putExtra(it.first, value)
+                is BooleanArray -> intent.putExtra(it.first, value)
+                else -> throw AnkoException("Intent extra ${it.first} has wrong type ${value.javaClass.name}")
             }
         }
     }
 
     // SQLiteDatabase is not closeable in older versions of Android
     @JvmStatic
-    public inline fun <T> useDatabase(db: SQLiteDatabase, f: (SQLiteDatabase) -> T) : T {
+    inline fun <T> useDatabase(db: SQLiteDatabase, f: (SQLiteDatabase) -> T) : T {
         try {
             return f(db)
         } finally {
@@ -156,7 +156,7 @@ public object AnkoInternals {
 
     // Cursor is not closeable in older versions of Android
     @JvmStatic
-    public inline fun <T> useCursor(cursor: Cursor, f: (Cursor) -> T) : T {
+    inline fun <T> useCursor(cursor: Cursor, f: (Cursor) -> T) : T {
         try {
             return f(cursor)
         } finally {
@@ -169,7 +169,7 @@ public object AnkoInternals {
     }
 
     @JvmStatic
-    public fun <T : View> initiateView(ctx: Context, viewClass: Class<T>): T {
+    fun <T : View> initiateView(ctx: Context, viewClass: Class<T>): T {
         fun getConstructor1() = viewClass.getConstructor(Context::class.java)
         fun getConstructor2() = viewClass.getConstructor(Context::class.java, AttributeSet::class.java)
 
@@ -187,7 +187,7 @@ public object AnkoInternals {
     }
 
     @JvmStatic
-    public fun testConfiguration(
+    fun testConfiguration(
             ctx: Context,
             screenSize: ScreenSize?,
             density: Range<Int>?,

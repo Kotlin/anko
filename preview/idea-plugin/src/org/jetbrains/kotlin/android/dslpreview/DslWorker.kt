@@ -25,7 +25,6 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.progress.Task
-import org.jetbrains.kotlin.android.dslpreview
 import org.zeromq.ZMQ
 import java.io.File
 import java.io.FileOutputStream
@@ -33,14 +32,19 @@ import java.net.URL
 import java.util.jar.JarFile
 import java.util.zip.ZipEntry
 
-public class DslWorker(private val myListener: DslWorker.Listener) {
+class DslWorker(private val myListener: DslWorker.Listener) {
     private val GSON = Gson()
     private val START_MARKER = "" + (5.toChar()) + (7.toChar()) + (5.toChar())
     private val END_MARKER = START_MARKER + START_MARKER
 
-    private volatile var myAlive = false
-    private volatile var myPort = 0
-    private volatile var myLastProcess: Process? = null
+    @Volatile
+    private var myAlive = false
+
+    @Volatile
+    private var myPort = 0
+
+    @Volatile
+    private var myLastProcess: Process? = null
 
     private val ROBOWRAPPER_LOCK = Object()
     private val DOWNLOAD_LOCK = Object()
@@ -63,13 +67,13 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
         return downloaded
     }
 
-    public fun finishWorkingProcess() {
+    fun finishWorkingProcess() {
         if (myLastProcess != null) {
             myLastProcess!!.destroy()
         }
     }
 
-    public fun exec(cmd: RobowrapperContext) {
+    fun exec(cmd: RobowrapperContext) {
         if (!checkRobowrapperDependencies(cmd)) {
             return
         }
@@ -103,12 +107,12 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
         ApplicationManager.getApplication().invokeLater(processor)
     }
 
-    public interface Listener {
-        public fun onXmlError(kind: ErrorKind, description: String, alive: Boolean)
-        public fun onXmlReceived(cmd: RobowrapperContext, xml: String)
+    interface Listener {
+        fun onXmlError(kind: ErrorKind, description: String, alive: Boolean)
+        fun onXmlReceived(cmd: RobowrapperContext, xml: String)
     }
 
-    public enum class ErrorKind {
+    enum class ErrorKind {
         INVALID_ROBOWRAPPER_DIRECTORY,
         UNKNOWN,
         UNKNOWN_ANDROID_VERSION
@@ -127,7 +131,7 @@ public class DslWorker(private val myListener: DslWorker.Listener) {
             }
 
             val rawData = outputText.substring(startMarker + START_MARKER.length(), endMarker)
-            val pack = GSON.fromJson<dslpreview.Pack>(rawData, dslpreview.Pack::class.java)
+            val pack = GSON.fromJson<Pack>(rawData, Pack::class.java)
 
             myPort = pack.port
             myAlive = pack.alive

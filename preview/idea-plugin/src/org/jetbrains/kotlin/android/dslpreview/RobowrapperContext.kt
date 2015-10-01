@@ -27,8 +27,8 @@ import java.util.*
 
 class RobowrapperContext(description: PreviewClassDescription) {
 
-    val androidFacet = description.androidFacet
-    val activityClassName = description.qualifiedName
+    internal val androidFacet = description.androidFacet
+    internal val activityClassName = description.qualifiedName
 
     private val mainSourceProvider = androidFacet.mainIdeaSourceProvider
     private val applicationPackage = androidFacet.manifest?.`package`?.xmlAttributeValue?.value ?: "app"
@@ -65,7 +65,7 @@ class RobowrapperContext(description: PreviewClassDescription) {
     }
 
     // `manifest` is already initialized at this point
-    fun removeManifest() {
+    internal fun removeManifest() {
         if (manifest.exists()) {
             manifest.delete()
         }
@@ -75,7 +75,7 @@ class RobowrapperContext(description: PreviewClassDescription) {
     private fun ArrayList<String>.add(name: String, value: VirtualFile) = add(name + escape(value.path))
     private fun ArrayList<String>.add(name: String, value: File) = add(name + escape(value.absolutePath))
 
-    public fun makeArguments(): List<String> {
+    fun makeArguments(): List<String> {
         val module = androidFacet.module
         val roots = ModuleRootManager.getInstance(module).orderEntries().classes().roots
         val androidSdkDirectory = androidFacet.sdkData?.location?.getPath()

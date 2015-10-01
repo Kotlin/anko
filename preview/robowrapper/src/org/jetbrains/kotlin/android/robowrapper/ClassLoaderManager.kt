@@ -19,9 +19,9 @@ package org.jetbrains.kotlin.android.robowrapper
 import org.robolectric.internal.bytecode.InstrumentingClassLoader
 import java.net.URLClassLoader
 
-public class ClassLoaderManager {
+class ClassLoaderManager {
 
-    public fun replaceClassLoader(packageName: String) {
+    fun replaceClassLoader(packageName: String) {
         // Context ClassLoader is set in RobolectricTestRunner
         val currentClassLoader = Thread.currentThread().contextClassLoader
         if (currentClassLoader !is InstrumentingClassLoader) {
@@ -41,7 +41,7 @@ public class ClassLoaderManager {
 
         val setup = configField.get(currentClassLoader)
         val urlClassLoader = urlsField.get(currentClassLoader) as URLClassLoader
-        @suppress("UNCHECKED_CAST")
+        @Suppress("UNCHECKED_CAST")
         val oldClasses = classesField.get(currentClassLoader) as Map<String, Class<Any>>
         val urls = urlClassLoader.urLs
 
@@ -49,7 +49,7 @@ public class ClassLoaderManager {
         val newClassLoader = asmClazz.constructors[0].newInstance(setup, urls) as InstrumentingClassLoader
 
         // Copy all Map entries from the old AsmInstrumentingClassLoader
-        @suppress("UNCHECKED_CAST")
+        @Suppress("UNCHECKED_CAST")
         val classes = classesField.get(newClassLoader) as MutableMap<String, Class<Any>>
         replicateCache(packageName, oldClasses, classes)
 

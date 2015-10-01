@@ -12,7 +12,7 @@ private fun String.replaceDoubledSpaces(): String {
     }
 }
 
-private fun getAllDeclarations(
+fun getAllDeclarations(
         file: File,
         receiver: String,
         declarationType: String,

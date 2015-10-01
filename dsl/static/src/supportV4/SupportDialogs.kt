@@ -22,47 +22,47 @@ import android.app.ProgressDialog
 import android.support.v4.app.Fragment
 import org.jetbrains.anko.*
 
-public fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
+fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
 
-public fun Fragment.toast(text: CharSequence): Unit = activity.toast(text)
+fun Fragment.toast(text: CharSequence): Unit = activity.toast(text)
 
-public fun Fragment.longToast(textResource: Int): Unit = activity.longToast(textResource)
+fun Fragment.longToast(textResource: Int): Unit = activity.longToast(textResource)
 
-public fun Fragment.longToast(text: CharSequence): Unit = activity.longToast(text)
+fun Fragment.longToast(text: CharSequence): Unit = activity.longToast(text)
 
-public fun Fragment.selector(
+fun Fragment.selector(
         title: CharSequence? = null,
         items: List<CharSequence>,
         onClick: (Int) -> Unit
 ): Unit = activity.selector(title, items, onClick)
 
-public fun Fragment.alert(
+fun Fragment.alert(
         message: String,
         title: String? = null,
         init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder =
         activity.alert(message, title, init)
 
-public fun Fragment.alert(
+fun Fragment.alert(
         message: Int,
         title: Int? = null,
         init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder =
         activity.alert(message, title, init)
 
-public fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder =
+fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder =
         activity.alert(init)
 
-public fun Fragment.progressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+fun Fragment.progressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return activity.progressDialog(message, title, init)
 }
 
-public fun Fragment.indeterminateProgressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+fun Fragment.indeterminateProgressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return activity.indeterminateProgressDialog(message, title, init)
 }
 
-public fun Fragment.progressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+fun Fragment.progressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return activity.progressDialog(message?.let { activity.getString(it) }, title?.let { activity.getString(it) }, init)
 }
 
-public fun Fragment.indeterminateProgressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+fun Fragment.indeterminateProgressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return activity.indeterminateProgressDialog(message?.let { activity.getString(it) }, title?.let { activity.getString(it) }, init)
 }

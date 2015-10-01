@@ -23,26 +23,26 @@ import org.jetbrains.kotlin.asJava.KotlinLightElement
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.ClassifierDescriptor
 import org.jetbrains.kotlin.idea.caches.resolve.KotlinCacheService
-import org.jetbrains.kotlin.idea.caches.resolve.getResolutionFacade
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.load.java.lazy.descriptors.LazyJavaClassDescriptor
 import org.jetbrains.kotlin.psi.JetClass
 import org.jetbrains.kotlin.psi.JetClassBody
 import org.jetbrains.kotlin.psi.JetClassOrObject
 import org.jetbrains.kotlin.psi.JetFile
+import org.jetbrains.kotlin.resolve.DescriptorUtils
 import org.jetbrains.kotlin.resolve.lazy.ResolveSession
 import org.jetbrains.kotlin.resolve.source.KotlinSourceElement
 import java.util.*
 
-private val DEBUG = true
+internal val DEBUG = true
 
-public class AndroidFacetNotFoundException : RuntimeException()
+class AndroidFacetNotFoundException : RuntimeException()
 
-public class CantCreateDependencyDirectoryException : RuntimeException()
+class CantCreateDependencyDirectoryException : RuntimeException()
 
-public class UnsupportedClassException : RuntimeException()
+class UnsupportedClassException : RuntimeException()
 
-public fun getQualifiedName(clazz: JetClass): String? {
+fun getQualifiedName(clazz: JetClass): String? {
     val parts = arrayListOf<String>()
 
     var current: Any? = clazz
@@ -64,13 +64,13 @@ public fun getQualifiedName(clazz: JetClass): String? {
     } else null
 }
 
-fun resolveJetClass(prob: PsiElement, cacheService: KotlinCacheService): JetClass? {
+internal fun resolveJetClass(prob: PsiElement, cacheService: KotlinCacheService): JetClass? {
     fun isClassSupported(descriptor: ClassifierDescriptor): Boolean {
         if (descriptor !is ClassDescriptor)
             return false
 
         if (descriptor is LazyJavaClassDescriptor) {
-            val name = descriptor.fqName.asString()
+            val name = DescriptorUtils.getFqName(descriptor).asString()
             when (name) {
                 // Currently unsupported classes
                 "android.support.v7.app.ActionBarActivity" -> return false

@@ -36,12 +36,12 @@ import kotlin.test.*
 import android.view.ViewGroup
 import org.jetbrains.kotlin.android.attrs.Attr
 
-Config(manifest = Config.NONE)
-RunWith(RobolectricTestRunner::class)
-public class ViewHierarchyParserTest() {
+@Config(manifest = Config.NONE)
+@RunWith(RobolectricTestRunner::class)
+class ViewHierarchyParserTest() {
 
-  Test
-  public fun testGetViewHierarchy() {
+  @Test
+  fun testGetViewHierarchy() {
     val a = Robolectric.setupActivity(Activity::class.java)
 
     val frameLayout = FrameLayout(a)
@@ -82,8 +82,8 @@ public class ViewHierarchyParserTest() {
     }
   }
 
-  Test
-  public fun testLayoutParams() {
+  @Test
+  fun testLayoutParams() {
     val a = Robolectric.setupActivity(Activity::class.java)
 
     val linearLayout = LinearLayout(a)
@@ -110,8 +110,8 @@ public class ViewHierarchyParserTest() {
     }
   }
 
-  Test
-  public fun testSpecialProperty() {
+  @Test
+  fun testSpecialProperty() {
     val a = Robolectric.setupActivity(Activity::class.java)
 
     val textView = TextView(a)
@@ -125,8 +125,8 @@ public class ViewHierarchyParserTest() {
     assertEquals("paddingRight", resolveSpecialProperty(imageView, "paddingRight"))
   }
 
-  Test
-  public fun testXmlName() {
+  @Test
+  fun testXmlName() {
     val a = Robolectric.setupActivity(Activity::class.java)
 
     val linearLayout = LinearLayout(a)
@@ -140,8 +140,8 @@ public class ViewHierarchyParserTest() {
     assertEquals("org.jetbrains.kotlin.android.robowrapper.test.SomeView", parseView(someView).getXmlName())
   }
 
-  Test
-  public fun testStyleableNames() {
+  @Test
+  fun testStyleableNames() {
     Robolectric.setupActivity(Activity::class.java)
 
     assertEquals(listOf("TextView"), TextView::class.java.getStyleableNames())
@@ -153,8 +153,8 @@ public class ViewHierarchyParserTest() {
       ViewGroup.LayoutParams::class.java.getStyleableNames())
   }
 
-  Test
-  public fun testUnwrapClass() {
+  @Test
+  fun testUnwrapClass() {
     Robolectric.setupActivity(Activity::class.java)
 
     assertEquals("android.widget.LinearLayout",
@@ -177,7 +177,7 @@ public class ViewHierarchyParserTest() {
 
 }
 
-public class _LinearLayout(ctx: Context?): LinearLayout(ctx)
-public class _NonWrapper1Class(ctx: Context?): View(ctx)
+class _LinearLayout(ctx: Context?): LinearLayout(ctx)
+class _NonWrapper1Class(ctx: Context?): View(ctx)
 //has strange name (not _LinearLayout)
-public class _NonWrapper2Class(ctx: Context?): LinearLayout(ctx)
+class _NonWrapper2Class(ctx: Context?): LinearLayout(ctx)

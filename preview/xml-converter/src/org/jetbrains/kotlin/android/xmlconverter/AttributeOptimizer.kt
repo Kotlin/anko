@@ -23,7 +23,7 @@ val attributeOptimizations = listOf(
         ::optimizeHelperConstructors
 )
 
-public fun optimizeInclude(name: String, attrs: List<KeyValuePair>): Pair<String, List<KeyValuePair>>? {
+internal fun optimizeInclude(name: String, attrs: List<KeyValuePair>): Pair<String, List<KeyValuePair>>? {
     val layout = attrs.firstOrNull { it.key == "layout" }?.value
     return if (name == "include" && layout != null) {
         val rendered = renderReference(NoAttr, "layout", layout)
@@ -31,7 +31,7 @@ public fun optimizeInclude(name: String, attrs: List<KeyValuePair>): Pair<String
     } else null
 }
 
-public fun optimizeHelperConstructors(name: String, attrs: List<KeyValuePair>): Pair<String, List<KeyValuePair>>? {
+internal fun optimizeHelperConstructors(name: String, attrs: List<KeyValuePair>): Pair<String, List<KeyValuePair>>? {
     val helpers = listOf(
             attrs.firstOrNull { it.key == "text" },
             attrs.firstOrNull { it.key == "textResource" }

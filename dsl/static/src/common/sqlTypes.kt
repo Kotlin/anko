@@ -18,46 +18,47 @@
 @file:JvmName("SqlTypesKt")
 package org.jetbrains.anko.db
 
-public interface SqlType {
+interface SqlType {
     open val name: String
     open val modifier: String?
 }
 
-public interface SqlTypeModifier {
+interface SqlTypeModifier {
     open val modifier: String
 }
 
-public fun SqlType.plus(m: SqlTypeModifier) : SqlType {
+operator fun SqlType.plus(m: SqlTypeModifier) : SqlType {
     return SqlTypeImpl(name, if (modifier == null) m.toString() else "$modifier $m")
 }
 
-public val NULL: SqlType = SqlTypeImpl("NULL")
-public val INTEGER: SqlType = SqlTypeImpl("INTEGER")
-public val REAL: SqlType = SqlTypeImpl("REAL")
-public val TEXT: SqlType = SqlTypeImpl("TEXT")
+val NULL: SqlType = SqlTypeImpl("NULL")
+val INTEGER: SqlType = SqlTypeImpl("INTEGER")
+val REAL: SqlType = SqlTypeImpl("REAL")
+val TEXT: SqlType = SqlTypeImpl("TEXT")
 
-public val BLOB: SqlType = SqlTypeImpl("BLOB")
+val BLOB: SqlType = SqlTypeImpl("BLOB")
 
-public fun FOREIGN_KEY(columnName: String, referenceTable: String, referenceColumn: String): SqlType {
+fun FOREIGN_KEY(columnName: String, referenceTable: String, referenceColumn: String): SqlType {
     return SqlTypeImpl("FOREIGN KEY($columnName) REFERENCES $referenceTable($referenceColumn)")
 }
-public val PRIMARY_KEY: SqlTypeModifier = SqlTypeModifierImpl("PRIMARY KEY")
-public val NOT_NULL: SqlTypeModifier = SqlTypeModifierImpl("NOT_NULL")
-public val AUTOINCREMENT: SqlTypeModifier = SqlTypeModifierImpl("AUTOINCREMENT")
-public val UNIQUE: SqlTypeModifier = SqlTypeModifierImpl("UNIQUE")
 
-public fun DEFAULT(value: String): SqlTypeModifier = SqlTypeModifierImpl("DEFAULT $value")
+val PRIMARY_KEY: SqlTypeModifier = SqlTypeModifierImpl("PRIMARY KEY")
+val NOT_NULL: SqlTypeModifier = SqlTypeModifierImpl("NOT_NULL")
+val AUTOINCREMENT: SqlTypeModifier = SqlTypeModifierImpl("AUTOINCREMENT")
+val UNIQUE: SqlTypeModifier = SqlTypeModifierImpl("UNIQUE")
+
+fun DEFAULT(value: String): SqlTypeModifier = SqlTypeModifierImpl("DEFAULT $value")
 
 private open class SqlTypeImpl(name: String, modifier: String? = null) : SqlType {
     override val name: String = name
 
     override val modifier: String? = modifier
-    public override fun toString(): String {
+    override fun toString(): String {
         return if (modifier == null) name else "$name $modifier"
     }
 }
 
 private open class SqlTypeModifierImpl(modifier: String) : SqlTypeModifier {
     override val modifier: String = modifier
-    public override fun toString(): String = modifier
+    override fun toString(): String = modifier
 }

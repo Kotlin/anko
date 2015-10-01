@@ -21,8 +21,8 @@ import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 import org.jetbrains.android.anko.utils.JarFileFilter
 import java.io.File
 
-public object Launcher {
-    @jvmStatic
+object Launcher {
+    @JvmStatic
     fun main(args: Array<String>) {
         if (args.isNotEmpty()) {
             args.forEach { taskName ->

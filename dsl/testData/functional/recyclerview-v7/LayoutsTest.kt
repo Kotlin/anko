@@ -1,7 +1,7 @@
 private val defaultInit: Any.() -> Unit = {}
 
-public open class _RecyclerView(ctx: Context): android.support.v7.widget.RecyclerView(ctx) {
-    public fun <T: View> T.lparams(
+open class _RecyclerView(ctx: Context): android.support.v7.widget.RecyclerView(ctx) {
+    fun <T: View> T.lparams(
             c: android.content.Context?,
             attrs: android.util.AttributeSet?,
             init: android.support.v7.widget.RecyclerView.LayoutParams.() -> Unit = defaultInit
@@ -12,7 +12,7 @@ public open class _RecyclerView(ctx: Context): android.support.v7.widget.Recycle
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             init: android.support.v7.widget.RecyclerView.LayoutParams.() -> Unit = defaultInit
@@ -23,7 +23,7 @@ public open class _RecyclerView(ctx: Context): android.support.v7.widget.Recycle
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             source: android.view.ViewGroup.MarginLayoutParams?,
             init: android.support.v7.widget.RecyclerView.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -33,7 +33,7 @@ public open class _RecyclerView(ctx: Context): android.support.v7.widget.Recycle
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             source: android.view.ViewGroup.LayoutParams?,
             init: android.support.v7.widget.RecyclerView.LayoutParams.() -> Unit = defaultInit
     ): T {
@@ -43,7 +43,7 @@ public open class _RecyclerView(ctx: Context): android.support.v7.widget.Recycle
         return this
     }
 
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             source: android.support.v7.widget.RecyclerView.LayoutParams?,
             init: android.support.v7.widget.RecyclerView.LayoutParams.() -> Unit = defaultInit
     ): T {

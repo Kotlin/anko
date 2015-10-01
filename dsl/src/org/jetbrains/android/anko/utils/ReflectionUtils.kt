@@ -16,7 +16,7 @@
 
 package org.jetbrains.android.anko.utils
 
-public interface ReflectionUtils {
+internal interface ReflectionUtils {
 
     fun <T> initializeClass(clazz: Class<out T>): T {
         try {

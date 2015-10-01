@@ -5,7 +5,10 @@ import org.jetbrains.kotlin.idea.caches.resolve.analyze
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.resolve.calls.callUtil.getResolvedCall
 
-public class FindViewByIdIntention : AnkoIntention<JetExpression>(JetExpression::class.java, "Simplify findViewById() with Anko") {
+class FindViewByIdIntention : AnkoIntention<JetExpression>(
+        JetExpression::class.java,
+        "Simplify findViewById() with Anko"
+) {
     override fun isApplicableTo(element: JetExpression, caretOffset: Int): Boolean {
         fun PsiElement?.requireFindViewByIdCall() = requireCall(FIND_VIEW_BY_ID, 1) {
             val resolvedCall = getResolvedCall(analyze())

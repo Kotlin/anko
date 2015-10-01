@@ -20,13 +20,13 @@ import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
 
-private val DEBUG = false
+class UnsupportedClassException : RuntimeException()
 
-public class UnsupportedClassException : RuntimeException()
+internal val DEBUG = false
 
-private fun Float.prettifyNumber() = toDouble().prettifyNumber()
+internal fun Float.prettifyNumber() = toDouble().prettifyNumber()
 
-private fun Double.prettifyNumber(): String {
+internal fun Double.prettifyNumber(): String {
     val df = DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH))
     df.maximumFractionDigits = 8
     var value = df.format(this)
@@ -34,7 +34,7 @@ private fun Double.prettifyNumber(): String {
     return if (value.endsWith(".0")) value.replace(".0", "") else value
 }
 
-private fun isNumeric(value: Any): Boolean {
+internal fun isNumeric(value: Any): Boolean {
     if (value is Float) {
         return (!java.lang.Float.isInfinite(value) && !value.isNaN())
     }
@@ -44,12 +44,12 @@ private fun isNumeric(value: Any): Boolean {
     return (value is Int) || (value is Long)
 }
 
-private fun decapitalize(s: String): String {
+internal fun decapitalize(s: String): String {
     if (s.isEmpty()) return s
     return Character.toLowerCase(s.charAt(0)) + s.substring(1)
 }
 
-private fun wildcardToRegex(wildcard: String): String {
+internal fun wildcardToRegex(wildcard: String): String {
     val b = Buffer().append('^')
     wildcard.forEach { c -> when (c) {
         '*' -> b.append(".*")

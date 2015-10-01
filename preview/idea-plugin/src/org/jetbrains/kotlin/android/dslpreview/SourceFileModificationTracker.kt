@@ -23,7 +23,7 @@ import com.intellij.psi.impl.PsiTreeChangePreprocessor
 import org.jetbrains.kotlin.psi.JetFile
 import java.util.concurrent.atomic.AtomicLong
 
-public class SourceFileModificationTracker : PsiTreeChangePreprocessor, ModificationTracker {
+class SourceFileModificationTracker : PsiTreeChangePreprocessor, ModificationTracker {
 
     private val counter = AtomicLong()
 

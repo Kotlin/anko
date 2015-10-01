@@ -28,7 +28,7 @@ abstract class Renderer(config: AnkoConfiguration): Configurable(config) {
     protected abstract fun processElements(state: GenerationState): String
     abstract val renderIf: Array<ConfigurationOption>
 
-    public fun process(state: GenerationState): String = generate(*renderIf) {
+    fun process(state: GenerationState): String = generate(*renderIf) {
         processElements(state)
     }
 
@@ -43,7 +43,7 @@ class RenderFacade(
 
     private val cachedResults: MutableMap<Class<out Renderer>, String> = hashMapOf()
 
-    fun get(clazz: Class<out Renderer>): String = cachedResults.getOrPut(clazz) {
+    operator fun get(clazz: Class<out Renderer>): String = cachedResults.getOrPut(clazz) {
         initializeClass(clazz, config to AnkoConfiguration::class.java).process(generationState)
     }
 

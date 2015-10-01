@@ -22,11 +22,11 @@ import org.jetbrains.android.anko.utils.getPackageName
 import sun.plugin.dom.exception.InvalidStateException
 import java.io.File
 
-public interface SourceProvider {
+interface SourceProvider {
     fun parse(fqName: String): CompilationUnit?
 }
 
-public class AndroidHomeSourceProvider(version: Int) : SourceProvider {
+class AndroidHomeSourceProvider(version: Int) : SourceProvider {
     private val baseDir: File
 
     init {

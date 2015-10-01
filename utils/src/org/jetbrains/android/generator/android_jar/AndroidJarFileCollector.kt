@@ -20,7 +20,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.zip.ZipFile
 
-public fun main(args: Array<String>): Unit = AndroidJarCollector().collect()
+fun main(args: Array<String>): Unit = AndroidJarCollector().collect()
 
 class AndroidJarCollector {
     private companion object {
@@ -68,7 +68,7 @@ class AndroidJarCollector {
                     ?: hashSetOf<SupportFile>()
 
             dependencies += SupportFile(supportFile, false)
-            dependencies as Set<SupportFile>
+            dependencies
         }
 
         for ((index, version) in REQUIRED_PLATFORM_VERSIONS.sortedByDescending { it }.withIndex()) {

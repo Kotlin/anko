@@ -23,7 +23,7 @@ public class ContextButNotFragmentUniformityTest {
         }
     }
 
-    Test
+    @Test
     public fun fragmentFunctionsExistTest() {
         val receiver1 = listOf("Fragment")
         val receiver2 = listOf("Activity", "Context")
@@ -32,7 +32,7 @@ public class ContextButNotFragmentUniformityTest {
 
         listOf("fun", "val", "var").forEach { declarationName ->
             fun getDeclarations(rs: List<String>) =
-                    rs.flatMap { r -> files.flatMap { getAllDeclarations(it, r, declarationName, "noBinding") } }
+                    rs.flatMap { r -> files.flatMap { getAllDeclarations(it, r, declarationName, "@NoBinding") } }
 
             val receiver1Functions = getDeclarations(receiver1)
             val receiver2Functions = getDeclarations(receiver2)

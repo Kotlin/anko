@@ -26,41 +26,41 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.preference.PreferenceManager
 import android.view.View
-import org.jetbrains.anko.internals.NoBinding
+import org.jetbrains.anko.internals.AnkoInternals.NoBinding
 import java.io.Serializable
 
-public val Context.defaultSharedPreferences: SharedPreferences
+val Context.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(this)
 
-public val Fragment.defaultSharedPreferences: SharedPreferences
+val Fragment.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(activity)
 
-public val Fragment.act: Activity
+val Fragment.act: Activity
     get() = activity
 
-public val Fragment.ctx: Context
+val Fragment.ctx: Context
     get() = activity
 
-public val Context.ctx: Context
+val Context.ctx: Context
     get() = this
 
-public val Activity.act: Activity
+val Activity.act: Activity
     get() = this
 
-public inline fun <reified T : View> View.find(id: Int): T = findViewById(id) as T
-public inline fun <reified T : View> Activity.find(id: Int): T = findViewById(id) as T
-public inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
+inline fun <reified T : View> View.find(id: Int): T = findViewById(id) as T
+inline fun <reified T : View> Activity.find(id: Int): T = findViewById(id) as T
+inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
 
-public inline fun <reified T : View> View.findOptional(id: Int): T? = findViewById(id) as? T
-public inline fun <reified T : View> Activity.findOptional(id: Int): T? = findViewById(id) as? T
-public inline fun <reified T : View> Fragment.findOptional(id: Int): T? = view?.findViewById(id) as? T
+inline fun <reified T : View> View.findOptional(id: Int): T? = findViewById(id) as? T
+inline fun <reified T : View> Activity.findOptional(id: Int): T? = findViewById(id) as? T
+inline fun <reified T : View> Fragment.findOptional(id: Int): T? = view?.findViewById(id) as? T
 
-public fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
+fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
     arguments = bundleOf(*params)
     return this
 }
 
-public fun bundleOf(vararg params: Pair<String, Any>): Bundle {
+fun bundleOf(vararg params: Pair<String, Any>): Bundle {
     val b = Bundle()
     for (p in params) {
         val (k, v) = p
@@ -96,17 +96,17 @@ public fun bundleOf(vararg params: Pair<String, Any>): Bundle {
     return b
 }
 
-public @NoBinding val Context.displayMetrics: android.util.DisplayMetrics
+@NoBinding val Context.displayMetrics: android.util.DisplayMetrics
     get() = resources.displayMetrics
 
-public @NoBinding val Context.configuration: android.content.res.Configuration
+@NoBinding val Context.configuration: android.content.res.Configuration
     get() = resources.configuration
 
-public val android.content.res.Configuration.portrait: Boolean
+val android.content.res.Configuration.portrait: Boolean
     get() = orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT
 
-public val android.content.res.Configuration.landscape: Boolean
+val android.content.res.Configuration.landscape: Boolean
     get() = orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
 
-public val android.content.res.Configuration.long: Boolean
+val android.content.res.Configuration.long: Boolean
     get() = (screenLayout and android.content.res.Configuration.SCREENLAYOUT_LONG_YES) != 0

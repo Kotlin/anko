@@ -21,14 +21,14 @@ import org.jetbrains.kotlin.android.attrs.Attrs
 import org.jetbrains.kotlin.android.attrs.readResource
 import java.util.regex.Pattern
 
-private val XML_HEADER = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\n"
-private val XML_SCHEMA = """ xmlns:android="http://schemas.android.com/apk/res/android" """
+internal val XML_HEADER = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\n"
+internal val XML_SCHEMA = """ xmlns:android="http://schemas.android.com/apk/res/android" """
 
 /*
     Key-value pairs that won't be present in result xml. Usually default values for attrs (or convert fixes).
     Line format: [<CLASSNAME>#]<PROPNAME>:<VALUE1>:<VALUE2>:...:<VALUEn>
  */
-private val defaultValues = readResource("default_values.txt")
+internal val defaultValues = readResource("default_values.txt")
         .split('\n').filter { it.length() > 2 }.fold(hashMapOf<String, List<Any>>()) { hmap, value ->
     val delimiter = value.indexOf(' ')
     val key = value.substring(0, delimiter)
@@ -41,20 +41,20 @@ private val defaultValues = readResource("default_values.txt")
     hmap
 }
 
-private val attrs = Gson().fromJson(readResource("attrs.json"), Attrs::class.java)
+internal val attrs = Gson().fromJson(readResource("attrs.json"), Attrs::class.java)
 
-private val ignoredMethods = setOf(
+internal val ignoredMethods = setOf(
         "getX", "getY", "getInputType", "getTextScaleX", "getTextScaleY",
         "isImportantForAccessibility", "getImportantForAccessibility",
         "getImeOptions", "getPersistentDrawingCache", "getDescendantFocusability"
 )
 
-private val ignoreChildrenOf = setOf(
+internal val ignoreChildrenOf = setOf(
         "android.widget.CalendarView", "android.widget.TimePicker", "android.widget.DatePicker",
         "android.support.v4.view.PagerTabStrip", "android.widget.NumberPicker", "android.widget.SearchView"
 )
 
-private val androidViewPaths = setOf(
+internal val androidViewPaths = setOf(
         "android.view.",
         "android.widget.",
         "android.appwidget.",
@@ -65,7 +65,7 @@ private val androidViewPaths = setOf(
         "android.support.v13.app."
 )
 
-val dimensionProperties = setOf(
+internal val dimensionProperties = setOf(
         "maxWidth",
         "maxHeight",
         "minWidth",

@@ -21,11 +21,11 @@ import com.intellij.openapi.application.PathManager
 import java.io.File
 
 object RobowrapperDependencies {
-    val DEPENDENCIES_DIRECTORY: File = File(PathManager.getSystemPath(), "dsl-plugin/deps")
+    internal val DEPENDENCIES_DIRECTORY: File = File(PathManager.getSystemPath(), "dsl-plugin/deps")
 
-    val ANDROID_ALL_DEPENDENCY = Dependency("org.robolectric", "android-all", "5.0.0_r2-robolectric-1")
+    internal val ANDROID_ALL_DEPENDENCY = Dependency("org.robolectric", "android-all", "5.0.0_r2-robolectric-1")
 
-    val DEPENDENCIES: List<Dependency> = listOf(
+    internal val DEPENDENCIES: List<Dependency> = listOf(
         ANDROID_ALL_DEPENDENCY,
         Dependency("org.robolectric", "shadows-core", "3.0-rc3", postfix = "-21"),
         Dependency("org.robolectric", "shadows-support-v4", "3.0-rc3", postfix = "-21"),
@@ -34,15 +34,15 @@ object RobowrapperDependencies {
     )
 }
 
-private class Dependency(
+class Dependency(
         group: String,
         artifact: String,
         version: String,
         extension: String = "jar",
         postfix: String? = ""
 ) {
-    val downloadUrl = "http://central.maven.org/maven2/${group.replace('.', '/')}/" +
+    internal val downloadUrl = "http://central.maven.org/maven2/${group.replace('.', '/')}/" +
             "$artifact/$version/$artifact-$version.$extension"
 
-    val file = File(RobowrapperDependencies.DEPENDENCIES_DIRECTORY, "$artifact-$version$postfix.$extension")
+    internal val file = File(RobowrapperDependencies.DEPENDENCIES_DIRECTORY, "$artifact-$version$postfix.$extension")
 }

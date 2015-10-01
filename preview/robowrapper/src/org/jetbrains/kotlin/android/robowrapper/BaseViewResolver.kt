@@ -25,12 +25,12 @@ import org.robolectric.Robolectric
 import org.robolectric.util.FragmentTestUtil
 import org.robolectric.util.SupportFragmentTestUtil
 
-public class BaseViewResolver {
+class BaseViewResolver {
 
-    public fun getBaseView(clazz: Class<Any>): View {
+    fun getBaseView(clazz: Class<Any>): View {
         return when {
             clazz.isActivity() -> {
-                @suppress("CAST_NEVER_SUCCEEDS")
+                @Suppress("CAST_NEVER_SUCCEEDS")
                 val activity = Robolectric.buildActivity<Activity>(clazz as Class<Activity>).create().get()
                 val contentView = activity.findViewById(android.R.id.content) as ViewGroup
                 if (contentView.childCount == 0) FrameLayout(activity) else contentView.getChildAt(0)

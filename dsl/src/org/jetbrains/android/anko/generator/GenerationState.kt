@@ -31,26 +31,26 @@ interface Generator<R> {
 }
 
 class GenerationState(
-        public override val classTree: ClassTree,
+        override val classTree: ClassTree,
         config: AnkoConfiguration
 ): ClassTreeUtils, Configurable(config), ReflectionUtils {
 
-    public val availableClasses: List<ClassNode> =
+    val availableClasses: List<ClassNode> =
             classTree.filter { !isExcluded(it) && !classTree.findNode(it)!!.fromPlatformJar }
 
-    public val availableMethods: List<MethodNodeWithClass> = findAvailableMethods(availableClasses)
+    val availableMethods: List<MethodNodeWithClass> = findAvailableMethods(availableClasses)
 
     private val cachedResults: MutableMap<Class<out Generator<*>>, Iterable<*>> = hashMapOf()
 
-    @suppress("UNCHECKED_CAST")
-    fun <T> get(clazz: Class<out Generator<T>>): Iterable<T> = cachedResults.getOrPut(clazz) {
+    @Suppress("UNCHECKED_CAST")
+    operator fun <T> get(clazz: Class<out Generator<T>>): Iterable<T> = cachedResults.getOrPut(clazz) {
         initializeClass(clazz).generate(this)
     } as Iterable<T>
 
-    public override fun isExcluded(node: ClassNode) =
+    override fun isExcluded(node: ClassNode) =
             node.fqName in config.excludedClasses || "${node.packageName}.*" in config.excludedClasses
 
-    public override fun isExcluded(node: MethodNodeWithClass) =
+    override fun isExcluded(node: MethodNodeWithClass) =
             (node.clazz.fqName + "#" + node.method.name) in config.excludedMethods
 
 }

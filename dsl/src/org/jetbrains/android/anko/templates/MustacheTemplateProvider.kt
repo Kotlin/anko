@@ -20,7 +20,7 @@ import com.samskivert.mustache.Mustache
 import com.samskivert.mustache.Template
 import java.io.File
 
-public class MustacheTemplateProvider(private val baseDir: File) : TemplateProvider {
+class MustacheTemplateProvider(private val baseDir: File) : TemplateProvider {
     private val templateCache = hashMapOf<String, Template>()
 
     override fun render(templateName: String, args: Map<String, Any?>): String {

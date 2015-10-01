@@ -37,7 +37,7 @@ import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
 import java.io.File
 import java.io.IOException
 
-public class ConvertAction : AnAction() {
+class ConvertAction : AnAction() {
 
     private class FileToConvert(val xmlFile: VirtualFile, val ktFile: File)
 

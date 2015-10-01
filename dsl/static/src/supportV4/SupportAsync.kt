@@ -21,7 +21,7 @@ package org.jetbrains.anko.support.v4
 import android.support.v4.app.Fragment
 import org.jetbrains.anko.*
 
-public fun <T: Fragment> AnkoAsyncContext<T>.supportFragmentUiThread(f: (T) -> Unit) {
+fun <T: Fragment> AnkoAsyncContext<T>.supportFragmentUiThread(f: (T) -> Unit) {
     val fragment = weakRef.get() ?: return
     if (fragment.isDetached) return
     val activity = fragment.activity ?: return
@@ -29,10 +29,10 @@ public fun <T: Fragment> AnkoAsyncContext<T>.supportFragmentUiThread(f: (T) -> U
 }
 
 @Deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
-public inline fun Fragment.uiThread(crossinline f: () -> Unit) {
+inline fun Fragment.uiThread(crossinline f: () -> Unit) {
     activity.onUiThread { f() }
 }
 
-public inline fun Fragment.onUiThread(crossinline f: () -> Unit) {
+inline fun Fragment.onUiThread(crossinline f: () -> Unit) {
     activity.onUiThread { f() }
 }

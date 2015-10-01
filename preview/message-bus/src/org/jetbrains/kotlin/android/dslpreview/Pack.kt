@@ -16,22 +16,22 @@
 
 package org.jetbrains.kotlin.android.dslpreview
 
-import com.google
+import com.google.gson.Gson
 
-public class Pack(
-        public val xml: String,
-        public val error_code: Int,
-        public val error: String,
-        public val stacktrace: String,
-        public val alive: Boolean,
-        public var port: Int = -1
+class Pack(
+        val xml: String,
+        val error_code: Int,
+        val error: String,
+        val stacktrace: String,
+        val alive: Boolean,
+        var port: Int = -1
 ) {
 
-    public fun toJson(): String {
+    fun toJson(): String {
         return gson.toJson(this)
     }
 
     companion object {
-        private val gson = google.gson.Gson()
+        private val gson = Gson()
     }
 }

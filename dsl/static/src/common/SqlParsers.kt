@@ -25,11 +25,11 @@ import org.jetbrains.anko.internals.AnkoInternals
 import java.lang.reflect.Modifier
 import java.util.*
 
-public interface RowParser<T> {
+interface RowParser<T> {
     fun parseRow(columns: Array<Any>): T
 }
 
-public interface MapRowParser<T> {
+interface MapRowParser<T> {
     fun parseRow(columns: Map<String, Any>): T
 }
 
@@ -54,22 +54,22 @@ private class ScalarColumnParser<R, T>(val modifier: ((R) -> T)? = null) : RowPa
     }
 }
 
-public val ShortParser: RowParser<Short> = ScalarColumnParser<Long, Short> { it.toShort() }
-public val IntParser: RowParser<Int> = ScalarColumnParser<Long, Int> { it.toInt() }
-public val LongParser: RowParser<Long> = SingleColumnParser()
-public val FloatParser: RowParser<Float> = ScalarColumnParser<Double, Float> { it.toFloat() }
-public val DoubleParser: RowParser<Double> = SingleColumnParser()
-public val StringParser: RowParser<String> = SingleColumnParser()
-public val BlobParser: RowParser<ByteArray> = SingleColumnParser()
+val ShortParser: RowParser<Short> = ScalarColumnParser<Long, Short> { it.toShort() }
+val IntParser: RowParser<Int> = ScalarColumnParser<Long, Int> { it.toInt() }
+val LongParser: RowParser<Long> = SingleColumnParser()
+val FloatParser: RowParser<Float> = ScalarColumnParser<Double, Float> { it.toFloat() }
+val DoubleParser: RowParser<Double> = SingleColumnParser()
+val StringParser: RowParser<String> = SingleColumnParser()
+val BlobParser: RowParser<ByteArray> = SingleColumnParser()
 
-public fun <T: Any> Cursor.parseSingle(parser: RowParser<T>): T = AnkoInternals.useCursor(this) {
+fun <T: Any> Cursor.parseSingle(parser: RowParser<T>): T = AnkoInternals.useCursor(this) {
     if (count != 1)
         throw SQLiteException("parseSingle accepts only cursors with a single entry")
     moveToFirst()
     return parser.parseRow(readColumnsArray(this))
 }
 
-public fun <T: Any> Cursor.parseOpt(parser: RowParser<T>): T? = AnkoInternals.useCursor(this) {
+fun <T: Any> Cursor.parseOpt(parser: RowParser<T>): T? = AnkoInternals.useCursor(this) {
     if (count > 1)
         throw SQLiteException("parseSingle accepts only cursors with a single entry or empty cursors")
     if (count == 0)
@@ -78,7 +78,7 @@ public fun <T: Any> Cursor.parseOpt(parser: RowParser<T>): T? = AnkoInternals.us
     return parser.parseRow(readColumnsArray(this))
 }
 
-public fun <T: Any> Cursor.parseList(parser: RowParser<T>): List<T> = AnkoInternals.useCursor(this) {
+fun <T: Any> Cursor.parseList(parser: RowParser<T>): List<T> = AnkoInternals.useCursor(this) {
     val list = ArrayList<T>(count)
     moveToFirst()
     while (!isAfterLast) {
@@ -88,14 +88,14 @@ public fun <T: Any> Cursor.parseList(parser: RowParser<T>): List<T> = AnkoIntern
     return list
 }
 
-public fun <T: Any> Cursor.parseSingle(parser: MapRowParser<T>): T = AnkoInternals.useCursor(this) {
+fun <T: Any> Cursor.parseSingle(parser: MapRowParser<T>): T = AnkoInternals.useCursor(this) {
     if (count != 1)
         throw SQLiteException("parseSingle accepts only cursors with getCount() == 1")
     moveToFirst()
     return parser.parseRow(readColumnsMap(this))
 }
 
-public fun <T: Any> Cursor.parseOpt(parser: MapRowParser<T>): T? = AnkoInternals.useCursor(this) {
+fun <T: Any> Cursor.parseOpt(parser: MapRowParser<T>): T? = AnkoInternals.useCursor(this) {
     if (count > 1)
         throw SQLiteException("parseSingle accepts only cursors with getCount() == 1 or empty cursors")
     if (count == 0)
@@ -104,7 +104,7 @@ public fun <T: Any> Cursor.parseOpt(parser: MapRowParser<T>): T? = AnkoInternals
     return parser.parseRow(readColumnsMap(this))
 }
 
-public fun <T: Any> Cursor.parseList(parser: MapRowParser<T>): List<T> = AnkoInternals.useCursor(this) {
+fun <T: Any> Cursor.parseList(parser: MapRowParser<T>): List<T> = AnkoInternals.useCursor(this) {
     val list = ArrayList<T>(count)
     moveToFirst()
     while (!isAfterLast) {
@@ -115,25 +115,25 @@ public fun <T: Any> Cursor.parseList(parser: MapRowParser<T>): List<T> = AnkoInt
 }
 
 @Deprecated("Use asSequence() instead", ReplaceWith("asSequence()"))
-public fun Cursor.sequence(): Sequence<Array<Any>> {
+fun Cursor.sequence(): Sequence<Array<Any>> {
     return CursorSequence(this)
 }
 
 @Deprecated("Use asMapSequence() instead", ReplaceWith("asMapSequence()"))
-public fun Cursor.mapSequence(): Sequence<Map<String, Any>> {
+fun Cursor.mapSequence(): Sequence<Map<String, Any>> {
     return CursorMapSequence(this)
 }
 
-public fun Cursor.asSequence(): Sequence<Array<Any>> {
+fun Cursor.asSequence(): Sequence<Array<Any>> {
     return CursorSequence(this)
 }
 
-public fun Cursor.asMapSequence(): Sequence<Map<String, Any>> {
+fun Cursor.asMapSequence(): Sequence<Map<String, Any>> {
     return CursorMapSequence(this)
 }
 
 @Suppress("NOTHING_TO_INLINE")
-public inline fun <reified T: Any> classParser(): RowParser<T> {
+inline fun <reified T: Any> classParser(): RowParser<T> {
     val clazz = T::class.java
     val constructors = clazz.declaredConstructors.filter {
         val types = it.parameterTypes

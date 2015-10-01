@@ -21,7 +21,6 @@ import org.jetbrains.kotlin.resolve.descriptorUtil.module
 import org.jetbrains.kotlin.resolve.lazy.descriptors.ClassResolutionScopesSupport
 import org.jetbrains.kotlin.resolve.scopes.*
 import org.jetbrains.kotlin.resolve.scopes.ExplicitImportsScope
-import org.jetbrains.kotlin.resolve.scopes.utils.asLexicalScope
 import org.jetbrains.kotlin.resolve.scopes.utils.memberScopeAsFileScope
 import org.jetbrains.kotlin.storage.LockBasedStorageManager
 import org.jetbrains.kotlin.types.TypeUtils
@@ -59,9 +58,6 @@ abstract class AnkoIntention<TElement : JetElement>(
     protected val JetDotQualifiedExpression.selector: JetExpression?
         get() = selectorExpression
 
-    protected val PsiElement.text: String
-        get() = getText()
-
     protected val JetBinaryExpressionWithTypeRHS.operation: JetSimpleNameExpression
         get() = operationReference
 
@@ -79,7 +75,7 @@ abstract class AnkoIntention<TElement : JetElement>(
         return requireCall(functionName, argCount) && (this as JetCallExpression).sub()
     }
 
-    suppress("NOTHING_TO_INLINE")
+    @Suppress("NOTHING_TO_INLINE")
     protected inline fun PsiElement?.requireCall(functionName: String? = null, argCount: Int? = null): Boolean {
         if (this !is JetCallExpression) return false
         if (functionName != null && functionName != calleeExpression?.getText()) return false
@@ -116,7 +112,7 @@ abstract class AnkoIntention<TElement : JetElement>(
                         RedeclarationHandler.DO_NOTHING)
             is LocalVariableDescriptor -> {
                 val declaration = DescriptorToSourceUtils.descriptorToDeclaration(descriptor) as JetDeclaration
-                declaration.analyze()[BindingContext.RESOLUTION_SCOPE, declaration]!!.asLexicalScope()
+                declaration.analyze().get(BindingContext.LEXICAL_SCOPE, declaration)!!
             }
 
             else -> throw IllegalArgumentException("Cannot find resolution scope for $descriptor")

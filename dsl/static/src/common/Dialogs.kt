@@ -22,39 +22,39 @@ import android.app.Fragment
 import android.app.ProgressDialog
 import android.content.Context
 import android.widget.Toast
-import org.jetbrains.anko.internals.NoBinding
+import org.jetbrains.anko.internals.AnkoInternals.NoBinding
 
-public fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
+fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
 
-public fun Context.toast(textResource: Int) {
+fun Context.toast(textResource: Int) {
     Toast.makeText(this, textResource, Toast.LENGTH_SHORT).show()
 }
 
-public fun Fragment.toast(text: CharSequence): Unit = activity.toast(text)
+fun Fragment.toast(text: CharSequence): Unit = activity.toast(text)
 
-public fun Context.toast(text: CharSequence) {
+fun Context.toast(text: CharSequence) {
     Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 }
 
-public fun Fragment.longToast(textResource: Int): Unit = activity.longToast(textResource)
+fun Fragment.longToast(textResource: Int): Unit = activity.longToast(textResource)
 
-public fun Context.longToast(textResource: Int) {
+fun Context.longToast(textResource: Int) {
     Toast.makeText(this, textResource, Toast.LENGTH_LONG).show()
 }
 
-public fun Fragment.longToast(text: CharSequence): Unit = activity.longToast(text)
+fun Fragment.longToast(text: CharSequence): Unit = activity.longToast(text)
 
-public fun Context.longToast(text: CharSequence) {
+fun Context.longToast(text: CharSequence) {
     Toast.makeText(this, text, Toast.LENGTH_LONG).show()
 }
 
-public fun Fragment.alert(
+fun Fragment.alert(
         message: String,
         title: String? = null,
         init: (AlertDialogBuilder.() -> Unit)? = null
 ): AlertDialogBuilder = activity.alert(message, title, init)
 
-public fun Context.alert(
+fun Context.alert(
         message: String,
         title: String? = null,
         init: (AlertDialogBuilder.() -> Unit)? = null
@@ -66,13 +66,13 @@ public fun Context.alert(
     }
 }
 
-public fun Fragment.alert(
+fun Fragment.alert(
         message: Int,
         title: Int? = null,
         init: (AlertDialogBuilder.() -> Unit)? = null
 ): AlertDialogBuilder = activity.alert(message, title, init)
 
-public fun Context.alert(
+fun Context.alert(
         message: Int,
         title: Int? = null,
         init: (AlertDialogBuilder.() -> Unit)? = null
@@ -84,13 +84,13 @@ public fun Context.alert(
     }
 }
 
-public fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = activity.alert(init)
+fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = activity.alert(init)
 
-public fun Context.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder {
+fun Context.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder {
     return AlertDialogBuilder(this).apply { init() }
 }
 
-public fun Fragment.progressDialog(
+fun Fragment.progressDialog(
         message: Int? = null,
         title: Int? = null,
         init: (ProgressDialog.() -> Unit)? = null
@@ -98,7 +98,7 @@ public fun Fragment.progressDialog(
     return activity.progressDialog(false, message?.let { getString(it) }, title?.let { getString(it) }, init)
 }
 
-public fun Context.progressDialog(
+fun Context.progressDialog(
         message: Int? = null,
         title: Int? = null,
         init: (ProgressDialog.() -> Unit)? = null
@@ -106,7 +106,7 @@ public fun Context.progressDialog(
     return progressDialog(false, message?.let { getString(it) }, title?.let { getString(it) }, init)
 }
 
-public fun Fragment.indeterminateProgressDialog(
+fun Fragment.indeterminateProgressDialog(
         message: Int? = null,
         title: Int? = null,
         init: (ProgressDialog.() -> Unit)? = null
@@ -114,7 +114,7 @@ public fun Fragment.indeterminateProgressDialog(
     return activity.progressDialog(true, message?.let { getString(it) }, title?.let { getString(it) }, init)
 }
 
-public fun Context.indeterminateProgressDialog(
+fun Context.indeterminateProgressDialog(
         message: Int? = null,
         title: Int? = null,
         init: (ProgressDialog.() -> Unit)? = null
@@ -122,7 +122,7 @@ public fun Context.indeterminateProgressDialog(
     return progressDialog(true, message?.let { getString(it) }, title?.let { getString(it) }, init)
 }
 
-public fun Fragment.progressDialog(
+fun Fragment.progressDialog(
         message: String? = null,
         title: String? = null,
         init: (ProgressDialog.() -> Unit)? = null
@@ -130,7 +130,7 @@ public fun Fragment.progressDialog(
     return activity.progressDialog(false, message, title, init)
 }
 
-public fun Context.progressDialog(
+fun Context.progressDialog(
         message: String? = null,
         title: String? = null,
         init: (ProgressDialog.() -> Unit)? = null
@@ -138,7 +138,7 @@ public fun Context.progressDialog(
     return progressDialog(false, message, title, init)
 }
 
-public fun Fragment.indeterminateProgressDialog(
+fun Fragment.indeterminateProgressDialog(
         message: String? = null,
         title: String? = null,
         init: (ProgressDialog.() -> Unit)? = null
@@ -146,7 +146,7 @@ public fun Fragment.indeterminateProgressDialog(
     return activity.progressDialog(true, message, title, init)
 }
 
-public fun Context.indeterminateProgressDialog(
+fun Context.indeterminateProgressDialog(
         message: String? = null,
         title: String? = null,
         init: (ProgressDialog.() -> Unit)? = null
@@ -171,14 +171,14 @@ private fun Context.progressDialog(
     return dialog
 }
 
-public fun Fragment.selector(
+fun Fragment.selector(
         title: CharSequence? = null,
         items: List<CharSequence>,
         onClick: (Int) -> Unit
 ): Unit = activity.selector(title, items, onClick)
 
 
-public fun Context.selector(
+fun Context.selector(
     title: CharSequence? = null,
     items: List<CharSequence>,
     onClick: (Int) -> Unit

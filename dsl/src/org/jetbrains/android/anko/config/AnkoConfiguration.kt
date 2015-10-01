@@ -53,11 +53,11 @@ abstract class AnkoConfiguration {
     abstract val sourceManager: SourceManager
     abstract val templateManager: TemplateManager
 
-    public fun get(option: ConfigurationOption): Boolean = option in tunes || option in files
+    operator fun get(option: ConfigurationOption): Boolean = option in tunes || option in files
 
-    public abstract fun getOutputFile(ankoFile: AnkoFile): File
+    abstract fun getOutputFile(ankoFile: AnkoFile): File
 
-    public fun getTargetArtifactType(): TargetArtifactType {
+    fun getTargetArtifactType(): TargetArtifactType {
         return when {
             "common" == version -> COMMON
             "support-v4" == version -> SUPPORT_V4

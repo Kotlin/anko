@@ -48,10 +48,10 @@ inline fun <T> List<T>.forEachReversedWithIndex(f: (Int, T) -> Unit) {
     }
 }
 
-public fun <F, S> android.util.Pair<F, S>.toKotlinPair(): Pair<F, S> {
+fun <F, S> android.util.Pair<F, S>.toKotlinPair(): Pair<F, S> {
     return first to second
 }
 
-public fun <F, S> Pair<F, S>.toAndroidPair(): android.util.Pair<F, S> {
+fun <F, S> Pair<F, S>.toAndroidPair(): android.util.Pair<F, S> {
     return android.util.Pair(first, second)
 }

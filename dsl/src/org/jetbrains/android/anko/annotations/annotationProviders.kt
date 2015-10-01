@@ -19,23 +19,17 @@ package org.jetbrains.android.anko.annotations
 import java.io.File
 import java.util.zip.ZipFile
 
-public enum class ExternalAnnotation {
+enum class ExternalAnnotation {
     NotNull,
     GenerateLayout,
     GenerateView
 }
 
-public interface AnnotationProvider {
+interface AnnotationProvider {
     fun getExternalAnnotations(packageName: String): Map<String, Set<ExternalAnnotation>>
 }
 
-public interface BulkAnnotationProvider : AnnotationProvider {
-    override fun getExternalAnnotations(packageName: String): Map<String, Set<ExternalAnnotation>> {
-        return mapOf()
-    }
-}
-
-public class ZipFileAnnotationProvider(val zipFile: File) : AnnotationProvider {
+class ZipFileAnnotationProvider(val zipFile: File) : AnnotationProvider {
     private val archive: ZipFile by lazy { ZipFile(zipFile) }
 
     override fun getExternalAnnotations(packageName: String): Map<String, Set<ExternalAnnotation>> {
@@ -48,7 +42,7 @@ public class ZipFileAnnotationProvider(val zipFile: File) : AnnotationProvider {
     }
 }
 
-public class DirectoryAnnotationProvider(val directory: File) : AnnotationProvider {
+class DirectoryAnnotationProvider(val directory: File) : AnnotationProvider {
 
     override fun getExternalAnnotations(packageName: String): Map<String, Set<ExternalAnnotation>> {
         val annotationFile = File(directory, packageName.replace('.', '/') + "/annotations.xml")
@@ -58,7 +52,7 @@ public class DirectoryAnnotationProvider(val directory: File) : AnnotationProvid
 
 }
 
-public class CachingAnnotationProvider(val underlyingProvider: AnnotationProvider) : AnnotationProvider {
+class CachingAnnotationProvider(val underlyingProvider: AnnotationProvider) : AnnotationProvider {
     private val cache = hashMapOf<String, Map<String, Set<ExternalAnnotation>>>()
 
     override fun getExternalAnnotations(packageName: String) = cache.getOrPut(packageName) {
@@ -66,7 +60,7 @@ public class CachingAnnotationProvider(val underlyingProvider: AnnotationProvide
     }
 }
 
-public class CompoundAnnotationProvider(vararg providers: AnnotationProvider) : AnnotationProvider {
+class CompoundAnnotationProvider(vararg providers: AnnotationProvider) : AnnotationProvider {
 
     private val providers = providers
 

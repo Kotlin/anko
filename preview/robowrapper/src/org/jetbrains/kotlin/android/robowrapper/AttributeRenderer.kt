@@ -109,7 +109,7 @@ private fun renderLayoutParams(view: View, lp: ViewGroup.LayoutParams, topLevel:
 }
 
 // Convert px value to dp (independent to screen size)
-private fun Context.px2dip(value: Int): Float {
+internal fun Context.px2dip(value: Int): Float {
     val metrics = resources.displayMetrics
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, value.toFloat(), metrics)
 }
@@ -119,7 +119,7 @@ private fun Context.px2dip(value: Int): Float {
     Handle all special cases (such as id, layoutParams or etc)
     @returns null if attr was not parsed properly
  */
-private fun renderAttribute(view: View, attr: Attr?, key: String, value: Any, topLevel: Boolean): String? {
+internal fun renderAttribute(view: View, attr: Attr?, key: String, value: Any, topLevel: Boolean): String? {
     if (key == "gravity") {
         return resolveGravity(value.toString().toInt())
     }
@@ -157,8 +157,9 @@ private fun renderAttribute(view: View, attr: Attr?, key: String, value: Any, to
         if ("dimension" in attr.format || key in dimensionProperties) {
             return resolveDimension(view, key, value.toString())
         }
-        if ("enum" in attr.format && attr.enum != null) {
-            for (nv in attr.enum) {
+        val attrEnum = attr.enum
+        if ("enum" in attr.format && attrEnum != null) {
+            for (nv in attrEnum) {
                 val enumValue = nv.value.parseEnumFlagValue()
                 if (enumValue.toString().equals(basicRenderAttr(key, value))) {
                     return nv.name
@@ -193,25 +194,14 @@ private fun renderDrawableAttribute(value: android.graphics.drawable.Drawable, v
     return null
 }
 
-fun String.parseEnumFlagValue(): Long {
+internal fun String.parseEnumFlagValue(): Long {
     if (startsWith("0x") && length() > 2) {
         return java.lang.Long.parseLong(substring(2), 16)
     } else return toLong()
 }
 
-private fun parseFlags(value: Long, attr: Attr): String {
-    val present = hashSetOf<String>()
-    attr.flags?.forEach { nv ->
-        val flagValue = nv.value.parseEnumFlagValue()
-        if ((value and flagValue) == flagValue) {
-            present.add(nv.name)
-        }
-    }
-    return present.joinToString("|")
-}
-
 // Convert several types of values to a string representation
-fun basicRenderAttr(key: String, value: Any): String? {
+internal fun basicRenderAttr(key: String, value: Any): String? {
     when (value) {
         is Int, is Long -> return value.toString()
         is Float -> return value.prettifyNumber()
@@ -227,4 +217,15 @@ fun basicRenderAttr(key: String, value: Any): String? {
             return null
         }
     }
+}
+
+private fun parseFlags(value: Long, attr: Attr): String {
+    val present = hashSetOf<String>()
+    attr.flags?.forEach { nv ->
+        val flagValue = nv.value.parseEnumFlagValue()
+        if ((value and flagValue) == flagValue) {
+            present.add(nv.name)
+        }
+    }
+    return present.joinToString("|")
 }

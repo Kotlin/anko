@@ -38,7 +38,7 @@ class SqlParserHelperRenderer(config: AnkoConfiguration) : Renderer(config) {
                 line("if (columns.size() != $i)")
                 val s = if (i == 1) "" else "s"
                 indent.line("throw SQLiteException(\"Invalid row: $i column$s required\")")
-                line("@suppress(\"UNCHECKED_CAST\")")
+                line("@Suppress(\"UNCHECKED_CAST\")")
                 line("return parser($args)")
                 line("}")
                 line("}")

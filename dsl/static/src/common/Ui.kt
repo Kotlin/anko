@@ -25,30 +25,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
 import org.jetbrains.anko.custom.ankoView
-import org.jetbrains.anko.internals.NoBinding
+import org.jetbrains.anko.internals.AnkoInternals.NoBinding
 
-public fun <T : View> T.style(style: (View) -> Unit): T {
+fun <T : View> T.style(style: (View) -> Unit): T {
     applyStyle(this, style)
     return this
 }
 
 @Deprecated("Use ViewManager.ankoView() instead")
-public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, manager: ViewManager): T {
+fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, manager: ViewManager): T {
     return manager.ankoView({ ctx -> view(ctx) }) { init() }
 }
 
 @Deprecated("Use Context.ankoView() instead")
-public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, ctx: Context): T {
+fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, ctx: Context): T {
     return ctx.ankoView({ ctx -> view(ctx) }) { init() }
 }
 
 @Deprecated("Use Activity.ankoView() instead")
-public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, act: Activity): T {
+fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, act: Activity): T {
     return act.ankoView({ ctx -> view(ctx) }) { init() }
 }
 
 @Deprecated("Use Context.ankoView() instead")
-public fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, fragment: Fragment): T {
+fun <T : View> __dslAddView(view: (ctx: Context) -> T, init: T.() -> Unit, fragment: Fragment): T {
     return (fragment.activity as Context).ankoView({ ctx -> view(ctx) }) { init() }
 }
 
@@ -63,23 +63,23 @@ private fun applyStyle(v: View, style: (View) -> Unit) {
 }
 
 @NoBinding
-public fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
+fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
     val dsl = UiHelper(this, setContentView)
     dsl.init()
     return dsl
 }
 
-public fun Context.UI(init: UiHelper.() -> Unit): UiHelper {
+fun Context.UI(init: UiHelper.() -> Unit): UiHelper {
     val dsl = UiHelper(this, false)
     dsl.init()
     return dsl
 }
 
-public fun Activity.UI(init: UiHelper.() -> Unit): UiHelper = UI(true, init)
+fun Activity.UI(init: UiHelper.() -> Unit): UiHelper = UI(true, init)
 
-public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = activity.UI(false, init)
+fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = activity.UI(false, init)
 
-public class UiHelper(public val ctx: Context, private val setContentView: Boolean = true) : ViewManager {
+class UiHelper(val ctx: Context, private val setContentView: Boolean = true) : ViewManager {
     private lateinit var view: View
 
     fun toView() = view

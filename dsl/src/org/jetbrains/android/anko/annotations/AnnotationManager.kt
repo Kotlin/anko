@@ -23,15 +23,15 @@ import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
 import kotlin.dom.childElements
 
-public class AnnotationManager(private val provider: AnnotationProvider) {
-    public fun findAnnotationsFor(q: String): Set<ExternalAnnotation> {
+class AnnotationManager(private val provider: AnnotationProvider) {
+    fun findAnnotationsFor(q: String): Set<ExternalAnnotation> {
         var packageName = getPackageName(q.substringBefore(' '))
         val annotations = provider.getExternalAnnotations(packageName)
         return annotations.get(q) ?: setOf()
     }
 }
 
-public fun parseAnnotations(doc: Document): Map<String, Set<ExternalAnnotation>> {
+fun parseAnnotations(doc: Document): Map<String, Set<ExternalAnnotation>> {
     val map = hashMapOf<String, Set<ExternalAnnotation>>()
 
     for (element in doc.documentElement.childElements("item")) {

@@ -19,7 +19,7 @@ package org.jetbrains.anko.db
 import android.database.sqlite.SQLiteDatabase
 import org.jetbrains.anko.AnkoException
 
-public class UpdateQueryBuilder(
+class UpdateQueryBuilder(
         val db: SQLiteDatabase,
         val tableName: String,
         val values: Array<out Pair<String, Any>>
@@ -30,7 +30,7 @@ public class UpdateQueryBuilder(
     private var selection: String? = null
     private var nativeSelectionArgs: Array<out String>? = null
 
-    public fun where(select: String, vararg args: Pair<String, Any>): UpdateQueryBuilder {
+    fun where(select: String, vararg args: Pair<String, Any>): UpdateQueryBuilder {
         if (selectionApplied) {
             throw AnkoException("Query selection was already applied.")
         }
@@ -45,7 +45,7 @@ public class UpdateQueryBuilder(
         return this
     }
 
-    public fun where(select: String): UpdateQueryBuilder {
+    fun where(select: String): UpdateQueryBuilder {
         if (selectionApplied)
             throw AnkoException("Query selection was already applied.")
 
@@ -55,7 +55,7 @@ public class UpdateQueryBuilder(
         return this
     }
 
-    public fun whereSimple(select: String, vararg args: String): UpdateQueryBuilder {
+    fun whereSimple(select: String, vararg args: String): UpdateQueryBuilder {
         if (selectionApplied)
             throw AnkoException("Query selection was already applied.")
 
@@ -67,11 +67,11 @@ public class UpdateQueryBuilder(
     }
 
     @Deprecated("Use whereSimple() instead", replaceWith = ReplaceWith("whereSimple(select, *args)"))
-    public fun whereSupport(select: String, vararg args: String): UpdateQueryBuilder {
+    fun whereSupport(select: String, vararg args: String): UpdateQueryBuilder {
         return whereSimple(select, *args)
     }
 
-    public fun exec(): Int {
+    fun exec(): Int {
         val finalSelection = if (selectionApplied) selection else null
         val finalSelectionArgs = if (selectionApplied && useNativeSelection) nativeSelectionArgs else null
         return db.update(tableName, values.toContentValues(), finalSelection, finalSelectionArgs)

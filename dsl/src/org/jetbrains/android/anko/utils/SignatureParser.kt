@@ -21,30 +21,30 @@ import org.objectweb.asm.signature.SignatureReader
 import org.objectweb.asm.signature.SignatureVisitor
 import java.util.*
 
-interface Classifier
-data class BaseType(val descriptor: Char) : Classifier
-interface NamedClass : Classifier
-data class TopLevelClass(val internalName: String) : NamedClass
-data class InnerClass(val outer: GenericType, val name: String) : NamedClass
-data class TypeVariable(val name: String) : Classifier
-object ArrayC : Classifier
+internal interface Classifier
+internal data class BaseType(val descriptor: Char) : Classifier
+internal interface NamedClass : Classifier
+internal data class TopLevelClass(val internalName: String) : NamedClass
+internal data class InnerClass(val outer: GenericType, val name: String) : NamedClass
+internal data class TypeVariable(val name: String) : Classifier
+internal object ArrayC : Classifier
 
-enum class Wildcard {
+internal enum class Wildcard {
     SUPER,  // ? super X
     EXTENDS // ? extends X
 }
 
-interface TypeArgument
-data class BoundedWildcard(val wildcard: Wildcard, val bound: GenericType) : TypeArgument
-object UnboundedWildcard : TypeArgument
-data class NoWildcard(val genericType: GenericType) : TypeArgument
+internal interface TypeArgument
+internal data class BoundedWildcard(val wildcard: Wildcard, val bound: GenericType) : TypeArgument
+internal object UnboundedWildcard : TypeArgument
+internal data class NoWildcard(val genericType: GenericType) : TypeArgument
 
-interface GenericType {
+internal interface GenericType {
     val classifier: Classifier
     val arguments: List<TypeArgument>
 }
 
-class GenericTypeImpl : GenericType {
+internal class GenericTypeImpl : GenericType {
     var classifierVar: Classifier? = null
 
     override val arguments: MutableList<TypeArgument> = ArrayList()
@@ -55,16 +55,16 @@ class GenericTypeImpl : GenericType {
     override fun toString(): String = "$classifier<${arguments.joinToString(separator = ", ")}>"
 }
 
-class TypeParameter(val name: String, val upperBounds: List<GenericType>)
-class ValueParameter(val index: Int, val genericType: GenericType)
+internal class TypeParameter(val name: String, val upperBounds: List<GenericType>)
+internal class ValueParameter(val index: Int, val genericType: GenericType)
 
-class GenericMethodSignature(
+internal class GenericMethodSignature(
     val typeParameters: List<TypeParameter>,
     val returnType: GenericType,
     val valueParameters: List<ValueParameter>
 )
 
-fun parseGenericMethodSignature(signature: String): GenericMethodSignature {
+internal fun parseGenericMethodSignature(signature: String): GenericMethodSignature {
     val typeParameters = ArrayList<TypeParameter>()
     val returnType = GenericTypeImpl()
     val valueParameters = ArrayList<ValueParameter>()
@@ -73,32 +73,32 @@ fun parseGenericMethodSignature(signature: String): GenericMethodSignature {
         object : SignatureVisitor(Opcodes.ASM4) {
             var bounds = ArrayList<GenericType>()
 
-            public override fun visitFormalTypeParameter(name: String) {
+            override fun visitFormalTypeParameter(name: String) {
                 bounds = ArrayList<GenericType>()
                 var param = TypeParameter(name, bounds)
                 typeParameters.add(param)
             }
 
-            public override fun visitClassBound(): SignatureVisitor {
+            override fun visitClassBound(): SignatureVisitor {
                 val bound = GenericTypeImpl()
                 bounds.add(bound)
                 return GenericTypeParser(bound)
             }
 
-            public override fun visitInterfaceBound(): SignatureVisitor {
+            override fun visitInterfaceBound(): SignatureVisitor {
                 val bound = GenericTypeImpl()
                 bounds.add(bound)
                 return GenericTypeParser(bound)
             }
 
-            public override fun visitParameterType(): SignatureVisitor {
+            override fun visitParameterType(): SignatureVisitor {
                 val parameterType = GenericTypeImpl()
                 val param = ValueParameter(valueParameters.size(), parameterType)
                 valueParameters.add(param)
                 return GenericTypeParser(parameterType)
             }
 
-            public override fun visitReturnType(): SignatureVisitor {
+            override fun visitReturnType(): SignatureVisitor {
                 return GenericTypeParser(returnType)
             }
         }

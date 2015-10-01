@@ -16,7 +16,6 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption

@@ -18,17 +18,17 @@ package org.jetbrains.android.anko.utils
 
 import org.objectweb.asm.Type
 
-val Type.isVoid: Boolean
+internal val Type.isVoid: Boolean
     get() = sort == Type.VOID
 
-val Type.isSimpleType: Boolean
+internal val Type.isSimpleType: Boolean
     get() = when (sort) {
         Type.BOOLEAN, Type.INT, Type.FLOAT, Type.DOUBLE, Type.LONG, Type.BYTE, Type.CHAR, Type.SHORT -> true
         Type.VOID -> true
         else -> false
     }
 
-val Type.fqName: String
+internal val Type.fqName: String
     get() = className.replace('/', '.').replace('$', '.')
 
 private fun mapJavaToKotlinType(str: String): String {
@@ -41,7 +41,7 @@ private fun mapJavaToKotlinType(str: String): String {
     }
 }
 
-fun Type.asString(nullable: Boolean = true): String {
+internal fun Type.asString(nullable: Boolean = true): String {
     val nullability = if (nullable) "?" else ""
     return when (sort) {
         Type.BOOLEAN -> "Boolean"
@@ -64,7 +64,7 @@ fun Type.asString(nullable: Boolean = true): String {
     }
 }
 
-fun Type.asJavaString(): String {
+internal fun Type.asJavaString(): String {
     return when (sort) {
         Type.BOOLEAN -> "boolean"
         Type.INT -> "int"
@@ -80,7 +80,7 @@ fun Type.asJavaString(): String {
     }
 }
 
-fun Type.getDefaultValue() : String {
+internal fun Type.getDefaultValue() : String {
     return when (sort) {
         Type.BOOLEAN -> "false"
         Type.INT -> "0"
@@ -102,7 +102,7 @@ fun Type.getDefaultValue() : String {
     }
 }
 
-fun genericTypeToStr(param: GenericType, nullable: Boolean = true): String {
+internal fun genericTypeToStr(param: GenericType, nullable: Boolean = true): String {
     var res = StringBuilder()
 
     val classifier = param.classifier
@@ -135,11 +135,11 @@ fun genericTypeToStr(param: GenericType, nullable: Boolean = true): String {
     return res.toString()
 }
 
-fun getPackageName(fqName: String): String {
+internal fun getPackageName(fqName: String): String {
     val indexOfFirstCapital = fqName.indexOfFirst { it.isUpperCase() }
     return fqName.substring(0, indexOfFirstCapital).substringBeforeLast('.')
 }
 
-fun getJavaClassName(fqName: String): String {
+internal fun getJavaClassName(fqName: String): String {
     return fqName.substring(getPackageName(fqName).length() + 1)
 }

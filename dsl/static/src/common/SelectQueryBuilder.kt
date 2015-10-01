@@ -21,7 +21,7 @@ import android.database.sqlite.SQLiteDatabase
 import org.jetbrains.anko.AnkoException
 import org.jetbrains.anko.internals.AnkoInternals
 
-public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
+class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
     private val columns = arrayListOf<String>()
     private val groupBy = arrayListOf<String>()
     private val orderBy = arrayListOf<String>()
@@ -37,34 +37,34 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
     private var selection: String? = null
     private var nativeSelectionArgs: Array<out String>? = null
 
-    public fun <T> exec(f: Cursor.() -> T): T {
+    fun <T> exec(f: Cursor.() -> T): T {
         val cursor = execInternal()
         return AnkoInternals.useCursor(cursor) {
             cursor.f()
         }
     }
 
-    public fun <T: Any> parseSingle(parser: RowParser<T>): T = AnkoInternals.useCursor(execInternal()) {
+    fun <T: Any> parseSingle(parser: RowParser<T>): T = AnkoInternals.useCursor(execInternal()) {
         it.parseSingle(parser)
     }
 
-    public fun <T: Any> parseOpt(parser: RowParser<T>): T? = AnkoInternals.useCursor(execInternal()) {
+    fun <T: Any> parseOpt(parser: RowParser<T>): T? = AnkoInternals.useCursor(execInternal()) {
         it.parseOpt(parser)
     }
 
-    public fun <T: Any> parseList(parser: RowParser<T>): List<T> = AnkoInternals.useCursor(execInternal()) {
+    fun <T: Any> parseList(parser: RowParser<T>): List<T> = AnkoInternals.useCursor(execInternal()) {
         it.parseList(parser)
     }
 
-    public fun <T: Any> parseSingle(parser: MapRowParser<T>): T = AnkoInternals.useCursor(execInternal()) {
+    fun <T: Any> parseSingle(parser: MapRowParser<T>): T = AnkoInternals.useCursor(execInternal()) {
         it.parseSingle(parser)
     }
 
-    public fun <T: Any> parseOpt(parser: MapRowParser<T>): T? = AnkoInternals.useCursor(execInternal()) {
+    fun <T: Any> parseOpt(parser: MapRowParser<T>): T? = AnkoInternals.useCursor(execInternal()) {
         it.parseOpt(parser)
     }
 
-    public fun <T: Any> parseList(parser: MapRowParser<T>): List<T> = AnkoInternals.useCursor(execInternal()) {
+    fun <T: Any> parseList(parser: MapRowParser<T>): List<T> = AnkoInternals.useCursor(execInternal()) {
         it.parseList(parser)
     }
 
@@ -81,17 +81,17 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
         return this
     }
 
-    public fun column(name: String): SelectQueryBuilder {
+    fun column(name: String): SelectQueryBuilder {
         columns.add(name)
         return this
     }
 
-    public fun groupBy(value: String): SelectQueryBuilder {
+    fun groupBy(value: String): SelectQueryBuilder {
         groupBy.add(value)
         return this
     }
 
-    public fun orderBy(value: String, direction: SqlOrderDirection = SqlOrderDirection.ASC): SelectQueryBuilder {
+    fun orderBy(value: String, direction: SqlOrderDirection = SqlOrderDirection.ASC): SelectQueryBuilder {
         if (direction == SqlOrderDirection.DESC) {
             orderBy.add("$value DESC")
         } else {
@@ -100,22 +100,22 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
         return this
     }
 
-    public fun limit(count: Int): SelectQueryBuilder {
+    fun limit(count: Int): SelectQueryBuilder {
         limit = count.toString()
         return this
     }
 
-    public fun limit(offset: Int, count: Int): SelectQueryBuilder {
+    fun limit(offset: Int, count: Int): SelectQueryBuilder {
         limit = "$offset, $count"
         return this
     }
 
-    public fun columns(vararg names: String): SelectQueryBuilder {
+    fun columns(vararg names: String): SelectQueryBuilder {
         columns.addAll(names)
         return this
     }
 
-    public fun having(having: String): SelectQueryBuilder {
+    fun having(having: String): SelectQueryBuilder {
         if (havingApplied) {
             throw AnkoException("Query having was already applied.")
         }
@@ -125,7 +125,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
         return this
     }
 
-    public fun having(having: String, vararg args: Pair<String, Any>): SelectQueryBuilder {
+    fun having(having: String, vararg args: Pair<String, Any>): SelectQueryBuilder {
         if (selectionApplied) {
             throw AnkoException("Query having was already applied.")
         }
@@ -135,7 +135,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
         return this
     }
 
-    public fun where(select: String, vararg args: Pair<String, Any>): SelectQueryBuilder {
+    fun where(select: String, vararg args: Pair<String, Any>): SelectQueryBuilder {
         if (selectionApplied) {
             throw AnkoException("Query selection was already applied.")
         }
@@ -146,7 +146,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
         return this
     }
 
-    public fun where(select: String): SelectQueryBuilder {
+    fun where(select: String): SelectQueryBuilder {
         if (selectionApplied) {
             throw AnkoException("Query selection was already applied.")
         }
@@ -157,7 +157,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
         return this
     }
 
-    public fun whereSimple(select: String, vararg args: String): SelectQueryBuilder {
+    fun whereSimple(select: String, vararg args: String): SelectQueryBuilder {
         if (selectionApplied) {
             throw AnkoException("Query selection was already applied.")
         }
@@ -170,7 +170,7 @@ public class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
     }
 
     @Deprecated("Use whereSimple() instead", replaceWith = ReplaceWith("whereSimple(select, *args)"))
-    public fun whereSupport(select: String, vararg args: String): SelectQueryBuilder {
+    fun whereSupport(select: String, vararg args: String): SelectQueryBuilder {
         return whereSimple(select, *args)
     }
 }

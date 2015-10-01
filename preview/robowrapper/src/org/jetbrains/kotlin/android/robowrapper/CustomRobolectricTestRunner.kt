@@ -21,7 +21,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.manifest.AndroidManifest
 
-public class CustomRobolectricTestRunner(clazz: Class<*>) : RobolectricTestRunner(clazz) {
+class CustomRobolectricTestRunner(clazz: Class<*>) : RobolectricTestRunner(clazz) {
 
     override fun getAppManifest(config: Config?): AndroidManifest? {
         val manifest = super.getAppManifest(config) ?: return null

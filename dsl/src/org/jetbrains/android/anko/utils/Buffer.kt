@@ -18,10 +18,10 @@ package org.jetbrains.android.anko.utils
 
 import org.jetbrains.android.anko.config.Configurable
 
-fun Configurable.buffer(init: Buffer.() -> Unit) = Buffer(config.indent, 0, init)
-fun Configurable.buffer(indent: Int, init: Buffer.() -> Unit) = Buffer(config.indent, indent, init)
+internal fun Configurable.buffer(init: Buffer.() -> Unit) = Buffer(config.indent, 0, init)
+internal fun Configurable.buffer(indent: Int, init: Buffer.() -> Unit) = Buffer(config.indent, indent, init)
 
-public class Buffer(private val indentString: String, indent: Int = 0, val init: Buffer.() -> Unit) {
+class Buffer(private val indentString: String, indent: Int = 0, val init: Buffer.() -> Unit) {
 
     private val builder = StringBuilder();
     private var mainIndent = indent;
@@ -29,7 +29,7 @@ public class Buffer(private val indentString: String, indent: Int = 0, val init:
 
     init { init() }
 
-    public fun line(s: String): Buffer {
+    fun line(s: String): Buffer {
         if (mainIndent > 0 && s.startsWith('}')) mainIndent -= 1
 
         if (s.isNotEmpty()) {
@@ -49,39 +49,35 @@ public class Buffer(private val indentString: String, indent: Int = 0, val init:
         return this
     }
 
-    public fun nl(): Buffer = line("")
+    fun nl(): Buffer = line("")
 
-    public val indent: Buffer
+    val indent: Buffer
         get() {
             tempIndent += 1
             return this
         }
 
-    public fun lines(lines: List<String>): Buffer {
+    fun lines(lines: List<String>): Buffer {
         for (line in lines) {
             line(line)
         }
         return this
     }
 
-    public fun lines(lines: Array<String>): Buffer {
+    fun lines(lines: Array<String>): Buffer {
         for (line in lines) {
             line(line)
         }
         return this
     }
 
-    public val size: Int
+    val size: Int
         get() = builder.length()
 
-    public val isEmpty: Boolean
+    val isEmpty: Boolean
         get() = builder.length() == 0
 
-    override fun toString(): String {
-        return builder.toString()
-    }
+    override fun toString() = builder.toString()
 
-    fun getLines(): List<String> {
-        return toString().split('\n').toList()
-    }
+    fun getLines() = toString().split('\n').toList()
 }

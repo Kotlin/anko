@@ -21,9 +21,9 @@ import com.intellij.openapi.components.Storage
 import com.intellij.openapi.components.StoragePathMacros
 import org.jetbrains.android.uipreview.AndroidEditorSettings
 
-State(
+@State(
     name = "DslAndroidEditorSettings",
     storages = arrayOf(Storage(file = StoragePathMacros.APP_CONFIG + "/dslAndroidEditors.xml")
     )
 )
-public class DslAndroidEditorSettings : AndroidEditorSettings()
+class DslAndroidEditorSettings : AndroidEditorSettings()

@@ -1,5 +1,5 @@
-public inline fun {{receiver}}.{{functionName}}(): {{returnType}} = {{functionName}}({})
-public inline fun {{receiver}}.{{functionName}}({{additionalParams}}{{#additionalParams}}, {{/additionalParams}}init: {{lambdaArgType}}.() -> Unit): {{returnType}} {
+inline fun {{receiver}}.{{functionName}}(): {{returnType}} = {{functionName}}({})
+inline fun {{receiver}}.{{functionName}}({{additionalParams}}{{#additionalParams}}, {{/additionalParams}}init: {{lambdaArgType}}.() -> Unit): {{returnType}} {
     return ankoView({{factory}}) { init() }
 }
 

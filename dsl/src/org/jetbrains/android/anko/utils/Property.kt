@@ -16,12 +16,10 @@
 
 package org.jetbrains.android.anko.utils
 
-import org.jetbrains.android.anko.utils.MethodNodeWithClass
-import org.jetbrains.android.anko.utils.fqName
 import org.jetbrains.android.anko.returnType
 import org.objectweb.asm.Type
 
-class Property(val node: MethodNodeWithClass) {
+internal class Property(val node: MethodNodeWithClass) {
 
     val name: String
 
@@ -48,4 +46,4 @@ class Property(val node: MethodNodeWithClass) {
 
 }
 
-fun MethodNodeWithClass.toProperty() = Property(this)
+internal fun MethodNodeWithClass.toProperty() = Property(this)

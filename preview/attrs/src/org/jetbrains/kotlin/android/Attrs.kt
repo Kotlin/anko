@@ -18,27 +18,27 @@ package org.jetbrains.kotlin.android.attrs
 
 import java.io.File
 
-public data class NameValue(
+data class NameValue(
         val name: String = "",
         val value: String = "")
 
-public data class Attr(
+data class Attr(
         val name: String = "",
         val format: List<String> = listOf(),
         val flags: List<NameValue>? = null,
         val enum: List<NameValue>? = null)
 
-public val NoAttr: Attr = Attr()
+val NoAttr: Attr = Attr()
 
-public data class Styleable(
+data class Styleable(
         val name: String = "",
         val attrs: List<Attr> = listOf())
 
-public data class Attrs(
+data class Attrs(
         val free: List<Attr> = listOf(),
         val styleables: Map<String, Styleable> = mapOf())
 
-public fun readResource(filename: String): String {
+fun readResource(filename: String): String {
     return Attrs::class.java.classLoader.getResourceAsStream(filename)?.reader()?.readText()
             ?: File(filename).readText()
 }

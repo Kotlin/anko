@@ -25,17 +25,17 @@ import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.*
 
-public inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
-public inline fun <reified T : View> Fragment.findOptional(id: Int): T? = view?.findViewById(id) as? T
+inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
+inline fun <reified T : View> Fragment.findOptional(id: Int): T? = view?.findViewById(id) as? T
 
 @Deprecated("Use Context.addView() instead")
-public fun <T : View> Fragment.addView(factory: (ctx: Context) -> T): T {
+fun <T : View> Fragment.addView(factory: (ctx: Context) -> T): T {
     return (activity as Context).ankoView(factory) {}
 }
 
-public fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = activity.UI(false, init)
+fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = activity.UI(false, init)
 
-public inline fun <T: Any> Fragment.configuration(
+inline fun <T: Any> Fragment.configuration(
         screenSize: ScreenSize? = null,
         density: Range<Int>? = null,
         language: String? = null,
@@ -57,7 +57,7 @@ public inline fun <T: Any> Fragment.configuration(
     else null
 }
 
-public fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
+fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
     setArguments(bundleOf(*params))
     return this
 }

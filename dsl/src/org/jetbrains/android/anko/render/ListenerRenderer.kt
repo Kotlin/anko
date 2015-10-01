@@ -29,7 +29,7 @@ import org.jetbrains.android.anko.generator.ListenerGenerator
 import org.jetbrains.android.anko.generator.SimpleListenerElement
 import org.jetbrains.android.anko.utils.*
 
-public class ListenerRenderer(config: AnkoConfiguration) : Renderer(config) {
+class ListenerRenderer(config: AnkoConfiguration) : Renderer(config) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.LISTENERS)
 

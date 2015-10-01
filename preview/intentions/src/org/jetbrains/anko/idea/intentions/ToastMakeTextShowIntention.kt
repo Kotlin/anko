@@ -18,7 +18,10 @@ package org.jetbrains.anko.idea.intentions
 
 import org.jetbrains.kotlin.psi.*
 
-public class ToastMakeTextShowIntention : AnkoIntention<JetExpression>(JetExpression::class.java, "Simplify Toast.makeText().show() with Anko") {
+class ToastMakeTextShowIntention : AnkoIntention<JetExpression>(
+        JetExpression::class.java,
+        "Simplify Toast.makeText().show() with Anko"
+) {
 
     override fun isApplicableTo(element: JetExpression, caretOffset: Int): Boolean {
         return element.require<JetDotQualifiedExpression> {
@@ -33,7 +36,7 @@ public class ToastMakeTextShowIntention : AnkoIntention<JetExpression>(JetExpres
     }
 
     private fun JetCallExpression.isLongToast(): Boolean? {
-        return when (valueArguments[2].getText()) {
+        return when (valueArguments[2].text) {
             "Toast.LENGTH_SHORT", "LENGTH_SHORT" -> false
             "Toast.LENGTH_LONG", "LENGTH_LONG" -> true
             else -> null

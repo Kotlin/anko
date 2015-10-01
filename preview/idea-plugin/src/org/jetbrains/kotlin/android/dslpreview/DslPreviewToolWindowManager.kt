@@ -61,8 +61,12 @@ import org.jetbrains.kotlin.psi.JetClass
 import org.jetbrains.kotlin.psi.JetFile
 import javax.swing.DefaultComboBoxModel
 import javax.swing.JPanel
+import com.intellij.openapi.Disposable
 
-public class DslPreviewToolWindowManager(private val myProject: Project, fileEditorManager: FileEditorManager) : AndroidLayoutPreviewToolWindowManager(myProject, fileEditorManager), DslWorker.Listener, com.intellij.openapi.Disposable {
+class DslPreviewToolWindowManager(
+        private val myProject: Project,
+        fileEditorManager: FileEditorManager
+) : AndroidLayoutPreviewToolWindowManager(myProject, fileEditorManager), DslWorker.Listener, Disposable {
 
     private var myDslWorker: DslWorker? = null
     private var myActivityListModel: DefaultComboBoxModel<Any>? = null
@@ -75,7 +79,8 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
                 .first { it is SourceFileModificationTracker } as SourceFileModificationTracker
     }
 
-    private volatile var lastSourceFileModification = 0L
+    @Volatile
+    private var lastSourceFileModification = 0L
 
     init {
         ApplicationManager.getApplication().invokeLater(object : Runnable {
@@ -271,17 +276,12 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
         return true
     }
 
-    override fun initListeners(project: Project) {
+    override fun initListeners(project: Project) {}
+    override fun update(event: PsiTreeChangeEvent) {}
+    override fun dispose() {}
 
-    }
-
-    override fun update(event: PsiTreeChangeEvent) {
-
-    }
-
-    override fun dispose() {
-
-    }
+    override fun getToolWindow() = super.getToolWindow()
+    override fun getToolWindowForm() = super.getToolWindowForm()
 
     private fun resolveAvailableClasses() {
         val cacheService = KotlinCacheService.getInstance(myProject)
@@ -366,7 +366,7 @@ public class DslPreviewToolWindowManager(private val myProject: Project, fileEdi
         }
     }
 
-    public inner class UpdateActivityNameTask : LongRunningReadTask<Pair<JetClass, String>, String>() {
+    inner class UpdateActivityNameTask : LongRunningReadTask<Pair<JetClass, String>, String>() {
         override fun prepareRequestInfo(): Pair<JetClass, String>? {
             val toolWindow = toolWindow
             if (toolWindow == null || !toolWindow.isVisible) {

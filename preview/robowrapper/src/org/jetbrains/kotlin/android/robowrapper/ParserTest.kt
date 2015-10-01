@@ -28,21 +28,21 @@ import java.io.StringWriter
 import java.nio.charset.Charset
 import kotlin.properties.Delegates
 
-RunWith(CustomRobolectricTestRunner::class)
-public class ParserTest {
+@RunWith(CustomRobolectricTestRunner::class)
+class ParserTest {
     private var activityClass: String by Delegates.notNull()
     private val classLoaderManager = ClassLoaderManager()
     private val baseViewResolver = BaseViewResolver()
 
     private val output = PrintStream(System.out, true, "UTF-8")
 
-    Before
-    public fun init() {
+    @Before
+    fun init() {
         activityClass = System.getProperty("robo.activityClass", "")
     }
 
-    Test
-    public fun testParser() {
+    @Test
+    fun testParser() {
         val first = generate(activityClass)
         if (!first.alive) {
             log(first)
@@ -84,7 +84,7 @@ public class ParserTest {
             val cl = Thread.currentThread().contextClassLoader
             val clazz = cl.loadClass(className)
 
-            @suppress("UNCHECKED_CAST")
+            @Suppress("UNCHECKED_CAST")
             val baseView = baseViewResolver.getBaseView(clazz as Class<Any>)
             val viewNode = parseView(baseView)
             val xml = toXml(viewNode)

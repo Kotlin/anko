@@ -16,21 +16,19 @@
 
 package org.jetbrains.android.anko.utils
 
-import org.jetbrains.android.anko.utils.ClassTree
-import org.jetbrains.android.anko.utils.ClassTreeNode
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 
-public interface ClassTreeUtils {
+internal interface ClassTreeUtils {
 
-    protected val classTree: ClassTree
+    val classTree: ClassTree
 
-    protected fun isExcluded(node: ClassNode): Boolean
-    protected fun isExcluded(node: MethodNodeWithClass): Boolean
+    fun isExcluded(node: ClassNode): Boolean
+    fun isExcluded(node: MethodNodeWithClass): Boolean
 
-    protected fun findAvailableClasses(): List<ClassNode> = classTree.filter { !isExcluded(it) }
+    fun findAvailableClasses(): List<ClassNode> = classTree.filter { !isExcluded(it) }
 
-    protected fun findAvailableMethods(availableClasses: List<ClassNode>): List<MethodNodeWithClass> {
+    fun findAvailableMethods(availableClasses: List<ClassNode>): List<MethodNodeWithClass> {
         return availableClasses.flatMap { classNode ->
             classNode.methods
                     ?.map { MethodNodeWithClass(classNode, it) }

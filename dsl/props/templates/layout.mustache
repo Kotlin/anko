@@ -1,6 +1,6 @@
-public open class {{name}}({{constructor}}): {{baseClass}}({{baseConstructor}}) {
+open class {{name}}({{constructor}}): {{baseClass}}({{baseConstructor}}) {
 {{#functions}}
-    public fun <T: View> T.lparams(
+    fun <T: View> T.lparams(
             {{#params}}{{this}},
             {{/params}}init: {{layoutParamsClass}}.() -> Unit = defaultInit
     ): T {

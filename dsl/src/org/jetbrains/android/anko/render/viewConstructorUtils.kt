@@ -25,10 +25,10 @@ interface ViewConstructorUtils {
     companion object {
         private val CONSTRUCTOR1 = arrayOf(Type.getObjectType("android/content/Context"))
         private val CONSTRUCTOR2 = arrayOf(Type.getObjectType("android/content/Context"), Type.getObjectType("android/util/AttributeSet"))
-        public val AVAILABLE_VIEW_CONSTRUCTORS: List<Array<Type>> = listOf(CONSTRUCTOR1, CONSTRUCTOR2)
+        val AVAILABLE_VIEW_CONSTRUCTORS: List<Array<Type>> = listOf(CONSTRUCTOR1, CONSTRUCTOR2)
     }
 
-    protected fun renderConstructorArgs(
+    fun renderConstructorArgs(
             view: ClassNode,
             constructors: List<MethodNode?>,
             ctxName: String,

@@ -20,13 +20,13 @@ import com.intellij.psi.PsiClass
 import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.kotlin.psi.JetClass
 
-public abstract class PreviewClassDescription(val androidFacet: AndroidFacet) {
+abstract class PreviewClassDescription(val androidFacet: AndroidFacet) {
     abstract val name: String
     abstract val qualifiedName: String
     abstract val packageName: String
 }
 
-public class PreviewPsiClassDescription(val psiClass: PsiClass, androidFacet: AndroidFacet): PreviewClassDescription(androidFacet) {
+class PreviewPsiClassDescription(val psiClass: PsiClass, androidFacet: AndroidFacet): PreviewClassDescription(androidFacet) {
     override val qualifiedName: String = psiClass.qualifiedName ?: ""
     override val packageName: String
     override val name: String
@@ -45,7 +45,7 @@ public class PreviewPsiClassDescription(val psiClass: PsiClass, androidFacet: An
     }
 }
 
-public class PreviewJetClassDescription(val jetClass: JetClass, androidFacet: AndroidFacet): PreviewClassDescription(androidFacet) {
+class PreviewJetClassDescription(val jetClass: JetClass, androidFacet: AndroidFacet): PreviewClassDescription(androidFacet) {
     override val packageName: String = jetClass.getContainingJetFile().packageFqName.asString()
     override val name: String = jetClass.name!!
     override val qualifiedName: String = "$packageName.$name"

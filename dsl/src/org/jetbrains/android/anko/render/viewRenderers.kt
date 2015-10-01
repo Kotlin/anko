@@ -27,26 +27,27 @@ import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 import java.util.*
 
-public class ViewRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
+class ViewRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
     override fun processElements(state: GenerationState) =
             renderViews(state[ViewGenerator::class.java]) { it.fqName }
 }
 
-public class ViewGroupRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
+class ViewGroupRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
     override fun processElements(state: GenerationState) =
             renderViews(state[ViewGroupGenerator::class.java]) { "_" + it.simpleName }
 }
 
-public class ViewFactoryClass(val config: AnkoConfiguration, val suffix: String) {
-    public val entries = arrayListOf<String>()
+class ViewFactoryClass(val config: AnkoConfiguration, val suffix: String) {
     private val name = config.version.toCamelCase('-').capitalize()
-    public val fullName = "`${'$'}${'$'}Anko${'$'}Factories${'$'}$name$suffix`"
 
-    public fun render(): String {
+    val entries = arrayListOf<String>()
+    val fullName = "`${'$'}${'$'}Anko${'$'}Factories${'$'}$name$suffix`"
+
+    fun render(): String {
         if (entries.isEmpty()) return ""
 
         return StringBuilder {
-            appendln("public object $fullName {")
+            appendln("object $fullName {")
             entries.forEach { append(config.indent).appendln(it) }
             appendln("}").appendln()
         }.toString()
@@ -72,7 +73,7 @@ private abstract class AbstractViewRenderer(
                     if (Props.helperConstructors.contains(view.fqName)) {
                         append(renderHelperConstructors(view, factoryClass))
                     } else if (view.clazz.isTinted()) {
-                        val (className21, _) = handleTintedView(view.clazz, nameResolver(view.clazz))
+                        val (className21, unused) = handleTintedView(view.clazz, nameResolver(view.clazz))
                         if (Props.helperConstructors.contains("android.widget.$className21")) {
                             append(renderHelperConstructors(view, factoryClass))
                         }
@@ -105,7 +106,7 @@ private abstract class AbstractViewRenderer(
                 "if (Build.VERSION.SDK_INT < 21) $className($constructorArgs) else $className21($constructorArgs)"
             else
                 "$className($constructorArgs)"
-            add("public val $factoryPropertyName = { ctx: Context -> $constructorCall }")
+            add("val $factoryPropertyName = { ctx: Context -> $constructorCall }")
         }
 
         fun renderView(receiver: String) = render("view") {
@@ -147,13 +148,13 @@ private abstract class AbstractViewRenderer(
             fun add(extendFor: String) = buffer {
                 val returnType = if (tinted) className21 else className
 
-                line("public inline fun $extendFor.$functionName($helperArguments): $returnType {")
+                line("inline fun $extendFor.$functionName($helperArguments): $returnType {")
                 line("return ankoView($factory) {")
                 lines(setters)
                 line("}")
                 line("}")
 
-                line("public inline fun $extendFor.$functionName($helperArguments, init: $lambdaArgType.() -> Unit): $returnType {")
+                line("inline fun $extendFor.$functionName($helperArguments, init: $lambdaArgType.() -> Unit): $returnType {")
                 line("return ankoView($factory) {")
                 line("init()")
                 lines(setters)

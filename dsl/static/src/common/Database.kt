@@ -25,27 +25,27 @@ import android.database.sqlite.SQLiteOpenHelper
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.regex.Pattern
 
-public enum class SqlOrderDirection { ASC, DESC }
+enum class SqlOrderDirection { ASC, DESC }
 
-public class TransactionAbortException : RuntimeException()
+class TransactionAbortException : RuntimeException()
 
-public fun SQLiteDatabase.insert(tableName: String, vararg values: Pair<String, Any>): Long {
+fun SQLiteDatabase.insert(tableName: String, vararg values: Pair<String, Any>): Long {
     return insert(tableName, null, values.toContentValues())
 }
 
-public fun SQLiteDatabase.insertOrThrow(tableName: String, vararg values: Pair<String, Any>): Long {
+fun SQLiteDatabase.insertOrThrow(tableName: String, vararg values: Pair<String, Any>): Long {
     return insertOrThrow(tableName, null, values.toContentValues())
 }
 
-public fun SQLiteDatabase.replace(tableName: String, vararg values: Pair<String, Any>): Long {
+fun SQLiteDatabase.replace(tableName: String, vararg values: Pair<String, Any>): Long {
     return replace(tableName, null, values.toContentValues())
 }
 
-public fun SQLiteDatabase.replaceOrThrow(tableName: String, vararg values: Pair<String, Any>): Long {
+fun SQLiteDatabase.replaceOrThrow(tableName: String, vararg values: Pair<String, Any>): Long {
     return replaceOrThrow(tableName, null, values.toContentValues())
 }
 
-public fun SQLiteDatabase.transaction(code: SQLiteDatabase.() -> Unit) {
+fun SQLiteDatabase.transaction(code: SQLiteDatabase.() -> Unit) {
     try {
         beginTransaction()
         code()
@@ -57,25 +57,25 @@ public fun SQLiteDatabase.transaction(code: SQLiteDatabase.() -> Unit) {
     }
 }
 
-public fun SQLiteDatabase.select(tableName: String): SelectQueryBuilder {
+fun SQLiteDatabase.select(tableName: String): SelectQueryBuilder {
     return SelectQueryBuilder(this, tableName)
 }
 
-public fun SQLiteDatabase.select(tableName: String, vararg columns: String): SelectQueryBuilder {
+fun SQLiteDatabase.select(tableName: String, vararg columns: String): SelectQueryBuilder {
     val builder = SelectQueryBuilder(this, tableName)
     builder.columns(*columns)
     return builder
 }
 
-public fun SQLiteDatabase.update(tableName: String, vararg values: Pair<String, Any>): UpdateQueryBuilder {
+fun SQLiteDatabase.update(tableName: String, vararg values: Pair<String, Any>): UpdateQueryBuilder {
     return UpdateQueryBuilder(this, tableName, values)
 }
 
-public fun SQLiteDatabase.delete(tableName: String, whereClause: String = "", vararg args: Pair<String, Any>): Int {
+fun SQLiteDatabase.delete(tableName: String, whereClause: String = "", vararg args: Pair<String, Any>): Int {
     return delete(tableName, applyArguments(whereClause, *args), null)
 }
 
-public fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = false, vararg columns: Pair<String, SqlType>) {
+fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = false, vararg columns: Pair<String, SqlType>) {
     val escapedTableName = tableName.replace("`", "``")
     val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
     execSQL(
@@ -85,7 +85,7 @@ public fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = 
     )
 }
 
-public fun SQLiteDatabase.dropTable(tableName: String, ifExists: Boolean = false) {
+fun SQLiteDatabase.dropTable(tableName: String, ifExists: Boolean = false) {
     val escapedTableName = tableName.replace("`", "``")
     val ifExistsText = if (ifExists) "IF EXISTS" else ""
     execSQL("DROP TABLE $ifExistsText `$escapedTableName`;")
@@ -101,7 +101,7 @@ internal fun applyArguments(whereClause: String, vararg args: Pair<String, Any>)
     return applyArguments(whereClause, argsMap)
 }
 
-fun applyArguments(whereClause: String, args: Map<String, Any>): String {
+internal fun applyArguments(whereClause: String, args: Map<String, Any>): String {
     val matcher = ARG_PATTERN.matcher(whereClause)
     val buffer = StringBuffer(whereClause.length())
     while (matcher.find()) {
@@ -142,7 +142,7 @@ internal fun Array<out Pair<String, Any>>.toContentValues(): ContentValues {
     return values
 }
 
-public abstract class ManagedSQLiteOpenHelper(
+abstract class ManagedSQLiteOpenHelper(
     ctx: Context,
     name: String,
     factory: SQLiteDatabase.CursorFactory? = null,
@@ -152,7 +152,7 @@ public abstract class ManagedSQLiteOpenHelper(
     private val counter = AtomicInteger()
     private var db: SQLiteDatabase? = null
 
-    public fun <T> use(f: SQLiteDatabase.() -> T): T {
+    fun <T> use(f: SQLiteDatabase.() -> T): T {
         try {
             return openDatabase().f()
         } finally {

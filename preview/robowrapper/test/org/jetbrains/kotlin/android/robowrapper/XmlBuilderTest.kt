@@ -37,12 +37,12 @@ import java.io.ByteArrayInputStream
 import kotlin.dom.parseXml
 import org.w3c.dom.Element
 
-Config(manifest = Config.NONE)
-RunWith(RobolectricTestRunner::class)
-public class XmlBuilderTest {
+@Config(manifest = Config.NONE)
+@RunWith(RobolectricTestRunner::class)
+class XmlBuilderTest {
 
-  Test
-  public fun testXml() {
+  @Test
+  fun testXml() {
     val a = Robolectric.setupActivity<Activity>(Activity::class.java)
 
     val frameLayout = FrameLayout(a)
@@ -87,8 +87,8 @@ public class XmlBuilderTest {
     assertEquals("Button text", buttonElement.getAttribute("android:text"))
   }
 
-  Test
-  public fun testGravity() {
+  @Test
+  fun testGravity() {
     Robolectric.setupActivity<Activity>(Activity::class.java)
     assertEquals("center_vertical|center_horizontal", resolveGravity(Gravity.CENTER))
     assertEquals("left|right", resolveGravity(Gravity.FILL_HORIZONTAL))
@@ -102,8 +102,8 @@ public class XmlBuilderTest {
     assertEquals("left|top|right|bottom", resolveGravity(Gravity.FILL))
   }
 
-  Test
-  public fun testBasicRenderAttr() {
+  @Test
+  fun testBasicRenderAttr() {
     Robolectric.setupActivity<Activity>(Activity::class.java)
     val key = "someKey" //used only for debug print
 
@@ -119,8 +119,8 @@ public class XmlBuilderTest {
     assertEquals("false", basicRenderAttr(key, false))
   }
 
-  Test
-  public fun testResolveEllipsize() {
+  @Test
+  fun testResolveEllipsize() {
     Robolectric.setupActivity<Activity>(Activity::class.java)
 
     assertEquals("end", convertEllipsize(TruncateAt.END))
@@ -129,8 +129,8 @@ public class XmlBuilderTest {
     assertEquals("start", convertEllipsize(TruncateAt.START))
   }
 
-  Test
-  public fun testResolveScaleType() {
+  @Test
+  fun testResolveScaleType() {
     assertEquals("center", convertScaleType(ScaleType.CENTER))
     assertEquals("centerCrop", convertScaleType(ScaleType.CENTER_CROP))
     assertEquals("fitInside", convertScaleType(ScaleType.CENTER_INSIDE))
@@ -141,8 +141,8 @@ public class XmlBuilderTest {
     assertEquals("matrix", convertScaleType(ScaleType.MATRIX))
   }
 
-  Test
-  public fun testresolveDimension() {
+  @Test
+  fun testResolveDimension() {
     val a = Robolectric.setupActivity<Activity>(Activity::class.java)
     val v = View(a)
 
@@ -150,8 +150,8 @@ public class XmlBuilderTest {
     assertEquals("4dp", resolveDimension(v, "paddingRight", "4")) //density=1
   }
 
-  Test
-  public fun testParseEnumFlagValue() {
+  @Test
+  fun testParseEnumFlagValue() {
     assertEquals(-1L, "-1".parseEnumFlagValue())
     assertEquals(0L, "0".parseEnumFlagValue())
     assertEquals(1L, "1".parseEnumFlagValue())

@@ -18,7 +18,7 @@ package org.jetbrains.kotlin.android.robowrapper;
 
 import org.junit.Test;
 
-import static org.jetbrains.kotlin.android.robowrapper.RobowrapperPackage.*;
+import static org.jetbrains.kotlin.android.robowrapper.UtilKt.*;
 import static org.junit.Assert.assertEquals;
 
 public class UtilsTest {
