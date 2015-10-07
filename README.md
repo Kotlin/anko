@@ -155,6 +155,59 @@ dependencies {
 
 If your project is not based on Gradle, you don't have to jump around with Maven artifacts. Just attach jars from the [releases page](https://github.com/JetBrains/anko/releases) as project library dependencies and that's it.
 
+### Which Anko libraries are available and which do I need?
+
+If you don't need the DSL features of Anko, you can just reference `org.jetbrains.anko:anko-common`, and that's all you have to do.
+
+If you need the DSL features of Anko, you need to reference different libraries.
+
+First, you need to reference a main library based on which `minSdkVersion` you target.
+`anko-common` is referenced by those libraries, so you don't need to specify it yourself.
+Here are the available libraries:
+* `org.jetbrains.anko:anko-sdk15` for 15 <= `minSdkVersion` < 19
+* `org.jetbrains.anko:anko-sdk19` for 19 <= `minSdkVersion` < 21
+* `org.jetbrains.anko:anko-sdk21` for 21 <= `minSdkVersion` < 23
+* `org.jetbrains.anko:anko-sdk23` for 23 <= `minSdkVersion`
+
+Then, for any Android Support library you referenced in your `build.gradle`, you need to add the matching Anko library, if you want some more Anko magic for those specific Android Support libraries. Here are all available Anko Android Support libraries:
+* `org.jetbrains.anko:anko-support-v4`
+* `org.jetbrains.anko:anko-appcompat-v7`
+* `org.jetbrains.anko:anko-cardview-v7`
+* `org.jetbrains.anko:anko-gridlayout-v7`
+* `org.jetbrains.anko:anko-recyclerview-v7`
+* `org.jetbrains.anko:anko-design`
+* `org.jetbrains.anko:anko-percent`
+
+Here is an example:
+````gradle
+android {
+    ...
+    defaultConfig {
+        ...
+        minSdkVersion 15 // Min SDK version is 15
+        targetSdkVersion 23
+        ...
+    }
+    ...
+}
+
+dependencies {
+    ...
+    // Note the used support libs
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:design:23.0.1'
+    compile 'com.android.support:recyclerview-v7:23.0.1'
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:14.+"
+    compile 'org.jetbrains.anko:anko-sdk15:0.7.1' // So here it's 15 too
+
+    // Same Anko libs than support libs
+    compile 'org.jetbrains.anko:anko-appcompat-v7:0.7.1'
+    compile 'org.jetbrains.anko:anko-design:0.7.1'
+    compile 'org.jetbrains.anko:anko-recyclerview-v7:0.7.1'
+}
+````
+
 ### Building Anko
 
 Instructions for building Anko are located [under Building](doc/BUILDING.md).
