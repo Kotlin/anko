@@ -32,7 +32,7 @@ class Writer(private val renderFacade: RenderFacade) {
 
     fun write() {
         val versionType = config.getTargetArtifactType()
-        AnkoFile.values().forEach { file ->
+        values.forEach { file ->
             if (config[file] && versionType in file.types && file.shouldBeWritten(config)) {
                 write(file)
             }
@@ -120,7 +120,7 @@ class Writer(private val renderFacade: RenderFacade) {
 
         PrintWriter(file).useIt {
             if (config.generatePackage && generatePackage) {
-                val facadeFilename = config.version.toCamelCase('-') + subsystem.name().toLowerCase().toCamelCase()
+                val facadeFilename = config.version.toCamelCase('-') + subsystem.name.toLowerCase().toCamelCase()
                 println("@file:JvmMultifileClass")
                 println("@file:JvmName(\"${facadeFilename}Kt\")")
                 println("package ${config.outputPackage}\n")

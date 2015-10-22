@@ -35,7 +35,7 @@ interface MapRowParser<T> {
 
 private class SingleColumnParser<T> : RowParser<T> {
     override fun parseRow(columns: Array<Any>): T {
-        if (columns.size() != 1)
+        if (columns.size != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
         @Suppress("UNCHECKED_CAST")
         return columns[0] as T
@@ -44,7 +44,7 @@ private class SingleColumnParser<T> : RowParser<T> {
 
 private class ScalarColumnParser<R, T>(val modifier: ((R) -> T)? = null) : RowParser<T> {
     override fun parseRow(columns: Array<Any>): T {
-        if (columns.size() != 1)
+        if (columns.size != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
         @Suppress("UNCHECKED_CAST", "UNNECESSARY_NOT_NULL_ASSERTION")
         return if (modifier != null)
@@ -138,7 +138,7 @@ inline fun <reified T: Any> classParser(): RowParser<T> {
     val constructors = clazz.declaredConstructors.filter {
         val types = it.parameterTypes
         it.isAccessible && !it.isVarArgs && Modifier.isPublic(it.modifiers) &&
-            types != null && types.size() > 0
+            types != null && types.size > 0
     }
     if (constructors.isEmpty())
         throw AnkoException(

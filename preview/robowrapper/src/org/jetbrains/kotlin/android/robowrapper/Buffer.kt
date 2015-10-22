@@ -34,5 +34,5 @@ class Buffer {
         return builder.toString()
     }
 
-    fun size() = builder.length()
+    fun size() = builder.length
 }

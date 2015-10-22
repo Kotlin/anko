@@ -46,7 +46,7 @@ enum class AnkoFile(
     val types: Set<TargetArtifactType> = type.toSet()
 
     val filename: String by lazy {
-        val name = name()
+        val name = name
         val extension = if (name.endsWith("_JAVA")) ".java" else ".kt"
         name.substringBeforeLast("_JAVA").toCamelCase() + extension
     }

@@ -41,7 +41,7 @@ class AndroidHomeSourceProvider(version: Int) : SourceProvider {
         val packageDir = File(baseDir, packageName.replace('.', '/'))
         if (!packageDir.exists()) return null
 
-        val filename = fqName.substring(packageName.length() + 1).substringBefore('.') + ".java"
+        val filename = fqName.substring(packageName.length + 1).substringBefore('.') + ".java"
         val file = File(packageDir, filename)
         if (!file.exists()) return null
 

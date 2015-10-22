@@ -93,7 +93,7 @@ internal fun parseGenericMethodSignature(signature: String): GenericMethodSignat
 
             override fun visitParameterType(): SignatureVisitor {
                 val parameterType = GenericTypeImpl()
-                val param = ValueParameter(valueParameters.size(), parameterType)
+                val param = ValueParameter(valueParameters.size, parameterType)
                 valueParameters.add(param)
                 return GenericTypeParser(parameterType)
             }

@@ -33,8 +33,8 @@ internal fun renderLayoutAttributes(attributes: List<KeyValuePair>, parentName: 
         else -> s
     }
 
-    val width = renderLayoutDimension(map.get("width") ?: "wrap_content")
-    val height = renderLayoutDimension(map.get("height") ?: "wrap_content")
+    val width = renderLayoutDimension(map["width"] ?: "wrap_content")
+    val height = renderLayoutDimension(map["height"] ?: "wrap_content")
 
     val options = (layoutAttributeRenderers.findFirst { it(parentName, map) } ?: listOf()).filterNotNull()
     val optionsString = if (options.isNotEmpty()) {
@@ -44,18 +44,18 @@ internal fun renderLayoutAttributes(attributes: List<KeyValuePair>, parentName: 
     return ".layoutParams(width = $width, height = $height)$optionsString"
 }
 
-fun transformAttribute(widgetName: String?, name: String, value: String): KeyValuePair? {
+internal fun transformAttribute(widgetName: String, name: String, value: String): KeyValuePair? {
     return when {
         name.startsWith("xmlns:") -> null
         name == "style" -> null
         name.startsWith("android:") -> {
-            val shortName = name.substring("android:".length())
+            val shortName = name.substring("android:".length)
             // Search for attribute in `widgetName` styleable, then in superclass styleables,
             // then in `View` styleable, then in free attributes
             val attr = attrs.free.firstOrNull { it.name == shortName } ?:
-                attrs.styleables.get(widgetName)?.attrs?.firstOrNull { it.name == shortName } ?:
-                viewHierarchy[widgetName]?.findFirst { attrs.styleables.get(it)?.attrs?.firstOrNull { it.name == shortName } }
-                attrs.styleables.get("View")?.attrs?.firstOrNull { it.name == shortName }
+                attrs.styleables[widgetName]?.attrs?.firstOrNull { it.name == shortName } ?:
+                viewHierarchy[widgetName]?.findFirst { attrs.styleables[it]?.attrs?.firstOrNull { it.name == shortName } }
+                attrs.styleables["View"]?.attrs?.firstOrNull { it.name == shortName }
 
             return if (attr != null) {
                 renderAttribute(attr, shortName, value)
@@ -65,7 +65,7 @@ fun transformAttribute(widgetName: String?, name: String, value: String): KeyVal
     }
 }
 
-fun renderAttribute(attr: Attr, p: KeyValuePair) = renderAttribute(attr, p.key, p.value)
+internal fun renderAttribute(attr: Attr, p: KeyValuePair) = renderAttribute(attr, p.key, p.value)
 
 private fun renderAttribute(attr: Attr, key: String, value: String): KeyValuePair? {
     for (renderer in viewAttributeRenderers) {

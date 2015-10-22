@@ -27,12 +27,12 @@ import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 import java.util.*
 
-class ViewRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
+internal class ViewRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
     override fun processElements(state: GenerationState) =
             renderViews(state[ViewGenerator::class.java]) { it.fqName }
 }
 
-class ViewGroupRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
+internal class ViewGroupRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
     override fun processElements(state: GenerationState) =
             renderViews(state[ViewGroupGenerator::class.java]) { "_" + it.simpleName }
 }
@@ -46,7 +46,7 @@ class ViewFactoryClass(val config: AnkoConfiguration, val suffix: String) {
     fun render(): String {
         if (entries.isEmpty()) return ""
 
-        return StringBuilder {
+        return StringBuilder().apply {
             appendln("object $fullName {")
             entries.forEach { append(config.indent).appendln(it) }
             appendln("}").appendln()
@@ -60,12 +60,12 @@ private abstract class AbstractViewRenderer(
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.VIEWS, ConfigurationTune.HELPER_CONSTRUCTORS)
 
-    protected fun renderViews(views: Iterable<ViewElement>, nameResolver: (ClassNode) -> String): String = StringBuilder {
+    protected fun renderViews(views: Iterable<ViewElement>, nameResolver: (ClassNode) -> String): String = StringBuilder().apply {
         val renderViews = config[AnkoFile.VIEWS]
         val renderHelperConstructors = config[ConfigurationTune.HELPER_CONSTRUCTORS]
 
         val factoryClass = ViewFactoryClass(config, this@AbstractViewRenderer.javaClass.simpleName.replace("Renderer", ""))
-        val functions = StringBuilder {
+        val functions = StringBuilder().apply {
             for (view in views.filter { !it.clazz.isAbstract }) {
                 if (renderViews) renderView(view.clazz, view.isContainer, nameResolver(view.clazz), factoryClass)
 
@@ -126,7 +126,7 @@ private abstract class AbstractViewRenderer(
         }
     }
 
-    private fun renderHelperConstructors(view: ViewElement, factoryClass: ViewFactoryClass) = StringBuilder {
+    private fun renderHelperConstructors(view: ViewElement, factoryClass: ViewFactoryClass) = StringBuilder().apply {
         val className = view.fqName
 
         val (className21, functionName) = handleTintedView(view.clazz, className)
@@ -171,10 +171,10 @@ private abstract class AbstractViewRenderer(
         return properties.map { property ->
             val methodName = "set" + property.name.capitalize()
             val methods = view.allMethods.filter {
-                it.name == methodName && it.args.size() == 1 && it.args[0].fqName.endsWith(property.type)
+                it.name == methodName && it.args.size == 1 && it.args[0].fqName.endsWith(property.type)
             }
 
-            when (methods.size()) {
+            when (methods.size) {
                 0 -> throw RuntimeException("Can't find a method $methodName for helper constructor ${view.fqName}($properties)")
                 1 -> {}
                 else -> throw RuntimeException("There are several methods $methodName for helper constructor ${view.fqName}($properties)")
@@ -186,7 +186,7 @@ private abstract class AbstractViewRenderer(
 
     private fun handleTintedView(view: ClassNode, className: String): Pair<String?, String> {
         val tinted = view.isTinted()
-        val className21 = if (tinted) className.substring(APP_COMPAT_VIEW_PREFIX.length()) else null
+        val className21 = if (tinted) className.substring(APP_COMPAT_VIEW_PREFIX.length) else null
         val functionName = if (tinted) "tinted$className21" else view.simpleName.decapitalize()
         return className21 to functionName
     }

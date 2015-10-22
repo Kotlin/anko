@@ -18,7 +18,7 @@ package org.jetbrains.kotlin.android.dslpreview
 
 import com.intellij.psi.PsiClass
 import org.jetbrains.android.facet.AndroidFacet
-import org.jetbrains.kotlin.psi.JetClass
+import org.jetbrains.kotlin.psi.KtClass
 
 abstract class PreviewClassDescription(val androidFacet: AndroidFacet) {
     abstract val name: String
@@ -45,9 +45,9 @@ class PreviewPsiClassDescription(val psiClass: PsiClass, androidFacet: AndroidFa
     }
 }
 
-class PreviewJetClassDescription(val jetClass: JetClass, androidFacet: AndroidFacet): PreviewClassDescription(androidFacet) {
-    override val packageName: String = jetClass.getContainingJetFile().packageFqName.asString()
-    override val name: String = jetClass.name!!
+class PreviewKtClassDescription(val ktClass: KtClass, androidFacet: AndroidFacet): PreviewClassDescription(androidFacet) {
+    override val packageName: String = ktClass.getContainingJetFile().packageFqName.asString()
+    override val name: String = ktClass.name!!
     override val qualifiedName: String = "$packageName.$name"
 
     override fun toString(): String {

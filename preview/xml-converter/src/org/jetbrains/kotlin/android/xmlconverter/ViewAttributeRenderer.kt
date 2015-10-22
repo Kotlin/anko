@@ -100,8 +100,8 @@ internal fun renderString(attr: Attr, key: String, value: String) =
 
 internal fun renderColor(attr: Attr, key: String, value: String) = if (attr accepts "color" && value.isColor()) {
         val color = value.replace("#", "").toLowerCase()
-        val displayColor = if (color.length() > 6 && !color.startsWith("ff"))
-            "0x${color}.toInt()" else "0x${color}.opaque"
+        val displayColor = if (color.length > 6 && !color.startsWith("ff"))
+            "0x$color.toInt()" else "0x${color}.opaque"
         key * displayColor
     } else null
 
@@ -136,4 +136,4 @@ internal fun renderDimension(attr: Attr, key: String, value: String) = if (attr 
     key * "${dimension.second}(${dimension.first})"
 } else null
 
-private fun Attr.accepts(f: String) = this == NoAttr || f in this.format
+private infix fun Attr.accepts(f: String) = this == NoAttr || f in this.format

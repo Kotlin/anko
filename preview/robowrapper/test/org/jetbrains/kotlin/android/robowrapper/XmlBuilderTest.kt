@@ -41,123 +41,123 @@ import org.w3c.dom.Element
 @RunWith(RobolectricTestRunner::class)
 class XmlBuilderTest {
 
-  @Test
-  fun testXml() {
-    val a = Robolectric.setupActivity<Activity>(Activity::class.java)
+    @Test
+    fun testXml() {
+        val a = Robolectric.setupActivity<Activity>(Activity::class.java)
 
-    val frameLayout = FrameLayout(a)
-    val linearLayout = LinearLayout(a)
-    linearLayout.orientation = LinearLayout.VERTICAL
+        val frameLayout = FrameLayout(a)
+        val linearLayout = LinearLayout(a)
+        linearLayout.orientation = LinearLayout.VERTICAL
 
-    val textView = TextView(a)
-    textView.setPadding(10, 20, 30, 40)
-    val textViewLP = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-    textViewLP.gravity = Gravity.CENTER
+        val textView = TextView(a)
+        textView.setPadding(10, 20, 30, 40)
+        val textViewLP = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+        textViewLP.gravity = Gravity.CENTER
 
-    val button = Button(a)
-    button.text = "Button text"
+        val button = Button(a)
+        button.text = "Button text"
 
-    linearLayout.addView(textView, textViewLP)
-    linearLayout.addView(button)
-    frameLayout.addView(linearLayout)
+        linearLayout.addView(textView, textViewLP)
+        linearLayout.addView(button)
+        frameLayout.addView(linearLayout)
 
-    val xml = toXml(parseView(frameLayout))
-    val inputStream = ByteArrayInputStream(xml.toByteArray("UTF-8"))
-    val document = parseXml(inputStream)
+        val xml = toXml(parseView(frameLayout))
+        val inputStream = ByteArrayInputStream(xml.toByteArray("UTF-8"))
+        val document = parseXml(inputStream)
 
-    val rootElement = document.documentElement!!
-    assertEquals("FrameLayout", rootElement.tagName)
+        val rootElement = document.documentElement!!
+        assertEquals("FrameLayout", rootElement.tagName)
 
-    val linearLayoutElement = rootElement.getElementsByTagName("LinearLayout")?.item(0) as Element
-    assertEquals("LinearLayout", linearLayoutElement.tagName)
-    assertEquals("vertical", linearLayoutElement.getAttribute("android:orientation"))
+        val linearLayoutElement = rootElement.getElementsByTagName("LinearLayout")?.item(0) as Element
+        assertEquals("LinearLayout", linearLayoutElement.tagName)
+        assertEquals("vertical", linearLayoutElement.getAttribute("android:orientation"))
 
-    val textViewElement = linearLayoutElement.getElementsByTagName("TextView")?.item(0) as Element
-    assertEquals("TextView", textViewElement.tagName)
-    assertEquals("10dp", textViewElement.getAttribute("android:paddingLeft"))
-    assertEquals("20dp", textViewElement.getAttribute("android:paddingTop"))
-    assertEquals("30dp", textViewElement.getAttribute("android:paddingRight"))
-    assertEquals("40dp", textViewElement.getAttribute("android:paddingBottom"))
-    assertEquals("match_parent", textViewElement.getAttribute("android:layout_width"))
-    assertEquals("wrap_content", textViewElement.getAttribute("android:layout_height"))
-    assertEquals("center_vertical|center_horizontal", textViewElement.getAttribute("android:layout_gravity"))
+        val textViewElement = linearLayoutElement.getElementsByTagName("TextView")?.item(0) as Element
+        assertEquals("TextView", textViewElement.tagName)
+        assertEquals("10dp", textViewElement.getAttribute("android:paddingLeft"))
+        assertEquals("20dp", textViewElement.getAttribute("android:paddingTop"))
+        assertEquals("30dp", textViewElement.getAttribute("android:paddingRight"))
+        assertEquals("40dp", textViewElement.getAttribute("android:paddingBottom"))
+        assertEquals("match_parent", textViewElement.getAttribute("android:layout_width"))
+        assertEquals("wrap_content", textViewElement.getAttribute("android:layout_height"))
+        assertEquals("center_vertical|center_horizontal", textViewElement.getAttribute("android:layout_gravity"))
 
-    val buttonElement = linearLayoutElement.getElementsByTagName("Button")?.item(0) as Element
-    assertEquals("Button", buttonElement.tagName)
-    assertEquals("Button text", buttonElement.getAttribute("android:text"))
-  }
+        val buttonElement = linearLayoutElement.getElementsByTagName("Button")?.item(0) as Element
+        assertEquals("Button", buttonElement.tagName)
+        assertEquals("Button text", buttonElement.getAttribute("android:text"))
+    }
 
-  @Test
-  fun testGravity() {
-    Robolectric.setupActivity<Activity>(Activity::class.java)
-    assertEquals("center_vertical|center_horizontal", resolveGravity(Gravity.CENTER))
-    assertEquals("left|right", resolveGravity(Gravity.FILL_HORIZONTAL))
-    assertEquals("top|bottom", resolveGravity(Gravity.FILL_VERTICAL))
-    assertEquals("top", resolveGravity(Gravity.TOP))
-    assertEquals("right", resolveGravity(Gravity.RIGHT))
-    assertEquals("start", resolveGravity(Gravity.START))
-    assertEquals("end", resolveGravity(Gravity.END))
-    assertEquals("center_horizontal", resolveGravity(Gravity.CENTER_HORIZONTAL))
-    assertEquals("right|bottom", resolveGravity(Gravity.RIGHT or Gravity.BOTTOM))
-    assertEquals("left|top|right|bottom", resolveGravity(Gravity.FILL))
-  }
+    @Test
+    fun testGravity() {
+        Robolectric.setupActivity<Activity>(Activity::class.java)
+        assertEquals("center_vertical|center_horizontal", resolveGravity(Gravity.CENTER))
+        assertEquals("left|right", resolveGravity(Gravity.FILL_HORIZONTAL))
+        assertEquals("top|bottom", resolveGravity(Gravity.FILL_VERTICAL))
+        assertEquals("top", resolveGravity(Gravity.TOP))
+        assertEquals("right", resolveGravity(Gravity.RIGHT))
+        assertEquals("start", resolveGravity(Gravity.START))
+        assertEquals("end", resolveGravity(Gravity.END))
+        assertEquals("center_horizontal", resolveGravity(Gravity.CENTER_HORIZONTAL))
+        assertEquals("right|bottom", resolveGravity(Gravity.RIGHT or Gravity.BOTTOM))
+        assertEquals("left|top|right|bottom", resolveGravity(Gravity.FILL))
+    }
 
-  @Test
-  fun testBasicRenderAttr() {
-    Robolectric.setupActivity<Activity>(Activity::class.java)
-    val key = "someKey" //used only for debug print
+    @Test
+    fun testBasicRenderAttr() {
+        Robolectric.setupActivity<Activity>(Activity::class.java)
+        val key = "someKey" //used only for debug print
 
-    assertEquals("1", basicRenderAttr(key, 1))
-    assertEquals("-5", basicRenderAttr(key, -5))
-    assertEquals("0", basicRenderAttr(key, 0))
-    assertEquals("0", basicRenderAttr(key, 0.0))
-    assertEquals("2", basicRenderAttr(key, 1.9999999999999999999999999999.toFloat()))
-    assertEquals("2.5", basicRenderAttr(key, 2.5))
-    assertEquals("2.5", basicRenderAttr(key, 2.5.toFloat()))
-    assertEquals("SomeText", basicRenderAttr(key, "SomeText"))
-    assertEquals("true", basicRenderAttr(key, true))
-    assertEquals("false", basicRenderAttr(key, false))
-  }
+        assertEquals("1", basicRenderAttr(key, 1))
+        assertEquals("-5", basicRenderAttr(key, -5))
+        assertEquals("0", basicRenderAttr(key, 0))
+        assertEquals("0", basicRenderAttr(key, 0.0))
+        assertEquals("2", basicRenderAttr(key, 1.9999999999999999999999999999.toFloat()))
+        assertEquals("2.5", basicRenderAttr(key, 2.5))
+        assertEquals("2.5", basicRenderAttr(key, 2.5.toFloat()))
+        assertEquals("SomeText", basicRenderAttr(key, "SomeText"))
+        assertEquals("true", basicRenderAttr(key, true))
+        assertEquals("false", basicRenderAttr(key, false))
+    }
 
-  @Test
-  fun testResolveEllipsize() {
-    Robolectric.setupActivity<Activity>(Activity::class.java)
+    @Test
+    fun testResolveEllipsize() {
+        Robolectric.setupActivity<Activity>(Activity::class.java)
 
-    assertEquals("end", convertEllipsize(TruncateAt.END))
-    assertEquals("marquee", convertEllipsize(TruncateAt.MARQUEE))
-    assertEquals("middle", convertEllipsize(TruncateAt.MIDDLE))
-    assertEquals("start", convertEllipsize(TruncateAt.START))
-  }
+        assertEquals("end", convertEllipsize(TruncateAt.END))
+        assertEquals("marquee", convertEllipsize(TruncateAt.MARQUEE))
+        assertEquals("middle", convertEllipsize(TruncateAt.MIDDLE))
+        assertEquals("start", convertEllipsize(TruncateAt.START))
+    }
 
-  @Test
-  fun testResolveScaleType() {
-    assertEquals("center", convertScaleType(ScaleType.CENTER))
-    assertEquals("centerCrop", convertScaleType(ScaleType.CENTER_CROP))
-    assertEquals("fitInside", convertScaleType(ScaleType.CENTER_INSIDE))
-    assertEquals("fitCenter", convertScaleType(ScaleType.FIT_CENTER))
-    assertEquals("fitEnd", convertScaleType(ScaleType.FIT_END))
-    assertEquals("fitStart", convertScaleType(ScaleType.FIT_START))
-    assertEquals("fitXY", convertScaleType(ScaleType.FIT_XY))
-    assertEquals("matrix", convertScaleType(ScaleType.MATRIX))
-  }
+    @Test
+    fun testResolveScaleType() {
+        assertEquals("center", convertScaleType(ScaleType.CENTER))
+        assertEquals("centerCrop", convertScaleType(ScaleType.CENTER_CROP))
+        assertEquals("fitInside", convertScaleType(ScaleType.CENTER_INSIDE))
+        assertEquals("fitCenter", convertScaleType(ScaleType.FIT_CENTER))
+        assertEquals("fitEnd", convertScaleType(ScaleType.FIT_END))
+        assertEquals("fitStart", convertScaleType(ScaleType.FIT_START))
+        assertEquals("fitXY", convertScaleType(ScaleType.FIT_XY))
+        assertEquals("matrix", convertScaleType(ScaleType.MATRIX))
+    }
 
-  @Test
-  fun testResolveDimension() {
-    val a = Robolectric.setupActivity<Activity>(Activity::class.java)
-    val v = View(a)
+    @Test
+    fun testResolveDimension() {
+        val a = Robolectric.setupActivity<Activity>(Activity::class.java)
+        val v = View(a)
 
-    assertEquals("17sp", resolveDimension(TextView(a), "textSize", "17"))
-    assertEquals("4dp", resolveDimension(v, "paddingRight", "4")) //density=1
-  }
+        assertEquals("17sp", resolveDimension(TextView(a), "textSize", "17"))
+        assertEquals("4dp", resolveDimension(v, "paddingRight", "4")) //density=1
+    }
 
-  @Test
-  fun testParseEnumFlagValue() {
-    assertEquals(-1L, "-1".parseEnumFlagValue())
-    assertEquals(0L, "0".parseEnumFlagValue())
-    assertEquals(1L, "1".parseEnumFlagValue())
-    assertEquals(1L, "0x1".parseEnumFlagValue())
-    assertEquals(0L, "0x0".parseEnumFlagValue())
-    assertEquals(255L, "0xfF".parseEnumFlagValue())
-  }
+    @Test
+    fun testParseEnumFlagValue() {
+        assertEquals(-1L, "-1".parseEnumFlagValue())
+        assertEquals(0L, "0".parseEnumFlagValue())
+        assertEquals(1L, "1".parseEnumFlagValue())
+        assertEquals(1L, "0x1".parseEnumFlagValue())
+        assertEquals(0L, "0x0".parseEnumFlagValue())
+        assertEquals(255L, "0xfF".parseEnumFlagValue())
+    }
 
 }

@@ -5,42 +5,42 @@ import org.jetbrains.kotlin.idea.caches.resolve.analyze
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.resolve.calls.callUtil.getResolvedCall
 
-class FindViewByIdIntention : AnkoIntention<JetExpression>(
-        JetExpression::class.java,
+class FindViewByIdIntention : AnkoIntention<KtExpression>(
+        KtExpression::class.java,
         "Simplify findViewById() with Anko"
 ) {
-    override fun isApplicableTo(element: JetExpression, caretOffset: Int): Boolean {
+    override fun isApplicableTo(element: KtExpression, caretOffset: Int): Boolean {
         fun PsiElement?.requireFindViewByIdCall() = requireCall(FIND_VIEW_BY_ID, 1) {
             val resolvedCall = getResolvedCall(analyze())
             isValueParameterTypeOf(0, resolvedCall, "kotlin.Int")
                     && isReceiverParameterTypeOf(resolvedCall, FqNames.ACTIVITY_FQNAME, FqNames.VIEW_FQNAME)
         }
 
-        return element.require<JetBinaryExpressionWithTypeRHS>() {
-            operation.require<JetSimpleNameExpression>("as")
-            && (left.requireFindViewByIdCall() || left.require<JetDotQualifiedExpression> {
+        return element.require<KtBinaryExpressionWithTypeRHS>() {
+            operation.require<KtSimpleNameExpression>("as")
+            && (left.requireFindViewByIdCall() || left.require<KtDotQualifiedExpression> {
                 selector.requireFindViewByIdCall()
             })
         }
     }
 
-    override fun replaceWith(element: JetExpression, psiFactory: JetPsiFactory): NewElement? {
-        fun JetCallExpression.createElement(type: String, receiver: String? = null): NewElement {
-            val id = valueArguments[0].getText()
+    override fun replaceWith(element: KtExpression, psiFactory: KtPsiFactory): NewElement? {
+        fun KtCallExpression.createElement(type: String, receiver: String? = null): NewElement {
+            val id = valueArguments[0].text
             val receiverWithDot = if (receiver == null) "" else "$receiver."
             val newExpression = psiFactory.createExpression("${receiverWithDot}find<$type>($id)")
             return NewElement(newExpression, "find")
         }
 
-        element.require<JetBinaryExpressionWithTypeRHS>() {
-            val type = right?.getText() ?: return null
+        element.require<KtBinaryExpressionWithTypeRHS>() {
+            val type = right?.text ?: return null
 
             left.requireCall(FIND_VIEW_BY_ID) {
                 return createElement(type)
             }
-            left.require<JetDotQualifiedExpression> {
+            left.require<KtDotQualifiedExpression> {
                 selector.requireCall(FIND_VIEW_BY_ID) {
-                    return createElement(type, receiver?.getText())
+                    return createElement(type, receiver?.text)
                 }
             }
         }

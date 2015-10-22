@@ -26,7 +26,7 @@ class SqlParserHelperRenderer(config: AnkoConfiguration) : Renderer(config) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.SQL_PARSER_HELPERS)
 
-    override fun processElements(state: GenerationState) = StringBuilder {
+    override fun processElements(state: GenerationState) = StringBuilder().apply {
         for (i in 1..22) {
             val types = (1..i).map { "T$it" }.joinToString(", ")
             val args = (1..i).map { "columns[${it - 1}] as T$it" }.joinToString(", ")

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.android.generator.android_jar
+package org.jetbrains.android.generator.androidJar
 
 import java.io.File
 import java.io.FileOutputStream
@@ -62,10 +62,9 @@ class AndroidJarCollector {
 
         val supportFiles = findSupportFiles()
         val supportFilesWithDependencies = supportFiles.map { supportFile ->
-            val dependencies = LIBRARY_DEPENDENCIES.entrySet()
-                    .firstOrNull { supportFile.name.startsWith(it.key) }?.getValue()
-                    ?.mapTo(hashSetOf()) { name -> SupportFile(supportFiles.first { it.name.startsWith(name) }, true) }
-                    ?: hashSetOf<SupportFile>()
+            val dependencies = (LIBRARY_DEPENDENCIES.entries
+                    .firstOrNull { supportFile.name.startsWith(it.key) }?.value ?: emptyList())
+                    .mapTo(hashSetOf()) { name -> SupportFile(supportFiles.first { it.name.startsWith(name) }, true) }
 
             dependencies += SupportFile(supportFile, false)
             dependencies

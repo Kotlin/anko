@@ -42,7 +42,7 @@ class RobowrapperContext(description: PreviewClassDescription) {
 
     private val manifest by lazy { generateManifest() }
 
-    private fun runReadAction<T>(action: () -> T): T {
+    private fun <T> runReadAction(action: () -> T): T {
         return ApplicationManager.getApplication().runReadAction<T>(action)
     }
 
@@ -139,7 +139,7 @@ class RobowrapperContext(description: PreviewClassDescription) {
                 continue
             }
             if (item.endsWith("!/")) {
-                item = item.substring(0, item.length() - 2)
+                item = item.substring(0, item.length - 2)
             }
             sb.append(':').append(item.replace(":", "\":"))
         }

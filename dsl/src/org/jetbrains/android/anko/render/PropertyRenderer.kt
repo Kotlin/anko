@@ -30,7 +30,7 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.PROPERTIES)
 
-    override fun processElements(state: GenerationState) = StringBuilder {
+    override fun processElements(state: GenerationState) = StringBuilder().apply {
         state[PropertyGenerator::class.java].forEach {
             append(renderProperty(it))
         }
@@ -61,7 +61,7 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
 
         val nullability = if (nullable) "?" else ""
 
-        val otherSetters = if (property.setters.size() > 1) property.setters.drop(1) else listOf()
+        val otherSetters = if (property.setters.size > 1) property.setters.drop(1) else listOf()
 
         if (property.getter != null) {
             return buffer {
@@ -88,7 +88,7 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
     {
         if (otherSetters.isNotEmpty() && supportsResourceSetter(returnType)) {
             val resourceSetter = otherSetters.firstOrNull {
-                it.method.args.size() == 1 && (it.method.args[0].className == "int")
+                it.method.args.size == 1 && (it.method.args[0].className == "int")
             }
 
             if (resourceSetter != null) {

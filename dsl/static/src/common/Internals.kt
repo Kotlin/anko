@@ -125,9 +125,12 @@ object AnkoInternals {
                 is Serializable -> intent.putExtra(it.first, value)
                 is Bundle -> intent.putExtra(it.first, value)
                 is Parcelable -> intent.putExtra(it.first, value)
-                is Array<CharSequence> -> intent.putExtra(it.first, value)
-                is Array<out String> -> intent.putExtra(it.first, value)
-                is Array<Parcelable> -> intent.putExtra(it.first, value)
+                is Array<*> -> when {
+                    value.isArrayOf<CharSequence>() -> intent.putExtra(it.first, value)
+                    value.isArrayOf<String>() -> intent.putExtra(it.first, value)
+                    value.isArrayOf<Parcelable>() -> intent.putExtra(it.first, value)
+                    else -> throw AnkoException("Intent extra ${it.first} has wrong type ${value.javaClass.name}")
+                }
                 is IntArray -> intent.putExtra(it.first, value)
                 is LongArray -> intent.putExtra(it.first, value)
                 is FloatArray -> intent.putExtra(it.first, value)

@@ -18,7 +18,7 @@ package org.jetbrains.kotlin.android.xmlconverter
 
 import org.jetbrains.kotlin.android.attrs.NoAttr
 
-val attributeOptimizations = listOf(
+internal val attributeOptimizations = listOf(
         ::optimizeInclude,
         ::optimizeHelperConstructors
 )

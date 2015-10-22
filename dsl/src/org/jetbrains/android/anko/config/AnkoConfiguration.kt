@@ -28,8 +28,8 @@ import java.io.File
 abstract class AnkoConfiguration {
     open val indent: String = "    "
 
-    open val files: MutableSet<AnkoFile> = hashSetOf(*AnkoFile.values())
-    open val tunes: MutableSet<ConfigurationTune> = hashSetOf(*ConfigurationTune.values())
+    open val files: MutableSet<AnkoFile> = hashSetOf(*AnkoFile.values)
+    open val tunes: MutableSet<ConfigurationTune> = hashSetOf(*ConfigurationTune.values)
 
     open val generateStaticFiles: Boolean = true
 
@@ -53,7 +53,7 @@ abstract class AnkoConfiguration {
     abstract val sourceManager: SourceManager
     abstract val templateManager: TemplateManager
 
-    operator fun get(option: ConfigurationOption): Boolean = option in tunes || option in files
+    operator fun get(option: ConfigurationOption): Boolean = tunes.containsRaw(option) || files.containsRaw(option)
 
     abstract fun getOutputFile(ankoFile: AnkoFile): File
 

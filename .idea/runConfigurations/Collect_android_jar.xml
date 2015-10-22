@@ -1,12 +1,12 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Collect android.jar" type="JetRunConfigurationType" factoryName="Kotlin">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-    <option name="MAIN_CLASS_NAME" value="org.jetbrains.android.generator.android_jar.Android_jarPackage" />
+    <option name="MAIN_CLASS_NAME" value="org.jetbrains.android.generator.androidJar.AndroidJarFileCollectorKt" />
     <option name="VM_PARAMETERS" value="" />
     <option name="PROGRAM_PARAMETERS" value="" />
     <option name="WORKING_DIRECTORY" value="" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="ALTERNATIVE_JRE_PATH" value="" />
     <option name="PASS_PARENT_ENVS" value="true" />
     <module name="utils" />
     <envs>

@@ -18,17 +18,17 @@ package org.jetbrains.kotlin.android.xmlconverter
 
 import org.jetbrains.kotlin.android.attrs.NoAttr
 
-val layoutAttributeRenderers = listOf(
+internal val layoutAttributeRenderers = listOf(
         ::linearLayoutRenderer,
         ::relativeLayoutRenderer
 )
 
-fun linearLayoutRenderer(parentName: String, attrs: Map<String, String>) = if (parentName == "LinearLayout") listOf(
+internal fun linearLayoutRenderer(parentName: String, attrs: Map<String, String>) = if (parentName == "LinearLayout") listOf(
         attrs.prop("gravity") { renderAttribute(NoAttr, it) },
         attrs.prop("weight")
 ) + marginLayoutRenderer(parentName, attrs) else null
 
-fun relativeLayoutRenderer(parentName: String, attrs: Map<String, String>) = if (parentName == "RelativeLayout") listOf(
+internal fun relativeLayoutRenderer(parentName: String, attrs: Map<String, String>) = if (parentName == "RelativeLayout") listOf(
         attrs.func("above") { renderReference(NoAttr, it.key, it.value) },
         attrs.func("below") { renderReference(NoAttr, it.key, it.value) },
         attrs.func("toRightOf") { renderReference(NoAttr, "toRightOf", it.value) },

@@ -107,16 +107,16 @@ internal fun genericTypeToStr(param: GenericType, nullable: Boolean = true): Str
 
     val classifier = param.classifier
 
-    res append when(classifier) {
+    res.append(when(classifier) {
         is TopLevelClass -> classifier.internalName.replace('/', '.').replace('$', '.')
         is BaseType -> Type.getType(classifier.descriptor.toString()).asString(nullable)
         else -> return ""
-    }
+    })
 
-    if (param.arguments.size() > 0) {
+    if (param.arguments.size > 0) {
         res.append("<")
         for (arg in param.arguments) {
-            res append when(arg) {
+            res.append(when(arg) {
                 is UnboundedWildcard -> "*"
                 is NoWildcard -> genericTypeToStr(arg.genericType)
                 is BoundedWildcard ->
@@ -125,10 +125,10 @@ internal fun genericTypeToStr(param: GenericType, nullable: Boolean = true): Str
                         Wildcard.SUPER -> "in ${genericTypeToStr(arg.bound)}"
                     }
                 else -> throw RuntimeException("Unexpected generic argument type: $arg")
-            }
+            })
             res.append(", ")
         }
-        res.delete(res.length() - 2, res.length())
+        res.delete(res.length - 2, res.length)
         res.append(">")
     }
     if (classifier is TopLevelClass && nullable) res.append("?")
@@ -141,5 +141,5 @@ internal fun getPackageName(fqName: String): String {
 }
 
 internal fun getJavaClassName(fqName: String): String {
-    return fqName.substring(getPackageName(fqName).length() + 1)
+    return fqName.substring(getPackageName(fqName).length + 1)
 }

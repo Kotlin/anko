@@ -40,144 +40,144 @@ import org.jetbrains.kotlin.android.attrs.Attr
 @RunWith(RobolectricTestRunner::class)
 class ViewHierarchyParserTest() {
 
-  @Test
-  fun testGetViewHierarchy() {
-    val a = Robolectric.setupActivity(Activity::class.java)
+    @Test
+    fun testGetViewHierarchy() {
+        val a = Robolectric.setupActivity(Activity::class.java)
 
-    val frameLayout = FrameLayout(a)
-    val linearLayout = LinearLayout(a)
-    val textView = TextView(a)
-    textView.setPadding(10, 20, 30, 40)
-    val button = Button(a)
-    button.text = "Button text"
+        val frameLayout = FrameLayout(a)
+        val linearLayout = LinearLayout(a)
+        val textView = TextView(a)
+        textView.setPadding(10, 20, 30, 40)
+        val button = Button(a)
+        button.text = "Button text"
 
-    linearLayout.addView(textView)
-    linearLayout.addView(button)
-    frameLayout.addView(linearLayout)
+        linearLayout.addView(textView)
+        linearLayout.addView(button)
+        frameLayout.addView(linearLayout)
 
-    val viewNode = parseView(frameLayout)
-    assertTrue(viewNode.view is FrameLayout)
-    assertEquals(1, viewNode.children.size())
-    assertTrue(viewNode.children[0].view is LinearLayout)
-    assertTrue(viewNode.children[0].children[0].view is TextView)
-    assertTrue(viewNode.children[0].children[1].view is Button)
+        val viewNode = parseView(frameLayout)
+        assertTrue(viewNode.view is FrameLayout)
+        assertEquals(1, viewNode.children.size)
+        assertTrue(viewNode.children[0].view is LinearLayout)
+        assertTrue(viewNode.children[0].children[0].view is TextView)
+        assertTrue(viewNode.children[0].children[1].view is Button)
 
-    val t = viewNode.children[0].children[0]
-    val b = viewNode.children[0].children[1]
+        val t = viewNode.children[0].children[0]
+        val b = viewNode.children[0].children[1]
 
-    with (t.attrs.fetch("paddingLeft")) {
-      assertEquals("paddingLeft", first)
-      assertNotNull(second.first)
-      assertEquals(1, second.first!!.format.size())
-      assertEquals("dimension", second.first!!.format[0])
-      assertEquals(10, second.second)
+        with (t.attrs.fetch("paddingLeft")) {
+            assertEquals("paddingLeft", first)
+            assertNotNull(second.first)
+            assertEquals(1, second.first!!.format.size)
+            assertEquals("dimension", second.first!!.format[0])
+            assertEquals(10, second.second)
+        }
+
+        with (b.attrs.fetch("text")) {
+            assertEquals("text", first)
+            assertNotNull(second.first)
+            assertEquals(1, second.first!!.format.size)
+            assertEquals("string", second.first!!.format[0])
+            assertEquals("Button text", second.second)
+        }
     }
 
-    with (b.attrs.fetch("text")) {
-      assertEquals("text", first)
-      assertNotNull(second.first)
-      assertEquals(1, second.first!!.format.size())
-      assertEquals("string", second.first!!.format[0])
-      assertEquals("Button text", second.second)
+    @Test
+    fun testLayoutParams() {
+        val a = Robolectric.setupActivity(Activity::class.java)
+
+        val linearLayout = LinearLayout(a)
+        val textView = TextView(a)
+
+        val textViewLP = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+        textViewLP.gravity = Gravity.CENTER
+
+        linearLayout.addView(textView, textViewLP)
+
+        val viewNode = parseView(linearLayout)
+        assertEquals(1, viewNode.children.size)
+        assertTrue(viewNode.children[0].view is TextView)
+        val t = viewNode.children[0]
+
+        with (t.attrs.fetch("layoutParams")) {
+            assertEquals("layoutParams", first)
+            assertNull(second.first)
+            assertTrue(second.second is LinearLayout.LayoutParams)
+            val lp = second.second as LinearLayout.LayoutParams
+            assertEquals(MATCH_PARENT, lp.width)
+            assertEquals(WRAP_CONTENT, lp.height)
+            assertEquals(Gravity.CENTER, lp.gravity)
+        }
     }
-  }
 
-  @Test
-  fun testLayoutParams() {
-    val a = Robolectric.setupActivity(Activity::class.java)
+    @Test
+    fun testSpecialProperty() {
+        val a = Robolectric.setupActivity(Activity::class.java)
 
-    val linearLayout = LinearLayout(a)
-    val textView = TextView(a)
+        val textView = TextView(a)
+        val imageView = ImageView(a)
 
-    val textViewLP = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-    textViewLP.gravity = Gravity.CENTER
+        //special
+        assertEquals("src", resolveSpecialProperty(imageView, "drawable"))
 
-    linearLayout.addView(textView, textViewLP)
-
-    val viewNode = parseView(linearLayout)
-    assertEquals(1, viewNode.children.size())
-    assertTrue(viewNode.children[0].view is TextView)
-    val t = viewNode.children[0]
-
-    with (t.attrs.fetch("layoutParams")) {
-      assertEquals("layoutParams", first)
-      assertNull(second.first)
-      assertTrue(second.second is LinearLayout.LayoutParams)
-      val lp = second.second as LinearLayout.LayoutParams
-      assertEquals(MATCH_PARENT, lp.width)
-      assertEquals(WRAP_CONTENT, lp.height)
-      assertEquals(Gravity.CENTER, lp.gravity)
+        //nothing special
+        assertEquals("text", resolveSpecialProperty(textView, "text"))
+        assertEquals("paddingRight", resolveSpecialProperty(imageView, "paddingRight"))
     }
-  }
 
-  @Test
-  fun testSpecialProperty() {
-    val a = Robolectric.setupActivity(Activity::class.java)
+    @Test
+    fun testXmlName() {
+        val a = Robolectric.setupActivity(Activity::class.java)
 
-    val textView = TextView(a)
-    val imageView = ImageView(a)
+        val linearLayout = LinearLayout(a)
+        val view = View(a)
+        val textView = TextView(a)
+        val someView = SomeView(a)
 
-    //special
-    assertEquals("src", resolveSpecialProperty(imageView, "drawable"))
-
-    //nothing special
-    assertEquals("text", resolveSpecialProperty(textView, "text"))
-    assertEquals("paddingRight", resolveSpecialProperty(imageView, "paddingRight"))
-  }
-
-  @Test
-  fun testXmlName() {
-    val a = Robolectric.setupActivity(Activity::class.java)
-
-    val linearLayout = LinearLayout(a)
-    val view = View(a)
-    val textView = TextView(a)
-    val someView = SomeView(a)
-
-    assertEquals("LinearLayout", parseView(linearLayout).getXmlName())
-    assertEquals("View", parseView(view).getXmlName())
-    assertEquals("TextView", parseView(textView).getXmlName())
-    assertEquals("org.jetbrains.kotlin.android.robowrapper.test.SomeView", parseView(someView).getXmlName())
-  }
-
-  @Test
-  fun testStyleableNames() {
-    Robolectric.setupActivity(Activity::class.java)
-
-    assertEquals(listOf("TextView"), TextView::class.java.getStyleableNames())
-    assertEquals(listOf("View"), View::class.java.getStyleableNames())
-    assertEquals(listOf("ViewGroup"), ViewGroup::class.java.getStyleableNames())
-    assertEquals(listOf("LinearLayout_Layout"),
-      LinearLayout.LayoutParams::class.java.getStyleableNames())
-    assertEquals(listOf("ViewGroup_Layout", "ViewGroup_MarginLayout"),
-      ViewGroup.LayoutParams::class.java.getStyleableNames())
-  }
-
-  @Test
-  fun testUnwrapClass() {
-    Robolectric.setupActivity(Activity::class.java)
-
-    assertEquals("android.widget.LinearLayout",
-      unwrapClass(_LinearLayout::class.java).name)
-
-    assertEquals("org.jetbrains.kotlin.android.robowrapper._NonWrapper1Class",
-      unwrapClass(_NonWrapper1Class::class.java).name)
-
-    assertEquals("org.jetbrains.kotlin.android.robowrapper._NonWrapper2Class",
-      unwrapClass(_NonWrapper2Class::class.java).name)
-  }
-
-  private fun Set<Pair<String, Pair<Attr?, Any>>>.fetch(name: String): Pair<String, Pair<Attr?, Any>> {
-    for (item in this) {
-      if (item.first == name)
-        return item;
+        assertEquals("LinearLayout", parseView(linearLayout).getXmlName())
+        assertEquals("View", parseView(view).getXmlName())
+        assertEquals("TextView", parseView(textView).getXmlName())
+        assertEquals("org.jetbrains.kotlin.android.robowrapper.test.SomeView", parseView(someView).getXmlName())
     }
-    throw Exception("Can't find property $name")
-  }
+
+    @Test
+    fun testStyleableNames() {
+        Robolectric.setupActivity(Activity::class.java)
+
+        assertEquals(listOf("TextView"), TextView::class.java.getStyleableNames())
+        assertEquals(listOf("View"), View::class.java.getStyleableNames())
+        assertEquals(listOf("ViewGroup"), ViewGroup::class.java.getStyleableNames())
+        assertEquals(listOf("LinearLayout_Layout"),
+                LinearLayout.LayoutParams::class.java.getStyleableNames())
+        assertEquals(listOf("ViewGroup_Layout", "ViewGroup_MarginLayout"),
+                ViewGroup.LayoutParams::class.java.getStyleableNames())
+    }
+
+    @Test
+    fun testUnwrapClass() {
+        Robolectric.setupActivity(Activity::class.java)
+
+        assertEquals("android.widget.LinearLayout",
+                unwrapClass(_LinearLayout::class.java).name)
+
+        assertEquals("org.jetbrains.kotlin.android.robowrapper._NonWrapper1Class",
+                unwrapClass(_NonWrapper1Class::class.java).name)
+
+        assertEquals("org.jetbrains.kotlin.android.robowrapper._NonWrapper2Class",
+                unwrapClass(_NonWrapper2Class::class.java).name)
+    }
+
+    private fun Set<Pair<String, Pair<Attr?, Any>>>.fetch(name: String): Pair<String, Pair<Attr?, Any>> {
+        for (item in this) {
+            if (item.first == name)
+                return item;
+        }
+        throw Exception("Can't find property $name")
+    }
 
 }
 
-class _LinearLayout(ctx: Context?): LinearLayout(ctx)
-class _NonWrapper1Class(ctx: Context?): View(ctx)
+class _LinearLayout(ctx: Context?) : LinearLayout(ctx)
+class _NonWrapper1Class(ctx: Context?) : View(ctx)
 //has strange name (not _LinearLayout)
-class _NonWrapper2Class(ctx: Context?): LinearLayout(ctx)
+class _NonWrapper2Class(ctx: Context?) : LinearLayout(ctx)

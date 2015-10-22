@@ -34,7 +34,7 @@ internal class ViewNode(val view: View, val children: List<ViewNode>, val attrs:
 private val superclassResolver = SuperclassResolver()
 
 // Parse view with it's children, get all attributes from getters and make a ViewNode
-fun parseView(view: View): ViewNode {
+internal fun parseView(view: View): ViewNode {
     val children = arrayListOf<ViewNode>()
     if (view is ViewGroup &&
             (view.javaClass.name !in ignoreChildrenOf || isAdapterViewChild(view.javaClass))) {
@@ -123,7 +123,7 @@ private fun parseAttributes(
         val name = method.name
 
         val parameterTypes = method.parameterTypes
-        if ((parameterTypes != null && parameterTypes.size() > 0) || name in ignoredMethods) {
+        if ((parameterTypes != null && parameterTypes.size > 0) || name in ignoredMethods) {
             continue
         }
 
@@ -154,7 +154,7 @@ private fun parseAttributes(
 
 private fun Method.resolveBooleanPropertyName(view: View): String? {
     val name = name
-    return if (name.startsWith("is") && name.length() > 2 && Character.isUpperCase(name.charAt(2)))
+    return if (name.startsWith("is") && name.length > 2 && Character.isUpperCase(name[2]))
         resolveSpecialProperty(view, decapitalize(name.substring(2)))
     else
         null
@@ -162,7 +162,7 @@ private fun Method.resolveBooleanPropertyName(view: View): String? {
 
 private fun Method.resolveGenericPropertyName(view: View): String? {
     val name = name
-    return if (name.startsWith("get") && name.length() > 3 && Character.isUpperCase(name.charAt(3)))
+    return if (name.startsWith("get") && name.length > 3 && Character.isUpperCase(name[3]))
         resolveSpecialProperty(view, decapitalize(name.substring(3)))
     else
         null

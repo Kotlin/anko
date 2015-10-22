@@ -51,13 +51,13 @@ class PropertyGenerator : Generator<PropertyElement> {
             val settersList = setters.get(property.setterIdentifier) ?: listOf()
 
             val (best, others) = settersList.partition {
-                it.method.args.size() == 1 && it.method.args[0] == getter.method.returnType
+                it.method.args.size == 1 && it.method.args[0] == getter.method.returnType
             }
 
             existingProperties.add(property.setterIdentifier)
             PropertyElement(property.name, getter, best + others)
         }
-        val propertyWithoutGetters = setters.values().map { setters ->
+        val propertyWithoutGetters = setters.values.map { setters ->
             val property = setters.first().toProperty()
 
             val id = property.setterIdentifier

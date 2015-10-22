@@ -49,12 +49,12 @@ fun Buffer.functionalDslTest(name: String, mainAnkoFile: AnkoFile, configInit: T
 
     line("@Test").line("fun test$name() {")
 
-    line("runFunctionalTest(\"$name.kt\", AnkoFile.${mainAnkoFile.name()}, version) {")
+    line("runFunctionalTest(\"$name.kt\", AnkoFile.${mainAnkoFile.name}, version) {")
     for (file in testConfiguration.files) {
-        line("files.add(AnkoFile.${file.name()})")
+        line("files.add(AnkoFile.${file.name})")
     }
     for (tune in testConfiguration.tunes) {
-        line("tunes.add(ConfigurationTune.${tune.name()})")
+        line("tunes.add(ConfigurationTune.${tune.name})")
     }
     line("}")
     line("}").nl()

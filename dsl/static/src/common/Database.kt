@@ -103,7 +103,7 @@ internal fun applyArguments(whereClause: String, vararg args: Pair<String, Any>)
 
 internal fun applyArguments(whereClause: String, args: Map<String, Any>): String {
     val matcher = ARG_PATTERN.matcher(whereClause)
-    val buffer = StringBuffer(whereClause.length())
+    val buffer = StringBuffer(whereClause.length)
     while (matcher.find()) {
         val key = matcher.group(2)
         val value = args.get(key) ?: throw IllegalStateException("Can't find a value for key $key")

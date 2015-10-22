@@ -46,7 +46,7 @@ internal fun isNumeric(value: Any): Boolean {
 
 internal fun decapitalize(s: String): String {
     if (s.isEmpty()) return s
-    return Character.toLowerCase(s.charAt(0)) + s.substring(1)
+    return Character.toLowerCase(s[0]) + s.substring(1)
 }
 
 internal fun wildcardToRegex(wildcard: String): String {

@@ -114,14 +114,14 @@ object XmlConverter {
 }
 
 fun main(args: Array<String>) {
-    if (args.size() < 2) {
+    if (args.size < 2) {
         println("Usage: <xml file> <kt file>")
         return
     }
 
     val xmlFile = File(args[0])
     val ktFile = File(args[1])
-    val options = if (args.size() > 2) args[2].split(',').toSet() else setOf()
+    val options = if (args.size > 2) args[2].split(',').toSet() else setOf()
 
     if (!xmlFile.exists()) {
         println("$xmlFile does not exist. Aborting")

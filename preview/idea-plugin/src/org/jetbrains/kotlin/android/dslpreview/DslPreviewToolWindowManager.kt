@@ -57,8 +57,8 @@ import org.jetbrains.kotlin.idea.internal.Location
 import org.jetbrains.kotlin.idea.util.InfinitePeriodicalTask
 import org.jetbrains.kotlin.idea.util.LongRunningReadTask
 import org.jetbrains.kotlin.idea.util.ProjectRootsUtil
-import org.jetbrains.kotlin.psi.JetClass
-import org.jetbrains.kotlin.psi.JetFile
+import org.jetbrains.kotlin.psi.KtClass
+import org.jetbrains.kotlin.psi.KtFile
 import javax.swing.DefaultComboBoxModel
 import javax.swing.JPanel
 import com.intellij.openapi.Disposable
@@ -85,8 +85,8 @@ class DslPreviewToolWindowManager(
     init {
         ApplicationManager.getApplication().invokeLater(object : Runnable {
             override fun run() {
-                val task = object : Computable<LongRunningReadTask<Pair<JetClass, String>, String>> {
-                    override fun compute(): LongRunningReadTask<Pair<JetClass, String>, String> {
+                val task = object : Computable<LongRunningReadTask<Pair<KtClass, String>, String>> {
+                    override fun compute(): LongRunningReadTask<Pair<KtClass, String>, String> {
                         return UpdateActivityNameTask()
                     }
                 }
@@ -194,7 +194,7 @@ class DslPreviewToolWindowManager(
         val editor = FileEditorManager.getInstance(myProject).selectedTextEditor ?: return null
         val psiFile = PsiDocumentManager.getInstance(myProject).getPsiFile(editor.document)
 
-        if (psiFile !is JetFile || editor !is EditorEx) {
+        if (psiFile !is KtFile || editor !is EditorEx) {
             throw UnsupportedClassException()
         }
 
@@ -203,17 +203,17 @@ class DslPreviewToolWindowManager(
         val selectionStart = editor.caretModel.primaryCaret.selectionStart
         val cacheService = KotlinCacheService.getInstance(myProject)
         val psiElement = psiFile.findElementAt(selectionStart)
-        val jetClass = if (psiElement != null) resolveJetClass(psiElement, cacheService) else null
+        val KtClass = if (psiElement != null) resolveKtClass(psiElement, cacheService) else null
 
         val module = ProjectRootManager.getInstance(myProject)
                 .fileIndex.getModuleForFile(virtualFile) ?: return null
         val androidFacet = module.resolveAndroidFacet()
 
-        if (jetClass == null || androidFacet == null) {
+        if (KtClass == null || androidFacet == null) {
             throw UnsupportedClassException()
         }
 
-        return PreviewJetClassDescription(jetClass, androidFacet)
+        return PreviewKtClassDescription(KtClass, androidFacet)
     }
 
     override fun render(psiFile: PsiFile?, facet: AndroidFacet?, forceFullRender: Boolean): Boolean {
@@ -303,12 +303,12 @@ class DslPreviewToolWindowManager(
     private fun getAncestors(baseClassName: String, cacheService: KotlinCacheService): Collection<PreviewClassDescription> {
         val baseClasses = JavaPsiFacade.getInstance(myProject).findClasses(baseClassName, GlobalSearchScope.allScope(myProject))
 
-        if (baseClasses.size() == 0) return listOf()
+        if (baseClasses.size == 0) return listOf()
 
         try {
             return ClassInheritorsSearch.search(baseClasses[0])
                     .findAll()
-                    .filter { resolveJetClass(it, cacheService) != null }
+                    .filter { resolveKtClass(it, cacheService) != null }
                     .map { it to it.getModule()?.resolveAndroidFacet() }
                     .filter { it.second != null }
                     .map { PreviewPsiClassDescription(it.first, it.second!!) }
@@ -366,8 +366,8 @@ class DslPreviewToolWindowManager(
         }
     }
 
-    inner class UpdateActivityNameTask : LongRunningReadTask<Pair<JetClass, String>, String>() {
-        override fun prepareRequestInfo(): Pair<JetClass, String>? {
+    inner class UpdateActivityNameTask : LongRunningReadTask<Pair<KtClass, String>, String>() {
+        override fun prepareRequestInfo(): Pair<KtClass, String>? {
             val toolWindow = toolWindow
             if (toolWindow == null || !toolWindow.isVisible) {
                 return null
@@ -386,15 +386,15 @@ class DslPreviewToolWindowManager(
 
             val cacheService = KotlinCacheService.getInstance(myProject)
             val psiElement = file.findElementAt(location.startOffset)
-            val resolvedClass = if (psiElement != null) resolveJetClass(psiElement, cacheService) else null
-            if (resolvedClass == null || resolvedClass !is JetClass) {
+            val resolvedClass = if (psiElement != null) resolveKtClass(psiElement, cacheService) else null
+            if (resolvedClass == null || resolvedClass !is KtClass) {
                 return null
             }
 
             return Pair(resolvedClass, getQualifiedName(resolvedClass) ?: "")
         }
 
-        override fun cloneRequestInfo(requestInfo: Pair<JetClass, String>): Pair<JetClass, String> {
+        override fun cloneRequestInfo(requestInfo: Pair<KtClass, String>): Pair<KtClass, String> {
             val newRequestInfo = super.cloneRequestInfo(requestInfo)
             assert(requestInfo == newRequestInfo, "cloneRequestInfo should generate same location object")
             return newRequestInfo
@@ -404,11 +404,11 @@ class DslPreviewToolWindowManager(
 
         }
 
-        override fun processRequest(requestInfo: Pair<JetClass, String>): String? {
+        override fun processRequest(requestInfo: Pair<KtClass, String>): String? {
             return getQualifiedName(requestInfo.first)
         }
 
-        override fun onResultReady(requestInfo: Pair<JetClass, String>, resultText: String?) {
+        override fun onResultReady(requestInfo: Pair<KtClass, String>, resultText: String?) {
             if (resultText == null) {
                 return
             }

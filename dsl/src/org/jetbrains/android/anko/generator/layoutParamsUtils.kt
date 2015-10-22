@@ -29,7 +29,7 @@ fun GenerationState.extractLayoutParams(viewGroup: ClassNode): LayoutElement? {
 
         val generateMethod = viewGroup.methods.firstOrNull { method ->
             method.name == "generateLayoutParams"
-                    && method.args.size() == 1
+                    && method.args.size == 1
                     && method.args[0].internalName == "android/util/AttributeSet"
         } ?: return findForParent()
 

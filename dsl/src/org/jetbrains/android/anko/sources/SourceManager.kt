@@ -34,7 +34,7 @@ class SourceManager(private val provider: SourceProvider) {
         object : VoidVisitorAdapter<Any>() {
             override fun visit(method: MethodDeclaration, arg: Any?) {
                 if (done) return
-                if (methodName != method.name || argumentJavaTypes.size() != method.parameters.size()) return
+                if (methodName != method.name || argumentJavaTypes.size != method.parameters.size) return
                 if (method.getParentClassName() != className) return
 
                 val parameters = method.parameters

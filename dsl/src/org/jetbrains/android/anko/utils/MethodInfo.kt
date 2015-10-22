@@ -78,7 +78,7 @@ internal fun MethodNodeWithClass.processArguments(
         nameIndex += arg.size
     }
 
-    if ( buffer.length() >= 2) buffer.delete(buffer.length() - 2, buffer.length())
+    if ( buffer.length >= 2) buffer.delete(buffer.length - 2, buffer.length)
     return buffer.toString()
 }
 
@@ -118,15 +118,15 @@ internal fun MethodNodeWithClass.formatArgumentsNames(config: AnkoConfiguration)
 
 
 fun MethodNode.isGetter(): Boolean {
-    val isNonBooleanGetter = name.startsWith("get") && name.length() > 3 && Character.isUpperCase(name.charAt(3))
-    val isBooleanGetter = name.startsWith("is") && name.length() > 2 && Character.isUpperCase(name.charAt(2))
+    val isNonBooleanGetter = name.startsWith("get") && name.length > 3 && Character.isUpperCase(name[3])
+    val isBooleanGetter = name.startsWith("is") && name.length > 2 && Character.isUpperCase(name[2])
 
     return (isNonBooleanGetter || isBooleanGetter) && args.isEmpty() && !returnType.isVoid && isPublic
 }
 
 internal fun MethodNode.isNonListenerSetter(): Boolean {
-    val isSetter = name.startsWith("set") && name.length() > 3 && Character.isUpperCase(name.charAt(3))
-    return isSetter && !(isListenerSetter() || name.endsWith("Listener")) && args.size() == 1 && isPublic
+    val isSetter = name.startsWith("set") && name.length > 3 && Character.isUpperCase(name[3])
+    return isSetter && !(isListenerSetter() || name.endsWith("Listener")) && args.size == 1 && isPublic
 }
 
 internal val MethodNode.isConstructor: Boolean

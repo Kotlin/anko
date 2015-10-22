@@ -29,7 +29,7 @@ internal val XML_SCHEMA = """ xmlns:android="http://schemas.android.com/apk/res/
     Line format: [<CLASSNAME>#]<PROPNAME>:<VALUE1>:<VALUE2>:...:<VALUEn>
  */
 internal val defaultValues = readResource("default_values.txt")
-        .split('\n').filter { it.length() > 2 }.fold(hashMapOf<String, List<Any>>()) { hmap, value ->
+        .split('\n').filter { it.length > 2 }.fold(hashMapOf<String, List<Any>>()) { hmap, value ->
     val delimiter = value.indexOf(' ')
     val key = value.substring(0, delimiter)
     val values = value.substring(delimiter + 1)

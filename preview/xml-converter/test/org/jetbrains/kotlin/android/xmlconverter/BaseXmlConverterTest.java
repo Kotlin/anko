@@ -5,8 +5,8 @@ import org.junit.rules.TestName;
 import sun.plugin.dom.exception.InvalidStateException;
 import java.io.File;
 
-import static kotlin.KotlinPackage.*;
-import static kotlin.io.IoPackage.*;
+import static kotlin.SetsKt.*;
+import static kotlin.io.FilesKt.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -29,7 +29,7 @@ public class BaseXmlConverterTest {
         assertTrue(inputFile + " does not exist", inputFile.exists());
         assertTrue(outputFile + " does not exist", outputFile.exists());
 
-        String actual = XmlConverter.INSTANCE$.convert(readText(inputFile, "UTF-8"), setOf("raw"));
+        String actual = XmlConverter.INSTANCE.convert(readText(inputFile, "UTF-8"), setOf("raw"));
         String expected = readText(outputFile, "UTF-8");
 
         assertEquals(expected, actual);

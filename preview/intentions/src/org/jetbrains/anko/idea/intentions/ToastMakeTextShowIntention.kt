@@ -18,15 +18,15 @@ package org.jetbrains.anko.idea.intentions
 
 import org.jetbrains.kotlin.psi.*
 
-class ToastMakeTextShowIntention : AnkoIntention<JetExpression>(
-        JetExpression::class.java,
+class ToastMakeTextShowIntention : AnkoIntention<KtExpression>(
+        KtExpression::class.java,
         "Simplify Toast.makeText().show() with Anko"
 ) {
 
-    override fun isApplicableTo(element: JetExpression, caretOffset: Int): Boolean {
-        return element.require<JetDotQualifiedExpression> {
-            receiver.require<JetDotQualifiedExpression> {
-                receiver.require<JetReferenceExpression>("Toast")
+    override fun isApplicableTo(element: KtExpression, caretOffset: Int): Boolean {
+        return element.require<KtDotQualifiedExpression> {
+            receiver.require<KtDotQualifiedExpression> {
+                receiver.require<KtReferenceExpression>("Toast")
                 && selector.requireCall("makeText", 3) {
                     isLongToast() != null && isValueParameterTypeOf(0, null, FqNames.CONTEXT_FQNAME)
                 }
@@ -35,7 +35,7 @@ class ToastMakeTextShowIntention : AnkoIntention<JetExpression>(
         }
     }
 
-    private fun JetCallExpression.isLongToast(): Boolean? {
+    private fun KtCallExpression.isLongToast(): Boolean? {
         return when (valueArguments[2].text) {
             "Toast.LENGTH_SHORT", "LENGTH_SHORT" -> false
             "Toast.LENGTH_LONG", "LENGTH_LONG" -> true
@@ -43,9 +43,9 @@ class ToastMakeTextShowIntention : AnkoIntention<JetExpression>(
         }
     }
 
-    override fun replaceWith(element: JetExpression, psiFactory: JetPsiFactory): NewElement? {
-        element.require<JetDotQualifiedExpression> {
-            receiver.require<JetDotQualifiedExpression> {
+    override fun replaceWith(element: KtExpression, psiFactory: KtPsiFactory): NewElement? {
+        element.require<KtDotQualifiedExpression> {
+            receiver.require<KtDotQualifiedExpression> {
                 selector.requireCall("makeText") {
                     val args = valueArguments
                     val ctxArg = args[0].text

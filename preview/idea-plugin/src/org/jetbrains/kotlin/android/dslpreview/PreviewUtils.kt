@@ -25,10 +25,10 @@ import org.jetbrains.kotlin.descriptors.ClassifierDescriptor
 import org.jetbrains.kotlin.idea.caches.resolve.KotlinCacheService
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.load.java.lazy.descriptors.LazyJavaClassDescriptor
-import org.jetbrains.kotlin.psi.JetClass
-import org.jetbrains.kotlin.psi.JetClassBody
-import org.jetbrains.kotlin.psi.JetClassOrObject
-import org.jetbrains.kotlin.psi.JetFile
+import org.jetbrains.kotlin.psi.KtClass
+import org.jetbrains.kotlin.psi.KtClassBody
+import org.jetbrains.kotlin.psi.KtClassOrObject
+import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.resolve.DescriptorUtils
 import org.jetbrains.kotlin.resolve.lazy.ResolveSession
 import org.jetbrains.kotlin.resolve.source.KotlinSourceElement
@@ -42,18 +42,18 @@ class CantCreateDependencyDirectoryException : RuntimeException()
 
 class UnsupportedClassException : RuntimeException()
 
-fun getQualifiedName(clazz: JetClass): String? {
+fun getQualifiedName(clazz: KtClass): String? {
     val parts = arrayListOf<String>()
 
     var current: Any? = clazz
     while (current != null) {
-        val name = (current as JetClassOrObject).name ?: return null
+        val name = (current as KtClassOrObject).name ?: return null
         parts.add(name)
-        current = PsiTreeUtil.getParentOfType<JetClassOrObject>(current as PsiElement, JetClassOrObject::class.java)
+        current = PsiTreeUtil.getParentOfType<KtClassOrObject>(current as PsiElement, KtClassOrObject::class.java)
     }
 
     val file = clazz.containingFile
-    return if (file is JetFile) {
+    return if (file is KtFile) {
         val fileQualifiedName = file.packageFqName.asString()
         if (!fileQualifiedName.isEmpty()) {
             parts.add(fileQualifiedName)
@@ -64,7 +64,7 @@ fun getQualifiedName(clazz: JetClass): String? {
     } else null
 }
 
-internal fun resolveJetClass(prob: PsiElement, cacheService: KotlinCacheService): JetClass? {
+internal fun resolveKtClass(prob: PsiElement, cacheService: KotlinCacheService): KtClass? {
     fun isClassSupported(descriptor: ClassifierDescriptor): Boolean {
         if (descriptor !is ClassDescriptor)
             return false
@@ -92,10 +92,10 @@ internal fun resolveJetClass(prob: PsiElement, cacheService: KotlinCacheService)
     }
 
     if (prob is KotlinLightElement<*, *>) {
-        return resolveJetClass(prob.getOrigin(), cacheService)
+        return resolveKtClass(prob.getOrigin(), cacheService)
     }
 
-    if (prob is JetClass && (prob.parent !is JetClassBody) &&
+    if (prob is KtClass && (prob.parent !is KtClassBody) &&
             !prob.isEnum() && !prob.isInterface() && !prob.isAnnotation() && !prob.isInner()) {
         try {
             val session = cacheService.getResolutionFacade(listOf(prob)).getFrontendService(ResolveSession::class.java)
@@ -118,5 +118,5 @@ internal fun resolveJetClass(prob: PsiElement, cacheService: KotlinCacheService)
     }
 
     val parent = prob.parent
-    return if (parent != null) resolveJetClass(prob.parent, cacheService) else null
+    return if (parent != null) resolveKtClass(prob.parent, cacheService) else null
 }

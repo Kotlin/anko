@@ -33,7 +33,7 @@ class ListenerRenderer(config: AnkoConfiguration) : Renderer(config) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.LISTENERS)
 
-    override fun processElements(state: GenerationState) = StringBuilder {
+    override fun processElements(state: GenerationState) = StringBuilder().apply {
         val renderedClasses = hashSetOf<String>()
 
         for (listener in state[ListenerGenerator::class.java]) {

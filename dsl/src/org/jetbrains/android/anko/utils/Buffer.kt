@@ -72,10 +72,10 @@ class Buffer(private val indentString: String, indent: Int = 0, val init: Buffer
     }
 
     val size: Int
-        get() = builder.length()
+        get() = builder.length
 
     val isEmpty: Boolean
-        get() = builder.length() == 0
+        get() = builder.length == 0
 
     override fun toString() = builder.toString()
 

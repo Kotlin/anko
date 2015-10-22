@@ -28,7 +28,7 @@ class ServiceRenderer(config: AnkoConfiguration) : Renderer(config) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.SERVICES)
 
-    override fun processElements(state: GenerationState) = StringBuilder {
+    override fun processElements(state: GenerationState) = StringBuilder().apply {
         append(render("services") {
             "services" % seq(state[ServiceGenerator::class.java]) {
                 "name" % it.service.simpleName.decapitalize()

@@ -22,7 +22,7 @@ import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.InnerClassNode
 import org.objectweb.asm.tree.MethodNode
 
-internal data class MethodNodeWithClass(var clazz: ClassNode, val method: MethodNode) {
+data class MethodNodeWithClass(var clazz: ClassNode, val method: MethodNode) {
     val identifier = "${clazz.fqName}#${method.name}"
 }
 

@@ -34,7 +34,7 @@ fun String.toCamelCase(separator: Char = '_', firstCapital: Boolean = true): Str
 internal fun String.toUPPER_CASE(): String {
     val builder = StringBuilder()
     for (c in this) {
-        if (c.isUpperCase() && builder.length() > 0) builder.append('_')
+        if (c.isUpperCase() && builder.length > 0) builder.append('_')
         builder.append(c.toUpperCase())
     }
     return builder.toString()

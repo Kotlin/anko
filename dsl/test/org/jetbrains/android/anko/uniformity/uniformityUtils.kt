@@ -28,8 +28,8 @@ fun getAllDeclarations(
     val functions = arrayListOf<Pair<String, String>>()
     while (matcher.find()) {
         if (ignoreAnnotation != null) {
-            val annotStart = matcher.start() - ignoreAnnotation.length() - 1
-            if (text.substring(annotStart, annotStart + ignoreAnnotation.length()) == ignoreAnnotation) continue
+            val annotStart = matcher.start() - ignoreAnnotation.length - 1
+            if (text.substring(annotStart, annotStart + ignoreAnnotation.length) == ignoreAnnotation) continue
         }
         val arguments = if (!argsIncluded) "" else matcher.group(2)
                 .replace('\n', ' ').replace('\r', ' ').replace('\t', ' ').replaceDoubledSpaces().trim()

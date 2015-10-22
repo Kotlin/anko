@@ -170,8 +170,8 @@ internal fun renderAttribute(view: View, attr: Attr?, key: String, value: Any, t
             return parseFlags(value.toString().toLong(), attr)
         }
         // If our property contains nothing but enum and flags, and string representation not found, exit
-        if (attr.format.size() == 1 && attr.format[0] == "enum") return null
-        if (attr.format.size() == 1 && attr.format[0] == "flags") return null
+        if (attr.format.size == 1 && attr.format[0] == "enum") return null
+        if (attr.format.size == 1 && attr.format[0] == "flags") return null
     }
     // (key, value) pair is not special
     return basicRenderAttr(key, value)
@@ -195,7 +195,7 @@ private fun renderDrawableAttribute(value: android.graphics.drawable.Drawable, v
 }
 
 internal fun String.parseEnumFlagValue(): Long {
-    if (startsWith("0x") && length() > 2) {
+    if (startsWith("0x") && length > 2) {
         return java.lang.Long.parseLong(substring(2), 16)
     } else return toLong()
 }

@@ -53,9 +53,9 @@ class ListenerGenerator : Generator<ListenerElement> {
 
         val rawName = setter.method.name
         //delete "set" ("add") end "Listener" parts of String
-        val name = rawName.substring("set".length()).dropLast("Listener".length()).decapitalize()
+        val name = rawName.substring("set".length).dropLast("Listener".length).decapitalize()
 
-        return when (methods?.size() ?: 0) {
+        return when (methods?.size ?: 0) {
             1 -> { // It is a simple listener, with just one method
                 val method = methods!![0]
                 val methodWithClass = MethodNodeWithClass(listener, method)
@@ -76,5 +76,5 @@ class ListenerGenerator : Generator<ListenerElement> {
         }
     }
 
-    private fun String.dropLast(n: Int) = if (n >= length()) "" else substring(0, length() - n)
+    private fun String.dropLast(n: Int) = if (n >= length) "" else substring(0, length - n)
 }

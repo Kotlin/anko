@@ -122,7 +122,7 @@ class DslWorker(private val myListener: DslWorker.Listener) {
 
         override fun run() {
             val startMarker = outputText.indexOf(START_MARKER)
-            val endMarker = outputText.indexOf(END_MARKER, startMarker + START_MARKER.length())
+            val endMarker = outputText.indexOf(END_MARKER, startMarker + START_MARKER.length)
 
             if (startMarker < 0 || endMarker < 0 || endMarker <= startMarker) {
                 myAlive = false
@@ -130,7 +130,7 @@ class DslWorker(private val myListener: DslWorker.Listener) {
                 return
             }
 
-            val rawData = outputText.substring(startMarker + START_MARKER.length(), endMarker)
+            val rawData = outputText.substring(startMarker + START_MARKER.length, endMarker)
             val pack = GSON.fromJson<Pack>(rawData, Pack::class.java)
 
             myPort = pack.port

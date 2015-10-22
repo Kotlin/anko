@@ -115,9 +115,9 @@ fun Context.email(email: String, subject: String = "", text: String = ""): Boole
     val intent = Intent(Intent.ACTION_SENDTO)
     intent.setData(Uri.parse("mailto:"))
     intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-    if (subject.length() > 0)
+    if (subject.length > 0)
         intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-    if (text.length() > 0)
+    if (text.length > 0)
         intent.putExtra(Intent.EXTRA_TEXT, text)
     if (intent.resolveActivity(packageManager) != null) {
         startActivity(intent)

@@ -27,7 +27,7 @@ import org.jetbrains.kotlin.types.TypeUtils
 import org.jetbrains.kotlin.types.expressions.ExpressionTypingServices
 import org.jetbrains.kotlin.types.lowerIfFlexible
 
-abstract class AnkoIntention<TElement : JetElement>(
+abstract class AnkoIntention<TElement : KtElement>(
         elementType: Class<TElement>,
         text: String,
         familyName: String = text
@@ -38,27 +38,27 @@ abstract class AnkoIntention<TElement : JetElement>(
         return fqName.any { it == resolvedName }
     }
 
-    protected fun JetCallExpression.isValueParameterTypeOf(parameterIndex: Int, resolvedCall: ResolvedCall<*>?, vararg fqName: String): Boolean {
+    protected fun KtCallExpression.isValueParameterTypeOf(parameterIndex: Int, resolvedCall: ResolvedCall<*>?, vararg fqName: String): Boolean {
         val ctxArgumentDescriptor = (resolvedCall ?: getResolvedCall(analyze()))?.resultingDescriptor
                 ?.valueParameters?.get(parameterIndex)?.type?.lowerIfFlexible()
                 ?.constructor?.declarationDescriptor ?: return false
         return isTypeOf(ctxArgumentDescriptor, *fqName)
     }
 
-    protected fun JetCallExpression.isReceiverParameterTypeOf(resolvedCall: ResolvedCall<*>?, vararg fqName: String): Boolean {
+    protected fun KtCallExpression.isReceiverParameterTypeOf(resolvedCall: ResolvedCall<*>?, vararg fqName: String): Boolean {
         val receiverDescriptor = (resolvedCall ?: getResolvedCall(analyze()))?.resultingDescriptor
                 ?.dispatchReceiverParameter?.type?.lowerIfFlexible()
                 ?.constructor?.declarationDescriptor ?: return false
         return isTypeOf(receiverDescriptor, *fqName)
     }
 
-    protected val JetDotQualifiedExpression.receiver: JetExpression?
+    protected val KtDotQualifiedExpression.receiver: KtExpression?
         get() = receiverExpression
 
-    protected val JetDotQualifiedExpression.selector: JetExpression?
+    protected val KtDotQualifiedExpression.selector: KtExpression?
         get() = selectorExpression
 
-    protected val JetBinaryExpressionWithTypeRHS.operation: JetSimpleNameExpression
+    protected val KtBinaryExpressionWithTypeRHS.operation: KtSimpleNameExpression
         get() = operationReference
 
     protected inline fun <reified E : PsiElement> PsiElement?.require(name: String? = null, sub: E.() -> Boolean): Boolean {
@@ -67,19 +67,23 @@ abstract class AnkoIntention<TElement : JetElement>(
 
     protected inline fun <reified E : PsiElement> PsiElement?.require(name: String? = null): Boolean {
         if (this !is E) return false
-        if (name != null && name != this.getText()) return false
+        if (name != null && name != this.text) return false
         return true
     }
 
-    protected inline fun PsiElement?.requireCall(functionName: String? = null, argCount: Int? = null, sub: JetCallExpression.() -> Boolean): Boolean {
-        return requireCall(functionName, argCount) && (this as JetCallExpression).sub()
+    protected inline fun PsiElement?.requireCall(
+            functionName: String? = null,
+            argCount: Int? = null,
+            sub: KtCallExpression.() -> Boolean
+    ): Boolean {
+        return requireCall(functionName, argCount) && (this as KtCallExpression).sub()
     }
 
     @Suppress("NOTHING_TO_INLINE")
     protected inline fun PsiElement?.requireCall(functionName: String? = null, argCount: Int? = null): Boolean {
-        if (this !is JetCallExpression) return false
-        if (functionName != null && functionName != calleeExpression?.getText()) return false
-        if (argCount != null && argCount != valueArguments.size()) return false
+        if (this !is KtCallExpression) return false
+        if (functionName != null && functionName != calleeExpression?.text) return false
+        if (argCount != null && argCount != valueArguments.size) return false
         return true
     }
 
@@ -111,26 +115,26 @@ abstract class AnkoIntention<TElement : JetElement>(
                         getResolutionScope(descriptor.containingDeclaration),
                         RedeclarationHandler.DO_NOTHING)
             is LocalVariableDescriptor -> {
-                val declaration = DescriptorToSourceUtils.descriptorToDeclaration(descriptor) as JetDeclaration
+                val declaration = DescriptorToSourceUtils.descriptorToDeclaration(descriptor) as KtDeclaration
                 declaration.analyze().get(BindingContext.LEXICAL_SCOPE, declaration)!!
             }
 
             else -> throw IllegalArgumentException("Cannot find resolution scope for $descriptor")
         }
     }
-    abstract fun replaceWith(element: TElement, psiFactory: JetPsiFactory): NewElement?
+    abstract fun replaceWith(element: TElement, psiFactory: KtPsiFactory): NewElement?
 
     final override fun applyTo(element: TElement, editor: Editor) {
         val project = editor.project ?: return
 
         val resolutionFacade = element.getResolutionFacade()
-        val containingJetDeclaration = JetStubbedPsiUtil.getContainingDeclaration(element) ?: return
+        val containingJetDeclaration = KtStubbedPsiUtil.getContainingDeclaration(element) ?: return
         val containingDeclaration = resolutionFacade.resolveToDescriptor(containingJetDeclaration)
                 as? CallableDescriptor ?: return
         val jetFile = element.getContainingJetFile()
 
 
-        val psiFactory = JetPsiFactory(project)
+        val psiFactory = KtPsiFactory(project)
         val newElement = replaceWith(element, psiFactory) ?: return
         val newExpression = newElement.element
 
@@ -148,7 +152,7 @@ abstract class AnkoIntention<TElement : JetElement>(
     }
 
     private fun analyzeInContext(
-            expression: JetExpression,
+            expression: KtExpression,
             symbolDescriptor: CallableDescriptor,
             scope: LexicalScope,
             resolutionFacade: ResolutionFacade
@@ -170,6 +174,6 @@ object FqNames {
     val VIEW_FQNAME = "android.view.View"
 }
 
-class NewElement(val element: JetExpression, vararg newFqNames: String) {
+class NewElement(val element: KtExpression, vararg newFqNames: String) {
     val newFqNames = newFqNames.toList()
 }

@@ -110,7 +110,7 @@ class ClassTree : Iterable<ClassNode>{
     }
 }
 
-internal class ClassTreeIterator(var next: ClassTreeNode) : Iterator<ClassNode> {
+class ClassTreeIterator(var next: ClassTreeNode) : Iterator<ClassNode> {
 
     var nodeQueue: Queue<ClassTreeNode> = ArrayDeque(next.children)
 

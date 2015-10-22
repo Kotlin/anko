@@ -34,7 +34,7 @@ interface ViewConstructorUtils {
             ctxName: String,
             argumentNames: Boolean = false
     ): String {
-        if (constructors.size() != AVAILABLE_VIEW_CONSTRUCTORS.size()) throw IllegalArgumentException("Invalid constructors list")
+        if (constructors.size != AVAILABLE_VIEW_CONSTRUCTORS.size) throw IllegalArgumentException("Invalid constructors list")
 
         return if (argumentNames) {
             when {

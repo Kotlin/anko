@@ -18,7 +18,7 @@
     <id>org.jetbrains.kotlin.android.dsl</id>
     <name>Anko DSL Preview</name>
     <description>Displays a layout preview for the Anko Android DSL.</description>
-    <version>0.7.1</version>
+    <version>0.7.2</version>
     <vendor url="http://www.jetbrains.com">JetBrains s.r.o.</vendor>
 
     <idea-version since-build="135.1" until-build="142.9999"/>
