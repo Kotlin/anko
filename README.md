@@ -69,12 +69,12 @@ While you can create UI programmatically, it's hardly done because it's somewhat
 ```kotlin
 val act = this
 val layout = LinearLayout(act)
-layout.setOrientation(LinearLayout.VERTICAL)
+layout.orientation = LinearLayout.VERTICAL
 val name = EditText(act)
 val button = Button(act)
-button.setText("Say Hello")
+button.text = "Say Hello"
 button.setOnClickListener {
-    Toast.makeText(act, "Hello, ${name.getText()}!", Toast.LENGTH_SHORT).show()  
+    Toast.makeText(act, "Hello, ${name.text}!", Toast.LENGTH_SHORT).show()
 }
 layout.addView(name)
 layout.addView(button)
@@ -147,7 +147,8 @@ Basically, all you have to do is to add an additional repository and a compile d
 ```gradle
 dependencies {
     compile 'org.jetbrains.anko:anko-sdk15:0.7.2' // sdk19, sdk21, sdk23 are also available
-    compile 'org.jetbrains.anko:anko-support-v4:0.7.2' // In case you need support.v4 bindings
+    compile 'org.jetbrains.anko:anko-support-v4:0.7.2' // In case you need support-v4 bindings
+    compile 'org.jetbrains.anko:anko-appcompat-v7:0.7.2' // For appcompat-v7 bindings
 }
 ```
 
@@ -175,7 +176,7 @@ DSL is available in `onCreate()`:
 
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
-    super<Activity>.onCreate(savedInstanceState)
+    super.onCreate(savedInstanceState)
     
     verticalLayout {
         padding = dip(30)
@@ -202,7 +203,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 </tr>
 </table>
 
-`padding`, `hint` and `textSize` are [extension properties](http://kotlinlang.org/docs/reference/extensions.html#extension-properties). They exist for most `View` properties allowing
+`hint` and `textSize` are [synthetic extension properties](https://kotlinlang.org/docs/reference/java-interop.html#getters-and-setters) bound to JavaBean-style getters and setters, `padding` is an [extension property](http://kotlinlang.org/docs/reference/extensions.html#extension-properties) from Anko. Either of these exists for most `View` properties allowing
 you to write `text = "Some text"` instead of `setText("Some text")`.
 
 `verticalLayout` (a `LinearLayout` but already with a `LinearLayout.VERTICAL` orientation), `editText` and `button` are
