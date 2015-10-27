@@ -22,6 +22,10 @@ public var android.widget.TextView.singleLine: Boolean
     get() = throw AnkoException("'android.widget.TextView.singleLine' property does not have a getter")
     set(v) = setSingleLine(v)
 
+public var android.widget.ImageView.imageResource: Int
+    get() = throw AnkoException("'android.widget.ImageView.imageResource' property does not have a getter")
+    set(v) = setImageResource(v)
+
 public var android.widget.ImageView.imageURI: android.net.Uri?
     get() = throw AnkoException("'android.widget.ImageView.imageURI' property does not have a getter")
     set(v) = setImageURI(v)
