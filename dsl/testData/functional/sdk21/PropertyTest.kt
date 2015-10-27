@@ -6,6 +6,10 @@ public var android.view.View.backgroundResource: Int
     get() = throw AnkoException("'android.view.View.backgroundResource' property does not have a getter")
     set(v) = setBackgroundResource(v)
 
+public var android.widget.ImageView.imageResource: Int
+    get() = throw AnkoException("'android.widget.ImageView.imageResource' property does not have a getter")
+    set(v) = setImageResource(v)
+
 public var android.widget.ImageView.imageURI: android.net.Uri?
     get() = throw AnkoException("'android.widget.ImageView.imageURI' property does not have a getter")
     set(v) = setImageURI(v)
