@@ -243,8 +243,8 @@ Positioning of widgets inside parent containers can be tuned using `LayoutParams
 <ImageView 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android_layout_marginLeft="5dip"
-    android_layout_marginTop="10dip"
+    android:layout_marginLeft="5dip"
+    android:layout_marginTop="10dip"
     android:src="@drawable/something" />
 ```
 
