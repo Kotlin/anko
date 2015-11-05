@@ -61,6 +61,12 @@ open class DefaultAnkoConfiguration(
             TargetArtifactType.COMMON, TargetArtifactType.PLATFORM -> ""
             else -> "." + version.replace('-', '.').toLowerCase()
         }
+
+        for (line in propertiesWithoutGetters) {
+            if (!line.matches("[A-Za-z0-9]+(\\.((?!set)[A-Za-z0-9]+))*".toRegex())) {
+                logManager.e("Invalid line in properties_without_getters.txt: $line")
+            }
+        }
     }
 
     override val outputDirectory = outputDirectory

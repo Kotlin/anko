@@ -22,14 +22,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 
-var View.backgroundColor: Int
-    get() = throw PropertyWithoutGetterException("backgroundColor")
-    set(value) = setBackgroundColor(value)
-
-var View.backgroundResource: Int
-    get() = throw PropertyWithoutGetterException("backgroundResource")
-    set(value) = setBackgroundResource(value)
-
 var View.backgroundDrawable: Drawable
     get() = background
     set(value) = setBackgroundDrawable(value)

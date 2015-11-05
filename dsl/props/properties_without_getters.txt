@@ -1,3 +1,5 @@
+android.view.View.backgroundColor
+android.view.View.backgroundResource
 android.view.View.minimumHeight
 android.view.View.minimumWidth
 android.widget.TextView.enabled
@@ -21,3 +23,8 @@ android.widget.LinearLayout.gravity
 android.widget.Gallery.gravity
 android.widget.Spinner.gravity
 android.widget.GridView.gravity
+android.widget.RelativeLayout.horizontalGravity
+android.widget.RelativeLayout.verticalGravity
+android.widget.LinearLayout.dividerDrawable
+android.widget.LinearLayout.horizontalGravity
+android.widget.LinearLayout.verticalGravity
