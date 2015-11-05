@@ -13,6 +13,7 @@ android.widget.TextView.maxEms
 android.widget.TextView.singleLine
 android.widget.TextView.marqueeRepeatLimit
 android.widget.TextView.cursorVisible
+android.widget.TextView.gravity
 android.widget.ImageView.imageURI
 android.widget.ImageView.imageBitmap
 android.widget.RelativeLayout.gravity
