@@ -1,13 +1,14 @@
-Change Log
-==========
+## Change Log
 
-Version 0.7.2 *(2015-10-22)*
-----------------------------
+### Anko 0.7.3 *(2015-11-02)*
+
+Built for Kotlin **Beta Candidate** (`1.0.0-beta-1103`).
+
+### Anko 0.7.2 *(2015-10-22)*
 
 Built for Kotlin **Beta Candidate**.
 
-Version 0.7.1 *(2015-10-01)*
-----------------------------
+### Anko 0.7.1 *(2015-10-01)*
 
 Built for Kotlin M14 (0.14.449).
 
@@ -15,8 +16,7 @@ Built for Kotlin M14 (0.14.449).
  * New: Added `findOptional<T>` for `View`, `Activity` and `Fragment`.
  * Fix: An exception in DSL Preview plugin in Android Studio 1.4.
 
-Version 0.7 *(2015-09-17)*
-----------------------------
+### Anko 0.7 *(2015-09-17)*
 
 Built for Kotlin M13 (0.13.1513).
 
@@ -30,8 +30,7 @@ Built for Kotlin M13 (0.13.1513).
  * [#77](https://github.com/JetBrains/anko/issues/77) New: Extension functions for the optimized Android collections and arrays.
  * `layoutParams` property is renamed to `lparams` (due to the clash with `View.getLayoutParams`).
 
-Version 0.6.3 *(2015-07-10)*
-----------------------------
+### Anko 0.6.3 *(2015-07-10)*
 
 Built for Kotlin M12.1 (0.12.613).
 
@@ -45,8 +44,7 @@ Built for Kotlin M12.1 (0.12.613).
  * DSL Preview plugin is updated to Robolectric 3.0 rc3.
  * DSL generator refactoring.
 
-Version 0.6.2 *(2015-05-29)*
-----------------------------
+### Anko 0.6.2 *(2015-05-29)*
 
 Built for Kotlin M12 (0.12.200).
 
@@ -62,8 +60,7 @@ Built for Kotlin M12 (0.12.200).
  * [#45](https://github.com/JetBrains/anko/issues/45) Fix: `SingleColumnParser` and `ScalarColumnParser`.
  * [#38](https://github.com/JetBrains/anko/issues/38) Fix: `SQLiteDatabase.dropTable` signature.
 
-Version 0.6.1 *(2015-05-06)*
-----------------------------
+### Anko 0.6.1 *(2015-05-06)*
 
 Built for Kotlin M11 (0.11.91.4).
 
@@ -72,8 +69,7 @@ Built for Kotlin M11 (0.11.91.4).
  * [#26](https://github.com/JetBrains/anko/issues/26) New: More extension properties (including `emptyView` for `AdapterView`).
  * [#21](https://github.com/JetBrains/anko/issues/21) Fix: Supported String resources with `progressDialog` and `indeterminateProgressDialog`.
 
-Version 0.6 *(2015-04-29)*
-----------------------------
+### Anko 0.6 *(2015-04-29)*
 
 Built for Kotlin M11 (0.11.91.2).
 
@@ -86,8 +82,7 @@ Built for Kotlin M11 (0.11.91.2).
  * New: `startActivityForResult`, `dimen` extension functions.
  * New: `uiThread` property for `Context` and `Fragment`.
 
-Version 0.5 *(2015-04-02)*
-----------------------------
+### Anko 0.5 *(2015-04-02)*
 
 Built for Koltin M11 (0.11.91.1).
 
