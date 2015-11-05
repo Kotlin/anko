@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:JvmMultifileClass
-@file:JvmName("SqlTypesKt")
 package org.jetbrains.anko.db
 
 interface SqlType {

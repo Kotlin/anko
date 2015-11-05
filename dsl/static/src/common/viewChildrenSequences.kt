@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:JvmMultifileClass
-@file:JvmName("ViewChildrenSequencesKt")
 package org.jetbrains.anko
 
 import android.view.*

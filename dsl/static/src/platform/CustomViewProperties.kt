@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:JvmMultifileClass
-@file:JvmName("CustomViewPropertiesKt")
 package org.jetbrains.anko
 
 import android.graphics.drawable.Drawable

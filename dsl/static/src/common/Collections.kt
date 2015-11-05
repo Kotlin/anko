@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:JvmMultifileClass
-@file:JvmName("CollectionsKt")
 package org.jetbrains.anko.collections
 
 inline fun <T> List<T>.forEachByIndex(f: (T) -> Unit) {

@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:JvmMultifileClass
-@file:JvmName("SupportKt")
 package org.jetbrains.anko.support.v4
 
 import android.content.Context

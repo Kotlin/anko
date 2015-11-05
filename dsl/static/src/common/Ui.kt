@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:JvmMultifileClass
-@file:JvmName("UiKt")
 package org.jetbrains.anko
 
 import android.app.Activity

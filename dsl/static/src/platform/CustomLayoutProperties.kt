@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-@file:JvmMultifileClass
-@file:JvmName("CustomLayoutPropertiesKt")
 @file:Suppress("NOTHING_TO_INLINE")
-
 package org.jetbrains.anko
 
 import android.view.ViewGroup
