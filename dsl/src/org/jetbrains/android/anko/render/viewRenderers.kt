@@ -54,7 +54,7 @@ class ViewFactoryClass(val config: AnkoConfiguration, val suffix: String) {
     }
 }
 
-private abstract class AbstractViewRenderer(
+internal abstract class AbstractViewRenderer(
         config: AnkoConfiguration
 ) : Renderer(config), ViewConstructorUtils {
 

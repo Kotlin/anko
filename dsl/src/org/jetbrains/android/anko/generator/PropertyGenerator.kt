@@ -48,7 +48,7 @@ class PropertyGenerator : Generator<PropertyElement> {
 
         val propertyWithGetters = getters.map { getter ->
             val property = getter.toProperty()
-            val settersList = setters.get(property.setterIdentifier) ?: listOf()
+            val settersList = setters[property.setterIdentifier] ?: listOf()
 
             val (best, others) = settersList.partition {
                 it.method.args.size == 1 && it.method.args[0] == getter.method.returnType

@@ -21,7 +21,3 @@ abstract class Configurable(val config: AnkoConfiguration)
 fun Configurable.generate(vararg option: ConfigurationOption, init: () -> String) : String {
     return if (option.any { config[it] }) init() else ""
 }
-
-fun <T> Configurable.generateList(vararg option: ConfigurationOption, init: () -> Collection<T>) : Collection<T> {
-    return if (option.any { config[it] }) init() else emptyList()
-}

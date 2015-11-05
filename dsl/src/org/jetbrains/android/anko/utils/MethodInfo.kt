@@ -89,7 +89,7 @@ internal fun MethodNodeWithClass.formatArguments(config: AnkoConfiguration): Str
 internal fun MethodNodeWithClass.formatLayoutParamsArguments(config: AnkoConfiguration): List<String> {
     val args = arrayListOf<String>()
     processArguments(config) { name, type, nul ->
-        val defaultValue = specialLayoutParamsArguments.get(name)
+        val defaultValue = specialLayoutParamsArguments[name]
         val realName = specialLayoutParamsNames.getOrElse(name, {name})
         val arg = if (defaultValue == null)
             "$realName: $type"

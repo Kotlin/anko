@@ -27,7 +27,7 @@ class AnnotationManager(private val provider: AnnotationProvider) {
     fun findAnnotationsFor(q: String): Set<ExternalAnnotation> {
         var packageName = getPackageName(q.substringBefore(' '))
         val annotations = provider.getExternalAnnotations(packageName)
-        return annotations.get(q) ?: setOf()
+        return annotations[q] ?: setOf()
     }
 }
 

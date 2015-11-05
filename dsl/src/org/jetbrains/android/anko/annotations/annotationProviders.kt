@@ -71,7 +71,7 @@ class CompoundAnnotationProvider(vararg providers: AnnotationProvider) : Annotat
 
         for (providerAnnotationMap in providerAnnotations) {
             for ((key, value) in providerAnnotationMap) {
-                val existingAnnotations = map.get(key)
+                val existingAnnotations = map[key]
 
                 if (existingAnnotations == null) map.put(key, value)
                 else map.put(key, (value + existingAnnotations).toSet())

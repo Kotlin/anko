@@ -19,8 +19,6 @@ package org.jetbrains.anko
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.content.DialogInterface.OnClickListener
-import android.content.DialogInterface.OnKeyListener
 import android.database.Cursor
 import android.graphics.drawable.Drawable
 import android.view.KeyEvent
@@ -88,11 +86,7 @@ class AlertDialogBuilder(val ctx: Context) {
     }
 
     fun onKey(f: (keyCode: Int, e: KeyEvent) -> Boolean) {
-        builder.setOnKeyListener(object : OnKeyListener {
-            override fun onKey(dialog: DialogInterface?, keyCode: Int, event: KeyEvent): Boolean {
-                return f(keyCode, event)
-            }
-        })
+        builder.setOnKeyListener({ dialog, keyCode, event -> f(keyCode, event) })
     }
 
     fun neutralButton(textResource: Int = android.R.string.ok, f: DialogInterface.() -> Unit = { dismiss() }) {
@@ -100,11 +94,7 @@ class AlertDialogBuilder(val ctx: Context) {
     }
 
     fun neutralButton(title: String, f: DialogInterface.() -> Unit = { dismiss() }) {
-        builder.setNeutralButton(title, object : OnClickListener {
-            override fun onClick(dialog: DialogInterface, which: Int) {
-                dialog.f()
-            }
-        })
+        builder.setNeutralButton(title, { dialog, which -> dialog.f() })
     }
 
     fun positiveButton(textResource: Int = android.R.string.ok, f: DialogInterface.() -> Unit) {
@@ -112,11 +102,7 @@ class AlertDialogBuilder(val ctx: Context) {
     }
 
     fun positiveButton(title: String, f: DialogInterface.() -> Unit) {
-        builder.setPositiveButton(title, object : OnClickListener {
-            override fun onClick(dialog: DialogInterface, which: Int) {
-                dialog.f()
-            }
-        })
+        builder.setPositiveButton(title, { dialog, which -> dialog.f() })
     }
 
     fun negativeButton(textResource: Int = android.R.string.ok, f: DialogInterface.() -> Unit = { dismiss() }) {
@@ -124,11 +110,7 @@ class AlertDialogBuilder(val ctx: Context) {
     }
 
     fun negativeButton(title: String, f: DialogInterface.() -> Unit = { dismiss() }) {
-        builder.setNegativeButton(title, object : OnClickListener {
-            override fun onClick(dialog: DialogInterface, which: Int) {
-                dialog.f()
-            }
-        })
+        builder.setNegativeButton(title, { dialog, which -> dialog.f() })
     }
 
     fun items(itemsId: Int, f: (which: Int) -> Unit) {
@@ -140,27 +122,15 @@ class AlertDialogBuilder(val ctx: Context) {
     }
 
     fun items(items: Array<CharSequence>, f: (which: Int) -> Unit) {
-        builder.setItems(items, object : OnClickListener {
-            override fun onClick(dialog: DialogInterface, which: Int) {
-                f(which)
-            }
-        })
+        builder.setItems(items, { dialog, which -> f(which) })
     }
 
     fun adapter(adapter: ListAdapter, f: (which: Int) -> Unit) {
-        builder.setAdapter(adapter, object : OnClickListener {
-            override fun onClick(dialog: DialogInterface, which: Int) {
-                f(which)
-            }
-        })
+        builder.setAdapter(adapter, { dialog, which -> f(which) })
     }
 
     fun adapter(cursor: Cursor, labelColumn: String, f: (which: Int) -> Unit) {
-        builder.setCursor(cursor, object : OnClickListener {
-            override fun onClick(dialog: DialogInterface, which: Int) {
-                f(which)
-            }
-        }, labelColumn)
+        builder.setCursor(cursor, { dialog, which -> f(which) }, labelColumn)
     }
 
 }
