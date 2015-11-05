@@ -17,6 +17,7 @@
 package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.config.DefaultAnkoConfiguration
+import org.jetbrains.android.anko.config.GeneratorOption
 import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 import org.jetbrains.android.anko.utils.JarFileFilter
 import java.io.File
@@ -24,11 +25,17 @@ import java.io.File
 object Launcher {
     @JvmStatic
     fun main(args: Array<String>) {
+        val generatorOptions = System.getProperty("gen.options", "")
+                .split(',')
+                .map { GeneratorOption.parse(it) }
+                .filterNotNull()
+                .toSet()
+
         if (args.isNotEmpty()) {
             args.forEach { taskName ->
                 println(":: $taskName")
                 when (taskName) {
-                    "gen", "generate" -> gen()
+                    "gen", "generate" -> gen(generatorOptions)
                     "clean" -> clean()
                     "versions" -> versions()
                     else -> {
@@ -38,7 +45,7 @@ object Launcher {
                 }
             }
             println("Done.")
-        } else gen()
+        } else gen(generatorOptions)
     }
 }
 
@@ -75,7 +82,7 @@ private fun getVersionDirs(): Array<File> {
 
 private fun getJars(version: File) = version.listFiles(JarFileFilter()).partition { it.name.startsWith("platform.") }
 
-private fun gen() {
+private fun gen(generatorOptions: Set<GeneratorOption>) {
     for (versionDir in getVersionDirs()) {
         val (platformJars, versionJars) = getJars(versionDir)
         val versionName = versionDir.name
@@ -92,7 +99,7 @@ private fun gen() {
             }
 
             DSLGenerator(versionDir, platformJars, versionJars,
-                    DefaultAnkoConfiguration(outputDirectory, versionName)).run()
+                    DefaultAnkoConfiguration(outputDirectory, versionName, generatorOptions)).run()
         }
     }
 }

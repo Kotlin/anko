@@ -39,6 +39,8 @@ abstract class AnkoConfiguration {
 
     abstract val version: String
 
+    abstract val generatorOptions: Set<GeneratorOption>
+
     abstract val outputPackage: String
 
     abstract val outputDirectory: File
@@ -52,6 +54,7 @@ abstract class AnkoConfiguration {
     abstract val annotationManager: AnnotationManager
     abstract val sourceManager: SourceManager
     abstract val templateManager: TemplateManager
+    abstract val logManager: LogManager
 
     operator fun get(option: ConfigurationOption): Boolean = tunes.containsRaw(option) || files.containsRaw(option)
 

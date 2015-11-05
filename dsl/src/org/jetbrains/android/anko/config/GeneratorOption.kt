@@ -16,11 +16,20 @@
 
 package org.jetbrains.android.anko.config
 
-abstract class Configurable(val config: AnkoConfiguration) {
-    public val log: LogManager
-        get() = config.logManager
-}
+sealed class GeneratorOption {
+    public class LogLevel(val arg: String) : GeneratorOption()
 
-fun Configurable.generate(vararg option: ConfigurationOption, init: () -> String) : String {
-    return if (option.any { config[it] }) init() else ""
+    companion object {
+        private val OPTIONS = mapOf<String, (String?) -> GeneratorOption>(
+                "level" to { a -> LogLevel(a!!) })
+
+        fun parse(s: String): GeneratorOption? {
+            val parts = s.split(':')
+            if (parts.size != 1 && parts.size != 2) {
+                throw IllegalArgumentException("Invalid option format: need 'key:value' or 'key'")
+            }
+
+            return (OPTIONS[parts[0]] ?: throw IllegalArgumentException("Invalid key: ${parts[0]}"))(parts[1])
+        }
+    }
 }

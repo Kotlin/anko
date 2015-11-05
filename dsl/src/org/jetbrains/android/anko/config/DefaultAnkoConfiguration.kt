@@ -25,7 +25,8 @@ import java.io.File
 
 open class DefaultAnkoConfiguration(
         outputDirectory: File,
-        override val version: String
+        override val version: String,
+        override val generatorOptions: Set<GeneratorOption>
 ) : AnkoConfiguration() {
     override val outputPackage: String
 
@@ -40,6 +41,7 @@ open class DefaultAnkoConfiguration(
     override val annotationManager: AnnotationManager
     override val sourceManager: SourceManager
     override val templateManager: TemplateManager
+    override val logManager: LogManager
 
     init {
         val zipFileProvider = ZipFileAnnotationProvider(File("lib/Kotlin/kotlinc/lib/kotlin-android-sdk-annotations.jar"))
@@ -51,6 +53,8 @@ open class DefaultAnkoConfiguration(
         sourceManager = SourceManager(AndroidHomeSourceProvider(23))
 
         templateManager = TemplateManager(MustacheTemplateProvider(File("dsl/props/templates")))
+
+        logManager = LogManager(this)
 
         val artifactType = getTargetArtifactType()
         outputPackage = "org.jetbrains.anko" + when (artifactType) {
