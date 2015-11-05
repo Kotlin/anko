@@ -37,6 +37,8 @@ val MAXDPI: Int = 0xfffe
 //returns dip(dp) dimension value in pixels
 fun Context.dip(value: Int): Int = (value * (resources?.displayMetrics?.density ?: 0f)).toInt()
 fun Context.dip(value: Float): Int = (value * (resources?.displayMetrics?.density ?: 0f)).toInt()
+fun android.view.View.dip(value: Int): Int = (value * (resources?.displayMetrics?.density ?: 0f)).toInt()
+fun android.view.View.dip(value: Float): Int = (value * (resources?.displayMetrics?.density ?: 0f)).toInt()
 
 //return sp dimension value in pixels
 fun Context.sp(value: Int): Int = (value * (resources?.displayMetrics?.scaledDensity ?: 0f)).toInt()
