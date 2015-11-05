@@ -85,7 +85,7 @@ private fun renderLayoutParams(view: View, lp: ViewGroup.LayoutParams, topLevel:
     }
     if (lp is RelativeLayout.LayoutParams) {
         val rules = lp.rules
-        relativeLayoutProperties.forEach { addRLProp(it.getKey(), rules[it.getValue()]) }
+        relativeLayoutProperties.forEach { addRLProp(it.key, rules[it.value]) }
     }
     if (lp is TableRow.LayoutParams) {
         if (lp.column != -1) addProperty("column", lp.column.toString())

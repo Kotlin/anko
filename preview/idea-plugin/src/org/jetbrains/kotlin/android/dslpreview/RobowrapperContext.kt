@@ -78,7 +78,7 @@ class RobowrapperContext(description: PreviewClassDescription) {
     fun makeArguments(): List<String> {
         val module = androidFacet.module
         val roots = ModuleRootManager.getInstance(module).orderEntries().classes().roots
-        val androidSdkDirectory = androidFacet.sdkData?.location?.getPath()
+        val androidSdkDirectory = androidFacet.sdkData?.location?.path
 
         val pluginJarPath = PathManager.getJarPathForClass(javaClass)!!
         val pluginDirectory = File(pluginJarPath).getParent()

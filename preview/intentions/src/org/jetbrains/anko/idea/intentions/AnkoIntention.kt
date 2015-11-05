@@ -38,14 +38,21 @@ abstract class AnkoIntention<TElement : KtElement>(
         return fqName.any { it == resolvedName }
     }
 
-    protected fun KtCallExpression.isValueParameterTypeOf(parameterIndex: Int, resolvedCall: ResolvedCall<*>?, vararg fqName: String): Boolean {
+    protected fun KtCallExpression.isValueParameterTypeOf(
+            parameterIndex: Int,
+            resolvedCall: ResolvedCall<*>?,
+            vararg fqName: String
+    ): Boolean {
         val ctxArgumentDescriptor = (resolvedCall ?: getResolvedCall(analyze()))?.resultingDescriptor
                 ?.valueParameters?.get(parameterIndex)?.type?.lowerIfFlexible()
                 ?.constructor?.declarationDescriptor ?: return false
         return isTypeOf(ctxArgumentDescriptor, *fqName)
     }
 
-    protected fun KtCallExpression.isReceiverParameterTypeOf(resolvedCall: ResolvedCall<*>?, vararg fqName: String): Boolean {
+    protected fun KtCallExpression.isReceiverParameterTypeOf(
+            resolvedCall: ResolvedCall<*>?,
+            vararg fqName: String
+    ): Boolean {
         val receiverDescriptor = (resolvedCall ?: getResolvedCall(analyze()))?.resultingDescriptor
                 ?.dispatchReceiverParameter?.type?.lowerIfFlexible()
                 ?.constructor?.declarationDescriptor ?: return false

@@ -74,8 +74,8 @@ internal fun genAttributes(v: View, className: String, attrs: Set<Pair<String, P
 }
 
 private fun ignoreAttribute(className: String, key: String, value: String): Boolean {
-    val def = defaultValues.get(key)
-    val classDef = defaultValues.get(className + "#" + key)
+    val def = defaultValues[key]
+    val classDef = defaultValues[className + "#" + key]
     fun match(s: String, pattern: Any) = when(pattern) {
         is Pattern -> pattern.matcher(s).matches()
         is String -> pattern == s

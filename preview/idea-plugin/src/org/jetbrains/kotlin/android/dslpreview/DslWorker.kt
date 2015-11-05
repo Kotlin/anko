@@ -218,12 +218,10 @@ class DslWorker(private val myListener: DslWorker.Listener) {
                     myLastProcess?.destroy()
 
                     // If alive task failed, launch non-alive version
-                    ApplicationManager.getApplication().invokeLater(object : Runnable {
-                        override fun run() {
-                            myAlive = false
-                            exec(ctx)
-                        }
-                    })
+                    ApplicationManager.getApplication().invokeLater {
+                        myAlive = false
+                        exec(ctx)
+                    }
                 }
 
             }
@@ -239,11 +237,9 @@ class DslWorker(private val myListener: DslWorker.Listener) {
             progressIndicator.isIndeterminate = true
 
             fun reportDownloadError(url: String) {
-                ApplicationManager.getApplication().invokeLater(object : Runnable {
-                    override fun run() {
-                        myListener.onXmlError(ErrorKind.UNKNOWN, "Failed to download $url", false)
-                    }
-                })
+                ApplicationManager.getApplication().invokeLater{
+                    myListener.onXmlError(ErrorKind.UNKNOWN, "Failed to download $url", false)
+                }
             }
 
             val result = synchronized(DOWNLOAD_LOCK) {
@@ -266,11 +262,7 @@ class DslWorker(private val myListener: DslWorker.Listener) {
             }
 
             if (result) {
-                ApplicationManager.getApplication().invokeLater(object : Runnable {
-                    override fun run() {
-                        exec(ctx)
-                    }
-                })
+                ApplicationManager.getApplication().invokeLater { exec(ctx) }
             }
         }
     }

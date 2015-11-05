@@ -96,7 +96,7 @@ class ParserTest {
         } catch (e: Throwable) {
             val stacktrace = e.renderStacktrace()
             log(stacktrace)
-            return Pack("", -1, e.getMessage() ?: "", stacktrace, false, -1)
+            return Pack("", -1, e.message ?: "", stacktrace, false, -1)
         }
     }
 
