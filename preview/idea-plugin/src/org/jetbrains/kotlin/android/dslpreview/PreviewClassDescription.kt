@@ -16,44 +16,36 @@
 
 package org.jetbrains.kotlin.android.dslpreview
 
-import com.intellij.psi.PsiClass
 import org.jetbrains.android.facet.AndroidFacet
-import org.jetbrains.kotlin.psi.KtClass
 
-abstract class PreviewClassDescription(val androidFacet: AndroidFacet) {
-    abstract val name: String
-    abstract val qualifiedName: String
-    abstract val packageName: String
-}
-
-class PreviewPsiClassDescription(val psiClass: PsiClass, androidFacet: AndroidFacet): PreviewClassDescription(androidFacet) {
-    override val qualifiedName: String = psiClass.qualifiedName ?: ""
-    override val packageName: String
-    override val name: String
-
-    init {
-        val finalDotIndex = qualifiedName.lastIndexOf('.')
-        packageName = if (finalDotIndex <= 0) "" else qualifiedName.substring(0, finalDotIndex)
-        name = if (finalDotIndex <= 0) qualifiedName else qualifiedName.substring(finalDotIndex + 1)
-    }
+class PreviewClassDescription(val fqName: String, val internalName: String, val androidFacet: AndroidFacet) {
+    val packageName = fqName.substringBeforeLast('.')
+    val name = fqName.substringAfterLast('.')
 
     override fun toString(): String {
-        return if (packageName.isNotEmpty())
-                "<html>$packageName.<b>$name</b></html>"
-            else
-                "<html><b>$name</b></html>"
-    }
-}
-
-class PreviewKtClassDescription(val ktClass: KtClass, androidFacet: AndroidFacet): PreviewClassDescription(androidFacet) {
-    override val packageName: String = ktClass.getContainingJetFile().packageFqName.asString()
-    override val name: String = ktClass.name!!
-    override val qualifiedName: String = "$packageName.$name"
-
-    override fun toString(): String {
-        return if (packageName.isNotEmpty())
+        return if (packageName.isNotBlank())
             "<html>$packageName.<b>$name</b></html>"
         else
             "<html><b>$name</b></html>"
     }
+
+    override fun equals(other: Any?): Boolean{
+        if (this === other) return true
+        if (other?.javaClass != javaClass) return false
+
+        other as PreviewClassDescription
+
+        if (fqName != other.fqName) return false
+        if (internalName != other.internalName) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int{
+        var result = fqName.hashCode()
+        result += 31 * result + internalName.hashCode()
+        return result
+    }
+
+
 }

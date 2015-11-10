@@ -9,6 +9,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
+    <orderEntry type="library" name="asm" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="idea-full" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="android-plugin" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="kotlin-plugin" level="project" />

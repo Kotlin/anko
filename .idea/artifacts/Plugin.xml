@@ -14,6 +14,7 @@
           <element id="file-copy" path="$PROJECT_DIR$/preview/views.json" />
           <element id="module-output" name="intentions" />
         </element>
+        <element id="library" level="project" name="asm" />
       </element>
       <element id="directory" name="robowrapper">
         <element id="artifact" artifact-name="Robowrapper" />
