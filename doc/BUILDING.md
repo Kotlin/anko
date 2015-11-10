@@ -30,4 +30,4 @@ Execute a run configuration named `Collect android.jar` and then `Generate`.
 
 **4.** After doing this a number of directories with generated Kotlin source files should be present in `workdir/gen` directory.
 
-**5.** You can build them all together by launching `build_artifacts.xml` Ant script. This script creates a zip file with an artifact for each artifact in `workdir/gen/zip` directory.
+**5.** You can build them all together by running `build_artifacts.xml` Ant script. This script creates a number of zip files with Maven artifacts inside in the `workdir/gen/zip` directory.
