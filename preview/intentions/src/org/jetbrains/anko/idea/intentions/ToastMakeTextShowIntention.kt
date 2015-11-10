@@ -52,7 +52,7 @@ class ToastMakeTextShowIntention : AnkoIntention<KtExpression>(
                     val textArg = args[1].text
 
                     val funName = if (isLongToast()!!) "longToast" else "toast"
-                    val receiver = if (ctxArg == "this") "" else ".$ctxArg"
+                    val receiver = if (ctxArg == "this") "" else "$ctxArg."
 
                     val newExpression = psiFactory.createExpression("$receiver$funName($textArg)")
                     return NewElement(newExpression, funName)
