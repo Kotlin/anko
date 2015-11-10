@@ -66,10 +66,6 @@ public var android.widget.TextView.cursorVisible: Boolean
     get() = throw AnkoException("'android.widget.TextView.cursorVisible' property does not have a getter")
     set(v) = setCursorVisible(v)
 
-public var android.widget.TextView.gravity: Int
-    get() = throw AnkoException("'android.widget.TextView.gravity' property does not have a getter")
-    set(v) = setGravity(v)
-
 public var android.widget.ImageView.imageResource: Int
     get() = throw AnkoException("'android.widget.ImageView.imageResource' property does not have a getter")
     set(v) = setImageResource(v)

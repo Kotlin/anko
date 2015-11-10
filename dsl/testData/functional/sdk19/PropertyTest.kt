@@ -30,10 +30,6 @@ public var android.widget.TextView.singleLine: Boolean
     get() = throw AnkoException("'android.widget.TextView.singleLine' property does not have a getter")
     set(v) = setSingleLine(v)
 
-public var android.widget.TextView.gravity: Int
-    get() = throw AnkoException("'android.widget.TextView.gravity' property does not have a getter")
-    set(v) = setGravity(v)
-
 public var android.widget.ImageView.imageResource: Int
     get() = throw AnkoException("'android.widget.ImageView.imageResource' property does not have a getter")
     set(v) = setImageResource(v)
