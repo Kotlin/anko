@@ -26,18 +26,6 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
-@Deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
-@NoBinding
-fun Context.uiThread(f: Context.() -> Unit) {
-    if (ContextHelper.mainThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
-}
-
-@Deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
-@NoBinding
-inline fun Fragment.uiThread(crossinline f: () -> Unit) {
-    activity?.onUiThread { f() }
-}
-
 // Fragment.uiThread() has a different argument list (because of inline)
 @NoBinding
 fun Context.onUiThread(f: Context.() -> Unit) {
