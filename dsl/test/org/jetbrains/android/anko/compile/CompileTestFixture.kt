@@ -101,7 +101,7 @@ public open class CompileTestFixture {
                 File(lib, "hamcrest-all-1.3.jar")
         ) + getAnkoJars(artifactOriginalDir) + robolectricJars + androidAllJars)
                 .map { it.absolutePath }
-                .join(File.pathSeparator)
+                .joinToString(File.pathSeparator)
 
         val manifest = File("dsl/testData/robolectric/AndroidManifest.xml")
         val androidRes = File("dsl/testData/robolectric/res/")

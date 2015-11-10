@@ -3,10 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Plugin</output-path>
     <root id="root">
       <element id="directory" name="lib">
-        <element id="library" level="project" name="gson" />
-        <element id="library" level="project" name="jeromq" />
         <element id="archive" name="dsl-preview-plugin.jar">
-          <element id="module-output" name="message-bus" />
           <element id="module-output" name="idea-plugin" />
           <element id="module-output" name="attrs" />
           <element id="module-output" name="xml-converter" />
@@ -15,11 +12,6 @@
           <element id="module-output" name="intentions" />
         </element>
         <element id="library" level="project" name="asm" />
-      </element>
-      <element id="directory" name="robowrapper">
-        <element id="artifact" artifact-name="Robowrapper" />
-        <element id="library" level="project" name="junit-4.11" />
-        <element id="library" level="project" name="robolectric-with-dependencies" />
       </element>
     </root>
   </artifact>

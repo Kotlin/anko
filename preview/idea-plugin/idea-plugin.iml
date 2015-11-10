@@ -13,7 +13,6 @@
     <orderEntry type="library" scope="PROVIDED" name="idea-full" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="android-plugin" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="kotlin-plugin" level="project" />
-    <orderEntry type="module" module-name="message-bus" />
     <orderEntry type="module" module-name="xml-converter" />
     <orderEntry type="library" name="jeromq" level="project" />
   </component>
