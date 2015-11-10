@@ -31,7 +31,7 @@ fun <T : View> Fragment.addView(factory: (ctx: Context) -> T): T {
     return (activity as Context).ankoView(factory) {}
 }
 
-fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = activity.UI(false, init)
+fun Fragment.UI(init: AnkoContext.() -> Unit): AnkoContext = activity.UI(false, init)
 
 inline fun <T: Any> Fragment.configuration(
         screenSize: ScreenSize? = null,

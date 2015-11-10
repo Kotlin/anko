@@ -17,12 +17,10 @@
 package org.jetbrains.anko
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
-import org.jetbrains.anko.internals.AnkoInternals.NoBinding
 
 fun <T : View> T.style(style: (View) -> Unit): T {
     applyStyle(this, style)
@@ -38,23 +36,6 @@ private fun applyStyle(v: View, style: (View) -> Unit) {
         }
     }
 }
-
-@NoBinding
-fun Context.UI(setContentView: Boolean, init: UiHelper.() -> Unit): UiHelper {
-    val dsl = UiHelper(this, setContentView)
-    dsl.init()
-    return dsl
-}
-
-fun Context.UI(init: UiHelper.() -> Unit): UiHelper {
-    val dsl = UiHelper(this, false)
-    dsl.init()
-    return dsl
-}
-
-fun Activity.UI(init: UiHelper.() -> Unit): UiHelper = UI(true, init)
-
-fun Fragment.UI(init: UiHelper.() -> Unit): UiHelper = activity.UI(false, init)
 
 @Deprecated("Use AnkoContext instead")
 class UiHelper(val ctx: Context, private val setContentView: Boolean = true) : ViewManager {

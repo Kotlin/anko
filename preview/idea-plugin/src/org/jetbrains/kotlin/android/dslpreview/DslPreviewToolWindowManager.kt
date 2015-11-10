@@ -256,7 +256,7 @@ class DslPreviewToolWindowManager(
     override fun getToolWindowForm() = super.getToolWindowForm()
 
     private fun resolveAvailableClasses() {
-        val activityClasses = getAncestors("com.example.ankotest.app.AnkoUI") //TODO change fqName
+        val activityClasses = getAncestors("org.jetbrains.anko.AnkoComponent")
 
         if (myActivityListModel != null) {
             with(myActivityListModel!!) {

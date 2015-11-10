@@ -73,7 +73,7 @@ class AlertDialogBuilder(val ctx: Context) {
     }
 
     fun customView(dsl: ViewManager.() -> Unit) {
-        val view = ctx.UI(dsl).toView()
+        val view = ctx.UI(dsl).view
         builder.setView(view)
     }
 

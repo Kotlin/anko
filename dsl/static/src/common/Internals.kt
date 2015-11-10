@@ -42,6 +42,7 @@ object AnkoInternals {
     fun <T : View> addView(manager: ViewManager, view: T) {
         return when (manager) {
             is ViewGroup -> manager.addView(view)
+            is AnkoContext -> manager.addView(view, null)
             is UiHelper -> manager.addView(view, null)
             else -> throw AnkoException("$manager is the wrong parent")
         }
@@ -57,6 +58,7 @@ object AnkoInternals {
 
     fun getContext(manager: ViewManager): Context = when (manager) {
         is ViewGroup -> manager.context
+        is AnkoContext -> manager.ctx
         is UiHelper -> manager.ctx
         else -> throw AnkoException("$manager is the wrong parent")
     }
