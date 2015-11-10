@@ -20,12 +20,23 @@ import android.app.Activity
 import android.app.Fragment
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.AssetManager
+import android.content.res.Resources
 import android.os.Bundle
 import android.os.Parcelable
 import android.preference.PreferenceManager
 import android.view.View
 import org.jetbrains.anko.internals.AnkoInternals.NoBinding
 import java.io.Serializable
+
+val AnkoContext.resources: Resources
+    get() = ctx.resources
+
+val AnkoContext.assets: AssetManager
+    get() = ctx.assets
+
+val AnkoContext.defaultSharedPreferences: SharedPreferences
+    get() = PreferenceManager.getDefaultSharedPreferences(ctx)
 
 val Context.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(this)
@@ -105,6 +116,12 @@ fun bundleOf(vararg params: Pair<String, Any>): Bundle {
 
 @NoBinding val Context.configuration: android.content.res.Configuration
     get() = resources.configuration
+
+@NoBinding val AnkoContext.displayMetrics: android.util.DisplayMetrics
+    get() = ctx.resources.displayMetrics
+
+@NoBinding val AnkoContext.configuration: android.content.res.Configuration
+    get() = ctx.resources.configuration
 
 val android.content.res.Configuration.portrait: Boolean
     get() = orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT

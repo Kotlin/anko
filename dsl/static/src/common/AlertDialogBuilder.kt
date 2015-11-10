@@ -30,6 +30,8 @@ class AlertDialogBuilder(val ctx: Context) {
     val builder: AlertDialog.Builder = AlertDialog.Builder(ctx)
     protected var dialog: AlertDialog? = null
 
+    constructor(ankoContext: AnkoContext) : this(ankoContext.ctx)
+
     fun dismiss() {
         dialog?.dismiss()
     }

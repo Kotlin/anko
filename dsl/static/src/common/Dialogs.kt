@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("NOTHING_TO_INLINE")
 package org.jetbrains.anko
 
 import android.app.Fragment
@@ -22,135 +23,163 @@ import android.content.Context
 import android.widget.Toast
 import org.jetbrains.anko.internals.AnkoInternals.NoBinding
 
-fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
+/* Toasts */
 
-fun Context.toast(textResource: Int) {
-    Toast.makeText(this, textResource, Toast.LENGTH_SHORT).show()
-}
+inline fun AnkoContext.toast(textResource: Int) = ctx.toast(textResource)
+inline fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
 
-fun Fragment.toast(text: CharSequence): Unit = activity.toast(text)
+fun Context.toast(textResource: Int) = Toast.makeText(this, textResource, Toast.LENGTH_SHORT).show()
 
-fun Context.toast(text: CharSequence) {
-    Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
-}
 
-fun Fragment.longToast(textResource: Int): Unit = activity.longToast(textResource)
+inline fun AnkoContext.toast(text: CharSequence) = ctx.toast(text)
+inline fun Fragment.toast(text: CharSequence): Unit = activity.toast(text)
 
-fun Context.longToast(textResource: Int) {
-    Toast.makeText(this, textResource, Toast.LENGTH_LONG).show()
-}
+fun Context.toast(text: CharSequence) = Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
 
-fun Fragment.longToast(text: CharSequence): Unit = activity.longToast(text)
 
-fun Context.longToast(text: CharSequence) {
-    Toast.makeText(this, text, Toast.LENGTH_LONG).show()
-}
+inline fun AnkoContext.longToast(textResource: Int) = ctx.longToast(textResource)
+inline fun Fragment.longToast(textResource: Int): Unit = activity.longToast(textResource)
 
-fun Fragment.alert(
+fun Context.longToast(textResource: Int) = Toast.makeText(this, textResource, Toast.LENGTH_LONG).show()
+
+
+inline fun AnkoContext.longToast(text: CharSequence) = ctx.longToast(text)
+inline fun Fragment.longToast(text: CharSequence): Unit = activity.longToast(text)
+
+fun Context.longToast(text: CharSequence) = Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+
+
+/* Alerts */
+
+inline fun AnkoContext.alert(
         message: String,
         title: String? = null,
-        init: (AlertDialogBuilder.() -> Unit)? = null
-): AlertDialogBuilder = activity.alert(message, title, init)
+        noinline init: (AlertDialogBuilder.() -> Unit)? = null
+) = ctx.alert(message, title, init)
+
+inline fun Fragment.alert(
+        message: String,
+        title: String? = null,
+        noinline init: (AlertDialogBuilder.() -> Unit)? = null
+) = activity.alert(message, title, init)
 
 fun Context.alert(
         message: String,
         title: String? = null,
         init: (AlertDialogBuilder.() -> Unit)? = null
-): AlertDialogBuilder {
-    return AlertDialogBuilder(this).apply {
-        if (title != null) title(title)
-        message(message)
-        if (init != null) init()
-    }
+) = AlertDialogBuilder(this).apply {
+    if (title != null) title(title)
+    message(message)
+    if (init != null) init()
 }
 
-fun Fragment.alert(
+
+inline fun AnkoContext.alert(
         message: Int,
         title: Int? = null,
-        init: (AlertDialogBuilder.() -> Unit)? = null
-): AlertDialogBuilder = activity.alert(message, title, init)
+        noinline init: (AlertDialogBuilder.() -> Unit)? = null
+) = ctx.alert(message, title, init)
+
+inline fun Fragment.alert(
+        message: Int,
+        title: Int? = null,
+        noinline init: (AlertDialogBuilder.() -> Unit)? = null
+) = activity.alert(message, title, init)
 
 fun Context.alert(
         message: Int,
         title: Int? = null,
         init: (AlertDialogBuilder.() -> Unit)? = null
-): AlertDialogBuilder {
-    return AlertDialogBuilder(this).apply {
-        if (title != null) title(title)
-        message(message)
-        if (init != null) init()
-    }
+) = AlertDialogBuilder(this).apply {
+    if (title != null) title(title)
+    message(message)
+    if (init != null) init()
 }
 
-fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = activity.alert(init)
 
-fun Context.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder {
-    return AlertDialogBuilder(this).apply { init() }
-}
+inline fun AnkoContext.alert(noinline init: AlertDialogBuilder.() -> Unit) = ctx.alert(init)
+inline fun Fragment.alert(noinline init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = activity.alert(init)
 
-fun Fragment.progressDialog(
+fun Context.alert(init: AlertDialogBuilder.() -> Unit) = AlertDialogBuilder(this).apply { init() }
+
+
+/* Progress dialogs */
+
+inline fun AnkoContext.progressDialog(
         message: Int? = null,
         title: Int? = null,
-        init: (ProgressDialog.() -> Unit)? = null
-): ProgressDialog {
-    return activity.progressDialog(false, message?.let { getString(it) }, title?.let { getString(it) }, init)
-}
+        noinline init: (ProgressDialog.() -> Unit)? = null
+) = ctx.progressDialog(message, title, init)
+
+inline fun Fragment.progressDialog(
+        message: Int? = null,
+        title: Int? = null,
+        noinline init: (ProgressDialog.() -> Unit)? = null
+) = activity.progressDialog(message, title, init)
 
 fun Context.progressDialog(
         message: Int? = null,
         title: Int? = null,
         init: (ProgressDialog.() -> Unit)? = null
-): ProgressDialog {
-    return progressDialog(false, message?.let { getString(it) }, title?.let { getString(it) }, init)
-}
+) = progressDialog(false, message?.let { getString(it) }, title?.let { getString(it) }, init)
 
-fun Fragment.indeterminateProgressDialog(
+
+inline fun AnkoContext.indeterminateProgressDialog(
         message: Int? = null,
         title: Int? = null,
-        init: (ProgressDialog.() -> Unit)? = null
-): ProgressDialog {
-    return activity.progressDialog(true, message?.let { getString(it) }, title?.let { getString(it) }, init)
-}
+        noinline init: (ProgressDialog.() -> Unit)? = null
+) = ctx.indeterminateProgressDialog(message, title, init)
+
+inline fun Fragment.indeterminateProgressDialog(
+        message: Int? = null,
+        title: Int? = null,
+        noinline init: (ProgressDialog.() -> Unit)? = null
+) = activity.progressDialog(message, title, init)
 
 fun Context.indeterminateProgressDialog(
         message: Int? = null,
         title: Int? = null,
         init: (ProgressDialog.() -> Unit)? = null
-): ProgressDialog {
-    return progressDialog(true, message?.let { getString(it) }, title?.let { getString(it) }, init)
-}
+) = progressDialog(true, message?.let { getString(it) }, title?.let { getString(it) }, init)
 
-fun Fragment.progressDialog(
+
+inline fun AnkoContext.progressDialog(
         message: String? = null,
         title: String? = null,
-        init: (ProgressDialog.() -> Unit)? = null
-): ProgressDialog {
-    return activity.progressDialog(false, message, title, init)
-}
+        noinline init: (ProgressDialog.() -> Unit)? = null
+) = ctx.progressDialog(message, title, init)
+
+inline fun Fragment.progressDialog(
+        message: String? = null,
+        title: String? = null,
+        noinline init: (ProgressDialog.() -> Unit)? = null
+) = activity.progressDialog(message, title, init)
 
 fun Context.progressDialog(
         message: String? = null,
         title: String? = null,
         init: (ProgressDialog.() -> Unit)? = null
-): ProgressDialog {
-    return progressDialog(false, message, title, init)
-}
+) = progressDialog(false, message, title, init)
 
-fun Fragment.indeterminateProgressDialog(
+
+inline fun AnkoContext.indeterminateProgressDialog(
         message: String? = null,
         title: String? = null,
-        init: (ProgressDialog.() -> Unit)? = null
-): ProgressDialog {
-    return activity.progressDialog(true, message, title, init)
-}
+        noinline init: (ProgressDialog.() -> Unit)? = null
+) = ctx.indeterminateProgressDialog(message, title, init)
+
+inline fun Fragment.indeterminateProgressDialog(
+        message: String? = null,
+        title: String? = null,
+        noinline init: (ProgressDialog.() -> Unit)? = null
+) = activity.indeterminateProgressDialog(message, title, init)
 
 fun Context.indeterminateProgressDialog(
         message: String? = null,
         title: String? = null,
         init: (ProgressDialog.() -> Unit)? = null
-): ProgressDialog {
-    return progressDialog(true, message, title, init)
-}
+) = progressDialog(true, message, title, init)
+
 
 @NoBinding
 private fun Context.progressDialog(
@@ -158,23 +187,29 @@ private fun Context.progressDialog(
         message: String? = null,
         title: String? = null,
         init: (ProgressDialog.() -> Unit)? = null
-): ProgressDialog {
-    val dialog = ProgressDialog(this)
-    dialog.isIndeterminate = indeterminate
-    if (!indeterminate) dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
-    if (message != null) dialog.setMessage(message)
-    if (title != null) dialog.setTitle(title)
-    if (init != null) dialog.init()
-    dialog.show()
-    return dialog
+) = ProgressDialog(this).apply {
+    isIndeterminate = indeterminate
+    if (!indeterminate) setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
+    if (message != null) setMessage(message)
+    if (title != null) setTitle(title)
+    if (init != null) init()
+    show()
 }
 
-fun Fragment.selector(
+
+/* Selectors */
+
+inline fun AnkoContext.selector(
         title: CharSequence? = null,
         items: List<CharSequence>,
-        onClick: (Int) -> Unit
-): Unit = activity.selector(title, items, onClick)
+        noinline onClick: (Int) -> Unit
+): Unit = ctx.selector(title, items, onClick)
 
+inline fun Fragment.selector(
+        title: CharSequence? = null,
+        items: List<CharSequence>,
+        noinline onClick: (Int) -> Unit
+): Unit = activity.selector(title, items, onClick)
 
 fun Context.selector(
     title: CharSequence? = null,

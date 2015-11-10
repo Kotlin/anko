@@ -30,12 +30,16 @@ inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<Strin
     AnkoInternals.internalStartActivity(this, T::class.java, params)
 }
 
-inline fun <reified T: Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
-    AnkoInternals.internalStartActivityForResult(this, T::class.java, requestCode, params)
+inline fun <reified T: Activity> AnkoContext.startActivity(vararg params: Pair<String, Any>) {
+    AnkoInternals.internalStartActivity(ctx, T::class.java, params)
 }
 
 inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartActivity(activity, T::class.java, params)
+}
+
+inline fun <reified T: Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
+    AnkoInternals.internalStartActivityForResult(this, T::class.java, requestCode, params)
 }
 
 inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
@@ -46,12 +50,20 @@ inline fun <reified T: Service> Context.startService(vararg params: Pair<String,
     AnkoInternals.internalStartService(this, T::class.java, params)
 }
 
+inline fun <reified T: Service> AnkoContext.startService(vararg params: Pair<String, Any>) {
+    AnkoInternals.internalStartService(ctx, T::class.java, params)
+}
+
 inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartService(activity, T::class.java, params)
 }
 
 inline fun <reified T: Any> Context.intentFor(vararg params: Pair<String, Any>): Intent {
     return AnkoInternals.createIntent(this, T::class.java, params)
+}
+
+inline fun <reified T: Any> AnkoContext.intentFor(vararg params: Pair<String, Any>): Intent {
+    return AnkoInternals.createIntent(ctx, T::class.java, params)
 }
 
 inline fun <reified T: Any> Fragment.intentFor(vararg params: Pair<String, Any>): Intent {
@@ -76,7 +88,8 @@ inline fun Intent.noHistory(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_NO
 
 inline fun Intent.singleTop(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) }
 
-inline fun Fragment.browse(url: String): Boolean = activity.browse(url)
+inline fun AnkoContext.browse(url: String) = ctx.browse(url)
+inline fun Fragment.browse(url: String) = activity.browse(url)
 
 fun Context.browse(url: String): Boolean {
     try {
@@ -90,7 +103,8 @@ fun Context.browse(url: String): Boolean {
     }
 }
 
-inline fun Fragment.share(text: String, subject: String = ""): Boolean = activity.share(text, subject)
+inline fun AnkoContext.share(text: String, subject: String = "") = ctx.share(text, subject)
+inline fun Fragment.share(text: String, subject: String = "") = activity.share(text, subject)
 
 fun Context.share(text: String, subject: String = ""): Boolean {
     try {
@@ -106,8 +120,8 @@ fun Context.share(text: String, subject: String = ""): Boolean {
     }
 }
 
-inline fun Fragment.email(email: String, subject: String = "", text: String = ""): Boolean =
-        activity.email(email, subject, text)
+inline fun AnkoContext.email(email: String, subject: String = "", text: String = "") = ctx.email(email, subject, text)
+inline fun Fragment.email(email: String, subject: String = "", text: String = "") = activity.email(email, subject, text)
 
 fun Context.email(email: String, subject: String = "", text: String = ""): Boolean {
     val intent = Intent(Intent.ACTION_SENDTO)
@@ -125,6 +139,7 @@ fun Context.email(email: String, subject: String = "", text: String = ""): Boole
 
 }
 
+inline fun AnkoContext.makeCall(number: String): Boolean = ctx.makeCall(number)
 inline fun Fragment.makeCall(number: String): Boolean = activity.makeCall(number)
 
 fun Context.makeCall(number: String): Boolean {

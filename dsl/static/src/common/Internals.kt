@@ -17,6 +17,7 @@
 package org.jetbrains.anko.internals
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.app.Service
 import android.app.UiModeManager
 import android.content.Context

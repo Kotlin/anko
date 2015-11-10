@@ -14,53 +14,55 @@
  * limitations under the License.
  */
 
+@file:Suppress("NOTHING_TO_INLINE")
 package org.jetbrains.anko.support.v4
 
 import android.app.ProgressDialog
 import android.support.v4.app.Fragment
 import org.jetbrains.anko.*
 
-fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
+inline fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
 
-fun Fragment.toast(text: CharSequence): Unit = activity.toast(text)
+inline fun Fragment.toast(text: CharSequence): Unit = activity.toast(text)
 
-fun Fragment.longToast(textResource: Int): Unit = activity.longToast(textResource)
+inline fun Fragment.longToast(textResource: Int): Unit = activity.longToast(textResource)
 
-fun Fragment.longToast(text: CharSequence): Unit = activity.longToast(text)
+inline fun Fragment.longToast(text: CharSequence): Unit = activity.longToast(text)
 
-fun Fragment.selector(
+inline fun Fragment.selector(
         title: CharSequence? = null,
         items: List<CharSequence>,
-        onClick: (Int) -> Unit
+        noinline onClick: (Int) -> Unit
 ): Unit = activity.selector(title, items, onClick)
 
-fun Fragment.alert(
+inline fun Fragment.alert(
         message: String,
         title: String? = null,
-        init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder =
-        activity.alert(message, title, init)
+        noinline init: (AlertDialogBuilder.() -> Unit)? = null
+) = activity.alert(message, title, init)
 
-fun Fragment.alert(
+inline fun Fragment.alert(
         message: Int,
         title: Int? = null,
-        init: (AlertDialogBuilder.() -> Unit)? = null): AlertDialogBuilder =
-        activity.alert(message, title, init)
+        noinline init: (AlertDialogBuilder.() -> Unit)? = null
+) = activity.alert(message, title, init)
 
-fun Fragment.alert(init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder =
-        activity.alert(init)
+inline fun Fragment.alert(noinline init: AlertDialogBuilder.() -> Unit) = activity.alert(init)
 
-fun Fragment.progressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
-    return activity.progressDialog(message, title, init)
-}
+inline fun Fragment.progressDialog(
+        message: String? = null,
+        title: String? = null,
+        noinline init: (ProgressDialog.() -> Unit)? = null
+) = activity.progressDialog(message, title, init)
 
-fun Fragment.indeterminateProgressDialog(message: String? = null, title: String? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+inline fun Fragment.indeterminateProgressDialog(message: String? = null, title: String? = null, noinline init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return activity.indeterminateProgressDialog(message, title, init)
 }
 
-fun Fragment.progressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+inline fun Fragment.progressDialog(message: Int? = null, title: Int? = null, noinline init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return activity.progressDialog(message?.let { activity.getString(it) }, title?.let { activity.getString(it) }, init)
 }
 
-fun Fragment.indeterminateProgressDialog(message: Int? = null, title: Int? = null, init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
+inline fun Fragment.indeterminateProgressDialog(message: Int? = null, title: Int? = null, noinline init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return activity.indeterminateProgressDialog(message?.let { activity.getString(it) }, title?.let { activity.getString(it) }, init)
 }
