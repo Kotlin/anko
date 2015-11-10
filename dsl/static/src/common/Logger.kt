@@ -121,7 +121,7 @@ inline fun AnkoLogger.error(message: () -> Any?) {
 }
 
 inline fun AnkoLogger.wtf(message: () -> Any?) {
-    Log.v(loggerTag, message()?.toString() ?: "null")
+    Log.wtf(loggerTag, message()?.toString() ?: "null")
 }
 
 fun Throwable.getStackTraceString(): String = Log.getStackTraceString(this)
