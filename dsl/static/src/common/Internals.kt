@@ -253,7 +253,7 @@ object AnkoInternals {
         }
 
         if (sdk != null) {
-            if (Build.VERSION.SDK_INT != fromSdk) return false
+            if (Build.VERSION.SDK_INT != sdk) return false
         }
 
         if (uiMode != null) {
