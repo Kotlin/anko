@@ -83,7 +83,7 @@ class DslPreviewToolWindowManager(
         fileEditorManager: FileEditorManager
 ) : AndroidLayoutPreviewToolWindowManager(myProject, fileEditorManager), Disposable {
 
-    private var myActivityListModel: DefaultComboBoxModel<Any>? = null
+    private var myActivityListModel: DefaultComboBoxModel? = null
 
     private var myLastFile: PsiFile? = null
     private var myLastAndroidFacet: AndroidFacet? = null
@@ -475,7 +475,7 @@ class DslPreviewToolWindowManager(
             return resolveClassDescription(element, cacheService)
         }
 
-        private fun indexOf(model: DefaultComboBoxModel<Any>, description: PreviewClassDescription): Int? {
+        private fun indexOf(model: DefaultComboBoxModel, description: PreviewClassDescription): Int? {
             for (i in 0..(model.size - 1)) {
                 val item = model.getElementAt(i) as? PreviewClassDescription ?: continue
                 if (item == description) return i
@@ -483,7 +483,7 @@ class DslPreviewToolWindowManager(
             return null
         }
 
-        private fun setSelection(model: DefaultComboBoxModel<Any>, description: PreviewClassDescription): Boolean {
+        private fun setSelection(model: DefaultComboBoxModel, description: PreviewClassDescription): Boolean {
             val index = indexOf(model, description) ?: return false
             model.selectedItem = model.getElementAt(index)
             return true
