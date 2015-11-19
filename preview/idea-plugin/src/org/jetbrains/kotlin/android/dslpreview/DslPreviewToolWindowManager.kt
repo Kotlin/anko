@@ -68,7 +68,7 @@ import com.intellij.openapi.project.DumbService
 import com.intellij.util.ui.update.MergingUpdateQueue
 import com.intellij.util.ui.update.Update
 import org.jetbrains.android.uipreview.ViewLoader
-import org.jetbrains.kotlin.asJava.KotlinLightElement
+import org.jetbrains.kotlin.asJava.KtLightElement
 import org.jetbrains.kotlin.codegen.ClassBuilderMode
 import org.jetbrains.kotlin.codegen.CodegenFileClassesProvider
 import org.jetbrains.kotlin.codegen.state.JetTypeMapper
@@ -269,7 +269,7 @@ class DslPreviewToolWindowManager(
     }
 
     private fun getKtClass(psiElement: PsiElement): KtClass? {
-        return if (psiElement is KotlinLightElement<*, *>) {
+        return if (psiElement is KtLightElement<*, *>) {
             getKtClass(psiElement.getOrigin())
         } else if (psiElement is KtClass && !psiElement.isEnum() && !psiElement.isInterface() &&
                 !psiElement.isAnnotation() && !psiElement.isSealed()) {
@@ -452,7 +452,7 @@ class DslPreviewToolWindowManager(
             val location = Location.fromEditor(editor, myProject)
             if (location.editor == null) return null
 
-            val file = location.jetFile
+            val file = location.kFile
             if (file == null || !ProjectRootsUtil.isInProjectSource(file)) return null
 
 

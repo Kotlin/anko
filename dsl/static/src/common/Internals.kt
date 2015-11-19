@@ -17,7 +17,6 @@
 package org.jetbrains.anko.internals
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.app.Service
 import android.app.UiModeManager
 import android.content.Context
@@ -196,7 +195,7 @@ object AnkoInternals {
     fun testConfiguration(
             ctx: Context,
             screenSize: ScreenSize?,
-            density: Range<Int>?,
+            density: ClosedRange<Int>?,
             language: String?,
             orientation: Orientation?,
             long: Boolean?,
@@ -223,7 +222,7 @@ object AnkoInternals {
 
         if (density != null) {
             val currentDensityDpi = ctx.resources?.displayMetrics?.densityDpi ?: return false
-            if (currentDensityDpi !in density || currentDensityDpi == density.end) return false
+            if (currentDensityDpi !in density || currentDensityDpi == density.endInclusive) return false
         }
 
         if (language != null) {
