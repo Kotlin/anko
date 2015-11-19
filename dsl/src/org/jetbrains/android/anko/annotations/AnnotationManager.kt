@@ -21,7 +21,7 @@ import org.w3c.dom.Document
 import org.xml.sax.InputSource
 import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
-import kotlin.dom.childElements
+import kotlinx.dom.childElements
 
 class AnnotationManager(private val provider: AnnotationProvider) {
     fun findAnnotationsFor(q: String): Set<ExternalAnnotation> {

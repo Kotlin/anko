@@ -23,7 +23,7 @@ import java.io.File
 import java.io.StringReader
 import java.util.*
 import javax.xml.parsers.DocumentBuilderFactory
-import kotlin.dom.childElements
+import kotlinx.dom.childElements
 
 private class Widget(val name: String, val attrs: List<KeyValuePair>, val layoutParams: String, val children: List<Widget>) {
     override fun toString(): String {

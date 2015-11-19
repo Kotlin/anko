@@ -13,5 +13,6 @@
     <orderEntry type="library" scope="PROVIDED" name="android-plugin" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="kotlin-plugin" level="project" />
     <orderEntry type="module" module-name="attrs" />
+    <orderEntry type="library" name="kotlinx.dom" level="project" />
   </component>
 </module>

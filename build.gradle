@@ -5,6 +5,7 @@ configurations {
     jmustache
     jeromq
     javaparser
+    kotlindom
 }
 
 String ROBOLECTRIC_VERSION = "3.0-rc3"
@@ -23,10 +24,12 @@ dependencies {
     jmustache 'com.samskivert:jmustache:1.10'
     jeromq 'org.zeromq:jeromq:0.3.4'
     javaparser 'com.github.javaparser:javaparser-core:2.1.0'
+    kotlindom 'org.jetbrains.kotlinx:kotlinx.dom:0.0.4'
 }
 
 repositories {
     mavenCentral()
+    maven { url "http://dl.bintray.com/kotlin/kotlinx.dom" }
 }
 
 task(collectDependencies) << {
