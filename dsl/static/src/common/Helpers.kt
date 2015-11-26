@@ -87,7 +87,7 @@ inline fun <T: Any> Activity.configuration(
 ): T? = if (AnkoInternals.testConfiguration(this, screenSize, density, language, orientation, long,
         fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth)) init() else null
 
-inline fun <T: Any> AnkoContext.configuration(
+inline fun <T: Any> AnkoContext<*>.configuration(
         screenSize: ScreenSize? = null,
         density: ClosedRange<Int>? = null,
         language: String? = null,

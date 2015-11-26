@@ -48,13 +48,13 @@ fun Context.dimen(resource: Int): Int = resources.getDimensionPixelSize(resource
 
 
 //the same for nested DSL components
-inline fun AnkoContext.dip(value: Int): Int = ctx.dip(value)
-inline fun AnkoContext.dip(value: Float): Int = ctx.dip(value)
-inline fun AnkoContext.sp(value: Int): Int = ctx.sp(value)
-inline fun AnkoContext.sp(value: Float): Int = ctx.sp(value)
-inline fun AnkoContext.px2dip(px: Int): Float = ctx.px2dip(px)
-inline fun AnkoContext.px2sp(px: Int): Float = ctx.px2sp(px)
-inline fun AnkoContext.dimen(resource: Int): Int = ctx.dimen(resource)
+inline fun AnkoContext<*>.dip(value: Int): Int = ctx.dip(value)
+inline fun AnkoContext<*>.dip(value: Float): Int = ctx.dip(value)
+inline fun AnkoContext<*>.sp(value: Int): Int = ctx.sp(value)
+inline fun AnkoContext<*>.sp(value: Float): Int = ctx.sp(value)
+inline fun AnkoContext<*>.px2dip(px: Int): Float = ctx.px2dip(px)
+inline fun AnkoContext<*>.px2sp(px: Int): Float = ctx.px2sp(px)
+inline fun AnkoContext<*>.dimen(resource: Int): Int = ctx.dimen(resource)
 
 //the same for Fragments
 inline fun Fragment.dip(value: Int): Int = activity.dip(value)

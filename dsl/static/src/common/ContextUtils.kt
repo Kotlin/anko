@@ -29,13 +29,13 @@ import android.view.View
 import org.jetbrains.anko.internals.AnkoInternals.NoBinding
 import java.io.Serializable
 
-val AnkoContext.resources: Resources
+val AnkoContext<*>.resources: Resources
     get() = ctx.resources
 
-val AnkoContext.assets: AssetManager
+val AnkoContext<*>.assets: AssetManager
     get() = ctx.assets
 
-val AnkoContext.defaultSharedPreferences: SharedPreferences
+val AnkoContext<*>.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(ctx)
 
 val Context.defaultSharedPreferences: SharedPreferences
@@ -117,10 +117,10 @@ fun bundleOf(vararg params: Pair<String, Any>): Bundle {
 @NoBinding val Context.configuration: android.content.res.Configuration
     get() = resources.configuration
 
-@NoBinding val AnkoContext.displayMetrics: android.util.DisplayMetrics
+@NoBinding val AnkoContext<*>.displayMetrics: android.util.DisplayMetrics
     get() = ctx.resources.displayMetrics
 
-@NoBinding val AnkoContext.configuration: android.content.res.Configuration
+@NoBinding val AnkoContext<*>.configuration: android.content.res.Configuration
     get() = ctx.resources.configuration
 
 val android.content.res.Configuration.portrait: Boolean

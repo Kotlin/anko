@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
 import org.jetbrains.anko.internals.AnkoInternals
+import org.jetbrains.anko.internals.AnkoInternals.createAnkoContext
 
-interface AnkoContext : ViewManager {
+interface AnkoContext<T> : ViewManager {
     val ctx: Context
+    val owner: T
     val view: View
 
     override fun updateViewLayout(view: View, params: ViewGroup.LayoutParams) {
@@ -21,7 +23,11 @@ interface AnkoContext : ViewManager {
     }
 }
 
-class AnkoContextImpl(override val ctx: Context, private val setContentView: Boolean = true) : AnkoContext {
+class AnkoContextImpl<T>(
+        override val ctx: Context,
+        override val owner: T,
+        private val setContentView: Boolean
+) : AnkoContext<T> {
     private var myView: View? = null
 
     override val view: View
@@ -44,24 +50,24 @@ class AnkoContextImpl(override val ctx: Context, private val setContentView: Boo
 }
 
 @AnkoInternals.NoBinding
-fun Context.UI(setContentView: Boolean, init: AnkoContext.() -> Unit): AnkoContext {
-    val dsl = AnkoContextImpl(this, setContentView)
-    dsl.init()
-    return dsl
+fun Context.UI(setContentView: Boolean, init: AnkoContext<Context>.() -> Unit) =
+        createAnkoContext(this, init, setContentView)
+
+fun Context.UI(init: AnkoContext<Context>.() -> Unit) = createAnkoContext(this, init)
+
+fun Fragment.UI(init: AnkoContext<Fragment>.() -> Unit): AnkoContext<Fragment> = createAnkoContext(activity, init)
+
+interface AnkoComponent<T> {
+    fun createView(ui: AnkoContext<T>): View
 }
 
-fun Context.UI(init: AnkoContext.() -> Unit): AnkoContext {
-    val dsl = AnkoContextImpl(this, false)
-    dsl.init()
-    return dsl
+fun AnkoComponent<out Activity>.setContentView(activity: Activity) =
+        createView(AnkoContextImpl(activity, activity, true))
+
+class MyActivity : Activity() {
+    fun a() {
+        this.UI {
+
+        }
+    }
 }
-
-fun Activity.UI(init: AnkoContext.() -> Unit): AnkoContext = UI(true, init)
-
-fun Fragment.UI(init: AnkoContext.() -> Unit): AnkoContext = activity.UI(false, init)
-
-interface AnkoComponent {
-    fun createView(ui: AnkoContext): View
-}
-
-fun AnkoComponent.setContentView(activity: Activity) = createView(AnkoContextImpl(activity))

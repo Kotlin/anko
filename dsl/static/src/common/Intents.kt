@@ -30,7 +30,7 @@ inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<Strin
     AnkoInternals.internalStartActivity(this, T::class.java, params)
 }
 
-inline fun <reified T: Activity> AnkoContext.startActivity(vararg params: Pair<String, Any>) {
+inline fun <reified T: Activity> AnkoContext<*>.startActivity(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartActivity(ctx, T::class.java, params)
 }
 
@@ -50,7 +50,7 @@ inline fun <reified T: Service> Context.startService(vararg params: Pair<String,
     AnkoInternals.internalStartService(this, T::class.java, params)
 }
 
-inline fun <reified T: Service> AnkoContext.startService(vararg params: Pair<String, Any>) {
+inline fun <reified T: Service> AnkoContext<*>.startService(vararg params: Pair<String, Any>) {
     AnkoInternals.internalStartService(ctx, T::class.java, params)
 }
 
@@ -62,7 +62,7 @@ inline fun <reified T: Any> Context.intentFor(vararg params: Pair<String, Any>):
     return AnkoInternals.createIntent(this, T::class.java, params)
 }
 
-inline fun <reified T: Any> AnkoContext.intentFor(vararg params: Pair<String, Any>): Intent {
+inline fun <reified T: Any> AnkoContext<*>.intentFor(vararg params: Pair<String, Any>): Intent {
     return AnkoInternals.createIntent(ctx, T::class.java, params)
 }
 
@@ -88,7 +88,7 @@ inline fun Intent.noHistory(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_NO
 
 inline fun Intent.singleTop(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) }
 
-inline fun AnkoContext.browse(url: String) = ctx.browse(url)
+inline fun AnkoContext<*>.browse(url: String) = ctx.browse(url)
 inline fun Fragment.browse(url: String) = activity.browse(url)
 
 fun Context.browse(url: String): Boolean {
@@ -103,7 +103,7 @@ fun Context.browse(url: String): Boolean {
     }
 }
 
-inline fun AnkoContext.share(text: String, subject: String = "") = ctx.share(text, subject)
+inline fun AnkoContext<*>.share(text: String, subject: String = "") = ctx.share(text, subject)
 inline fun Fragment.share(text: String, subject: String = "") = activity.share(text, subject)
 
 fun Context.share(text: String, subject: String = ""): Boolean {
@@ -120,7 +120,7 @@ fun Context.share(text: String, subject: String = ""): Boolean {
     }
 }
 
-inline fun AnkoContext.email(email: String, subject: String = "", text: String = "") = ctx.email(email, subject, text)
+inline fun AnkoContext<*>.email(email: String, subject: String = "", text: String = "") = ctx.email(email, subject, text)
 inline fun Fragment.email(email: String, subject: String = "", text: String = "") = activity.email(email, subject, text)
 
 fun Context.email(email: String, subject: String = "", text: String = ""): Boolean {
@@ -139,7 +139,7 @@ fun Context.email(email: String, subject: String = "", text: String = ""): Boole
 
 }
 
-inline fun AnkoContext.makeCall(number: String): Boolean = ctx.makeCall(number)
+inline fun AnkoContext<*>.makeCall(number: String): Boolean = ctx.makeCall(number)
 inline fun Fragment.makeCall(number: String): Boolean = activity.makeCall(number)
 
 fun Context.makeCall(number: String): Boolean {
