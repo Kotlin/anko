@@ -54,11 +54,38 @@ fun <T: Activity> AnkoAsyncContext<T>.activityUiThread(f: (T) -> Unit) {
     activity.runOnUiThread { f(activity) }
 }
 
+fun <T: Activity> AnkoAsyncContext<T>.activityUiThreadWithContext(f: Context.(T) -> Unit) {
+    val activity = weakRef.get() ?: return
+    if (activity.isFinishing) return
+    activity.runOnUiThread { activity.f(activity) }
+}
+
+@JvmName("activityContextUiThread")
+fun <T: Activity> AnkoAsyncContext<AnkoContext<T>>.activityUiThread(f: (T) -> Unit) {
+    val activity = weakRef.get()?.owner ?: return
+    if (activity.isFinishing) return
+    activity.runOnUiThread { f(activity) }
+}
+
+@JvmName("activityContextUiThreadWithContext")
+fun <T: Activity> AnkoAsyncContext<AnkoContext<T>>.activityUiThreadWithContext(f: Context.(T) -> Unit) {
+    val activity = weakRef.get()?.owner ?: return
+    if (activity.isFinishing) return
+    activity.runOnUiThread { activity.f(activity) }
+}
+
 fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThread(f: (T) -> Unit) {
     val fragment = weakRef.get() ?: return
     if (fragment.isDetached) return
     val activity = fragment.activity ?: return
     activity.runOnUiThread { f(fragment) }
+}
+
+fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T) -> Unit) {
+    val fragment = weakRef.get() ?: return
+    if (fragment.isDetached) return
+    val activity = fragment.activity ?: return
+    activity.runOnUiThread { activity.f(fragment) }
 }
 
 fun <T> T.async(task: AnkoAsyncContext<T>.() -> Unit): Future<Unit> {
