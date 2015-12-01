@@ -11,7 +11,7 @@ You can download Anko Preview plugin [here](https://plugins.jetbrains.com/update
 
 ### Preview
 
-Suppose you have this class written with Anko:
+Suppose you have these classes written with Anko:
 
 ```kotlin
 class MyActivity : AppCompatActivity() {
@@ -21,23 +21,21 @@ class MyActivity : AppCompatActivity() {
     }
 }
 
-class MyActivityUI : AnkoComponent {
-    override fun createView(ui: AnkoContext): View = with(ui) {
+class MyActivityUI : AnkoComponent<MyActivity> {
+    override fun createView(ui: AnkoContext<MyActivity>) = ui.apply {
         verticalLayout {
             val name = editText()
             button("Say Hello") {
                 onClick { ctx.toast("Hello, ${name.text}!") }
             }
         }
-    }
+    }.view
 }
 ```
 
-Put the cursor somewhere inside the `MyActivityUI` declaration, open the *Anko DSL Preview* tool window ("View" → "Tool Windows" → "DSL Preview") and press *Refresh*.
+Put the cursor somewhere inside the `MyActivityUI` declaration, open the *Anko DSL Preview* tool window ("View" → "Tool Windows" → "Anko DSL Preview") and press *Refresh*.
 
-<img src="preview.png" alt="Preview screenshot" width="651" height="479" />
-
-Module make is required, so it could take some time before the image will be actually shown.
+Running make is required, so it could take some time before the image will be actually shown.
 
 ## XML to DSL Converter
 

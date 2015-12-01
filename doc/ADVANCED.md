@@ -235,8 +235,8 @@ Let's say, `CustomView` is your custom `View` class name, and `customView` is wh
 If you only plan to use your custom `View` in the DSL surrounded by some other `View`:
 
 ```kotlin
-fun ViewManager.customView(init: CustomView.() -> Unit = {}) =
-    __dslAddView({CustomView(it)}, init, this)
+public inline fun ViewManager.customView() = customView {}
+public inline fun ViewManager.customView(init: CustomView.() -> Unit) = ankoView({ CustomView(it) }, init)
 ```
 
 So now you can write this:
@@ -255,16 +255,9 @@ UI {
 }
 ```
 
-But if you really want to use your view as a top-level widget without a UI wrapper, add this:
+But if you want to use your view as a top-level widget without a UI wrapper inside `Activity`, add this as well:
 
 ```kotlin
-fun Activity.customView(init: View.() -> Unit = {}) =
-    __dslAddView({View(it)}, init, this)
-
-fun Context.customView(init: View.() -> Unit = {}) =
-    __dslAddView({View(it)}, init, this)
-
-// Only if you use android.support.v4
-fun android.support.v4.app.Fragment.customView(init: View.() -> Unit = {}) =
-    __dslAddView({View(it)}, init, this)
+public inline fun Activity.customView() = customView {}
+public inline fun Activity.customView(init: CustomView.() -> Unit) = ankoView({ CustomView(it) }, init)
 ```
