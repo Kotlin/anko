@@ -1,5 +1,16 @@
 ## Change Log
 
+### Anko 0.8 *(2015-12-01)*
+
+Built for Kotlin Beta 2 (1.0.0-beta-2423).
+
+* `AnkoComponent` interface for writing reusable components;
+* New DSL preview plugin: much more fast and stable :rocket:;
+* Add `TextView.gravity` [#96](https://github.com/JetBrains/anko/issues/96) and `ImageView.imageResource` [#102](https://github.com/JetBrains/anko/issues/102) properties;
+* `Cancel` is the default negative button name [#112](https://github.com/JetBrains/anko/issues/112);
+* Fix `AnkoLogger.wtf`;
+* Remove deprecated `__dslAddView` functions.
+
 ### Anko 0.7.3 *(2015-11-02)*
 
 Built for Kotlin **Beta Candidate** (`1.0.0-beta-1103`).
