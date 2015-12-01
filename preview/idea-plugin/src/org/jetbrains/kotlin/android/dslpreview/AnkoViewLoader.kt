@@ -50,7 +50,6 @@ class AnkoViewLoader : ViewLoader {
         val viewFqName = "__anko.preview.View"
         val viewInternalName = viewFqName.replace('.', '/')
         val superClassInternalName = "android/widget/FrameLayout"
-        val ankoContextImplInternalName = "org/jetbrains/anko/AnkoContextImpl"
 
         val bytes = with (ClassWriter(0)) {
             visit(49, ACC_PUBLIC, viewInternalName, null, superClassInternalName, null)
@@ -81,28 +80,29 @@ class AnkoViewLoader : ViewLoader {
             visitConstructor("Landroid/content/Context;", "Landroid/util/AttributeSet;")
             visitConstructor("Landroid/content/Context;", "Landroid/util/AttributeSet;", "I")
 
+            /*
+            private fun init() {
+                addView(MainActivityUi().createView(AnkoContext.create(getContext())))
+            }
+             */
+
             with (visitMethod(ACC_PRIVATE, "init", "()V", null, null)) {
+                visitVarInsn(ALOAD, 0)
                 visitTypeInsn(NEW, uiInternalName)
                 visitInsn(Opcodes.DUP)
                 visitMethodInsn(INVOKESPECIAL, uiInternalName, "<init>", "()V")
-                visitVarInsn(ASTORE, 1)
-
-                visitTypeInsn(NEW, ankoContextImplInternalName)
-                visitInsn(DUP)
+                visitFieldInsn(GETSTATIC, "org/jetbrains/anko/AnkoContext", "Companion",
+                        "Lorg/jetbrains/anko/AnkoContext" + '$' + "Companion;")
                 visitVarInsn(ALOAD, 0)
                 visitMethodInsn(INVOKEVIRTUAL, viewInternalName, "getContext", "()Landroid/content/Context;")
-                visitInsn(ICONST_0)
-                visitMethodInsn(INVOKESPECIAL, ankoContextImplInternalName, "<init>", "(Landroid/content/Context;Z)V")
-                visitVarInsn(ASTORE, 2)
-
-                visitVarInsn(ALOAD, 0)
-                visitVarInsn(ALOAD, 1)
-                visitVarInsn(ALOAD, 2)
-                visitMethodInsn(INVOKEVIRTUAL, uiInternalName, "createView", "(Lorg/jetbrains/anko/AnkoContext;)Landroid/view/View;")
+                visitMethodInsn(INVOKEVIRTUAL, "org/jetbrains/anko/AnkoContext" + '$' + "Companion", "create",
+                        "(Landroid/content/Context;)Lorg/jetbrains/anko/AnkoContext;")
+                visitMethodInsn(INVOKEVIRTUAL, uiInternalName, "createView",
+                        "(Lorg/jetbrains/anko/AnkoContext;)Landroid/view/View;")
                 visitMethodInsn(INVOKEVIRTUAL, viewInternalName, "addView", "(Landroid/view/View;)V")
 
                 visitInsn(RETURN)
-                visitMaxs(4 /*max stack*/, 3 /*max locals*/)
+                visitMaxs(4 /*max stack*/, 1 /*max locals*/)
                 visitEnd()
             }
 
