@@ -53,7 +53,7 @@ object AnkoInternals {
     }
 
     fun <T : View> addView(activity: Activity, view: T) {
-        activity.UI { AnkoInternals.addView(this, view) }
+        createAnkoContext(activity, { AnkoInternals.addView(this, view) }, true)
     }
 
     fun getContext(manager: ViewManager): Context = when (manager) {
