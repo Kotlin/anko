@@ -23,7 +23,7 @@ class ToastMakeTextShowIntention : AnkoIntention<KtExpression>(
         "Simplify Toast.makeText().show() with Anko"
 ) {
 
-    override fun isApplicableTo(element: KtExpression, caretOffset: Int): Boolean {
+    override fun isApplicable(element: KtExpression, caretOffset: Int): Boolean {
         return element.require<KtDotQualifiedExpression> {
             receiver.require<KtDotQualifiedExpression> {
                 receiver.require<KtReferenceExpression>("Toast")

@@ -56,6 +56,11 @@
             <className>org.jetbrains.anko.idea.intentions.FindViewByIdIntention</className>
             <category>Anko</category>
         </intentionAction>
+
+        <intentionAction>
+            <className>org.jetbrains.anko.idea.intentions.ReplaceColorGrayOpaqueIntention</className>
+            <category>Anko</category>
+        </intentionAction>
     </extensions>
 
     <project-components>

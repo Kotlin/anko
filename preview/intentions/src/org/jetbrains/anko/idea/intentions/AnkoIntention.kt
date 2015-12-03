@@ -10,11 +10,13 @@ import org.jetbrains.kotlin.idea.caches.resolve.resolveImportReference
 import org.jetbrains.kotlin.idea.imports.importableFqName
 import org.jetbrains.kotlin.idea.intentions.SelfTargetingIntention
 import org.jetbrains.kotlin.idea.util.ImportInsertHelper
+import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.resolve.*
 import org.jetbrains.kotlin.resolve.calls.callUtil.getResolvedCall
 import org.jetbrains.kotlin.resolve.calls.model.ResolvedCall
+import org.jetbrains.kotlin.resolve.descriptorUtil.resolveTopLevelClass
 import org.jetbrains.kotlin.types.lowerIfFlexible
 
 abstract class AnkoIntention<TElement : KtElement>(
@@ -22,6 +24,15 @@ abstract class AnkoIntention<TElement : KtElement>(
         text: String,
         familyName: String = text
 ) : SelfTargetingIntention<TElement>(elementType, text, familyName) {
+
+    final override fun isApplicableTo(element: TElement, caretOffset: Int): Boolean {
+        val file = element.containingFile as? KtFile ?: return false
+        val moduleDescriptor = file.findModuleDescriptor()
+        moduleDescriptor.resolveTopLevelClass(ANKO_INTERNALS_FQNAME, NoLookupLocation.FROM_IDE) ?: return false
+        return isApplicable(element, caretOffset)
+    }
+
+    abstract fun isApplicable(element: TElement, caretOffset: Int): Boolean
 
     private fun isTypeOf(descriptor: ClassifierDescriptor, vararg fqName: String): Boolean {
         val resolvedName = DescriptorUtils.getFqNameSafe(descriptor).asString()
@@ -62,6 +73,11 @@ abstract class AnkoIntention<TElement : KtElement>(
         return require<E>(name) && (this as E).sub()
     }
 
+    inline fun require(cond: Boolean, sub: () -> Boolean): Boolean {
+        if (cond) sub()
+        return cond
+    }
+
     protected inline fun <reified E : PsiElement> PsiElement?.require(name: String? = null): Boolean {
         if (this !is E) return false
         if (name != null && name != this.text) return false
@@ -99,7 +115,10 @@ abstract class AnkoIntention<TElement : KtElement>(
 
         ImportInsertHelper.getInstance(project).apply {
             fqNamesToImport
-                    .flatMap { resolutionFacade.resolveImportReference(moduleDescriptor, FqName("$ANKO_PACKAGE$it")) }
+                    .flatMap {
+                        val fqName = FqName(if ('.' in it) it else "$ANKO_PACKAGE$it")
+                        resolutionFacade.resolveImportReference(moduleDescriptor, fqName)
+                    }
                     .forEach { if (it.importableFqName != null) importDescriptor(file, it) }
         }
 
@@ -108,6 +127,7 @@ abstract class AnkoIntention<TElement : KtElement>(
 
     private companion object {
         private val ANKO_PACKAGE = "org.jetbrains.anko."
+        private val ANKO_INTERNALS_FQNAME = FqName("org.jetbrains.anko.internals.AnkoInternals")
     }
 }
 
@@ -117,7 +137,7 @@ object FqNames {
     val VIEW_FQNAME = "android.view.View"
 }
 
-class NewElement(val element: KtExpression, vararg val newFqNames: String) {
+class NewElement(val element: KtExpression, vararg val newNames: String) {
     operator fun component1() = element
-    operator fun component2() = newFqNames
+    operator fun component2() = newNames //fqName or name in anko package
 }

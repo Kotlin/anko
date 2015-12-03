@@ -9,7 +9,7 @@ class FindViewByIdIntention : AnkoIntention<KtExpression>(
         KtExpression::class.java,
         "Simplify findViewById() with Anko"
 ) {
-    override fun isApplicableTo(element: KtExpression, caretOffset: Int): Boolean {
+    override fun isApplicable(element: KtExpression, caretOffset: Int): Boolean {
         fun PsiElement?.requireFindViewByIdCall() = requireCall(FIND_VIEW_BY_ID, 1) {
             val resolvedCall = getResolvedCall(analyze())
             isValueParameterTypeOf(0, resolvedCall, "kotlin.Int")
