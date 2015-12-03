@@ -32,7 +32,7 @@ class Writer(private val renderFacade: RenderFacade) {
 
     fun write() {
         val versionType = config.getTargetArtifactType()
-        values.forEach { file ->
+        values().forEach { file ->
             if (config[file] && versionType in file.types && file.shouldBeWritten(config)) {
                 write(file)
             }

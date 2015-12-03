@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="build_artifacts" default="build_artifacts">
 
+    <property name="android.sdk" location="lib/android-sdk"/>
+
     <condition property="gradlew.file" value="gradlew.bat">
         <os family="windows"/>
     </condition>
@@ -26,6 +28,7 @@
         </delete>
 
         <build_artifact version="common"/>
+        <build_artifact version="sqlite"/>
         <build_artifact version="sdk15"/>
         <build_artifact version="sdk19"/>
         <build_artifact version="sdk21"/>
@@ -55,6 +58,7 @@
 
             <chmod_version version.dir="@{version.dir}"/>
             <exec executable="./${gradlew.file}" dir="@{version.dir}">
+                <env key="ANDROID_HOME" value="${android.sdk}"/>
                 <arg value="publish"/>
             </exec>
 

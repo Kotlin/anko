@@ -71,15 +71,18 @@ class AndroidJarCollector {
         }
 
         for ((index, version) in REQUIRED_PLATFORM_VERSIONS.sortedByDescending { it }.withIndex()) {
-            println("Processing version '${version}':")
+            println("Processing version '$version':")
 
             val versionDir = File(ORIGINAL_DIR, "sdk$version")
             processVersion(versionDir, version, false, emptySet())
 
+            val commonArtifacts = listOf("common", "sqlite")
+
             if (index == 0) {
-                // Generate common artifact
-                println("Processing version 'common':")
-                processVersion(File(ORIGINAL_DIR, "common"), version, false, emptySet())
+                for (artifactName in commonArtifacts) {
+                    println("Processing version '$artifactName':")
+                    processVersion(File(ORIGINAL_DIR, artifactName), version, false, emptySet())
+                }
 
                 // Generate toolkit artifacts for this platform
                 supportFilesWithDependencies.forEach {

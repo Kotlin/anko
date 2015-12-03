@@ -11,7 +11,10 @@
     <option name="ENV_VARIABLES" />
     <option name="PASS_PARENT_ENVS" value="true" />
     <module name="anko" />
-    <envs />
+    <envs>
+      <env name="ANDROID_HOME" value="lib/android-sdk" />
+      <env name="" value="" />
+    </envs>
     <RunnerSettings RunnerId="Debug">
       <option name="DEBUG_PORT" value="" />
       <option name="TRANSPORT" value="0" />

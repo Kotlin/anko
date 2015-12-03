@@ -17,6 +17,7 @@
 package org.jetbrains.android.anko.config
 
 import org.jetbrains.android.anko.config.TargetArtifactType.COMMON
+import org.jetbrains.android.anko.config.TargetArtifactType.SQLITE
 import org.jetbrains.android.anko.config.TargetArtifactType.PLATFORM
 import org.jetbrains.android.anko.config.TargetArtifactType.SUPPORT_V4
 import org.jetbrains.android.anko.config.TargetArtifactType.TOOLKIT
@@ -24,6 +25,7 @@ import org.jetbrains.android.anko.utils.toCamelCase
 
 enum class TargetArtifactType {
     COMMON, // Common stuff (does not contain platform-dependent functions)
+    SQLITE, // SqLite Database helpers
     PLATFORM, // Artifacts for the specific Android SDK version (eg. 15, 19, 21 etc.)
     SUPPORT_V4, // Artifact for Android support-v4 library (contains some helpers for support.v4 Fragments)
     TOOLKIT; // Helpers for any other Android libraries
@@ -36,11 +38,9 @@ enum class AnkoFile(
     INTERFACE_WORKAROUNDS_JAVA(setOf(PLATFORM)),
     LAYOUTS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     LISTENERS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
-    OTHER(setOf(PLATFORM)),
-    OTHER_WIDGETS(setOf(PLATFORM)),
     PROPERTIES(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     SERVICES(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
-    SQL_PARSER_HELPERS(setOf(COMMON)),
+    SQL_PARSER_HELPERS(setOf(SQLITE)),
     VIEWS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT), { it[VIEWS] || it[ConfigurationTune.HELPER_CONSTRUCTORS] });
 
     val types: Set<TargetArtifactType> = type.toSet()

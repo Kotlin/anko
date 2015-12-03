@@ -18,6 +18,7 @@ package org.jetbrains.android.anko.config
 
 import org.jetbrains.android.anko.annotations.AnnotationManager
 import org.jetbrains.android.anko.config.TargetArtifactType.COMMON
+import org.jetbrains.android.anko.config.TargetArtifactType.SQLITE
 import org.jetbrains.android.anko.config.TargetArtifactType.PLATFORM
 import org.jetbrains.android.anko.config.TargetArtifactType.SUPPORT_V4
 import org.jetbrains.android.anko.config.TargetArtifactType.TOOLKIT
@@ -63,6 +64,7 @@ abstract class AnkoConfiguration {
     fun getTargetArtifactType(): TargetArtifactType {
         return when {
             "common" == version -> COMMON
+            "sqlite" == version -> SQLITE
             "support-v4" == version -> SUPPORT_V4
             version.matches("sdk\\d{2}".toRegex()) -> PLATFORM
             else -> TOOLKIT
