@@ -19,6 +19,7 @@ package org.jetbrains.anko
 
 import android.app.Fragment
 import android.content.Context
+import android.view.View
 
 val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
 val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
@@ -55,6 +56,15 @@ inline fun AnkoContext<*>.sp(value: Float): Int = ctx.sp(value)
 inline fun AnkoContext<*>.px2dip(px: Int): Float = ctx.px2dip(px)
 inline fun AnkoContext<*>.px2sp(px: Int): Float = ctx.px2sp(px)
 inline fun AnkoContext<*>.dimen(resource: Int): Int = ctx.dimen(resource)
+
+//the same for the views
+inline fun View.dip(value: Int): Int = context.dip(value)
+inline fun View.dip(value: Float): Int = context.dip(value)
+inline fun View.sp(value: Int): Int = context.sp(value)
+inline fun View.sp(value: Float): Int = context.sp(value)
+inline fun View.px2dip(px: Int): Float = context.px2dip(px)
+inline fun View.px2sp(px: Int): Float = context.px2sp(px)
+inline fun View.dimen(resource: Int): Int = context.dimen(resource)
 
 //the same for Fragments
 inline fun Fragment.dip(value: Int): Int = activity.dip(value)
