@@ -37,6 +37,18 @@ class AnkoViewLoader : ViewLoader {
         this.delegate = delegate
     }
 
+    override fun loadView(className: String?, constructorSignature: Array<out Class<Any>>?, constructorArgs: Array<out Any>?): Any? {
+        if (className == "__anko.preview.View") {
+            try {
+                val clazz = generateStubViewClass()
+                val createNewInstanceMethod = ViewLoader::class.java.declaredMethods.first { it.name == "createNewInstance" }
+                createNewInstanceMethod.isAccessible = true
+                return createNewInstanceMethod(this, clazz, constructorSignature, constructorArgs, true)
+            } catch (ignored: Exception) { }
+        }
+        return super.loadView(className, constructorSignature, constructorArgs)
+    }
+
     override fun loadClass(className: String): Class<*>? {
         if (className == "__anko.preview.View") {
             val clazz = generateStubViewClass()

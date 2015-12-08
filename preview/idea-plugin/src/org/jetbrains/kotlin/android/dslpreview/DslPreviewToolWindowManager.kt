@@ -17,9 +17,12 @@
 package org.jetbrains.kotlin.android.dslpreview
 
 import com.android.tools.idea.configurations.ConfigurationListener
+import com.android.tools.idea.gradle.invoker.GradleInvoker
+import com.android.tools.idea.gradle.project.BuildSettings
+import com.android.tools.idea.gradle.util.BuildMode
+import com.android.tools.idea.gradle.util.GradleUtil
 import com.android.tools.idea.rendering.*
 import com.android.tools.idea.rendering.multi.RenderPreviewMode
-import com.intellij.compiler.impl.ProjectCompileScope
 import com.intellij.facet.FacetManager
 import com.intellij.icons.AllIcons
 import com.intellij.ide.highlighter.XmlFileType
@@ -62,6 +65,10 @@ import javax.swing.DefaultComboBoxModel
 import javax.swing.JPanel
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.editor.ex.EditorEx
+import com.intellij.openapi.externalSystem.model.task.ExternalSystemTaskId
+import com.intellij.openapi.externalSystem.model.task.ExternalSystemTaskNotificationListener
+import com.intellij.openapi.externalSystem.model.task.ExternalSystemTaskType
+import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.progress.util.ProgressIndicatorBase
 import com.intellij.openapi.project.DumbService
@@ -94,7 +101,7 @@ class DslPreviewToolWindowManager(
     }
 
     @Volatile
-    private var lastSourceFileModification = 0L
+    private var lastSourceFileModification = -1L
 
     private val RENDERING_LOCK = Object()
 
@@ -239,7 +246,48 @@ class DslPreviewToolWindowManager(
                     showNotification("Build completed with errors.", MessageType.ERROR)
                 }
             }
-            CompilerManager.getInstance(myProject).make(ProjectCompileScope(myProject), notification)
+
+            fun compileWithCompileManager() {
+                BuildSettings.getInstance(myProject).buildMode = BuildMode.COMPILE_JAVA
+                CompilerManager.getInstance(myProject).make(notification)
+            }
+
+            fun compileWithGradle() {
+                val modules = ModuleManager.getInstance(myProject).modules
+                val gradleInvoker = GradleInvoker.getInstance(myProject)
+                val buildMode = BuildMode.COMPILE_JAVA
+                BuildSettings.getInstance(myProject).buildMode = buildMode
+                val tasks = GradleInvoker.findTasksToExecute(modules, buildMode, GradleInvoker.TestCompileType.NONE)
+
+                val id = ExternalSystemTaskId.create(GradleUtil.GRADLE_SYSTEM_ID, ExternalSystemTaskType.EXECUTE_TASK, myProject)
+                gradleInvoker.addAfterGradleInvocationTask { result ->
+                    if (result.isBuildSuccessful) {
+                        ApplicationManager.getApplication().invokeLater {
+                            lastSourceFileModification = actualSourceFileModification
+                            renderIt(description)
+                        }
+                    }
+                }
+
+                try {
+                    val newMethod = GradleInvoker::class.java.getDeclaredMethod("executeTasks",
+                            List::class.java,
+                            List::class.java,
+                            List::class.java,
+                            ExternalSystemTaskId::class.java,
+                            ExternalSystemTaskNotificationListener::class.java,
+                            Boolean::class.java)
+                    newMethod(gradleInvoker, tasks, emptyList<Any>(), emptyList<Any>(), id, null, false)
+                } catch (e: Exception) {
+                    gradleInvoker.executeTasks(tasks, emptyList(), id, null, false)
+                }
+            }
+
+            if (facet?.isGradleProject ?: true) {
+                compileWithGradle()
+            } else {
+                compileWithCompileManager()
+            }
         }
         else {
             renderIt(description)
