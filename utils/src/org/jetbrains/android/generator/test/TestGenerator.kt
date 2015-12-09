@@ -39,8 +39,8 @@ fun Context.generate() {
 
         functionalDslTest("ViewTest", AnkoFile.VIEWS) {
             file(AnkoFile.VIEWS)
-            tune(ConfigurationTune.HELPER_CONSTRUCTORS)
             tune(ConfigurationTune.TOP_LEVEL_DSL_ITEMS)
+            tune(ConfigurationTune.HELPER_CONSTRUCTORS)
         }
 
         functionalDslTest("PropertyTest", AnkoFile.PROPERTIES) {

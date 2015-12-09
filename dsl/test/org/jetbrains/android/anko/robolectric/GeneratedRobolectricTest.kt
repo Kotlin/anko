@@ -59,6 +59,11 @@ class GeneratedRobolectricTest : AbstractRobolectricTest() {
     }
 
     @Test
+    fun testDialogsTestForSqlite() {
+        runRobolectricTest("DialogsTest.kt", "sqlite")
+    }
+
+    @Test
     fun testDialogsTestForSupportV4() {
         runRobolectricTest("DialogsTest.kt", "support-v4")
     }
@@ -116,6 +121,11 @@ class GeneratedRobolectricTest : AbstractRobolectricTest() {
     @Test
     fun testFindViewTestForSdk23() {
         runRobolectricTest("FindViewTest.kt", "sdk23")
+    }
+
+    @Test
+    fun testFindViewTestForSqlite() {
+        runRobolectricTest("FindViewTest.kt", "sqlite")
     }
 
     @Test
@@ -179,6 +189,11 @@ class GeneratedRobolectricTest : AbstractRobolectricTest() {
     }
 
     @Test
+    fun testServiceTestForSqlite() {
+        runRobolectricTest("ServiceTest.kt", "sqlite")
+    }
+
+    @Test
     fun testServiceTestForSupportV4() {
         runRobolectricTest("ServiceTest.kt", "support-v4")
     }
@@ -236,6 +251,11 @@ class GeneratedRobolectricTest : AbstractRobolectricTest() {
     @Test
     fun testSimpleTestForSdk23() {
         runRobolectricTest("SimpleTest.kt", "sdk23")
+    }
+
+    @Test
+    fun testSimpleTestForSqlite() {
+        runRobolectricTest("SimpleTest.kt", "sqlite")
     }
 
     @Test

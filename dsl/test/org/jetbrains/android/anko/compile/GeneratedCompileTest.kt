@@ -59,6 +59,11 @@ class GeneratedCompileTest : AbstractCompileTest() {
     }
 
     @Test
+    fun testAndroidLayoutParamsTestForSqlite() {
+        runCompileTest("AndroidLayoutParamsTest.kt", "sqlite")
+    }
+
+    @Test
     fun testAndroidLayoutParamsTestForSupportV4() {
         runCompileTest("AndroidLayoutParamsTest.kt", "support-v4")
     }
@@ -116,6 +121,11 @@ class GeneratedCompileTest : AbstractCompileTest() {
     @Test
     fun testAndroidLayoutsTestForSdk23() {
         runCompileTest("AndroidLayoutsTest.kt", "sdk23")
+    }
+
+    @Test
+    fun testAndroidLayoutsTestForSqlite() {
+        runCompileTest("AndroidLayoutsTest.kt", "sqlite")
     }
 
     @Test
@@ -179,6 +189,11 @@ class GeneratedCompileTest : AbstractCompileTest() {
     }
 
     @Test
+    fun testAndroidListenerHelpersTestForSqlite() {
+        runCompileTest("AndroidListenerHelpersTest.kt", "sqlite")
+    }
+
+    @Test
     fun testAndroidListenerHelpersTestForSupportV4() {
         runCompileTest("AndroidListenerHelpersTest.kt", "support-v4")
     }
@@ -236,6 +251,11 @@ class GeneratedCompileTest : AbstractCompileTest() {
     @Test
     fun testAndroidMultiMethodListenersForSdk23() {
         runCompileTest("AndroidMultiMethodListeners.kt", "sdk23")
+    }
+
+    @Test
+    fun testAndroidMultiMethodListenersForSqlite() {
+        runCompileTest("AndroidMultiMethodListeners.kt", "sqlite")
     }
 
     @Test
@@ -299,6 +319,11 @@ class GeneratedCompileTest : AbstractCompileTest() {
     }
 
     @Test
+    fun testAndroidPropertiesTestForSqlite() {
+        runCompileTest("AndroidPropertiesTest.kt", "sqlite")
+    }
+
+    @Test
     fun testAndroidPropertiesTestForSupportV4() {
         runCompileTest("AndroidPropertiesTest.kt", "support-v4")
     }
@@ -359,6 +384,11 @@ class GeneratedCompileTest : AbstractCompileTest() {
     }
 
     @Test
+    fun testAndroidSimpleTestForSqlite() {
+        runCompileTest("AndroidSimpleTest.kt", "sqlite")
+    }
+
+    @Test
     fun testAndroidSimpleTestForSupportV4() {
         runCompileTest("AndroidSimpleTest.kt", "support-v4")
     }
@@ -416,6 +446,11 @@ class GeneratedCompileTest : AbstractCompileTest() {
     @Test
     fun testAndroidWidgetTestForSdk23() {
         runCompileTest("AndroidWidgetTest.kt", "sdk23")
+    }
+
+    @Test
+    fun testAndroidWidgetTestForSqlite() {
+        runCompileTest("AndroidWidgetTest.kt", "sqlite")
     }
 
     @Test
