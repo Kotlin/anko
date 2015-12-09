@@ -329,6 +329,7 @@ class DslPreviewToolWindowManager(
     }
 
     private fun getAncestors(baseClassName: String): Collection<PreviewClassDescription> {
+        if (DumbService.isDumb(myProject)) return emptyList()
         val baseClasses = JavaPsiFacade.getInstance(myProject)
                 .findClasses(baseClassName, GlobalSearchScope.allScope(myProject))
         if (baseClasses.size == 0) return listOf()
