@@ -47,6 +47,7 @@ internal fun renderLayoutAttributes(attributes: List<KeyValuePair>, parentName: 
 internal fun transformAttribute(widgetName: String, name: String, value: String): KeyValuePair? {
     return when {
         name.startsWith("xmlns:") -> null
+        name.startsWith("tools:") -> null
         name == "style" -> null
         name.startsWith("android:") -> {
             val shortName = name.substring("android:".length)
