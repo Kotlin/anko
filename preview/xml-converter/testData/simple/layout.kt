@@ -1,5 +1,5 @@
 linearLayout {
     orientation = LinearLayout.VERTICAL
 
-    textView("Hello World").layoutParams(width = matchParent, height = wrapContent)
+    textView("Hello World").lparams(width = matchParent, height = wrapContent)
 }

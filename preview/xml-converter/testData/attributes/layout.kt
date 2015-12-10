@@ -13,13 +13,13 @@ frameLayout {
         textColor = 0x00ff00.opaque
         textSize = 17f
         visibility = View.INVISIBLE
-    }.layoutParams(width = wrapContent, height = wrapContent)
+    }.lparams(width = wrapContent, height = wrapContent)
     textView {
         backgroundColor = 0xeeffff00.toInt()
         textSize = 17f
-    }.layoutParams(width = wrapContent, height = wrapContent)
+    }.lparams(width = wrapContent, height = wrapContent)
     textView {
         backgroundResource = android.R.color.background_light
         textSize = 17f
-    }.layoutParams(width = wrapContent, height = wrapContent)
+    }.lparams(width = wrapContent, height = wrapContent)
 }

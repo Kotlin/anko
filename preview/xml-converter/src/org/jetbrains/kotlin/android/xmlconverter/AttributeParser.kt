@@ -41,7 +41,7 @@ internal fun renderLayoutAttributes(attributes: List<KeyValuePair>, parentName: 
         options.map { it.toString().indent(1) }.joinToString("\n", " {\n", "\n}")
     } else ""
 
-    return ".layoutParams(width = $width, height = $height)$optionsString"
+    return ".lparams(width = $width, height = $height)$optionsString"
 }
 
 internal fun transformAttribute(widgetName: String, name: String, value: String): KeyValuePair? {
