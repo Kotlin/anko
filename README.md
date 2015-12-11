@@ -1,4 +1,4 @@
-[![Download](https://api.bintray.com/packages/jetbrains/anko/anko/images/download.svg) ](https://bintray.com/jetbrains/anko/anko/_latestVersion)
+![GitHub version](https://badge.fury.io/gh/Kotlin%2Fanko.svg)
 Anko
 ===========
 
