@@ -184,7 +184,7 @@ android {
     ...
     defaultConfig {
         ...
-        minSdkVersion 15 // Min SDK version is 15
+        minSdkVersion 15 // Min SDK version is 15 in this example
         targetSdkVersion 23
         ...
     }
@@ -194,17 +194,17 @@ android {
 dependencies {
     ...
     // Note the used support libs
-    compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.android.support:design:23.0.1'
-    compile 'com.android.support:recyclerview-v7:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:14.+"
-    compile 'org.jetbrains.anko:anko-sdk15:0.7.1' // So here it's 15 too
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-3595"
+    compile 'org.jetbrains.anko:anko-sdk15:0.8.1' // So here it's 15 too
 
-    // Same Anko libs than support libs
-    compile 'org.jetbrains.anko:anko-appcompat-v7:0.7.1'
-    compile 'org.jetbrains.anko:anko-design:0.7.1'
-    compile 'org.jetbrains.anko:anko-recyclerview-v7:0.7.1'
+    // Anko libs matching support libs
+    compile 'org.jetbrains.anko:anko-appcompat-v7:0.8.1'
+    compile 'org.jetbrains.anko:anko-design:0.8.1'
+    compile 'org.jetbrains.anko:anko-recyclerview-v7:0.8.1'
 }
 ````
 
