@@ -1,3 +1,4 @@
+![GitHub version](https://badge.fury.io/gh/Kotlin%2Fanko.svg)
 Anko
 ===========
 
