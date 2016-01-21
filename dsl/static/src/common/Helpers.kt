@@ -32,7 +32,7 @@ val Int.gray: Int
 val Int.opaque: Int
     get() = this or 0xff000000.toInt()
 
-fun Int.withAlpha(alpha: Int) {
+fun Int.withAlpha(alpha: Int): Int {
     require(alpha >= 0 && alpha <= 0xFF)
     return this and 0x00FFFFFF or (alpha shl 24)
 }
