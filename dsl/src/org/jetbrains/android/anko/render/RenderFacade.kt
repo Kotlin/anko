@@ -44,7 +44,7 @@ class RenderFacade(
     private val cachedResults: MutableMap<Class<out Renderer>, String> = hashMapOf()
 
     operator fun get(clazz: Class<out Renderer>): String = cachedResults.getOrPut(clazz) {
-        initializeClass(clazz, config to AnkoConfiguration::class.java).process(generationState)
+        initializeClassWithArgs(clazz, config to AnkoConfiguration::class.java).process(generationState)
     }
 
     protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {

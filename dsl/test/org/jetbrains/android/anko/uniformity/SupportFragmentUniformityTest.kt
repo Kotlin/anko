@@ -28,7 +28,7 @@ public class SupportFragmentUniformityTest {
         val receiver = "Fragment"
 
         val (mainFiles, supportFiles) = File("dsl/static/src")
-                .listFiles { it.extension == "kt" } !!.partition { !it.name.contains("Support")}
+                .listFiles { file -> file.extension == "kt" } !!.partition { !it.name.contains("Support")}
 
         listOf("fun", "val", "var").forEach { declarationName ->
             val mainFunctions = mainFiles.flatMap { getAllDeclarations(it, receiver, declarationName) }

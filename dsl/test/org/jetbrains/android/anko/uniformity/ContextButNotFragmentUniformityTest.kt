@@ -28,7 +28,7 @@ public class ContextButNotFragmentUniformityTest {
         val receiver1 = listOf("Fragment")
         val receiver2 = listOf("Activity", "Context")
 
-        val files = File("dsl/static/src").listFiles { it.extension == "kt" && !it.name.contains("Support") }!!
+        val files = File("dsl/static/src").listFiles { file -> file.extension == "kt" && !file.name.contains("Support") }!!
 
         listOf("fun", "val", "var").forEach { declarationName ->
             fun getDeclarations(rs: List<String>) =

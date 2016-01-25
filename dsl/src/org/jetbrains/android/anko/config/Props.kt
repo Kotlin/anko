@@ -30,7 +30,7 @@ object Props {
     val imports: Map<String, String> by lazy {
         val map = hashMapOf<String, String>()
         File("dsl/props")
-                .listFiles { it.name.startsWith("imports_") && it.name.endsWith(".txt") }
+                .listFiles { file -> file.name.startsWith("imports_") && file.name.endsWith(".txt") }
                 ?.forEach {
                     val name = it.name.replace(".txt", "")
                     map.put(name.substring(name.indexOf('_') + 1), it.readText())

@@ -97,5 +97,5 @@ interface AnkoComponent<T> {
     fun createView(ui: AnkoContext<T>): View
 }
 
-fun AnkoComponent<out Activity>.setContentView(activity: Activity) =
+fun <T : Activity> AnkoComponent<T>.setContentView(activity: T) =
         createView(AnkoContextImpl(activity, activity, true))

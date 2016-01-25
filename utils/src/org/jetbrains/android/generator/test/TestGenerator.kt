@@ -71,4 +71,4 @@ fun Context.generate() {
 }
 
 private fun ktFiles(category: String) = File("dsl/testData/$category")
-        .listFiles { it.name.endsWith(".kt") }?.map { it.name.replace(".kt", "") } ?: listOf()
+        .listFiles { file -> file.name.endsWith(".kt") }?.map { it.name.replace(".kt", "") } ?: listOf()

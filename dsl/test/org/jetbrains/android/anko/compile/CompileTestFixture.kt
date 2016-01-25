@@ -90,8 +90,8 @@ public open class CompileTestFixture {
         val lib = File("lib/")
         val robolectricDir = File(lib, "robolectric/")
 
-        val robolectricJars = robolectricDir.listFiles { it.extension == "jar" }?.toList() ?: listOf()
-        val androidAllJars = File(lib, "androidall").listFiles { it.extension == "jar" }?.toList() ?: listOf()
+        val robolectricJars = robolectricDir.listFiles { file -> file.extension == "jar" }?.toList() ?: listOf()
+        val androidAllJars = File(lib, "androidall").listFiles { file -> file.extension == "jar" }?.toList() ?: listOf()
 
         val compiledJarFile = compile(testDataFile, artifactOriginalDir, robolectricJars)
 

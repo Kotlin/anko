@@ -30,9 +30,9 @@ object HierarchyCollector {
 
     @JvmStatic
     fun collect() {
-        val ver = File("workdir/original").listFiles { it.name.matches("[0-9]+".toRegex()) }!!
-                .first { it.listFiles { it.name == "android.jar" }?.isNotEmpty() ?: false }
-        val androidJar = ver.listFiles { it.name == "android.jar" }!!.first()
+        val ver = File("workdir/original").listFiles { file -> file.name.matches("[0-9]+".toRegex()) }!!
+                .first { it.listFiles { file -> file.name == "android.jar" }?.isNotEmpty() ?: false }
+        val androidJar = ver.listFiles { file -> file.name == "android.jar" }!!.first()
 
         val classTree = ClassProcessor(listOf(androidJar), listOf()).genClassTree()
         val viewClasses = classTree.filter { it.isView(classTree) && !it.isInner && it.name.startsWith("android/widget/") }

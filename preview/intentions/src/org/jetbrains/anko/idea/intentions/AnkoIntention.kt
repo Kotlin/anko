@@ -102,8 +102,8 @@ abstract class AnkoIntention<TElement : KtElement>(
 
     abstract fun replaceWith(element: TElement, psiFactory: KtPsiFactory): NewElement?
 
-    final override fun applyTo(element: TElement, editor: Editor) {
-        val project = editor.project ?: return
+    final override fun applyTo(element: TElement, editor: Editor?) {
+        val project = editor?.project ?: return
         val file = element.containingFile as? KtFile ?: return
         val moduleDescriptor = file.findModuleDescriptor()
         val resolutionFacade = file.getResolutionFacade()

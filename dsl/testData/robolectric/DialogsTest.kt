@@ -46,7 +46,7 @@ public class RobolectricTest() {
 
     @Test
     public fun test() {
-        val activity = Robolectric.buildActivity(javaClass<TestActivity>()).create().get()
+        val activity = Robolectric.buildActivity(TestActivity::class.java).create().get()
         val button1 = activity.findViewById(1) as Button
         val button2 = activity.findViewById(2) as Button
         val button3 = activity.findViewById(3) as Button

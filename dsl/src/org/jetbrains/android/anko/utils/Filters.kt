@@ -28,6 +28,6 @@ internal class JarFileFilter : FileFilter {
 class AndroidVersionDirectoryFilter : FileFilter {
     override fun accept(path: File): Boolean {
         return path.isDirectory && !path.isHidden
-                && path.listFiles { it.name.endsWith(".jar") }?.isNotEmpty() ?: false
+                && path.listFiles { file -> file.name.endsWith(".jar") }?.isNotEmpty() ?: false
     }
 }

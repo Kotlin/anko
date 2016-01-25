@@ -24,12 +24,13 @@ dependencies {
     jmustache 'com.samskivert:jmustache:1.10'
     jeromq 'org.zeromq:jeromq:0.3.4'
     javaparser 'com.github.javaparser:javaparser-core:2.1.0'
-    kotlindom 'org.jetbrains.kotlinx:kotlinx.dom:0.0.4'
+    kotlindom 'org.jetbrains.kotlinx:kotlinx.dom:0.0.7-rc'
 }
 
 repositories {
     mavenCentral()
     maven { url "http://dl.bintray.com/kotlin/kotlinx.dom" }
+    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
 }
 
 task(collectDependencies) << {

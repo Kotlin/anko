@@ -144,7 +144,7 @@ class ConvertAction : AnAction() {
 
     private fun FileToConvert.convert(project: Project) {
         try {
-            ktFile.writeText(XmlConverter.convert(xmlFile.contentsToByteArray().toString("UTF-8")))
+            ktFile.writeText(XmlConverter.convert(xmlFile.contentsToByteArray().toString(charset("UTF-8"))))
         }
         catch (e: IOException) {
             MessagesEx.error(project, e.message).showLater()

@@ -8,7 +8,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.*
 import org.junit.Test
-import kotlin.test.*
+import org.junit.Assert.*
 
 public open class TestActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
@@ -22,7 +22,7 @@ public class RobolectricTest() {
 
     @Test
     public fun test() {
-        val activity = Robolectric.buildActivity(javaClass<TestActivity>()).create().get()
+        val activity = Robolectric.buildActivity(TestActivity::class.java).create().get()
 
         val vibrator = activity.vibrator
         vibrator.vibrate(100)

@@ -55,7 +55,6 @@ import com.intellij.util.Alarm.ThreadToUse.SWING_THREAD
 import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.android.sdk.AndroidTargetData
 import org.jetbrains.android.uipreview.AndroidLayoutPreviewToolWindowManager
-import org.jetbrains.kotlin.idea.caches.resolve.KotlinCacheService
 import org.jetbrains.kotlin.idea.internal.Location
 import org.jetbrains.kotlin.idea.util.InfinitePeriodicalTask
 import org.jetbrains.kotlin.idea.util.LongRunningReadTask
@@ -76,8 +75,10 @@ import com.intellij.util.ui.update.MergingUpdateQueue
 import com.intellij.util.ui.update.Update
 import org.jetbrains.android.uipreview.ViewLoader
 import org.jetbrains.kotlin.asJava.KtLightElement
+import org.jetbrains.kotlin.caches.resolve.KotlinCacheService
 import org.jetbrains.kotlin.codegen.ClassBuilderMode
 import org.jetbrains.kotlin.codegen.CodegenFileClassesProvider
+import org.jetbrains.kotlin.codegen.state.IncompatibleClassTracker
 import org.jetbrains.kotlin.codegen.state.JetTypeMapper
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.psi.KtFile
@@ -316,14 +317,14 @@ class DslPreviewToolWindowManager(
         }
     }
 
-    private fun getKtClass(psiElement: PsiElement): KtClass? {
+    private fun getKtClass(psiElement: PsiElement?): KtClass? {
         return if (psiElement is KtLightElement<*, *>) {
             getKtClass(psiElement.getOrigin())
         } else if (psiElement is KtClass && !psiElement.isEnum() && !psiElement.isInterface() &&
                 !psiElement.isAnnotation() && !psiElement.isSealed()) {
             psiElement
         } else {
-            val parent = psiElement.parent ?: return null
+            val parent = psiElement?.parent ?: return null
             return getKtClass(parent)
         }
     }
@@ -357,7 +358,8 @@ class DslPreviewToolWindowManager(
                 .getFrontendService(ResolveSession::class.java)
         val classDescriptor = resolveSession.getClassDescriptor(ktClass, NoLookupLocation.FROM_IDE)
         val typeMapper = JetTypeMapper(resolveSession.bindingContext,
-                ClassBuilderMode.LIGHT_CLASSES, CodegenFileClassesProvider(), null, "main")
+                ClassBuilderMode.LIGHT_CLASSES, CodegenFileClassesProvider(), null,
+                IncompatibleClassTracker.DoNothing, "main")
 
         return PreviewClassDescription(classDescriptor.fqNameSafe.asString(),
                 typeMapper.mapType(classDescriptor).internalName, androidFacet)

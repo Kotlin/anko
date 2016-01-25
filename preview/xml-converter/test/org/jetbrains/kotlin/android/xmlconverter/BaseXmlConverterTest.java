@@ -5,7 +5,7 @@ import org.junit.rules.TestName;
 import sun.plugin.dom.exception.InvalidStateException;
 import java.io.File;
 
-import static kotlin.SetsKt.*;
+import static kotlin.collections.SetsKt.*;
 import static kotlin.io.FilesKt.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

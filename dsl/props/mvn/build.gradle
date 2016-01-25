@@ -1,6 +1,9 @@
 buildscript {
-    ext.kotlin_version = '1.0.0-beta-3595'
+    ext.kotlin_version = '1.0.0-rc-1007'
     repositories {
+        maven {
+            url "https://dl.bintray.com/kotlin/kotlin-eap"
+        }
         jcenter()
     }
     dependencies {
@@ -36,6 +39,9 @@ gradle.projectsEvaluated {
 
 dependencies {
     repositories {
+        maven {
+            url "https://dl.bintray.com/kotlin/kotlin-eap"
+        }
         jcenter()
     }
 

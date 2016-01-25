@@ -39,7 +39,7 @@ public class RobolectricTest() {
 
     @Test
     public fun test() {
-        val activity = Robolectric.buildActivity(javaClass<TestActivity>()).create().get()
+        val activity = Robolectric.buildActivity(TestActivity::class.java).create().get()
 
         val verticalLayout = activity.findViewById(1) as? LinearLayout
         val relativeLayout = activity.findViewById(2) as? RelativeLayout
