@@ -19,19 +19,19 @@ package org.jetbrains.anko
 import android.view.*
 import java.util.*
 
-fun ViewGroup.forEachChild(f: (View) -> Unit) {
+inline fun ViewGroup.forEachChild(f: (View) -> Unit) {
     for (i in 0..childCount - 1) {
         f(getChildAt(i))
     }
 }
 
-fun ViewGroup.forEachChildWithIndex(f: (Int, View) -> Unit) {
+inline fun ViewGroup.forEachChildWithIndex(f: (Int, View) -> Unit) {
     for (i in 0..childCount - 1) {
         f(i, getChildAt(i))
     }
 }
 
-fun ViewGroup.firstChild(predicate: (View) -> Boolean): View {
+inline fun ViewGroup.firstChild(predicate: (View) -> Boolean): View {
     for (i in 0..childCount - 1) {
         val child = getChildAt(i)
         if (predicate(child)) {
@@ -41,7 +41,7 @@ fun ViewGroup.firstChild(predicate: (View) -> Boolean): View {
     throw NoSuchElementException("No element matching predicate was found.")
 }
 
-fun ViewGroup.firstChildOrNull(predicate: (View) -> Boolean): View? {
+inline fun ViewGroup.firstChildOrNull(predicate: (View) -> Boolean): View? {
     for (i in 0..childCount - 1) {
         val child = getChildAt(i)
         if (predicate(child)) {
