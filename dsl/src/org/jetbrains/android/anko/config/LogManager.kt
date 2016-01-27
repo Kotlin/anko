@@ -24,19 +24,19 @@ class LogManager(config: AnkoConfiguration) {
     private val level = LogLevel.valueOf(config.generatorOptions
             .filterIsInstance<GeneratorOption.LogLevel>().firstOrNull()?.arg?.toUpperCase() ?: LogLevel.INFO.name)
 
-    public fun d(s: String) {
+    fun d(s: String) {
         if (level <= LogLevel.DEBUG) System.out.println("D: $s")
     }
 
-    public fun i(s: String) {
+    fun i(s: String) {
         if (level <= LogLevel.INFO) System.out.println("I: $s")
     }
 
-    public fun w(s: String) {
+    fun w(s: String) {
         if (level <= LogLevel.WARNING) System.out.println("W: $s")
     }
 
-    public fun e(s: String) {
+    fun e(s: String) {
         if (level <= LogLevel.ERROR) {
             System.err.println("E: $s")
             throw Error(s)

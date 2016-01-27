@@ -23,10 +23,9 @@ import org.junit.Assert.assertTrue
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
-import java.util.*
 import java.util.logging.Logger
 
-public open class CompileTestFixture {
+open class CompileTestFixture {
     class ProcResult(val stdout: String, val stderr: String, val exitCode: Int)
 
     companion object {

@@ -19,7 +19,7 @@ package org.jetbrains.android.anko.robolectric
 import org.jetbrains.android.anko.compile.CompileTestFixture
 import java.io.File
 
-public abstract class AbstractRobolectricTest : CompileTestFixture() {
+abstract class AbstractRobolectricTest : CompileTestFixture() {
 
     protected fun runRobolectricTest(testDataFile: String, version: String) {
         runRobolectricTest(File("dsl/testData/robolectric/$testDataFile"), File("workdir/original/$version/"))

@@ -19,4 +19,4 @@ package org.jetbrains.anko
 import android.content.Context
 import android.widget.LinearLayout
 
-public class _LinearLayout(ctx: Context) : LinearLayout(ctx)
+class _LinearLayout(ctx: Context) : LinearLayout(ctx)

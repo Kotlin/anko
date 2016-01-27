@@ -3,7 +3,7 @@ package org.jetbrains.android.anko.uniformity
 import org.junit.Test
 import java.io.File
 
-public class SupportFragmentUniformityTest {
+class SupportFragmentUniformityTest {
 
     private var failFlag: Boolean = false
 
@@ -24,7 +24,7 @@ public class SupportFragmentUniformityTest {
     }
 
     @Test
-    public fun supportFragmentFunctionsExistTest() {
+    fun supportFragmentFunctionsExistTest() {
         val receiver = "Fragment"
 
         val (mainFiles, supportFiles) = File("dsl/static/src")

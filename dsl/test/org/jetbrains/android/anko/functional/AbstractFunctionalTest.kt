@@ -28,7 +28,7 @@ import org.junit.Assert.fail
 import java.io.File
 import java.io.FileWriter
 
-public abstract class AbstractFunctionalTest {
+abstract class AbstractFunctionalTest {
     protected fun loadOrCreate(file: File, data: String): String {
         try {
             return file.readText()

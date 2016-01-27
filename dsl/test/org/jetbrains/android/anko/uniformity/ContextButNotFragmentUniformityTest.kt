@@ -3,7 +3,7 @@ package org.jetbrains.android.anko.uniformity
 import org.junit.Test
 import java.io.File
 
-public class ContextButNotFragmentUniformityTest {
+class ContextButNotFragmentUniformityTest {
 
     private var failFlag: Boolean = false
 
@@ -24,7 +24,7 @@ public class ContextButNotFragmentUniformityTest {
     }
 
     @Test
-    public fun fragmentFunctionsExistTest() {
+    fun fragmentFunctionsExistTest() {
         val receiver1 = listOf("Fragment")
         val receiver2 = listOf("Activity", "Context")
 

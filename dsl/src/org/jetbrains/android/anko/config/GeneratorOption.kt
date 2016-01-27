@@ -17,7 +17,7 @@
 package org.jetbrains.android.anko.config
 
 sealed class GeneratorOption {
-    public class LogLevel(val arg: String) : GeneratorOption()
+    class LogLevel(val arg: String) : GeneratorOption()
 
     companion object {
         private val OPTIONS = mapOf<String, (String?) -> GeneratorOption>(

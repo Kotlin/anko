@@ -18,7 +18,7 @@ package org.jetbrains.android.anko.compile
 
 import java.io.File
 
-public open class AbstractCompileTest : CompileTestFixture() {
+open class AbstractCompileTest : CompileTestFixture() {
 
     protected fun runCompileTest(testDataFile: String, artifactOriginalDir: String) {
         runCompileTest(File("dsl/testData/compile/$testDataFile"), File("workdir/original/$artifactOriginalDir/"))
