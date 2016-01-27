@@ -6,7 +6,7 @@ class __ViewGroup_OnHierarchyChangeListener : android.view.ViewGroup.OnHierarchy
         _onChildViewAdded?.invoke(parent, child)
     }
 
-    public fun onChildViewAdded(listener: (android.view.View?, android.view.View?) -> Unit) {
+    fun onChildViewAdded(listener: (android.view.View?, android.view.View?) -> Unit) {
         _onChildViewAdded = listener
     }
 
@@ -14,7 +14,7 @@ class __ViewGroup_OnHierarchyChangeListener : android.view.ViewGroup.OnHierarchy
         _onChildViewRemoved?.invoke(parent, child)
     }
 
-    public fun onChildViewRemoved(listener: (android.view.View?, android.view.View?) -> Unit) {
+    fun onChildViewRemoved(listener: (android.view.View?, android.view.View?) -> Unit) {
         _onChildViewRemoved = listener
     }
 
@@ -29,7 +29,7 @@ class __TabLayout_OnTabSelectedListener : android.support.design.widget.TabLayou
         _onTabSelected?.invoke(tab)
     }
 
-    public fun onTabSelected(listener: (android.support.design.widget.TabLayout.Tab?) -> Unit) {
+    fun onTabSelected(listener: (android.support.design.widget.TabLayout.Tab?) -> Unit) {
         _onTabSelected = listener
     }
 
@@ -37,7 +37,7 @@ class __TabLayout_OnTabSelectedListener : android.support.design.widget.TabLayou
         _onTabUnselected?.invoke(tab)
     }
 
-    public fun onTabUnselected(listener: (android.support.design.widget.TabLayout.Tab?) -> Unit) {
+    fun onTabUnselected(listener: (android.support.design.widget.TabLayout.Tab?) -> Unit) {
         _onTabUnselected = listener
     }
 
@@ -45,7 +45,7 @@ class __TabLayout_OnTabSelectedListener : android.support.design.widget.TabLayou
         _onTabReselected?.invoke(tab)
     }
 
-    public fun onTabReselected(listener: (android.support.design.widget.TabLayout.Tab?) -> Unit) {
+    fun onTabReselected(listener: (android.support.design.widget.TabLayout.Tab?) -> Unit) {
         _onTabReselected = listener
     }
 

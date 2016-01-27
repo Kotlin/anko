@@ -6,7 +6,7 @@ class __RecyclerView_OnChildAttachStateChangeListener : android.support.v7.widge
         _onChildViewAttachedToWindow?.invoke(view)
     }
 
-    public fun onChildViewAttachedToWindow(listener: (android.view.View?) -> Unit) {
+    fun onChildViewAttachedToWindow(listener: (android.view.View?) -> Unit) {
         _onChildViewAttachedToWindow = listener
     }
 
@@ -14,7 +14,7 @@ class __RecyclerView_OnChildAttachStateChangeListener : android.support.v7.widge
         _onChildViewDetachedFromWindow?.invoke(view)
     }
 
-    public fun onChildViewDetachedFromWindow(listener: (android.view.View?) -> Unit) {
+    fun onChildViewDetachedFromWindow(listener: (android.view.View?) -> Unit) {
         _onChildViewDetachedFromWindow = listener
     }
 
@@ -28,7 +28,7 @@ class __RecyclerView_OnScrollListener : android.support.v7.widget.RecyclerView.O
         _onScrollStateChanged?.invoke(recyclerView, newState)
     }
 
-    public fun onScrollStateChanged(listener: (android.support.v7.widget.RecyclerView?, Int) -> Unit) {
+    fun onScrollStateChanged(listener: (android.support.v7.widget.RecyclerView?, Int) -> Unit) {
         _onScrollStateChanged = listener
     }
 
@@ -36,7 +36,7 @@ class __RecyclerView_OnScrollListener : android.support.v7.widget.RecyclerView.O
         _onScrolled?.invoke(recyclerView, dx, dy)
     }
 
-    public fun onScrolled(listener: (android.support.v7.widget.RecyclerView?, Int, Int) -> Unit) {
+    fun onScrolled(listener: (android.support.v7.widget.RecyclerView?, Int, Int) -> Unit) {
         _onScrolled = listener
     }
 
@@ -49,7 +49,7 @@ class __RecyclerView_OnItemTouchListener : android.support.v7.widget.RecyclerVie
 
     override fun onInterceptTouchEvent(rv: android.support.v7.widget.RecyclerView?, e: android.view.MotionEvent?) = _onInterceptTouchEvent?.invoke(rv, e) ?: false
 
-    public fun onInterceptTouchEvent(listener: (android.support.v7.widget.RecyclerView?, android.view.MotionEvent?) -> Boolean) {
+    fun onInterceptTouchEvent(listener: (android.support.v7.widget.RecyclerView?, android.view.MotionEvent?) -> Boolean) {
         _onInterceptTouchEvent = listener
     }
 
@@ -57,7 +57,7 @@ class __RecyclerView_OnItemTouchListener : android.support.v7.widget.RecyclerVie
         _onTouchEvent?.invoke(rv, e)
     }
 
-    public fun onTouchEvent(listener: (android.support.v7.widget.RecyclerView?, android.view.MotionEvent?) -> Unit) {
+    fun onTouchEvent(listener: (android.support.v7.widget.RecyclerView?, android.view.MotionEvent?) -> Unit) {
         _onTouchEvent = listener
     }
 
@@ -65,7 +65,7 @@ class __RecyclerView_OnItemTouchListener : android.support.v7.widget.RecyclerVie
         _onRequestDisallowInterceptTouchEvent?.invoke(disallowIntercept)
     }
 
-    public fun onRequestDisallowInterceptTouchEvent(listener: (Boolean) -> Unit) {
+    fun onRequestDisallowInterceptTouchEvent(listener: (Boolean) -> Unit) {
         _onRequestDisallowInterceptTouchEvent = listener
     }
 

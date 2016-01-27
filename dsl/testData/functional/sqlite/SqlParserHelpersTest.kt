@@ -1,4 +1,4 @@
-public fun <T1, R> rowParser(parser: (T1) -> R): RowParser<R> {
+fun <T1, R> rowParser(parser: (T1) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 1)
@@ -9,7 +9,7 @@ public fun <T1, R> rowParser(parser: (T1) -> R): RowParser<R> {
     }
 }
 
-public fun <T1, T2, R> rowParser(parser: (T1, T2) -> R): RowParser<R> {
+fun <T1, T2, R> rowParser(parser: (T1, T2) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 2)
@@ -20,7 +20,7 @@ public fun <T1, T2, R> rowParser(parser: (T1, T2) -> R): RowParser<R> {
     }
 }
 
-public fun <T1, T2, T3, R> rowParser(parser: (T1, T2, T3) -> R): RowParser<R> {
+fun <T1, T2, T3, R> rowParser(parser: (T1, T2, T3) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 3)
@@ -31,7 +31,7 @@ public fun <T1, T2, T3, R> rowParser(parser: (T1, T2, T3) -> R): RowParser<R> {
     }
 }
 
-public fun <T1, T2, T3, T4, R> rowParser(parser: (T1, T2, T3, T4) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, R> rowParser(parser: (T1, T2, T3, T4) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 4)
@@ -42,7 +42,7 @@ public fun <T1, T2, T3, T4, R> rowParser(parser: (T1, T2, T3, T4) -> R): RowPars
     }
 }
 
-public fun <T1, T2, T3, T4, T5, R> rowParser(parser: (T1, T2, T3, T4, T5) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, R> rowParser(parser: (T1, T2, T3, T4, T5) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 5)
@@ -53,7 +53,7 @@ public fun <T1, T2, T3, T4, T5, R> rowParser(parser: (T1, T2, T3, T4, T5) -> R):
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, R> rowParser(parser: (T1, T2, T3, T4, T5, T6) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, R> rowParser(parser: (T1, T2, T3, T4, T5, T6) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 6)
@@ -64,7 +64,7 @@ public fun <T1, T2, T3, T4, T5, T6, R> rowParser(parser: (T1, T2, T3, T4, T5, T6
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 7)
@@ -75,7 +75,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, R> rowParser(parser: (T1, T2, T3, T4, T5
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 8)
@@ -86,7 +86,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, R> rowParser(parser: (T1, T2, T3, T4
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 9)
@@ -97,7 +97,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> rowParser(parser: (T1, T2, T3
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 10)
@@ -108,7 +108,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R> rowParser(parser: (T1, T
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 11)
@@ -119,7 +119,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, R> rowParser(parser: (
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 12)
@@ -130,7 +130,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, R> rowParser(pars
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 13)
@@ -141,7 +141,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, R> rowParser
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 14)
@@ -152,7 +152,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, R> rowP
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 15)
@@ -163,7 +163,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, R>
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 16)
@@ -174,7 +174,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T1
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 17)
@@ -185,7 +185,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T1
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 18)
@@ -196,7 +196,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T1
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 19)
@@ -207,7 +207,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T1
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 20)
@@ -218,7 +218,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T1
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 21)
@@ -229,7 +229,7 @@ public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T1
     }
 }
 
-public fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22) -> R): RowParser<R> {
+fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, R> rowParser(parser: (T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22) -> R): RowParser<R> {
     return object : RowParser<R> {
         override fun parseRow(columns: Array<Any>): R {
             if (columns.size != 22)

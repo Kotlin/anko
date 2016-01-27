@@ -70,7 +70,7 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
         }
 
         return buffer {
-            line("public $mutability $fullPropertyName: $rawReturnType$nullability")
+            line("$mutability $fullPropertyName: $rawReturnType$nullability")
             if (getter != null) {
                 indent.line("get() = ${getter.method.name}()")
             } else {
@@ -92,7 +92,7 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
             }
 
             if (resourceSetter != null) {
-                line("public var ${fullPropertyName}Resource: Int")
+                line("var ${fullPropertyName}Resource: Int")
                 indent.line("get() = throw AnkoException(\"'${fullPropertyName}Resource' property does not have a getter\")")
                 indent.line("set(v) = ${resourceSetter.method.name}(v)")
                 nl()

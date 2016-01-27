@@ -4,13 +4,13 @@ class __SearchView_OnQueryTextListener : android.support.v7.widget.SearchView.On
 
     override fun onQueryTextSubmit(query: String?) = _onQueryTextSubmit?.invoke(query) ?: false
 
-    public fun onQueryTextSubmit(listener: (String?) -> Boolean) {
+    fun onQueryTextSubmit(listener: (String?) -> Boolean) {
         _onQueryTextSubmit = listener
     }
 
     override fun onQueryTextChange(newText: String?) = _onQueryTextChange?.invoke(newText) ?: false
 
-    public fun onQueryTextChange(listener: (String?) -> Boolean) {
+    fun onQueryTextChange(listener: (String?) -> Boolean) {
         _onQueryTextChange = listener
     }
 
@@ -22,13 +22,13 @@ class __SearchView_OnSuggestionListener : android.support.v7.widget.SearchView.O
 
     override fun onSuggestionSelect(position: Int) = _onSuggestionSelect?.invoke(position) ?: false
 
-    public fun onSuggestionSelect(listener: (Int) -> Boolean) {
+    fun onSuggestionSelect(listener: (Int) -> Boolean) {
         _onSuggestionSelect = listener
     }
 
     override fun onSuggestionClick(position: Int) = _onSuggestionClick?.invoke(position) ?: false
 
-    public fun onSuggestionClick(listener: (Int) -> Boolean) {
+    fun onSuggestionClick(listener: (Int) -> Boolean) {
         _onSuggestionClick = listener
     }
 

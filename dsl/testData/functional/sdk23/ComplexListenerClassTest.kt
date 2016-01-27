@@ -6,7 +6,7 @@ class __View_OnAttachStateChangeListener : android.view.View.OnAttachStateChange
         _onViewAttachedToWindow?.invoke(v)
     }
 
-    public fun onViewAttachedToWindow(listener: (android.view.View) -> Unit) {
+    fun onViewAttachedToWindow(listener: (android.view.View) -> Unit) {
         _onViewAttachedToWindow = listener
     }
 
@@ -14,7 +14,7 @@ class __View_OnAttachStateChangeListener : android.view.View.OnAttachStateChange
         _onViewDetachedFromWindow?.invoke(v)
     }
 
-    public fun onViewDetachedFromWindow(listener: (android.view.View) -> Unit) {
+    fun onViewDetachedFromWindow(listener: (android.view.View) -> Unit) {
         _onViewDetachedFromWindow = listener
     }
 
@@ -29,7 +29,7 @@ class __TextWatcher : android.text.TextWatcher {
         _beforeTextChanged?.invoke(s, start, count, after)
     }
 
-    public fun beforeTextChanged(listener: (CharSequence?, Int, Int, Int) -> Unit) {
+    fun beforeTextChanged(listener: (CharSequence?, Int, Int, Int) -> Unit) {
         _beforeTextChanged = listener
     }
 
@@ -37,7 +37,7 @@ class __TextWatcher : android.text.TextWatcher {
         _onTextChanged?.invoke(s, start, before, count)
     }
 
-    public fun onTextChanged(listener: (CharSequence?, Int, Int, Int) -> Unit) {
+    fun onTextChanged(listener: (CharSequence?, Int, Int, Int) -> Unit) {
         _onTextChanged = listener
     }
 
@@ -45,7 +45,7 @@ class __TextWatcher : android.text.TextWatcher {
         _afterTextChanged?.invoke(s)
     }
 
-    public fun afterTextChanged(listener: (android.text.Editable?) -> Unit) {
+    fun afterTextChanged(listener: (android.text.Editable?) -> Unit) {
         _afterTextChanged = listener
     }
 
@@ -61,7 +61,7 @@ class __GestureOverlayView_OnGestureListener : android.gesture.GestureOverlayVie
         _onGestureStarted?.invoke(overlay, event)
     }
 
-    public fun onGestureStarted(listener: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
+    fun onGestureStarted(listener: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
         _onGestureStarted = listener
     }
 
@@ -69,7 +69,7 @@ class __GestureOverlayView_OnGestureListener : android.gesture.GestureOverlayVie
         _onGesture?.invoke(overlay, event)
     }
 
-    public fun onGesture(listener: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
+    fun onGesture(listener: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
         _onGesture = listener
     }
 
@@ -77,7 +77,7 @@ class __GestureOverlayView_OnGestureListener : android.gesture.GestureOverlayVie
         _onGestureEnded?.invoke(overlay, event)
     }
 
-    public fun onGestureEnded(listener: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
+    fun onGestureEnded(listener: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
         _onGestureEnded = listener
     }
 
@@ -85,7 +85,7 @@ class __GestureOverlayView_OnGestureListener : android.gesture.GestureOverlayVie
         _onGestureCancelled?.invoke(overlay, event)
     }
 
-    public fun onGestureCancelled(listener: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
+    fun onGestureCancelled(listener: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
         _onGestureCancelled = listener
     }
 
@@ -99,7 +99,7 @@ class __GestureOverlayView_OnGesturingListener : android.gesture.GestureOverlayV
         _onGesturingStarted?.invoke(overlay)
     }
 
-    public fun onGesturingStarted(listener: (android.gesture.GestureOverlayView?) -> Unit) {
+    fun onGesturingStarted(listener: (android.gesture.GestureOverlayView?) -> Unit) {
         _onGesturingStarted = listener
     }
 
@@ -107,7 +107,7 @@ class __GestureOverlayView_OnGesturingListener : android.gesture.GestureOverlayV
         _onGesturingEnded?.invoke(overlay)
     }
 
-    public fun onGesturingEnded(listener: (android.gesture.GestureOverlayView?) -> Unit) {
+    fun onGesturingEnded(listener: (android.gesture.GestureOverlayView?) -> Unit) {
         _onGesturingEnded = listener
     }
 
@@ -121,7 +121,7 @@ class __ViewGroup_OnHierarchyChangeListener : android.view.ViewGroup.OnHierarchy
         _onChildViewAdded?.invoke(parent, child)
     }
 
-    public fun onChildViewAdded(listener: (android.view.View?, android.view.View?) -> Unit) {
+    fun onChildViewAdded(listener: (android.view.View?, android.view.View?) -> Unit) {
         _onChildViewAdded = listener
     }
 
@@ -129,7 +129,7 @@ class __ViewGroup_OnHierarchyChangeListener : android.view.ViewGroup.OnHierarchy
         _onChildViewRemoved?.invoke(parent, child)
     }
 
-    public fun onChildViewRemoved(listener: (android.view.View?, android.view.View?) -> Unit) {
+    fun onChildViewRemoved(listener: (android.view.View?, android.view.View?) -> Unit) {
         _onChildViewRemoved = listener
     }
 
@@ -143,7 +143,7 @@ class __AbsListView_OnScrollListener : android.widget.AbsListView.OnScrollListen
         _onScrollStateChanged?.invoke(view, scrollState)
     }
 
-    public fun onScrollStateChanged(listener: (android.widget.AbsListView?, Int) -> Unit) {
+    fun onScrollStateChanged(listener: (android.widget.AbsListView?, Int) -> Unit) {
         _onScrollStateChanged = listener
     }
 
@@ -151,7 +151,7 @@ class __AbsListView_OnScrollListener : android.widget.AbsListView.OnScrollListen
         _onScroll?.invoke(view, firstVisibleItem, visibleItemCount, totalItemCount)
     }
 
-    public fun onScroll(listener: (android.widget.AbsListView?, Int, Int, Int) -> Unit) {
+    fun onScroll(listener: (android.widget.AbsListView?, Int, Int, Int) -> Unit) {
         _onScroll = listener
     }
 
@@ -165,7 +165,7 @@ class __AdapterView_OnItemSelectedListener : android.widget.AdapterView.OnItemSe
         _onItemSelected?.invoke(p0, p1, p2, p3)
     }
 
-    public fun onItemSelected(listener: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit) {
+    fun onItemSelected(listener: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit) {
         _onItemSelected = listener
     }
 
@@ -173,7 +173,7 @@ class __AdapterView_OnItemSelectedListener : android.widget.AdapterView.OnItemSe
         _onNothingSelected?.invoke(p0)
     }
 
-    public fun onNothingSelected(listener: (android.widget.AdapterView<*>?) -> Unit) {
+    fun onNothingSelected(listener: (android.widget.AdapterView<*>?) -> Unit) {
         _onNothingSelected = listener
     }
 
@@ -185,13 +185,13 @@ class __SearchView_OnQueryTextListener : android.widget.SearchView.OnQueryTextLi
 
     override fun onQueryTextSubmit(query: String?) = _onQueryTextSubmit?.invoke(query) ?: false
 
-    public fun onQueryTextSubmit(listener: (String?) -> Boolean) {
+    fun onQueryTextSubmit(listener: (String?) -> Boolean) {
         _onQueryTextSubmit = listener
     }
 
     override fun onQueryTextChange(newText: String?) = _onQueryTextChange?.invoke(newText) ?: false
 
-    public fun onQueryTextChange(listener: (String?) -> Boolean) {
+    fun onQueryTextChange(listener: (String?) -> Boolean) {
         _onQueryTextChange = listener
     }
 
@@ -203,13 +203,13 @@ class __SearchView_OnSuggestionListener : android.widget.SearchView.OnSuggestion
 
     override fun onSuggestionSelect(position: Int) = _onSuggestionSelect?.invoke(position) ?: false
 
-    public fun onSuggestionSelect(listener: (Int) -> Boolean) {
+    fun onSuggestionSelect(listener: (Int) -> Boolean) {
         _onSuggestionSelect = listener
     }
 
     override fun onSuggestionClick(position: Int) = _onSuggestionClick?.invoke(position) ?: false
 
-    public fun onSuggestionClick(listener: (Int) -> Boolean) {
+    fun onSuggestionClick(listener: (Int) -> Boolean) {
         _onSuggestionClick = listener
     }
 
@@ -224,7 +224,7 @@ class __SeekBar_OnSeekBarChangeListener : android.widget.SeekBar.OnSeekBarChange
         _onProgressChanged?.invoke(seekBar, progress, fromUser)
     }
 
-    public fun onProgressChanged(listener: (android.widget.SeekBar?, Int, Boolean) -> Unit) {
+    fun onProgressChanged(listener: (android.widget.SeekBar?, Int, Boolean) -> Unit) {
         _onProgressChanged = listener
     }
 
@@ -232,7 +232,7 @@ class __SeekBar_OnSeekBarChangeListener : android.widget.SeekBar.OnSeekBarChange
         _onStartTrackingTouch?.invoke(seekBar)
     }
 
-    public fun onStartTrackingTouch(listener: (android.widget.SeekBar?) -> Unit) {
+    fun onStartTrackingTouch(listener: (android.widget.SeekBar?) -> Unit) {
         _onStartTrackingTouch = listener
     }
 
@@ -240,7 +240,7 @@ class __SeekBar_OnSeekBarChangeListener : android.widget.SeekBar.OnSeekBarChange
         _onStopTrackingTouch?.invoke(seekBar)
     }
 
-    public fun onStopTrackingTouch(listener: (android.widget.SeekBar?) -> Unit) {
+    fun onStopTrackingTouch(listener: (android.widget.SeekBar?) -> Unit) {
         _onStopTrackingTouch = listener
     }
 
@@ -254,7 +254,7 @@ class __SlidingDrawer_OnDrawerScrollListener : android.widget.SlidingDrawer.OnDr
         _onScrollStarted?.invoke()
     }
 
-    public fun onScrollStarted(listener: () -> Unit) {
+    fun onScrollStarted(listener: () -> Unit) {
         _onScrollStarted = listener
     }
 
@@ -262,7 +262,7 @@ class __SlidingDrawer_OnDrawerScrollListener : android.widget.SlidingDrawer.OnDr
         _onScrollEnded?.invoke()
     }
 
-    public fun onScrollEnded(listener: () -> Unit) {
+    fun onScrollEnded(listener: () -> Unit) {
         _onScrollEnded = listener
     }
 

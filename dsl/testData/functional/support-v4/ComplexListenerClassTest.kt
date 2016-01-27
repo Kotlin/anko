@@ -7,7 +7,7 @@ class __ViewPager_OnPageChangeListener : android.support.v4.view.ViewPager.OnPag
         _onPageScrolled?.invoke(position, positionOffset, positionOffsetPixels)
     }
 
-    public fun onPageScrolled(listener: (Int, Float, Int) -> Unit) {
+    fun onPageScrolled(listener: (Int, Float, Int) -> Unit) {
         _onPageScrolled = listener
     }
 
@@ -15,7 +15,7 @@ class __ViewPager_OnPageChangeListener : android.support.v4.view.ViewPager.OnPag
         _onPageSelected?.invoke(position)
     }
 
-    public fun onPageSelected(listener: (Int) -> Unit) {
+    fun onPageSelected(listener: (Int) -> Unit) {
         _onPageSelected = listener
     }
 
@@ -23,7 +23,7 @@ class __ViewPager_OnPageChangeListener : android.support.v4.view.ViewPager.OnPag
         _onPageScrollStateChanged?.invoke(state)
     }
 
-    public fun onPageScrollStateChanged(listener: (Int) -> Unit) {
+    fun onPageScrollStateChanged(listener: (Int) -> Unit) {
         _onPageScrollStateChanged = listener
     }
 

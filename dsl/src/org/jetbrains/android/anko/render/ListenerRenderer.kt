@@ -101,7 +101,7 @@ class ListenerRenderer(config: AnkoConfiguration) : Renderer(config) {
                     line("}").nl()
                 }
 
-                line("public fun ${method.name}(listener: ($argumentTypes) -> ${method.returnType.asString()}) {")
+                line("fun ${method.name}(listener: ($argumentTypes) -> ${method.returnType.asString()}) {")
                 line("_$varName = listener")
                 line("}")
             }.getLines()
