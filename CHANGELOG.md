@@ -1,5 +1,15 @@
 ## Change Log
 
+### Anko 0.8.1 *(2015-12-09)*
+
+Built for Koltin Beta 3 (1.0.0-beta-3595).
+
+* SQLite helpers are moved to `anko-sqlite` artifact;
+* Fixed "Implicit setContentView in onCreate doesn't work in 0.8" [#114](https://github.com/Kotlin/anko/issues/114);
+* Fixed "Anko DSL Preview plugin 0.8 crashes" [#115](https://github.com/Kotlin/anko/issues/115);
+* Add intention: `0xffefefef.toInt()` → `0xef.gray.opaque`;
+* Add `forEachChild()`, `firstChild()`, `firstChildOrNull()` helpers.
+
 ### Anko 0.8 *(2015-12-01)*
 
 Built for Kotlin Beta 2 (1.0.0-beta-2423).

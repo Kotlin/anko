@@ -3,6 +3,7 @@ package org.jetbrains.anko
 import android.app.Activity
 import android.app.Fragment
 import android.content.Context
+import android.content.ContextWrapper
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
@@ -74,11 +75,15 @@ open class AnkoContextImpl<T>(
         this.myView = view
 
         if (setContentView) {
-            val context = ctx
-            when (context) {
-                is Activity -> context.setContentView(view)
-                else -> throw IllegalStateException("Context is not an Activity, can't set content view")
-            }
+            doAddView(ctx, view)
+        }
+    }
+
+    private fun doAddView(context: Context, view: View) {
+        when (context) {
+            is Activity -> context.setContentView(view)
+            is ContextWrapper -> doAddView(context.baseContext, view)
+            else -> throw IllegalStateException("Context is not an Activity, can't set content view")
         }
     }
 
