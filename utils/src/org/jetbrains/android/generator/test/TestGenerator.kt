@@ -56,10 +56,6 @@ fun Context.generate() {
             tune(ConfigurationTune.SIMPLE_LISTENERS)
         }
 
-        functionalDslTest("InterfaceWorkaroundsTest", AnkoFile.INTERFACE_WORKAROUNDS_JAVA) {
-            file(AnkoFile.INTERFACE_WORKAROUNDS_JAVA)
-        }
-
         functionalDslTest("SqlParserHelpersTest", AnkoFile.SQL_PARSER_HELPERS) {
             file(AnkoFile.SQL_PARSER_HELPERS)
         }

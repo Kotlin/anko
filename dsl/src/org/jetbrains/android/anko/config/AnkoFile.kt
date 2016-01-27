@@ -35,7 +35,6 @@ enum class AnkoFile(
         type: Set<TargetArtifactType>,
         val shouldBeWritten: (AnkoConfiguration) -> Boolean = { true }
 ) : ConfigurationOption {
-    INTERFACE_WORKAROUNDS_JAVA(setOf(PLATFORM)),
     LAYOUTS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     LISTENERS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     PROPERTIES(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),

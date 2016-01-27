@@ -36,8 +36,6 @@ class LayoutElement(val layout: ClassNode, val layoutParams: ClassNode, val cons
 
 class ServiceElement(val service: ClassNode, val name: String)
 
-data class InterfaceWorkaroundElement(val baseClass: ClassNode, val ancestor: ClassNode, val inner: InnerClassNode)
-
 class PropertyElement(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)
 
 class ListenerMethod(val methodWithClass: MethodNodeWithClass, val name: String, val returnType: Type)

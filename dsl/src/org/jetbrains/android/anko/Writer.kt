@@ -53,18 +53,12 @@ class Writer(private val renderFacade: RenderFacade) {
     }
 
     private fun write(file: AnkoFile): Unit = when (file) {
-        INTERFACE_WORKAROUNDS_JAVA -> writeInterfaceWorkarounds()
         LAYOUTS -> writeLayouts()
         LISTENERS -> writeListeners()
         PROPERTIES -> writeProperties()
         SERVICES -> writeServices()
         SQL_PARSER_HELPERS -> writeSqlParserHelpers()
         VIEWS -> writeViews()
-    }
-
-    fun writeInterfaceWorkarounds() {
-        val imports = "package ${config.outputPackage}.workarounds;"
-        write(AnkoFile.INTERFACE_WORKAROUNDS_JAVA, InterfaceWorkaroundsRenderer::class.java, imports, false)
     }
 
     private fun writeLayouts() {

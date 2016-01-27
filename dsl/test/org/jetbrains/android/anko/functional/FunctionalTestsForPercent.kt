@@ -59,13 +59,6 @@ class FunctionalTestsForPercent : AbstractFunctionalTest() {
     }
 
     @Test
-    fun testInterfaceWorkaroundsTest() {
-        runFunctionalTest("InterfaceWorkaroundsTest.kt", AnkoFile.INTERFACE_WORKAROUNDS_JAVA, version) {
-            files.add(AnkoFile.INTERFACE_WORKAROUNDS_JAVA)
-        }
-    }
-
-    @Test
     fun testSqlParserHelpersTest() {
         runFunctionalTest("SqlParserHelpersTest.kt", AnkoFile.SQL_PARSER_HELPERS, version) {
             files.add(AnkoFile.SQL_PARSER_HELPERS)
