@@ -4,6 +4,7 @@
     <buildFile url="file://$PROJECT_DIR$/update_dependencies.xml" />
     <buildFile url="file://$PROJECT_DIR$/download_android_sdk.xml" />
     <buildFile url="file://$PROJECT_DIR$/build_artifacts.xml">
+      <customJdkName value="1.8" />
       <maximumHeapSize value="1024" />
       <maximumStackSize value="16" />
     </buildFile>
