@@ -40,7 +40,7 @@ class ListenerGenerator : Generator<ListenerElement> {
                 .map { makeListener(it) }
                 .filter { it !is ComplexListenerElement || Pair(it.clazz, it.name) !in complexAddListeners }
                 .sortedBy { it.setter.identifier }
-                .toArrayList()
+                .toMutableList()
         
         addListeners + setListeners
     }

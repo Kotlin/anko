@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.0.0-rc-1007'
+    ext.kotlin_version = '1.0.0-rc-1025'
     repositories {
         maven {
             url "https://dl.bintray.com/kotlin/kotlin-eap"
