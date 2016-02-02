@@ -16,11 +16,8 @@
 
 package org.jetbrains.anko
 
-import android.app.Activity
-import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewManager
 
 fun <T : View> T.style(style: (View) -> Unit): T {
     applyStyle(this, style)
@@ -34,30 +31,5 @@ private fun applyStyle(v: View, style: (View) -> Unit) {
         for (i in 0 .. maxIndex) {
             v.getChildAt(i)?.let { applyStyle(it, style) }
         }
-    }
-}
-
-@Deprecated("Use AnkoContext instead")
-class UiHelper(val ctx: Context, private val setContentView: Boolean = true) : ViewManager {
-    private lateinit var view: View
-
-    fun toView() = view
-
-    override fun addView(view: View, params: ViewGroup.LayoutParams?) {
-        this.view = view
-        if (setContentView) {
-            when (ctx) {
-                is Activity -> ctx.setContentView(view)
-                else -> {}
-            }
-        }
-    }
-
-    override fun updateViewLayout(view: View, params: ViewGroup.LayoutParams) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun removeView(view: View) {
-        throw UnsupportedOperationException()
     }
 }
