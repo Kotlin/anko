@@ -115,7 +115,6 @@ class Writer(private val renderFacade: RenderFacade) {
         PrintWriter(file).useIt {
             if (config.generatePackage && generatePackage) {
                 val facadeFilename = config.version.toCamelCase('-') + subsystem.name.toLowerCase().toCamelCase()
-                println("@file:JvmMultifileClass")
                 println("@file:JvmName(\"${facadeFilename}Kt\")")
                 println("package ${config.outputPackage}\n")
             }
