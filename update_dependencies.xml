@@ -21,7 +21,7 @@
         <get src="http://search.maven.org/remotecontent?filepath=org/robolectric/android-all/4.3_r2-robolectric-0/android-all-4.3_r2-robolectric-0.jar"
              dest="lib/android-all-4.1.2_r1-robolectric-0.jar" usetimestamp="true"/>
 
-        <get src="https://teamcity.jetbrains.com/repository/download/bt345/690126:id/kotlin-plugin-1.0.0-rc-1025.zip"
+        <get src="https://teamcity.jetbrains.com/repository/download/bt345/691605:id/kotlin-plugin-1.0.0-rc-1036.zip"
              dest="lib/kotlin-plugin.zip" usetimestamp="true" username="guest" password="guest"/>
 
         <get src="http://heanet.dl.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-bin.zip"
