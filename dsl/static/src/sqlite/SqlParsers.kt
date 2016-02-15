@@ -135,7 +135,7 @@ inline fun <reified T: Any> classParser(): RowParser<T> {
     val clazz = T::class.java
     val constructors = clazz.declaredConstructors.filter {
         val types = it.parameterTypes
-        it.isAccessible && !it.isVarArgs && Modifier.isPublic(it.modifiers) &&
+        !it.isVarArgs && Modifier.isPublic(it.modifiers) &&
             types != null && types.size > 0
     }
     if (constructors.isEmpty())
@@ -160,7 +160,7 @@ inline fun <reified T: Any> classParser(): RowParser<T> {
 
     return object : RowParser<T> {
         override fun parseRow(columns: Array<Any>): T {
-            return c.newInstance(columns) as T
+            return c.newInstance(*columns) as T
         }
     }
 }
