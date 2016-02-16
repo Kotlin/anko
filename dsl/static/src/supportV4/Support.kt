@@ -16,21 +16,14 @@
 
 package org.jetbrains.anko.support.v4
 
-import android.content.Context
 import android.support.v4.app.Fragment
 import android.view.View
-import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.*
 import org.jetbrains.anko.internals.AnkoInternals.createAnkoContext
 
 inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
 inline fun <reified T : View> Fragment.findOptional(id: Int): T? = view?.findViewById(id) as? T
-
-@Deprecated("Use Context.addView() instead")
-fun <T : View> Fragment.addView(factory: (ctx: Context) -> T): T {
-    return (activity as Context).ankoView(factory) {}
-}
 
 fun Fragment.UI(init: AnkoContext<Fragment>.() -> Unit) = createAnkoContext(activity, init)
 
