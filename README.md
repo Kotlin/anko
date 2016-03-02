@@ -11,7 +11,7 @@ Just a brief example. Here is a "hello world" written with Anko:
 ```kotlin
 verticalLayout {
     val name = editText()
-    button("Say Hello") {
+    button("Say Hello") {0
         onClick { toast("Hello, ${name.text}!") }
     }
 }
@@ -144,9 +144,9 @@ Basically, all you have to do is to add an additional repository and a compile d
 
 ```gradle
 dependencies {
-    compile 'org.jetbrains.anko:anko-sdk15:0.8' // sdk19, sdk21, sdk23 are also available
-    compile 'org.jetbrains.anko:anko-support-v4:0.8' // In case you need support-v4 bindings
-    compile 'org.jetbrains.anko:anko-appcompat-v7:0.8' // For appcompat-v7 bindings
+    compile 'org.jetbrains.anko:anko-sdk15:0.8.3' // sdk19, sdk21, sdk23 are also available
+    compile 'org.jetbrains.anko:anko-support-v4:0.8.3' // In case you need support-v4 bindings
+    compile 'org.jetbrains.anko:anko-appcompat-v7:0.8.3' // For appcompat-v7 bindings
 }
 ```
 
