@@ -1,5 +1,20 @@
 ## Change Log
 
+### Anko 0.8.3 *(2016-03-02)*
+
+Built for Kotlin 1.0.
+
+* Remove deprecated `android.support.v4.Fragment.addView()` function.
+
+### Anko 0.8.2 *(2016-02-04)*
+
+Built for Kotlin 1.0 RC.
+
+* `forEachChild()`, `forEachChildWithIndex()`, `firstChild()`, `firstChildOrNull()` are inlined now [#134](https://github.com/Kotlin/anko/pull/134);
+* `Int.withAlpha` [#125](https://github.com/Kotlin/anko/pull/125);
+* `ContextWrapper` is now supported by `AnkoContext`;
+* Anko library size and method count was slightly reduced.
+
 ### Anko 0.8.1 *(2015-12-09)*
 
 Built for Koltin Beta 3 (1.0.0-beta-3595).
