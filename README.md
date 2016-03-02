@@ -11,7 +11,7 @@ Just a brief example. Here is a "hello world" written with Anko:
 ```kotlin
 verticalLayout {
     val name = editText()
-    button("Say Hello") {0
+    button("Say Hello") {
         onClick { toast("Hello, ${name.text}!") }
     }
 }
