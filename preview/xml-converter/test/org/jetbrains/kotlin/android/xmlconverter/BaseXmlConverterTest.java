@@ -1,5 +1,6 @@
 package org.jetbrains.kotlin.android.xmlconverter;
 
+import kotlin.text.Charsets;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 import sun.plugin.dom.exception.InvalidStateException;
@@ -29,8 +30,8 @@ public class BaseXmlConverterTest {
         assertTrue(inputFile + " does not exist", inputFile.exists());
         assertTrue(outputFile + " does not exist", outputFile.exists());
 
-        String actual = XmlConverter.INSTANCE.convert(readText(inputFile, "UTF-8"), setOf("raw"));
-        String expected = readText(outputFile, "UTF-8");
+        String actual = XmlConverter.INSTANCE.convert(readText(inputFile, Charsets.UTF_8), setOf("raw"));
+        String expected = readText(outputFile, Charsets.UTF_8);
 
         assertEquals(expected, actual);
     }
