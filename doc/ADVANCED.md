@@ -156,7 +156,7 @@ selector("Where are you from?", countries) { i ->
 There's a better way:
 
 ```kotlin
-async {
+async() {
     // Long background task
     uiThread {
         result.text = "Done"
