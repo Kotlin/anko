@@ -32,7 +32,7 @@
     <property name="idea.dir" value="ideaSDK"/>
     <property name="idea.sdk.fetch.needed" value="true"/>
 
-    <property name="dependencies.info.file" value="lib/dependencies.properties"/>
+    <property name="dependencies.info.file" value="dependencies/dependencies.properties"/>
 
     <property file="${dependencies.info.file}" prefix="dependencies.info.prev"/>
 
@@ -140,15 +140,15 @@
                     teamcity.server.url="https://teamcity.jetbrains.com"
                     build.locator.request="${kotlin.bootstrap.locator}"
                     artifact.path="kotlin-plugin-{build.number}.zip"
-                    dest="lib/kotlin-plugin.zip"
+                    dest="dependencies/kotlin-plugin.zip"
                     usetimestamp="true"/>
 
-            <delete dir="lib/Kotlin" failonerror="false"/>
-            <unzip src="lib/kotlin-plugin.zip" dest="lib"/>
+            <delete dir="dependencies/Kotlin" failonerror="false"/>
+            <unzip src="dependencies/kotlin-plugin.zip" dest="lib"/>
         </sequential>
 
         <sequential unless:set="download.bootstrap.compiler">
-            <available file="lib/Kotlin" property="have.bootstrap.compiler"/>
+            <available file="dependencies/Kotlin" property="have.bootstrap.compiler"/>
             <fail message="Bootstrap compiler is expected to be downloaded to 'dependencies/bootstrap-compiler' by TeamCity" unless:set="have.bootstrap.compiler"/>
             <echo message="Bootstrap compiler found in 'dependencies/bootstrap-compiler'" if:set="have.bootstrap.compiler"/>
 
@@ -161,7 +161,7 @@
 
         <!-- Java can't manipulate permissions -->
         <exec executable="find" if:set="bootstrap.need.chmod">
-            <arg value="lib/Kotlin/kotlinc/bin"/>
+            <arg value="dependencies/Kotlin/kotlinc/bin"/>
             <arg line="-name 'kotlin*' ! -name '*.bat' -exec chmod a+x '{}' ;"/>
         </exec>
     </target>
@@ -361,7 +361,7 @@
 
     <macrodef name="build-protobuf-java-lite">
         <sequential>
-            <exec executable="lib/Kotlin/kotlinc/bin/${kotlinc.executable.path}" failonerror="true">
+            <exec executable="dependencies/Kotlin/kotlinc/bin/${kotlinc.executable.path}" failonerror="true">
                 <arg value="-script"/>
                 <arg value="generators/infrastructure/build-protobuf-lite.kts"/>
                 <arg value="${basedir}/ideaSDK/lib/protobuf-2.5.0.jar"/>
@@ -743,7 +743,7 @@
         <attribute name="idea.maven.version"/>
         <attribute name="base.repository.url"/>
 
-        <attribute name="download.dir" default="lib/idea"/>
+        <attribute name="download.dir" default="dependencies/idea"/>
 
         <sequential>
             <delete dir="@{download.dir}"/>

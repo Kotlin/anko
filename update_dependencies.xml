@@ -1,43 +1,43 @@
 <project name="Update Dependencies" default="update">
 
     <target name="update">
-        <mkdir dir="lib/download"/>
+        <mkdir dir="dependencies/download"/>
 
         <get src="http://repo1.maven.org/maven2/org/ow2/asm/asm-debug-all/4.2/asm-debug-all-4.2.jar"
-             dest="lib/asm-4.2.jar" usetimestamp="true"/>
+             dest="dependencies/asm-4.2.jar" usetimestamp="true"/>
 
         <get src="http://search.maven.org/remotecontent?filepath=junit/junit/4.11/junit-4.11.jar"
-             dest="lib/junit-4.11.jar" usetimestamp="true"/>
+             dest="dependencies/junit-4.11.jar" usetimestamp="true"/>
 
         <get src="http://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-all/1.3/hamcrest-all-1.3.jar"
-             dest="lib/hamcrest-all-1.3.jar" usetimestamp="true"/>
+             dest="dependencies/hamcrest-all-1.3.jar" usetimestamp="true"/>
 
         <get src="http://search.maven.org/remotecontent?filepath=org/json/json/20080701/json-20080701.jar"
-             dest="lib/json-20080701.jar" usetimestamp="true"/>
+             dest="dependencies/json-20080701.jar" usetimestamp="true"/>
 
         <get src="http://search.maven.org/remotecontent?filepath=org/ccil/cowan/tagsoup/tagsoup/1.2/tagsoup-1.2.jar"
-             dest="lib/tagsoup-1.2.jar" usetimestamp="true"/>
+             dest="dependencies/tagsoup-1.2.jar" usetimestamp="true"/>
 
         <get src="http://search.maven.org/remotecontent?filepath=org/robolectric/android-all/4.3_r2-robolectric-0/android-all-4.3_r2-robolectric-0.jar"
-             dest="lib/android-all-4.1.2_r1-robolectric-0.jar" usetimestamp="true"/>
+             dest="dependencies/android-all-4.1.2_r1-robolectric-0.jar" usetimestamp="true"/>
 
         <get src="https://plugins.jetbrains.com/files/6954/24023/kotlin-plugin-1.0.0-release-IJ143-70.zip"
-             dest="lib/kotlin-plugin.zip" usetimestamp="true"/>
+             dest="dependencies/kotlin-plugin.zip" usetimestamp="true"/>
 
         <get src="http://heanet.dl.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-bin.zip"
-             dest="lib/download/ant-contrib-1.0b3-bin.zip" usetimestamp="true"/>
+             dest="dependencies/download/ant-contrib-1.0b3-bin.zip" usetimestamp="true"/>
 
-        <delete file="lib/ant-contrib.jar" failonerror="false"/>
-        <unzip src="lib/download/ant-contrib-1.0b3-bin.zip" dest="lib">
+        <delete file="dependencies/ant-contrib.jar" failonerror="false"/>
+        <unzip src="dependencies/download/ant-contrib-1.0b3-bin.zip" dest="dependencies">
             <patternset>
                 <include name="ant-contrib/ant-contrib-1.0b3.jar"/>
             </patternset>
             <mapper type="merge" to="ant-contrib.jar"/>
         </unzip>
 
-        <delete dir="lib/kotlin-plugin" failonerror="false"/>
-        <unzip src="lib/kotlin-plugin.zip"
-               dest="lib/"/>
+        <delete dir="dependencies/kotlin-plugin" failonerror="false"/>
+        <unzip src="dependencies/kotlin-plugin.zip"
+               dest="dependencies/"/>
 
         <set_unix_perms />
 
@@ -46,13 +46,13 @@
 
     <macrodef name="set_unix_perms">
         <sequential>
-            <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="lib/ant-contrib.jar"/>
+            <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="dependencies/ant-contrib.jar"/>
 
             <if>
                 <equals arg1="${os.tag}" arg2="win.zip"/>
                 <then />
                 <else>
-                    <chmod dir="lib/Kotlin/kotlinc/bin" perm="+x" includes="**/*"/>
+                    <chmod dir="dependencies/Kotlin/kotlinc/bin" perm="+x" includes="**/*"/>
                 </else>
             </if>
 

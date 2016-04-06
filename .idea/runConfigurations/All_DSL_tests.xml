@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="All DSL tests" type="JUnit" factoryName="JUnit">
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-    <module name="anko" />
+    <module name="generator" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-    <option name="ALTERNATIVE_JRE_PATH" value="" />
+    <option name="ALTERNATIVE_JRE_PATH" />
     <option name="PACKAGE_NAME" value="org.jetbrains.android.anko" />
     <option name="MAIN_CLASS_NAME" value="" />
     <option name="METHOD_NAME" value="" />
@@ -17,7 +17,7 @@
       <value defaultName="singleModule" />
     </option>
     <envs>
-      <env name="ANDROID_HOME" value="lib/android-sdk" />
+      <env name="ANDROID_HOME" value="dependencies/android-sdk" />
     </envs>
     <patterns />
     <method />

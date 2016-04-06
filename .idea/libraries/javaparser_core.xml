@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="javaparser-core">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/javaparser/javaparser-core-2.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/javaparser/javaparser-core-2.1.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

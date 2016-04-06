@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="build_artifacts" default="build_artifacts">
 
-    <property name="android.sdk" location="lib/android-sdk"/>
+    <property name="android.sdk" location="dependencies/android-sdk"/>
 
     <condition property="gradlew.file" value="gradlew.bat">
         <os family="windows"/>
@@ -79,7 +79,7 @@
         <attribute name="version.dir" />
 
         <sequential>
-            <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="lib/ant-contrib.jar"/>
+            <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="dependencies/ant-contrib.jar"/>
 
             <if>
                 <equals arg1="${gradlew.file}" arg2="gradlew.bat"/>

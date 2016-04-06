@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="download_android_sdk" default="download_android_sdk">
 
-    <property name="android.sdk.dir" value="lib/android-sdk"/>
-    <property name="download.dir" value="lib/download"/>
+    <property name="android.sdk.dir" value="dependencies/android-sdk"/>
+    <property name="download.dir" value="dependencies/download"/>
 
     <condition property="tools.os" value="windows">
         <os family="windows"/>
@@ -97,7 +97,7 @@
         <attribute name="android.build.tools.full.version" />
 
         <sequential>
-            <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="lib/ant-contrib.jar"/>
+            <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="dependencies/ant-contrib.jar"/>
 
             <get src="http://dl.google.com/android/repository/build-tools_r@{android.build.tools.version}-${tools.os}.zip"
                  dest="${download.dir}/android-build-tools_r@{android.build.tools.version}.zip" usetimestamp="true"/>

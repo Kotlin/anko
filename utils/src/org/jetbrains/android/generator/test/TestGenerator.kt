@@ -66,5 +66,5 @@ fun Context.generate() {
     dslCompileTests(ktFiles("compile"), "Compile")
 }
 
-private fun ktFiles(category: String) = File("dsl/testData/$category")
+private fun ktFiles(category: String) = File("anko/library/testData/$category")
         .listFiles { file -> file.name.endsWith(".kt") }?.map { it.name.replace(".kt", "") } ?: listOf()

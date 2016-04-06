@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="kotlin-plugin">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/Kotlin/lib/kotlin-plugin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/Kotlin/lib/kotlin-plugin.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

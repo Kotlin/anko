@@ -24,7 +24,7 @@ import org.jetbrains.android.anko.utils.toCamelCase
 import java.io.File
 
 fun Context.functionalDslTests(init: Buffer.(version: String) -> Unit) {
-    val dir = File("./dsl/test/" + basePackage.replace('.', '/'), "/functional")
+    val dir = File("./anko/library/generator/test/" + basePackage.replace('.', '/'), "/functional")
 
     for (version in versions) {
         val versionName = version.toCamelCase('-').capitalize()
@@ -61,7 +61,7 @@ fun Buffer.functionalDslTest(name: String, mainAnkoFile: AnkoFile, configInit: T
 }
 
 fun Context.dslCompileTests(files: List<String>, category: String) {
-    val dir = File("./dsl/test/" + basePackage.replace('.', '/'), "/${category.toLowerCase()}")
+    val dir = File("./anko/library/generator/test/" + basePackage.replace('.', '/'), "/${category.toLowerCase()}")
 
     val contents = buffer {
         line("package $basePackage.${category.toLowerCase()}\n").nl()

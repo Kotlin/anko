@@ -4,11 +4,11 @@
     <root id="root">
       <element id="directory" name="lib">
         <element id="archive" name="dsl-preview-plugin.jar">
-          <element id="module-output" name="idea-plugin" />
+          <element id="module-output" name="preview" />
           <element id="module-output" name="attrs" />
           <element id="module-output" name="xml-converter" />
-          <element id="file-copy" path="$PROJECT_DIR$/preview/attrs.json" />
-          <element id="file-copy" path="$PROJECT_DIR$/preview/views.json" />
+          <element id="file-copy" path="$PROJECT_DIR$/anko/idea-plugin/attrs.json" />
+          <element id="file-copy" path="$PROJECT_DIR$/anko/idea-plugin/views.json" />
           <element id="module-output" name="intentions" />
         </element>
         <element id="library" level="project" name="asm" />

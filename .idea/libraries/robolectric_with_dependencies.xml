@@ -1,27 +1,27 @@
 <component name="libraryTable">
   <library name="robolectric-with-dependencies">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/maven-ant-tasks-2.1.3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/robolectric-annotations-3.0-rc3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/asm-util-5.0.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/icu4j-53.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/asm-analysis-5.0.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/sqlite4java-0.282.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/asm-commons-5.0.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/bcprov-jdk16-1.46.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/robolectric-resources-3.0-rc3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/robolectric-3.0-rc3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/accessibility-test-framework-1.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/asm-tree-5.0.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/vtd-xml-2.11.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/asm-5.0.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/ant-1.8.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/robolectric-utils-3.0-rc3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/ant-launcher-1.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/maven-ant-tasks-2.1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/robolectric-annotations-3.0-rc3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/asm-util-5.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/icu4j-53.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/asm-analysis-5.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/sqlite4java-0.282.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/asm-commons-5.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/bcprov-jdk16-1.46.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/robolectric-resources-3.0-rc3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/robolectric-3.0-rc3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/accessibility-test-framework-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/asm-tree-5.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/vtd-xml-2.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/asm-5.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/ant-1.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/robolectric-utils-3.0-rc3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/ant-launcher-1.8.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/lib/robolectric/robolectric-3.0-rc3-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/robolectric/robolectric-3.0-rc3-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

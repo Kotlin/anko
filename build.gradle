@@ -41,7 +41,7 @@ task(collectDependencies) << {
         Set<File> files = configuration.resolve()
         if (files.size() < 1) continue
 
-        File targetDirectory = new File("lib", configuration.name)
+        File targetDirectory = new File("dependencies", configuration.name)
         targetDirectory.mkdirs()
 
         for (file in files) {
