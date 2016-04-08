@@ -22,7 +22,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 
-var View.backgroundDrawable: Drawable
+var View.backgroundDrawable: Drawable?
     get() = background
     set(value) = setBackgroundDrawable(value)
 
