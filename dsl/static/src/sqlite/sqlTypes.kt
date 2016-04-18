@@ -41,7 +41,7 @@ fun FOREIGN_KEY(columnName: String, referenceTable: String, referenceColumn: Str
 }
 
 val PRIMARY_KEY: SqlTypeModifier = SqlTypeModifierImpl("PRIMARY KEY")
-val NOT_NULL: SqlTypeModifier = SqlTypeModifierImpl("NOT_NULL")
+val NOT_NULL: SqlTypeModifier = SqlTypeModifierImpl("NOT NULL")
 val AUTOINCREMENT: SqlTypeModifier = SqlTypeModifierImpl("AUTOINCREMENT")
 val UNIQUE: SqlTypeModifier = SqlTypeModifierImpl("UNIQUE")
 
