@@ -26,6 +26,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.preference.PreferenceManager
 import android.view.View
+import android.view.ViewGroup
 import org.jetbrains.anko.internals.AnkoInternals.NoBinding
 import java.io.Serializable
 
@@ -55,6 +56,12 @@ val Context.ctx: Context
 
 val Activity.act: Activity
     get() = this
+
+/**
+ * Returns the content view of this Activity if set, null otherwise.
+ */
+val Activity.contentView: View?
+    get() = findOptional<ViewGroup>(android.R.id.content)?.getChildAt(0)
 
 inline fun <reified T : View> View.find(id: Int): T = findViewById(id) as T
 inline fun <reified T : View> Activity.find(id: Int): T = findViewById(id) as T
