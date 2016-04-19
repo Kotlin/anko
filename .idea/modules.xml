@@ -6,10 +6,10 @@
       <module fileurl="file://$PROJECT_DIR$/anko/idea-plugin/attrs/attrs.iml" filepath="$PROJECT_DIR$/anko/idea-plugin/attrs/attrs.iml" group="idea-plugin" />
       <module fileurl="file://$PROJECT_DIR$/anko/library/static/common/common.iml" filepath="$PROJECT_DIR$/anko/library/static/common/common.iml" group="library/static" />
       <module fileurl="file://$PROJECT_DIR$/anko/library/generator/generator.iml" filepath="$PROJECT_DIR$/anko/library/generator/generator.iml" group="library" />
+      <module fileurl="file://$PROJECT_DIR$/anko/idea-plugin/preview/idea-plugin.iml" filepath="$PROJECT_DIR$/anko/idea-plugin/preview/idea-plugin.iml" group="idea-plugin" />
       <module fileurl="file://$PROJECT_DIR$/idea-runner/idea-runner.iml" filepath="$PROJECT_DIR$/idea-runner/idea-runner.iml" group="idea-plugin" />
       <module fileurl="file://$PROJECT_DIR$/anko/idea-plugin/intentions/intentions.iml" filepath="$PROJECT_DIR$/anko/idea-plugin/intentions/intentions.iml" group="idea-plugin" />
       <module fileurl="file://$PROJECT_DIR$/anko/library/static/platform/platform.iml" filepath="$PROJECT_DIR$/anko/library/static/platform/platform.iml" group="library/static" />
-      <module fileurl="file://$PROJECT_DIR$/anko/idea-plugin/preview/idea-plugin.iml" filepath="$PROJECT_DIR$/anko/idea-plugin/preview/idea-plugin.iml" group="idea-plugin" />
       <module fileurl="file://$PROJECT_DIR$/anko/library/static/sqlite/sqlite.iml" filepath="$PROJECT_DIR$/anko/library/static/sqlite/sqlite.iml" group="library/static" />
       <module fileurl="file://$PROJECT_DIR$/anko/library/stubs/stubs.iml" filepath="$PROJECT_DIR$/anko/library/stubs/stubs.iml" group="library" />
       <module fileurl="file://$PROJECT_DIR$/anko/library/static/supportV4/supportV4.iml" filepath="$PROJECT_DIR$/anko/library/static/supportV4/supportV4.iml" group="library/static" />

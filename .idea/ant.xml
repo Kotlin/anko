@@ -8,6 +8,6 @@
       <maximumHeapSize value="1024" />
       <maximumStackSize value="16" />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/update_dependencies_kotlin.xml" />
+    <buildFile url="file://$PROJECT_DIR$/update_dependencies_idea.xml" />
   </component>
 </project>

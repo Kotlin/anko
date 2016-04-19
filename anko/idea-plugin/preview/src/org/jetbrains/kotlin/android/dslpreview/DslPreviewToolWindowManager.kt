@@ -23,6 +23,7 @@ import com.android.tools.idea.gradle.util.BuildMode
 import com.android.tools.idea.gradle.util.GradleUtil
 import com.android.tools.idea.rendering.*
 import com.android.tools.idea.rendering.multi.RenderPreviewMode
+import com.intellij.facet.Facet
 import com.intellij.facet.FacetManager
 import com.intellij.icons.AllIcons
 import com.intellij.ide.highlighter.XmlFileType
@@ -64,9 +65,11 @@ import javax.swing.DefaultComboBoxModel
 import javax.swing.JPanel
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.editor.ex.EditorEx
+import com.intellij.openapi.externalSystem.model.ProjectSystemId
 import com.intellij.openapi.externalSystem.model.task.ExternalSystemTaskId
 import com.intellij.openapi.externalSystem.model.task.ExternalSystemTaskNotificationListener
 import com.intellij.openapi.externalSystem.model.task.ExternalSystemTaskType
+import com.intellij.openapi.externalSystem.util.ExternalSystemApiUtil
 import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.progress.util.ProgressIndicatorBase
@@ -90,6 +93,9 @@ class DslPreviewToolWindowManager(
         private val myProject: Project,
         fileEditorManager: FileEditorManager
 ) : AndroidLayoutPreviewToolWindowManager(myProject, fileEditorManager), Disposable {
+    private companion object {
+        private val GRADLE_ID = ProjectSystemId("GRADLE")
+    }
 
     private var myActivityListModel: DefaultComboBoxModel? = null
 
@@ -280,11 +286,11 @@ class DslPreviewToolWindowManager(
                             Boolean::class.java)
                     newMethod(gradleInvoker, tasks, emptyList<Any>(), emptyList<Any>(), id, null, false)
                 } catch (e: Exception) {
-                    gradleInvoker.executeTasks(tasks, emptyList(), id, null, false)
+                    gradleInvoker.executeTasks(tasks, emptyList(), emptyList(), id, null, false)
                 }
             }
 
-            if (facet?.isGradleProject ?: true) {
+            if (facet?.isGradleModule() ?: true) {
                 compileWithGradle()
             } else {
                 compileWithCompileManager()
@@ -295,6 +301,11 @@ class DslPreviewToolWindowManager(
         }
 
         return true
+    }
+
+    private fun Facet<*>?.isGradleModule(): Boolean {
+        val module = this?.module ?: return false
+        return ExternalSystemApiUtil.isExternalSystemAwareModule(GRADLE_ID, module)
     }
 
     override fun initListeners(project: Project) {}
