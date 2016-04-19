@@ -44,7 +44,7 @@ open class DefaultAnkoConfiguration(
     override val logManager: LogManager
 
     init {
-        val zipFileProvider = ZipFileAnnotationProvider(File("dependencies/Kotlin/kotlinc/lib/kotlin-android-sdk-annotations.jar"))
+        val zipFileProvider = ZipFileAnnotationProvider(File("anko/props/kotlin-android-sdk-annotations-1.0.0.jar"))
         val directoryProvider = DirectoryAnnotationProvider(File("anko/props/annotations"))
 
         annotationManager = AnnotationManager(CompoundAnnotationProvider(
