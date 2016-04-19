@@ -33,35 +33,35 @@ object `$$Anko$Factories$CustomViews` {
     }
 }
 
-inline fun ViewManager.verticalLayout(): LinearLayout = verticalLayout({})
-inline fun ViewManager.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout {
-    return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, init)
+inline fun ViewManager.verticalLayout(theme: Int = 0): LinearLayout = verticalLayout(theme) {}
+inline fun ViewManager.verticalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): LinearLayout {
+    return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, theme, init)
 }
 
-inline fun Context.verticalLayout(): LinearLayout = verticalLayout({})
-inline fun Context.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout {
-    return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, init)
+inline fun Context.verticalLayout(theme: Int = 0): LinearLayout = verticalLayout(theme) {}
+inline fun Context.verticalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): LinearLayout {
+    return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, theme, init)
 }
 
-inline fun Activity.verticalLayout(): LinearLayout = verticalLayout({})
-inline fun Activity.verticalLayout(init: _LinearLayout.() -> Unit): LinearLayout {
-    return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, init)
+inline fun Activity.verticalLayout(theme: Int = 0): LinearLayout = verticalLayout(theme) {}
+inline fun Activity.verticalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): LinearLayout {
+    return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, theme, init)
 }
 
 inline fun <T: View> ViewManager.include(layoutId: Int): T = include(layoutId, {})
 inline fun <T: View> ViewManager.include(layoutId: Int, init: T.() -> Unit): T {
     @Suppress("UNCHECKED_CAST")
-    return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }) { init() }
+    return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }, 0) { init() }
 }
 
 inline fun <T: View> Context.include(layoutId: Int): T = include(layoutId, {})
 inline fun <T: View> Context.include(layoutId: Int, init: T.() -> Unit): T {
     @Suppress("UNCHECKED_CAST")
-    return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }) { init() }
+    return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }, 0) { init() }
 }
 
 inline fun <T: View> Activity.include(layoutId: Int): T = include(layoutId, {})
 inline fun <T: View> Activity.include(layoutId: Int, init: T.() -> Unit): T {
     @Suppress("UNCHECKED_CAST")
-    return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }) { init() }
+    return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }, 0) { init() }
 }

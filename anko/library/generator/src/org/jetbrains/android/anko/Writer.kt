@@ -40,7 +40,7 @@ class Writer(private val renderFacade: RenderFacade) {
 
         val moduleName = when (versionType) {
             TargetArtifactType.PLATFORM -> "platform"
-            else -> config.version.toCamelCase('-', firstCapital = false)
+            else -> config.artifactName.toCamelCase('-', firstCapital = false)
         }
 
         val staticFilesDir = File("anko/library/static/$moduleName/src")
@@ -116,7 +116,7 @@ class Writer(private val renderFacade: RenderFacade) {
 
         PrintWriter(file).useIt {
             if (config.generatePackage && generatePackage) {
-                val facadeFilename = config.version.toCamelCase('-') + subsystem.name.toLowerCase().toCamelCase()
+                val facadeFilename = config.artifactName.toCamelCase('-') + subsystem.name.toLowerCase().toCamelCase()
                 println("@file:JvmName(\"${facadeFilename}Kt\")")
                 println("package ${config.outputPackage}\n")
             }

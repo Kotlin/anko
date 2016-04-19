@@ -27,6 +27,7 @@
             <fileset dir="workdir/zip" includes="*" />
         </delete>
 
+        <build_artifact version="stubs"/>
         <build_artifact version="common"/>
         <build_artifact version="sqlite"/>
         <build_artifact version="sdk15"/>

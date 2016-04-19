@@ -38,7 +38,7 @@ internal class ViewGroupRenderer(config: AnkoConfiguration) : AbstractViewRender
 }
 
 class ViewFactoryClass(val config: AnkoConfiguration, val suffix: String) {
-    private val name = config.version.toCamelCase('-').capitalize()
+    private val name = config.artifactName.toCamelCase('-').capitalize()
 
     val entries = arrayListOf<String>()
     val fullName = "`${'$'}${'$'}Anko${'$'}Factories${'$'}$name$suffix`"
@@ -148,14 +148,14 @@ internal abstract class AbstractViewRenderer(
             fun add(extendFor: String) = buffer {
                 val returnType = if (tinted) className21 else className
 
-                line("inline fun $extendFor.$functionName($helperArguments): $returnType {")
-                line("return ankoView($factory) {")
+                line("inline fun $extendFor.$functionName(theme: Int = 0, $helperArguments): $returnType {")
+                line("return ankoView($factory, theme) {")
                 lines(setters)
                 line("}")
                 line("}")
 
-                line("inline fun $extendFor.$functionName($helperArguments, init: $lambdaArgType.() -> Unit): $returnType {")
-                line("return ankoView($factory) {")
+                line("inline fun $extendFor.$functionName(theme: Int = 0, $helperArguments, init: $lambdaArgType.() -> Unit): $returnType {")
+                line("return ankoView($factory, theme) {")
                 line("init()")
                 lines(setters)
                 line("}")

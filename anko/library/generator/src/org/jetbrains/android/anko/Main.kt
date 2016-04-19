@@ -83,6 +83,8 @@ private fun getVersionDirs(): Array<File> {
 private fun getJars(version: File) = version.listFiles(JarFileFilter()).partition { it.name.startsWith("platform.") }
 
 private fun gen(generatorOptions: Set<GeneratorOption>) {
+    copyStubs()
+
     for (versionDir in getVersionDirs()) {
         val (platformJars, versionJars) = getJars(versionDir)
         val versionName = versionDir.name
@@ -102,4 +104,13 @@ private fun gen(generatorOptions: Set<GeneratorOption>) {
                     DefaultAnkoConfiguration(outputDirectory, versionName, generatorOptions)).run()
         }
     }
+}
+
+private fun copyStubs() {
+    val sourceDir = File("anko/library/stubs/src")
+    val artifactDir = File("workdir/gen/stubs")
+    val sourcesDir = File(artifactDir, "src/main/kotlin")
+    sourcesDir.mkdirs()
+    sourceDir.copyRecursively(sourcesDir)
+    generateMavenArtifact(artifactDir, "stubs", "21")
 }

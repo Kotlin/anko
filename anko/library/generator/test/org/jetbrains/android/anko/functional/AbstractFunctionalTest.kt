@@ -59,7 +59,7 @@ abstract class AbstractFunctionalTest {
         fun String.trimBlank() = trim('\n', '\t', ' ', '\r')
 
         val actual = config.getOutputFile(subsystem).readText().replace("\r", "").trimBlank()
-        val expectedPath = ("anko/library/testData/functional/${config.version}/$testDataFile")
+        val expectedPath = ("anko/library/testData/functional/${config.artifactName}/$testDataFile")
 
         val expectedFile = File(expectedPath)
         if (!expectedFile.exists() && actual.isEmpty()) return

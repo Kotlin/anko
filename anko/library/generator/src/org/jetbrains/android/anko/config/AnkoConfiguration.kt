@@ -38,7 +38,7 @@ abstract class AnkoConfiguration {
     open var generatePackage: Boolean = true
     open var generateMavenArtifact: Boolean = true
 
-    abstract val version: String
+    abstract val artifactName: String
 
     abstract val generatorOptions: Set<GeneratorOption>
 
@@ -63,10 +63,10 @@ abstract class AnkoConfiguration {
 
     fun getTargetArtifactType(): TargetArtifactType {
         return when {
-            "common" == version -> COMMON
-            "sqlite" == version -> SQLITE
-            "support-v4" == version -> SUPPORT_V4
-            version.matches("sdk\\d{2}".toRegex()) -> PLATFORM
+            "common" == artifactName -> COMMON
+            "sqlite" == artifactName -> SQLITE
+            "support-v4" == artifactName -> SUPPORT_V4
+            artifactName.matches("sdk\\d{2}".toRegex()) -> PLATFORM
             else -> TOOLKIT
         }
     }

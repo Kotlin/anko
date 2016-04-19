@@ -28,6 +28,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
@@ -53,6 +54,16 @@ object AnkoInternals {
 
     fun <T : View> addView(activity: Activity, view: T) {
         createAnkoContext(activity, { AnkoInternals.addView(this, view) }, true)
+    }
+
+    fun wrapContextIfNeeded(ctx: Context, theme: Int): Context {
+        return if (theme != 0 && (ctx !is ContextThemeWrapper || ctx.themeResId != theme)) {
+            // If the context isn't a ContextThemeWrapper, or it is but does not have
+            // the same theme as we need, wrap it in a new wrapper
+            ContextThemeWrapper(ctx, theme)
+        } else {
+            ctx
+        }
     }
 
     fun getContext(manager: ViewManager): Context = when (manager) {

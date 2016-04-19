@@ -25,7 +25,7 @@ import java.io.File
 
 open class DefaultAnkoConfiguration(
         outputDirectory: File,
-        override val version: String,
+        override val artifactName: String,
         override val generatorOptions: Set<GeneratorOption>
 ) : AnkoConfiguration() {
     override val outputPackage: String
@@ -59,7 +59,7 @@ open class DefaultAnkoConfiguration(
         val artifactType = getTargetArtifactType()
         outputPackage = "org.jetbrains.anko" + when (artifactType) {
             TargetArtifactType.COMMON, TargetArtifactType.PLATFORM -> ""
-            else -> "." + version.replace('-', '.').toLowerCase()
+            else -> "." + artifactName.replace('-', '.').toLowerCase()
         }
 
         for (line in propertiesWithoutGetters) {
