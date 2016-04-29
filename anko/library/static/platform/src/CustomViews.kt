@@ -23,6 +23,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewManager
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import org.jetbrains.anko.custom.ankoView
 
 object `$$Anko$Factories$CustomViews` {
@@ -30,6 +31,10 @@ object `$$Anko$Factories$CustomViews` {
         val view = _LinearLayout(ctx)
         view.orientation = LinearLayout.VERTICAL
         view
+    }
+
+    val HORIZONTAL_PROGRESS_BAR_FACTORY = { ctx: Context ->
+        ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal)
     }
 }
 
@@ -46,6 +51,21 @@ inline fun Context.verticalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit
 inline fun Activity.verticalLayout(theme: Int = 0): LinearLayout = verticalLayout(theme) {}
 inline fun Activity.verticalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): LinearLayout {
     return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, theme, init)
+}
+
+inline fun ViewManager.horizontalProgressBar(theme: Int = 0): ProgressBar = horizontalProgressBar(theme) {}
+inline fun ViewManager.horizontalProgressBar(theme: Int = 0, init: ProgressBar.() -> Unit): ProgressBar {
+    return ankoView(`$$Anko$Factories$CustomViews`.HORIZONTAL_PROGRESS_BAR_FACTORY, theme, init)
+}
+
+inline fun Context.horizontalProgressBar(theme: Int = 0): ProgressBar = horizontalProgressBar(theme) {}
+inline fun Context.horizontalProgressBar(theme: Int = 0, init: ProgressBar.() -> Unit): ProgressBar {
+    return ankoView(`$$Anko$Factories$CustomViews`.HORIZONTAL_PROGRESS_BAR_FACTORY, theme, init)
+}
+
+inline fun Activity.horizontalProgressBar(theme: Int = 0): ProgressBar = horizontalProgressBar(theme) {}
+inline fun Activity.horizontalProgressBar(theme: Int = 0, init: ProgressBar.() -> Unit): ProgressBar {
+    return ankoView(`$$Anko$Factories$CustomViews`.HORIZONTAL_PROGRESS_BAR_FACTORY, theme, init)
 }
 
 inline fun <T: View> ViewManager.include(layoutId: Int): T = include(layoutId, {})
