@@ -66,6 +66,16 @@ object AnkoInternals {
         }
     }
 
+    fun applyRecursively(v: View, style: (View) -> Unit) {
+        style(v)
+        if (v is ViewGroup) {
+            val maxIndex = v.childCount - 1
+            for (i in 0 .. maxIndex) {
+                v.getChildAt(i)?.let { applyRecursively(it, style) }
+            }
+        }
+    }
+
     fun getContext(manager: ViewManager): Context = when (manager) {
         is ViewGroup -> manager.context
         is AnkoContext<*> -> manager.ctx

@@ -17,21 +17,14 @@
 package org.jetbrains.anko
 
 import android.view.View
-import android.view.ViewGroup
+import org.jetbrains.anko.internals.AnkoInternals
 
-fun <T: View> makeStyle(style: T.() -> Unit) = { v : T -> v.style() }
-
+@Deprecated("Use applyRecursively(block) instead.", ReplaceWith("applyRecursively(style)"))
 fun <T : View> T.style(style: (View) -> Unit): T {
-    applyStyle(this, style)
-    return this
+    return applyRecursively(style)
 }
 
-private fun applyStyle(v: View, style: (View) -> Unit) {
-    style(v)
-    if (v is ViewGroup) {
-        val maxIndex = v.childCount - 1
-        for (i in 0 .. maxIndex) {
-            v.getChildAt(i)?.let { applyStyle(it, style) }
-        }
-    }
+fun <T : View> T.applyRecursively(block: (View) -> Unit): T {
+    AnkoInternals.applyRecursively(this, block)
+    return this
 }
