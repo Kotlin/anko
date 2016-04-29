@@ -34,7 +34,7 @@ class SqlParserHelperRenderer(config: AnkoConfiguration) : Renderer(config) {
             append(buffer {
                 line("fun <$types, R> rowParser(parser: ($types) -> R): RowParser<R> {")
                 line("return object : RowParser<R> {")
-                line("override fun parseRow(columns: Array<Any>): R {")
+                line("override fun parseRow(columns: Array<Any?>): R {")
                 line("if (columns.size != $i)")
                 val s = if (i == 1) "" else "s"
                 indent.line("throw SQLiteException(\"Invalid row: $i column$s required\")")
