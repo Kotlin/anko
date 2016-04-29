@@ -27,19 +27,19 @@ enum class SqlOrderDirection { ASC, DESC }
 
 class TransactionAbortException : RuntimeException()
 
-fun SQLiteDatabase.insert(tableName: String, vararg values: Pair<String, Any>): Long {
+fun SQLiteDatabase.insert(tableName: String, vararg values: Pair<String, Any?>): Long {
     return insert(tableName, null, values.toContentValues())
 }
 
-fun SQLiteDatabase.insertOrThrow(tableName: String, vararg values: Pair<String, Any>): Long {
+fun SQLiteDatabase.insertOrThrow(tableName: String, vararg values: Pair<String, Any?>): Long {
     return insertOrThrow(tableName, null, values.toContentValues())
 }
 
-fun SQLiteDatabase.replace(tableName: String, vararg values: Pair<String, Any>): Long {
+fun SQLiteDatabase.replace(tableName: String, vararg values: Pair<String, Any?>): Long {
     return replace(tableName, null, values.toContentValues())
 }
 
-fun SQLiteDatabase.replaceOrThrow(tableName: String, vararg values: Pair<String, Any>): Long {
+fun SQLiteDatabase.replaceOrThrow(tableName: String, vararg values: Pair<String, Any?>): Long {
     return replaceOrThrow(tableName, null, values.toContentValues())
 }
 
@@ -65,7 +65,7 @@ fun SQLiteDatabase.select(tableName: String, vararg columns: String): SelectQuer
     return builder
 }
 
-fun SQLiteDatabase.update(tableName: String, vararg values: Pair<String, Any>): UpdateQueryBuilder {
+fun SQLiteDatabase.update(tableName: String, vararg values: Pair<String, Any?>): UpdateQueryBuilder {
     return UpdateQueryBuilder(this, tableName, values)
 }
 
@@ -104,7 +104,7 @@ internal fun applyArguments(whereClause: String, args: Map<String, Any>): String
     val buffer = StringBuffer(whereClause.length)
     while (matcher.find()) {
         val key = matcher.group(2)
-        val value = args.get(key) ?: throw IllegalStateException("Can't find a value for key $key")
+        val value = args[key] ?: throw IllegalStateException("Can't find a value for key $key")
 
         val valueString = if (value is Int || value is Long || value is Byte || value is Short) {
             value.toString()
@@ -121,10 +121,11 @@ internal fun applyArguments(whereClause: String, args: Map<String, Any>): String
     return buffer.toString()
 }
 
-internal fun Array<out Pair<String, Any>>.toContentValues(): ContentValues {
+internal fun Array<out Pair<String, Any?>>.toContentValues(): ContentValues {
     val values = ContentValues()
     for ((key, value) in this) {
         when(value) {
+            null -> values.putNull(key)
             is Boolean -> values.put(key, value)
             is Byte -> values.put(key, value)
             is ByteArray -> values.put(key, value)

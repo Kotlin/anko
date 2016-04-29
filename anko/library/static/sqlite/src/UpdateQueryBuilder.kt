@@ -22,7 +22,7 @@ import org.jetbrains.anko.AnkoException
 class UpdateQueryBuilder(
         val db: SQLiteDatabase,
         val tableName: String,
-        val values: Array<out Pair<String, Any>>
+        val values: Array<out Pair<String, Any?>>
 ) {
 
     private var selectionApplied = false

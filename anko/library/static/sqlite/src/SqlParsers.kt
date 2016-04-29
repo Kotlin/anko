@@ -24,15 +24,15 @@ import java.lang.reflect.Modifier
 import java.util.*
 
 interface RowParser<T> {
-    fun parseRow(columns: Array<Any>): T
+    fun parseRow(columns: Array<Any?>): T
 }
 
 interface MapRowParser<T> {
-    fun parseRow(columns: Map<String, Any>): T
+    fun parseRow(columns: Map<String, Any?>): T
 }
 
 private class SingleColumnParser<T> : RowParser<T> {
-    override fun parseRow(columns: Array<Any>): T {
+    override fun parseRow(columns: Array<Any?>): T {
         if (columns.size != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
         @Suppress("UNCHECKED_CAST")
@@ -41,7 +41,7 @@ private class SingleColumnParser<T> : RowParser<T> {
 }
 
 private class ScalarColumnParser<R, T>(val modifier: ((R) -> T)? = null) : RowParser<T> {
-    override fun parseRow(columns: Array<Any>): T {
+    override fun parseRow(columns: Array<Any?>): T {
         if (columns.size != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
         @Suppress("UNCHECKED_CAST", "UNNECESSARY_NOT_NULL_ASSERTION")
@@ -113,20 +113,20 @@ fun <T: Any> Cursor.parseList(parser: MapRowParser<T>): List<T> = AnkoInternals.
 }
 
 @Deprecated("Use asSequence() instead", ReplaceWith("asSequence()"))
-fun Cursor.sequence(): Sequence<Array<Any>> {
+fun Cursor.sequence(): Sequence<Array<Any?>> {
     return CursorSequence(this)
 }
 
 @Deprecated("Use asMapSequence() instead", ReplaceWith("asMapSequence()"))
-fun Cursor.mapSequence(): Sequence<Map<String, Any>> {
+fun Cursor.mapSequence(): Sequence<Map<String, Any?>> {
     return CursorMapSequence(this)
 }
 
-fun Cursor.asSequence(): Sequence<Array<Any>> {
+fun Cursor.asSequence(): Sequence<Array<Any?>> {
     return CursorSequence(this)
 }
 
-fun Cursor.asMapSequence(): Sequence<Map<String, Any>> {
+fun Cursor.asMapSequence(): Sequence<Map<String, Any?>> {
     return CursorMapSequence(this)
 }
 
@@ -159,64 +159,63 @@ inline fun <reified T: Any> classParser(): RowParser<T> {
     }
 
     return object : RowParser<T> {
-        override fun parseRow(columns: Array<Any>): T {
+        override fun parseRow(columns: Array<Any?>): T {
             return c.newInstance(*columns) as T
         }
     }
 }
 
-private fun readColumnsArray(cursor: Cursor): Array<Any> {
-    val count = cursor.columnCount
-    val arr = arrayOfNulls<Any>(count)
-    for (i in 0..(count - 1)) {
-        arr[i] = when (cursor.getType(i)) {
-            Cursor.FIELD_TYPE_INTEGER -> cursor.getLong(i)
-            Cursor.FIELD_TYPE_FLOAT -> cursor.getDouble(i)
-            Cursor.FIELD_TYPE_STRING -> cursor.getString(i)
-            Cursor.FIELD_TYPE_BLOB -> cursor.getBlob(i)
-            else -> Unit
-        }
+private fun Cursor.getColumnValue(index: Int): Any? {
+    if (isNull(index)) return null
+
+    return when (getType(index)) {
+        Cursor.FIELD_TYPE_INTEGER -> getLong(index)
+        Cursor.FIELD_TYPE_FLOAT -> getDouble(index)
+        Cursor.FIELD_TYPE_STRING -> getString(index)
+        Cursor.FIELD_TYPE_BLOB -> getBlob(index)
+        else -> Unit
     }
-    @Suppress("CAST_NEVER_SUCCEEDS")
-    return arr as Array<Any>
 }
 
-private fun readColumnsMap(cursor: Cursor): Map<String, Any> {
+private fun readColumnsArray(cursor: Cursor): Array<Any?> {
     val count = cursor.columnCount
-    val map = hashMapOf<String, Any>()
+    val arr = arrayOfNulls<Any?>(count)
     for (i in 0..(count - 1)) {
-        map.put(cursor.getColumnName(i), when (cursor.getType(i)) {
-            Cursor.FIELD_TYPE_INTEGER -> cursor.getLong(i)
-            Cursor.FIELD_TYPE_FLOAT -> cursor.getDouble(i)
-            Cursor.FIELD_TYPE_STRING -> cursor.getString(i)
-            Cursor.FIELD_TYPE_BLOB -> cursor.getBlob(i)
-            else -> Unit
-        })
+        arr[i] = cursor.getColumnValue(i)
+    }
+    return arr
+}
+
+private fun readColumnsMap(cursor: Cursor): Map<String, Any?> {
+    val count = cursor.columnCount
+    val map = hashMapOf<String, Any?>()
+    for (i in 0..(count - 1)) {
+        map.put(cursor.getColumnName(i), cursor.getColumnValue(i))
     }
     return map
 }
 
-private class CursorMapSequence(val cursor: Cursor) : Sequence<Map<String, Any>> {
+private class CursorMapSequence(val cursor: Cursor) : Sequence<Map<String, Any?>> {
     override fun iterator() = CursorMapIterator(cursor)
 }
 
-private class CursorSequence(val cursor: Cursor) : Sequence<Array<Any>> {
+private class CursorSequence(val cursor: Cursor) : Sequence<Array<Any?>> {
     override fun iterator() = CursorIterator(cursor)
 }
 
-private class CursorIterator(val cursor: Cursor) : Iterator<Array<Any>> {
+private class CursorIterator(val cursor: Cursor) : Iterator<Array<Any?>> {
     override fun hasNext() = cursor.position < cursor.count - 1
 
-    override fun next(): Array<Any> {
+    override fun next(): Array<Any?> {
         cursor.moveToNext()
         return readColumnsArray(cursor)
     }
 }
 
-private class CursorMapIterator(val cursor: Cursor) : Iterator<Map<String, Any>> {
+private class CursorMapIterator(val cursor: Cursor) : Iterator<Map<String, Any?>> {
     override fun hasNext() = cursor.position < cursor.count - 1
 
-    override fun next(): Map<String, Any> {
+    override fun next(): Map<String, Any?> {
         cursor.moveToNext()
         return readColumnsMap(cursor)
     }
