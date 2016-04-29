@@ -20,8 +20,10 @@ package org.jetbrains.anko
 import android.app.Activity
 import android.app.Fragment
 import android.content.Context
+import android.text.InputType
 import android.view.View
 import android.view.ViewManager
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import org.jetbrains.anko.custom.ankoView
@@ -32,6 +34,8 @@ object `$$Anko$Factories$CustomViews` {
         view.orientation = LinearLayout.VERTICAL
         view
     }
+
+    val EDIT_TEXT = { ctx: Context -> EditText(ctx) }
 
     val HORIZONTAL_PROGRESS_BAR_FACTORY = { ctx: Context ->
         ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal)
@@ -51,6 +55,27 @@ inline fun Context.verticalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit
 inline fun Activity.verticalLayout(theme: Int = 0): LinearLayout = verticalLayout(theme) {}
 inline fun Activity.verticalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): LinearLayout {
     return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, theme, init)
+}
+
+inline fun ViewManager.editText(constraints: InputConstraints, theme: Int = 0): EditText = editText(constraints, theme) {}
+inline fun ViewManager.editText(constraints: InputConstraints, theme: Int = 0, init: EditText.() -> Unit): EditText {
+    val v = ankoView(`$$Anko$Factories$CustomViews`.EDIT_TEXT, theme, init)
+    v.inputType = constraints.value
+    return v
+}
+
+inline fun Context.editText(constraints: InputConstraints, theme: Int = 0): EditText = editText(constraints, theme) {}
+inline fun Context.editText(constraints: InputConstraints, theme: Int = 0, init: EditText.() -> Unit): EditText {
+    val v = ankoView(`$$Anko$Factories$CustomViews`.EDIT_TEXT, theme, init)
+    v.inputType = constraints.value
+    return v
+}
+
+inline fun Activity.editText(constraints: InputConstraints, theme: Int = 0): EditText = editText(constraints, theme) {}
+inline fun Activity.editText(constraints: InputConstraints, theme: Int = 0, init: EditText.() -> Unit): EditText {
+    val v = ankoView(`$$Anko$Factories$CustomViews`.EDIT_TEXT, theme, init)
+    v.inputType = constraints.value
+    return v
 }
 
 inline fun ViewManager.horizontalProgressBar(theme: Int = 0): ProgressBar = horizontalProgressBar(theme) {}
