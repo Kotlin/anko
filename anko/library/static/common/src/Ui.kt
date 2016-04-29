@@ -19,11 +19,6 @@ package org.jetbrains.anko
 import android.view.View
 import org.jetbrains.anko.internals.AnkoInternals
 
-@Deprecated("Use applyRecursively(block) instead.", ReplaceWith("applyRecursively(style)"))
-fun <T : View> T.style(style: (View) -> Unit): T {
-    return applyRecursively(style)
-}
-
 fun <T : View> T.applyRecursively(block: (View) -> Unit): T {
     AnkoInternals.applyRecursively(this, block)
     return this

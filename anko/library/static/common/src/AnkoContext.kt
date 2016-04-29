@@ -90,7 +90,6 @@ open class AnkoContextImpl<T>(
     open protected fun alreadyHasView(): Unit = throw IllegalStateException("View is already set: $myView")
 }
 
-@AnkoInternals.NoBinding
 fun Context.UI(setContentView: Boolean, init: AnkoContext<Context>.() -> Unit) =
         createAnkoContext(this, init, setContentView)
 

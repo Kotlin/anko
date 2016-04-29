@@ -17,12 +17,9 @@
 package org.jetbrains.anko
 
 import android.content.Context
-import org.jetbrains.anko.internals.AnkoInternals.NoBinding
 
-@NoBinding
 val Context.vibrator: android.os.Vibrator
     get() = getSystemService(Context.VIBRATOR_SERVICE) as android.os.Vibrator
 
-@NoBinding
 val Context.layoutInflater: android.view.LayoutInflater
     get() = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as android.view.LayoutInflater

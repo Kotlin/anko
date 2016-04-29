@@ -20,21 +20,17 @@ import android.app.Fragment
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import org.jetbrains.anko.internals.AnkoInternals.NoBinding
 import java.lang.ref.WeakReference
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
-// Fragment.uiThread() has a different argument list (because of inline)
-@NoBinding
-fun Context.onUiThread(f: Context.() -> Unit) {
+fun Context.runOnUiThread(f: Context.() -> Unit) {
     if (ContextHelper.mainThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
 }
 
-@NoBinding
-inline fun Fragment.onUiThread(crossinline f: () -> Unit) {
-    activity?.onUiThread { f() }
+inline fun Fragment.runOnUiThread(crossinline f: () -> Unit) {
+    activity?.runOnUiThread { f() }
 }
 
 class AnkoAsyncContext<T>(val weakRef: WeakReference<T>)
@@ -88,22 +84,22 @@ fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T)
     activity.runOnUiThread { activity.f(fragment) }
 }
 
-fun <T> T.async(task: AnkoAsyncContext<T>.() -> Unit): Future<Unit> {
+fun <T> T.doAsync(task: AnkoAsyncContext<T>.() -> Unit): Future<Unit> {
     val context = AnkoAsyncContext(WeakReference(this))
     return BackgroundExecutor.submit { context.task() }
 }
 
-fun <T> T.async(executorService: ExecutorService, task: AnkoAsyncContext<T>.() -> Unit): Future<Unit> {
+fun <T> T.doAsync(executorService: ExecutorService, task: AnkoAsyncContext<T>.() -> Unit): Future<Unit> {
     val context = AnkoAsyncContext(WeakReference(this))
     return executorService.submit<Unit> { context.task() }
 }
 
-fun <T, R> T.asyncResult(task: AnkoAsyncContext<T>.() -> R): Future<R> {
+fun <T, R> T.doAsyncResult(task: AnkoAsyncContext<T>.() -> R): Future<R> {
     val context = AnkoAsyncContext(WeakReference(this))
     return BackgroundExecutor.submit { context.task() }
 }
 
-fun <T, R> T.asyncResult(executorService: ExecutorService, task: AnkoAsyncContext<T>.() -> R): Future<R> {
+fun <T, R> T.doAsyncResult(executorService: ExecutorService, task: AnkoAsyncContext<T>.() -> R): Future<R> {
     val context = AnkoAsyncContext(WeakReference(this))
     return executorService.submit<R> { context.task() }
 }

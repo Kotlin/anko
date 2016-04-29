@@ -37,8 +37,6 @@ import java.io.Serializable
 import java.util.*
 
 object AnkoInternals {
-    @Retention(AnnotationRetention.SOURCE)
-    annotation class NoBinding
 
     fun <T : View> addView(manager: ViewManager, view: T) {
         return when (manager) {

@@ -27,7 +27,6 @@ import android.os.Parcelable
 import android.preference.PreferenceManager
 import android.view.View
 import android.view.ViewGroup
-import org.jetbrains.anko.internals.AnkoInternals.NoBinding
 import java.io.Serializable
 
 val AnkoContext<*>.resources: Resources
@@ -118,16 +117,16 @@ fun bundleOf(vararg params: Pair<String, Any>): Bundle {
     return b
 }
 
-@NoBinding val Context.displayMetrics: android.util.DisplayMetrics
+val Context.displayMetrics: android.util.DisplayMetrics
     get() = resources.displayMetrics
 
-@NoBinding val Context.configuration: android.content.res.Configuration
+val Context.configuration: android.content.res.Configuration
     get() = resources.configuration
 
-@NoBinding val AnkoContext<*>.displayMetrics: android.util.DisplayMetrics
+val AnkoContext<*>.displayMetrics: android.util.DisplayMetrics
     get() = ctx.resources.displayMetrics
 
-@NoBinding val AnkoContext<*>.configuration: android.content.res.Configuration
+val AnkoContext<*>.configuration: android.content.res.Configuration
     get() = ctx.resources.configuration
 
 val android.content.res.Configuration.portrait: Boolean
