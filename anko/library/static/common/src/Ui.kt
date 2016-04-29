@@ -19,6 +19,8 @@ package org.jetbrains.anko
 import android.view.View
 import android.view.ViewGroup
 
+fun <T: View> makeStyle(style: T.() -> Unit) = { v : T -> v.style() }
+
 fun <T : View> T.style(style: (View) -> Unit): T {
     applyStyle(this, style)
     return this
