@@ -198,13 +198,13 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-3595"
-    compile 'org.jetbrains.anko:anko-sdk15:0.8.1' // So here it's 15 too
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin-version"
+    compile "org.jetbrains.anko:anko-sdk15:$anko-version" // So here it's 15 too
 
     // Anko libs matching support libs
-    compile 'org.jetbrains.anko:anko-appcompat-v7:0.8.1'
-    compile 'org.jetbrains.anko:anko-design:0.8.1'
-    compile 'org.jetbrains.anko:anko-recyclerview-v7:0.8.1'
+    compile "org.jetbrains.anko:anko-appcompat-v7:$anko-version"
+    compile "org.jetbrains.anko:anko-design:$anko-version"
+    compile "org.jetbrains.anko:anko-recyclerview-v7:$anko-version"
 }
 ````
 
