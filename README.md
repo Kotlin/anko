@@ -32,6 +32,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [Is it extensible?](#is-it-extensible)
 	* [Using with Gradle](#using-with-gradle)
 	* [Using as Jar library](#using-as-jar-library)
+	* [Which Anko libraries are available and which do I need?](#which-anko-libraries-are-available-and-which-do-i-need)
 	* [Building Anko](#building-anko)
 * [Understanding Anko](#understanding-anko)
 	* [Basics](#basics)
