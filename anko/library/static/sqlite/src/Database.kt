@@ -56,17 +56,17 @@ fun SQLiteDatabase.transaction(code: SQLiteDatabase.() -> Unit) {
 }
 
 fun SQLiteDatabase.select(tableName: String): SelectQueryBuilder {
-    return SelectQueryBuilder(this, tableName)
+    return AndroidSdkDatabaseSelectQueryBuilder(this, tableName)
 }
 
 fun SQLiteDatabase.select(tableName: String, vararg columns: String): SelectQueryBuilder {
-    val builder = SelectQueryBuilder(this, tableName)
+    val builder = AndroidSdkDatabaseSelectQueryBuilder(this, tableName)
     builder.columns(*columns)
     return builder
 }
 
 fun SQLiteDatabase.update(tableName: String, vararg values: Pair<String, Any?>): UpdateQueryBuilder {
-    return UpdateQueryBuilder(this, tableName, values)
+    return AndroidSdkDatabaseUpdateQueryBuilder(this, tableName, values)
 }
 
 fun SQLiteDatabase.delete(tableName: String, whereClause: String = "", vararg args: Pair<String, Any>): Int {
