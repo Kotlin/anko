@@ -4,6 +4,71 @@ import org.junit.*
 
 class GeneratedRobolectricTest : AbstractRobolectricTest() {
     @Test
+    fun testCollectionsTestForAppcompatV7() {
+        runRobolectricTest("CollectionsTest.kt", "appcompat-v7")
+    }
+
+    @Test
+    fun testCollectionsTestForCardviewV7() {
+        runRobolectricTest("CollectionsTest.kt", "cardview-v7")
+    }
+
+    @Test
+    fun testCollectionsTestForCommon() {
+        runRobolectricTest("CollectionsTest.kt", "common")
+    }
+
+    @Test
+    fun testCollectionsTestForDesign() {
+        runRobolectricTest("CollectionsTest.kt", "design")
+    }
+
+    @Test
+    fun testCollectionsTestForGridlayoutV7() {
+        runRobolectricTest("CollectionsTest.kt", "gridlayout-v7")
+    }
+
+    @Test
+    fun testCollectionsTestForPercent() {
+        runRobolectricTest("CollectionsTest.kt", "percent")
+    }
+
+    @Test
+    fun testCollectionsTestForRecyclerviewV7() {
+        runRobolectricTest("CollectionsTest.kt", "recyclerview-v7")
+    }
+
+    @Test
+    fun testCollectionsTestForSdk15() {
+        runRobolectricTest("CollectionsTest.kt", "sdk15")
+    }
+
+    @Test
+    fun testCollectionsTestForSdk19() {
+        runRobolectricTest("CollectionsTest.kt", "sdk19")
+    }
+
+    @Test
+    fun testCollectionsTestForSdk21() {
+        runRobolectricTest("CollectionsTest.kt", "sdk21")
+    }
+
+    @Test
+    fun testCollectionsTestForSdk23() {
+        runRobolectricTest("CollectionsTest.kt", "sdk23")
+    }
+
+    @Test
+    fun testCollectionsTestForSqlite() {
+        runRobolectricTest("CollectionsTest.kt", "sqlite")
+    }
+
+    @Test
+    fun testCollectionsTestForSupportV4() {
+        runRobolectricTest("CollectionsTest.kt", "support-v4")
+    }
+
+    @Test
     fun testDialogsTestForAppcompatV7() {
         runRobolectricTest("DialogsTest.kt", "appcompat-v7")
     }
