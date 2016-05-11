@@ -35,6 +35,15 @@ inline fun Fragment.runOnUiThread(crossinline f: () -> Unit) {
 
 class AnkoAsyncContext<T>(val weakRef: WeakReference<T>)
 
+fun <T> AnkoAsyncContext<T>.onComplete(f: (T?) -> Unit) {
+    val ref = weakRef.get()
+    if (ContextHelper.mainThread == Thread.currentThread()) {
+        f(ref)
+    } else {
+        ContextHelper.handler.post { f(ref) }
+    }
+}
+
 fun <T> AnkoAsyncContext<T>.uiThread(f: (T) -> Unit) {
     val ref = weakRef.get() ?: return
     if (ContextHelper.mainThread == Thread.currentThread()) {
