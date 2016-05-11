@@ -22,10 +22,14 @@ import android.view.View
 import org.jetbrains.anko.AnkoAsyncContext
 import org.jetbrains.anko.BackgroundExecutor
 import org.jetbrains.anko.applyRecursively
+import org.jetbrains.anko.collections.forEachReversedByIndex
 import org.jetbrains.anko.runOnUiThread
 import java.lang.ref.WeakReference
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
+
+@Deprecated("Use forEachReversedByIndex(f) instead.", ReplaceWith("forEachReversedByIndex(f)"))
+inline fun <T> Array<T>.forEachReversed(f: (T) -> Unit) = forEachReversedByIndex(f)
 
 @Deprecated("Use runOnUiThread(f) instead.", ReplaceWith("runOnUiThread(f)"))
 inline fun Fragment.onUiThread(crossinline f: () -> Unit) = runOnUiThread(f)

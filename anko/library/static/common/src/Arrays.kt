@@ -35,7 +35,7 @@ inline fun <T> Array<T>.forEachWithIndex(f: (Int, T) -> Unit) {
     }
 }
 
-inline fun <T> Array<T>.forEachReversed(f: (T) -> Unit) {
+inline fun <T> Array<T>.forEachReversedByIndex(f: (T) -> Unit) {
     var i = size - 1
     while (i >= 0) {
         f(get(i))
