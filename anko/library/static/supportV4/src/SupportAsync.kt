@@ -28,9 +28,9 @@ fun <T: Fragment> AnkoAsyncContext<T>.supportFragmentUiThread(f: (T) -> Unit) {
 
 @Deprecated("Use onUiThread() instead", ReplaceWith("onUiThread(f)"))
 inline fun Fragment.uiThread(crossinline f: () -> Unit) {
-    activity.onUiThread { f() }
+    activity.runOnUiThread { f() }
 }
 
 inline fun Fragment.onUiThread(crossinline f: () -> Unit) {
-    activity.onUiThread { f() }
+    activity.runOnUiThread { f() }
 }
