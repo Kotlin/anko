@@ -42,13 +42,13 @@ dependencies {
         jcenter()
     }
 
-    provided fileTree(dir: '../../original/%ARTIFACT_NAME', include: ['*.jar'])
+    provided fileTree(dir: '../../original/%ARTIFACT_NAME', include: ['*.jar'], exclude: ['platform.android.jar'])
     provided "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     if ("%ARTIFACT_NAME" == "common") {
         provided files('../../zip/anko-stubs.jar')
     }
-    if ("%ARTIFACT_NAME" != "common") {
+    if ("%ARTIFACT_NAME" != "common" && "%ARTIFACT_NAME" != "stubs") {
         provided files('../../zip/anko-common.jar')
     }
     if ("%ARTIFACT_NAME" != "common" && !"%ARTIFACT_NAME".startsWith("sdk")) {
