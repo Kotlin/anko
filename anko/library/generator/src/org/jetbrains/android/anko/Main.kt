@@ -21,6 +21,8 @@ import org.jetbrains.android.anko.config.GeneratorOption
 import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 import org.jetbrains.android.anko.utils.JarFileFilter
 import java.io.File
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.Executors
 
 object Launcher {
     @JvmStatic
@@ -85,25 +87,30 @@ private fun getJars(version: File) = version.listFiles(JarFileFilter()).partitio
 private fun gen(generatorOptions: Set<GeneratorOption>) {
     copyStubs()
 
-    for (versionDir in getVersionDirs()) {
-        val (platformJars, versionJars) = getJars(versionDir)
-        val versionName = versionDir.name
+    val versionDirs = getVersionDirs()
+    val latch = CountDownLatch(versionDirs.size)
+    val executor = Executors.newFixedThreadPool(versionDirs.size)
 
-        if (platformJars.isNotEmpty()) {
-            println("Processing version $versionName")
-            println("  Platform jars: ${platformJars.joinToString()}")
-            if (versionJars.isNotEmpty()) println("  Version jars: ${versionJars.joinToString()}")
+    for (versionDir in versionDirs) {
+        executor.submit {
+            val (platformJars, versionJars) = getJars(versionDir)
+            val versionName = versionDir.name
 
-            val outputDirectory = File("workdir/gen/$versionName/")
-            val fileOutputDirectory = File(outputDirectory, "src/main/kotlin/")
-            if (!fileOutputDirectory.exists()) {
-                fileOutputDirectory.mkdirs()
+            if (platformJars.isNotEmpty()) {
+                val outputDirectory = File("workdir/gen/$versionName/")
+                val fileOutputDirectory = File(outputDirectory, "src/main/kotlin/")
+                if (!fileOutputDirectory.exists()) {
+                    fileOutputDirectory.mkdirs()
+                }
+
+                DSLGenerator(versionDir, platformJars, versionJars,
+                        DefaultAnkoConfiguration(outputDirectory, versionName, generatorOptions)).run()
+                latch.countDown()
             }
-
-            DSLGenerator(versionDir, platformJars, versionJars,
-                    DefaultAnkoConfiguration(outputDirectory, versionName, generatorOptions)).run()
         }
     }
+    latch.await()
+    executor.shutdown()
 }
 
 private fun copyStubs() {

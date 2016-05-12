@@ -30,17 +30,21 @@
         <build_artifact version="stubs"/>
         <build_artifact version="common"/>
         <build_artifact version="sqlite"/>
-        <build_artifact version="sdk15"/>
-        <build_artifact version="sdk19"/>
-        <build_artifact version="sdk21"/>
-        <build_artifact version="sdk23"/>
+        <parallel threadCount="4">
+            <build_artifact version="sdk15"/>
+            <build_artifact version="sdk19"/>
+            <build_artifact version="sdk21"/>
+            <build_artifact version="sdk23"/>
+        </parallel>
         <build_artifact version="support-v4"/>
         <build_artifact version="appcompat-v7"/>
-        <build_artifact version="cardview-v7"/>
-        <build_artifact version="gridlayout-v7"/>
-        <build_artifact version="recyclerview-v7"/>
-        <build_artifact version="design"/>
-        <build_artifact version="percent"/>
+        <parallel threadCount="4">
+            <build_artifact version="cardview-v7"/>
+            <build_artifact version="gridlayout-v7"/>
+            <build_artifact version="recyclerview-v7"/>
+            <build_artifact version="design"/>
+            <build_artifact version="percent"/>
+        </parallel>
     </target>
 
     <macrodef name="build_artifact">
