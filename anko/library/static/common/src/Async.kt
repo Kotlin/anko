@@ -93,33 +93,69 @@ fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T)
     activity.runOnUiThread { activity.f(fragment) }
 }
 
-fun <T> T.doAsync(task: AnkoAsyncContext<T>.() -> Unit): Future<Unit> {
+fun <T> T.doAsync(
+        exceptionHandler: ((Throwable) -> Unit)? = null,
+        task: AnkoAsyncContext<T>.() -> Unit
+): Future<Unit> {
     val context = AnkoAsyncContext(WeakReference(this))
-    return BackgroundExecutor.submit { context.task() }
+    return BackgroundExecutor.submit {
+        try {
+            context.task()
+        } catch (thr: Throwable) {
+            exceptionHandler?.invoke(thr) ?: Unit
+        }
+    }
 }
 
-fun <T> T.doAsync(executorService: ExecutorService, task: AnkoAsyncContext<T>.() -> Unit): Future<Unit> {
+fun <T> T.doAsync(
+        exceptionHandler: ((Throwable) -> Unit)? = null,
+        executorService: ExecutorService,
+        task: AnkoAsyncContext<T>.() -> Unit
+): Future<Unit> {
     val context = AnkoAsyncContext(WeakReference(this))
-    return executorService.submit<Unit> { context.task() }
+    return executorService.submit<Unit> {
+        try {
+            context.task()
+        } catch (thr: Throwable) {
+            exceptionHandler?.invoke(thr)
+        }
+    }
 }
 
-fun <T, R> T.doAsyncResult(task: AnkoAsyncContext<T>.() -> R): Future<R> {
+fun <T, R> T.doAsyncResult(
+        exceptionHandler: ((Throwable) -> Unit)? = null,
+        task: AnkoAsyncContext<T>.() -> R
+): Future<R> {
     val context = AnkoAsyncContext(WeakReference(this))
-    return BackgroundExecutor.submit { context.task() }
+    return BackgroundExecutor.submit {
+        try {
+            context.task()
+        } catch (thr: Throwable) {
+            exceptionHandler?.invoke(thr)
+            throw thr
+        }
+    }
 }
 
-fun <T, R> T.doAsyncResult(executorService: ExecutorService, task: AnkoAsyncContext<T>.() -> R): Future<R> {
+fun <T, R> T.doAsyncResult(
+        exceptionHandler: ((Throwable) -> Unit)? = null,
+        executorService: ExecutorService,
+        task: AnkoAsyncContext<T>.() -> R
+): Future<R> {
     val context = AnkoAsyncContext(WeakReference(this))
-    return executorService.submit<R> { context.task() }
+    return executorService.submit<R> {
+        try {
+            context.task()
+        } catch (thr: Throwable) {
+            exceptionHandler?.invoke(thr)
+            throw thr
+        }
+    }
 }
 
 internal object BackgroundExecutor {
     var executor: ExecutorService =
         Executors.newScheduledThreadPool(2 * Runtime.getRuntime().availableProcessors())
-
-    fun execute(task: () -> Unit): Future<Unit> {
-        return executor.submit<Unit> { task() }
-    }
 
     fun <T> submit(task: () -> T): Future<T> {
         return executor.submit(task)
