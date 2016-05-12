@@ -70,23 +70,23 @@ inline fun <reified T: Any> Fragment.intentFor(vararg params: Pair<String, Any>)
     return AnkoInternals.createIntent(activity, T::class.java, params)
 }
 
-inline fun Intent.clearTask(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK) }
+inline fun Intent.clearTask(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK) }
 
-inline fun Intent.clearTop(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) }
+inline fun Intent.clearTop(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) }
 
-inline fun Intent.clearWhenTaskReset(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET) }
+inline fun Intent.clearWhenTaskReset(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET) }
 
-inline fun Intent.excludeFromRecents(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS) }
+inline fun Intent.excludeFromRecents(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS) }
 
-inline fun Intent.multipleTask(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK) }
+inline fun Intent.multipleTask(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK) }
 
-inline fun Intent.newTask(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
+inline fun Intent.newTask(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
 
-inline fun Intent.noAnimation(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION) }
+inline fun Intent.noAnimation(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION) }
 
-inline fun Intent.noHistory(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY) }
+inline fun Intent.noHistory(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY) }
 
-inline fun Intent.singleTop(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) }
+inline fun Intent.singleTop(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) }
 
 inline fun AnkoContext<*>.browse(url: String, newTask: Boolean = false) = ctx.browse(url, newTask)
 inline fun Fragment.browse(url: String, newTask: Boolean = false) = activity.browse(url, newTask)
