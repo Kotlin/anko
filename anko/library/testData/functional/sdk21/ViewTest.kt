@@ -50,611 +50,611 @@ object `$$Anko$Factories$Sdk21View` {
     val ZOOM_CONTROLS = { ctx: Context -> android.widget.ZoomControls(ctx) }
 }
 
-inline fun ViewManager.mediaRouteButton(): android.app.MediaRouteButton = mediaRouteButton({})
-inline fun ViewManager.mediaRouteButton(init: android.app.MediaRouteButton.() -> Unit): android.app.MediaRouteButton {
-    return ankoView(`$$Anko$Factories$Sdk21View`.MEDIA_ROUTE_BUTTON) { init() }
+inline fun ViewManager.mediaRouteButton(theme: Int = 0): android.app.MediaRouteButton = mediaRouteButton(theme) {}
+inline fun ViewManager.mediaRouteButton(theme: Int = 0, init: android.app.MediaRouteButton.() -> Unit): android.app.MediaRouteButton {
+    return ankoView(`$$Anko$Factories$Sdk21View`.MEDIA_ROUTE_BUTTON, theme) { init() }
 }
 
-inline fun ViewManager.gestureOverlayView(): android.gesture.GestureOverlayView = gestureOverlayView({})
-inline fun ViewManager.gestureOverlayView(init: android.gesture.GestureOverlayView.() -> Unit): android.gesture.GestureOverlayView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.GESTURE_OVERLAY_VIEW) { init() }
+inline fun ViewManager.gestureOverlayView(theme: Int = 0): android.gesture.GestureOverlayView = gestureOverlayView(theme) {}
+inline fun ViewManager.gestureOverlayView(theme: Int = 0, init: android.gesture.GestureOverlayView.() -> Unit): android.gesture.GestureOverlayView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.GESTURE_OVERLAY_VIEW, theme) { init() }
 }
 
-inline fun Context.gestureOverlayView(): android.gesture.GestureOverlayView = gestureOverlayView({})
-inline fun Context.gestureOverlayView(init: android.gesture.GestureOverlayView.() -> Unit): android.gesture.GestureOverlayView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.GESTURE_OVERLAY_VIEW) { init() }
+inline fun Context.gestureOverlayView(theme: Int = 0): android.gesture.GestureOverlayView = gestureOverlayView(theme) {}
+inline fun Context.gestureOverlayView(theme: Int = 0, init: android.gesture.GestureOverlayView.() -> Unit): android.gesture.GestureOverlayView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.GESTURE_OVERLAY_VIEW, theme) { init() }
 }
 
-inline fun Activity.gestureOverlayView(): android.gesture.GestureOverlayView = gestureOverlayView({})
-inline fun Activity.gestureOverlayView(init: android.gesture.GestureOverlayView.() -> Unit): android.gesture.GestureOverlayView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.GESTURE_OVERLAY_VIEW) { init() }
+inline fun Activity.gestureOverlayView(theme: Int = 0): android.gesture.GestureOverlayView = gestureOverlayView(theme) {}
+inline fun Activity.gestureOverlayView(theme: Int = 0, init: android.gesture.GestureOverlayView.() -> Unit): android.gesture.GestureOverlayView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.GESTURE_OVERLAY_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.extractEditText(): android.inputmethodservice.ExtractEditText = extractEditText({})
-inline fun ViewManager.extractEditText(init: android.inputmethodservice.ExtractEditText.() -> Unit): android.inputmethodservice.ExtractEditText {
-    return ankoView(`$$Anko$Factories$Sdk21View`.EXTRACT_EDIT_TEXT) { init() }
+inline fun ViewManager.extractEditText(theme: Int = 0): android.inputmethodservice.ExtractEditText = extractEditText(theme) {}
+inline fun ViewManager.extractEditText(theme: Int = 0, init: android.inputmethodservice.ExtractEditText.() -> Unit): android.inputmethodservice.ExtractEditText {
+    return ankoView(`$$Anko$Factories$Sdk21View`.EXTRACT_EDIT_TEXT, theme) { init() }
 }
 
-inline fun ViewManager.tvView(): android.media.tv.TvView = tvView({})
-inline fun ViewManager.tvView(init: android.media.tv.TvView.() -> Unit): android.media.tv.TvView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TV_VIEW) { init() }
+inline fun ViewManager.tvView(theme: Int = 0): android.media.tv.TvView = tvView(theme) {}
+inline fun ViewManager.tvView(theme: Int = 0, init: android.media.tv.TvView.() -> Unit): android.media.tv.TvView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TV_VIEW, theme) { init() }
 }
 
-inline fun Context.tvView(): android.media.tv.TvView = tvView({})
-inline fun Context.tvView(init: android.media.tv.TvView.() -> Unit): android.media.tv.TvView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TV_VIEW) { init() }
+inline fun Context.tvView(theme: Int = 0): android.media.tv.TvView = tvView(theme) {}
+inline fun Context.tvView(theme: Int = 0, init: android.media.tv.TvView.() -> Unit): android.media.tv.TvView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TV_VIEW, theme) { init() }
 }
 
-inline fun Activity.tvView(): android.media.tv.TvView = tvView({})
-inline fun Activity.tvView(init: android.media.tv.TvView.() -> Unit): android.media.tv.TvView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TV_VIEW) { init() }
+inline fun Activity.tvView(theme: Int = 0): android.media.tv.TvView = tvView(theme) {}
+inline fun Activity.tvView(theme: Int = 0, init: android.media.tv.TvView.() -> Unit): android.media.tv.TvView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TV_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.gLSurfaceView(): android.opengl.GLSurfaceView = gLSurfaceView({})
-inline fun ViewManager.gLSurfaceView(init: android.opengl.GLSurfaceView.() -> Unit): android.opengl.GLSurfaceView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.G_L_SURFACE_VIEW) { init() }
+inline fun ViewManager.gLSurfaceView(theme: Int = 0): android.opengl.GLSurfaceView = gLSurfaceView(theme) {}
+inline fun ViewManager.gLSurfaceView(theme: Int = 0, init: android.opengl.GLSurfaceView.() -> Unit): android.opengl.GLSurfaceView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.G_L_SURFACE_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.surfaceView(): android.view.SurfaceView = surfaceView({})
-inline fun ViewManager.surfaceView(init: android.view.SurfaceView.() -> Unit): android.view.SurfaceView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SURFACE_VIEW) { init() }
+inline fun ViewManager.surfaceView(theme: Int = 0): android.view.SurfaceView = surfaceView(theme) {}
+inline fun ViewManager.surfaceView(theme: Int = 0, init: android.view.SurfaceView.() -> Unit): android.view.SurfaceView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SURFACE_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.textureView(): android.view.TextureView = textureView({})
-inline fun ViewManager.textureView(init: android.view.TextureView.() -> Unit): android.view.TextureView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TEXTURE_VIEW) { init() }
+inline fun ViewManager.textureView(theme: Int = 0): android.view.TextureView = textureView(theme) {}
+inline fun ViewManager.textureView(theme: Int = 0, init: android.view.TextureView.() -> Unit): android.view.TextureView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TEXTURE_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.view(): android.view.View = view({})
-inline fun ViewManager.view(init: android.view.View.() -> Unit): android.view.View {
-    return ankoView(`$$Anko$Factories$Sdk21View`.VIEW) { init() }
+inline fun ViewManager.view(theme: Int = 0): android.view.View = view(theme) {}
+inline fun ViewManager.view(theme: Int = 0, init: android.view.View.() -> Unit): android.view.View {
+    return ankoView(`$$Anko$Factories$Sdk21View`.VIEW, theme) { init() }
 }
 
-inline fun ViewManager.viewStub(): android.view.ViewStub = viewStub({})
-inline fun ViewManager.viewStub(init: android.view.ViewStub.() -> Unit): android.view.ViewStub {
-    return ankoView(`$$Anko$Factories$Sdk21View`.VIEW_STUB) { init() }
+inline fun ViewManager.viewStub(theme: Int = 0): android.view.ViewStub = viewStub(theme) {}
+inline fun ViewManager.viewStub(theme: Int = 0, init: android.view.ViewStub.() -> Unit): android.view.ViewStub {
+    return ankoView(`$$Anko$Factories$Sdk21View`.VIEW_STUB, theme) { init() }
 }
 
-inline fun ViewManager.adapterViewFlipper(): android.widget.AdapterViewFlipper = adapterViewFlipper({})
-inline fun ViewManager.adapterViewFlipper(init: android.widget.AdapterViewFlipper.() -> Unit): android.widget.AdapterViewFlipper {
-    return ankoView(`$$Anko$Factories$Sdk21View`.ADAPTER_VIEW_FLIPPER) { init() }
+inline fun ViewManager.adapterViewFlipper(theme: Int = 0): android.widget.AdapterViewFlipper = adapterViewFlipper(theme) {}
+inline fun ViewManager.adapterViewFlipper(theme: Int = 0, init: android.widget.AdapterViewFlipper.() -> Unit): android.widget.AdapterViewFlipper {
+    return ankoView(`$$Anko$Factories$Sdk21View`.ADAPTER_VIEW_FLIPPER, theme) { init() }
 }
 
-inline fun Context.adapterViewFlipper(): android.widget.AdapterViewFlipper = adapterViewFlipper({})
-inline fun Context.adapterViewFlipper(init: android.widget.AdapterViewFlipper.() -> Unit): android.widget.AdapterViewFlipper {
-    return ankoView(`$$Anko$Factories$Sdk21View`.ADAPTER_VIEW_FLIPPER) { init() }
+inline fun Context.adapterViewFlipper(theme: Int = 0): android.widget.AdapterViewFlipper = adapterViewFlipper(theme) {}
+inline fun Context.adapterViewFlipper(theme: Int = 0, init: android.widget.AdapterViewFlipper.() -> Unit): android.widget.AdapterViewFlipper {
+    return ankoView(`$$Anko$Factories$Sdk21View`.ADAPTER_VIEW_FLIPPER, theme) { init() }
 }
 
-inline fun Activity.adapterViewFlipper(): android.widget.AdapterViewFlipper = adapterViewFlipper({})
-inline fun Activity.adapterViewFlipper(init: android.widget.AdapterViewFlipper.() -> Unit): android.widget.AdapterViewFlipper {
-    return ankoView(`$$Anko$Factories$Sdk21View`.ADAPTER_VIEW_FLIPPER) { init() }
+inline fun Activity.adapterViewFlipper(theme: Int = 0): android.widget.AdapterViewFlipper = adapterViewFlipper(theme) {}
+inline fun Activity.adapterViewFlipper(theme: Int = 0, init: android.widget.AdapterViewFlipper.() -> Unit): android.widget.AdapterViewFlipper {
+    return ankoView(`$$Anko$Factories$Sdk21View`.ADAPTER_VIEW_FLIPPER, theme) { init() }
 }
 
-inline fun ViewManager.analogClock(): android.widget.AnalogClock = analogClock({})
-inline fun ViewManager.analogClock(init: android.widget.AnalogClock.() -> Unit): android.widget.AnalogClock {
-    return ankoView(`$$Anko$Factories$Sdk21View`.ANALOG_CLOCK) { init() }
+inline fun ViewManager.analogClock(theme: Int = 0): android.widget.AnalogClock = analogClock(theme) {}
+inline fun ViewManager.analogClock(theme: Int = 0, init: android.widget.AnalogClock.() -> Unit): android.widget.AnalogClock {
+    return ankoView(`$$Anko$Factories$Sdk21View`.ANALOG_CLOCK, theme) { init() }
 }
 
-inline fun ViewManager.autoCompleteTextView(): android.widget.AutoCompleteTextView = autoCompleteTextView({})
-inline fun ViewManager.autoCompleteTextView(init: android.widget.AutoCompleteTextView.() -> Unit): android.widget.AutoCompleteTextView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.AUTO_COMPLETE_TEXT_VIEW) { init() }
+inline fun ViewManager.autoCompleteTextView(theme: Int = 0): android.widget.AutoCompleteTextView = autoCompleteTextView(theme) {}
+inline fun ViewManager.autoCompleteTextView(theme: Int = 0, init: android.widget.AutoCompleteTextView.() -> Unit): android.widget.AutoCompleteTextView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.AUTO_COMPLETE_TEXT_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.button(): android.widget.Button = button({})
-inline fun ViewManager.button(init: android.widget.Button.() -> Unit): android.widget.Button {
-    return ankoView(`$$Anko$Factories$Sdk21View`.BUTTON) { init() }
+inline fun ViewManager.button(theme: Int = 0): android.widget.Button = button(theme) {}
+inline fun ViewManager.button(theme: Int = 0, init: android.widget.Button.() -> Unit): android.widget.Button {
+    return ankoView(`$$Anko$Factories$Sdk21View`.BUTTON, theme) { init() }
 }
 
-inline fun ViewManager.button(text: CharSequence?): android.widget.Button {
-    return ankoView(`$$Anko$Factories$Sdk21View`.BUTTON) {
+inline fun ViewManager.button(text: CharSequence?, theme: Int = 0): android.widget.Button {
+    return ankoView(`$$Anko$Factories$Sdk21View`.BUTTON, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.button(text: CharSequence?, init: android.widget.Button.() -> Unit): android.widget.Button {
-    return ankoView(`$$Anko$Factories$Sdk21View`.BUTTON) {
+inline fun ViewManager.button(text: CharSequence?, theme: Int = 0, init: android.widget.Button.() -> Unit): android.widget.Button {
+    return ankoView(`$$Anko$Factories$Sdk21View`.BUTTON, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.button(text: Int): android.widget.Button {
-    return ankoView(`$$Anko$Factories$Sdk21View`.BUTTON) {
+inline fun ViewManager.button(text: Int, theme: Int = 0): android.widget.Button {
+    return ankoView(`$$Anko$Factories$Sdk21View`.BUTTON, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.button(text: Int, init: android.widget.Button.() -> Unit): android.widget.Button {
-    return ankoView(`$$Anko$Factories$Sdk21View`.BUTTON) {
+inline fun ViewManager.button(text: Int, theme: Int = 0, init: android.widget.Button.() -> Unit): android.widget.Button {
+    return ankoView(`$$Anko$Factories$Sdk21View`.BUTTON, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.calendarView(): android.widget.CalendarView = calendarView({})
-inline fun ViewManager.calendarView(init: android.widget.CalendarView.() -> Unit): android.widget.CalendarView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CALENDAR_VIEW) { init() }
+inline fun ViewManager.calendarView(theme: Int = 0): android.widget.CalendarView = calendarView(theme) {}
+inline fun ViewManager.calendarView(theme: Int = 0, init: android.widget.CalendarView.() -> Unit): android.widget.CalendarView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CALENDAR_VIEW, theme) { init() }
 }
 
-inline fun Context.calendarView(): android.widget.CalendarView = calendarView({})
-inline fun Context.calendarView(init: android.widget.CalendarView.() -> Unit): android.widget.CalendarView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CALENDAR_VIEW) { init() }
+inline fun Context.calendarView(theme: Int = 0): android.widget.CalendarView = calendarView(theme) {}
+inline fun Context.calendarView(theme: Int = 0, init: android.widget.CalendarView.() -> Unit): android.widget.CalendarView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CALENDAR_VIEW, theme) { init() }
 }
 
-inline fun Activity.calendarView(): android.widget.CalendarView = calendarView({})
-inline fun Activity.calendarView(init: android.widget.CalendarView.() -> Unit): android.widget.CalendarView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CALENDAR_VIEW) { init() }
+inline fun Activity.calendarView(theme: Int = 0): android.widget.CalendarView = calendarView(theme) {}
+inline fun Activity.calendarView(theme: Int = 0, init: android.widget.CalendarView.() -> Unit): android.widget.CalendarView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CALENDAR_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.checkBox(): android.widget.CheckBox = checkBox({})
-inline fun ViewManager.checkBox(init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX) { init() }
+inline fun ViewManager.checkBox(theme: Int = 0): android.widget.CheckBox = checkBox(theme) {}
+inline fun ViewManager.checkBox(theme: Int = 0, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX, theme) { init() }
 }
 
-inline fun ViewManager.checkBox(text: CharSequence?): android.widget.CheckBox {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX) {
+inline fun ViewManager.checkBox(text: CharSequence?, theme: Int = 0): android.widget.CheckBox {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.checkBox(text: CharSequence?, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX) {
+inline fun ViewManager.checkBox(text: CharSequence?, theme: Int = 0, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.checkBox(text: Int): android.widget.CheckBox {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX) {
+inline fun ViewManager.checkBox(text: Int, theme: Int = 0): android.widget.CheckBox {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.checkBox(text: Int, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX) {
+inline fun ViewManager.checkBox(text: Int, theme: Int = 0, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.checkBox(text: CharSequence?, checked: Boolean): android.widget.CheckBox {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX) {
+inline fun ViewManager.checkBox(text: CharSequence?, checked: Boolean, theme: Int = 0): android.widget.CheckBox {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX, theme) {
         setText(text)
         setChecked(checked)
     }
 }
-inline fun ViewManager.checkBox(text: CharSequence?, checked: Boolean, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX) {
-        init()
-        setText(text)
-        setChecked(checked)
-    }
-}
-
-inline fun ViewManager.checkBox(text: Int, checked: Boolean): android.widget.CheckBox {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX) {
-        setText(text)
-        setChecked(checked)
-    }
-}
-inline fun ViewManager.checkBox(text: Int, checked: Boolean, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX) {
+inline fun ViewManager.checkBox(text: CharSequence?, checked: Boolean, theme: Int = 0, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX, theme) {
         init()
         setText(text)
         setChecked(checked)
     }
 }
 
-inline fun ViewManager.checkedTextView(): android.widget.CheckedTextView = checkedTextView({})
-inline fun ViewManager.checkedTextView(init: android.widget.CheckedTextView.() -> Unit): android.widget.CheckedTextView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CHECKED_TEXT_VIEW) { init() }
+inline fun ViewManager.checkBox(text: Int, checked: Boolean, theme: Int = 0): android.widget.CheckBox {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX, theme) {
+        setText(text)
+        setChecked(checked)
+    }
+}
+inline fun ViewManager.checkBox(text: Int, checked: Boolean, theme: Int = 0, init: android.widget.CheckBox.() -> Unit): android.widget.CheckBox {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CHECK_BOX, theme) {
+        init()
+        setText(text)
+        setChecked(checked)
+    }
 }
 
-inline fun ViewManager.chronometer(): android.widget.Chronometer = chronometer({})
-inline fun ViewManager.chronometer(init: android.widget.Chronometer.() -> Unit): android.widget.Chronometer {
-    return ankoView(`$$Anko$Factories$Sdk21View`.CHRONOMETER) { init() }
+inline fun ViewManager.checkedTextView(theme: Int = 0): android.widget.CheckedTextView = checkedTextView(theme) {}
+inline fun ViewManager.checkedTextView(theme: Int = 0, init: android.widget.CheckedTextView.() -> Unit): android.widget.CheckedTextView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CHECKED_TEXT_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.datePicker(): android.widget.DatePicker = datePicker({})
-inline fun ViewManager.datePicker(init: android.widget.DatePicker.() -> Unit): android.widget.DatePicker {
-    return ankoView(`$$Anko$Factories$Sdk21View`.DATE_PICKER) { init() }
+inline fun ViewManager.chronometer(theme: Int = 0): android.widget.Chronometer = chronometer(theme) {}
+inline fun ViewManager.chronometer(theme: Int = 0, init: android.widget.Chronometer.() -> Unit): android.widget.Chronometer {
+    return ankoView(`$$Anko$Factories$Sdk21View`.CHRONOMETER, theme) { init() }
 }
 
-inline fun Context.datePicker(): android.widget.DatePicker = datePicker({})
-inline fun Context.datePicker(init: android.widget.DatePicker.() -> Unit): android.widget.DatePicker {
-    return ankoView(`$$Anko$Factories$Sdk21View`.DATE_PICKER) { init() }
+inline fun ViewManager.datePicker(theme: Int = 0): android.widget.DatePicker = datePicker(theme) {}
+inline fun ViewManager.datePicker(theme: Int = 0, init: android.widget.DatePicker.() -> Unit): android.widget.DatePicker {
+    return ankoView(`$$Anko$Factories$Sdk21View`.DATE_PICKER, theme) { init() }
 }
 
-inline fun Activity.datePicker(): android.widget.DatePicker = datePicker({})
-inline fun Activity.datePicker(init: android.widget.DatePicker.() -> Unit): android.widget.DatePicker {
-    return ankoView(`$$Anko$Factories$Sdk21View`.DATE_PICKER) { init() }
+inline fun Context.datePicker(theme: Int = 0): android.widget.DatePicker = datePicker(theme) {}
+inline fun Context.datePicker(theme: Int = 0, init: android.widget.DatePicker.() -> Unit): android.widget.DatePicker {
+    return ankoView(`$$Anko$Factories$Sdk21View`.DATE_PICKER, theme) { init() }
 }
 
-inline fun ViewManager.dialerFilter(): android.widget.DialerFilter = dialerFilter({})
-inline fun ViewManager.dialerFilter(init: android.widget.DialerFilter.() -> Unit): android.widget.DialerFilter {
-    return ankoView(`$$Anko$Factories$Sdk21View`.DIALER_FILTER) { init() }
+inline fun Activity.datePicker(theme: Int = 0): android.widget.DatePicker = datePicker(theme) {}
+inline fun Activity.datePicker(theme: Int = 0, init: android.widget.DatePicker.() -> Unit): android.widget.DatePicker {
+    return ankoView(`$$Anko$Factories$Sdk21View`.DATE_PICKER, theme) { init() }
 }
 
-inline fun Context.dialerFilter(): android.widget.DialerFilter = dialerFilter({})
-inline fun Context.dialerFilter(init: android.widget.DialerFilter.() -> Unit): android.widget.DialerFilter {
-    return ankoView(`$$Anko$Factories$Sdk21View`.DIALER_FILTER) { init() }
+inline fun ViewManager.dialerFilter(theme: Int = 0): android.widget.DialerFilter = dialerFilter(theme) {}
+inline fun ViewManager.dialerFilter(theme: Int = 0, init: android.widget.DialerFilter.() -> Unit): android.widget.DialerFilter {
+    return ankoView(`$$Anko$Factories$Sdk21View`.DIALER_FILTER, theme) { init() }
 }
 
-inline fun Activity.dialerFilter(): android.widget.DialerFilter = dialerFilter({})
-inline fun Activity.dialerFilter(init: android.widget.DialerFilter.() -> Unit): android.widget.DialerFilter {
-    return ankoView(`$$Anko$Factories$Sdk21View`.DIALER_FILTER) { init() }
+inline fun Context.dialerFilter(theme: Int = 0): android.widget.DialerFilter = dialerFilter(theme) {}
+inline fun Context.dialerFilter(theme: Int = 0, init: android.widget.DialerFilter.() -> Unit): android.widget.DialerFilter {
+    return ankoView(`$$Anko$Factories$Sdk21View`.DIALER_FILTER, theme) { init() }
 }
 
-inline fun ViewManager.digitalClock(): android.widget.DigitalClock = digitalClock({})
-inline fun ViewManager.digitalClock(init: android.widget.DigitalClock.() -> Unit): android.widget.DigitalClock {
-    return ankoView(`$$Anko$Factories$Sdk21View`.DIGITAL_CLOCK) { init() }
+inline fun Activity.dialerFilter(theme: Int = 0): android.widget.DialerFilter = dialerFilter(theme) {}
+inline fun Activity.dialerFilter(theme: Int = 0, init: android.widget.DialerFilter.() -> Unit): android.widget.DialerFilter {
+    return ankoView(`$$Anko$Factories$Sdk21View`.DIALER_FILTER, theme) { init() }
 }
 
-inline fun ViewManager.editText(): android.widget.EditText = editText({})
-inline fun ViewManager.editText(init: android.widget.EditText.() -> Unit): android.widget.EditText {
-    return ankoView(`$$Anko$Factories$Sdk21View`.EDIT_TEXT) { init() }
+inline fun ViewManager.digitalClock(theme: Int = 0): android.widget.DigitalClock = digitalClock(theme) {}
+inline fun ViewManager.digitalClock(theme: Int = 0, init: android.widget.DigitalClock.() -> Unit): android.widget.DigitalClock {
+    return ankoView(`$$Anko$Factories$Sdk21View`.DIGITAL_CLOCK, theme) { init() }
 }
 
-inline fun ViewManager.editText(text: CharSequence?): android.widget.EditText {
-    return ankoView(`$$Anko$Factories$Sdk21View`.EDIT_TEXT) {
+inline fun ViewManager.editText(theme: Int = 0): android.widget.EditText = editText(theme) {}
+inline fun ViewManager.editText(theme: Int = 0, init: android.widget.EditText.() -> Unit): android.widget.EditText {
+    return ankoView(`$$Anko$Factories$Sdk21View`.EDIT_TEXT, theme) { init() }
+}
+
+inline fun ViewManager.editText(text: CharSequence?, theme: Int = 0): android.widget.EditText {
+    return ankoView(`$$Anko$Factories$Sdk21View`.EDIT_TEXT, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.editText(text: CharSequence?, init: android.widget.EditText.() -> Unit): android.widget.EditText {
-    return ankoView(`$$Anko$Factories$Sdk21View`.EDIT_TEXT) {
+inline fun ViewManager.editText(text: CharSequence?, theme: Int = 0, init: android.widget.EditText.() -> Unit): android.widget.EditText {
+    return ankoView(`$$Anko$Factories$Sdk21View`.EDIT_TEXT, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.editText(text: Int): android.widget.EditText {
-    return ankoView(`$$Anko$Factories$Sdk21View`.EDIT_TEXT) {
+inline fun ViewManager.editText(text: Int, theme: Int = 0): android.widget.EditText {
+    return ankoView(`$$Anko$Factories$Sdk21View`.EDIT_TEXT, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.editText(text: Int, init: android.widget.EditText.() -> Unit): android.widget.EditText {
-    return ankoView(`$$Anko$Factories$Sdk21View`.EDIT_TEXT) {
+inline fun ViewManager.editText(text: Int, theme: Int = 0, init: android.widget.EditText.() -> Unit): android.widget.EditText {
+    return ankoView(`$$Anko$Factories$Sdk21View`.EDIT_TEXT, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.expandableListView(): android.widget.ExpandableListView = expandableListView({})
-inline fun ViewManager.expandableListView(init: android.widget.ExpandableListView.() -> Unit): android.widget.ExpandableListView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.EXPANDABLE_LIST_VIEW) { init() }
+inline fun ViewManager.expandableListView(theme: Int = 0): android.widget.ExpandableListView = expandableListView(theme) {}
+inline fun ViewManager.expandableListView(theme: Int = 0, init: android.widget.ExpandableListView.() -> Unit): android.widget.ExpandableListView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.EXPANDABLE_LIST_VIEW, theme) { init() }
 }
 
-inline fun Context.expandableListView(): android.widget.ExpandableListView = expandableListView({})
-inline fun Context.expandableListView(init: android.widget.ExpandableListView.() -> Unit): android.widget.ExpandableListView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.EXPANDABLE_LIST_VIEW) { init() }
+inline fun Context.expandableListView(theme: Int = 0): android.widget.ExpandableListView = expandableListView(theme) {}
+inline fun Context.expandableListView(theme: Int = 0, init: android.widget.ExpandableListView.() -> Unit): android.widget.ExpandableListView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.EXPANDABLE_LIST_VIEW, theme) { init() }
 }
 
-inline fun Activity.expandableListView(): android.widget.ExpandableListView = expandableListView({})
-inline fun Activity.expandableListView(init: android.widget.ExpandableListView.() -> Unit): android.widget.ExpandableListView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.EXPANDABLE_LIST_VIEW) { init() }
+inline fun Activity.expandableListView(theme: Int = 0): android.widget.ExpandableListView = expandableListView(theme) {}
+inline fun Activity.expandableListView(theme: Int = 0, init: android.widget.ExpandableListView.() -> Unit): android.widget.ExpandableListView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.EXPANDABLE_LIST_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.imageButton(): android.widget.ImageButton = imageButton({})
-inline fun ViewManager.imageButton(init: android.widget.ImageButton.() -> Unit): android.widget.ImageButton {
-    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_BUTTON) { init() }
+inline fun ViewManager.imageButton(theme: Int = 0): android.widget.ImageButton = imageButton(theme) {}
+inline fun ViewManager.imageButton(theme: Int = 0, init: android.widget.ImageButton.() -> Unit): android.widget.ImageButton {
+    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_BUTTON, theme) { init() }
 }
 
-inline fun ViewManager.imageButton(imageDrawable: android.graphics.drawable.Drawable?): android.widget.ImageButton {
-    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_BUTTON) {
+inline fun ViewManager.imageButton(imageDrawable: android.graphics.drawable.Drawable?, theme: Int = 0): android.widget.ImageButton {
+    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_BUTTON, theme) {
         setImageDrawable(imageDrawable)
     }
 }
-inline fun ViewManager.imageButton(imageDrawable: android.graphics.drawable.Drawable?, init: android.widget.ImageButton.() -> Unit): android.widget.ImageButton {
-    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_BUTTON) {
-        init()
-        setImageDrawable(imageDrawable)
-    }
-}
-
-inline fun ViewManager.imageButton(imageResource: Int): android.widget.ImageButton {
-    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_BUTTON) {
-        setImageResource(imageResource)
-    }
-}
-inline fun ViewManager.imageButton(imageResource: Int, init: android.widget.ImageButton.() -> Unit): android.widget.ImageButton {
-    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_BUTTON) {
-        init()
-        setImageResource(imageResource)
-    }
-}
-
-inline fun ViewManager.imageView(): android.widget.ImageView = imageView({})
-inline fun ViewManager.imageView(init: android.widget.ImageView.() -> Unit): android.widget.ImageView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_VIEW) { init() }
-}
-
-inline fun ViewManager.imageView(imageDrawable: android.graphics.drawable.Drawable?): android.widget.ImageView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_VIEW) {
-        setImageDrawable(imageDrawable)
-    }
-}
-inline fun ViewManager.imageView(imageDrawable: android.graphics.drawable.Drawable?, init: android.widget.ImageView.() -> Unit): android.widget.ImageView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_VIEW) {
+inline fun ViewManager.imageButton(imageDrawable: android.graphics.drawable.Drawable?, theme: Int = 0, init: android.widget.ImageButton.() -> Unit): android.widget.ImageButton {
+    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_BUTTON, theme) {
         init()
         setImageDrawable(imageDrawable)
     }
 }
 
-inline fun ViewManager.imageView(imageResource: Int): android.widget.ImageView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_VIEW) {
+inline fun ViewManager.imageButton(imageResource: Int, theme: Int = 0): android.widget.ImageButton {
+    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_BUTTON, theme) {
         setImageResource(imageResource)
     }
 }
-inline fun ViewManager.imageView(imageResource: Int, init: android.widget.ImageView.() -> Unit): android.widget.ImageView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_VIEW) {
+inline fun ViewManager.imageButton(imageResource: Int, theme: Int = 0, init: android.widget.ImageButton.() -> Unit): android.widget.ImageButton {
+    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_BUTTON, theme) {
         init()
         setImageResource(imageResource)
     }
 }
 
-inline fun ViewManager.listView(): android.widget.ListView = listView({})
-inline fun ViewManager.listView(init: android.widget.ListView.() -> Unit): android.widget.ListView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.LIST_VIEW) { init() }
+inline fun ViewManager.imageView(theme: Int = 0): android.widget.ImageView = imageView(theme) {}
+inline fun ViewManager.imageView(theme: Int = 0, init: android.widget.ImageView.() -> Unit): android.widget.ImageView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_VIEW, theme) { init() }
 }
 
-inline fun Context.listView(): android.widget.ListView = listView({})
-inline fun Context.listView(init: android.widget.ListView.() -> Unit): android.widget.ListView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.LIST_VIEW) { init() }
+inline fun ViewManager.imageView(imageDrawable: android.graphics.drawable.Drawable?, theme: Int = 0): android.widget.ImageView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_VIEW, theme) {
+        setImageDrawable(imageDrawable)
+    }
+}
+inline fun ViewManager.imageView(imageDrawable: android.graphics.drawable.Drawable?, theme: Int = 0, init: android.widget.ImageView.() -> Unit): android.widget.ImageView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_VIEW, theme) {
+        init()
+        setImageDrawable(imageDrawable)
+    }
 }
 
-inline fun Activity.listView(): android.widget.ListView = listView({})
-inline fun Activity.listView(init: android.widget.ListView.() -> Unit): android.widget.ListView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.LIST_VIEW) { init() }
+inline fun ViewManager.imageView(imageResource: Int, theme: Int = 0): android.widget.ImageView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_VIEW, theme) {
+        setImageResource(imageResource)
+    }
+}
+inline fun ViewManager.imageView(imageResource: Int, theme: Int = 0, init: android.widget.ImageView.() -> Unit): android.widget.ImageView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.IMAGE_VIEW, theme) {
+        init()
+        setImageResource(imageResource)
+    }
 }
 
-inline fun ViewManager.multiAutoCompleteTextView(): android.widget.MultiAutoCompleteTextView = multiAutoCompleteTextView({})
-inline fun ViewManager.multiAutoCompleteTextView(init: android.widget.MultiAutoCompleteTextView.() -> Unit): android.widget.MultiAutoCompleteTextView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.MULTI_AUTO_COMPLETE_TEXT_VIEW) { init() }
+inline fun ViewManager.listView(theme: Int = 0): android.widget.ListView = listView(theme) {}
+inline fun ViewManager.listView(theme: Int = 0, init: android.widget.ListView.() -> Unit): android.widget.ListView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.LIST_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.numberPicker(): android.widget.NumberPicker = numberPicker({})
-inline fun ViewManager.numberPicker(init: android.widget.NumberPicker.() -> Unit): android.widget.NumberPicker {
-    return ankoView(`$$Anko$Factories$Sdk21View`.NUMBER_PICKER) { init() }
+inline fun Context.listView(theme: Int = 0): android.widget.ListView = listView(theme) {}
+inline fun Context.listView(theme: Int = 0, init: android.widget.ListView.() -> Unit): android.widget.ListView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.LIST_VIEW, theme) { init() }
 }
 
-inline fun Context.numberPicker(): android.widget.NumberPicker = numberPicker({})
-inline fun Context.numberPicker(init: android.widget.NumberPicker.() -> Unit): android.widget.NumberPicker {
-    return ankoView(`$$Anko$Factories$Sdk21View`.NUMBER_PICKER) { init() }
+inline fun Activity.listView(theme: Int = 0): android.widget.ListView = listView(theme) {}
+inline fun Activity.listView(theme: Int = 0, init: android.widget.ListView.() -> Unit): android.widget.ListView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.LIST_VIEW, theme) { init() }
 }
 
-inline fun Activity.numberPicker(): android.widget.NumberPicker = numberPicker({})
-inline fun Activity.numberPicker(init: android.widget.NumberPicker.() -> Unit): android.widget.NumberPicker {
-    return ankoView(`$$Anko$Factories$Sdk21View`.NUMBER_PICKER) { init() }
+inline fun ViewManager.multiAutoCompleteTextView(theme: Int = 0): android.widget.MultiAutoCompleteTextView = multiAutoCompleteTextView(theme) {}
+inline fun ViewManager.multiAutoCompleteTextView(theme: Int = 0, init: android.widget.MultiAutoCompleteTextView.() -> Unit): android.widget.MultiAutoCompleteTextView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.MULTI_AUTO_COMPLETE_TEXT_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.progressBar(): android.widget.ProgressBar = progressBar({})
-inline fun ViewManager.progressBar(init: android.widget.ProgressBar.() -> Unit): android.widget.ProgressBar {
-    return ankoView(`$$Anko$Factories$Sdk21View`.PROGRESS_BAR) { init() }
+inline fun ViewManager.numberPicker(theme: Int = 0): android.widget.NumberPicker = numberPicker(theme) {}
+inline fun ViewManager.numberPicker(theme: Int = 0, init: android.widget.NumberPicker.() -> Unit): android.widget.NumberPicker {
+    return ankoView(`$$Anko$Factories$Sdk21View`.NUMBER_PICKER, theme) { init() }
 }
 
-inline fun ViewManager.quickContactBadge(): android.widget.QuickContactBadge = quickContactBadge({})
-inline fun ViewManager.quickContactBadge(init: android.widget.QuickContactBadge.() -> Unit): android.widget.QuickContactBadge {
-    return ankoView(`$$Anko$Factories$Sdk21View`.QUICK_CONTACT_BADGE) { init() }
+inline fun Context.numberPicker(theme: Int = 0): android.widget.NumberPicker = numberPicker(theme) {}
+inline fun Context.numberPicker(theme: Int = 0, init: android.widget.NumberPicker.() -> Unit): android.widget.NumberPicker {
+    return ankoView(`$$Anko$Factories$Sdk21View`.NUMBER_PICKER, theme) { init() }
 }
 
-inline fun ViewManager.radioButton(): android.widget.RadioButton = radioButton({})
-inline fun ViewManager.radioButton(init: android.widget.RadioButton.() -> Unit): android.widget.RadioButton {
-    return ankoView(`$$Anko$Factories$Sdk21View`.RADIO_BUTTON) { init() }
+inline fun Activity.numberPicker(theme: Int = 0): android.widget.NumberPicker = numberPicker(theme) {}
+inline fun Activity.numberPicker(theme: Int = 0, init: android.widget.NumberPicker.() -> Unit): android.widget.NumberPicker {
+    return ankoView(`$$Anko$Factories$Sdk21View`.NUMBER_PICKER, theme) { init() }
 }
 
-inline fun ViewManager.ratingBar(): android.widget.RatingBar = ratingBar({})
-inline fun ViewManager.ratingBar(init: android.widget.RatingBar.() -> Unit): android.widget.RatingBar {
-    return ankoView(`$$Anko$Factories$Sdk21View`.RATING_BAR) { init() }
+inline fun ViewManager.progressBar(theme: Int = 0): android.widget.ProgressBar = progressBar(theme) {}
+inline fun ViewManager.progressBar(theme: Int = 0, init: android.widget.ProgressBar.() -> Unit): android.widget.ProgressBar {
+    return ankoView(`$$Anko$Factories$Sdk21View`.PROGRESS_BAR, theme) { init() }
 }
 
-inline fun ViewManager.searchView(): android.widget.SearchView = searchView({})
-inline fun ViewManager.searchView(init: android.widget.SearchView.() -> Unit): android.widget.SearchView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SEARCH_VIEW) { init() }
+inline fun ViewManager.quickContactBadge(theme: Int = 0): android.widget.QuickContactBadge = quickContactBadge(theme) {}
+inline fun ViewManager.quickContactBadge(theme: Int = 0, init: android.widget.QuickContactBadge.() -> Unit): android.widget.QuickContactBadge {
+    return ankoView(`$$Anko$Factories$Sdk21View`.QUICK_CONTACT_BADGE, theme) { init() }
 }
 
-inline fun Context.searchView(): android.widget.SearchView = searchView({})
-inline fun Context.searchView(init: android.widget.SearchView.() -> Unit): android.widget.SearchView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SEARCH_VIEW) { init() }
+inline fun ViewManager.radioButton(theme: Int = 0): android.widget.RadioButton = radioButton(theme) {}
+inline fun ViewManager.radioButton(theme: Int = 0, init: android.widget.RadioButton.() -> Unit): android.widget.RadioButton {
+    return ankoView(`$$Anko$Factories$Sdk21View`.RADIO_BUTTON, theme) { init() }
 }
 
-inline fun Activity.searchView(): android.widget.SearchView = searchView({})
-inline fun Activity.searchView(init: android.widget.SearchView.() -> Unit): android.widget.SearchView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SEARCH_VIEW) { init() }
+inline fun ViewManager.ratingBar(theme: Int = 0): android.widget.RatingBar = ratingBar(theme) {}
+inline fun ViewManager.ratingBar(theme: Int = 0, init: android.widget.RatingBar.() -> Unit): android.widget.RatingBar {
+    return ankoView(`$$Anko$Factories$Sdk21View`.RATING_BAR, theme) { init() }
 }
 
-inline fun ViewManager.seekBar(): android.widget.SeekBar = seekBar({})
-inline fun ViewManager.seekBar(init: android.widget.SeekBar.() -> Unit): android.widget.SeekBar {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SEEK_BAR) { init() }
+inline fun ViewManager.searchView(theme: Int = 0): android.widget.SearchView = searchView(theme) {}
+inline fun ViewManager.searchView(theme: Int = 0, init: android.widget.SearchView.() -> Unit): android.widget.SearchView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SEARCH_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.slidingDrawer(): android.widget.SlidingDrawer = slidingDrawer({})
-inline fun ViewManager.slidingDrawer(init: android.widget.SlidingDrawer.() -> Unit): android.widget.SlidingDrawer {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SLIDING_DRAWER) { init() }
+inline fun Context.searchView(theme: Int = 0): android.widget.SearchView = searchView(theme) {}
+inline fun Context.searchView(theme: Int = 0, init: android.widget.SearchView.() -> Unit): android.widget.SearchView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SEARCH_VIEW, theme) { init() }
 }
 
-inline fun Context.slidingDrawer(): android.widget.SlidingDrawer = slidingDrawer({})
-inline fun Context.slidingDrawer(init: android.widget.SlidingDrawer.() -> Unit): android.widget.SlidingDrawer {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SLIDING_DRAWER) { init() }
+inline fun Activity.searchView(theme: Int = 0): android.widget.SearchView = searchView(theme) {}
+inline fun Activity.searchView(theme: Int = 0, init: android.widget.SearchView.() -> Unit): android.widget.SearchView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SEARCH_VIEW, theme) { init() }
 }
 
-inline fun Activity.slidingDrawer(): android.widget.SlidingDrawer = slidingDrawer({})
-inline fun Activity.slidingDrawer(init: android.widget.SlidingDrawer.() -> Unit): android.widget.SlidingDrawer {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SLIDING_DRAWER) { init() }
+inline fun ViewManager.seekBar(theme: Int = 0): android.widget.SeekBar = seekBar(theme) {}
+inline fun ViewManager.seekBar(theme: Int = 0, init: android.widget.SeekBar.() -> Unit): android.widget.SeekBar {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SEEK_BAR, theme) { init() }
 }
 
-inline fun ViewManager.space(): android.widget.Space = space({})
-inline fun ViewManager.space(init: android.widget.Space.() -> Unit): android.widget.Space {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SPACE) { init() }
+inline fun ViewManager.slidingDrawer(theme: Int = 0): android.widget.SlidingDrawer = slidingDrawer(theme) {}
+inline fun ViewManager.slidingDrawer(theme: Int = 0, init: android.widget.SlidingDrawer.() -> Unit): android.widget.SlidingDrawer {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SLIDING_DRAWER, theme) { init() }
 }
 
-inline fun ViewManager.spinner(): android.widget.Spinner = spinner({})
-inline fun ViewManager.spinner(init: android.widget.Spinner.() -> Unit): android.widget.Spinner {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SPINNER) { init() }
+inline fun Context.slidingDrawer(theme: Int = 0): android.widget.SlidingDrawer = slidingDrawer(theme) {}
+inline fun Context.slidingDrawer(theme: Int = 0, init: android.widget.SlidingDrawer.() -> Unit): android.widget.SlidingDrawer {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SLIDING_DRAWER, theme) { init() }
 }
 
-inline fun Context.spinner(): android.widget.Spinner = spinner({})
-inline fun Context.spinner(init: android.widget.Spinner.() -> Unit): android.widget.Spinner {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SPINNER) { init() }
+inline fun Activity.slidingDrawer(theme: Int = 0): android.widget.SlidingDrawer = slidingDrawer(theme) {}
+inline fun Activity.slidingDrawer(theme: Int = 0, init: android.widget.SlidingDrawer.() -> Unit): android.widget.SlidingDrawer {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SLIDING_DRAWER, theme) { init() }
 }
 
-inline fun Activity.spinner(): android.widget.Spinner = spinner({})
-inline fun Activity.spinner(init: android.widget.Spinner.() -> Unit): android.widget.Spinner {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SPINNER) { init() }
+inline fun ViewManager.space(theme: Int = 0): android.widget.Space = space(theme) {}
+inline fun ViewManager.space(theme: Int = 0, init: android.widget.Space.() -> Unit): android.widget.Space {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SPACE, theme) { init() }
 }
 
-inline fun ViewManager.stackView(): android.widget.StackView = stackView({})
-inline fun ViewManager.stackView(init: android.widget.StackView.() -> Unit): android.widget.StackView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.STACK_VIEW) { init() }
+inline fun ViewManager.spinner(theme: Int = 0): android.widget.Spinner = spinner(theme) {}
+inline fun ViewManager.spinner(theme: Int = 0, init: android.widget.Spinner.() -> Unit): android.widget.Spinner {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SPINNER, theme) { init() }
 }
 
-inline fun Context.stackView(): android.widget.StackView = stackView({})
-inline fun Context.stackView(init: android.widget.StackView.() -> Unit): android.widget.StackView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.STACK_VIEW) { init() }
+inline fun Context.spinner(theme: Int = 0): android.widget.Spinner = spinner(theme) {}
+inline fun Context.spinner(theme: Int = 0, init: android.widget.Spinner.() -> Unit): android.widget.Spinner {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SPINNER, theme) { init() }
 }
 
-inline fun Activity.stackView(): android.widget.StackView = stackView({})
-inline fun Activity.stackView(init: android.widget.StackView.() -> Unit): android.widget.StackView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.STACK_VIEW) { init() }
+inline fun Activity.spinner(theme: Int = 0): android.widget.Spinner = spinner(theme) {}
+inline fun Activity.spinner(theme: Int = 0, init: android.widget.Spinner.() -> Unit): android.widget.Spinner {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SPINNER, theme) { init() }
 }
 
-inline fun ViewManager.switch(): android.widget.Switch = switch({})
-inline fun ViewManager.switch(init: android.widget.Switch.() -> Unit): android.widget.Switch {
-    return ankoView(`$$Anko$Factories$Sdk21View`.SWITCH) { init() }
+inline fun ViewManager.stackView(theme: Int = 0): android.widget.StackView = stackView(theme) {}
+inline fun ViewManager.stackView(theme: Int = 0, init: android.widget.StackView.() -> Unit): android.widget.StackView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.STACK_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.tabHost(): android.widget.TabHost = tabHost({})
-inline fun ViewManager.tabHost(init: android.widget.TabHost.() -> Unit): android.widget.TabHost {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TAB_HOST) { init() }
+inline fun Context.stackView(theme: Int = 0): android.widget.StackView = stackView(theme) {}
+inline fun Context.stackView(theme: Int = 0, init: android.widget.StackView.() -> Unit): android.widget.StackView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.STACK_VIEW, theme) { init() }
 }
 
-inline fun Context.tabHost(): android.widget.TabHost = tabHost({})
-inline fun Context.tabHost(init: android.widget.TabHost.() -> Unit): android.widget.TabHost {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TAB_HOST) { init() }
+inline fun Activity.stackView(theme: Int = 0): android.widget.StackView = stackView(theme) {}
+inline fun Activity.stackView(theme: Int = 0, init: android.widget.StackView.() -> Unit): android.widget.StackView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.STACK_VIEW, theme) { init() }
 }
 
-inline fun Activity.tabHost(): android.widget.TabHost = tabHost({})
-inline fun Activity.tabHost(init: android.widget.TabHost.() -> Unit): android.widget.TabHost {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TAB_HOST) { init() }
+inline fun ViewManager.switch(theme: Int = 0): android.widget.Switch = switch(theme) {}
+inline fun ViewManager.switch(theme: Int = 0, init: android.widget.Switch.() -> Unit): android.widget.Switch {
+    return ankoView(`$$Anko$Factories$Sdk21View`.SWITCH, theme) { init() }
 }
 
-inline fun ViewManager.tabWidget(): android.widget.TabWidget = tabWidget({})
-inline fun ViewManager.tabWidget(init: android.widget.TabWidget.() -> Unit): android.widget.TabWidget {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TAB_WIDGET) { init() }
+inline fun ViewManager.tabHost(theme: Int = 0): android.widget.TabHost = tabHost(theme) {}
+inline fun ViewManager.tabHost(theme: Int = 0, init: android.widget.TabHost.() -> Unit): android.widget.TabHost {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TAB_HOST, theme) { init() }
 }
 
-inline fun Context.tabWidget(): android.widget.TabWidget = tabWidget({})
-inline fun Context.tabWidget(init: android.widget.TabWidget.() -> Unit): android.widget.TabWidget {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TAB_WIDGET) { init() }
+inline fun Context.tabHost(theme: Int = 0): android.widget.TabHost = tabHost(theme) {}
+inline fun Context.tabHost(theme: Int = 0, init: android.widget.TabHost.() -> Unit): android.widget.TabHost {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TAB_HOST, theme) { init() }
 }
 
-inline fun Activity.tabWidget(): android.widget.TabWidget = tabWidget({})
-inline fun Activity.tabWidget(init: android.widget.TabWidget.() -> Unit): android.widget.TabWidget {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TAB_WIDGET) { init() }
+inline fun Activity.tabHost(theme: Int = 0): android.widget.TabHost = tabHost(theme) {}
+inline fun Activity.tabHost(theme: Int = 0, init: android.widget.TabHost.() -> Unit): android.widget.TabHost {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TAB_HOST, theme) { init() }
 }
 
-inline fun ViewManager.textClock(): android.widget.TextClock = textClock({})
-inline fun ViewManager.textClock(init: android.widget.TextClock.() -> Unit): android.widget.TextClock {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TEXT_CLOCK) { init() }
+inline fun ViewManager.tabWidget(theme: Int = 0): android.widget.TabWidget = tabWidget(theme) {}
+inline fun ViewManager.tabWidget(theme: Int = 0, init: android.widget.TabWidget.() -> Unit): android.widget.TabWidget {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TAB_WIDGET, theme) { init() }
 }
 
-inline fun ViewManager.textView(): android.widget.TextView = textView({})
-inline fun ViewManager.textView(init: android.widget.TextView.() -> Unit): android.widget.TextView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TEXT_VIEW) { init() }
+inline fun Context.tabWidget(theme: Int = 0): android.widget.TabWidget = tabWidget(theme) {}
+inline fun Context.tabWidget(theme: Int = 0, init: android.widget.TabWidget.() -> Unit): android.widget.TabWidget {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TAB_WIDGET, theme) { init() }
 }
 
-inline fun ViewManager.textView(text: CharSequence?): android.widget.TextView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TEXT_VIEW) {
+inline fun Activity.tabWidget(theme: Int = 0): android.widget.TabWidget = tabWidget(theme) {}
+inline fun Activity.tabWidget(theme: Int = 0, init: android.widget.TabWidget.() -> Unit): android.widget.TabWidget {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TAB_WIDGET, theme) { init() }
+}
+
+inline fun ViewManager.textClock(theme: Int = 0): android.widget.TextClock = textClock(theme) {}
+inline fun ViewManager.textClock(theme: Int = 0, init: android.widget.TextClock.() -> Unit): android.widget.TextClock {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TEXT_CLOCK, theme) { init() }
+}
+
+inline fun ViewManager.textView(theme: Int = 0): android.widget.TextView = textView(theme) {}
+inline fun ViewManager.textView(theme: Int = 0, init: android.widget.TextView.() -> Unit): android.widget.TextView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TEXT_VIEW, theme) { init() }
+}
+
+inline fun ViewManager.textView(text: CharSequence?, theme: Int = 0): android.widget.TextView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TEXT_VIEW, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.textView(text: CharSequence?, init: android.widget.TextView.() -> Unit): android.widget.TextView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TEXT_VIEW) {
+inline fun ViewManager.textView(text: CharSequence?, theme: Int = 0, init: android.widget.TextView.() -> Unit): android.widget.TextView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TEXT_VIEW, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.textView(text: Int): android.widget.TextView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TEXT_VIEW) {
+inline fun ViewManager.textView(text: Int, theme: Int = 0): android.widget.TextView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TEXT_VIEW, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.textView(text: Int, init: android.widget.TextView.() -> Unit): android.widget.TextView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TEXT_VIEW) {
+inline fun ViewManager.textView(text: Int, theme: Int = 0, init: android.widget.TextView.() -> Unit): android.widget.TextView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TEXT_VIEW, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.timePicker(): android.widget.TimePicker = timePicker({})
-inline fun ViewManager.timePicker(init: android.widget.TimePicker.() -> Unit): android.widget.TimePicker {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TIME_PICKER) { init() }
+inline fun ViewManager.timePicker(theme: Int = 0): android.widget.TimePicker = timePicker(theme) {}
+inline fun ViewManager.timePicker(theme: Int = 0, init: android.widget.TimePicker.() -> Unit): android.widget.TimePicker {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TIME_PICKER, theme) { init() }
 }
 
-inline fun Context.timePicker(): android.widget.TimePicker = timePicker({})
-inline fun Context.timePicker(init: android.widget.TimePicker.() -> Unit): android.widget.TimePicker {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TIME_PICKER) { init() }
+inline fun Context.timePicker(theme: Int = 0): android.widget.TimePicker = timePicker(theme) {}
+inline fun Context.timePicker(theme: Int = 0, init: android.widget.TimePicker.() -> Unit): android.widget.TimePicker {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TIME_PICKER, theme) { init() }
 }
 
-inline fun Activity.timePicker(): android.widget.TimePicker = timePicker({})
-inline fun Activity.timePicker(init: android.widget.TimePicker.() -> Unit): android.widget.TimePicker {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TIME_PICKER) { init() }
+inline fun Activity.timePicker(theme: Int = 0): android.widget.TimePicker = timePicker(theme) {}
+inline fun Activity.timePicker(theme: Int = 0, init: android.widget.TimePicker.() -> Unit): android.widget.TimePicker {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TIME_PICKER, theme) { init() }
 }
 
-inline fun ViewManager.toggleButton(): android.widget.ToggleButton = toggleButton({})
-inline fun ViewManager.toggleButton(init: android.widget.ToggleButton.() -> Unit): android.widget.ToggleButton {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TOGGLE_BUTTON) { init() }
+inline fun ViewManager.toggleButton(theme: Int = 0): android.widget.ToggleButton = toggleButton(theme) {}
+inline fun ViewManager.toggleButton(theme: Int = 0, init: android.widget.ToggleButton.() -> Unit): android.widget.ToggleButton {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TOGGLE_BUTTON, theme) { init() }
 }
 
-inline fun ViewManager.twoLineListItem(): android.widget.TwoLineListItem = twoLineListItem({})
-inline fun ViewManager.twoLineListItem(init: android.widget.TwoLineListItem.() -> Unit): android.widget.TwoLineListItem {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TWO_LINE_LIST_ITEM) { init() }
+inline fun ViewManager.twoLineListItem(theme: Int = 0): android.widget.TwoLineListItem = twoLineListItem(theme) {}
+inline fun ViewManager.twoLineListItem(theme: Int = 0, init: android.widget.TwoLineListItem.() -> Unit): android.widget.TwoLineListItem {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TWO_LINE_LIST_ITEM, theme) { init() }
 }
 
-inline fun Context.twoLineListItem(): android.widget.TwoLineListItem = twoLineListItem({})
-inline fun Context.twoLineListItem(init: android.widget.TwoLineListItem.() -> Unit): android.widget.TwoLineListItem {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TWO_LINE_LIST_ITEM) { init() }
+inline fun Context.twoLineListItem(theme: Int = 0): android.widget.TwoLineListItem = twoLineListItem(theme) {}
+inline fun Context.twoLineListItem(theme: Int = 0, init: android.widget.TwoLineListItem.() -> Unit): android.widget.TwoLineListItem {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TWO_LINE_LIST_ITEM, theme) { init() }
 }
 
-inline fun Activity.twoLineListItem(): android.widget.TwoLineListItem = twoLineListItem({})
-inline fun Activity.twoLineListItem(init: android.widget.TwoLineListItem.() -> Unit): android.widget.TwoLineListItem {
-    return ankoView(`$$Anko$Factories$Sdk21View`.TWO_LINE_LIST_ITEM) { init() }
+inline fun Activity.twoLineListItem(theme: Int = 0): android.widget.TwoLineListItem = twoLineListItem(theme) {}
+inline fun Activity.twoLineListItem(theme: Int = 0, init: android.widget.TwoLineListItem.() -> Unit): android.widget.TwoLineListItem {
+    return ankoView(`$$Anko$Factories$Sdk21View`.TWO_LINE_LIST_ITEM, theme) { init() }
 }
 
-inline fun ViewManager.videoView(): android.widget.VideoView = videoView({})
-inline fun ViewManager.videoView(init: android.widget.VideoView.() -> Unit): android.widget.VideoView {
-    return ankoView(`$$Anko$Factories$Sdk21View`.VIDEO_VIEW) { init() }
+inline fun ViewManager.videoView(theme: Int = 0): android.widget.VideoView = videoView(theme) {}
+inline fun ViewManager.videoView(theme: Int = 0, init: android.widget.VideoView.() -> Unit): android.widget.VideoView {
+    return ankoView(`$$Anko$Factories$Sdk21View`.VIDEO_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.viewFlipper(): android.widget.ViewFlipper = viewFlipper({})
-inline fun ViewManager.viewFlipper(init: android.widget.ViewFlipper.() -> Unit): android.widget.ViewFlipper {
-    return ankoView(`$$Anko$Factories$Sdk21View`.VIEW_FLIPPER) { init() }
+inline fun ViewManager.viewFlipper(theme: Int = 0): android.widget.ViewFlipper = viewFlipper(theme) {}
+inline fun ViewManager.viewFlipper(theme: Int = 0, init: android.widget.ViewFlipper.() -> Unit): android.widget.ViewFlipper {
+    return ankoView(`$$Anko$Factories$Sdk21View`.VIEW_FLIPPER, theme) { init() }
 }
 
-inline fun Context.viewFlipper(): android.widget.ViewFlipper = viewFlipper({})
-inline fun Context.viewFlipper(init: android.widget.ViewFlipper.() -> Unit): android.widget.ViewFlipper {
-    return ankoView(`$$Anko$Factories$Sdk21View`.VIEW_FLIPPER) { init() }
+inline fun Context.viewFlipper(theme: Int = 0): android.widget.ViewFlipper = viewFlipper(theme) {}
+inline fun Context.viewFlipper(theme: Int = 0, init: android.widget.ViewFlipper.() -> Unit): android.widget.ViewFlipper {
+    return ankoView(`$$Anko$Factories$Sdk21View`.VIEW_FLIPPER, theme) { init() }
 }
 
-inline fun Activity.viewFlipper(): android.widget.ViewFlipper = viewFlipper({})
-inline fun Activity.viewFlipper(init: android.widget.ViewFlipper.() -> Unit): android.widget.ViewFlipper {
-    return ankoView(`$$Anko$Factories$Sdk21View`.VIEW_FLIPPER) { init() }
+inline fun Activity.viewFlipper(theme: Int = 0): android.widget.ViewFlipper = viewFlipper(theme) {}
+inline fun Activity.viewFlipper(theme: Int = 0, init: android.widget.ViewFlipper.() -> Unit): android.widget.ViewFlipper {
+    return ankoView(`$$Anko$Factories$Sdk21View`.VIEW_FLIPPER, theme) { init() }
 }
 
-inline fun ViewManager.zoomButton(): android.widget.ZoomButton = zoomButton({})
-inline fun ViewManager.zoomButton(init: android.widget.ZoomButton.() -> Unit): android.widget.ZoomButton {
-    return ankoView(`$$Anko$Factories$Sdk21View`.ZOOM_BUTTON) { init() }
+inline fun ViewManager.zoomButton(theme: Int = 0): android.widget.ZoomButton = zoomButton(theme) {}
+inline fun ViewManager.zoomButton(theme: Int = 0, init: android.widget.ZoomButton.() -> Unit): android.widget.ZoomButton {
+    return ankoView(`$$Anko$Factories$Sdk21View`.ZOOM_BUTTON, theme) { init() }
 }
 
-inline fun ViewManager.zoomControls(): android.widget.ZoomControls = zoomControls({})
-inline fun ViewManager.zoomControls(init: android.widget.ZoomControls.() -> Unit): android.widget.ZoomControls {
-    return ankoView(`$$Anko$Factories$Sdk21View`.ZOOM_CONTROLS) { init() }
+inline fun ViewManager.zoomControls(theme: Int = 0): android.widget.ZoomControls = zoomControls(theme) {}
+inline fun ViewManager.zoomControls(theme: Int = 0, init: android.widget.ZoomControls.() -> Unit): android.widget.ZoomControls {
+    return ankoView(`$$Anko$Factories$Sdk21View`.ZOOM_CONTROLS, theme) { init() }
 }
 
-inline fun Context.zoomControls(): android.widget.ZoomControls = zoomControls({})
-inline fun Context.zoomControls(init: android.widget.ZoomControls.() -> Unit): android.widget.ZoomControls {
-    return ankoView(`$$Anko$Factories$Sdk21View`.ZOOM_CONTROLS) { init() }
+inline fun Context.zoomControls(theme: Int = 0): android.widget.ZoomControls = zoomControls(theme) {}
+inline fun Context.zoomControls(theme: Int = 0, init: android.widget.ZoomControls.() -> Unit): android.widget.ZoomControls {
+    return ankoView(`$$Anko$Factories$Sdk21View`.ZOOM_CONTROLS, theme) { init() }
 }
 
-inline fun Activity.zoomControls(): android.widget.ZoomControls = zoomControls({})
-inline fun Activity.zoomControls(init: android.widget.ZoomControls.() -> Unit): android.widget.ZoomControls {
-    return ankoView(`$$Anko$Factories$Sdk21View`.ZOOM_CONTROLS) { init() }
+inline fun Activity.zoomControls(theme: Int = 0): android.widget.ZoomControls = zoomControls(theme) {}
+inline fun Activity.zoomControls(theme: Int = 0, init: android.widget.ZoomControls.() -> Unit): android.widget.ZoomControls {
+    return ankoView(`$$Anko$Factories$Sdk21View`.ZOOM_CONTROLS, theme) { init() }
 }
 
 object `$$Anko$Factories$Sdk21ViewGroup` {
@@ -680,302 +680,302 @@ object `$$Anko$Factories$Sdk21ViewGroup` {
     val VIEW_SWITCHER = { ctx: Context -> _ViewSwitcher(ctx) }
 }
 
-inline fun ViewManager.appWidgetHostView(): android.appwidget.AppWidgetHostView = appWidgetHostView({})
-inline fun ViewManager.appWidgetHostView(init: _AppWidgetHostView.() -> Unit): android.appwidget.AppWidgetHostView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.APP_WIDGET_HOST_VIEW) { init() }
+inline fun ViewManager.appWidgetHostView(theme: Int = 0): android.appwidget.AppWidgetHostView = appWidgetHostView(theme) {}
+inline fun ViewManager.appWidgetHostView(theme: Int = 0, init: _AppWidgetHostView.() -> Unit): android.appwidget.AppWidgetHostView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.APP_WIDGET_HOST_VIEW, theme) { init() }
 }
 
-inline fun Context.appWidgetHostView(): android.appwidget.AppWidgetHostView = appWidgetHostView({})
-inline fun Context.appWidgetHostView(init: _AppWidgetHostView.() -> Unit): android.appwidget.AppWidgetHostView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.APP_WIDGET_HOST_VIEW) { init() }
+inline fun Context.appWidgetHostView(theme: Int = 0): android.appwidget.AppWidgetHostView = appWidgetHostView(theme) {}
+inline fun Context.appWidgetHostView(theme: Int = 0, init: _AppWidgetHostView.() -> Unit): android.appwidget.AppWidgetHostView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.APP_WIDGET_HOST_VIEW, theme) { init() }
 }
 
-inline fun Activity.appWidgetHostView(): android.appwidget.AppWidgetHostView = appWidgetHostView({})
-inline fun Activity.appWidgetHostView(init: _AppWidgetHostView.() -> Unit): android.appwidget.AppWidgetHostView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.APP_WIDGET_HOST_VIEW) { init() }
+inline fun Activity.appWidgetHostView(theme: Int = 0): android.appwidget.AppWidgetHostView = appWidgetHostView(theme) {}
+inline fun Activity.appWidgetHostView(theme: Int = 0, init: _AppWidgetHostView.() -> Unit): android.appwidget.AppWidgetHostView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.APP_WIDGET_HOST_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.webView(): android.webkit.WebView = webView({})
-inline fun ViewManager.webView(init: _WebView.() -> Unit): android.webkit.WebView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.WEB_VIEW) { init() }
+inline fun ViewManager.webView(theme: Int = 0): android.webkit.WebView = webView(theme) {}
+inline fun ViewManager.webView(theme: Int = 0, init: _WebView.() -> Unit): android.webkit.WebView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.WEB_VIEW, theme) { init() }
 }
 
-inline fun Context.webView(): android.webkit.WebView = webView({})
-inline fun Context.webView(init: _WebView.() -> Unit): android.webkit.WebView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.WEB_VIEW) { init() }
+inline fun Context.webView(theme: Int = 0): android.webkit.WebView = webView(theme) {}
+inline fun Context.webView(theme: Int = 0, init: _WebView.() -> Unit): android.webkit.WebView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.WEB_VIEW, theme) { init() }
 }
 
-inline fun Activity.webView(): android.webkit.WebView = webView({})
-inline fun Activity.webView(init: _WebView.() -> Unit): android.webkit.WebView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.WEB_VIEW) { init() }
+inline fun Activity.webView(theme: Int = 0): android.webkit.WebView = webView(theme) {}
+inline fun Activity.webView(theme: Int = 0, init: _WebView.() -> Unit): android.webkit.WebView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.WEB_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.absoluteLayout(): android.widget.AbsoluteLayout = absoluteLayout({})
-inline fun ViewManager.absoluteLayout(init: _AbsoluteLayout.() -> Unit): android.widget.AbsoluteLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.ABSOLUTE_LAYOUT) { init() }
+inline fun ViewManager.absoluteLayout(theme: Int = 0): android.widget.AbsoluteLayout = absoluteLayout(theme) {}
+inline fun ViewManager.absoluteLayout(theme: Int = 0, init: _AbsoluteLayout.() -> Unit): android.widget.AbsoluteLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.ABSOLUTE_LAYOUT, theme) { init() }
 }
 
-inline fun Context.absoluteLayout(): android.widget.AbsoluteLayout = absoluteLayout({})
-inline fun Context.absoluteLayout(init: _AbsoluteLayout.() -> Unit): android.widget.AbsoluteLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.ABSOLUTE_LAYOUT) { init() }
+inline fun Context.absoluteLayout(theme: Int = 0): android.widget.AbsoluteLayout = absoluteLayout(theme) {}
+inline fun Context.absoluteLayout(theme: Int = 0, init: _AbsoluteLayout.() -> Unit): android.widget.AbsoluteLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.ABSOLUTE_LAYOUT, theme) { init() }
 }
 
-inline fun Activity.absoluteLayout(): android.widget.AbsoluteLayout = absoluteLayout({})
-inline fun Activity.absoluteLayout(init: _AbsoluteLayout.() -> Unit): android.widget.AbsoluteLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.ABSOLUTE_LAYOUT) { init() }
+inline fun Activity.absoluteLayout(theme: Int = 0): android.widget.AbsoluteLayout = absoluteLayout(theme) {}
+inline fun Activity.absoluteLayout(theme: Int = 0, init: _AbsoluteLayout.() -> Unit): android.widget.AbsoluteLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.ABSOLUTE_LAYOUT, theme) { init() }
 }
 
-inline fun ViewManager.actionMenuView(): android.widget.ActionMenuView = actionMenuView({})
-inline fun ViewManager.actionMenuView(init: _ActionMenuView.() -> Unit): android.widget.ActionMenuView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.ACTION_MENU_VIEW) { init() }
+inline fun ViewManager.actionMenuView(theme: Int = 0): android.widget.ActionMenuView = actionMenuView(theme) {}
+inline fun ViewManager.actionMenuView(theme: Int = 0, init: _ActionMenuView.() -> Unit): android.widget.ActionMenuView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.ACTION_MENU_VIEW, theme) { init() }
 }
 
-inline fun Context.actionMenuView(): android.widget.ActionMenuView = actionMenuView({})
-inline fun Context.actionMenuView(init: _ActionMenuView.() -> Unit): android.widget.ActionMenuView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.ACTION_MENU_VIEW) { init() }
+inline fun Context.actionMenuView(theme: Int = 0): android.widget.ActionMenuView = actionMenuView(theme) {}
+inline fun Context.actionMenuView(theme: Int = 0, init: _ActionMenuView.() -> Unit): android.widget.ActionMenuView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.ACTION_MENU_VIEW, theme) { init() }
 }
 
-inline fun Activity.actionMenuView(): android.widget.ActionMenuView = actionMenuView({})
-inline fun Activity.actionMenuView(init: _ActionMenuView.() -> Unit): android.widget.ActionMenuView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.ACTION_MENU_VIEW) { init() }
+inline fun Activity.actionMenuView(theme: Int = 0): android.widget.ActionMenuView = actionMenuView(theme) {}
+inline fun Activity.actionMenuView(theme: Int = 0, init: _ActionMenuView.() -> Unit): android.widget.ActionMenuView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.ACTION_MENU_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.frameLayout(): android.widget.FrameLayout = frameLayout({})
-inline fun ViewManager.frameLayout(init: _FrameLayout.() -> Unit): android.widget.FrameLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.FRAME_LAYOUT) { init() }
+inline fun ViewManager.frameLayout(theme: Int = 0): android.widget.FrameLayout = frameLayout(theme) {}
+inline fun ViewManager.frameLayout(theme: Int = 0, init: _FrameLayout.() -> Unit): android.widget.FrameLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.FRAME_LAYOUT, theme) { init() }
 }
 
-inline fun Context.frameLayout(): android.widget.FrameLayout = frameLayout({})
-inline fun Context.frameLayout(init: _FrameLayout.() -> Unit): android.widget.FrameLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.FRAME_LAYOUT) { init() }
+inline fun Context.frameLayout(theme: Int = 0): android.widget.FrameLayout = frameLayout(theme) {}
+inline fun Context.frameLayout(theme: Int = 0, init: _FrameLayout.() -> Unit): android.widget.FrameLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.FRAME_LAYOUT, theme) { init() }
 }
 
-inline fun Activity.frameLayout(): android.widget.FrameLayout = frameLayout({})
-inline fun Activity.frameLayout(init: _FrameLayout.() -> Unit): android.widget.FrameLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.FRAME_LAYOUT) { init() }
+inline fun Activity.frameLayout(theme: Int = 0): android.widget.FrameLayout = frameLayout(theme) {}
+inline fun Activity.frameLayout(theme: Int = 0, init: _FrameLayout.() -> Unit): android.widget.FrameLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.FRAME_LAYOUT, theme) { init() }
 }
 
-inline fun ViewManager.gallery(): android.widget.Gallery = gallery({})
-inline fun ViewManager.gallery(init: _Gallery.() -> Unit): android.widget.Gallery {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GALLERY) { init() }
+inline fun ViewManager.gallery(theme: Int = 0): android.widget.Gallery = gallery(theme) {}
+inline fun ViewManager.gallery(theme: Int = 0, init: _Gallery.() -> Unit): android.widget.Gallery {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GALLERY, theme) { init() }
 }
 
-inline fun Context.gallery(): android.widget.Gallery = gallery({})
-inline fun Context.gallery(init: _Gallery.() -> Unit): android.widget.Gallery {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GALLERY) { init() }
+inline fun Context.gallery(theme: Int = 0): android.widget.Gallery = gallery(theme) {}
+inline fun Context.gallery(theme: Int = 0, init: _Gallery.() -> Unit): android.widget.Gallery {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GALLERY, theme) { init() }
 }
 
-inline fun Activity.gallery(): android.widget.Gallery = gallery({})
-inline fun Activity.gallery(init: _Gallery.() -> Unit): android.widget.Gallery {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GALLERY) { init() }
+inline fun Activity.gallery(theme: Int = 0): android.widget.Gallery = gallery(theme) {}
+inline fun Activity.gallery(theme: Int = 0, init: _Gallery.() -> Unit): android.widget.Gallery {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GALLERY, theme) { init() }
 }
 
-inline fun ViewManager.gridLayout(): android.widget.GridLayout = gridLayout({})
-inline fun ViewManager.gridLayout(init: _GridLayout.() -> Unit): android.widget.GridLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GRID_LAYOUT) { init() }
+inline fun ViewManager.gridLayout(theme: Int = 0): android.widget.GridLayout = gridLayout(theme) {}
+inline fun ViewManager.gridLayout(theme: Int = 0, init: _GridLayout.() -> Unit): android.widget.GridLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GRID_LAYOUT, theme) { init() }
 }
 
-inline fun Context.gridLayout(): android.widget.GridLayout = gridLayout({})
-inline fun Context.gridLayout(init: _GridLayout.() -> Unit): android.widget.GridLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GRID_LAYOUT) { init() }
+inline fun Context.gridLayout(theme: Int = 0): android.widget.GridLayout = gridLayout(theme) {}
+inline fun Context.gridLayout(theme: Int = 0, init: _GridLayout.() -> Unit): android.widget.GridLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GRID_LAYOUT, theme) { init() }
 }
 
-inline fun Activity.gridLayout(): android.widget.GridLayout = gridLayout({})
-inline fun Activity.gridLayout(init: _GridLayout.() -> Unit): android.widget.GridLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GRID_LAYOUT) { init() }
+inline fun Activity.gridLayout(theme: Int = 0): android.widget.GridLayout = gridLayout(theme) {}
+inline fun Activity.gridLayout(theme: Int = 0, init: _GridLayout.() -> Unit): android.widget.GridLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GRID_LAYOUT, theme) { init() }
 }
 
-inline fun ViewManager.gridView(): android.widget.GridView = gridView({})
-inline fun ViewManager.gridView(init: _GridView.() -> Unit): android.widget.GridView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GRID_VIEW) { init() }
+inline fun ViewManager.gridView(theme: Int = 0): android.widget.GridView = gridView(theme) {}
+inline fun ViewManager.gridView(theme: Int = 0, init: _GridView.() -> Unit): android.widget.GridView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GRID_VIEW, theme) { init() }
 }
 
-inline fun Context.gridView(): android.widget.GridView = gridView({})
-inline fun Context.gridView(init: _GridView.() -> Unit): android.widget.GridView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GRID_VIEW) { init() }
+inline fun Context.gridView(theme: Int = 0): android.widget.GridView = gridView(theme) {}
+inline fun Context.gridView(theme: Int = 0, init: _GridView.() -> Unit): android.widget.GridView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GRID_VIEW, theme) { init() }
 }
 
-inline fun Activity.gridView(): android.widget.GridView = gridView({})
-inline fun Activity.gridView(init: _GridView.() -> Unit): android.widget.GridView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GRID_VIEW) { init() }
+inline fun Activity.gridView(theme: Int = 0): android.widget.GridView = gridView(theme) {}
+inline fun Activity.gridView(theme: Int = 0, init: _GridView.() -> Unit): android.widget.GridView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.GRID_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.horizontalScrollView(): android.widget.HorizontalScrollView = horizontalScrollView({})
-inline fun ViewManager.horizontalScrollView(init: _HorizontalScrollView.() -> Unit): android.widget.HorizontalScrollView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.HORIZONTAL_SCROLL_VIEW) { init() }
+inline fun ViewManager.horizontalScrollView(theme: Int = 0): android.widget.HorizontalScrollView = horizontalScrollView(theme) {}
+inline fun ViewManager.horizontalScrollView(theme: Int = 0, init: _HorizontalScrollView.() -> Unit): android.widget.HorizontalScrollView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.HORIZONTAL_SCROLL_VIEW, theme) { init() }
 }
 
-inline fun Context.horizontalScrollView(): android.widget.HorizontalScrollView = horizontalScrollView({})
-inline fun Context.horizontalScrollView(init: _HorizontalScrollView.() -> Unit): android.widget.HorizontalScrollView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.HORIZONTAL_SCROLL_VIEW) { init() }
+inline fun Context.horizontalScrollView(theme: Int = 0): android.widget.HorizontalScrollView = horizontalScrollView(theme) {}
+inline fun Context.horizontalScrollView(theme: Int = 0, init: _HorizontalScrollView.() -> Unit): android.widget.HorizontalScrollView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.HORIZONTAL_SCROLL_VIEW, theme) { init() }
 }
 
-inline fun Activity.horizontalScrollView(): android.widget.HorizontalScrollView = horizontalScrollView({})
-inline fun Activity.horizontalScrollView(init: _HorizontalScrollView.() -> Unit): android.widget.HorizontalScrollView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.HORIZONTAL_SCROLL_VIEW) { init() }
+inline fun Activity.horizontalScrollView(theme: Int = 0): android.widget.HorizontalScrollView = horizontalScrollView(theme) {}
+inline fun Activity.horizontalScrollView(theme: Int = 0, init: _HorizontalScrollView.() -> Unit): android.widget.HorizontalScrollView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.HORIZONTAL_SCROLL_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
-inline fun ViewManager.imageSwitcher(init: _ImageSwitcher.() -> Unit): android.widget.ImageSwitcher {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.IMAGE_SWITCHER) { init() }
+inline fun ViewManager.imageSwitcher(theme: Int = 0): android.widget.ImageSwitcher = imageSwitcher(theme) {}
+inline fun ViewManager.imageSwitcher(theme: Int = 0, init: _ImageSwitcher.() -> Unit): android.widget.ImageSwitcher {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.IMAGE_SWITCHER, theme) { init() }
 }
 
-inline fun Context.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
-inline fun Context.imageSwitcher(init: _ImageSwitcher.() -> Unit): android.widget.ImageSwitcher {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.IMAGE_SWITCHER) { init() }
+inline fun Context.imageSwitcher(theme: Int = 0): android.widget.ImageSwitcher = imageSwitcher(theme) {}
+inline fun Context.imageSwitcher(theme: Int = 0, init: _ImageSwitcher.() -> Unit): android.widget.ImageSwitcher {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.IMAGE_SWITCHER, theme) { init() }
 }
 
-inline fun Activity.imageSwitcher(): android.widget.ImageSwitcher = imageSwitcher({})
-inline fun Activity.imageSwitcher(init: _ImageSwitcher.() -> Unit): android.widget.ImageSwitcher {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.IMAGE_SWITCHER) { init() }
+inline fun Activity.imageSwitcher(theme: Int = 0): android.widget.ImageSwitcher = imageSwitcher(theme) {}
+inline fun Activity.imageSwitcher(theme: Int = 0, init: _ImageSwitcher.() -> Unit): android.widget.ImageSwitcher {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.IMAGE_SWITCHER, theme) { init() }
 }
 
-inline fun ViewManager.linearLayout(): android.widget.LinearLayout = linearLayout({})
-inline fun ViewManager.linearLayout(init: _LinearLayout.() -> Unit): android.widget.LinearLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.LINEAR_LAYOUT) { init() }
+inline fun ViewManager.linearLayout(theme: Int = 0): android.widget.LinearLayout = linearLayout(theme) {}
+inline fun ViewManager.linearLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): android.widget.LinearLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.LINEAR_LAYOUT, theme) { init() }
 }
 
-inline fun Context.linearLayout(): android.widget.LinearLayout = linearLayout({})
-inline fun Context.linearLayout(init: _LinearLayout.() -> Unit): android.widget.LinearLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.LINEAR_LAYOUT) { init() }
+inline fun Context.linearLayout(theme: Int = 0): android.widget.LinearLayout = linearLayout(theme) {}
+inline fun Context.linearLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): android.widget.LinearLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.LINEAR_LAYOUT, theme) { init() }
 }
 
-inline fun Activity.linearLayout(): android.widget.LinearLayout = linearLayout({})
-inline fun Activity.linearLayout(init: _LinearLayout.() -> Unit): android.widget.LinearLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.LINEAR_LAYOUT) { init() }
+inline fun Activity.linearLayout(theme: Int = 0): android.widget.LinearLayout = linearLayout(theme) {}
+inline fun Activity.linearLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): android.widget.LinearLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.LINEAR_LAYOUT, theme) { init() }
 }
 
-inline fun ViewManager.radioGroup(): android.widget.RadioGroup = radioGroup({})
-inline fun ViewManager.radioGroup(init: _RadioGroup.() -> Unit): android.widget.RadioGroup {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.RADIO_GROUP) { init() }
+inline fun ViewManager.radioGroup(theme: Int = 0): android.widget.RadioGroup = radioGroup(theme) {}
+inline fun ViewManager.radioGroup(theme: Int = 0, init: _RadioGroup.() -> Unit): android.widget.RadioGroup {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.RADIO_GROUP, theme) { init() }
 }
 
-inline fun Context.radioGroup(): android.widget.RadioGroup = radioGroup({})
-inline fun Context.radioGroup(init: _RadioGroup.() -> Unit): android.widget.RadioGroup {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.RADIO_GROUP) { init() }
+inline fun Context.radioGroup(theme: Int = 0): android.widget.RadioGroup = radioGroup(theme) {}
+inline fun Context.radioGroup(theme: Int = 0, init: _RadioGroup.() -> Unit): android.widget.RadioGroup {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.RADIO_GROUP, theme) { init() }
 }
 
-inline fun Activity.radioGroup(): android.widget.RadioGroup = radioGroup({})
-inline fun Activity.radioGroup(init: _RadioGroup.() -> Unit): android.widget.RadioGroup {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.RADIO_GROUP) { init() }
+inline fun Activity.radioGroup(theme: Int = 0): android.widget.RadioGroup = radioGroup(theme) {}
+inline fun Activity.radioGroup(theme: Int = 0, init: _RadioGroup.() -> Unit): android.widget.RadioGroup {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.RADIO_GROUP, theme) { init() }
 }
 
-inline fun ViewManager.relativeLayout(): android.widget.RelativeLayout = relativeLayout({})
-inline fun ViewManager.relativeLayout(init: _RelativeLayout.() -> Unit): android.widget.RelativeLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.RELATIVE_LAYOUT) { init() }
+inline fun ViewManager.relativeLayout(theme: Int = 0): android.widget.RelativeLayout = relativeLayout(theme) {}
+inline fun ViewManager.relativeLayout(theme: Int = 0, init: _RelativeLayout.() -> Unit): android.widget.RelativeLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.RELATIVE_LAYOUT, theme) { init() }
 }
 
-inline fun Context.relativeLayout(): android.widget.RelativeLayout = relativeLayout({})
-inline fun Context.relativeLayout(init: _RelativeLayout.() -> Unit): android.widget.RelativeLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.RELATIVE_LAYOUT) { init() }
+inline fun Context.relativeLayout(theme: Int = 0): android.widget.RelativeLayout = relativeLayout(theme) {}
+inline fun Context.relativeLayout(theme: Int = 0, init: _RelativeLayout.() -> Unit): android.widget.RelativeLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.RELATIVE_LAYOUT, theme) { init() }
 }
 
-inline fun Activity.relativeLayout(): android.widget.RelativeLayout = relativeLayout({})
-inline fun Activity.relativeLayout(init: _RelativeLayout.() -> Unit): android.widget.RelativeLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.RELATIVE_LAYOUT) { init() }
+inline fun Activity.relativeLayout(theme: Int = 0): android.widget.RelativeLayout = relativeLayout(theme) {}
+inline fun Activity.relativeLayout(theme: Int = 0, init: _RelativeLayout.() -> Unit): android.widget.RelativeLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.RELATIVE_LAYOUT, theme) { init() }
 }
 
-inline fun ViewManager.scrollView(): android.widget.ScrollView = scrollView({})
-inline fun ViewManager.scrollView(init: _ScrollView.() -> Unit): android.widget.ScrollView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.SCROLL_VIEW) { init() }
+inline fun ViewManager.scrollView(theme: Int = 0): android.widget.ScrollView = scrollView(theme) {}
+inline fun ViewManager.scrollView(theme: Int = 0, init: _ScrollView.() -> Unit): android.widget.ScrollView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.SCROLL_VIEW, theme) { init() }
 }
 
-inline fun Context.scrollView(): android.widget.ScrollView = scrollView({})
-inline fun Context.scrollView(init: _ScrollView.() -> Unit): android.widget.ScrollView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.SCROLL_VIEW) { init() }
+inline fun Context.scrollView(theme: Int = 0): android.widget.ScrollView = scrollView(theme) {}
+inline fun Context.scrollView(theme: Int = 0, init: _ScrollView.() -> Unit): android.widget.ScrollView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.SCROLL_VIEW, theme) { init() }
 }
 
-inline fun Activity.scrollView(): android.widget.ScrollView = scrollView({})
-inline fun Activity.scrollView(init: _ScrollView.() -> Unit): android.widget.ScrollView {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.SCROLL_VIEW) { init() }
+inline fun Activity.scrollView(theme: Int = 0): android.widget.ScrollView = scrollView(theme) {}
+inline fun Activity.scrollView(theme: Int = 0, init: _ScrollView.() -> Unit): android.widget.ScrollView {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.SCROLL_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.tableLayout(): android.widget.TableLayout = tableLayout({})
-inline fun ViewManager.tableLayout(init: _TableLayout.() -> Unit): android.widget.TableLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TABLE_LAYOUT) { init() }
+inline fun ViewManager.tableLayout(theme: Int = 0): android.widget.TableLayout = tableLayout(theme) {}
+inline fun ViewManager.tableLayout(theme: Int = 0, init: _TableLayout.() -> Unit): android.widget.TableLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TABLE_LAYOUT, theme) { init() }
 }
 
-inline fun Context.tableLayout(): android.widget.TableLayout = tableLayout({})
-inline fun Context.tableLayout(init: _TableLayout.() -> Unit): android.widget.TableLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TABLE_LAYOUT) { init() }
+inline fun Context.tableLayout(theme: Int = 0): android.widget.TableLayout = tableLayout(theme) {}
+inline fun Context.tableLayout(theme: Int = 0, init: _TableLayout.() -> Unit): android.widget.TableLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TABLE_LAYOUT, theme) { init() }
 }
 
-inline fun Activity.tableLayout(): android.widget.TableLayout = tableLayout({})
-inline fun Activity.tableLayout(init: _TableLayout.() -> Unit): android.widget.TableLayout {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TABLE_LAYOUT) { init() }
+inline fun Activity.tableLayout(theme: Int = 0): android.widget.TableLayout = tableLayout(theme) {}
+inline fun Activity.tableLayout(theme: Int = 0, init: _TableLayout.() -> Unit): android.widget.TableLayout {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TABLE_LAYOUT, theme) { init() }
 }
 
-inline fun ViewManager.tableRow(): android.widget.TableRow = tableRow({})
-inline fun ViewManager.tableRow(init: _TableRow.() -> Unit): android.widget.TableRow {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TABLE_ROW) { init() }
+inline fun ViewManager.tableRow(theme: Int = 0): android.widget.TableRow = tableRow(theme) {}
+inline fun ViewManager.tableRow(theme: Int = 0, init: _TableRow.() -> Unit): android.widget.TableRow {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TABLE_ROW, theme) { init() }
 }
 
-inline fun Context.tableRow(): android.widget.TableRow = tableRow({})
-inline fun Context.tableRow(init: _TableRow.() -> Unit): android.widget.TableRow {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TABLE_ROW) { init() }
+inline fun Context.tableRow(theme: Int = 0): android.widget.TableRow = tableRow(theme) {}
+inline fun Context.tableRow(theme: Int = 0, init: _TableRow.() -> Unit): android.widget.TableRow {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TABLE_ROW, theme) { init() }
 }
 
-inline fun Activity.tableRow(): android.widget.TableRow = tableRow({})
-inline fun Activity.tableRow(init: _TableRow.() -> Unit): android.widget.TableRow {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TABLE_ROW) { init() }
+inline fun Activity.tableRow(theme: Int = 0): android.widget.TableRow = tableRow(theme) {}
+inline fun Activity.tableRow(theme: Int = 0, init: _TableRow.() -> Unit): android.widget.TableRow {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TABLE_ROW, theme) { init() }
 }
 
-inline fun ViewManager.textSwitcher(): android.widget.TextSwitcher = textSwitcher({})
-inline fun ViewManager.textSwitcher(init: _TextSwitcher.() -> Unit): android.widget.TextSwitcher {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TEXT_SWITCHER) { init() }
+inline fun ViewManager.textSwitcher(theme: Int = 0): android.widget.TextSwitcher = textSwitcher(theme) {}
+inline fun ViewManager.textSwitcher(theme: Int = 0, init: _TextSwitcher.() -> Unit): android.widget.TextSwitcher {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TEXT_SWITCHER, theme) { init() }
 }
 
-inline fun Context.textSwitcher(): android.widget.TextSwitcher = textSwitcher({})
-inline fun Context.textSwitcher(init: _TextSwitcher.() -> Unit): android.widget.TextSwitcher {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TEXT_SWITCHER) { init() }
+inline fun Context.textSwitcher(theme: Int = 0): android.widget.TextSwitcher = textSwitcher(theme) {}
+inline fun Context.textSwitcher(theme: Int = 0, init: _TextSwitcher.() -> Unit): android.widget.TextSwitcher {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TEXT_SWITCHER, theme) { init() }
 }
 
-inline fun Activity.textSwitcher(): android.widget.TextSwitcher = textSwitcher({})
-inline fun Activity.textSwitcher(init: _TextSwitcher.() -> Unit): android.widget.TextSwitcher {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TEXT_SWITCHER) { init() }
+inline fun Activity.textSwitcher(theme: Int = 0): android.widget.TextSwitcher = textSwitcher(theme) {}
+inline fun Activity.textSwitcher(theme: Int = 0, init: _TextSwitcher.() -> Unit): android.widget.TextSwitcher {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TEXT_SWITCHER, theme) { init() }
 }
 
-inline fun ViewManager.toolbar(): android.widget.Toolbar = toolbar({})
-inline fun ViewManager.toolbar(init: _Toolbar.() -> Unit): android.widget.Toolbar {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TOOLBAR) { init() }
+inline fun ViewManager.toolbar(theme: Int = 0): android.widget.Toolbar = toolbar(theme) {}
+inline fun ViewManager.toolbar(theme: Int = 0, init: _Toolbar.() -> Unit): android.widget.Toolbar {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TOOLBAR, theme) { init() }
 }
 
-inline fun Context.toolbar(): android.widget.Toolbar = toolbar({})
-inline fun Context.toolbar(init: _Toolbar.() -> Unit): android.widget.Toolbar {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TOOLBAR) { init() }
+inline fun Context.toolbar(theme: Int = 0): android.widget.Toolbar = toolbar(theme) {}
+inline fun Context.toolbar(theme: Int = 0, init: _Toolbar.() -> Unit): android.widget.Toolbar {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TOOLBAR, theme) { init() }
 }
 
-inline fun Activity.toolbar(): android.widget.Toolbar = toolbar({})
-inline fun Activity.toolbar(init: _Toolbar.() -> Unit): android.widget.Toolbar {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TOOLBAR) { init() }
+inline fun Activity.toolbar(theme: Int = 0): android.widget.Toolbar = toolbar(theme) {}
+inline fun Activity.toolbar(theme: Int = 0, init: _Toolbar.() -> Unit): android.widget.Toolbar {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.TOOLBAR, theme) { init() }
 }
 
-inline fun ViewManager.viewAnimator(): android.widget.ViewAnimator = viewAnimator({})
-inline fun ViewManager.viewAnimator(init: _ViewAnimator.() -> Unit): android.widget.ViewAnimator {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.VIEW_ANIMATOR) { init() }
+inline fun ViewManager.viewAnimator(theme: Int = 0): android.widget.ViewAnimator = viewAnimator(theme) {}
+inline fun ViewManager.viewAnimator(theme: Int = 0, init: _ViewAnimator.() -> Unit): android.widget.ViewAnimator {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.VIEW_ANIMATOR, theme) { init() }
 }
 
-inline fun Context.viewAnimator(): android.widget.ViewAnimator = viewAnimator({})
-inline fun Context.viewAnimator(init: _ViewAnimator.() -> Unit): android.widget.ViewAnimator {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.VIEW_ANIMATOR) { init() }
+inline fun Context.viewAnimator(theme: Int = 0): android.widget.ViewAnimator = viewAnimator(theme) {}
+inline fun Context.viewAnimator(theme: Int = 0, init: _ViewAnimator.() -> Unit): android.widget.ViewAnimator {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.VIEW_ANIMATOR, theme) { init() }
 }
 
-inline fun Activity.viewAnimator(): android.widget.ViewAnimator = viewAnimator({})
-inline fun Activity.viewAnimator(init: _ViewAnimator.() -> Unit): android.widget.ViewAnimator {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.VIEW_ANIMATOR) { init() }
+inline fun Activity.viewAnimator(theme: Int = 0): android.widget.ViewAnimator = viewAnimator(theme) {}
+inline fun Activity.viewAnimator(theme: Int = 0, init: _ViewAnimator.() -> Unit): android.widget.ViewAnimator {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.VIEW_ANIMATOR, theme) { init() }
 }
 
-inline fun ViewManager.viewSwitcher(): android.widget.ViewSwitcher = viewSwitcher({})
-inline fun ViewManager.viewSwitcher(init: _ViewSwitcher.() -> Unit): android.widget.ViewSwitcher {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.VIEW_SWITCHER) { init() }
+inline fun ViewManager.viewSwitcher(theme: Int = 0): android.widget.ViewSwitcher = viewSwitcher(theme) {}
+inline fun ViewManager.viewSwitcher(theme: Int = 0, init: _ViewSwitcher.() -> Unit): android.widget.ViewSwitcher {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.VIEW_SWITCHER, theme) { init() }
 }
 
-inline fun Context.viewSwitcher(): android.widget.ViewSwitcher = viewSwitcher({})
-inline fun Context.viewSwitcher(init: _ViewSwitcher.() -> Unit): android.widget.ViewSwitcher {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.VIEW_SWITCHER) { init() }
+inline fun Context.viewSwitcher(theme: Int = 0): android.widget.ViewSwitcher = viewSwitcher(theme) {}
+inline fun Context.viewSwitcher(theme: Int = 0, init: _ViewSwitcher.() -> Unit): android.widget.ViewSwitcher {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.VIEW_SWITCHER, theme) { init() }
 }
 
-inline fun Activity.viewSwitcher(): android.widget.ViewSwitcher = viewSwitcher({})
-inline fun Activity.viewSwitcher(init: _ViewSwitcher.() -> Unit): android.widget.ViewSwitcher {
-    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.VIEW_SWITCHER) { init() }
+inline fun Activity.viewSwitcher(theme: Int = 0): android.widget.ViewSwitcher = viewSwitcher(theme) {}
+inline fun Activity.viewSwitcher(theme: Int = 0, init: _ViewSwitcher.() -> Unit): android.widget.ViewSwitcher {
+    return ankoView(`$$Anko$Factories$Sdk21ViewGroup`.VIEW_SWITCHER, theme) { init() }
 }

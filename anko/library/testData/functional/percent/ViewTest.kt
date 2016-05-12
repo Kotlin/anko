@@ -3,32 +3,32 @@ object `$$Anko$Factories$PercentViewGroup` {
     val PERCENT_RELATIVE_LAYOUT = { ctx: Context -> _PercentRelativeLayout(ctx) }
 }
 
-inline fun ViewManager.percentFrameLayout(): android.support.percent.PercentFrameLayout = percentFrameLayout({})
-inline fun ViewManager.percentFrameLayout(init: _PercentFrameLayout.() -> Unit): android.support.percent.PercentFrameLayout {
-    return ankoView(`$$Anko$Factories$PercentViewGroup`.PERCENT_FRAME_LAYOUT) { init() }
+inline fun ViewManager.percentFrameLayout(theme: Int = 0): android.support.percent.PercentFrameLayout = percentFrameLayout(theme) {}
+inline fun ViewManager.percentFrameLayout(theme: Int = 0, init: _PercentFrameLayout.() -> Unit): android.support.percent.PercentFrameLayout {
+    return ankoView(`$$Anko$Factories$PercentViewGroup`.PERCENT_FRAME_LAYOUT, theme) { init() }
 }
 
-inline fun Context.percentFrameLayout(): android.support.percent.PercentFrameLayout = percentFrameLayout({})
-inline fun Context.percentFrameLayout(init: _PercentFrameLayout.() -> Unit): android.support.percent.PercentFrameLayout {
-    return ankoView(`$$Anko$Factories$PercentViewGroup`.PERCENT_FRAME_LAYOUT) { init() }
+inline fun Context.percentFrameLayout(theme: Int = 0): android.support.percent.PercentFrameLayout = percentFrameLayout(theme) {}
+inline fun Context.percentFrameLayout(theme: Int = 0, init: _PercentFrameLayout.() -> Unit): android.support.percent.PercentFrameLayout {
+    return ankoView(`$$Anko$Factories$PercentViewGroup`.PERCENT_FRAME_LAYOUT, theme) { init() }
 }
 
-inline fun Activity.percentFrameLayout(): android.support.percent.PercentFrameLayout = percentFrameLayout({})
-inline fun Activity.percentFrameLayout(init: _PercentFrameLayout.() -> Unit): android.support.percent.PercentFrameLayout {
-    return ankoView(`$$Anko$Factories$PercentViewGroup`.PERCENT_FRAME_LAYOUT) { init() }
+inline fun Activity.percentFrameLayout(theme: Int = 0): android.support.percent.PercentFrameLayout = percentFrameLayout(theme) {}
+inline fun Activity.percentFrameLayout(theme: Int = 0, init: _PercentFrameLayout.() -> Unit): android.support.percent.PercentFrameLayout {
+    return ankoView(`$$Anko$Factories$PercentViewGroup`.PERCENT_FRAME_LAYOUT, theme) { init() }
 }
 
-inline fun ViewManager.percentRelativeLayout(): android.support.percent.PercentRelativeLayout = percentRelativeLayout({})
-inline fun ViewManager.percentRelativeLayout(init: _PercentRelativeLayout.() -> Unit): android.support.percent.PercentRelativeLayout {
-    return ankoView(`$$Anko$Factories$PercentViewGroup`.PERCENT_RELATIVE_LAYOUT) { init() }
+inline fun ViewManager.percentRelativeLayout(theme: Int = 0): android.support.percent.PercentRelativeLayout = percentRelativeLayout(theme) {}
+inline fun ViewManager.percentRelativeLayout(theme: Int = 0, init: _PercentRelativeLayout.() -> Unit): android.support.percent.PercentRelativeLayout {
+    return ankoView(`$$Anko$Factories$PercentViewGroup`.PERCENT_RELATIVE_LAYOUT, theme) { init() }
 }
 
-inline fun Context.percentRelativeLayout(): android.support.percent.PercentRelativeLayout = percentRelativeLayout({})
-inline fun Context.percentRelativeLayout(init: _PercentRelativeLayout.() -> Unit): android.support.percent.PercentRelativeLayout {
-    return ankoView(`$$Anko$Factories$PercentViewGroup`.PERCENT_RELATIVE_LAYOUT) { init() }
+inline fun Context.percentRelativeLayout(theme: Int = 0): android.support.percent.PercentRelativeLayout = percentRelativeLayout(theme) {}
+inline fun Context.percentRelativeLayout(theme: Int = 0, init: _PercentRelativeLayout.() -> Unit): android.support.percent.PercentRelativeLayout {
+    return ankoView(`$$Anko$Factories$PercentViewGroup`.PERCENT_RELATIVE_LAYOUT, theme) { init() }
 }
 
-inline fun Activity.percentRelativeLayout(): android.support.percent.PercentRelativeLayout = percentRelativeLayout({})
-inline fun Activity.percentRelativeLayout(init: _PercentRelativeLayout.() -> Unit): android.support.percent.PercentRelativeLayout {
-    return ankoView(`$$Anko$Factories$PercentViewGroup`.PERCENT_RELATIVE_LAYOUT) { init() }
+inline fun Activity.percentRelativeLayout(theme: Int = 0): android.support.percent.PercentRelativeLayout = percentRelativeLayout(theme) {}
+inline fun Activity.percentRelativeLayout(theme: Int = 0, init: _PercentRelativeLayout.() -> Unit): android.support.percent.PercentRelativeLayout {
+    return ankoView(`$$Anko$Factories$PercentViewGroup`.PERCENT_RELATIVE_LAYOUT, theme) { init() }
 }

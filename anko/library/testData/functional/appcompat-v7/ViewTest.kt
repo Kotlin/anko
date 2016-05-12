@@ -13,208 +13,208 @@ object `$$Anko$Factories$AppcompatV7View` {
     val SWITCH_COMPAT = { ctx: Context -> android.support.v7.widget.SwitchCompat(ctx) }
 }
 
-inline fun ViewManager.tintedAutoCompleteTextView(): AutoCompleteTextView = tintedAutoCompleteTextView({})
-inline fun ViewManager.tintedAutoCompleteTextView(init: AutoCompleteTextView.() -> Unit): AutoCompleteTextView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_AUTO_COMPLETE_TEXT_VIEW) { init() }
+inline fun ViewManager.tintedAutoCompleteTextView(theme: Int = 0): AutoCompleteTextView = tintedAutoCompleteTextView(theme) {}
+inline fun ViewManager.tintedAutoCompleteTextView(theme: Int = 0, init: AutoCompleteTextView.() -> Unit): AutoCompleteTextView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_AUTO_COMPLETE_TEXT_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.tintedButton(): Button = tintedButton({})
-inline fun ViewManager.tintedButton(init: Button.() -> Unit): Button {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_BUTTON) { init() }
+inline fun ViewManager.tintedButton(theme: Int = 0): Button = tintedButton(theme) {}
+inline fun ViewManager.tintedButton(theme: Int = 0, init: Button.() -> Unit): Button {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_BUTTON, theme) { init() }
 }
 
-inline fun ViewManager.tintedButton(text: CharSequence?): Button {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_BUTTON) {
+inline fun ViewManager.tintedButton(text: CharSequence?, theme: Int = 0): Button {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_BUTTON, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.tintedButton(text: CharSequence?, init: Button.() -> Unit): Button {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_BUTTON) {
+inline fun ViewManager.tintedButton(text: CharSequence?, theme: Int = 0, init: Button.() -> Unit): Button {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_BUTTON, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.tintedButton(text: Int): Button {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_BUTTON) {
+inline fun ViewManager.tintedButton(text: Int, theme: Int = 0): Button {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_BUTTON, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.tintedButton(text: Int, init: Button.() -> Unit): Button {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_BUTTON) {
+inline fun ViewManager.tintedButton(text: Int, theme: Int = 0, init: Button.() -> Unit): Button {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_BUTTON, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.tintedCheckBox(): CheckBox = tintedCheckBox({})
-inline fun ViewManager.tintedCheckBox(init: CheckBox.() -> Unit): CheckBox {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) { init() }
+inline fun ViewManager.tintedCheckBox(theme: Int = 0): CheckBox = tintedCheckBox(theme) {}
+inline fun ViewManager.tintedCheckBox(theme: Int = 0, init: CheckBox.() -> Unit): CheckBox {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX, theme) { init() }
 }
 
-inline fun ViewManager.tintedCheckBox(text: CharSequence?): CheckBox {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) {
+inline fun ViewManager.tintedCheckBox(text: CharSequence?, theme: Int = 0): CheckBox {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.tintedCheckBox(text: CharSequence?, init: CheckBox.() -> Unit): CheckBox {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) {
+inline fun ViewManager.tintedCheckBox(text: CharSequence?, theme: Int = 0, init: CheckBox.() -> Unit): CheckBox {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.tintedCheckBox(text: Int): CheckBox {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) {
+inline fun ViewManager.tintedCheckBox(text: Int, theme: Int = 0): CheckBox {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.tintedCheckBox(text: Int, init: CheckBox.() -> Unit): CheckBox {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) {
+inline fun ViewManager.tintedCheckBox(text: Int, theme: Int = 0, init: CheckBox.() -> Unit): CheckBox {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.tintedCheckBox(text: CharSequence?, checked: Boolean): CheckBox {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) {
+inline fun ViewManager.tintedCheckBox(text: CharSequence?, checked: Boolean, theme: Int = 0): CheckBox {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX, theme) {
         setText(text)
         setChecked(checked)
     }
 }
-inline fun ViewManager.tintedCheckBox(text: CharSequence?, checked: Boolean, init: CheckBox.() -> Unit): CheckBox {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) {
-        init()
-        setText(text)
-        setChecked(checked)
-    }
-}
-
-inline fun ViewManager.tintedCheckBox(text: Int, checked: Boolean): CheckBox {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) {
-        setText(text)
-        setChecked(checked)
-    }
-}
-inline fun ViewManager.tintedCheckBox(text: Int, checked: Boolean, init: CheckBox.() -> Unit): CheckBox {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX) {
+inline fun ViewManager.tintedCheckBox(text: CharSequence?, checked: Boolean, theme: Int = 0, init: CheckBox.() -> Unit): CheckBox {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX, theme) {
         init()
         setText(text)
         setChecked(checked)
     }
 }
 
-inline fun ViewManager.tintedCheckedTextView(): CheckedTextView = tintedCheckedTextView({})
-inline fun ViewManager.tintedCheckedTextView(init: CheckedTextView.() -> Unit): CheckedTextView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECKED_TEXT_VIEW) { init() }
+inline fun ViewManager.tintedCheckBox(text: Int, checked: Boolean, theme: Int = 0): CheckBox {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX, theme) {
+        setText(text)
+        setChecked(checked)
+    }
+}
+inline fun ViewManager.tintedCheckBox(text: Int, checked: Boolean, theme: Int = 0, init: CheckBox.() -> Unit): CheckBox {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECK_BOX, theme) {
+        init()
+        setText(text)
+        setChecked(checked)
+    }
 }
 
-inline fun ViewManager.tintedEditText(): EditText = tintedEditText({})
-inline fun ViewManager.tintedEditText(init: EditText.() -> Unit): EditText {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_EDIT_TEXT) { init() }
+inline fun ViewManager.tintedCheckedTextView(theme: Int = 0): CheckedTextView = tintedCheckedTextView(theme) {}
+inline fun ViewManager.tintedCheckedTextView(theme: Int = 0, init: CheckedTextView.() -> Unit): CheckedTextView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_CHECKED_TEXT_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.tintedEditText(text: CharSequence?): EditText {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_EDIT_TEXT) {
+inline fun ViewManager.tintedEditText(theme: Int = 0): EditText = tintedEditText(theme) {}
+inline fun ViewManager.tintedEditText(theme: Int = 0, init: EditText.() -> Unit): EditText {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_EDIT_TEXT, theme) { init() }
+}
+
+inline fun ViewManager.tintedEditText(text: CharSequence?, theme: Int = 0): EditText {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_EDIT_TEXT, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.tintedEditText(text: CharSequence?, init: EditText.() -> Unit): EditText {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_EDIT_TEXT) {
+inline fun ViewManager.tintedEditText(text: CharSequence?, theme: Int = 0, init: EditText.() -> Unit): EditText {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_EDIT_TEXT, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.tintedEditText(text: Int): EditText {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_EDIT_TEXT) {
+inline fun ViewManager.tintedEditText(text: Int, theme: Int = 0): EditText {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_EDIT_TEXT, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.tintedEditText(text: Int, init: EditText.() -> Unit): EditText {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_EDIT_TEXT) {
+inline fun ViewManager.tintedEditText(text: Int, theme: Int = 0, init: EditText.() -> Unit): EditText {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_EDIT_TEXT, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.tintedMultiAutoCompleteTextView(): MultiAutoCompleteTextView = tintedMultiAutoCompleteTextView({})
-inline fun ViewManager.tintedMultiAutoCompleteTextView(init: MultiAutoCompleteTextView.() -> Unit): MultiAutoCompleteTextView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_MULTI_AUTO_COMPLETE_TEXT_VIEW) { init() }
+inline fun ViewManager.tintedMultiAutoCompleteTextView(theme: Int = 0): MultiAutoCompleteTextView = tintedMultiAutoCompleteTextView(theme) {}
+inline fun ViewManager.tintedMultiAutoCompleteTextView(theme: Int = 0, init: MultiAutoCompleteTextView.() -> Unit): MultiAutoCompleteTextView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_MULTI_AUTO_COMPLETE_TEXT_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.tintedRadioButton(): RadioButton = tintedRadioButton({})
-inline fun ViewManager.tintedRadioButton(init: RadioButton.() -> Unit): RadioButton {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_RADIO_BUTTON) { init() }
+inline fun ViewManager.tintedRadioButton(theme: Int = 0): RadioButton = tintedRadioButton(theme) {}
+inline fun ViewManager.tintedRadioButton(theme: Int = 0, init: RadioButton.() -> Unit): RadioButton {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_RADIO_BUTTON, theme) { init() }
 }
 
-inline fun ViewManager.tintedRatingBar(): RatingBar = tintedRatingBar({})
-inline fun ViewManager.tintedRatingBar(init: RatingBar.() -> Unit): RatingBar {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_RATING_BAR) { init() }
+inline fun ViewManager.tintedRatingBar(theme: Int = 0): RatingBar = tintedRatingBar(theme) {}
+inline fun ViewManager.tintedRatingBar(theme: Int = 0, init: RatingBar.() -> Unit): RatingBar {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_RATING_BAR, theme) { init() }
 }
 
-inline fun ViewManager.tintedSpinner(): Spinner = tintedSpinner({})
-inline fun ViewManager.tintedSpinner(init: Spinner.() -> Unit): Spinner {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_SPINNER) { init() }
+inline fun ViewManager.tintedSpinner(theme: Int = 0): Spinner = tintedSpinner(theme) {}
+inline fun ViewManager.tintedSpinner(theme: Int = 0, init: Spinner.() -> Unit): Spinner {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_SPINNER, theme) { init() }
 }
 
-inline fun Context.tintedSpinner(): Spinner = tintedSpinner({})
-inline fun Context.tintedSpinner(init: Spinner.() -> Unit): Spinner {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_SPINNER) { init() }
+inline fun Context.tintedSpinner(theme: Int = 0): Spinner = tintedSpinner(theme) {}
+inline fun Context.tintedSpinner(theme: Int = 0, init: Spinner.() -> Unit): Spinner {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_SPINNER, theme) { init() }
 }
 
-inline fun Activity.tintedSpinner(): Spinner = tintedSpinner({})
-inline fun Activity.tintedSpinner(init: Spinner.() -> Unit): Spinner {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_SPINNER) { init() }
+inline fun Activity.tintedSpinner(theme: Int = 0): Spinner = tintedSpinner(theme) {}
+inline fun Activity.tintedSpinner(theme: Int = 0, init: Spinner.() -> Unit): Spinner {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_SPINNER, theme) { init() }
 }
 
-inline fun ViewManager.tintedTextView(): TextView = tintedTextView({})
-inline fun ViewManager.tintedTextView(init: TextView.() -> Unit): TextView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_TEXT_VIEW) { init() }
+inline fun ViewManager.tintedTextView(theme: Int = 0): TextView = tintedTextView(theme) {}
+inline fun ViewManager.tintedTextView(theme: Int = 0, init: TextView.() -> Unit): TextView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_TEXT_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.tintedTextView(text: CharSequence?): TextView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_TEXT_VIEW) {
+inline fun ViewManager.tintedTextView(text: CharSequence?, theme: Int = 0): TextView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_TEXT_VIEW, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.tintedTextView(text: CharSequence?, init: TextView.() -> Unit): TextView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_TEXT_VIEW) {
+inline fun ViewManager.tintedTextView(text: CharSequence?, theme: Int = 0, init: TextView.() -> Unit): TextView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_TEXT_VIEW, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.tintedTextView(text: Int): TextView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_TEXT_VIEW) {
+inline fun ViewManager.tintedTextView(text: Int, theme: Int = 0): TextView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_TEXT_VIEW, theme) {
         setText(text)
     }
 }
-inline fun ViewManager.tintedTextView(text: Int, init: TextView.() -> Unit): TextView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_TEXT_VIEW) {
+inline fun ViewManager.tintedTextView(text: Int, theme: Int = 0, init: TextView.() -> Unit): TextView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.TINTED_TEXT_VIEW, theme) {
         init()
         setText(text)
     }
 }
 
-inline fun ViewManager.searchView(): android.support.v7.widget.SearchView = searchView({})
-inline fun ViewManager.searchView(init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.SEARCH_VIEW) { init() }
+inline fun ViewManager.searchView(theme: Int = 0): android.support.v7.widget.SearchView = searchView(theme) {}
+inline fun ViewManager.searchView(theme: Int = 0, init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.SEARCH_VIEW, theme) { init() }
 }
 
-inline fun Context.searchView(): android.support.v7.widget.SearchView = searchView({})
-inline fun Context.searchView(init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.SEARCH_VIEW) { init() }
+inline fun Context.searchView(theme: Int = 0): android.support.v7.widget.SearchView = searchView(theme) {}
+inline fun Context.searchView(theme: Int = 0, init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.SEARCH_VIEW, theme) { init() }
 }
 
-inline fun Activity.searchView(): android.support.v7.widget.SearchView = searchView({})
-inline fun Activity.searchView(init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.SEARCH_VIEW) { init() }
+inline fun Activity.searchView(theme: Int = 0): android.support.v7.widget.SearchView = searchView(theme) {}
+inline fun Activity.searchView(theme: Int = 0, init: android.support.v7.widget.SearchView.() -> Unit): android.support.v7.widget.SearchView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.SEARCH_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.switchCompat(): android.support.v7.widget.SwitchCompat = switchCompat({})
-inline fun ViewManager.switchCompat(init: android.support.v7.widget.SwitchCompat.() -> Unit): android.support.v7.widget.SwitchCompat {
-    return ankoView(`$$Anko$Factories$AppcompatV7View`.SWITCH_COMPAT) { init() }
+inline fun ViewManager.switchCompat(theme: Int = 0): android.support.v7.widget.SwitchCompat = switchCompat(theme) {}
+inline fun ViewManager.switchCompat(theme: Int = 0, init: android.support.v7.widget.SwitchCompat.() -> Unit): android.support.v7.widget.SwitchCompat {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.SWITCH_COMPAT, theme) { init() }
 }
 
 object `$$Anko$Factories$AppcompatV7ViewGroup` {
@@ -223,47 +223,47 @@ object `$$Anko$Factories$AppcompatV7ViewGroup` {
     val TOOLBAR = { ctx: Context -> _Toolbar(ctx) }
 }
 
-inline fun ViewManager.actionMenuView(): android.support.v7.widget.ActionMenuView = actionMenuView({})
-inline fun ViewManager.actionMenuView(init: _ActionMenuView.() -> Unit): android.support.v7.widget.ActionMenuView {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_MENU_VIEW) { init() }
+inline fun ViewManager.actionMenuView(theme: Int = 0): android.support.v7.widget.ActionMenuView = actionMenuView(theme) {}
+inline fun ViewManager.actionMenuView(theme: Int = 0, init: _ActionMenuView.() -> Unit): android.support.v7.widget.ActionMenuView {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_MENU_VIEW, theme) { init() }
 }
 
-inline fun Context.actionMenuView(): android.support.v7.widget.ActionMenuView = actionMenuView({})
-inline fun Context.actionMenuView(init: _ActionMenuView.() -> Unit): android.support.v7.widget.ActionMenuView {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_MENU_VIEW) { init() }
+inline fun Context.actionMenuView(theme: Int = 0): android.support.v7.widget.ActionMenuView = actionMenuView(theme) {}
+inline fun Context.actionMenuView(theme: Int = 0, init: _ActionMenuView.() -> Unit): android.support.v7.widget.ActionMenuView {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_MENU_VIEW, theme) { init() }
 }
 
-inline fun Activity.actionMenuView(): android.support.v7.widget.ActionMenuView = actionMenuView({})
-inline fun Activity.actionMenuView(init: _ActionMenuView.() -> Unit): android.support.v7.widget.ActionMenuView {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_MENU_VIEW) { init() }
+inline fun Activity.actionMenuView(theme: Int = 0): android.support.v7.widget.ActionMenuView = actionMenuView(theme) {}
+inline fun Activity.actionMenuView(theme: Int = 0, init: _ActionMenuView.() -> Unit): android.support.v7.widget.ActionMenuView {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_MENU_VIEW, theme) { init() }
 }
 
-inline fun ViewManager.linearLayoutCompat(): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompat({})
-inline fun ViewManager.linearLayoutCompat(init: _LinearLayoutCompat.() -> Unit): android.support.v7.widget.LinearLayoutCompat {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.LINEAR_LAYOUT_COMPAT) { init() }
+inline fun ViewManager.linearLayoutCompat(theme: Int = 0): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompat(theme) {}
+inline fun ViewManager.linearLayoutCompat(theme: Int = 0, init: _LinearLayoutCompat.() -> Unit): android.support.v7.widget.LinearLayoutCompat {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.LINEAR_LAYOUT_COMPAT, theme) { init() }
 }
 
-inline fun Context.linearLayoutCompat(): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompat({})
-inline fun Context.linearLayoutCompat(init: _LinearLayoutCompat.() -> Unit): android.support.v7.widget.LinearLayoutCompat {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.LINEAR_LAYOUT_COMPAT) { init() }
+inline fun Context.linearLayoutCompat(theme: Int = 0): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompat(theme) {}
+inline fun Context.linearLayoutCompat(theme: Int = 0, init: _LinearLayoutCompat.() -> Unit): android.support.v7.widget.LinearLayoutCompat {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.LINEAR_LAYOUT_COMPAT, theme) { init() }
 }
 
-inline fun Activity.linearLayoutCompat(): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompat({})
-inline fun Activity.linearLayoutCompat(init: _LinearLayoutCompat.() -> Unit): android.support.v7.widget.LinearLayoutCompat {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.LINEAR_LAYOUT_COMPAT) { init() }
+inline fun Activity.linearLayoutCompat(theme: Int = 0): android.support.v7.widget.LinearLayoutCompat = linearLayoutCompat(theme) {}
+inline fun Activity.linearLayoutCompat(theme: Int = 0, init: _LinearLayoutCompat.() -> Unit): android.support.v7.widget.LinearLayoutCompat {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.LINEAR_LAYOUT_COMPAT, theme) { init() }
 }
 
-inline fun ViewManager.toolbar(): android.support.v7.widget.Toolbar = toolbar({})
-inline fun ViewManager.toolbar(init: _Toolbar.() -> Unit): android.support.v7.widget.Toolbar {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR) { init() }
+inline fun ViewManager.toolbar(theme: Int = 0): android.support.v7.widget.Toolbar = toolbar(theme) {}
+inline fun ViewManager.toolbar(theme: Int = 0, init: _Toolbar.() -> Unit): android.support.v7.widget.Toolbar {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR, theme) { init() }
 }
 
-inline fun Context.toolbar(): android.support.v7.widget.Toolbar = toolbar({})
-inline fun Context.toolbar(init: _Toolbar.() -> Unit): android.support.v7.widget.Toolbar {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR) { init() }
+inline fun Context.toolbar(theme: Int = 0): android.support.v7.widget.Toolbar = toolbar(theme) {}
+inline fun Context.toolbar(theme: Int = 0, init: _Toolbar.() -> Unit): android.support.v7.widget.Toolbar {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR, theme) { init() }
 }
 
-inline fun Activity.toolbar(): android.support.v7.widget.Toolbar = toolbar({})
-inline fun Activity.toolbar(init: _Toolbar.() -> Unit): android.support.v7.widget.Toolbar {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR) { init() }
+inline fun Activity.toolbar(theme: Int = 0): android.support.v7.widget.Toolbar = toolbar(theme) {}
+inline fun Activity.toolbar(theme: Int = 0, init: _Toolbar.() -> Unit): android.support.v7.widget.Toolbar {
+    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.TOOLBAR, theme) { init() }
 }

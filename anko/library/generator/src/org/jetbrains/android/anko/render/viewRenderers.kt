@@ -148,13 +148,13 @@ internal abstract class AbstractViewRenderer(
             fun add(extendFor: String) = buffer {
                 val returnType = if (tinted) className21 else className
 
-                line("inline fun $extendFor.$functionName(theme: Int = 0, $helperArguments): $returnType {")
+                line("inline fun $extendFor.$functionName($helperArguments, theme: Int = 0): $returnType {")
                 line("return ankoView($factory, theme) {")
                 lines(setters)
                 line("}")
                 line("}")
 
-                line("inline fun $extendFor.$functionName(theme: Int = 0, $helperArguments, init: $lambdaArgType.() -> Unit): $returnType {")
+                line("inline fun $extendFor.$functionName($helperArguments, theme: Int = 0, init: $lambdaArgType.() -> Unit): $returnType {")
                 line("return ankoView($factory, theme) {")
                 line("init()")
                 lines(setters)

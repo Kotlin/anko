@@ -15,14 +15,14 @@ public class RobolectricTest() {
         testArray(emptyArray<Int>())
         testArray(emptyArray<String>())
         assertEquals(listOf(1, 2, 3), testArray(arrayOf(1, 2, 3)))
-        assertEquals(listOf("A", "B", "C", testArray(arrayOf("A", "B", "C"))))
-        assertEquals(listOf("A", null, "C", testArray(arrayOf<String?>("A", null, "C"))))
+        assertEquals(listOf("A", "B", "C"), testArray(arrayOf("A", "B", "C")))
+        assertEquals(listOf("A", null, "C"), testArray(arrayOf<String?>("A", null, "C")))
 
         testList(emptyList<Int>())
         testList(emptyList<String>())
         assertEquals(listOf(1, 2, 3), testList(listOf(1, 2, 3)))
-        assertEquals(listOf("A", "B", "C", testList(listOf("A", "B", "C"))))
-        assertEquals(listOf<String?>("A", null, "C", testList(listOf("A", null, "C"))))
+        assertEquals(listOf("A", "B", "C"), testList(listOf("A", "B", "C")))
+        assertEquals(listOf<String?>("A", null, "C"), testList(listOf("A", null, "C")))
 
         val pair = Pair(1, "A")
         val androidPair = pair.toAndroidPair()
