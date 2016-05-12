@@ -88,13 +88,16 @@ inline fun Intent.noHistory(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_NO
 
 inline fun Intent.singleTop(): Intent = apply { setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) }
 
-inline fun AnkoContext<*>.browse(url: String) = ctx.browse(url)
-inline fun Fragment.browse(url: String) = activity.browse(url)
+inline fun AnkoContext<*>.browse(url: String, newTask: Boolean = false) = ctx.browse(url, newTask)
+inline fun Fragment.browse(url: String, newTask: Boolean = false) = activity.browse(url, newTask)
 
-fun Context.browse(url: String): Boolean {
+fun Context.browse(url: String, newTask: Boolean = false): Boolean {
     try {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.setData(Uri.parse(url))
+        intent.data = Uri.parse(url)
+        if (newTask) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
         startActivity(intent)
         return true
     } catch (e: ActivityNotFoundException) {
@@ -109,7 +112,7 @@ inline fun Fragment.share(text: String, subject: String = "") = activity.share(t
 fun Context.share(text: String, subject: String = ""): Boolean {
     try {
         val intent = Intent(android.content.Intent.ACTION_SEND)
-        intent.setType("text/plain")
+        intent.type = "text/plain"
         intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)
         intent.putExtra(android.content.Intent.EXTRA_TEXT, text)
         startActivity(Intent.createChooser(intent, null))
@@ -125,7 +128,7 @@ inline fun Fragment.email(email: String, subject: String = "", text: String = ""
 
 fun Context.email(email: String, subject: String = "", text: String = ""): Boolean {
     val intent = Intent(Intent.ACTION_SENDTO)
-    intent.setData(Uri.parse("mailto:"))
+    intent.data = Uri.parse("mailto:")
     intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
     if (subject.length > 0)
         intent.putExtra(Intent.EXTRA_SUBJECT, subject)

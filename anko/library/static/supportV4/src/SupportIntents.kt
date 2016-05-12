@@ -23,7 +23,7 @@ import android.support.v4.app.Fragment
 import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.*
 
-fun Fragment.browse(url: String): Boolean = activity.browse(url)
+fun Fragment.browse(url: String, newTask: Boolean = false): Boolean = activity.browse(url, newTask)
 
 fun Fragment.share(text: String, subject: String = ""): Boolean = activity.share(text, subject)
 
