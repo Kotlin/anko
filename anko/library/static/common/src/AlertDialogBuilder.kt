@@ -196,8 +196,26 @@ class AlertDialogBuilder(val ctx: Context) {
      * @param positiveText the text to display in the positive button.
      * @param callback the callback that will be called if the positive button is pressed.
      */
-    fun positiveButton(positiveText: Int = R.string.ok, callback: DialogInterface.() -> Unit) {
+    fun positiveButton(positiveText: Int, callback: DialogInterface.() -> Unit) {
         positiveButton(ctx.getString(positiveText), callback)
+    }
+
+    /**
+     * Set a listener to be invoked when the positive button of the dialog is pressed.
+     *
+     * @param callback the callback that will be called if the positive button is pressed.
+     */
+    fun okButton(callback: DialogInterface.() -> Unit) {
+        positiveButton(ctx.getString(R.string.ok), callback)
+    }
+
+    /**
+     * Set a listener to be invoked when the positive button of the dialog is pressed.
+     *
+     * @param callback the callback that will be called if the positive button is pressed.
+     */
+    fun yesButton(callback: DialogInterface.() -> Unit) {
+        positiveButton(ctx.getString(R.string.yes), callback)
     }
 
     /**
@@ -217,8 +235,26 @@ class AlertDialogBuilder(val ctx: Context) {
      * @param negativeText the text to display in the negative button.
      * @param callback the callback that will be called if the negative button is pressed.
      */
-    fun negativeButton(negativeText: Int = R.string.cancel, callback: DialogInterface.() -> Unit = { dismiss() }) {
+    fun negativeButton(negativeText: Int, callback: DialogInterface.() -> Unit = { dismiss() }) {
         negativeButton(ctx.getString(negativeText), callback)
+    }
+
+    /**
+     * Set a listener to be invoked when the negative button of the dialog is pressed.
+     *
+     * @param callback the callback that will be called if the negative button is pressed.
+     */
+    fun cancelButton(callback: DialogInterface.() -> Unit = { dismiss() }) {
+        negativeButton(ctx.getString(R.string.cancel), callback)
+    }
+
+    /**
+     * Set a listener to be invoked when the negative button of the dialog is pressed.
+     *
+     * @param callback the callback that will be called if the negative button is pressed.
+     */
+    fun noButton(callback: DialogInterface.() -> Unit = { dismiss() }) {
+        negativeButton(ctx.getString(R.string.no), callback)
     }
 
     /**
