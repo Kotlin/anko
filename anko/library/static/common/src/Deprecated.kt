@@ -28,8 +28,13 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 
-@Deprecated("Use forEachReversedByIndex(f) instead.", ReplaceWith("forEachReversedByIndex(f)"))
+@Deprecated("Use forEachReversedByIndex(f) instead.",
+        ReplaceWith("forEachReversedByIndex(f)", "org.jetbrains.anko.collections.forEachReversedByIndex"))
 inline fun <T> Array<T>.forEachReversed(f: (T) -> Unit) = forEachReversedByIndex(f)
+
+@Deprecated("Use forEachReversedByIndex(f) instead.",
+        ReplaceWith("forEachReversedByIndex(f)", "org.jetbrains.anko.collections.forEachReversedByIndex"))
+inline fun <T> List<T>.forEachReversed(f: (T) -> Unit) = forEachReversedByIndex(f)
 
 @Deprecated("Use runOnUiThread(f) instead.", ReplaceWith("runOnUiThread(f)"))
 inline fun Fragment.onUiThread(crossinline f: () -> Unit) = runOnUiThread(f)

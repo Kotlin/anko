@@ -2,6 +2,7 @@ package test
 
 import android.os.Bundle
 import org.jetbrains.anko.*
+import org.jetbrains.anko.collections.*
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.robolectric.*
@@ -26,7 +27,7 @@ public class RobolectricTest() {
 
         val pair = Pair(1, "A")
         val androidPair = pair.toAndroidPair()
-        val kotlinPair = pair.toKotlinPair()
+        val kotlinPair = androidPair.toKotlinPair()
         assertEquals(pair.first, androidPair.first)
         assertEquals(pair.second, androidPair.second)
         assertEquals(pair.second, kotlinPair)
