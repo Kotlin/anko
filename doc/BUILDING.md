@@ -3,7 +3,7 @@ Building Anko
 
 Required tools:
 
-* JDK 1.7
+* JDK 1.6, 1.8
 * IntelliJ IDEA 14.0+
 * Maven
 * Gradle

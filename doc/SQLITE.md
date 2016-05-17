@@ -34,11 +34,11 @@ Anko provides a special class `ManagedSQLiteOpenHelper` that seamlessly replaces
 
 ```kotlin
 class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyDatabase", null, 1) {
-
-    class object {
+    companion object {
         private var instance: MyDatabaseOpenHelper? = null
 
-        synchronized fun getInstance(ctx: Context): MyDatabaseOpenHelper {
+        @Synchronized
+        fun getInstance(ctx: Context): MyDatabaseOpenHelper {
             if (instance == null) {
                 instance = MyDatabaseOpenHelper(ctx.getApplicationContext())
             }
@@ -75,7 +75,7 @@ Asynchronous call example (please read [here](ADVANCED.md#asynchronous-tasks) ab
 ```kotlin
 class SomeActivity : Activity() {
     private fun loadAsync() {
-        async {
+        doAsync {
             val result = database.use {
                 // Now `this` is a SQLiteDatabase instance
             }
@@ -193,11 +193,11 @@ Note that `parseSingle()` and `parseOpt()` will throw an exception if the receiv
 Now the question is: what is `rowParser`? Well, each function support two different types of parsers: `RowParser` and `MapRowParser`:
 
 ```kotlin
-public trait RowParser<T> {
+interface RowParser<T> {
     fun parseRow(columns: Array<Any>): T
 }
 
-public trait MapRowParser<T> {
+interface MapRowParser<T> {
     fun parseRow(columns: Map<String, Any>): T
 }
 ```
@@ -235,7 +235,7 @@ If you are using Anko `db.select()` builder, you can directly call `parseSingle`
 For instance, let's make a new parser for columns `(Int, String, String)`. The most naive way to do so is:
 
 ```kotlin
-public class MyRowParser : RowParser<Triple<Int, String, String>> {
+class MyRowParser : RowParser<Triple<Int, String, String>> {
     override fun parseRow(columns: Array<Any>): Triple<Int, String, String> {
         return Triple(columns[0] as Int, columns[1] as String, columns[2] as String)
     }
@@ -245,7 +245,7 @@ public class MyRowParser : RowParser<Triple<Int, String, String>> {
 Well, now we have three explicit checkcasts in our code. Let's get rid of them by using the `rowParser` function:
 
 ```kotlin
-val parser = rowParser { (id: Int, name: String, email: String) -> 
+val parser = rowParser { id: Int, name: String, email: String ->
     Triple(id, name, email)
 }
 ```

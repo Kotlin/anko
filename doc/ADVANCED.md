@@ -124,7 +124,7 @@ longToast("Wow, such a duration")
 
 ```kotlin
 alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
-    positiveButton("Yes") {toast("Oh…")}
+    positiveButton("Yes") { toast("Oh…") }
     negativeButton("No") {}
 }.show()
 ```
@@ -235,8 +235,8 @@ Let's say, `CustomView` is your custom `View` class name, and `customView` is wh
 If you only plan to use your custom `View` in the DSL surrounded by some other `View`:
 
 ```kotlin
-public inline fun ViewManager.customView() = customView {}
-public inline fun ViewManager.customView(init: CustomView.() -> Unit) = ankoView({ CustomView(it) }, init)
+inline fun ViewManager.customView() = customView {}
+inline fun ViewManager.customView(init: CustomView.() -> Unit) = ankoView({ CustomView(it) }, init)
 ```
 
 So now you can write this:
@@ -258,6 +258,6 @@ UI {
 But if you want to use your view as a top-level widget without a UI wrapper inside `Activity`, add this as well:
 
 ```kotlin
-public inline fun Activity.customView() = customView {}
-public inline fun Activity.customView(init: CustomView.() -> Unit) = ankoView({ CustomView(it) }, init)
+inline fun Activity.customView() = customView {}
+inline fun Activity.customView(init: CustomView.() -> Unit) = ankoView({ CustomView(it) }, init)
 ```
