@@ -285,7 +285,7 @@ class MyActivity : AppCompatActivity() {
 }
 
 class MyActivityUI : AnkoComponent<MyActivity> {
-    override fun createView(ui: AnkoContext) = with(ui) {
+    override fun createView(ui: AnkoContext<MyActivity>) = with(ui) {
         verticalLayout {
             val name = editText()
             button("Say Hello") {
