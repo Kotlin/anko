@@ -33,7 +33,7 @@ Arguments in square brackets (`[]`) are optional. Methods return true if the int
 In general, you have to write a couple of lines to start a new `Activity`. And it requires you to write an additional line for each value you pass as an extra. For example, this is a code for starting an `Activity` with extra `(id, 5)` and a special flag:
 
 ```kotlin
-val intent = Intent(this, javaClass<SomeOtherActivity>())
+val intent = Intent(this, SomeOtherActivity::class.java)
 intent.putExtra("id", 5)
 intent.setFlag(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 startActivity(intent)
