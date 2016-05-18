@@ -155,3 +155,18 @@ fun Context.makeCall(number: String): Boolean {
         return false
     }
 }
+
+inline fun AnkoContext<*>.sendSMS(number: String, text: String = ""): Boolean = ctx.sendSMS(number, text)
+inline fun Fragment.sendSMS(number: String, text: String = ""): Boolean = activity.sendSMS(number, text)
+
+fun Context.sendSMS(number: String, text: String = ""): Boolean {
+    try {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("sms:$number"))
+        intent.putExtra("sms_body", text)
+        startActivity(intent)
+        return true
+    } catch (e: Exception) {
+        e.printStackTrace()
+        return false
+    }
+}

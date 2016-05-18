@@ -22,6 +22,7 @@ Even if you won't use the DSL to create UI, Anko still has something to make you
 Goal                | Solution
 --------------------|--------- 
 Make a call         | `makeCall(number)` without **tel:**
+Send a text         | `sendSMS(number, [text])` without **sms:**
 Browse the web      | `browse(url)`
 Share some text     | `share(text, [subject])`
 Send a email        | `email(email, [subject], [text])`
