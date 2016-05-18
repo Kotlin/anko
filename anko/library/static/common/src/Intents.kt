@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 JetBrains s.r.o.
+ * Copyright 2016 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,22 +70,67 @@ inline fun <reified T: Any> Fragment.intentFor(vararg params: Pair<String, Any>)
     return AnkoInternals.createIntent(activity, T::class.java, params)
 }
 
+/**
+ * Add the [Intent.FLAG_ACTIVITY_CLEAR_TASK] flag to the [Intent].
+ *
+ * @return the same intent with the flag applied.
+ */
 inline fun Intent.clearTask(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK) }
 
+/**
+ * Add the [Intent.FLAG_ACTIVITY_CLEAR_TOP] flag to the [Intent].
+ *
+ * @return the same intent with the flag applied.
+ */
 inline fun Intent.clearTop(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) }
 
+/**
+ * Add the [Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET] flag to the [Intent].
+ *
+ * @return the same intent with the flag applied.
+ */
 inline fun Intent.clearWhenTaskReset(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET) }
 
+/**
+ * Add the [Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS] flag to the [Intent].
+ *
+ * @return the same intent with the flag applied.
+ */
 inline fun Intent.excludeFromRecents(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS) }
 
+/**
+ * Add the [Intent.FLAG_ACTIVITY_MULTIPLE_TASK] flag to the [Intent].
+ *
+ * @return the same intent with the flag applied.
+ */
 inline fun Intent.multipleTask(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK) }
 
+/**
+ * Add the [Intent.FLAG_ACTIVITY_NEW_TASK] flag to the [Intent].
+ *
+ * @return the same intent with the flag applied.
+ */
 inline fun Intent.newTask(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
 
+/**
+ * Add the [Intent.FLAG_ACTIVITY_NO_ANIMATION] flag to the [Intent].
+ *
+ * @return the same intent with the flag applied.
+ */
 inline fun Intent.noAnimation(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION) }
 
+/**
+ * Add the [Intent.FLAG_ACTIVITY_NO_HISTORY] flag to the [Intent].
+ *
+ * @return the same intent with the flag applied.
+ */
 inline fun Intent.noHistory(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY) }
 
+/**
+ * Add the [Intent.FLAG_ACTIVITY_SINGLE_TOP] flag to the [Intent].
+ *
+ * @return the same intent with the flag applied.
+ */
 inline fun Intent.singleTop(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) }
 
 inline fun AnkoContext<*>.browse(url: String, newTask: Boolean = false) = ctx.browse(url, newTask)

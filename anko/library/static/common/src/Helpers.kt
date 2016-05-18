@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 JetBrains s.r.o.
+ * Copyright 2016 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,16 +23,45 @@ import android.os.Build
 import org.jetbrains.anko.internals.AnkoInternals
 
 open class AnkoException(message: String = "") : RuntimeException(message)
+
+/**
+ * Indicates that the called property does not have a getter.
+ * Some of the extension properties only have a getter, because Android SDK does not provide a
+ *   method to get the proper value. Another case is when the getter is senseless.
+ *
+ * Example: there is a [View.padding] extension property, which is used to set the equal padding value
+ *   for all paddings (left, top, right, bottom). Technically, the left padding is unrelated to,
+ *   for example, the bottom padding, so there is just no right value to return.
+ *
+ * @param name the property name
+ *
+ * @see [View.padding] extension property
+ */
 class PropertyWithoutGetterException(name: String) : AnkoException("'$name' property does not have a getter")
 
-//returns 0xC0C0C0 for 0xC0
+/**
+ * Return the grayscale color with the zero opacity using the single color value.
+ * E.g., 0xC0 will be translated to 0xC0C0C0.
+ */
 val Int.gray: Int
     get() = this or (this shl 8) or (this shl 16)
 
-//returns 0xFFABCDEF for 0xABCDEF
+/**
+ * Return the color with 0xFF opacity.
+ * E.g., 0xabcdef will be translated to 0xFFabcdef.
+ */
 val Int.opaque: Int
     get() = this or 0xff000000.toInt()
 
+/**
+ * Return the color with the given alpha value.
+ * Examples:
+ *   0xabcdef.withAlpha(0xCF) == 0xCFabcdef
+ *   0xFFabcdef.withAlpha(0xCF) == 0xCFabcdef
+ *
+ * @param alpha the alpha channel value: [0x0..0xFF].
+ * @return the color with the given alpha value applied.
+ */
 fun Int.withAlpha(alpha: Int): Int {
     require(alpha >= 0 && alpha <= 0xFF)
     return this and 0x00FFFFFF or (alpha shl 24)

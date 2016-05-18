@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 JetBrains s.r.o.
+ * Copyright 2016 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,18 +19,35 @@ package org.jetbrains.anko
 import android.view.*
 import java.util.*
 
+/**
+ * Execute [action] for each child of the received [ViewGroup].
+ *
+ * @param action the action to execute.
+ */
 inline fun ViewGroup.forEachChild(f: (View) -> Unit) {
     for (i in 0..childCount - 1) {
         f(getChildAt(i))
     }
 }
 
+/**
+ * Execute [action] for each child of the received [ViewGroup].
+ *
+ * @param action the action to execute. The first index is 0.
+ */
 inline fun ViewGroup.forEachChildWithIndex(f: (Int, View) -> Unit) {
     for (i in 0..childCount - 1) {
         f(i, getChildAt(i))
     }
 }
 
+/**
+ * Return the first child [View] matching the given [predicate].
+ *
+ * @param predicate the predicate to check against.
+ * @return the child [View] that matches [predicate].
+ *   [NoSuchElementException] will be thrown if no such child was found.
+ */
 inline fun ViewGroup.firstChild(predicate: (View) -> Boolean): View {
     for (i in 0..childCount - 1) {
         val child = getChildAt(i)
@@ -41,6 +58,12 @@ inline fun ViewGroup.firstChild(predicate: (View) -> Boolean): View {
     throw NoSuchElementException("No element matching predicate was found.")
 }
 
+/**
+ * Return the first child [View] matching the given [predicate].
+ *
+ * @param predicate the predicate to check against.
+ * @return the child [View] that matches [predicate], or null if no such child was found.
+ */
 inline fun ViewGroup.firstChildOrNull(predicate: (View) -> Boolean): View? {
     for (i in 0..childCount - 1) {
         val child = getChildAt(i)
@@ -51,8 +74,20 @@ inline fun ViewGroup.firstChildOrNull(predicate: (View) -> Boolean): View? {
     return null
 }
 
+/**
+ * Return the sequence of children of the received [View].
+ * Note that the sequence is not thread-safe.
+ *
+ * @return the [Sequence] of children.
+ */
 fun View.childrenSequence(): Sequence<View> = ViewChildrenSequence(this)
 
+/**
+ * Return the [Sequence] of all children of the received [View], recursively.
+ * Note that the sequence is not thread-safe.
+ *
+ * @return the [Sequence] of children.
+ */
 fun View.childrenRecursiveSequence(): Sequence<View> = ViewChildrenRecursiveSequence(this)
 
 private class ViewChildrenSequence(private val view: View) : Sequence<View> {

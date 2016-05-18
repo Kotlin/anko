@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 JetBrains s.r.o.
+ * Copyright 2016 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,30 +22,89 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.widget.Toast
 
-/* Toasts */
+/**
+ * Display the simple Toast message with the [Toast.LENGTH_SHORT] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun AnkoContext<*>.toast(message: Int) = ctx.toast(message)
 
-inline fun AnkoContext<*>.toast(textResource: Int) = ctx.toast(textResource)
-inline fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
+/**
+ * Display the simple Toast message with the [Toast.LENGTH_SHORT] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun Fragment.toast(message: Int): Unit = activity.toast(message)
 
-fun Context.toast(textResource: Int) = Toast.makeText(this, textResource, Toast.LENGTH_SHORT).show()
+/**
+ * Display the simple Toast message with the [Toast.LENGTH_SHORT] duration.
+ *
+ * @param message the message text resource.
+ */
+fun Context.toast(message: Int) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
+/**
+ * Display the simple Toast message with the [Toast.LENGTH_SHORT] duration.
+ *
+ * @param message the message text.
+ */
+inline fun AnkoContext<*>.toast(message: CharSequence) = ctx.toast(message)
 
-inline fun AnkoContext<*>.toast(text: CharSequence) = ctx.toast(text)
-inline fun Fragment.toast(text: CharSequence): Unit = activity.toast(text)
+/**
+ * Display the simple Toast message with the [Toast.LENGTH_SHORT] duration.
+ *
+ * @param message the message text.
+ */
+inline fun Fragment.toast(message: CharSequence): Unit = activity.toast(message)
 
-fun Context.toast(text: CharSequence) = Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+/**
+ * Display the simple Toast message with the [Toast.LENGTH_SHORT] duration.
+ *
+ * @param message the message text.
+ */
+fun Context.toast(message: CharSequence) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
+/**
+ * Display the simple Toast message with the [Toast.LENGTH_LONG] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun AnkoContext<*>.longToast(message: Int) = ctx.longToast(message)
 
-inline fun AnkoContext<*>.longToast(textResource: Int) = ctx.longToast(textResource)
-inline fun Fragment.longToast(textResource: Int): Unit = activity.longToast(textResource)
+/**
+ * Display the simple Toast message with the [Toast.LENGTH_LONG] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun Fragment.longToast(message: Int): Unit = activity.longToast(message)
 
-fun Context.longToast(textResource: Int) = Toast.makeText(this, textResource, Toast.LENGTH_LONG).show()
+/**
+ * Display the simple Toast message with the [Toast.LENGTH_LONG] duration.
+ *
+ * @param message the message text resource.
+ */
+fun Context.longToast(message: Int) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 
+/**
+ * Display the simple Toast message with the [Toast.LENGTH_LONG] duration.
+ *
+ * @param message the message text.
+ */
+inline fun AnkoContext<*>.longToast(message: CharSequence) = ctx.longToast(message)
 
-inline fun AnkoContext<*>.longToast(text: CharSequence) = ctx.longToast(text)
-inline fun Fragment.longToast(text: CharSequence): Unit = activity.longToast(text)
+/**
+ * Display the simple Toast message with the [Toast.LENGTH_LONG] duration.
+ *
+ * @param message the message text.
+ */
+inline fun Fragment.longToast(message: CharSequence): Unit = activity.longToast(message)
 
-fun Context.longToast(text: CharSequence) = Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+/**
+ * Display the simple Toast message with the [Toast.LENGTH_LONG] duration.
+ *
+ * @param message the message text.
+ */
+fun Context.longToast(message: CharSequence) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 
 
 /* Alerts */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 JetBrains s.r.o.
+ * Copyright 2016 JetBrains s.r.o.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,11 @@
 
 package org.jetbrains.anko.collections
 
+/**
+ * Iterate the [List] using an index.
+ *
+ * @f an action to invoke on each list element.
+ */
 inline fun <T> List<T>.forEachByIndex(f: (T) -> Unit) {
     val lastIndex = size - 1
     for (i in 0..lastIndex) {
@@ -23,6 +28,11 @@ inline fun <T> List<T>.forEachByIndex(f: (T) -> Unit) {
     }
 }
 
+/**
+ * Iterate the [List] using an index.
+ *
+ * @f an action to invoke on each list element (index, element).
+ */
 inline fun <T> List<T>.forEachWithIndex(f: (Int, T) -> Unit) {
     val lastIndex = size - 1
     for (i in 0..lastIndex) {
@@ -30,6 +40,11 @@ inline fun <T> List<T>.forEachWithIndex(f: (Int, T) -> Unit) {
     }
 }
 
+/**
+ * Iterate the [List] backwards using an index.
+ *
+ * @f an action to invoke on each list element.
+ */
 inline fun <T> List<T>.forEachReversedByIndex(f: (T) -> Unit) {
     var i = size - 1
     while (i >= 0) {
@@ -38,6 +53,11 @@ inline fun <T> List<T>.forEachReversedByIndex(f: (T) -> Unit) {
     }
 }
 
+/**
+ * Iterate the [List] backwards using an index.
+ *
+ * @f an action to invoke on each list element (index, element).
+ */
 inline fun <T> List<T>.forEachReversedWithIndex(f: (Int, T) -> Unit) {
     var i = size - 1
     while (i >= 0) {
@@ -46,10 +66,20 @@ inline fun <T> List<T>.forEachReversedWithIndex(f: (Int, T) -> Unit) {
     }
 }
 
+/**
+ * Convert the Android pair to a Kotlin one.
+ *
+ * @see [Pair.toAndroidPair].
+ */
 fun <F, S> android.util.Pair<F, S>.toKotlinPair(): Pair<F, S> {
     return first to second
 }
 
+/**
+ * Convert the Kotlin pair to an Android one.
+ *
+ * @see [android.util.Pair.toKotlinPair].
+ */
 fun <F, S> Pair<F, S>.toAndroidPair(): android.util.Pair<F, S> {
     return android.util.Pair(first, second)
 }
