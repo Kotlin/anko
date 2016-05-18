@@ -44,53 +44,60 @@ fun <T> AnkoAsyncContext<T>.onComplete(f: (T?) -> Unit) {
     }
 }
 
-fun <T> AnkoAsyncContext<T>.uiThread(f: (T) -> Unit) {
-    val ref = weakRef.get() ?: return
+fun <T> AnkoAsyncContext<T>.uiThread(f: (T) -> Unit): Boolean {
+    val ref = weakRef.get() ?: return false
     if (ContextHelper.mainThread == Thread.currentThread()) {
         f(ref)
     } else {
         ContextHelper.handler.post { f(ref) }
     }
+    return true
 }
 
-fun <T: Activity> AnkoAsyncContext<T>.activityUiThread(f: (T) -> Unit) {
-    val activity = weakRef.get() ?: return
-    if (activity.isFinishing) return
+fun <T: Activity> AnkoAsyncContext<T>.activityUiThread(f: (T) -> Unit): Boolean {
+    val activity = weakRef.get() ?: return false
+    if (activity.isFinishing) return false
     activity.runOnUiThread { f(activity) }
+    return true
 }
 
-fun <T: Activity> AnkoAsyncContext<T>.activityUiThreadWithContext(f: Context.(T) -> Unit) {
-    val activity = weakRef.get() ?: return
-    if (activity.isFinishing) return
+fun <T: Activity> AnkoAsyncContext<T>.activityUiThreadWithContext(f: Context.(T) -> Unit): Boolean {
+    val activity = weakRef.get() ?: return false
+    if (activity.isFinishing) return false
     activity.runOnUiThread { activity.f(activity) }
+    return true
 }
 
 @JvmName("activityContextUiThread")
-fun <T: Activity> AnkoAsyncContext<AnkoContext<T>>.activityUiThread(f: (T) -> Unit) {
-    val activity = weakRef.get()?.owner ?: return
-    if (activity.isFinishing) return
+fun <T: Activity> AnkoAsyncContext<AnkoContext<T>>.activityUiThread(f: (T) -> Unit): Boolean {
+    val activity = weakRef.get()?.owner ?: return false
+    if (activity.isFinishing) return false
     activity.runOnUiThread { f(activity) }
+    return true
 }
 
 @JvmName("activityContextUiThreadWithContext")
-fun <T: Activity> AnkoAsyncContext<AnkoContext<T>>.activityUiThreadWithContext(f: Context.(T) -> Unit) {
-    val activity = weakRef.get()?.owner ?: return
-    if (activity.isFinishing) return
+fun <T: Activity> AnkoAsyncContext<AnkoContext<T>>.activityUiThreadWithContext(f: Context.(T) -> Unit): Boolean {
+    val activity = weakRef.get()?.owner ?: return false
+    if (activity.isFinishing) return false
     activity.runOnUiThread { activity.f(activity) }
+    return true
 }
 
-fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThread(f: (T) -> Unit) {
-    val fragment = weakRef.get() ?: return
-    if (fragment.isDetached) return
-    val activity = fragment.activity ?: return
+fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThread(f: (T) -> Unit): Boolean {
+    val fragment = weakRef.get() ?: return false
+    if (fragment.isDetached) return false
+    val activity = fragment.activity ?: return false
     activity.runOnUiThread { f(fragment) }
+    return true
 }
 
-fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T) -> Unit) {
-    val fragment = weakRef.get() ?: return
-    if (fragment.isDetached) return
-    val activity = fragment.activity ?: return
+fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T) -> Unit): Boolean {
+    val fragment = weakRef.get() ?: return false
+    if (fragment.isDetached) return false
+    val activity = fragment.activity ?: return false
     activity.runOnUiThread { activity.f(fragment) }
+    return true
 }
 
 fun <T> T.doAsync(
