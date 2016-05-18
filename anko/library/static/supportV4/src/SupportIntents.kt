@@ -37,7 +37,7 @@ inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<Stri
 }
 
 inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
-    AnkoInternals.internalStartActivityForResult(activity, T::class.java, requestCode, params)
+    startActivityForResult(AnkoInternals.createIntent(act, T::class.java, params), requestCode)
 }
 
 inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any>) {
