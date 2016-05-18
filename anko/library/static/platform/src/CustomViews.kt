@@ -22,6 +22,7 @@ import android.app.Fragment
 import android.content.Context
 import android.text.InputType
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewManager
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -97,6 +98,12 @@ inline fun <T: View> ViewManager.include(layoutId: Int): T = include(layoutId, {
 inline fun <T: View> ViewManager.include(layoutId: Int, init: T.() -> Unit): T {
     @Suppress("UNCHECKED_CAST")
     return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }, 0) { init() }
+}
+
+inline fun <T: View> ViewGroup.include(layoutId: Int): T = include(layoutId, {})
+inline fun <T: View> ViewGroup.include(layoutId: Int, init: T.() -> Unit): T {
+    @Suppress("UNCHECKED_CAST")
+    return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, this, false) as T }, 0) { init() }
 }
 
 inline fun <T: View> Context.include(layoutId: Int): T = include(layoutId, {})
