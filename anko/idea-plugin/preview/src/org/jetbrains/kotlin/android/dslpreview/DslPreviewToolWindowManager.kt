@@ -82,7 +82,7 @@ import org.jetbrains.kotlin.caches.resolve.KotlinCacheService
 import org.jetbrains.kotlin.codegen.ClassBuilderMode
 import org.jetbrains.kotlin.codegen.CodegenFileClassesProvider
 import org.jetbrains.kotlin.codegen.state.IncompatibleClassTracker
-import org.jetbrains.kotlin.codegen.state.JetTypeMapper
+import org.jetbrains.kotlin.codegen.state.KotlinTypeMapper
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameSafe
@@ -330,7 +330,7 @@ class DslPreviewToolWindowManager(
 
     private fun getKtClass(psiElement: PsiElement?): KtClass? {
         return if (psiElement is KtLightElement<*, *>) {
-            getKtClass(psiElement.getOrigin())
+            getKtClass(psiElement.kotlinOrigin)
         } else if (psiElement is KtClass && !psiElement.isEnum() && !psiElement.isInterface() &&
                 !psiElement.isAnnotation() && !psiElement.isSealed()) {
             psiElement
@@ -368,7 +368,7 @@ class DslPreviewToolWindowManager(
         val resolveSession = cacheService.getResolutionFacade(listOf(ktClass))
                 .getFrontendService(ResolveSession::class.java)
         val classDescriptor = resolveSession.getClassDescriptor(ktClass, NoLookupLocation.FROM_IDE)
-        val typeMapper = JetTypeMapper(resolveSession.bindingContext,
+        val typeMapper = KotlinTypeMapper(resolveSession.bindingContext,
                 ClassBuilderMode.LIGHT_CLASSES, CodegenFileClassesProvider(), null,
                 IncompatibleClassTracker.DoNothing, "main")
 
