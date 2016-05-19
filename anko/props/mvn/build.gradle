@@ -145,8 +145,9 @@ bintray {
     publications = ['maven']
 
     pkg {
-        repo = 'anko-dev'
-        name = 'anko-dev'
+        repo = 'kotlin-dev'
+        name = 'anko'
+        userOrg = 'kotlin'
         licenses = ['Apache-2.0']
         vcsUrl = scmUrl
 
