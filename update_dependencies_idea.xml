@@ -264,20 +264,6 @@
             <mapper type="flatten"/>
         </unzip>
 
-        <local name="bootstrap.need.chmod"/>
-        <condition property="bootstrap.need.chmod">
-            <or>
-                <isset property="isMac" />
-                <isset property="isLinux" />
-            </or>
-        </condition>
-
-        <!-- Java can't manipulate permissions -->
-        <exec executable="find" if:set="bootstrap.need.chmod">
-            <arg value="dependencies/bootstrap-compiler/Kotlin/kotlinc/bin"/>
-            <arg line="-name 'kotlin*' ! -name '*.bat' -exec chmod a+x '{}' ;"/>
-        </exec>
-
         <download-or-build-markdown-parser/>
     </target>
 
@@ -510,10 +496,6 @@
                 Plugin depends on newer runtime and reflect jar from our bootstrap compiler.
                 Avoid depending on old runtime during build phase but attach original runtime when idea starts.
                 -->
-                <mkdir dir="@{idea.dir}/idea-kotlin-runtime"/>
-                <move file="@{idea.dir}/lib/kotlin-runtime.jar" todir="@{idea.dir}/idea-kotlin-runtime"/>
-                <move file="@{idea.dir}/lib/kotlin-reflect.jar" todir="@{idea.dir}/idea-kotlin-runtime"/>
-
                 <delete dir="@{idea.dir}/plugins/Kotlin"/>
 
                 <echo message="@{download.dir.intellij-core}/intellij-core-analysis.jar"/>
