@@ -63,11 +63,11 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
         return myPsiFile.rootTag
     }
 
-    override fun getVirtualFile(): VirtualFile {
+    override fun getVirtualFile(): VirtualFile? {
         return myPsiFile.virtualFile
     }
 
-    override fun getContainingDirectory(): PsiDirectory {
+    override fun getContainingDirectory(): PsiDirectory? {
         return myPsiFile.containingDirectory
     }
 
@@ -87,7 +87,7 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
         return myPsiFile.viewProvider
     }
 
-    override fun getNode(): FileASTNode {
+    override fun getNode(): FileASTNode? {
         return myPsiFile.node
     }
 
@@ -110,7 +110,9 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
         return myPsiFile.name
     }
 
-    override fun processChildren(psiFileSystemItemPsiElementProcessor: PsiElementProcessor<PsiFileSystemItem>): Boolean {
+    override fun processChildren(
+            psiFileSystemItemPsiElementProcessor: PsiElementProcessor<PsiFileSystemItem>?
+    ): Boolean {
         return myPsiFile.processChildren(psiFileSystemItemPsiElementProcessor)
     }
 
@@ -133,7 +135,7 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
         return myPsiFile.language
     }
 
-    override fun getManager(): PsiManager {
+    override fun getManager(): PsiManager? {
         return myPsiFile.manager
     }
 
@@ -141,28 +143,28 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
         return myPsiFile.children
     }
 
-    override fun getFirstChild(): PsiElement {
+    override fun getFirstChild(): PsiElement? {
         return myPsiFile.firstChild
     }
 
-    override fun getLastChild(): PsiElement {
+    override fun getLastChild(): PsiElement? {
         return myPsiFile.lastChild
     }
 
-    override fun getNextSibling(): PsiElement {
+    override fun getNextSibling(): PsiElement? {
         return myPsiFile.nextSibling
     }
 
-    override fun getPrevSibling(): PsiElement {
+    override fun getPrevSibling(): PsiElement? {
         return myPsiFile.prevSibling
     }
 
     @Throws(PsiInvalidElementAccessException::class)
-    override fun getContainingFile(): PsiFile {
+    override fun getContainingFile(): PsiFile? {
         return myPsiFile.containingFile
     }
 
-    override fun getTextRange(): TextRange {
+    override fun getTextRange(): TextRange? {
         return myPsiFile.textRange
     }
 
@@ -187,7 +189,7 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
     }
 
     @NonNls
-    override fun getText(): String {
+    override fun getText(): String? {
         return myPsiFile.text
     }
 
@@ -195,11 +197,11 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
         return myPsiFile.textToCharArray()
     }
 
-    override fun getNavigationElement(): PsiElement {
+    override fun getNavigationElement(): PsiElement? {
         return myPsiFile.navigationElement
     }
 
-    override fun getOriginalElement(): PsiElement {
+    override fun getOriginalElement(): PsiElement? {
         return myPsiFile.originalElement
     }
 
@@ -223,22 +225,22 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
         myPsiFile.acceptChildren(psiElementVisitor)
     }
 
-    override fun copy(): PsiElement {
+    override fun copy(): PsiElement? {
         return myPsiFile.copy()
     }
 
     @Throws(IncorrectOperationException::class)
-    override fun add(psiElement: PsiElement): PsiElement {
+    override fun add(psiElement: PsiElement): PsiElement? {
         return myPsiFile.add(psiElement)
     }
 
     @Throws(IncorrectOperationException::class)
-    override fun addBefore(psiElement: PsiElement, psiElement2: PsiElement?): PsiElement {
+    override fun addBefore(psiElement: PsiElement, psiElement2: PsiElement?): PsiElement? {
         return myPsiFile.addBefore(psiElement, psiElement2)
     }
 
     @Throws(IncorrectOperationException::class)
-    override fun addAfter(psiElement: PsiElement, psiElement2: PsiElement?): PsiElement {
+    override fun addAfter(psiElement: PsiElement, psiElement2: PsiElement?): PsiElement? {
         return myPsiFile.addAfter(psiElement, psiElement2)
     }
 
@@ -249,17 +251,17 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
     }
 
     @Throws(IncorrectOperationException::class)
-    override fun addRange(psiElement: PsiElement, psiElement2: PsiElement): PsiElement {
+    override fun addRange(psiElement: PsiElement, psiElement2: PsiElement): PsiElement? {
         return myPsiFile.addRange(psiElement, psiElement2)
     }
 
     @Throws(IncorrectOperationException::class)
-    override fun addRangeBefore(psiElement: PsiElement, psiElement2: PsiElement, psiElement3: PsiElement): PsiElement {
+    override fun addRangeBefore(psiElement: PsiElement, psiElement2: PsiElement, psiElement3: PsiElement): PsiElement? {
         return myPsiFile.addRangeBefore(psiElement, psiElement2, psiElement3)
     }
 
     @Throws(IncorrectOperationException::class)
-    override fun addRangeAfter(psiElement: PsiElement, psiElement2: PsiElement, psiElement3: PsiElement): PsiElement {
+    override fun addRangeAfter(psiElement: PsiElement, psiElement2: PsiElement, psiElement3: PsiElement): PsiElement? {
         return myPsiFile.addRangeAfter(psiElement, psiElement2, psiElement3)
     }
 
@@ -280,7 +282,7 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
     }
 
     @Throws(IncorrectOperationException::class)
-    override fun replace(psiElement: PsiElement): PsiElement {
+    override fun replace(psiElement: PsiElement): PsiElement? {
         return myPsiFile.replace(psiElement)
     }
 
@@ -308,7 +310,12 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
         myPsiFile.putCopyableUserData(tKey, t)
     }
 
-    override fun processDeclarations(psiScopeProcessor: PsiScopeProcessor, resolveState: ResolveState, psiElement: PsiElement?, psiElement2: PsiElement): Boolean {
+    override fun processDeclarations(
+            psiScopeProcessor: PsiScopeProcessor,
+            resolveState: ResolveState,
+            psiElement: PsiElement?,
+            psiElement2: PsiElement
+    ): Boolean {
         return myPsiFile.processDeclarations(psiScopeProcessor, resolveState, psiElement, psiElement2)
     }
 
@@ -652,7 +659,12 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
 
         }
 
-        override fun processDeclarations(psiScopeProcessor: PsiScopeProcessor, resolveState: ResolveState, psiElement: PsiElement?, psiElement2: PsiElement): Boolean {
+        override fun processDeclarations(
+                psiScopeProcessor: PsiScopeProcessor,
+                resolveState: ResolveState,
+                psiElement: PsiElement?,
+                psiElement2: PsiElement
+        ): Boolean {
             return false
         }
 
