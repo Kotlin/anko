@@ -77,7 +77,7 @@
                 <env key="ANDROID_HOME" value="${android.sdk}"/>
                 <arg value="-Dbintray.user=${bintray.user}"/>
                 <arg value="-Dbintray.key=${bintray.key}"/>
-                <arg value="publish"/>
+                <arg value="@{task}"/>
             </exec>
 
             <copy file="@{version.dir}/build/libs/@{artifact.name}.jar"
