@@ -6,11 +6,13 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
     }
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion %SDK_VERSION
@@ -71,7 +73,7 @@ publishing {
         maven(MavenPublication) {
             groupId POM_ARTEFACT_GROUP
             artifactId POM_ARTEFACT_ID
-            version POM_ARTEFACT_VERSION
+            version "%ARTEFACT_VERSION"
 
             artifact androidReleaseJar
             artifact androidReleaseSources {
@@ -110,10 +112,10 @@ publishing {
 
                 if ("%ARTIFACT_NAME" != "common") {
                     def dependenciesNode = asNode().appendNode('dependencies')
-                    addDependency(dependenciesNode, POM_ARTEFACT_GROUP, "anko-common", POM_ARTEFACT_VERSION)
+                    addDependency(dependenciesNode, POM_ARTEFACT_GROUP, "anko-common", "%ARTEFACT_VERSION")
 
                     if ("%ARTIFACT_NAME" == "appcompat-v7") {
-                        addDependency(dependenciesNode, POM_ARTEFACT_GROUP, "anko-support-v4", POM_ARTEFACT_VERSION)
+                        addDependency(dependenciesNode, POM_ARTEFACT_GROUP, "anko-support-v4", "%ARTEFACT_VERSION")
                     }
                 }
             }
@@ -132,6 +134,25 @@ publishing {
     repositories {
         maven {
             url "$buildDir/repo"
+        }
+    }
+}
+
+bintray {
+    user = System.getProperty("bintray.user")
+    key = System.getProperty("bintray.key")
+
+    publications = ['maven']
+
+    pkg {
+        repo = 'anko-dev'
+        name = 'anko-%ARTIFACT_NAME'
+        licenses = ['Apache-2.0']
+        vcsUrl = scmUrl
+
+        version {
+            name = '0.9'
+            released = new Date()
         }
     }
 }

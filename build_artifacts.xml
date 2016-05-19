@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="build_artifacts" default="build_artifacts">
-
     <property name="android.sdk" location="dependencies/android-sdk"/>
+    <property environment="env"/>
 
     <condition property="gradlew.file" value="gradlew.bat">
         <os family="windows"/>
@@ -20,37 +20,48 @@
         </and>
     </condition>
 
-    <target name="build_artifacts">
-        <mkdir dir="workdir/zip" />
-
-        <delete>
-            <fileset dir="workdir/zip" includes="*" />
-        </delete>
-
-        <build_artifact version="stubs"/>
-        <build_artifact version="common"/>
-        <build_artifact version="sqlite"/>
-        <parallel threadCount="4">
-            <build_artifact version="sdk15"/>
-            <build_artifact version="sdk19"/>
-            <build_artifact version="sdk21"/>
-            <build_artifact version="sdk23"/>
-        </parallel>
-        <build_artifact version="support-v4"/>
-        <build_artifact version="appcompat-v7"/>
-        <parallel threadCount="4">
-            <build_artifact version="cardview-v7"/>
-            <build_artifact version="gridlayout-v7"/>
-            <build_artifact version="recyclerview-v7"/>
-            <build_artifact version="design"/>
-            <build_artifact version="percent"/>
-        </parallel>
+    <target name="publish_artifacts">
+        <build-all-artifacts task="bintrayUpload"/>
     </target>
 
+    <target name="build_artifacts">
+        <build-all-artifacts/>
+    </target>
+
+    <macrodef name="build-all-artifacts">
+        <attribute name="task" default="publish" />
+
+        <sequential>
+            <loadproperties srcFile="local.properties"/>
+
+            <mkdir dir="workdir/zip" />
+            <mkdir dir="workdir/repo" />
+
+            <delete>
+                <fileset dir="workdir/zip" includes="*" />
+            </delete>
+
+            <build_artifact artifact.name="stubs" task="@{task}" />
+            <build_artifact artifact.name="common" task="@{task}"/>
+            <build_artifact artifact.name="sqlite" task="@{task}"/>
+            <build_artifact artifact.name="sdk15" task="@{task}"/>
+            <build_artifact artifact.name="sdk19" task="@{task}"/>
+            <build_artifact artifact.name="sdk21" task="@{task}"/>
+            <build_artifact artifact.name="sdk23" task="@{task}"/>
+            <build_artifact artifact.name="support-v4" task="@{task}"/>
+            <build_artifact artifact.name="appcompat-v7" task="@{task}"/>
+            <build_artifact artifact.name="cardview-v7" task="@{task}"/>
+            <build_artifact artifact.name="gridlayout-v7" task="@{task}"/>
+            <build_artifact artifact.name="recyclerview-v7" task="@{task}"/>
+            <build_artifact artifact.name="design" task="@{task}"/>
+            <build_artifact artifact.name="percent" task="@{task}"/>
+        </sequential>
+    </macrodef>
+
     <macrodef name="build_artifact">
-        <attribute name="version" />
-        <attribute name="version.dir" default="workdir/gen/@{version}" />
-        <attribute name="artifact.name" default="@{version}" />
+        <attribute name="task" />
+        <attribute name="artifact.name" />
+        <attribute name="version.dir" default="workdir/gen/@{artifact.name}" />
 
         <sequential>
             <fail message="The directory '@{version.dir}' does not exist">
@@ -62,21 +73,16 @@
             </fail>
 
             <chmod_version version.dir="@{version.dir}"/>
-            <exec executable="./${gradlew.file}" dir="@{version.dir}">
+            <exec executable="./${gradlew.file}" dir="@{version.dir}" failonerror="true">
                 <env key="ANDROID_HOME" value="${android.sdk}"/>
+                <arg value="-Dbintray.user=${bintray.user}"/>
+                <arg value="-Dbintray.key=${bintray.key}"/>
                 <arg value="publish"/>
             </exec>
 
-            <delete>
-                <fileset dir="@{version.dir}/build/repo/org/jetbrains/anko/anko-@{artifact.name}" includes="maven-metadata.*" />
-            </delete>
-
-            <zip destfile="workdir/zip/anko-@{artifact.name}.zip" basedir="@{version.dir}/build/repo"/>
-
-            <copy file="@{version.dir}/build/libs/@{version}.jar"
+            <copy file="@{version.dir}/build/libs/@{artifact.name}.jar"
                   tofile="workdir/zip/anko-@{artifact.name}.jar"
                   overwrite="true" />
-
         </sequential>
     </macrodef>
 
