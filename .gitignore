@@ -7,3 +7,5 @@ dependencies/*
 .DS_Store
 workdir/*
 /ideaSDK
+local.properties
+.gradle
