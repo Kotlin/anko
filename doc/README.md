@@ -37,6 +37,8 @@ Put the cursor somewhere inside the `MyActivityUI` declaration, open the *Anko D
 
 Running make is required, so it could take some time before the image will be actually shown.
 
+<img src="preview.png" alt="Preview" height="359" width="490" />
+
 ## XML to DSL Converter
 
 Plugin also supports converting layouts from the XML format to Anko DSL code. Open an XML file and select "Code" → "Convert to Anko DSL". You can convert several XML layout files simultaneously.
