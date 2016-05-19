@@ -73,7 +73,7 @@ publishing {
         maven(MavenPublication) {
             groupId POM_ARTEFACT_GROUP
             artifactId POM_ARTEFACT_ID
-            version "%ARTEFACT_VERSION"
+            version "%ARTIFACT_VERSION"
 
             artifact androidReleaseJar
             artifact androidReleaseSources {
@@ -112,10 +112,10 @@ publishing {
 
                 if ("%ARTIFACT_NAME" != "common") {
                     def dependenciesNode = asNode().appendNode('dependencies')
-                    addDependency(dependenciesNode, POM_ARTEFACT_GROUP, "anko-common", "%ARTEFACT_VERSION")
+                    addDependency(dependenciesNode, POM_ARTEFACT_GROUP, "anko-common", "%ARTIFACT_VERSION")
 
                     if ("%ARTIFACT_NAME" == "appcompat-v7") {
-                        addDependency(dependenciesNode, POM_ARTEFACT_GROUP, "anko-support-v4", "%ARTEFACT_VERSION")
+                        addDependency(dependenciesNode, POM_ARTEFACT_GROUP, "anko-support-v4", "%ARTIFACT_VERSION")
                     }
                 }
             }
@@ -146,12 +146,12 @@ bintray {
 
     pkg {
         repo = 'anko-dev'
-        name = 'anko-%ARTIFACT_NAME'
+        name = 'anko-dev'
         licenses = ['Apache-2.0']
         vcsUrl = scmUrl
 
         version {
-            name = '0.9'
+            name = '%ARTIFACT_VERSION'
             released = new Date()
         }
     }

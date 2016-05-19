@@ -36,7 +36,7 @@ fun generateMavenArtifact(outputDirectory: File, artifactName: String, sdkVersio
     // Copy gradle build files
     fun String.substVersions(): String {
         return replace("%SDK_VERSION", sdkVersion)
-                .replace("%ARTEFACT_VERSION", File("version.txt").readText())
+                .replace("%ARTIFACT_VERSION", File("version.txt").readText())
                 .replace("%ARTIFACT_NAME", artifactName)
     }
     copy("gradle.properties") { it.substVersions() }
