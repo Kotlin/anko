@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Build Artifacts" type="AntRunConfiguration" factoryName="Ant Target">
+    <antsettings antfile="file://$PROJECT_DIR$/build_artifacts.xml" target="build_artifacts" />
+    <method>
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Generate" run_configuration_type="Application" />
+    </method>
+  </configuration>
+</component>
