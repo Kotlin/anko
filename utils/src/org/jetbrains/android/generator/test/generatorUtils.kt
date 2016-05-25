@@ -60,7 +60,7 @@ fun Buffer.functionalDslTest(name: String, mainAnkoFile: AnkoFile, configInit: T
     line("}").nl()
 }
 
-fun Context.dslCompileTests(files: List<String>, category: String) {
+fun Context.dslCompileTests(files: List<String>, category: String, versionFilter: (String) -> Boolean = { true }) {
     val dir = File("./anko/library/generator/test/" + basePackage.replace('.', '/'), "/${category.toLowerCase()}")
 
     val contents = buffer {
@@ -69,6 +69,7 @@ fun Context.dslCompileTests(files: List<String>, category: String) {
         line("class Generated${category}Test : Abstract${category}Test() {")
         for (file in files) {
             for (version in versions) {
+                if (!versionFilter(version)) continue
                 val funcSuffix = version.toCamelCase('-').capitalize()
                 line("@Test").line("fun test${file}For$funcSuffix() {")
                 line("run${category}Test(\"$file.kt\", \"$version\")")

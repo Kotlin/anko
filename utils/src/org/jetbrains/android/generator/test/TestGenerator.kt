@@ -55,13 +55,18 @@ fun Context.generate() {
             file(AnkoFile.LISTENERS)
             tune(ConfigurationTune.SIMPLE_LISTENERS)
         }
-
+        
         functionalDslTest("SqlParserHelpersTest", AnkoFile.SQL_PARSER_HELPERS) {
             file(AnkoFile.SQL_PARSER_HELPERS)
         }
     }
 
-    dslCompileTests(ktFiles("robolectric"), "Robolectric")
+    val latestVersion = File("workdir/original")
+            .listFiles { f, name -> name.startsWith("sdk") }
+            .sortedByDescending { it.name.replace("sdk", "").toInt() }
+            .first().name
+    
+    dslCompileTests(ktFiles("robolectric"), "Robolectric") { it.equals(latestVersion) }
 
     dslCompileTests(ktFiles("compile"), "Compile")
 }
