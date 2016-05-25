@@ -41,10 +41,18 @@ interface AnkoContext<T> : ViewManager {
     }
 
     companion object {
-        fun create(ctx: Context): AnkoContext<Context> = AnkoContextImpl(ctx, ctx, false)
-        fun createReusable(ctx: Context): AnkoContext<Context> = ReusableAnkoContext(ctx, ctx, false)
-        fun <T> create(ctx: Context, owner: T): AnkoContext<T> = AnkoContextImpl(ctx, owner, false)
-        fun <T> createReusable(ctx: Context, owner: T): AnkoContext<T> = ReusableAnkoContext(ctx, owner, false)
+        fun create(ctx: Context, setContentView: Boolean = false): AnkoContext<Context>
+                = AnkoContextImpl(ctx, ctx, setContentView)
+
+        fun createReusable(ctx: Context, setContentView: Boolean = false): AnkoContext<Context>
+                = ReusableAnkoContext(ctx, ctx, setContentView)
+
+        fun <T> create(ctx: Context, owner: T, setContentView: Boolean = false): AnkoContext<T>
+                = AnkoContextImpl(ctx, owner, setContentView)
+
+        fun <T> createReusable(ctx: Context, owner: T, setContentView: Boolean = false): AnkoContext<T>
+                = ReusableAnkoContext(ctx, owner, setContentView)
+
         fun <T: ViewGroup> createDelegate(owner: T): AnkoContext<T> = DelegatingAnkoContext(owner)
     }
 }
