@@ -125,6 +125,16 @@ inline fun LayoutParams.sameRight(id: Int): Unit = addRule(ALIGN_RIGHT, id)
 inline fun LayoutParams.sameBottom(id: Int): Unit = addRule(ALIGN_BOTTOM, id)
 
 /**
+ * Align the current View's start edge with another child's start edge.
+ */
+inline fun LayoutParams.alignStart(id: Int): Unit = addRule(18, id) // ALIGN_END
+
+/**
+ * Align the current View's end edge with another child's end edge.
+ */
+inline fun LayoutParams.alignEnd(id: Int): Unit = addRule(19, id) // ALIGN_END
+
+/**
  * Align the current View's top edge with its parent's top edge.
  */
 inline fun LayoutParams.alignParentTop(): Unit = addRule(ALIGN_PARENT_TOP)
