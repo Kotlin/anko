@@ -174,3 +174,16 @@ inline fun doFromSdk(version: Int, f: () -> Unit) {
 inline fun doIfSdk(version: Int, f: () -> Unit) {
     if (Build.VERSION.SDK_INT == version) f()
 }
+
+data class AttemptResult<T>(val value: T?, val error: Throwable?)
+
+fun <T> attempt(f: () -> T): AttemptResult<T> {
+    var value: T? = null
+    var error: Throwable? = null
+    try {
+        value = f()
+    } catch(t: Throwable) {
+        error = t
+    }
+    return AttemptResult(value, error)
+}
