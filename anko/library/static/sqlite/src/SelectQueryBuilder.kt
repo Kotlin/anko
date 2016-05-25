@@ -21,7 +21,7 @@ import android.database.sqlite.SQLiteDatabase
 import org.jetbrains.anko.AnkoException
 import org.jetbrains.anko.internals.AnkoInternals
 
-class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
+abstract class SelectQueryBuilder(val tableName: String) {
     private val columns = arrayListOf<String>()
     private val groupBy = arrayListOf<String>()
     private val orderBy = arrayListOf<String>()
@@ -71,10 +71,22 @@ class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
     private fun execInternal(): Cursor {
         val finalSelection = if (selectionApplied) selection else null
         val finalSelectionArgs = if (selectionApplied && useNativeSelection) nativeSelectionArgs else null
-        return db.query(distinct, tableName, columns.toTypedArray(),
+        return execQuery(distinct, tableName, columns.toTypedArray(),
                 finalSelection, finalSelectionArgs,
                 groupBy.joinToString(", "), having, orderBy.joinToString(", "), limit)
     }
+
+    protected abstract fun execQuery(
+            distinct: Boolean,
+            tableName: String,
+            columns: Array<String>,
+            selection: String?,
+            selectionArgs: Array<out String>?,
+            groupBy: String,
+            having: String?,
+            orderBy: String,
+            limit: String?
+    ): Cursor
 
     fun distinct(): SelectQueryBuilder {
         this.distinct = true
@@ -173,4 +185,25 @@ class SelectQueryBuilder(val db: SQLiteDatabase, val tableName: String) {
     fun whereSupport(select: String, vararg args: String): SelectQueryBuilder {
         return whereSimple(select, *args)
     }
+}
+
+class AndroidSdkDatabaseSelectQueryBuilder(
+        private val db: SQLiteDatabase,
+        tableName: String
+) : SelectQueryBuilder(tableName) {
+
+    override fun execQuery(
+            distinct: Boolean,
+            tableName: String,
+            columns: Array<String>,
+            selection: String?,
+            selectionArgs: Array<out String>?,
+            groupBy: String,
+            having: String?,
+            orderBy: String,
+            limit: String?
+    ): Cursor {
+        return db.query(distinct, tableName, columns, selection, selectionArgs, groupBy, having, orderBy, limit)
+    }
+
 }

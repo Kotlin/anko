@@ -16,11 +16,11 @@
 
 package org.jetbrains.anko.db
 
+import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import org.jetbrains.anko.AnkoException
 
-class UpdateQueryBuilder(
-        val db: SQLiteDatabase,
+abstract class UpdateQueryBuilder(
         val tableName: String,
         val values: Array<out Pair<String, Any?>>
 ) {
@@ -74,6 +74,29 @@ class UpdateQueryBuilder(
     fun exec(): Int {
         val finalSelection = if (selectionApplied) selection else null
         val finalSelectionArgs = if (selectionApplied && useNativeSelection) nativeSelectionArgs else null
-        return db.update(tableName, values.toContentValues(), finalSelection, finalSelectionArgs)
+        return execUpdate(tableName, values.toContentValues(), finalSelection, finalSelectionArgs)
     }
+
+    abstract fun execUpdate(
+            table: String,
+            values: ContentValues,
+            whereClause: String?,
+            whereArgs: Array<out String>?
+    ): Int
+
+}
+
+class AndroidSdkDatabaseUpdateQueryBuilder(
+        private val db: SQLiteDatabase,
+        table: String,
+        values: Array<out Pair<String, Any?>>
+) : UpdateQueryBuilder(table, values) {
+
+    override fun execUpdate(
+            table: String,
+            values: ContentValues,
+            whereClause: String?,
+            whereArgs: Array<out String>?
+    ) = db.update(table, values, whereClause, whereArgs)
+
 }
