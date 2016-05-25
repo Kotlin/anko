@@ -19,7 +19,12 @@ package org.jetbrains.anko
 import android.view.View
 import org.jetbrains.anko.internals.AnkoInternals
 
-fun <T : View> T.applyRecursively(block: (View) -> Unit): T {
-    AnkoInternals.applyRecursively(this, block)
+/**
+ * Apply [f] to this [View] and to all of its children recursively.
+ * 
+ * @return the receiver.
+ */
+fun <T : View> T.applyRecursively(f: (View) -> Unit): T {
+    AnkoInternals.applyRecursively(this, f)
     return this
 }
