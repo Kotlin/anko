@@ -25,16 +25,27 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
+/**
+ * Execute [f] on the application UI thread.
+ */
 fun Context.runOnUiThread(f: Context.() -> Unit) {
     if (ContextHelper.mainThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
 }
 
+/**
+ * Execute [f] on the application UI thread.
+ */
 inline fun Fragment.runOnUiThread(crossinline f: () -> Unit) {
     activity?.runOnUiThread { f() }
 }
 
 class AnkoAsyncContext<T>(val weakRef: WeakReference<T>)
 
+/**
+ * Execute [f] on the application UI thread.
+ * If the [async] receiver still exists (was not collected by GC), 
+ *  [f] gets it as a parameter ([f] gets null if the receiver does not exist anymore).
+ */
 fun <T> AnkoAsyncContext<T>.onComplete(f: (T?) -> Unit) {
     val ref = weakRef.get()
     if (ContextHelper.mainThread == Thread.currentThread()) {
@@ -44,6 +55,11 @@ fun <T> AnkoAsyncContext<T>.onComplete(f: (T?) -> Unit) {
     }
 }
 
+/**
+ * Execute [f] on the application UI thread.
+ * [async] receiver will be passed to [f].
+ * If the receiver does not exist anymore (it was collected by GC), [f] will not be executed.
+ */
 fun <T> AnkoAsyncContext<T>.uiThread(f: (T) -> Unit): Boolean {
     val ref = weakRef.get() ?: return false
     if (ContextHelper.mainThread == Thread.currentThread()) {
@@ -54,6 +70,11 @@ fun <T> AnkoAsyncContext<T>.uiThread(f: (T) -> Unit): Boolean {
     return true
 }
 
+/**
+ * Execute [f] on the application UI thread if the underlying [Activity] still exists and is not finished.
+ * The receiver [Activity] will be passed to [f]. 
+ *  If it is not exist anymore or if it was finished, [f] will not be called.
+ */
 fun <T: Activity> AnkoAsyncContext<T>.activityUiThread(f: (T) -> Unit): Boolean {
     val activity = weakRef.get() ?: return false
     if (activity.isFinishing) return false
@@ -100,6 +121,13 @@ fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T)
     return true
 }
 
+/**
+ * Execute [task] asynchronously.
+ * 
+ * @param exceptionHandler optional exception handler. 
+ *  If defined, any exceptions thrown inside [task] will be passed to it. If not, exceptions will be ignored.
+ * @param task the code to execute asynchronously.
+ */
 fun <T> T.doAsync(
         exceptionHandler: ((Throwable) -> Unit)? = null,
         task: AnkoAsyncContext<T>.() -> Unit

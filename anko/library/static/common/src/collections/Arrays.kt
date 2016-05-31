@@ -21,6 +21,11 @@ import android.util.SparseBooleanArray
 import android.util.SparseIntArray
 import java.util.*
 
+/**
+ * Iterate the receiver [Array] using an index.
+ *
+ * @f an action to invoke on each array element.
+ */
 inline fun <T> Array<T>.forEachByIndex(f: (T) -> Unit) {
     val lastIndex = size - 1
     for (i in 0..lastIndex) {
@@ -28,6 +33,11 @@ inline fun <T> Array<T>.forEachByIndex(f: (T) -> Unit) {
     }
 }
 
+/**
+ * Iterate the receiver [Array] using an index.
+ *
+ * @f an action to invoke on each array element (index, element).
+ */
 inline fun <T> Array<T>.forEachWithIndex(f: (Int, T) -> Unit) {
     val lastIndex = size - 1
     for (i in 0..lastIndex) {
@@ -35,6 +45,11 @@ inline fun <T> Array<T>.forEachWithIndex(f: (Int, T) -> Unit) {
     }
 }
 
+/**
+ * Iterate the receiver [Array] backwards using an index.
+ *
+ * @f an action to invoke on each array element.
+ */
 inline fun <T> Array<T>.forEachReversedByIndex(f: (T) -> Unit) {
     var i = size - 1
     while (i >= 0) {
@@ -43,6 +58,11 @@ inline fun <T> Array<T>.forEachReversedByIndex(f: (T) -> Unit) {
     }
 }
 
+/**
+ * Iterate the receiver [Array] backwards using an index.
+ *
+ * @f an action to invoke on each array element (index, element).
+ */
 inline fun <T> Array<T>.forEachReversedWithIndex(f: (Int, T) -> Unit) {
     var i = size - 1
     while (i >= 0) {
@@ -51,10 +71,19 @@ inline fun <T> Array<T>.forEachReversedWithIndex(f: (Int, T) -> Unit) {
     }
 }
 
+/**
+ * Create a [Sequence] instance that wraps the original [SparseArray] returning its elements when being iterated.
+ */
 fun <T> SparseArray<T>.asSequence(): Sequence<T> = SparseArraySequence(this)
 
+/**
+ * Create a [Sequence] instance that wraps the original [SparseBooleanArray] returning its elements when being iterated.
+ */
 fun <T> SparseBooleanArray.asSequence(): Sequence<Boolean> = SparseBooleanArraySequence(this)
 
+/**
+ * Create a [Sequence] instance that wraps the original [SparseIntArray] returning its elements when being iterated.
+ */
 fun <T> SparseIntArray.asSequence(): Sequence<Int> = SparseIntArraySequence(this)
 
 private class SparseArraySequence<T>(private val a: SparseArray<T>) : Sequence<T> {

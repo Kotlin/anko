@@ -17,7 +17,7 @@
 package org.jetbrains.anko.collections
 
 /**
- * Iterate the [List] using an index.
+ * Iterate the receiver [List] using an index.
  *
  * @f an action to invoke on each list element.
  */
@@ -29,7 +29,7 @@ inline fun <T> List<T>.forEachByIndex(f: (T) -> Unit) {
 }
 
 /**
- * Iterate the [List] using an index.
+ * Iterate the receiver [List] using an index.
  *
  * @f an action to invoke on each list element (index, element).
  */
@@ -41,7 +41,7 @@ inline fun <T> List<T>.forEachWithIndex(f: (Int, T) -> Unit) {
 }
 
 /**
- * Iterate the [List] backwards using an index.
+ * Iterate the receiver [List] backwards using an index.
  *
  * @f an action to invoke on each list element.
  */
@@ -54,7 +54,7 @@ inline fun <T> List<T>.forEachReversedByIndex(f: (T) -> Unit) {
 }
 
 /**
- * Iterate the [List] backwards using an index.
+ * Iterate the receiver [List] backwards using an index.
  *
  * @f an action to invoke on each list element (index, element).
  */
