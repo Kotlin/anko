@@ -9,6 +9,11 @@ class GeneratedRobolectricTest : AbstractRobolectricTest() {
     }
 
     @Test
+    fun testBuildSpannedTestForSdk23() {
+        runRobolectricTest("BuildSpannedTest.kt", "sdk23")
+    }
+
+    @Test
     fun testCollectionsTestForSdk23() {
         runRobolectricTest("CollectionsTest.kt", "sdk23")
     }
