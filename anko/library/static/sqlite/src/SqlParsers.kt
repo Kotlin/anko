@@ -173,7 +173,7 @@ private fun Cursor.getColumnValue(index: Int): Any? {
         Cursor.FIELD_TYPE_FLOAT -> getDouble(index)
         Cursor.FIELD_TYPE_STRING -> getString(index)
         Cursor.FIELD_TYPE_BLOB -> getBlob(index)
-        else -> Unit
+        else -> null
     }
 }
 
