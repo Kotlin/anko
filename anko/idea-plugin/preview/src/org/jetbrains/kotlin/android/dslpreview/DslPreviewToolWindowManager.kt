@@ -362,6 +362,7 @@ class DslPreviewToolWindowManager(
     }
 
     private fun resolveClassDescription(element: PsiElement, cacheService: KotlinCacheService): PreviewClassDescription? {
+        if (DumbService.isDumb(element.project)) return null
         val ktClass = getKtClass(element) ?: return null
         val androidFacet = ProjectRootManager.getInstance(myProject).fileIndex
                 .getModuleForFile(element.containingFile.virtualFile)?.resolveAndroidFacet() ?: return null
