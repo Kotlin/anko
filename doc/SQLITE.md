@@ -18,6 +18,15 @@ Anko provides lots of extension functions to simplify communication with SQLite 
 * [Updating values](#updating-values)
 * [Transactions](#transactions)
 
+
+## Gradle installation
+
+Add the following to your `build.gradle`:
+
+```groovy
+compile 'org.jetbrains.anko:anko-sqlite:0.8.3'
+```
+
 ## Db package
 
 All database-related tools are in the `org.jetbrains.anko.db` package. You could probably want to import all children at once:
