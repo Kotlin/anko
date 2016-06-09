@@ -125,8 +125,8 @@ longToast("Wow, such a duration")
 
 ```kotlin
 alert("Hi, I'm Roy", "Have you tried turning it off and on again?") {
-    positiveButton("Yes") { toast("Oh…") }
-    negativeButton("No") {}
+    yesButton { toast("Oh…") }
+    noButton {}
 }.show()
 ```
 
@@ -157,7 +157,7 @@ selector("Where are you from?", countries) { i ->
 There's a better way:
 
 ```kotlin
-async() {
+doAsync {
     // Long background task
     uiThread {
         result.text = "Done"
@@ -169,7 +169,7 @@ You can even execute tasks using your own `ExecutorService`:
 
 ```kotlin
 val executor = Executors.newScheduledThreadPool(4)
-async(executor) {
+doAsync(executor) {
     // Some task
 }
 ```
@@ -180,7 +180,7 @@ async(executor) {
 fun apiCall(): Result {
     // Something
 }
-val future: Future<Result> = asyncResult(::apiCall)
+val future: Future<Result> = doAsyncResult(::apiCall)
 ```
 
 <table>
@@ -236,8 +236,8 @@ Let's say, `CustomView` is your custom `View` class name, and `customView` is wh
 If you only plan to use your custom `View` in the DSL surrounded by some other `View`:
 
 ```kotlin
-inline fun ViewManager.customView() = customView {}
-inline fun ViewManager.customView(init: CustomView.() -> Unit) = ankoView({ CustomView(it) }, init)
+inline fun ViewManager.customView(theme: Int = 0) = customView(theme) {}
+inline fun ViewManager.customView(theme: Int = 0, init: CustomView.() -> Unit) = ankoView({ CustomView(it) }, theme, init)
 ```
 
 So now you can write this:
@@ -259,6 +259,6 @@ UI {
 But if you want to use your view as a top-level widget without a UI wrapper inside `Activity`, add this as well:
 
 ```kotlin
-inline fun Activity.customView() = customView {}
-inline fun Activity.customView(init: CustomView.() -> Unit) = ankoView({ CustomView(it) }, init)
+inline fun Activity.customView(theme: Int = 0) = customView(theme) {}
+inline fun Activity.customView(theme: Int = 0, init: CustomView.() -> Unit) = ankoView({ CustomView(it) }, theme, init)
 ```
