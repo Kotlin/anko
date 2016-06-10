@@ -120,8 +120,8 @@ Short answer: **yes**.
 
 For example, you might want to use a `MapView` in the DSL. Then just write this in any Kotlin file from where you could import it:
 ```kotlin
-public inline fun ViewManager.mapView() = mapView {}
-public inline fun ViewManager.mapView(init: MapView.() -> Unit) = ankoView({ MapView(it) }, init)
+public inline fun ViewManager.mapView(theme: Int = 0) = mapView(theme) {}
+public inline fun ViewManager.mapView(theme: Int = 0, init: MapView.() -> Unit) = ankoView({ MapView(it) }, theme, init)
 ```
 
 ``{ MapView(it) }`` is a factory function for your custom `View`. It accepts a `Context` instance.
