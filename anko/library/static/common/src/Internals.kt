@@ -37,7 +37,8 @@ import java.io.Serializable
 import java.util.*
 
 object AnkoInternals {
-
+    private class AnkoContextThemeWrapper(base: Context?, val theme: Int) : ContextThemeWrapper(base, theme)
+    
     fun <T : View> addView(manager: ViewManager, view: T) {
         return when (manager) {
             is ViewGroup -> manager.addView(view)
@@ -55,10 +56,10 @@ object AnkoInternals {
     }
 
     fun wrapContextIfNeeded(ctx: Context, theme: Int): Context {
-        return if (theme != 0 && (ctx !is ContextThemeWrapper || ctx.themeResId != theme)) {
+        return if (theme != 0 && (ctx !is AnkoContextThemeWrapper || ctx.theme != theme)) {
             // If the context isn't a ContextThemeWrapper, or it is but does not have
             // the same theme as we need, wrap it in a new wrapper
-            ContextThemeWrapper(ctx, theme)
+            AnkoContextThemeWrapper(ctx, theme)
         } else {
             ctx
         }
