@@ -18,7 +18,6 @@ package org.jetbrains.android.generator.test
 
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationTune
-import java.io.File
 
 fun Context.generate() {
 
@@ -60,16 +59,4 @@ fun Context.generate() {
             file(AnkoFile.SQL_PARSER_HELPERS)
         }
     }
-
-    val latestVersion = File("workdir/original")
-            .listFiles { f, name -> name.startsWith("sdk") }
-            .sortedByDescending { it.name.replace("sdk", "").toInt() }
-            .first().name
-    
-    dslCompileTests(ktFiles("robolectric"), "Robolectric") { it.equals(latestVersion) }
-
-    dslCompileTests(ktFiles("compile"), "Compile")
 }
-
-private fun ktFiles(category: String) = File("anko/library/testData/$category")
-        .listFiles { file -> file.name.endsWith(".kt") }?.map { it.name.replace(".kt", "") } ?: listOf()

@@ -11,7 +11,7 @@ import org.robolectric.*
 import org.junit.Test
 import org.junit.Assert.*
 
-public open class TestActivity() : Activity() {
+public open class SimpleTestActivity() : Activity() {
     public var ctxProperty: Context? = null
     public var actProperty: Activity? = null
 
@@ -33,12 +33,13 @@ public open class TestActivity() : Activity() {
     }
 }
 
-@RunWith(RobolectricTestRunner::class)
-public class RobolectricTest() {
+@RunWith(RobolectricGradleTestRunner::class)
+@Config(constants = BuildConfig::class)
+public class SimpleTest() {
 
     @Test
     public fun test() {
-        val activity = Robolectric.buildActivity(TestActivity::class.java).create().get()
+        val activity = Robolectric.buildActivity(SimpleTestActivity::class.java).create().get()
         val textView = activity.findViewById(1) as TextView
         val button = activity.findViewById(2) as Button
 

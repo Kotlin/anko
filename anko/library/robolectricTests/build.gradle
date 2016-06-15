@@ -1,0 +1,38 @@
+buildscript {
+    ext.kotlin_version = '1.0.2'
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "23.0.1"
+    defaultConfig {
+        applicationId 'org.jetbrains.anko.robolectric.test'
+        minSdkVersion 15
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile fileTree(dir: '../../../workdir/gen/common/build/libs', include: ['common.jar'])
+    compile fileTree(dir: '../../../workdir/gen/sdk15/build/libs', include: ['sdk15.jar'])
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    testCompile "org.robolectric:robolectric:3.0"
+}

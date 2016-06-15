@@ -11,8 +11,9 @@ import android.graphics.*
 import android.text.*
 import android.text.style.*
 
-@RunWith(RobolectricTestRunner::class)
-public class RobolectricTest() {
+@RunWith(RobolectricGradleTestRunner::class)
+@Config(constants = BuildConfig::class)
+public class BuildSpannedTest() {
     @Test
     public fun test() {
         val spannable = buildSpanned {
@@ -28,7 +29,7 @@ public class RobolectricTest() {
             append("456", Underline, Strikethrough)
             append("789", foregroundColor(Color.RED), backgroundColor(Color.BLUE))
         }
-        assertEquals("123", spannable2.toString())
+        assertEquals("123456789", spannable2.toString())
         val styleSpans: Array<StyleSpan> = spannable2.getSpans(0, 3, StyleSpan::class.java)
         assertEquals(2, styleSpans.size)
         assertTrue(styleSpans.any { it.style == Typeface.BOLD })
@@ -43,8 +44,8 @@ public class RobolectricTest() {
         val foregroundColorSpan: Array<ForegroundColorSpan> = spannable2.getSpans(6, 9, ForegroundColorSpan::class.java)
         assertEquals(1, backgroundColorSpan.size)
         assertEquals(1, foregroundColorSpan.size)
-        assertEquals(Color.RED, backgroundColorSpan[0].backgroundColor)
-        assertEquals(Color.BLUE, foregroundColorSpan[0].foregroundColor)
+        assertEquals(Color.RED, foregroundColorSpan[0].foregroundColor)
+        assertEquals(Color.BLUE, backgroundColorSpan[0].backgroundColor)
         
         println("[COMPLETE]")
     }

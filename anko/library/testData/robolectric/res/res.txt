@@ -1,1 +1,0 @@
-Resource directory for Robolectric tests.

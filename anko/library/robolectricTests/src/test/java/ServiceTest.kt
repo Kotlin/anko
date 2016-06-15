@@ -10,19 +10,20 @@ import org.robolectric.*
 import org.junit.Test
 import org.junit.Assert.*
 
-public open class TestActivity() : Activity() {
+public open class ServiceTestActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         linearLayout {}
     }
 }
 
-@RunWith(RobolectricTestRunner::class)
-public class RobolectricTest() {
+@RunWith(RobolectricGradleTestRunner::class)
+@Config(constants = BuildConfig::class)
+public class ServiceTest() {
 
     @Test
     public fun test() {
-        val activity = Robolectric.buildActivity(TestActivity::class.java).create().get()
+        val activity = Robolectric.buildActivity(ServiceTestActivity::class.java).create().get()
 
         val vibrator = activity.vibrator
         vibrator.vibrate(100)

@@ -5,7 +5,7 @@ import android.os.Bundle
 import org.jetbrains.anko.*
 import android.widget.LinearLayout
 
-public open class MyActivity() : Activity() {
+public open class AndroidLayoutsTestActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {

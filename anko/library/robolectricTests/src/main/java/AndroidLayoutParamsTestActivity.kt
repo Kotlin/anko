@@ -11,7 +11,7 @@ import android.widget.GridLayout
 import android.view.Gravity
 
 
-public open class MyActivity() : Activity() {
+public open class AndroidLayoutParamsTestActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {

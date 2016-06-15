@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import android.view.View
 import android.view.View.OnClickListener
 
-public open class MyActivity() : Activity() {
+public open class AndroidListenerHelpersTestActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {

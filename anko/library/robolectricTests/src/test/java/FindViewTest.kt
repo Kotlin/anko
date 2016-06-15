@@ -11,7 +11,7 @@ import org.robolectric.*
 import org.junit.Test
 import org.junit.Assert.*
 
-public open class TestActivity() : Activity() {
+public open class FindViewTestActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
 
@@ -34,12 +34,13 @@ public open class TestActivity() : Activity() {
     }
 }
 
-@RunWith(RobolectricTestRunner::class)
-public class RobolectricTest() {
+@RunWith(RobolectricGradleTestRunner::class)
+@Config(constants = BuildConfig::class)
+public class FindViewTest() {
 
     @Test
     public fun test() {
-        val activity = Robolectric.buildActivity(TestActivity::class.java).create().get()
+        val activity = Robolectric.buildActivity(FindViewTestActivity::class.java).create().get()
 
         val verticalLayout = activity.findViewById(1) as? LinearLayout
         val relativeLayout = activity.findViewById(2) as? RelativeLayout

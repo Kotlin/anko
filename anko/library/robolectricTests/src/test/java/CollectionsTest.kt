@@ -9,8 +9,9 @@ import org.robolectric.*
 import org.junit.Test
 import org.junit.Assert.*
 
-@RunWith(RobolectricTestRunner::class)
-public class RobolectricTest() {
+@RunWith(RobolectricGradleTestRunner::class)
+@Config(constants = BuildConfig::class)
+public class CollectionsTest() {
     @Test
     public fun test() {
         testArray(emptyArray<Int>())
@@ -30,7 +31,7 @@ public class RobolectricTest() {
         val kotlinPair = androidPair.toKotlinPair()
         assertEquals(pair.first, androidPair.first)
         assertEquals(pair.second, androidPair.second)
-        assertEquals(pair.second, kotlinPair)
+        assertEquals(pair, kotlinPair)
 
         println("[COMPLETE]")
     }
@@ -49,7 +50,7 @@ public class RobolectricTest() {
         }
 
         arr.forEachWithIndex { index, element ->
-            elements += element
+            elements2 += element
             indices += index
         }
 
@@ -70,7 +71,7 @@ public class RobolectricTest() {
         assertEquals(elementsReversed, elements2Reversed)
 
         assertEquals(arr.size, indices.size)
-        assertEquals(indicesReversed.reverse(), indices)
+        assertEquals(indicesReversed.reversed(), indices)
         assertTrue((0..arr.size - 1).all { it in indices })
 
         return elements
@@ -90,7 +91,7 @@ public class RobolectricTest() {
         }
 
         list.forEachWithIndex { index, element ->
-            elements += element
+            elements2 += element
             indices += index
         }
 
@@ -111,7 +112,7 @@ public class RobolectricTest() {
         assertEquals(elementsReversed, elements2Reversed)
 
         assertEquals(list.size, indices.size)
-        assertEquals(indicesReversed.reverse(), indices)
+        assertEquals(indicesReversed.reversed(), indices)
         assertTrue((0..list.size - 1).all { it in indices })
 
         return elements

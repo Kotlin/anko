@@ -12,8 +12,9 @@ import org.robolectric.internal.ShadowExtractor
 import org.robolectric.*
 import org.junit.Test
 import org.junit.Assert.*
+import android.view.View
 
-public open class TestActivity() : Activity() {
+public open class DialogsTestActivity() : Activity() {
     public var dialog: AlertDialog? = null
 
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
@@ -41,12 +42,13 @@ public open class TestActivity() : Activity() {
     }
 }
 
-@RunWith(RobolectricTestRunner::class)
-public class RobolectricTest() {
+@RunWith(RobolectricGradleTestRunner::class)
+@Config(constants = BuildConfig::class)
+public class DialogsTest() {
 
     @Test
     public fun test() {
-        val activity = Robolectric.buildActivity(TestActivity::class.java).create().get()
+        val activity = Robolectric.buildActivity(DialogsTestActivity::class.java).create().get()
         val button1 = activity.findViewById(1) as Button
         val button2 = activity.findViewById(2) as Button
         val button3 = activity.findViewById(3) as Button
@@ -69,9 +71,9 @@ public class RobolectricTest() {
         assertEquals("Message", alertShadow.getMessage().toString())
         assertEquals("Title", alertShadow.getTitle().toString())
         assertEquals(true, alertShadow.isCancelable())
-        assertNotNull(alert.getButton(DialogInterface.BUTTON_POSITIVE))
-        assertNotNull(alert.getButton(DialogInterface.BUTTON_NEGATIVE))
-        assertNull(alert.getButton(DialogInterface.BUTTON_NEUTRAL))
+        assertEquals(View.VISIBLE, alert.getButton(DialogInterface.BUTTON_POSITIVE).visibility)
+        assertEquals(View.VISIBLE, alert.getButton(DialogInterface.BUTTON_NEGATIVE).visibility)
+        assertEquals(View.GONE, alert.getButton(DialogInterface.BUTTON_NEUTRAL).visibility)
         alert.dismiss()
 
         println("[COMPLETE]")

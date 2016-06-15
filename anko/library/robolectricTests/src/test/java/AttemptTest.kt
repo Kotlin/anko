@@ -8,8 +8,9 @@ import org.robolectric.*
 import org.junit.Test
 import org.junit.Assert.*
 
-@RunWith(RobolectricTestRunner::class)
-public class RobolectricTest() {
+@RunWith(RobolectricGradleTestRunner::class)
+@Config(constants = BuildConfig::class)
+public class AttemptTest() {
     @Test
     public fun test() {
         val (value, error) = attempt { "My String" }

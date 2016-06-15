@@ -8,7 +8,7 @@ configurations {
     kotlindom
 }
 
-String ROBOLECTRIC_VERSION = "3.0-rc3"
+String ROBOLECTRIC_VERSION = "3.1"
 
 dependencies {
     robolectric "org.robolectric:robolectric:${ROBOLECTRIC_VERSION}"
@@ -18,7 +18,8 @@ dependencies {
     robolectric "org.robolectric:shadows-core:${ROBOLECTRIC_VERSION}:sources"
     robolectric "org.robolectric:shadows-support-v4:${ROBOLECTRIC_VERSION}"
 
-    androidall 'org.robolectric:android-all:5.0.0_r2-robolectric-1'
+    robolectric 'org.robolectric:android-all:5.0.0_r2-robolectric-1'
+    robolectric 'org.robolectric:android-all:5.0.0_r2-robolectric-1'
 
     gson 'com.google.code.gson:gson:2.3.1'
     jmustache 'com.samskivert:jmustache:1.10'
@@ -51,4 +52,8 @@ task(collectDependencies) << {
             }
         }
     }
+
+    def src = new File("dependencies/robolectric/shadows-core-${ROBOLECTRIC_VERSION}.jar")
+    def dst = new File("dependencies/robolectric/shadows-core-${ROBOLECTRIC_VERSION}-21.jar")
+    dst << src.bytes
 }
