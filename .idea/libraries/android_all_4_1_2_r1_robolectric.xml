@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="android-all-4.1.2_r1-robolectric">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/dependencies/androidall/android-all-5.0.0_r2-robolectric-1.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
