@@ -178,3 +178,8 @@ inline fun LayoutParams.alignParentStart(): Unit = addRule(20) // ALIGN_PARENT_S
  * Align the current View's end edge with its parent's end edge.
  */
 inline fun LayoutParams.alignParentEnd(): Unit = addRule(21) // ALIGN_PARENT_END
+
+/**
+ * Positions the baseline of this view on the baseline of the given anchor [view].
+ */
+inline fun LayoutParams.baselineOf(view: View): Unit = addRule(ALIGN_BASELINE, view.id)
