@@ -143,7 +143,7 @@ internal fun Array<out Pair<String, Any?>>.toContentValues(): ContentValues {
 
 abstract class ManagedSQLiteOpenHelper(
     ctx: Context,
-    name: String,
+    name: String?,
     factory: SQLiteDatabase.CursorFactory? = null,
     version: Int = 1
 ): SQLiteOpenHelper(ctx, name, factory, version) {
