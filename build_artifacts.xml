@@ -32,8 +32,6 @@
         <attribute name="task" default="publish" />
 
         <sequential>
-            <loadproperties srcFile="local.properties"/>
-
             <mkdir dir="workdir/zip" />
             <mkdir dir="workdir/repo" />
 
@@ -75,8 +73,6 @@
             <chmod_version version.dir="@{version.dir}"/>
             <exec executable="./${gradlew.file}" dir="@{version.dir}" failonerror="true">
                 <env key="ANDROID_HOME" value="${android.sdk}"/>
-                <arg value="-Dbintray.user=${bintray.user}"/>
-                <arg value="-Dbintray.key=${bintray.key}"/>
                 <arg value="@{task}"/>
             </exec>
 
