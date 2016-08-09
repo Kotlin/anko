@@ -107,14 +107,21 @@ class AnkoViewLoader : ViewLoader {
                         "Lorg/jetbrains/anko/AnkoContext" + '$' + "Companion;")
                 visitVarInsn(ALOAD, 0)
                 visitMethodInsn(INVOKEVIRTUAL, viewInternalName, "getContext", "()Landroid/content/Context;")
-                visitMethodInsn(INVOKEVIRTUAL, "org/jetbrains/anko/AnkoContext" + '$' + "Companion", "create",
-                        "(Landroid/content/Context;)Lorg/jetbrains/anko/AnkoContext;")
+
+                if (isAnko09()) {
+                    visitInsn(ICONST_0)
+                    visitMethodInsn(INVOKEVIRTUAL, "org/jetbrains/anko/AnkoContext" + '$' + "Companion", "create",
+                            "(Landroid/content/Context;Z)Lorg/jetbrains/anko/AnkoContext;")
+                } else {
+                    visitMethodInsn(INVOKEVIRTUAL, "org/jetbrains/anko/AnkoContext" + '$' + "Companion", "create",
+                            "(Landroid/content/Context;)Lorg/jetbrains/anko/AnkoContext;")
+                }
                 visitMethodInsn(INVOKEVIRTUAL, uiInternalName, "createView",
                         "(Lorg/jetbrains/anko/AnkoContext;)Landroid/view/View;")
                 visitMethodInsn(INVOKEVIRTUAL, viewInternalName, "addView", "(Landroid/view/View;)V")
 
                 visitInsn(RETURN)
-                visitMaxs(4 /*max stack*/, 1 /*max locals*/)
+                visitMaxs(5 /*max stack*/, 1 /*max locals*/)
                 visitEnd()
             }
 
@@ -123,6 +130,18 @@ class AnkoViewLoader : ViewLoader {
         }
 
         return loadClass(viewFqName, bytes)
+    }
+
+    private fun isAnko09(): Boolean {
+        return try {
+            val ankoContextCompanion = Class.forName(
+                    "org.jetbrains.anko.AnkoContext\$Companion", false, getDelegateClassLoader())
+            ankoContextCompanion.declaredMethods.any {
+                it.name == "create" && it.parameterCount == 2 && it.parameterTypes[1] == java.lang.Boolean.TYPE
+            }
+        } catch (e: Exception) {
+            false
+        }
     }
 
     private fun getDelegateClassLoader(): ClassLoader {
