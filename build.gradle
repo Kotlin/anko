@@ -21,7 +21,7 @@ dependencies {
     robolectric 'org.robolectric:android-all:5.0.0_r2-robolectric-1'
     robolectric 'org.robolectric:android-all:5.0.0_r2-robolectric-1'
 
-    gson 'com.google.code.gson:gson:2.3.1'
+    gson 'com.google.code.gson:gson:2.4'
     jmustache 'com.samskivert:jmustache:1.10'
     jeromq 'org.zeromq:jeromq:0.3.4'
     javaparser 'com.github.javaparser:javaparser-core:2.1.0'
