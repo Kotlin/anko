@@ -97,7 +97,7 @@ private class SparseArraySequence<T>(private val a: SparseArray<T>) : Sequence<T
 
         override fun next(): T {
             if (a.size() != size) throw ConcurrentModificationException()
-            return a.get(index++)
+            return a.valueAt(index++)
         }
     }
 }
