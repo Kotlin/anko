@@ -129,7 +129,7 @@ fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T)
  * @param task the code to execute asynchronously.
  */
 fun <T> T.doAsync(
-        exceptionHandler: ((Throwable) -> Unit)? = null,
+        exceptionHandler: ((Throwable) -> Unit)? = {throwable -> throwable.printStackTrace()},
         task: AnkoAsyncContext<T>.() -> Unit
 ): Future<Unit> {
     val context = AnkoAsyncContext(WeakReference(this))
@@ -143,7 +143,7 @@ fun <T> T.doAsync(
 }
 
 fun <T> T.doAsync(
-        exceptionHandler: ((Throwable) -> Unit)? = null,
+        exceptionHandler: ((Throwable) -> Unit)? = {throwable -> throwable.printStackTrace()},
         executorService: ExecutorService,
         task: AnkoAsyncContext<T>.() -> Unit
 ): Future<Unit> {
