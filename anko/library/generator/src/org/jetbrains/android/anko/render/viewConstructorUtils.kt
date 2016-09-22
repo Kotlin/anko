@@ -25,7 +25,8 @@ interface ViewConstructorUtils {
     companion object {
         private val CONSTRUCTOR1 = arrayOf(Type.getObjectType("android/content/Context"))
         private val CONSTRUCTOR2 = arrayOf(Type.getObjectType("android/content/Context"), Type.getObjectType("android/util/AttributeSet"))
-        val AVAILABLE_VIEW_CONSTRUCTORS: List<Array<Type>> = listOf(CONSTRUCTOR1, CONSTRUCTOR2)
+        private val CONSTRUCTOR3 = arrayOf(Type.getObjectType("android/content/Context"), Type.getObjectType("android/util/AttributeSet"), Type.getObjectType("java/lang/Integer"))
+        val AVAILABLE_VIEW_CONSTRUCTORS: List<Array<Type>> = listOf(CONSTRUCTOR1, CONSTRUCTOR2, CONSTRUCTOR3)
     }
 
     fun renderConstructorArgs(
@@ -40,12 +41,14 @@ interface ViewConstructorUtils {
             when {
                 constructors[0] != null -> "$ctxName: Context"
                 constructors[1] != null -> "$ctxName: Context, attrs: AttributeSet?"
+                constructors[2] != null -> "$ctxName: Context, attrs: AttributeSet?, defStyleAttrs: Int"
                 else -> throw IllegalArgumentException("No available constructors for ${view.fqName}.")
             }
         } else {
             when {
                 constructors[0] != null -> "$ctxName"
                 constructors[1] != null -> "$ctxName, null"
+                constructors[2] != null -> "$ctxName: Context, null, defStyleAttrs: Int"
                 else -> throw IllegalArgumentException("No available constructors for ${view.fqName}.")
             }
         }
