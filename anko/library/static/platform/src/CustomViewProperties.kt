@@ -26,6 +26,10 @@ var View.backgroundDrawable: Drawable?
     get() = background
     set(value) = setBackgroundDrawable(value)
 
+var View.backgroundColorResource: Int
+    get() = throw PropertyWithoutGetterException("backgroundColor")
+    set(colorId) = setBackgroundColor(context.resources.getColor(colorId))
+
 var View.leftPadding: Int
     get() = paddingLeft
     set(value) = setPadding(value, paddingTop, paddingRight, paddingBottom)
@@ -71,6 +75,10 @@ var TextView.isSelectable: Boolean
 var TextView.textSizeDimen: Int
     get() = throw PropertyWithoutGetterException("textSizeDimen")
     set(value) = setTextSize(TypedValue.COMPLEX_UNIT_PX, context.resources.getDimension(value))
+
+var TextView.textColorResource: Int
+    get() = throw PropertyWithoutGetterException("textColor")
+    set(colorId) = setTextColor(context.resources.getColor(colorId))
 
 var ImageView.image: Drawable?
     get() = drawable
