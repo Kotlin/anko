@@ -43,7 +43,6 @@ inline fun <E> SparseArray<E>.forEach(action: (Int, E) -> Unit) {
  */
 inline fun SparseBooleanArray.forEach(action: (Int, Boolean) -> Unit) {
     val size = this.size()
-    if (size != this.size()) throw ConcurrentModificationException()
     for (i in 0..size - 1) {
         if (size != this.size()) throw ConcurrentModificationException()
         action(this.keyAt(i), this.valueAt(i))
