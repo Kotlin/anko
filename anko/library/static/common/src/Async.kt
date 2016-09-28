@@ -120,7 +120,7 @@ fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T)
     activity.runOnUiThread { activity.f(fragment) }
     return true
 }
-
+private val crashLogger = { throwable : Throwable -> throwable.printStackTrace() }
 /**
  * Execute [task] asynchronously.
  * 
@@ -129,7 +129,7 @@ fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T)
  * @param task the code to execute asynchronously.
  */
 fun <T> T.doAsync(
-        exceptionHandler: ((Throwable) -> Unit)? = { throwable -> throwable.printStackTrace() },
+        exceptionHandler: ((Throwable) -> Unit)? = crashLogger,
         task: AnkoAsyncContext<T>.() -> Unit
 ): Future<Unit> {
     val context = AnkoAsyncContext(WeakReference(this))
@@ -143,7 +143,7 @@ fun <T> T.doAsync(
 }
 
 fun <T> T.doAsync(
-        exceptionHandler: ((Throwable) -> Unit)? = { throwable -> throwable.printStackTrace() },
+        exceptionHandler: ((Throwable) -> Unit)? = crashLogger,
         executorService: ExecutorService,
         task: AnkoAsyncContext<T>.() -> Unit
 ): Future<Unit> {
@@ -158,7 +158,7 @@ fun <T> T.doAsync(
 }
 
 fun <T, R> T.doAsyncResult(
-        exceptionHandler: ((Throwable) -> Unit)? = { throwable -> throwable.printStackTrace() },
+        exceptionHandler: ((Throwable) -> Unit)? = crashLogger,
         task: AnkoAsyncContext<T>.() -> R
 ): Future<R> {
     val context = AnkoAsyncContext(WeakReference(this))
@@ -173,7 +173,7 @@ fun <T, R> T.doAsyncResult(
 }
 
 fun <T, R> T.doAsyncResult(
-        exceptionHandler: ((Throwable) -> Unit)? = { throwable -> throwable.printStackTrace() },
+        exceptionHandler: ((Throwable) -> Unit)? = crashLogger,
         executorService: ExecutorService,
         task: AnkoAsyncContext<T>.() -> R
 ): Future<R> {
