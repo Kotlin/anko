@@ -36,8 +36,8 @@ val TEXT: SqlType = SqlTypeImpl("TEXT")
 
 val BLOB: SqlType = SqlTypeImpl("BLOB")
 
-fun FOREIGN_KEY(columnName: String, referenceTable: String, referenceColumn: String): SqlType {
-    return SqlTypeImpl("FOREIGN KEY($columnName) REFERENCES $referenceTable($referenceColumn)")
+fun FOREIGN_KEY(columnName: String, referenceTable: String, referenceColumn: String): Pair<String, SqlType> {
+    return "" to SqlTypeImpl("FOREIGN KEY($columnName) REFERENCES $referenceTable($referenceColumn)")
 }
 
 val PRIMARY_KEY: SqlTypeModifier = SqlTypeModifierImpl("PRIMARY KEY")
