@@ -28,3 +28,10 @@ fun <T : View> T.applyRecursively(f: (View) -> Unit): T {
     AnkoInternals.applyRecursively(this, f)
     return this
 }
+
+/**
+ * Sets the labelFor on this [View] from a [View] passed as an argument
+ */
+fun <T : View> T.labelFor(v: View) {
+    this.labelFor = v.id
+}
