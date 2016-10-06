@@ -26,8 +26,6 @@ internal interface ClassTreeUtils {
     fun isExcluded(node: ClassNode): Boolean
     fun isExcluded(node: MethodNodeWithClass): Boolean
 
-    fun findAvailableClasses(): List<ClassNode> = classTree.filter { !isExcluded(it) }
-
     fun findAvailableMethods(availableClasses: List<ClassNode>): List<MethodNodeWithClass> {
         return availableClasses.flatMap { classNode ->
             classNode.methods

@@ -21,8 +21,7 @@ import java.util.*
 
 internal class NoSuchClassException : Exception()
 
-class ClassTreeNode(parent: ClassTreeNode?, val data: ClassNode, val fromPlatformJar: Boolean) {
-    var parent = parent
+class ClassTreeNode(var parent: ClassTreeNode?, val data: ClassNode, val fromPlatformJar: Boolean) {
     var children: MutableList<ClassTreeNode> = ArrayList()
 }
 
@@ -110,7 +109,7 @@ class ClassTree : Iterable<ClassNode>{
     }
 }
 
-class ClassTreeIterator(var next: ClassTreeNode) : Iterator<ClassNode> {
+class ClassTreeIterator(next: ClassTreeNode) : Iterator<ClassNode> {
 
     var nodeQueue: Queue<ClassTreeNode> = ArrayDeque(next.children)
 

@@ -56,7 +56,7 @@ internal class GenericTypeImpl : GenericType {
 }
 
 internal class TypeParameter(val name: String, val upperBounds: List<GenericType>)
-internal class ValueParameter(val index: Int, val genericType: GenericType)
+internal class ValueParameter(val genericType: GenericType)
 
 internal class GenericMethodSignature(
     val typeParameters: List<TypeParameter>,
@@ -75,7 +75,7 @@ internal fun parseGenericMethodSignature(signature: String): GenericMethodSignat
 
             override fun visitFormalTypeParameter(name: String) {
                 bounds = ArrayList<GenericType>()
-                var param = TypeParameter(name, bounds)
+                val param = TypeParameter(name, bounds)
                 typeParameters.add(param)
             }
 
@@ -93,7 +93,7 @@ internal fun parseGenericMethodSignature(signature: String): GenericMethodSignat
 
             override fun visitParameterType(): SignatureVisitor {
                 val parameterType = GenericTypeImpl()
-                val param = ValueParameter(valueParameters.size, parameterType)
+                val param = ValueParameter(parameterType)
                 valueParameters.add(param)
                 return GenericTypeParser(parameterType)
             }

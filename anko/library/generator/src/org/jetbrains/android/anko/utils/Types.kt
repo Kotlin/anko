@@ -103,7 +103,7 @@ internal fun Type.getDefaultValue() : String {
 }
 
 internal fun genericTypeToStr(param: GenericType, nullable: Boolean = true): String {
-    var res = StringBuilder()
+    val res = StringBuilder()
 
     val classifier = param.classifier
 
@@ -136,7 +136,7 @@ internal fun genericTypeToStr(param: GenericType, nullable: Boolean = true): Str
 }
 
 internal fun getPackageName(fqName: String): String {
-    val indexOfFirstCapital = fqName.indexOfFirst { it.isUpperCase() }
+    val indexOfFirstCapital = fqName.indexOfFirst(Char::isUpperCase)
     return fqName.substring(0, indexOfFirstCapital).substringBeforeLast('.')
 }
 

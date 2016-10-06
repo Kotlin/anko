@@ -16,17 +16,18 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
-import org.jetbrains.android.anko.config.ConfigurationTune.COMPLEX_LISTENER_CLASSES
-import org.jetbrains.android.anko.config.ConfigurationTune.COMPLEX_LISTENER_SETTERS
-import org.jetbrains.android.anko.config.ConfigurationTune.SIMPLE_LISTENERS
+import org.jetbrains.android.anko.config.ConfigurationTune.*
+import org.jetbrains.android.anko.formatArguments
+import org.jetbrains.android.anko.formatArgumentsNames
+import org.jetbrains.android.anko.formatArgumentsTypes
 import org.jetbrains.android.anko.generator.ComplexListenerElement
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.ListenerGenerator
 import org.jetbrains.android.anko.generator.SimpleListenerElement
+import org.jetbrains.android.anko.returnType
 import org.jetbrains.android.anko.utils.*
 
 class ListenerRenderer(config: AnkoConfiguration) : Renderer(config) {
@@ -118,7 +119,7 @@ class ListenerRenderer(config: AnkoConfiguration) : Renderer(config) {
     }
 
     // Get a name for helper class. Listener interfaces are often inner so we'll separate the base class name with "_"
-    // For example, for class android.widget.SearchView.OnSuggestionListener it would be SearchView_OnSuggessionListener
+    // For example, for class android.widget.SearchView.OnSuggestionListener it would be SearchView_OnSuggestionListener
     fun getHelperClassName(listener: ComplexListenerElement): String {
         val internalName = listener.clazz.name
         val nestedClassName = internalName.substringAfter('$', "")

@@ -60,10 +60,7 @@ class CachingAnnotationProvider(val underlyingProvider: AnnotationProvider) : An
     }
 }
 
-class CompoundAnnotationProvider(vararg providers: AnnotationProvider) : AnnotationProvider {
-
-    private val providers = providers
-
+class CompoundAnnotationProvider(vararg private val providers: AnnotationProvider) : AnnotationProvider {
     override fun getExternalAnnotations(packageName: String): Map<String, Set<ExternalAnnotation>> {
         val providerAnnotations = providers.map { it.getExternalAnnotations(packageName) }
 

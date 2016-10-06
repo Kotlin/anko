@@ -19,9 +19,9 @@ package org.jetbrains.android.anko.render
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
-import org.jetbrains.android.anko.utils.fqName
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.ServiceGenerator
+import org.jetbrains.android.anko.utils.fqName
 import org.jetbrains.android.anko.utils.simpleName
 
 class ServiceRenderer(config: AnkoConfiguration) : Renderer(config) {

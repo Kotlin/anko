@@ -56,7 +56,7 @@ internal fun MethodNodeWithClass.processArguments(
     var nameIndex = if (method.isStatic) 0 else 1
     val genericArgs = buildKotlinSignature(method)
 
-    val javaArgs = method.args.map { it.asJavaString() }
+    val javaArgs = method.args.map(Type::asJavaString)
     val argNames = config.sourceManager.getArgumentNames(clazz.fqName, method.name, javaArgs)
     val javaArgsString = javaArgs.joinToString()
 

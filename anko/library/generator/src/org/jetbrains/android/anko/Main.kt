@@ -58,7 +58,7 @@ private fun clean() {
 private fun versions() {
     for (version in getVersionDirs()) {
         val (platformJars, versionJars) = getJars(version)
-        println("${version.name}")
+        println(version.name)
         (platformJars + versionJars).forEach { println("  ${it.name}") }
     }
 }
@@ -67,7 +67,7 @@ private fun deleteDirectory(f: File) {
     if (!f.exists()) return
 
     if (f.isDirectory) {
-        f.listFiles()?.forEach { deleteDirectory(it) }
+        f.listFiles()?.forEach(::deleteDirectory)
     }
     if (!f.delete()) {
         throw RuntimeException("Failed to delete ${f.absolutePath}")

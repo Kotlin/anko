@@ -24,7 +24,7 @@ import org.jetbrains.android.anko.templates.TemplateManager
 import java.io.File
 
 open class DefaultAnkoConfiguration(
-        outputDirectory: File,
+        override val outputDirectory: File,
         override val artifactName: String,
         override val generatorOptions: Set<GeneratorOption>
 ) : AnkoConfiguration() {
@@ -69,7 +69,6 @@ open class DefaultAnkoConfiguration(
         }
     }
 
-    override val outputDirectory = outputDirectory
     override val sourceOutputDirectory = File(outputDirectory, "src/main/kotlin/" + outputPackage.replace('.', '/'))
 
     override fun getOutputFile(ankoFile: AnkoFile): File {

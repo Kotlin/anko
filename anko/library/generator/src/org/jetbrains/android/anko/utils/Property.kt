@@ -16,15 +16,9 @@
 
 package org.jetbrains.android.anko.utils
 
-import org.jetbrains.android.anko.returnType
-import org.objectweb.asm.Type
-
 internal class Property(val node: MethodNodeWithClass) {
 
     val name: String
-
-    val getterName: String
-        get() = (if (node.method.returnType == Type.BOOLEAN_TYPE) "is" else "get") + name.capitalize()
 
     val setterName: String
         get() = "set" + name.capitalize()

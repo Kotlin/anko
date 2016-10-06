@@ -19,7 +19,6 @@ package org.jetbrains.android.anko.utils
 import org.jetbrains.android.anko.isConstructor
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.tree.ClassNode
-import org.objectweb.asm.tree.InnerClassNode
 import org.objectweb.asm.tree.MethodNode
 
 data class MethodNodeWithClass(var clazz: ClassNode, val method: MethodNode) {
@@ -57,18 +56,6 @@ val ClassNode.isInner: Boolean
 
 internal val ClassNode.isAbstract: Boolean
     get() = ((access and Opcodes.ACC_ABSTRACT) != 0)
-
-internal val ClassNode.isPublic: Boolean
-    get() = ((access and Opcodes.ACC_PUBLIC) != 0)
-
-internal val InnerClassNode.isPublic: Boolean
-    get() = ((access and Opcodes.ACC_PUBLIC) != 0)
-
-internal val InnerClassNode.isProtected: Boolean
-    get() = ((access and Opcodes.ACC_PROTECTED) != 0)
-
-internal val InnerClassNode.isInterface: Boolean
-    get() = ((access and Opcodes.ACC_INTERFACE) != 0)
 
 internal fun ClassNode.getConstructors(): List<MethodNode> {
     return (methods as List<MethodNode>).filter { it.isConstructor }

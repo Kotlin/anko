@@ -16,10 +16,12 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.*
+import org.jetbrains.android.anko.args
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
+import org.jetbrains.android.anko.formatLayoutParamsArguments
+import org.jetbrains.android.anko.formatLayoutParamsArgumentsInvoke
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.LayoutElement
 import org.jetbrains.android.anko.generator.LayoutGenerator

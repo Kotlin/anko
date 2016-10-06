@@ -22,9 +22,7 @@ import org.jetbrains.android.anko.TestAnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.utils.JarFileFilter
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
+import org.junit.Assert.*
 import java.io.File
 import java.io.FileWriter
 
@@ -50,8 +48,8 @@ abstract class AbstractFunctionalTest {
                                     testDataFile: String,
                                     subsystem: AnkoFile,
                                     config: TestAnkoConfiguration) {
-        val (platformJars, versionJars) = inputJarFileNames.map { File(it) }.partition { it.name.startsWith("platform.") }
-        var classTree = ClassProcessor(platformJars, versionJars).genClassTree()
+        val (platformJars, versionJars) = inputJarFileNames.map(::File).partition { it.name.startsWith("platform.") }
+        val classTree = ClassProcessor(platformJars, versionJars).genClassTree()
 
         val generator = DSLGenerator(versionDir, platformJars, versionJars, config, classTree)
         generator.run()

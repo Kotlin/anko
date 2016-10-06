@@ -17,7 +17,7 @@
 package org.jetbrains.android.anko.config
 
 abstract class Configurable(val config: AnkoConfiguration) {
-    public val log: LogManager
+    val log: LogManager
         get() = config.logManager
 }
 

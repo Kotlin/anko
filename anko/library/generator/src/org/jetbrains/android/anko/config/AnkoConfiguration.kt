@@ -17,11 +17,7 @@
 package org.jetbrains.android.anko.config
 
 import org.jetbrains.android.anko.annotations.AnnotationManager
-import org.jetbrains.android.anko.config.TargetArtifactType.COMMON
-import org.jetbrains.android.anko.config.TargetArtifactType.SQLITE
-import org.jetbrains.android.anko.config.TargetArtifactType.PLATFORM
-import org.jetbrains.android.anko.config.TargetArtifactType.SUPPORT_V4
-import org.jetbrains.android.anko.config.TargetArtifactType.TOOLKIT
+import org.jetbrains.android.anko.config.TargetArtifactType.*
 import org.jetbrains.android.anko.sources.SourceManager
 import org.jetbrains.android.anko.templates.TemplateManager
 import java.io.File

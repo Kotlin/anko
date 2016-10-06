@@ -19,12 +19,11 @@ package org.jetbrains.android.anko.utils
 import org.jetbrains.android.anko.config.Configurable
 
 internal fun Configurable.buffer(init: Buffer.() -> Unit) = Buffer(config.indent, 0, init)
-internal fun Configurable.buffer(indent: Int, init: Buffer.() -> Unit) = Buffer(config.indent, indent, init)
 
-class Buffer(private val indentString: String, indent: Int = 0, val init: Buffer.() -> Unit) {
+class Buffer(private val indentString: String, indent: Int = 0, init: Buffer.() -> Unit) {
 
-    private val builder = StringBuilder();
-    private var mainIndent = indent;
+    private val builder = StringBuilder()
+    private var mainIndent = indent
     private var tempIndent = 0
 
     init { init() }
@@ -64,18 +63,8 @@ class Buffer(private val indentString: String, indent: Int = 0, val init: Buffer
         return this
     }
 
-    fun lines(lines: Array<String>): Buffer {
-        for (line in lines) {
-            line(line)
-        }
-        return this
-    }
-
     val size: Int
         get() = builder.length
-
-    val isEmpty: Boolean
-        get() = builder.length == 0
 
     override fun toString() = builder.toString()
 

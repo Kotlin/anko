@@ -16,16 +16,16 @@
 
 package org.jetbrains.android.anko.annotations
 
+import kotlinx.dom.childElements
 import org.jetbrains.android.anko.utils.getPackageName
 import org.w3c.dom.Document
 import org.xml.sax.InputSource
 import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
-import kotlinx.dom.childElements
 
 class AnnotationManager(private val provider: AnnotationProvider) {
     fun findAnnotationsFor(q: String): Set<ExternalAnnotation> {
-        var packageName = getPackageName(q.substringBefore(' '))
+        val packageName = getPackageName(q.substringBefore(' '))
         val annotations = provider.getExternalAnnotations(packageName)
         return annotations[q] ?: setOf()
     }

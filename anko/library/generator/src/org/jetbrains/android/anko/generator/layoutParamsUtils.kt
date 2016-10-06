@@ -16,8 +16,10 @@
 
 package org.jetbrains.android.anko.generator
 
-import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
+import org.jetbrains.android.anko.args
+import org.jetbrains.android.anko.isPublic
+import org.jetbrains.android.anko.returnType
 import org.jetbrains.android.anko.utils.fqName
 import org.jetbrains.android.anko.utils.getConstructors
 import org.objectweb.asm.tree.ClassNode

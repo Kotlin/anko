@@ -23,7 +23,7 @@ internal interface ReflectionUtils {
             val constructor = clazz.getConstructor()
             return constructor.newInstance()
         } catch (e: NoSuchMethodException) {
-            throw RuntimeException("Can't initialize class ${clazz.getName()}, no <init>()", e)
+            throw RuntimeException("Can't initialize class ${clazz.name}, no <init>()", e)
         }
     }
 
@@ -36,7 +36,7 @@ internal interface ReflectionUtils {
             val constructor = clazz.getConstructor(*argTypes)
             return constructor.newInstance(*argList)
         } catch (e: NoSuchMethodException) {
-            throw RuntimeException("Can't initialize class ${clazz.getName()}, no <init>(${argTypes.joinToString()})", e)
+            throw RuntimeException("Can't initialize class ${clazz.name}, no <init>(${argTypes.joinToString()})", e)
         }
     }
 

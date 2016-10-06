@@ -47,7 +47,7 @@ class RenderFacade(
         initializeClassWithArgs(clazz, config to AnkoConfiguration::class.java).process(generationState)
     }
 
-    protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {
+    private fun render(templateName: String, body: TemplateContext.() -> Unit): String {
         return config.templateManager.render(templateName, body)
     }
 

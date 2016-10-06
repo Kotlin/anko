@@ -16,14 +16,16 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
+import org.jetbrains.android.anko.args
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.PropertyElement
 import org.jetbrains.android.anko.generator.PropertyGenerator
+import org.jetbrains.android.anko.renderReturnType
+import org.jetbrains.android.anko.returnType
 import org.jetbrains.android.anko.utils.*
 
 class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {

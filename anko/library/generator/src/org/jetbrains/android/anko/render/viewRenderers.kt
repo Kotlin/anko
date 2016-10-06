@@ -16,7 +16,7 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.*
+import org.jetbrains.android.anko.args
 import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.ViewElement
@@ -37,7 +37,7 @@ internal class ViewGroupRenderer(config: AnkoConfiguration) : AbstractViewRender
             renderViews(state[ViewGroupGenerator::class.java]) { "_" + it.simpleName }
 }
 
-class ViewFactoryClass(val config: AnkoConfiguration, val suffix: String) {
+class ViewFactoryClass(val config: AnkoConfiguration, suffix: String) {
     private val name = config.artifactName.toCamelCase('-').capitalize()
 
     val entries = arrayListOf<String>()
