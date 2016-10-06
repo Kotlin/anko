@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="kotlinx.dom">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/dependencies/kotlindom/kotlinx.dom-0.0.7-rc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/kotlindom/kotlinx.dom-0.0.8.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

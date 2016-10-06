@@ -1,6 +1,4 @@
 configurations {
-    robolectric
-    androidall
     gson
     jmustache
     jeromq
@@ -8,24 +6,11 @@ configurations {
     kotlindom
 }
 
-String ROBOLECTRIC_VERSION = "3.1"
-
 dependencies {
-    robolectric "org.robolectric:robolectric:${ROBOLECTRIC_VERSION}"
-    robolectric "org.robolectric:robolectric:${ROBOLECTRIC_VERSION}:sources"
-
-    robolectric "org.robolectric:shadows-core:${ROBOLECTRIC_VERSION}"
-    robolectric "org.robolectric:shadows-core:${ROBOLECTRIC_VERSION}:sources"
-    robolectric "org.robolectric:shadows-support-v4:${ROBOLECTRIC_VERSION}"
-
-    robolectric 'org.robolectric:android-all:5.0.0_r2-robolectric-1'
-    robolectric 'org.robolectric:android-all:5.0.0_r2-robolectric-1'
-
     gson 'com.google.code.gson:gson:2.4'
     jmustache 'com.samskivert:jmustache:1.10'
-    jeromq 'org.zeromq:jeromq:0.3.4'
     javaparser 'com.github.javaparser:javaparser-core:2.1.0'
-    kotlindom 'org.jetbrains.kotlinx:kotlinx.dom:0.0.7-rc'
+    kotlindom 'org.jetbrains.kotlinx:kotlinx.dom:0.0.8'
 }
 
 repositories {
@@ -52,8 +37,4 @@ task(collectDependencies) << {
             }
         }
     }
-
-    def src = new File("dependencies/robolectric/shadows-core-${ROBOLECTRIC_VERSION}.jar")
-    def dst = new File("dependencies/robolectric/shadows-core-${ROBOLECTRIC_VERSION}-21.jar")
-    dst << src.bytes
 }

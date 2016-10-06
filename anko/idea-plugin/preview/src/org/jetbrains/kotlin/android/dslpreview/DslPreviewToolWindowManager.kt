@@ -77,7 +77,7 @@ import com.intellij.openapi.project.DumbService
 import com.intellij.util.ui.update.MergingUpdateQueue
 import com.intellij.util.ui.update.Update
 import org.jetbrains.android.uipreview.ViewLoader
-import org.jetbrains.kotlin.asJava.KtLightElement
+import org.jetbrains.kotlin.asJava.elements.KtLightElement
 import org.jetbrains.kotlin.caches.resolve.KotlinCacheService
 import org.jetbrains.kotlin.codegen.ClassBuilderMode
 import org.jetbrains.kotlin.codegen.CodegenFileClassesProvider
