@@ -24,7 +24,7 @@ Anko provides lots of extension functions to simplify communication with SQLite 
 Add the following to your `build.gradle`:
 
 ```groovy
-compile 'org.jetbrains.anko:anko-sqlite:0.8.3'
+compile 'org.jetbrains.anko:anko-sqlite:0.9'
 ```
 
 ## Db package
