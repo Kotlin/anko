@@ -18,6 +18,7 @@ package org.jetbrains.android.anko.render
 
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
 import org.jetbrains.android.anko.args
+import org.jetbrains.android.anko.config.AnkoBuilderContext
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
@@ -28,7 +29,7 @@ import org.jetbrains.android.anko.renderReturnType
 import org.jetbrains.android.anko.returnType
 import org.jetbrains.android.anko.utils.*
 
-class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
+class PropertyRenderer(context: AnkoBuilderContext) : Renderer(context) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.PROPERTIES)
 
@@ -57,7 +58,7 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
             false // Do not look up annotations for simple types
         } else if (getter != null) {
             val annotationSignature = "${getter.clazz.fqName} $javaReturnType ${getter.method.name}()"
-            val foundAnnotations = config.annotationManager.findExternalAnnotations(annotationSignature)
+            val foundAnnotations = annotationManager.findExternalAnnotations(annotationSignature)
             ExternalAnnotation.NotNull !in foundAnnotations
         } else true // Default is nullable
 

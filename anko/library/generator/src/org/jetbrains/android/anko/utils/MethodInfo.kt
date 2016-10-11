@@ -17,6 +17,7 @@
 package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
+import org.jetbrains.android.anko.config.AnkoBuilderContext
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.utils.*
 import org.objectweb.asm.Opcodes
@@ -45,7 +46,7 @@ internal fun buildKotlinSignature(node: MethodNode): List<String> {
 }
 
 internal fun MethodNodeWithClass.processArguments(
-        config: AnkoConfiguration,
+        context: AnkoBuilderContext,
         template: (argName: String, argType: String, explicitNotNull: String) -> String
 ): String {
     if (method.args.isEmpty()) return ""
@@ -57,7 +58,7 @@ internal fun MethodNodeWithClass.processArguments(
     val genericArgs = buildKotlinSignature(method)
 
     val javaArgs = method.args.map(Type::asJavaString)
-    val argNames = config.sourceManager.getArgumentNames(clazz.fqName, method.name, javaArgs)
+    val argNames = context.sourceManager.getArgumentNames(clazz.fqName, method.name, javaArgs)
     val javaArgsString = javaArgs.joinToString()
 
     for ((index, arg) in method.args.withIndex()) {
@@ -65,7 +66,7 @@ internal fun MethodNodeWithClass.processArguments(
 
         val annotationSignature = "${clazz.fqName} ${method.returnType.asJavaString()} ${method.name}($javaArgsString) $index"
         val nullable = !arg.isSimpleType &&
-                ExternalAnnotation.NotNull !in config.annotationManager.findExternalAnnotations(annotationSignature)
+                ExternalAnnotation.NotNull !in context.annotationManager.findExternalAnnotations(annotationSignature)
         val argType = if (nullable) rawArgType + "?" else rawArgType
 
         val explicitNotNull = if (argType.endsWith("?")) "!!" else ""
@@ -82,13 +83,13 @@ internal fun MethodNodeWithClass.processArguments(
     return buffer.toString()
 }
 
-internal fun MethodNodeWithClass.formatArguments(config: AnkoConfiguration): String {
-    return processArguments(config) { name, type, nul -> "$name: $type, " }
+internal fun MethodNodeWithClass.formatArguments(context: AnkoBuilderContext): String {
+    return processArguments(context) { name, type, nul -> "$name: $type, " }
 }
 
-internal fun MethodNodeWithClass.formatLayoutParamsArguments(config: AnkoConfiguration): List<String> {
+internal fun MethodNodeWithClass.formatLayoutParamsArguments(context: AnkoBuilderContext): List<String> {
     val args = arrayListOf<String>()
-    processArguments(config) { name, type, nul ->
+    processArguments(context) { name, type, nul ->
         val defaultValue = specialLayoutParamsArguments[name]
         val realName = specialLayoutParamsNames.getOrElse(name, {name})
         val arg = if (defaultValue == null)
@@ -101,19 +102,19 @@ internal fun MethodNodeWithClass.formatLayoutParamsArguments(config: AnkoConfigu
     return args
 }
 
-internal fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(config: AnkoConfiguration): String {
-    return processArguments(config) { name, type, nul ->
+internal fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(context: AnkoBuilderContext): String {
+    return processArguments(context) { name, type, nul ->
         val realName = specialLayoutParamsNames.getOrElse(name, {name})
         "$realName$nul, "
     }
 }
 
-internal fun MethodNodeWithClass.formatArgumentsTypes(config: AnkoConfiguration): String {
-    return processArguments(config) { name, type, nul -> "$type, " }
+internal fun MethodNodeWithClass.formatArgumentsTypes(context: AnkoBuilderContext): String {
+    return processArguments(context) { name, type, nul -> "$type, " }
 }
 
-internal fun MethodNodeWithClass.formatArgumentsNames(config: AnkoConfiguration): String {
-    return processArguments(config) { name, type, nul -> "$name, " }
+internal fun MethodNodeWithClass.formatArgumentsNames(context: AnkoBuilderContext): String {
+    return processArguments(context) { name, type, nul -> "$name, " }
 }
 
 

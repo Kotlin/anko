@@ -16,11 +16,6 @@
 
 package org.jetbrains.android.anko.config
 
-import org.jetbrains.android.anko.annotations.*
-import org.jetbrains.android.anko.sources.AndroidHomeSourceProvider
-import org.jetbrains.android.anko.sources.SourceManager
-import org.jetbrains.android.anko.templates.MustacheTemplateProvider
-import org.jetbrains.android.anko.templates.TemplateManager
 import java.io.File
 
 open class DefaultAnkoConfiguration(
@@ -38,24 +33,7 @@ open class DefaultAnkoConfiguration(
 
     override val propertiesWithoutGetters = File("anko/props/properties_without_getters.txt").readLines().toSet()
 
-    override val annotationManager: AnnotationManager
-    override val sourceManager: SourceManager
-    override val templateManager: TemplateManager
-    override val logManager: LogManager
-
     init {
-        val zipFileProvider = ZipFileAnnotationProvider(File("anko/props/kotlin-android-sdk-annotations-1.0.0.jar"))
-        val directoryProvider = DirectoryAnnotationProvider(File("anko/props/annotations"))
-
-        annotationManager = AnnotationManager(CompoundAnnotationProvider(
-                CachingAnnotationProvider(zipFileProvider), CachingAnnotationProvider(directoryProvider)))
-
-        sourceManager = SourceManager(AndroidHomeSourceProvider(23))
-
-        templateManager = TemplateManager(MustacheTemplateProvider(File("anko/props/templates")))
-
-        logManager = LogManager(this)
-
         val artifactType = getTargetArtifactType()
         outputPackage = "org.jetbrains.anko" + when (artifactType) {
             TargetArtifactType.COMMON, TargetArtifactType.PLATFORM -> ""
@@ -64,7 +42,7 @@ open class DefaultAnkoConfiguration(
 
         for (line in propertiesWithoutGetters) {
             if (!line.matches("[A-Za-z0-9]+(\\.((?!set)[A-Za-z0-9]+))*".toRegex())) {
-                logManager.e("Invalid line in properties_without_getters.txt: $line")
+                error("Invalid line in properties_without_getters.txt: $line")
             }
         }
     }

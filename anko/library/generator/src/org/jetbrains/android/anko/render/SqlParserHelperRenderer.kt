@@ -16,13 +16,14 @@
 
 package org.jetbrains.android.anko.render
 
+import org.jetbrains.android.anko.config.AnkoBuilderContext
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.utils.buffer
 
-class SqlParserHelperRenderer(config: AnkoConfiguration) : Renderer(config) {
+class SqlParserHelperRenderer(context: AnkoBuilderContext) : Renderer(context) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.SQL_PARSER_HELPERS)
 

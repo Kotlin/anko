@@ -16,8 +16,15 @@
 
 package org.jetbrains.android.anko
 
+import org.jetbrains.android.anko.annotations.*
+import org.jetbrains.android.anko.config.AnkoBuilderContext
 import org.jetbrains.android.anko.config.DefaultAnkoConfiguration
 import org.jetbrains.android.anko.config.GeneratorOption
+import org.jetbrains.android.anko.config.LogManager
+import org.jetbrains.android.anko.sources.AndroidHomeSourceProvider
+import org.jetbrains.android.anko.sources.SourceManager
+import org.jetbrains.android.anko.templates.MustacheTemplateProvider
+import org.jetbrains.android.anko.templates.TemplateManager
 import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 import org.jetbrains.android.anko.utils.JarFileFilter
 import java.io.File
@@ -103,8 +110,9 @@ private fun gen(generatorOptions: Set<GeneratorOption>) {
                     fileOutputDirectory.mkdirs()
                 }
 
-                DSLGenerator(versionDir, platformJars, versionJars,
-                        DefaultAnkoConfiguration(outputDirectory, versionName, generatorOptions)).run()
+                val configuration = DefaultAnkoConfiguration(outputDirectory, versionName, generatorOptions)
+                val context = AnkoBuilderContext.create(File("anko/props"), LogManager.LogLevel.INFO, configuration)
+                DSLGenerator(versionDir, platformJars, versionJars, context).run()
                 latch.countDown()
             }
         }

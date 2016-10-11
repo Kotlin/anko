@@ -16,6 +16,7 @@
 
 package org.jetbrains.android.anko.render
 
+import org.jetbrains.android.anko.config.AnkoBuilderContext
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
@@ -30,7 +31,7 @@ import org.jetbrains.android.anko.generator.SimpleListenerElement
 import org.jetbrains.android.anko.returnType
 import org.jetbrains.android.anko.utils.*
 
-class ListenerRenderer(config: AnkoConfiguration) : Renderer(config) {
+class ListenerRenderer(context: AnkoBuilderContext) : Renderer(context) {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.LISTENERS)
 
@@ -55,7 +56,7 @@ class ListenerRenderer(config: AnkoConfiguration) : Renderer(config) {
     private fun SimpleListenerElement.render() = render("simple_listener") {
         "receiver" % setter.clazz.fqNameWithTypeArguments
         "name" % method.name
-        "args" % method.methodWithClass.formatArguments(config)
+        "args" % method.methodWithClass.formatArguments(context)
         "returnType" % method.returnType.asString()
         "setter" % setter.method.name
     }
@@ -77,7 +78,7 @@ class ListenerRenderer(config: AnkoConfiguration) : Renderer(config) {
         //field list (already with indentation)
         val fields = methods.map { method ->
             val varName = method.name.decapitalize()
-            val argumentTypes = method.methodWithClass.formatArgumentsTypes(config)
+            val argumentTypes = method.methodWithClass.formatArgumentsTypes(context)
             val lambdaType = "(($argumentTypes) -> ${method.returnType.asString()})"
             "private var _$varName: $lambdaType? = null"
         }
@@ -86,9 +87,9 @@ class ListenerRenderer(config: AnkoConfiguration) : Renderer(config) {
             val varName = method.name.decapitalize()
             val methodWithClass = method.methodWithClass
 
-            val arguments = methodWithClass.formatArguments(config)
-            val argumentNames = methodWithClass.formatArgumentsNames(config)
-            val argumentTypes = methodWithClass.formatArgumentsTypes(config)
+            val arguments = methodWithClass.formatArguments(context)
+            val argumentNames = methodWithClass.formatArgumentsNames(context)
+            val argumentTypes = methodWithClass.formatArgumentsTypes(context)
 
             buffer {
                 val defaultValue = methodWithClass.method.returnType.getDefaultValue()

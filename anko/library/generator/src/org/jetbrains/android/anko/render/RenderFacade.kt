@@ -16,15 +16,12 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.config.AnkoConfiguration
-import org.jetbrains.android.anko.config.Configurable
-import org.jetbrains.android.anko.config.ConfigurationOption
-import org.jetbrains.android.anko.config.generate
+import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.templates.TemplateContext
 import org.jetbrains.android.anko.utils.ReflectionUtils
 
-abstract class Renderer(config: AnkoConfiguration): Configurable(config) {
+abstract class Renderer(override val context: AnkoBuilderContext): WithContext {
     protected abstract fun processElements(state: GenerationState): String
     abstract val renderIf: Array<ConfigurationOption>
 
@@ -32,23 +29,21 @@ abstract class Renderer(config: AnkoConfiguration): Configurable(config) {
         processElements(state)
     }
 
+    private fun generate(vararg option: ConfigurationOption, init: () -> String) : String {
+        return if (option.any { config[it] }) init() else ""
+    }
+
     protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {
-        return config.templateManager.render(templateName, body)
+        return templateManager.render(templateName, body)
     }
 }
 
 class RenderFacade(
         val generationState: GenerationState
-) : Configurable(generationState.config), ViewConstructorUtils, ReflectionUtils {
-
+) : ViewConstructorUtils, ReflectionUtils {
     private val cachedResults: MutableMap<Class<out Renderer>, String> = hashMapOf()
 
     operator fun get(clazz: Class<out Renderer>): String = cachedResults.getOrPut(clazz) {
-        initializeClassWithArgs(clazz, config to AnkoConfiguration::class.java).process(generationState)
+        initializeClassWithArgs(clazz, generationState.context to AnkoBuilderContext::class.java).process(generationState)
     }
-
-    private fun render(templateName: String, body: TemplateContext.() -> Unit): String {
-        return config.templateManager.render(templateName, body)
-    }
-
 }

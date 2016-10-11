@@ -16,19 +16,18 @@
 
 package org.jetbrains.android.anko
 
-import org.jetbrains.android.anko.config.AnkoFile
+import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.config.ConfigurationTune.HELPER_CONSTRUCTORS
-import org.jetbrains.android.anko.config.Props
-import org.jetbrains.android.anko.config.TargetArtifactType
 import org.jetbrains.android.anko.render.*
 import org.jetbrains.android.anko.utils.toCamelCase
 import java.io.Closeable
 import java.io.File
 import java.io.PrintWriter
 
-class Writer(private val renderFacade: RenderFacade) {
-    private val config = renderFacade.config
+class Writer(private val renderFacade: RenderFacade): WithContext {
+    override val context: AnkoBuilderContext
+        get() = renderFacade.generationState.context
 
     fun write() {
         val versionType = config.getTargetArtifactType()

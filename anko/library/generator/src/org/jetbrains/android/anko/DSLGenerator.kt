@@ -16,7 +16,9 @@
 
 package org.jetbrains.android.anko
 
+import org.jetbrains.android.anko.config.AnkoBuilderContext
 import org.jetbrains.android.anko.config.AnkoConfiguration
+import org.jetbrains.android.anko.config.WithContext
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.render.RenderFacade
 import org.jetbrains.android.anko.utils.ClassTree
@@ -26,12 +28,12 @@ class DSLGenerator(
     val sourceDirectory: File,
     val platformJars: List<File>,
     val versionJars: List<File>,
-    val config: AnkoConfiguration,
-    val classTree: ClassTree? = null): Runnable
-{
+    override val context: AnkoBuilderContext,
+    val classTree: ClassTree? = null
+): Runnable, WithContext {
     override fun run() {
         val classTree = this.classTree ?: ClassProcessor(platformJars, versionJars).genClassTree()
-        val generationState = GenerationState(classTree, config)
+        val generationState = GenerationState(classTree, context)
         val renderer = RenderFacade(generationState)
         Writer(renderer).write()
 

@@ -17,7 +17,7 @@
 package org.jetbrains.android.anko.render
 
 import org.jetbrains.android.anko.args
-import org.jetbrains.android.anko.config.AnkoConfiguration
+import org.jetbrains.android.anko.config.AnkoBuilderContext
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationOption
 import org.jetbrains.android.anko.formatLayoutParamsArguments
@@ -31,7 +31,7 @@ import org.jetbrains.android.anko.utils.getConstructors
 import org.jetbrains.android.anko.utils.simpleName
 import java.util.*
 
-class LayoutRenderer(config: AnkoConfiguration) : Renderer(config), ViewConstructorUtils {
+class LayoutRenderer(context: AnkoBuilderContext) : Renderer(context), ViewConstructorUtils {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.LAYOUTS)
 
@@ -56,8 +56,8 @@ class LayoutRenderer(config: AnkoConfiguration) : Renderer(config), ViewConstruc
 
             "functions" % seq(node.constructors) { item ->
                 val function = MethodNodeWithClass(node.layoutParams, item)
-                "params" % function.formatLayoutParamsArguments(config)
-                "substituted" % function.formatLayoutParamsArgumentsInvoke(config)
+                "params" % function.formatLayoutParamsArguments(context)
+                "substituted" % function.formatLayoutParamsArgumentsInvoke(context)
                 "layoutParamsClass" % layoutParamsClass
             }
         }

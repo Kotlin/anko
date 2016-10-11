@@ -27,12 +27,12 @@ import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 import java.util.*
 
-internal class ViewRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
+internal class ViewRenderer(context: AnkoBuilderContext) : AbstractViewRenderer(context) {
     override fun processElements(state: GenerationState) =
             renderViews(state[ViewGenerator::class.java]) { it.fqName }
 }
 
-internal class ViewGroupRenderer(config: AnkoConfiguration) : AbstractViewRenderer(config) {
+internal class ViewGroupRenderer(context: AnkoBuilderContext) : AbstractViewRenderer(context) {
     override fun processElements(state: GenerationState) =
             renderViews(state[ViewGroupGenerator::class.java]) { "_" + it.simpleName }
 }
@@ -55,8 +55,8 @@ class ViewFactoryClass(val config: AnkoConfiguration, suffix: String) {
 }
 
 internal abstract class AbstractViewRenderer(
-        config: AnkoConfiguration
-) : Renderer(config), ViewConstructorUtils {
+        context: AnkoBuilderContext
+) : Renderer(context), ViewConstructorUtils {
 
     override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.VIEWS, ConfigurationTune.HELPER_CONSTRUCTORS)
 

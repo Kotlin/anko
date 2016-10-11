@@ -16,10 +16,7 @@
 
 package org.jetbrains.android.anko.config
 
-import org.jetbrains.android.anko.annotations.AnnotationManager
 import org.jetbrains.android.anko.config.TargetArtifactType.*
-import org.jetbrains.android.anko.sources.SourceManager
-import org.jetbrains.android.anko.templates.TemplateManager
 import java.io.File
 
 abstract class AnkoConfiguration {
@@ -30,9 +27,9 @@ abstract class AnkoConfiguration {
 
     open val generateStaticFiles: Boolean = true
 
-    open var generateImports: Boolean = true
-    open var generatePackage: Boolean = true
-    open var generateMavenArtifact: Boolean = true
+    open val generateImports: Boolean = true
+    open val generatePackage: Boolean = true
+    open val generateMavenArtifact: Boolean = true
 
     abstract val artifactName: String
 
@@ -47,11 +44,6 @@ abstract class AnkoConfiguration {
     abstract val excludedMethods: Set<String>
     abstract val excludedProperties: Set<String>
     abstract val propertiesWithoutGetters: Set<String>
-
-    abstract val annotationManager: AnnotationManager
-    abstract val sourceManager: SourceManager
-    abstract val templateManager: TemplateManager
-    abstract val logManager: LogManager
 
     operator fun get(option: ConfigurationOption): Boolean = tunes.contains(option) || files.contains(option)
 

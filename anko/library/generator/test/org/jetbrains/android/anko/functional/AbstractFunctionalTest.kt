@@ -19,8 +19,10 @@ package org.jetbrains.android.anko.functional
 import org.jetbrains.android.anko.ClassProcessor
 import org.jetbrains.android.anko.DSLGenerator
 import org.jetbrains.android.anko.TestAnkoConfiguration
+import org.jetbrains.android.anko.config.AnkoBuilderContext
 import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.AnkoFile
+import org.jetbrains.android.anko.config.LogManager
 import org.jetbrains.android.anko.utils.JarFileFilter
 import org.junit.Assert.*
 import java.io.File
@@ -51,7 +53,8 @@ abstract class AbstractFunctionalTest {
         val (platformJars, versionJars) = inputJarFileNames.map(::File).partition { it.name.startsWith("platform.") }
         val classTree = ClassProcessor(platformJars, versionJars).genClassTree()
 
-        val generator = DSLGenerator(versionDir, platformJars, versionJars, config, classTree)
+        val context = AnkoBuilderContext.create(File("anko/props"), LogManager.LogLevel.INFO, config)
+        val generator = DSLGenerator(versionDir, platformJars, versionJars, context, classTree)
         generator.run()
 
         fun String.trimBlank() = trim('\n', '\t', ' ', '\r')
@@ -75,15 +78,11 @@ abstract class AbstractFunctionalTest {
             version: String,
             settings: AnkoConfiguration.() -> Unit
     ) {
-        val config = TestAnkoConfiguration(version)
-        config.generateImports = false
-        config.generatePackage = false
-        config.generateMavenArtifact = false
-
-        config.files.clear()
-        config.tunes.clear()
-
-        config.settings()
+        val config = TestAnkoConfiguration(version).apply {
+            files.clear()
+            tunes.clear()
+            settings()
+        }
 
         val versionDir = File("workdir/original", version)
         val jarFiles = versionDir.listFiles(JarFileFilter()).map { it.absolutePath }

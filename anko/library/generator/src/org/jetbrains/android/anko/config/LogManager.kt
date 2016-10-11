@@ -16,14 +16,10 @@
 
 package org.jetbrains.android.anko.config
 
-class LogManager(config: AnkoConfiguration) {
-    private enum class LogLevel {
+class LogManager(private val level: LogManager.LogLevel) {
+    enum class LogLevel {
         DEBUG, INFO, WARNING, ERROR
     }
-
-    private val level = LogLevel.valueOf(config.generatorOptions
-            .filterIsInstance<GeneratorOption.LogLevel>().firstOrNull()?.arg?.toUpperCase() ?: LogLevel.INFO.name)
-
     fun d(s: String) {
         if (level <= LogLevel.DEBUG) System.out.println("D: $s")
     }

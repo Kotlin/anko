@@ -26,8 +26,11 @@ open class TestAnkoConfiguration(
     val tmpFiles: Map<AnkoFile, File> =
         AnkoFile.values().map { it to createTempTestFile(it.filename, ".kt") }.toMap()
 
-    override var generateMavenArtifact = false
+    override val generateMavenArtifact = false
     override val generateStaticFiles = false
+
+    override val generateImports = false
+    override val generatePackage = false
 
     override fun getOutputFile(ankoFile: AnkoFile): File {
         return tmpFiles[ankoFile]!!
