@@ -28,13 +28,11 @@ internal interface ReflectionUtils {
     }
 
     fun <T> initializeClassWithArgs(clazz: Class<out T>, vararg args: Pair<Any, Class<*>>): T {
-        // https://youtrack.jetbrains.com/issue/KT-5793
-        val argList = args.map { it.first }.toTypedArray()
-        val argTypes = args.map { it.second }.toTypedArray()
+        val (argList, argTypes) = args.unzip()
 
         try {
-            val constructor = clazz.getConstructor(*argTypes)
-            return constructor.newInstance(*argList)
+            val constructor = clazz.getConstructor(*argTypes.toTypedArray())
+            return constructor.newInstance(*argList.toTypedArray())
         } catch (e: NoSuchMethodException) {
             throw RuntimeException("Can't initialize class ${clazz.name}, no <init>(${argTypes.joinToString()})", e)
         }
