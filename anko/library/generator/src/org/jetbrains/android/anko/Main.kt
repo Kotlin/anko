@@ -16,15 +16,7 @@
 
 package org.jetbrains.android.anko
 
-import org.jetbrains.android.anko.annotations.*
-import org.jetbrains.android.anko.config.AnkoBuilderContext
-import org.jetbrains.android.anko.config.DefaultAnkoConfiguration
-import org.jetbrains.android.anko.config.GeneratorOption
-import org.jetbrains.android.anko.config.LogManager
-import org.jetbrains.android.anko.sources.AndroidHomeSourceProvider
-import org.jetbrains.android.anko.sources.SourceManager
-import org.jetbrains.android.anko.templates.MustacheTemplateProvider
-import org.jetbrains.android.anko.templates.TemplateManager
+import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 import org.jetbrains.android.anko.utils.JarFileFilter
 import java.io.File
@@ -34,17 +26,25 @@ import java.util.concurrent.Executors
 object Launcher {
     @JvmStatic
     fun main(args: Array<String>) {
-        val generatorOptions = System.getProperty("gen.options", "")
-                .split(',')
-                .map { GeneratorOption.parse(it) }
-                .filterNotNull()
-                .toSet()
+        val (rawOptions, tasks) = args.partition { it.startsWith("--") }
 
-        if (args.isNotEmpty()) {
-            args.forEach { taskName ->
+        val options = MutableOptions.create()
+        rawOptions.map { it.drop(2) }.forEach { rawOption ->
+            val split = rawOption.split('=', limit = 1)
+            if (split.size != 2) error("Invalid option format: $rawOption")
+            val key = split[0]
+            val option: CliConfiguationKey<Any> =
+                    CLI_CONFIGURATION_KEYS.firstOrNull { it.cliName == key }
+                    ?: error("Option not found: $key")
+
+            options.setCliOption(option, split[1])
+        }
+
+        if (tasks.isNotEmpty()) {
+            tasks.forEach { taskName ->
                 println(":: $taskName")
                 when (taskName) {
-                    "gen", "generate" -> gen(generatorOptions)
+                    "gen", "generate" -> gen(options)
                     "clean" -> clean()
                     "versions" -> versions()
                     else -> {
@@ -54,7 +54,7 @@ object Launcher {
                 }
             }
             println("Done.")
-        } else gen(generatorOptions)
+        } else println("Please specify a task.")
     }
 }
 
@@ -91,7 +91,7 @@ private fun getVersionDirs(): Array<File> {
 
 private fun getJars(version: File) = version.listFiles(JarFileFilter()).partition { it.name.startsWith("platform.") }
 
-private fun gen(generatorOptions: Set<GeneratorOption>) {
+private fun gen(options: Options) {
     copyStubs()
 
     val versionDirs = getVersionDirs()
@@ -110,7 +110,7 @@ private fun gen(generatorOptions: Set<GeneratorOption>) {
                     fileOutputDirectory.mkdirs()
                 }
 
-                val configuration = DefaultAnkoConfiguration(outputDirectory, versionName, generatorOptions)
+                val configuration = DefaultAnkoConfiguration(outputDirectory, versionName, options)
                 val context = AnkoBuilderContext.create(File("anko/props"), LogManager.LogLevel.INFO, configuration)
                 DSLGenerator(versionDir, platformJars, versionJars, context).run()
                 latch.countDown()

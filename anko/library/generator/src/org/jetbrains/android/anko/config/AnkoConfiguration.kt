@@ -33,7 +33,7 @@ abstract class AnkoConfiguration {
 
     abstract val artifactName: String
 
-    abstract val generatorOptions: Set<GeneratorOption>
+    abstract val generatorOptions: Options
 
     abstract val outputPackage: String
 

@@ -18,11 +18,12 @@ package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.DefaultAnkoConfiguration
+import org.jetbrains.android.anko.config.Options
 import java.io.File
 
 open class TestAnkoConfiguration(
         version: String
-) : DefaultAnkoConfiguration(File("workdir/temp"), version, emptySet()) {
+) : DefaultAnkoConfiguration(File("workdir/temp"), version, Options.create()) {
     val tmpFiles: Map<AnkoFile, File> =
         AnkoFile.values().map { it to createTempTestFile(it.filename, ".kt") }.toMap()
 
