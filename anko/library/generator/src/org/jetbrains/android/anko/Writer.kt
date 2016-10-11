@@ -18,7 +18,6 @@ package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.config.AnkoFile.*
-import org.jetbrains.android.anko.config.ConfigurationTune.HELPER_CONSTRUCTORS
 import org.jetbrains.android.anko.render.*
 import org.jetbrains.android.anko.utils.toCamelCase
 import java.io.Closeable
@@ -85,7 +84,7 @@ class Writer(private val renderFacade: RenderFacade): WithContext {
     }
 
     private fun writeViews() {
-        val allViews = if (config[VIEWS] || config[HELPER_CONSTRUCTORS]) {
+        val allViews = if (config[VIEWS] || config[Tune.HELPER_CONSTRUCTORS]) {
             renderFacade[ViewRenderer::class.java] + renderFacade[ViewGroupRenderer::class.java]
         } else ""
         val imports = Props.imports["views"] ?: ""

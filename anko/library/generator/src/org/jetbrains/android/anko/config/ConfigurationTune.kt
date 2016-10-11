@@ -16,10 +16,10 @@
 
 package org.jetbrains.android.anko.config
 
-enum class ConfigurationTune : ConfigurationOption {
-    HELPER_CONSTRUCTORS,
-    TOP_LEVEL_DSL_ITEMS,
-    SIMPLE_LISTENERS,
-    COMPLEX_LISTENER_SETTERS,
-    COMPLEX_LISTENER_CLASSES
+enum class Tune(override val defaultValue: Boolean = true) : ConfigurationKey<Boolean> {
+    HELPER_CONSTRUCTORS(),
+    TOP_LEVEL_DSL_ITEMS(),
+    SIMPLE_LISTENERS(),
+    COMPLEX_LISTENER_SETTERS(),
+    COMPLEX_LISTENER_CLASSES()
 }

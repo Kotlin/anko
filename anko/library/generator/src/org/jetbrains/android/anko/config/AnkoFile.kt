@@ -29,14 +29,15 @@ enum class TargetArtifactType {
 
 enum class AnkoFile(
         type: Set<TargetArtifactType>,
-        val shouldBeWritten: (AnkoConfiguration) -> Boolean = { true }
-) : ConfigurationOption {
+        val shouldBeWritten: (AnkoConfiguration) -> Boolean = { true },
+        override val defaultValue: Boolean = true
+) : ConfigurationKey<Boolean> {
     LAYOUTS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     LISTENERS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     PROPERTIES(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     SERVICES(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     SQL_PARSER_HELPERS(setOf(SQLITE)),
-    VIEWS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT), { it[VIEWS] || it[ConfigurationTune.HELPER_CONSTRUCTORS] });
+    VIEWS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT), { it[VIEWS] || it[Tune.HELPER_CONSTRUCTORS] });
 
     val types: Set<TargetArtifactType> = type.toSet()
 

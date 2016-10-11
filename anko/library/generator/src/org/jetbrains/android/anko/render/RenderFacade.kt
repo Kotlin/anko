@@ -23,13 +23,13 @@ import org.jetbrains.android.anko.utils.ReflectionUtils
 
 abstract class Renderer(override val context: AnkoBuilderContext): WithContext {
     protected abstract fun processElements(state: GenerationState): String
-    abstract val renderIf: Array<ConfigurationOption>
+    abstract val renderIf: Array<ConfigurationKey<Boolean>>
 
     fun process(state: GenerationState): String = generate(*renderIf) {
         processElements(state)
     }
 
-    private fun generate(vararg option: ConfigurationOption, init: () -> String) : String {
+    private fun generate(vararg option: ConfigurationKey<Boolean>, init: () -> String) : String {
         return if (option.any { config[it] }) init() else ""
     }
 

@@ -1,13 +1,22 @@
 package org.jetbrains.android.anko.config
 
-open class ConfigurationKey<out T : Any>(val name: String, val defaultValue: T? = null)
+interface ConfigurationKey<out T : Any> {
+    val name: String
+    val defaultValue: T?
+}
+
+fun <T : Any> ConfigurationKey(name: String, defaultValue: T? = null): ConfigurationKey<T> = ConfigurationKeyImpl(name, defaultValue)
+
+private open class ConfigurationKeyImpl<out T : Any>(
+        override val name: String,
+        override val defaultValue: T? = null) : ConfigurationKey<T>
 
 class CliConfiguationKey<out T : Any>(
         name: String,
         val cliName: String = name,
         defaultValue: T? = null,
         val mapper: (String) -> T?
-) : ConfigurationKey<T>(name, defaultValue)
+) : ConfigurationKey<T> by ConfigurationKeyImpl(name, defaultValue)
 
 val LOG_LEVEL = CliConfiguationKey(
         "logLevel",
@@ -46,7 +55,7 @@ private class OptionsImpl : MutableOptions {
     private val options = mutableMapOf<ConfigurationKey<*>, Any>()
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : Any> opt(key: ConfigurationKey<T>) = options[key] as T?
+    override fun <T : Any> opt(key: ConfigurationKey<T>) = options[key] as T? ?: key.defaultValue
 
     override fun <T : Any> set(key: ConfigurationKey<T>, value: T) {
         options[key] = value

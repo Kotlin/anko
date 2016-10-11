@@ -16,10 +16,7 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.config.AnkoBuilderContext
-import org.jetbrains.android.anko.config.AnkoConfiguration
-import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.config.ConfigurationOption
+import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.ServiceGenerator
 import org.jetbrains.android.anko.utils.fqName
@@ -27,7 +24,7 @@ import org.jetbrains.android.anko.utils.simpleName
 
 class ServiceRenderer(context: AnkoBuilderContext) : Renderer(context) {
 
-    override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.SERVICES)
+    override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.SERVICES)
 
     override fun processElements(state: GenerationState) = StringBuilder().apply {
         append(render("services") {

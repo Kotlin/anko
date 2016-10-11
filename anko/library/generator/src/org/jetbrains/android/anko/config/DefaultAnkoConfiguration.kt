@@ -21,7 +21,7 @@ import java.io.File
 open class DefaultAnkoConfiguration(
         override val outputDirectory: File,
         override val artifactName: String,
-        override val generatorOptions: Options
+        override val options: Options
 ) : AnkoConfiguration() {
     override val outputPackage: String
 

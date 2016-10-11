@@ -7,61 +7,61 @@ class FunctionalTestsForSqlite : AbstractFunctionalTest() {
     @Test
     fun testComplexListenerClassTest() {
         runFunctionalTest("ComplexListenerClassTest.kt", AnkoFile.LISTENERS, version) {
-            files.add(AnkoFile.LISTENERS)
-            tunes.add(ConfigurationTune.COMPLEX_LISTENER_CLASSES)
+            options[AnkoFile.LISTENERS] = true
+            options[Tune.COMPLEX_LISTENER_CLASSES] = true
         }
     }
 
     @Test
     fun testComplexListenerSetterTest() {
         runFunctionalTest("ComplexListenerSetterTest.kt", AnkoFile.LISTENERS, version) {
-            files.add(AnkoFile.LISTENERS)
-            tunes.add(ConfigurationTune.COMPLEX_LISTENER_SETTERS)
+            options[AnkoFile.LISTENERS] = true
+            options[Tune.COMPLEX_LISTENER_SETTERS] = true
         }
     }
 
     @Test
     fun testLayoutsTest() {
         runFunctionalTest("LayoutsTest.kt", AnkoFile.LAYOUTS, version) {
-            files.add(AnkoFile.LAYOUTS)
+            options[AnkoFile.LAYOUTS] = true
         }
     }
 
     @Test
     fun testViewTest() {
         runFunctionalTest("ViewTest.kt", AnkoFile.VIEWS, version) {
-            files.add(AnkoFile.VIEWS)
-            tunes.add(ConfigurationTune.HELPER_CONSTRUCTORS)
-            tunes.add(ConfigurationTune.TOP_LEVEL_DSL_ITEMS)
+            options[AnkoFile.VIEWS] = true
+            options[Tune.HELPER_CONSTRUCTORS] = true
+            options[Tune.TOP_LEVEL_DSL_ITEMS] = true
         }
     }
 
     @Test
     fun testPropertyTest() {
         runFunctionalTest("PropertyTest.kt", AnkoFile.PROPERTIES, version) {
-            files.add(AnkoFile.PROPERTIES)
+            options[AnkoFile.PROPERTIES] = true
         }
     }
 
     @Test
     fun testServicesTest() {
         runFunctionalTest("ServicesTest.kt", AnkoFile.SERVICES, version) {
-            files.add(AnkoFile.SERVICES)
+            options[AnkoFile.SERVICES] = true
         }
     }
 
     @Test
     fun testSimpleListenerTest() {
         runFunctionalTest("SimpleListenerTest.kt", AnkoFile.LISTENERS, version) {
-            files.add(AnkoFile.LISTENERS)
-            tunes.add(ConfigurationTune.SIMPLE_LISTENERS)
+            options[AnkoFile.LISTENERS] = true
+            options[Tune.SIMPLE_LISTENERS] = true
         }
     }
 
     @Test
     fun testSqlParserHelpersTest() {
         runFunctionalTest("SqlParserHelpersTest.kt", AnkoFile.SQL_PARSER_HELPERS, version) {
-            files.add(AnkoFile.SQL_PARSER_HELPERS)
+            options[AnkoFile.SQL_PARSER_HELPERS] = true
         }
     }
 

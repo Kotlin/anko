@@ -16,11 +16,7 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.config.AnkoBuilderContext
-import org.jetbrains.android.anko.config.AnkoConfiguration
-import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.config.ConfigurationOption
-import org.jetbrains.android.anko.config.ConfigurationTune.*
+import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.formatArguments
 import org.jetbrains.android.anko.formatArgumentsNames
 import org.jetbrains.android.anko.formatArgumentsTypes
@@ -33,17 +29,17 @@ import org.jetbrains.android.anko.utils.*
 
 class ListenerRenderer(context: AnkoBuilderContext) : Renderer(context) {
 
-    override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.LISTENERS)
+    override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.LISTENERS)
 
     override fun processElements(state: GenerationState) = StringBuilder().apply {
         val renderedClasses = hashSetOf<String>()
 
         for (listener in state[ListenerGenerator::class.java]) {
             when (listener) {
-                is SimpleListenerElement -> if (config[SIMPLE_LISTENERS]) append(listener.render())
+                is SimpleListenerElement -> if (config[Tune.SIMPLE_LISTENERS]) append(listener.render())
                 is ComplexListenerElement -> {
-                    if (config[COMPLEX_LISTENER_SETTERS]) append(listener.renderSetter())
-                    if (config[COMPLEX_LISTENER_CLASSES] && !renderedClasses.contains(listener.id)) {
+                    if (config[Tune.COMPLEX_LISTENER_SETTERS]) append(listener.renderSetter())
+                    if (config[Tune.COMPLEX_LISTENER_CLASSES] && !renderedClasses.contains(listener.id)) {
                         append(listener.renderClass())
                         renderedClasses.add(listener.id)
                     }

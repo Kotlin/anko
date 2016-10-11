@@ -19,10 +19,7 @@ package org.jetbrains.android.anko.functional
 import org.jetbrains.android.anko.ClassProcessor
 import org.jetbrains.android.anko.DSLGenerator
 import org.jetbrains.android.anko.TestAnkoConfiguration
-import org.jetbrains.android.anko.config.AnkoBuilderContext
-import org.jetbrains.android.anko.config.AnkoConfiguration
-import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.config.LogManager
+import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.utils.JarFileFilter
 import org.junit.Assert.*
 import java.io.File
@@ -76,11 +73,11 @@ abstract class AbstractFunctionalTest {
             testDataFile: String,
             subsystem: AnkoFile,
             version: String,
-            settings: AnkoConfiguration.() -> Unit
+            settings: TestAnkoConfiguration.() -> Unit
     ) {
         val config = TestAnkoConfiguration(version).apply {
-            files.clear()
-            tunes.clear()
+            AnkoFile.values().forEach { options[it] = false }
+            Tune.values().forEach { options[it] = false }
             settings()
         }
 

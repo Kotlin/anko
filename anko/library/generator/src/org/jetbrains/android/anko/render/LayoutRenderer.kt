@@ -19,7 +19,7 @@ package org.jetbrains.android.anko.render
 import org.jetbrains.android.anko.args
 import org.jetbrains.android.anko.config.AnkoBuilderContext
 import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.config.ConfigurationOption
+import org.jetbrains.android.anko.config.ConfigurationKey
 import org.jetbrains.android.anko.formatLayoutParamsArguments
 import org.jetbrains.android.anko.formatLayoutParamsArgumentsInvoke
 import org.jetbrains.android.anko.generator.GenerationState
@@ -33,7 +33,7 @@ import java.util.*
 
 class LayoutRenderer(context: AnkoBuilderContext) : Renderer(context), ViewConstructorUtils {
 
-    override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.LAYOUTS)
+    override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.LAYOUTS)
 
     override fun processElements(state: GenerationState) = StringBuilder().apply {
         append("private val defaultInit: Any.() -> Unit = {}").appendln().appendln()

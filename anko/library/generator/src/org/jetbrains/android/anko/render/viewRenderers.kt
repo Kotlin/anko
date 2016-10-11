@@ -58,11 +58,11 @@ internal abstract class AbstractViewRenderer(
         context: AnkoBuilderContext
 ) : Renderer(context), ViewConstructorUtils {
 
-    override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.VIEWS, ConfigurationTune.HELPER_CONSTRUCTORS)
+    override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.VIEWS, Tune.HELPER_CONSTRUCTORS)
 
     protected fun renderViews(views: Iterable<ViewElement>, nameResolver: (ClassNode) -> String): String = StringBuilder().apply {
         val renderViews = config[AnkoFile.VIEWS]
-        val renderHelperConstructors = config[ConfigurationTune.HELPER_CONSTRUCTORS]
+        val renderHelperConstructors = config[Tune.HELPER_CONSTRUCTORS]
 
         val factoryClass = ViewFactoryClass(config, this@AbstractViewRenderer.javaClass.simpleName.replace("Renderer", ""))
         val functions = StringBuilder().apply {
@@ -120,7 +120,7 @@ internal abstract class AbstractViewRenderer(
         }
 
         append(renderView("ViewManager"))
-        if (config[ConfigurationTune.TOP_LEVEL_DSL_ITEMS] && isContainer) {
+        if (config[Tune.TOP_LEVEL_DSL_ITEMS] && isContainer) {
             append(renderView("Context"))
             append(renderView("Activity"))
         }

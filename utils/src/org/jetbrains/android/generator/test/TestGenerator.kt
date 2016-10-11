@@ -17,19 +17,18 @@
 package org.jetbrains.android.generator.test
 
 import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.config.ConfigurationTune
+import org.jetbrains.android.anko.config.Tune
 
 fun Context.generate() {
-
     functionalDslTests {
         functionalDslTest("ComplexListenerClassTest", AnkoFile.LISTENERS) {
             file(AnkoFile.LISTENERS)
-            tune(ConfigurationTune.COMPLEX_LISTENER_CLASSES)
+            tune(Tune.COMPLEX_LISTENER_CLASSES)
         }
 
         functionalDslTest("ComplexListenerSetterTest", AnkoFile.LISTENERS) {
             file(AnkoFile.LISTENERS)
-            tune(ConfigurationTune.COMPLEX_LISTENER_SETTERS)
+            tune(Tune.COMPLEX_LISTENER_SETTERS)
         }
 
         functionalDslTest("LayoutsTest", AnkoFile.LAYOUTS) {
@@ -38,8 +37,8 @@ fun Context.generate() {
 
         functionalDslTest("ViewTest", AnkoFile.VIEWS) {
             file(AnkoFile.VIEWS)
-            tune(ConfigurationTune.TOP_LEVEL_DSL_ITEMS)
-            tune(ConfigurationTune.HELPER_CONSTRUCTORS)
+            tune(Tune.TOP_LEVEL_DSL_ITEMS)
+            tune(Tune.HELPER_CONSTRUCTORS)
         }
 
         functionalDslTest("PropertyTest", AnkoFile.PROPERTIES) {
@@ -52,7 +51,7 @@ fun Context.generate() {
 
         functionalDslTest("SimpleListenerTest", AnkoFile.LISTENERS) {
             file(AnkoFile.LISTENERS)
-            tune(ConfigurationTune.SIMPLE_LISTENERS)
+            tune(Tune.SIMPLE_LISTENERS)
         }
         
         functionalDslTest("SqlParserHelpersTest", AnkoFile.SQL_PARSER_HELPERS) {

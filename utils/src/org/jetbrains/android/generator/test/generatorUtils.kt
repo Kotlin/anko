@@ -17,11 +17,12 @@
 package org.jetbrains.android.generator.test
 
 import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.config.ConfigurationTune
+import org.jetbrains.android.anko.config.Tune
 import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
 import org.jetbrains.android.anko.utils.Buffer
 import org.jetbrains.android.anko.utils.toCamelCase
 import java.io.File
+import kotlin.reflect.KProperty
 
 fun Context.functionalDslTests(init: Buffer.(version: String) -> Unit) {
     val dir = File("./anko/library/generator/test/" + basePackage.replace('.', '/'), "/functional")
@@ -51,10 +52,10 @@ fun Buffer.functionalDslTest(name: String, mainAnkoFile: AnkoFile, configInit: T
 
     line("runFunctionalTest(\"$name.kt\", AnkoFile.${mainAnkoFile.name}, version) {")
     for (file in testConfiguration.files) {
-        line("files.add(AnkoFile.${file.name})")
+        line("options[AnkoFile.${file.name}] = true")
     }
     for (tune in testConfiguration.tunes) {
-        line("tunes.add(ConfigurationTune.${tune.name})")
+        line("options[Tune.${tune.name}] = true")
     }
     line("}")
     line("}").nl()
@@ -82,9 +83,9 @@ class Context(val versions: List<String>, val basePackage: String)
 
 class TestConfiguration {
     val files = hashSetOf<AnkoFile>()
-    val tunes = hashSetOf<ConfigurationTune>()
+    val tunes = hashSetOf<Tune>()
 
-    fun tune(tune: ConfigurationTune) {
+    fun tune(tune: Tune) {
         tunes.add(tune)
     }
 

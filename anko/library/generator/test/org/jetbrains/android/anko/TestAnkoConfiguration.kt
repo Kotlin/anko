@@ -18,12 +18,12 @@ package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.DefaultAnkoConfiguration
-import org.jetbrains.android.anko.config.Options
+import org.jetbrains.android.anko.config.MutableOptions
 import java.io.File
 
 open class TestAnkoConfiguration(
         version: String
-) : DefaultAnkoConfiguration(File("workdir/temp"), version, Options.create()) {
+) : DefaultAnkoConfiguration(File("workdir/temp"), version, MutableOptions.create()) {
     val tmpFiles: Map<AnkoFile, File> =
         AnkoFile.values().map { it to createTempTestFile(it.filename, ".kt") }.toMap()
 
@@ -32,6 +32,9 @@ open class TestAnkoConfiguration(
 
     override val generateImports = false
     override val generatePackage = false
+
+    override val options: MutableOptions
+        get() = super.options as MutableOptions
 
     override fun getOutputFile(ankoFile: AnkoFile): File {
         return tmpFiles[ankoFile]!!
