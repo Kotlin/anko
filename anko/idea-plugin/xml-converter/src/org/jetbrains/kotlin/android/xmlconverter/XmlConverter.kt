@@ -44,7 +44,7 @@ private class Widget(val name: String, val attrs: List<KeyValuePair>, val layout
 class XmlReference(val packageName: String, val type: String, val value: String)
 
 object XmlConverter {
-    fun convert(xml: String, options: Set<String> = setOf()): String {
+    fun convert(xml: String, options: Set<String> = emptySet()): String {
         val layout = xml.parseXml()
         val root = layout.documentElement
         val ids = TreeSet<String>()
@@ -121,7 +121,7 @@ fun main(args: Array<String>) {
 
     val xmlFile = File(args[0])
     val ktFile = File(args[1])
-    val options = if (args.size > 2) args[2].split(',').toSet() else setOf()
+    val options = if (args.size > 2) args[2].split(',').toSet() else emptySet()
 
     if (!xmlFile.exists()) {
         println("$xmlFile does not exist. Aborting")

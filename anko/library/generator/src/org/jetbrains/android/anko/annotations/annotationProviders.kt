@@ -30,11 +30,11 @@ interface AnnotationProvider {
 }
 
 class ZipFileAnnotationProvider(val zipFile: File) : AnnotationProvider {
-    private val archive: ZipFile by lazy { ZipFile(zipFile) }
+    private val archive by lazy { ZipFile(zipFile) }
 
     override fun getExternalAnnotations(packageName: String): Map<String, Set<ExternalAnnotation>> {
         val entryName = packageName.replace('.', '/') + "/annotations.xml"
-        val entry = archive.getEntry(entryName) ?: return mapOf()
+        val entry = archive.getEntry(entryName) ?: return emptyMap()
 
         return archive.getInputStream(entry).reader().use {
             parseAnnotations(parseXml(it.readText()))
@@ -43,10 +43,9 @@ class ZipFileAnnotationProvider(val zipFile: File) : AnnotationProvider {
 }
 
 class DirectoryAnnotationProvider(val directory: File) : AnnotationProvider {
-
     override fun getExternalAnnotations(packageName: String): Map<String, Set<ExternalAnnotation>> {
         val annotationFile = File(directory, packageName.replace('.', '/') + "/annotations.xml")
-        if (!annotationFile.exists()) return mapOf()
+        if (!annotationFile.exists()) return emptyMap()
         return parseAnnotations(parseXml(annotationFile.readText()))
     }
 
@@ -70,8 +69,11 @@ class CompoundAnnotationProvider(vararg private val providers: AnnotationProvide
             for ((key, value) in providerAnnotationMap) {
                 val existingAnnotations = map[key]
 
-                if (existingAnnotations == null) map.put(key, value)
-                else map.put(key, (value + existingAnnotations).toSet())
+                if (existingAnnotations == null) {
+                    map.put(key, value)
+                } else {
+                    map.put(key, (value + existingAnnotations).toSet())
+                }
             }
         }
 

@@ -57,13 +57,13 @@ class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
             false // Do not look up annotations for simple types
         } else if (getter != null) {
             val annotationSignature = "${getter.clazz.fqName} $javaReturnType ${getter.method.name}()"
-            val foundAnnotations = config.annotationManager.findAnnotationsFor(annotationSignature)
+            val foundAnnotations = config.annotationManager.findExternalAnnotations(annotationSignature)
             ExternalAnnotation.NotNull !in foundAnnotations
         } else true // Default is nullable
 
         val nullability = if (nullable) "?" else ""
 
-        val otherSetters = if (property.setters.size > 1) property.setters.drop(1) else listOf()
+        val otherSetters = if (property.setters.size > 1) property.setters.drop(1) else emptyList()
 
         if (property.getter != null) {
             return buffer {

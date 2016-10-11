@@ -71,7 +71,7 @@ fun main(args: Array<String>) {
     val versions = File("./workdir/original/")
             .listFiles(AndroidVersionDirectoryFilter())
             ?.map { it.name }
-            ?: listOf()
+            ?: emptyList()
 
     Context(versions, "org.jetbrains.android.anko").generate()
 }

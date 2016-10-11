@@ -109,8 +109,8 @@ class ConvertAction : AnAction() {
     }
 
     private fun selectedLayoutFiles(e: AnActionEvent): List<FileToConvert> {
-        val virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY) ?: return listOf()
-        val project = CommonDataKeys.PROJECT.getData(e.dataContext) ?: return listOf()
+        val virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY) ?: return emptyList()
+        val project = CommonDataKeys.PROJECT.getData(e.dataContext) ?: return emptyList()
         return allFilesToConvert(virtualFiles, project)
     }
 

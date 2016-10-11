@@ -38,7 +38,7 @@ internal val MethodNode.args: Array<Type>
     get() = Type.getArgumentTypes(desc)
 
 internal fun buildKotlinSignature(node: MethodNode): List<String> {
-    if (node.signature == null) return listOf()
+    if (node.signature == null) return emptyList()
 
     val parsed = parseGenericMethodSignature(node.signature)
     return parsed.valueParameters.map { genericTypeToStr(it.genericType) }
@@ -65,7 +65,7 @@ internal fun MethodNodeWithClass.processArguments(
 
         val annotationSignature = "${clazz.fqName} ${method.returnType.asJavaString()} ${method.name}($javaArgsString) $index"
         val nullable = !arg.isSimpleType &&
-                ExternalAnnotation.NotNull !in config.annotationManager.findAnnotationsFor(annotationSignature)
+                ExternalAnnotation.NotNull !in config.annotationManager.findExternalAnnotations(annotationSignature)
         val argType = if (nullable) rawArgType + "?" else rawArgType
 
         val explicitNotNull = if (argType.endsWith("?")) "!!" else ""

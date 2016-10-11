@@ -31,7 +31,7 @@ internal interface ClassTreeUtils {
             classNode.methods
                     ?.map { MethodNodeWithClass(classNode, it) }
                     ?.filter { !isExcluded(it) }
-                    ?: listOf()
+                    ?: emptyList()
         }
     }
 

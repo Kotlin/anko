@@ -34,7 +34,7 @@ object HierarchyCollector {
                 .first { it.listFiles { file -> file.name == "android.jar" }?.isNotEmpty() ?: false }
         val androidJar = ver.listFiles { file -> file.name == "android.jar" }!!.first()
 
-        val classTree = ClassProcessor(listOf(androidJar), listOf()).genClassTree()
+        val classTree = ClassProcessor(listOf(androidJar), emptyList()).genClassTree()
         val viewClasses = classTree.filter { it.isView(classTree) && !it.isInner && it.name.startsWith("android/widget/") }
 
         val hierarchy = viewClasses.map {

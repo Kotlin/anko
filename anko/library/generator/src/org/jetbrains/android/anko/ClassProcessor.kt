@@ -24,7 +24,6 @@ import java.io.InputStream
 import java.util.zip.ZipFile
 
 class ClassProcessor(val platformJars: List<File>, val versionJars: List<File>) {
-
     fun genClassTree(): ClassTree {
         val classTree = ClassTree()
         for (classData in extractClasses()) {
@@ -51,10 +50,10 @@ class ClassProcessor(val platformJars: List<File>, val versionJars: List<File>) 
 
     private fun processClassData(classData: InputStream): ClassNode {
         return classData.use {
-            val cn = ClassNode()
-            val cr = ClassReader(classData)
-            cr.accept(cn, 0)
-            cn
+            val classNode = ClassNode()
+            val classReader = ClassReader(classData)
+            classReader.accept(classNode, 0)
+            classNode
         }
     }
 

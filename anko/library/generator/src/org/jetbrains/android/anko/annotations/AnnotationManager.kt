@@ -24,10 +24,10 @@ import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
 
 class AnnotationManager(private val provider: AnnotationProvider) {
-    fun findAnnotationsFor(q: String): Set<ExternalAnnotation> {
-        val packageName = getPackageName(q.substringBefore(' '))
+    fun findExternalAnnotations(declarationFqName: String): Set<ExternalAnnotation> {
+        val packageName = getPackageName(declarationFqName.substringBefore(' '))
         val annotations = provider.getExternalAnnotations(packageName)
-        return annotations[q] ?: setOf()
+        return annotations[declarationFqName] ?: emptySet()
     }
 }
 

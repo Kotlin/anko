@@ -22,7 +22,7 @@ import java.io.File
 
 open class TestAnkoConfiguration(
         version: String
-) : DefaultAnkoConfiguration(File("workdir/temp"), version, setOf()) {
+) : DefaultAnkoConfiguration(File("workdir/temp"), version, emptySet()) {
     val tmpFiles: Map<AnkoFile, File> =
         AnkoFile.values().map { it to createTempTestFile(it.filename, ".kt") }.toMap()
 

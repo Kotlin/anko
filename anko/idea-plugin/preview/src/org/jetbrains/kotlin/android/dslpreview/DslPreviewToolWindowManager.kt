@@ -344,7 +344,7 @@ class DslPreviewToolWindowManager(
         if (DumbService.isDumb(myProject)) return emptyList()
         val baseClasses = JavaPsiFacade.getInstance(myProject)
                 .findClasses(baseClassName, GlobalSearchScope.allScope(myProject))
-        if (baseClasses.size == 0) return listOf()
+        if (baseClasses.size == 0) return emptyList()
 
         try {
             val cacheService = KotlinCacheService.getInstance(myProject)
@@ -357,7 +357,7 @@ class DslPreviewToolWindowManager(
             return previewClasses
         }
         catch (e: IndexNotReadyException) {
-            return listOf()
+            return emptyList()
         }
     }
 

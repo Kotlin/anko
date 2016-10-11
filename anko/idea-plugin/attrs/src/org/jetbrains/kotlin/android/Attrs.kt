@@ -24,7 +24,7 @@ data class NameValue(
 
 data class Attr(
         val name: String = "",
-        val format: List<String> = listOf(),
+        val format: List<String> = emptyList(),
         val flags: List<NameValue>? = null,
         val enum: List<NameValue>? = null)
 
@@ -32,11 +32,11 @@ val NoAttr: Attr = Attr()
 
 data class Styleable(
         val name: String = "",
-        val attrs: List<Attr> = listOf())
+        val attrs: List<Attr> = emptyList())
 
 data class Attrs(
-        val free: List<Attr> = listOf(),
-        val styleables: Map<String, Styleable> = mapOf())
+        val free: List<Attr> = emptyList(),
+        val styleables: Map<String, Styleable> = emptyMap())
 
 fun readResource(filename: String): String {
     return Attrs::class.java.classLoader.getResourceAsStream(filename)?.reader()?.readText()
