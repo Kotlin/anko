@@ -17,7 +17,6 @@
 package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.config.AnkoBuilderContext
-import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.config.WithContext
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.render.RenderFacade

@@ -75,6 +75,4 @@ class ListenerGenerator : Generator<ListenerElement> {
             }
         }
     }
-
-    private fun String.dropLast(n: Int) = if (n >= length) "" else substring(0, length - n)
 }

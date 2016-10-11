@@ -16,7 +16,10 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.config.*
+import org.jetbrains.android.anko.config.AnkoBuilderContext
+import org.jetbrains.android.anko.config.ConfigurationKey
+import org.jetbrains.android.anko.config.WithContext
+import org.jetbrains.android.anko.config.get
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.templates.TemplateContext
 import org.jetbrains.android.anko.utils.ReflectionUtils

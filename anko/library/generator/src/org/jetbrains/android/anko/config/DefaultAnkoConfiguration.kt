@@ -19,19 +19,19 @@ package org.jetbrains.android.anko.config
 import java.io.File
 
 open class DefaultAnkoConfiguration(
-        override val outputDirectory: File,
-        override val artifactName: String,
+        final override val outputDirectory: File,
+        final override val artifactName: String,
         override val options: Options
 ) : AnkoConfiguration() {
-    override val outputPackage: String
+    final override val outputPackage: String
 
-    override val excludedClasses = File("anko/props/excluded_classes.txt").readLines().toSet()
+    final override val excludedClasses = File("anko/props/excluded_classes.txt").readLines().toSet()
 
-    override val excludedMethods = File("anko/props/excluded_methods.txt").readLines().toSet()
+    final override val excludedMethods = File("anko/props/excluded_methods.txt").readLines().toSet()
 
-    override val excludedProperties = File("anko/props/excluded_properties.txt").readLines().toSet()
+    final override val excludedProperties = File("anko/props/excluded_properties.txt").readLines().toSet()
 
-    override val propertiesWithoutGetters = File("anko/props/properties_without_getters.txt").readLines().toSet()
+    final override val propertiesWithoutGetters = File("anko/props/properties_without_getters.txt").readLines().toSet()
 
     init {
         val artifactType = getTargetArtifactType()

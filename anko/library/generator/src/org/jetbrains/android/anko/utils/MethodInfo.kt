@@ -18,7 +18,6 @@ package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.annotations.ExternalAnnotation
 import org.jetbrains.android.anko.config.AnkoBuilderContext
-import org.jetbrains.android.anko.config.AnkoConfiguration
 import org.jetbrains.android.anko.utils.*
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.Type
