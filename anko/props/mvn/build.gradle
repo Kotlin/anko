@@ -4,7 +4,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.android.tools.build:gradle:2.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
     }
@@ -53,7 +53,7 @@ dependencies {
     if ("%ARTIFACT_NAME" != "common" && "%ARTIFACT_NAME" != "stubs") {
         provided files('../../zip/anko-common.jar')
     }
-    if ("%ARTIFACT_NAME" != "common" && !"%ARTIFACT_NAME".startsWith("sdk")) {
+    if ("%ARTIFACT_NAME" != "common" && "%ARTIFACT_NAME" != "stubs" && !"%ARTIFACT_NAME".startsWith("sdk")) {
         provided files('../../zip/anko-sdk%SDK_VERSION.jar')
     }
 }
