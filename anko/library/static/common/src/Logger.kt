@@ -17,6 +17,7 @@
 package org.jetbrains.anko
 
 import android.util.Log
+import kotlin.reflect.KClass
 
 /**
  * Interface for the Anko logger.
@@ -37,15 +38,16 @@ interface AnkoLogger {
      * Note that the tag length should not be more than 23 symbols.
      */
     val loggerTag: String
-        get() {
-            val tag = javaClass.simpleName
-            return if (tag.length <= 23) {
-                tag
-            } else {
-                tag.substring(0, 23)
-            }
-        }
+        get() = getTag(javaClass)
 }
+
+fun AnkoLogger(clazz: Class<*>): AnkoLogger = object : AnkoLogger {
+    override val loggerTag = getTag(clazz)
+}
+
+fun AnkoLogger(clazz: KClass<*>): AnkoLogger = AnkoLogger(clazz.java)
+
+fun AnkoLogger(obj: Any): AnkoLogger = AnkoLogger(obj.javaClass)
 
 /**
  * Send a log message with the [Log.VERBOSE] severity.
@@ -254,5 +256,14 @@ private inline fun log(
         } else {
             f(tag, message?.toString() ?: "null")
         }
+    }
+}
+
+private fun getTag(clazz: Class<*>): String {
+    val tag = clazz.simpleName
+    return if (tag.length <= 23) {
+        tag
+    } else {
+        tag.substring(0, 23)
     }
 }
