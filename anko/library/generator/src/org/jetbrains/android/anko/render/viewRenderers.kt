@@ -16,7 +16,7 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.*
+import org.jetbrains.android.anko.args
 import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.ViewElement
@@ -106,7 +106,7 @@ internal abstract class AbstractViewRenderer(
                 "if (Build.VERSION.SDK_INT < 21) $className($constructorArgs) else $className21($constructorArgs)"
             else
                 "$className($constructorArgs)"
-            add("val $factoryPropertyName = { ctx: Context -> $constructorCall }")
+            add("val $factoryPropertyName = { ctx: Context, defStyleAttrs: Int -> $constructorCall }")
         }
 
         fun renderView(receiver: String) = render("view") {

@@ -181,8 +181,8 @@
         <get-maven-library prefix="net/sf/proguard" lib="proguard-anttask" version="5.1" target.jar.name.base="proguard-anttask" src="false"/>
 
         <!-- JarJar -->
-        <get src="http://jarjar.googlecode.com/files/jarjar-1.4.jar" dest="dependencies/download/jarjar-1.4.jar" usetimestamp="true"/>
-        <copy file="dependencies/download/jarjar-1.4.jar" tofile="dependencies/jarjar.jar" overwrite="true"/>
+        <get src="http://search.maven.org/remotecontent?filepath=org/pantsbuild/jarjar/jarjar/1.5/jarjar-1.5.jar" dest="dependencies/download/jarjar-1.5.jar" usetimestamp="true"/>
+        <copy file="dependencies/download/jarjar-1.5.jar" tofile="dependencies/jarjar.jar" overwrite="true"/>
 
         <!-- ant 1.8.2 -->
         <get-ant-library version="1.8.2" folderName="ant-1.8"/>
