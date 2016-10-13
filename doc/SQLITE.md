@@ -158,7 +158,7 @@ Method                                | Description
 `distinct(Boolean)`                   | Distinct query
 `where(String)`                       | Specify raw String `where` query
 `where(String, args)` :star:          | Specify a `where` query with arguments
-`where?(String, args)`                | Specify a `where` query with `?` mark arguments
+`whereSimple(String, args)`           | Specify a `where` query with `?` mark arguments
 `orderBy(String, [ASC/DESC])`         | Order by this column
 `groupBy(String)`                     | Group by this column
 `limit(count: Int)`                   | Limit query result row count
@@ -177,7 +177,7 @@ db.select("User", "name")
 
 Here, `{userId}` part will be replaced with `42` and `{userName}` — with `'John'`. Value will be escaped if its type is not numeric (`Int`, `Float` etc.) or `Boolean`. For any other types, `toString()` representation will be used.
 
-`where?` function accepts arguments of `String` type. It works the same as [`query()`](http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html#query(java.lang.String,%20java.lang.String[],%20java.lang.String,%20java.lang.String[],%20java.lang.String,%20java.lang.String,%20java.lang.String)) from `SQLiteDatabase` (question marks `?` will be replaced with actual values from arguments).
+`whereSimple` function accepts arguments of `String` type. It works the same as [`query()`](http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html#query(java.lang.String,%20java.lang.String[],%20java.lang.String,%20java.lang.String[],%20java.lang.String,%20java.lang.String,%20java.lang.String)) from `SQLiteDatabase` (question marks `?` will be replaced with actual values from arguments).
 
 How can we execute the query? Using `exec()` function. It accepts an extension function which type is `Cursor.() -> T`. It simply launches the received extension function and then closes `Cursor` so you don't need to do it by yourself:
 
@@ -275,11 +275,11 @@ update("User", "name" to "Alice")
     .exec()
 ```
 
-Update also contains `where?()` function in case you want to provide query in a traditional way:
+Update also contains `whereSimple()` function in case you want to provide query in a traditional way:
 
 ```kotlin
 update("User", "name" to "Alice")
-    .`where?`("_id = ?", 42)
+    .`whereSimple`("_id = ?", 42)
     .exec()
 ```
 
