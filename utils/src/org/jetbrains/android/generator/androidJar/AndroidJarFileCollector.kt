@@ -42,7 +42,7 @@ class AndroidJarCollector {
                 "design" to listOf("support-v4", "appcompat-v7"),
                 "percent" to listOf("support-v4"))
 
-        private val ORIGINAL_DIR = File("workdir/original")
+        private val ORIGINAL_DIR = File("dependencies/androidJars")
         private val ANDROID_SDK = File("dependencies/android-sdk")
         private val PLATFORMS_DIR = File(ANDROID_SDK, "platforms")
         private val SUPPORT_PACKAGES_DIR = File(ANDROID_SDK, "extras/android/m2repository/com/android/support")
@@ -162,8 +162,7 @@ class AndroidJarCollector {
     }
 
     private fun createDirs() {
-        File("workdir/original").mkdirs()
-        File("workdir/temp").mkdirs()
+        ORIGINAL_DIR.mkdirs()
     }
 
     private fun findSupportFiles(): List<File> {

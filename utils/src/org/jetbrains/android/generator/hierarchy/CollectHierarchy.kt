@@ -30,7 +30,7 @@ object HierarchyCollector {
 
     @JvmStatic
     fun collect() {
-        val ver = File("workdir/original").listFiles { file -> file.name.matches("[0-9]+".toRegex()) }!!
+        val ver = File("dependencies/androidJars").listFiles { file -> file.name.matches("[0-9]+".toRegex()) }!!
                 .first { it.listFiles { file -> file.name == "android.jar" }?.isNotEmpty() ?: false }
         val androidJar = ver.listFiles { file -> file.name == "android.jar" }!!.first()
 

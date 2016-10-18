@@ -5,7 +5,7 @@ mainClassName = "org.jetbrains.android.anko.Launcher"
 
 run {
     args = ["versions", "generate",
-            "--originalDirectory=workdir/original",
+            "--originalDirectory=dependencies/androidJars",
             "--outputDirectory=anko/library/generated"]
 
     workingDir = rootDir
