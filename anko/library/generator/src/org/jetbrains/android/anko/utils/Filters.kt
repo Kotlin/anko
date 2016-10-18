@@ -25,7 +25,7 @@ internal class JarFileFilter : FileFilter {
     }
 }
 
-class AndroidVersionDirectoryFilter : FileFilter {
+class AndroidArtifactDirectoryFilter : FileFilter {
     override fun accept(path: File): Boolean {
         return path.isDirectory && !path.isHidden
                 && path.listFiles { file -> file.name.endsWith(".jar") }?.isNotEmpty() ?: false

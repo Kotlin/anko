@@ -1,0 +1,13 @@
+sourceSets {
+    test {
+        java.srcDirs = ['test']
+        kotlin.srcDirs = ['test']
+    }
+}
+
+dependencies {
+    compile project(':ide:plugin-classpath')
+
+    compile project(':ide:attrs')
+    compile 'org.jetbrains.kotlinx:kotlinx.dom:0.0.8'
+}

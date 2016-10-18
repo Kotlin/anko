@@ -1,0 +1,65 @@
+include ':utils'
+
+include ':generator'
+include ':stubs'
+include ':robolectricTests'
+
+include ':static:common'
+include ':static:platform'
+include ':static:sqlite'
+include ':static:supportV4'
+
+include ':generated'
+include ':generated:appcompat-v7'
+include ':generated:cardview-v7'
+include ':generated:common'
+include ':generated:design'
+include ':generated:gridlayout-v7'
+include ':generated:percent'
+include ':generated:recyclerview-v7'
+include ':generated:sdk15'
+include ':generated:sdk19'
+include ':generated:sdk21'
+include ':generated:sdk23'
+include ':generated:sqlite'
+include ':generated:support-v4'
+
+include ':ide:plugin-classpath'
+include ':ide:attrs'
+include ':ide:intentions'
+include ':ide:preview'
+include ':ide:xml-converter'
+
+project(':utils').projectDir = new File(rootDir, 'utils')
+
+project(':generator').projectDir = new File(rootDir, 'anko/library/generator')
+project(':stubs').projectDir = new File(rootDir, 'anko/library/stubs')
+project(':robolectricTests').projectDir = new File(rootDir, 'anko/library/robolectricTests')
+
+project(':static').projectDir = new File(rootDir, 'anko/library/static')
+project(':static:common').projectDir = new File(rootDir, 'anko/library/static/common')
+project(':static:platform').projectDir = new File(rootDir, 'anko/library/static/platform')
+project(':static:sqlite').projectDir = new File(rootDir, 'anko/library/static/sqlite')
+project(':static:supportV4').projectDir = new File(rootDir, 'anko/library/static/supportV4')
+
+project(':generated').projectDir = new File(rootDir, 'anko/library/generated')
+project(':generated:appcompat-v7').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7')
+project(':generated:cardview-v7').projectDir = new File(rootDir, 'anko/library/generated/cardview-v7')
+project(':generated:common').projectDir = new File(rootDir, 'anko/library/generated/common')
+project(':generated:design').projectDir = new File(rootDir, 'anko/library/generated/design')
+project(':generated:gridlayout-v7').projectDir = new File(rootDir, 'anko/library/generated/gridlayout-v7')
+project(':generated:percent').projectDir = new File(rootDir, 'anko/library/generated/percent')
+project(':generated:recyclerview-v7').projectDir = new File(rootDir, 'anko/library/generated/recyclerview-v7')
+project(':generated:sdk15').projectDir = new File(rootDir, 'anko/library/generated/sdk15')
+project(':generated:sdk19').projectDir = new File(rootDir, 'anko/library/generated/sdk19')
+project(':generated:sdk21').projectDir = new File(rootDir, 'anko/library/generated/sdk21')
+project(':generated:sdk23').projectDir = new File(rootDir, 'anko/library/generated/sdk23')
+project(':generated:sqlite').projectDir = new File(rootDir, 'anko/library/generated/sqlite')
+project(':generated:support-v4').projectDir = new File(rootDir, 'anko/library/generated/support-v4')
+
+project(':ide').projectDir = new File(rootDir, 'anko/idea-plugin')
+project(':ide:plugin-classpath').projectDir = new File(rootDir, 'anko/idea-plugin/plugin-classpath')
+project(':ide:attrs').projectDir = new File(rootDir, 'anko/idea-plugin/attrs')
+project(':ide:intentions').projectDir = new File(rootDir, 'anko/idea-plugin/intentions')
+project(':ide:preview').projectDir = new File(rootDir, 'anko/idea-plugin/preview')
+project(':ide:xml-converter').projectDir = new File(rootDir, 'anko/idea-plugin/xml-converter')

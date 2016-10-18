@@ -1,0 +1,6 @@
+apply from: '../generated.gradle'
+
+dependencies {
+    provided "com.android.support:percent:$SUPPORT_ARTIFACT_VERSION"
+    provided project(':generated:common')
+}

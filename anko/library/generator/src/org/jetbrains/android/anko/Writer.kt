@@ -21,7 +21,6 @@ import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.render.*
 import org.jetbrains.android.anko.utils.toCamelCase
 import java.io.Closeable
-import java.io.File
 import java.io.PrintWriter
 
 class Writer(private val renderFacade: RenderFacade): WithContext {
@@ -33,19 +32,6 @@ class Writer(private val renderFacade: RenderFacade): WithContext {
         values().forEach { file ->
             if (config[file] && versionType in file.types && file.shouldBeWritten(config)) {
                 write(file)
-            }
-        }
-
-        val moduleName = when (versionType) {
-            TargetArtifactType.PLATFORM -> "platform"
-            else -> config.artifactName.toCamelCase('-', firstCapital = false)
-        }
-
-        val staticFilesDir = File("anko/library/static/$moduleName/src")
-
-        if (config.generateStaticFiles) {
-            staticFilesDir.listFiles()?.forEach { file ->
-                file.copyRecursively(File(config.sourceOutputDirectory, file.name))
             }
         }
     }

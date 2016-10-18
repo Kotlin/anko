@@ -1,0 +1,5 @@
+apply from: '../generated.gradle'
+
+dependencies {
+    compile project(':static:common')
+}

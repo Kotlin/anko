@@ -24,7 +24,6 @@ import org.jetbrains.android.anko.utils.ClassTree
 import java.io.File
 
 class DSLGenerator(
-    val sourceDirectory: File,
     val platformJars: List<File>,
     val versionJars: List<File>,
     override val context: AnkoBuilderContext,
@@ -35,10 +34,5 @@ class DSLGenerator(
         val generationState = GenerationState(classTree, context)
         val renderer = RenderFacade(generationState)
         Writer(renderer).write()
-
-        if (config.generateMavenArtifact) {
-            val sdkVersion = File(sourceDirectory, "version.txt").readText()
-            generateMavenArtifact(config.outputDirectory, config.artifactName, sdkVersion)
-        }
     }
 }

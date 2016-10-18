@@ -1,0 +1,7 @@
+apply from: '../generated.gradle'
+
+dependencies {
+    provided "com.android.support:appcompat-v7:$SUPPORT_ARTIFACT_VERSION"
+    provided project(':generated:common')
+    provided project(':generated:support-v4')
+}

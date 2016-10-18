@@ -1,0 +1,26 @@
+apply plugin: 'com.github.johnrengelman.shadow'
+
+configurations {
+    shadow
+    compile.extendsFrom shadow
+}
+
+dependencies {
+    compile project(':ide:plugin-classpath')
+
+    shadow 'org.jetbrains.kotlinx:kotlinx.dom:0.0.8'
+
+    shadow(project(':ide:attrs')) {
+        transitive = false
+    }
+    shadow(project(':ide:intentions')) {
+        transitive = false
+    }
+    shadow(project(':ide:xml-converter')) {
+        transitive = false
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadow]
+}

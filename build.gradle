@@ -1,40 +1,57 @@
-configurations {
-    gson
-    jmustache
-    jeromq
-    javaparser
-    kotlindom
-}
+buildscript {
+    ext.kotlin_version = '1.0.4'
 
-dependencies {
-    gson 'com.google.code.gson:gson:2.4'
-    jmustache 'com.samskivert:jmustache:1.10'
-    javaparser 'com.github.javaparser:javaparser-core:2.1.0'
-    kotlindom 'org.jetbrains.kotlinx:kotlinx.dom:0.0.8'
-}
+    ext.ANKO_VERSION = '0.9.1'
+    ext.ANKO_VERSION_CODE = 91
 
-repositories {
-    mavenCentral()
-    maven { url "http://dl.bintray.com/kotlin/kotlinx.dom" }
-    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
-}
+    ext.COMPILE_SDK_VERSION = 23
+    ext.BUILD_TOOLS_VERSION = "23.0.1"
+    ext.MIN_SDK_VERSION = 15
+    ext.TARGET_SDK_VERSION = 23
+    ext.SUPPORT_ARTIFACT_VERSION = "23.0.0"
 
-task(collectDependencies) << {
-    groovy.util.AntBuilder antBuilder = new groovy.util.AntBuilder()
-    for (configuration in project.getConfigurations().asList()) {
-        println("Resolving configuration " + configuration.name)
+    ext.PROJECT_URL = 'https://github.com/JetBrains/anko'
+    ext.SCM_URL = 'https://github.com/JetBrains/anko.git'
+    ext.CONNECTION_URL = 'scm:git:https://github.com/JetBrains/anko.git'
+    ext.DEVELOPER_CONNECTION_URL = 'scm:git:https://github.com/JetBrains/anko'
 
-        Set<File> files = configuration.resolve()
-        if (files.size() < 1) continue
+    ext.POM_ARTIFACT_GROUP = 'org.jetbrains.anko'
 
-        File targetDirectory = new File("dependencies", configuration.name)
-        targetDirectory.mkdirs()
+    repositories {
+        jcenter()
+    }
 
-        for (file in files) {
-            copy {
-                from file
-                into targetDirectory
-            }
-        }
+    dependencies {
+        classpath "com.android.tools.build:gradle:2.1.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
     }
 }
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "http://dl.bintray.com/kotlin/kotlinx.dom" }
+    }
+}
+
+task make(dependsOn: [
+        ':ide:preview:shadowJar',
+        ':generator:run',
+        ':generator:test',
+        ':robolectricTests:test',
+        ':generated:appcompat-v7:assembleRelease',
+        ':generated:cardview-v7:assembleRelease',
+        ':generated:common:assembleRelease',
+        ':generated:design:assembleRelease',
+        ':generated:gridlayout-v7:assembleRelease',
+        ':generated:percent:assembleRelease',
+        ':generated:recyclerview-v7:assembleRelease',
+        ':generated:sdk15:assembleRelease',
+        ':generated:sdk19:assembleRelease',
+        ':generated:sdk21:assembleRelease',
+        ':generated:sdk23:assembleRelease',
+        ':generated:sqlite:assembleRelease',
+        ':generated:support-v4:assembleRelease'
+])

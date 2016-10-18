@@ -1,0 +1,15 @@
+apply plugin: 'kotlin'
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+        kotlin.srcDirs = ['src']
+    }
+}
+
+dependencies {
+    compile project(':generator')
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'org.ow2.asm:asm-debug-all:5.1'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
