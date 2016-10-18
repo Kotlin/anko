@@ -1,0 +1,33 @@
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+mainClassName = "org.jetbrains.android.anko.Launcher"
+
+run {
+    args = ["versions", "generate",
+            "--originalDirectory=workdir/original",
+            "--outputDirectory=anko/library/generated"]
+
+    workingDir = rootDir
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+        kotlin.srcDirs = ['src']
+    }
+    test {
+        java.srcDirs = ['test']
+        kotlin.srcDirs = ['test']
+    }
+}
+
+dependencies {
+    compile 'com.github.javaparser:javaparser-core:2.1.0'
+    compile 'com.samskivert:jmustache:1.10'
+    compile 'org.ow2.asm:asm-debug-all:5.1'
+    compile 'org.jetbrains.kotlinx:kotlinx.dom:0.0.8'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    testCompile 'junit:junit:4.12'
+}

@@ -1,0 +1,5 @@
+dependencies {
+    compile fileTree(dir: new File(project.rootDir, "ideaSDK/lib"), include: ['*.jar'])
+    compile fileTree(dir: new File(project.rootDir, "ideaSDK/plugins/android/lib"), include: ['*.jar'])
+    compile fileTree(dir: new File(project.rootDir, "dependencies/Kotlin/lib"), include: ['kotlin-plugin.jar'])
+}

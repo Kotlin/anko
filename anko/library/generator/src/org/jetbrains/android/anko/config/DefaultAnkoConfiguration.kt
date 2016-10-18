@@ -47,7 +47,7 @@ open class DefaultAnkoConfiguration(
         }
     }
 
-    override val sourceOutputDirectory = File(outputDirectory, "src/main/kotlin/" + outputPackage.replace('.', '/'))
+    override val sourceOutputDirectory = File(outputDirectory, "src")
 
     override fun getOutputFile(ankoFile: AnkoFile): File {
         return File(sourceOutputDirectory, ankoFile.filename)

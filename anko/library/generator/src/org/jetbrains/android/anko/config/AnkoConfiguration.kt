@@ -22,11 +22,8 @@ import java.io.File
 abstract class AnkoConfiguration {
     open val indent: String = "    "
 
-    open val generateStaticFiles: Boolean = true
-
     open val generateImports: Boolean = true
     open val generatePackage: Boolean = true
-    open val generateMavenArtifact: Boolean = true
 
     abstract val artifactName: String
 

@@ -1,5 +1,7 @@
 package org.jetbrains.android.anko.config
 
+import java.io.File
+
 interface ConfigurationKey<out T : Any> {
     val name: String
     val defaultValue: T?
@@ -23,7 +25,15 @@ val LOG_LEVEL = CliConfiguationKey(
         defaultValue = LogManager.LogLevel.WARNING,
         mapper = { LogManager.LogLevel.valueOf(it) })
 
-val CLI_CONFIGURATION_KEYS: List<CliConfiguationKey<Any>> = listOf(LOG_LEVEL)
+val ORIGINAL_DIRECTORY = CliConfiguationKey(
+        "originalDirectory",
+        mapper = ::File)
+
+val OUTPUT_DIRECTORY = CliConfiguationKey(
+        "outputDirectory",
+        mapper = ::File)
+
+val CLI_CONFIGURATION_KEYS: List<CliConfiguationKey<Any>> = listOf(LOG_LEVEL, ORIGINAL_DIRECTORY, OUTPUT_DIRECTORY)
 
 interface Options {
     operator fun <T : Any> get(key: ConfigurationKey<T>): T = opt(key)!!

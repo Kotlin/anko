@@ -17,7 +17,7 @@
 package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.config.*
-import org.jetbrains.android.anko.utils.AndroidVersionDirectoryFilter
+import org.jetbrains.android.anko.utils.AndroidArtifactDirectoryFilter
 import org.jetbrains.android.anko.utils.JarFileFilter
 import java.io.File
 import java.util.concurrent.CountDownLatch
@@ -30,7 +30,7 @@ object Launcher {
 
         val options = MutableOptions.create()
         rawOptions.map { it.drop(2) }.forEach { rawOption ->
-            val split = rawOption.split('=', limit = 1)
+            val split = rawOption.split('=', limit = 2)
             if (split.size != 2) error("Invalid option format: $rawOption")
             val key = split[0]
             val option: CliConfiguationKey<Any> =
@@ -43,10 +43,10 @@ object Launcher {
         if (tasks.isNotEmpty()) {
             tasks.forEach { taskName ->
                 println(":: $taskName")
+
                 when (taskName) {
                     "gen", "generate" -> gen(options)
-                    "clean" -> clean()
-                    "versions" -> versions()
+                    "versions" -> versions(options)
                     else -> {
                         println("Invalid task $taskName")
                         return
@@ -58,74 +58,47 @@ object Launcher {
     }
 }
 
-private fun clean() {
-    deleteDirectory(File("workdir/gen/"))
-}
-
-private fun versions() {
-    for (version in getVersionDirs()) {
+private fun versions(options: Options) {
+    for (version in getArtifactDirs(options[ORIGINAL_DIRECTORY])) {
         val (platformJars, versionJars) = getJars(version)
-        println(version.name)
-        (platformJars + versionJars).forEach { println("  ${it.name}") }
+        println(version.name + ": " + (platformJars + versionJars).joinToString())
     }
 }
 
-private fun deleteDirectory(f: File) {
-    if (!f.exists()) return
-
-    if (f.isDirectory) {
-        f.listFiles()?.forEach(::deleteDirectory)
+private fun getArtifactDirs(originalDir: File): Array<File> {
+    if (!originalDir.exists() || !originalDir.isDirectory) {
+        throw RuntimeException("\"${originalDir.absolutePath}\" directory does not exist.")
     }
-    if (!f.delete()) {
-        throw RuntimeException("Failed to delete ${f.absolutePath}")
-    }
-}
-
-private fun getVersionDirs(): Array<File> {
-    val original = File("workdir/original/")
-    if (!original.exists() || !original.isDirectory) {
-        throw RuntimeException("\"workdir/original\" directory does not exist.")
-    }
-    return original.listFiles(AndroidVersionDirectoryFilter()) ?: arrayOf<File>()
+    return originalDir.listFiles(AndroidArtifactDirectoryFilter()) ?: arrayOf<File>()
 }
 
 private fun getJars(version: File) = version.listFiles(JarFileFilter()).partition { it.name.startsWith("platform.") }
 
 private fun gen(options: Options) {
-    copyStubs()
+    val artifactDirs = getArtifactDirs(options[ORIGINAL_DIRECTORY])
+    val latch = CountDownLatch(artifactDirs.size)
+    val executor = Executors.newFixedThreadPool(artifactDirs.size)
+    val outputDirectory = options[OUTPUT_DIRECTORY]
 
-    val versionDirs = getVersionDirs()
-    val latch = CountDownLatch(versionDirs.size)
-    val executor = Executors.newFixedThreadPool(versionDirs.size)
-
-    for (versionDir in versionDirs) {
+    for (artifactDir in artifactDirs) {
         executor.submit {
-            val (platformJars, versionJars) = getJars(versionDir)
-            val versionName = versionDir.name
+            val (platformJars, versionJars) = getJars(artifactDir)
+            val artifactName = artifactDir.name
 
             if (platformJars.isNotEmpty()) {
-                val outputDirectory = File("workdir/gen/$versionName/")
-                val fileOutputDirectory = File(outputDirectory, "src/main/kotlin/")
+                val outputDirectoryForArtifact = File(outputDirectory, artifactName)
+                val fileOutputDirectory = File(outputDirectoryForArtifact, "src/")
                 if (!fileOutputDirectory.exists()) {
                     fileOutputDirectory.mkdirs()
                 }
 
-                val configuration = DefaultAnkoConfiguration(outputDirectory, versionName, options)
+                val configuration = DefaultAnkoConfiguration(outputDirectoryForArtifact, artifactName, options)
                 val context = AnkoBuilderContext.create(File("anko/props"), LogManager.LogLevel.INFO, configuration)
-                DSLGenerator(versionDir, platformJars, versionJars, context).run()
+                DSLGenerator(platformJars, versionJars, context).run()
                 latch.countDown()
             }
         }
     }
     latch.await()
     executor.shutdown()
-}
-
-private fun copyStubs() {
-    val sourceDir = File("anko/library/stubs/src")
-    val artifactDir = File("workdir/gen/stubs")
-    val sourcesDir = File(artifactDir, "src/main/kotlin")
-    sourcesDir.mkdirs()
-    sourceDir.copyRecursively(sourcesDir)
-    generateMavenArtifact(artifactDir, "stubs", "21")
 }
