@@ -28,7 +28,7 @@ class ServiceRenderer(context: AnkoBuilderContext) : Renderer(context) {
 
     override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.SERVICES)
 
-    override fun processElements(state: GenerationState) = StringBuilder().apply {
+    override fun processElements(state: GenerationState) = generatedFile { importList ->
         append(render("services") {
             "services" % seq(state[ServiceGenerator::class.java]) {
                 "name" % it.service.simpleName.decapitalize()
@@ -36,6 +36,6 @@ class ServiceRenderer(context: AnkoBuilderContext) : Renderer(context) {
                 "const" % it.name
             }
         })
-    }.toString()
+    }
 
 }

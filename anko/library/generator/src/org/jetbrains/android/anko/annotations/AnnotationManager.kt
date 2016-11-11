@@ -29,6 +29,10 @@ class AnnotationManager(private val provider: AnnotationProvider) {
         val annotations = provider.getExternalAnnotations(packageName)
         return annotations[declarationFqName] ?: emptySet()
     }
+
+    fun hasAnnotation(declarationFqName: String, annotation: ExternalAnnotation): Boolean {
+        return annotation in findExternalAnnotations(declarationFqName)
+    }
 }
 
 fun parseAnnotations(doc: Document): Map<String, Set<ExternalAnnotation>> {

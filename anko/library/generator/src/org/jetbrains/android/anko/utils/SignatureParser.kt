@@ -52,7 +52,7 @@ internal class GenericTypeImpl : GenericType {
     override val classifier: Classifier
         get() = classifierVar!!
 
-    override fun toString(): String = "$classifier<${arguments.joinToString(separator = ", ")}>"
+    override fun toString(): String = "$classifier<${arguments.joinToString()}>"
 }
 
 internal class TypeParameter(val name: String, val upperBounds: List<GenericType>)

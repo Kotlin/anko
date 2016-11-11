@@ -16,7 +16,7 @@
 
 package org.jetbrains.android.anko
 
-import org.jetbrains.android.anko.annotations.ExternalAnnotation
+import org.jetbrains.android.anko.annotations.ExternalAnnotation.*
 import org.jetbrains.android.anko.config.AnkoBuilderContext
 import org.jetbrains.android.anko.utils.*
 import org.objectweb.asm.Opcodes
@@ -34,88 +34,82 @@ private val specialLayoutParamsNames = mapOf(
         "w" to "width", "h" to "height"
 )
 
-internal val MethodNode.args: Array<Type>
+internal val MethodNode.parameterRawTypes: Array<Type>
     get() = Type.getArgumentTypes(desc)
 
-internal fun buildKotlinSignature(node: MethodNode): List<String> {
-    if (node.signature == null) return emptyList()
+@Deprecated("Use parameterRawTypes", ReplaceWith("parameterRawTypes"))
+internal val MethodNode.args: Array<Type>
+    get() = parameterRawTypes
 
-    val parsed = parseGenericMethodSignature(node.signature)
-    return parsed.valueParameters.map { genericTypeToStr(it.genericType) }
-}
-
-internal fun MethodNodeWithClass.processArguments(
-        context: AnkoBuilderContext,
-        template: (argName: String, argType: String, explicitNotNull: String) -> String
-): String {
-    if (method.args.isEmpty()) return ""
-
-    val locals = method.localVariables?.map { it.index to it }?.toMap() ?: hashMapOf()
-    val buffer = StringBuffer()
-    var argNum = 0
-    var nameIndex = if (method.isStatic) 0 else 1
-    val genericArgs = buildKotlinSignature(method)
-
-    val javaArgs = method.args.map(Type::asJavaString)
-    val argNames = context.sourceManager.getArgumentNames(clazz.fqName, method.name, javaArgs)
-    val javaArgsString = javaArgs.joinToString()
-
-    for ((index, arg) in method.args.withIndex()) {
-        val rawArgType = arg.asString(false)
-
-        val annotationSignature = "${clazz.fqName} ${method.returnType.asJavaString()} ${method.name}($javaArgsString) $index"
-        val nullable = !arg.isSimpleType &&
-                ExternalAnnotation.NotNull !in context.annotationManager.findExternalAnnotations(annotationSignature)
-        val argType = if (nullable) rawArgType + "?" else rawArgType
-
-        val explicitNotNull = if (argType.endsWith("?")) "!!" else ""
-        val argName = argNames?.get(index) ?: locals[nameIndex]?.name ?: "p$argNum"
-        if (argType.isNotEmpty()) {
-            buffer.append(template(argName,
-                    if (method.signature != null) genericArgs[argNum] else argType, explicitNotNull))
-        }
-        argNum++
-        nameIndex += arg.size
+internal fun getParameterKTypes(node: MethodNode): List<KType> {
+    if (node.signature == null) {
+        return node.parameterRawTypes.map { KType(it.asString(false), isNullable = false) }
     }
 
-    if ( buffer.length >= 2) buffer.delete(buffer.length - 2, buffer.length)
-    return buffer.toString()
+    val parsed = parseGenericMethodSignature(node.signature)
+    return parsed.valueParameters.map { genericTypeToKType(it.genericType) }
+}
+
+internal fun MethodNodeWithClass.toKMethod(context: AnkoBuilderContext): KMethod {
+    val parameterTypes = getParameterKTypes(this.method)
+    val localVariables = method.localVariables?.map { it.index to it }?.toMap() ?: emptyMap()
+
+    val parameterRawTypes = this.method.parameterRawTypes
+    val javaArgs = parameterRawTypes.map(Type::asJavaString)
+    val parameterNames = context.sourceManager.getParameterNames(clazz.fqName, method.name, javaArgs)
+    val javaArgsString = javaArgs.joinToString()
+    val methodAnnotationSignature = "${clazz.fqName} ${method.returnType.asJavaString()} ${method.name}($javaArgsString)"
+
+    var nameIndex = if (method.isStatic) 0 else 1
+    val parameters = parameterTypes.mapIndexed { index, type ->
+        val parameterAnnotationSignature = "$methodAnnotationSignature $index"
+        val isSimpleType = parameterRawTypes[index].isSimpleType
+        val isNullable = !isSimpleType && !context.annotationManager.hasAnnotation(parameterAnnotationSignature, NotNull)
+
+        val parameterName = parameterNames?.get(index) ?: localVariables[nameIndex]?.name ?: "p$index"
+        nameIndex += parameterRawTypes[index].size
+        KVariable(parameterName, type.copy(isNullable = isNullable))
+    }
+
+    return KMethod(method.name, parameters, method.returnType.toKType())
 }
 
 internal fun MethodNodeWithClass.formatArguments(context: AnkoBuilderContext): String {
-    return processArguments(context) { name, type, nul -> "$name: $type, " }
+    return toKMethod(context).parameters.joinToString { "${it.name}: ${it.type}" }
 }
 
-internal fun MethodNodeWithClass.formatLayoutParamsArguments(context: AnkoBuilderContext): List<String> {
-    val args = arrayListOf<String>()
-    processArguments(context) { name, type, nul ->
-        val defaultValue = specialLayoutParamsArguments[name]
-        val realName = specialLayoutParamsNames.getOrElse(name, {name})
-        val arg = if (defaultValue == null)
-            "$realName: $type"
+internal fun MethodNodeWithClass.formatLayoutParamsArguments(
+        context: AnkoBuilderContext,
+        importList: ImportList
+): List<String> {
+    return toKMethod(context).parameters.map { param ->
+        val renderType = importList.let { it[param.type] }
+
+        val defaultValue = specialLayoutParamsArguments[param.name]
+        val realName = specialLayoutParamsNames.getOrElse(param.name, { param.name })
+
+        if (defaultValue == null)
+            "$realName: $renderType"
         else
-            "$realName: $type = $defaultValue"
-        args += arg
-        arg
+            "$realName: $renderType = $defaultValue"
     }
-    return args
 }
 
 internal fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(context: AnkoBuilderContext): String {
-    return processArguments(context) { name, type, nul ->
-        val realName = specialLayoutParamsNames.getOrElse(name, {name})
-        "$realName$nul, "
+    return toKMethod(context).parameters.joinToString { param ->
+        val realName = specialLayoutParamsNames.getOrElse(param.name, { param.name })
+        val explicitNotNull = if (param.type.isNullable) "!!" else ""
+        "$realName$explicitNotNull"
     }
 }
 
 internal fun MethodNodeWithClass.formatArgumentsTypes(context: AnkoBuilderContext): String {
-    return processArguments(context) { name, type, nul -> "$type, " }
+    return toKMethod(context).parameters.joinToString { it.type.toString() }
 }
 
 internal fun MethodNodeWithClass.formatArgumentsNames(context: AnkoBuilderContext): String {
-    return processArguments(context) { name, type, nul -> "$name, " }
+    return toKMethod(context).parameters.joinToString { it.name }
 }
-
 
 fun MethodNode.isGetter(): Boolean {
     val isNonBooleanGetter = name.startsWith("get") && name.length > 3 && Character.isUpperCase(name[3])
@@ -147,11 +141,3 @@ internal val MethodNode.isStatic: Boolean
 
 internal val MethodNode.returnType: Type
     get() = Type.getReturnType(desc)
-
-internal fun MethodNode.renderReturnType(nullable: Boolean = true): String {
-    return if (signature != null) {
-        genericTypeToStr(parseGenericMethodSignature(signature).returnType, nullable)
-    } else {
-        returnType.asString(nullable)
-    }
-}

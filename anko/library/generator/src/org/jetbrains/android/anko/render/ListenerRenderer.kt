@@ -31,7 +31,7 @@ class ListenerRenderer(context: AnkoBuilderContext) : Renderer(context) {
 
     override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.LISTENERS)
 
-    override fun processElements(state: GenerationState) = StringBuilder().apply {
+    override fun processElements(state: GenerationState) = generatedFile { importList ->
         val renderedClasses = hashSetOf<String>()
 
         for (listener in state[ListenerGenerator::class.java]) {
@@ -47,7 +47,7 @@ class ListenerRenderer(context: AnkoBuilderContext) : Renderer(context) {
                 else -> throw RuntimeException("Invalid listener type: ${listener.javaClass.name}")
             }
         }
-    }.toString()
+    }
 
     private fun SimpleListenerElement.render() = render("simple_listener") {
         "receiver" % setter.clazz.fqNameWithTypeArguments

@@ -39,3 +39,6 @@ internal fun String.toUPPER_CASE(): String {
     }
     return builder.toString()
 }
+
+val Char.isPackageSymbol: Boolean
+    get() = isLowerCase() || isDigit() || this == '_'

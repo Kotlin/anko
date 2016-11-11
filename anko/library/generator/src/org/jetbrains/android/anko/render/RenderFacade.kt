@@ -22,14 +22,24 @@ import org.jetbrains.android.anko.config.WithContext
 import org.jetbrains.android.anko.config.get
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.templates.TemplateContext
+import org.jetbrains.android.anko.utils.ImportList
 import org.jetbrains.android.anko.utils.ReflectionUtils
 
 abstract class Renderer(override val context: AnkoBuilderContext): WithContext {
-    protected abstract fun processElements(state: GenerationState): String
+    protected abstract fun processElements(state: GenerationState): GeneratedFile
+
     abstract val renderIf: Array<ConfigurationKey<Boolean>>
 
     fun process(state: GenerationState): String = generate(*renderIf) {
-        processElements(state)
+        val generatedFile = processElements(state)
+        buildString {
+            if (!generatedFile.importList.isEmpty()) {
+                generatedFile.importList.imports.joinTo(this, "\n") { "import $it" }
+                appendln().appendln()
+            }
+
+            append(generatedFile.body)
+        }
     }
 
     private fun generate(vararg option: ConfigurationKey<Boolean>, init: () -> String) : String {
@@ -40,6 +50,17 @@ abstract class Renderer(override val context: AnkoBuilderContext): WithContext {
         return templateManager.render(templateName, body)
     }
 }
+
+
+
+fun generatedFile(builder: StringBuilder.(ImportList) -> Unit): GeneratedFile {
+    val sb = StringBuilder()
+    val importList = ImportList()
+    sb.builder(importList)
+    return GeneratedFile(sb.toString(), importList)
+}
+
+class GeneratedFile(val body: String, val importList: ImportList)
 
 class RenderFacade(
         val generationState: GenerationState

@@ -249,19 +249,19 @@ class __AbsListView_OnScrollListener : android.widget.AbsListView.OnScrollListen
 
 }
 
-fun android.widget.AdapterView<out android.widget.Adapter?>.onClick(l: (v: android.view.View?) -> Unit) {
+fun android.widget.AdapterView<out android.widget.Adapter>.onClick(l: (v: android.view.View?) -> Unit) {
     setOnClickListener(l)
 }
 
-fun android.widget.AdapterView<out android.widget.Adapter?>.onItemClick(l: (p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) -> Unit) {
+fun android.widget.AdapterView<out android.widget.Adapter>.onItemClick(l: (p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) -> Unit) {
     setOnItemClickListener(l)
 }
 
-fun android.widget.AdapterView<out android.widget.Adapter?>.onItemLongClick(l: (p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) -> Boolean) {
+fun android.widget.AdapterView<out android.widget.Adapter>.onItemLongClick(l: (p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) -> Boolean) {
     setOnItemLongClickListener(l)
 }
 
-fun android.widget.AdapterView<out android.widget.Adapter?>.onItemSelectedListener(init: __AdapterView_OnItemSelectedListener.() -> Unit) {
+fun android.widget.AdapterView<out android.widget.Adapter>.onItemSelectedListener(init: __AdapterView_OnItemSelectedListener.() -> Unit) {
     val listener = __AdapterView_OnItemSelectedListener()
     listener.init()
     setOnItemSelectedListener(listener)

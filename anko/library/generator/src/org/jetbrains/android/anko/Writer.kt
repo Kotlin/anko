@@ -105,9 +105,9 @@ class Writer(private val renderFacade: RenderFacade): WithContext {
 
             if (config.generateImports) {
                 if (imports.isNotEmpty()) println(imports)
-                println()
             }
 
+            println()
             print(text)
         }
     }

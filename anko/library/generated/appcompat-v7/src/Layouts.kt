@@ -1,40 +1,45 @@
 @file:JvmName("AppcompatV7LayoutsKt")
 package org.jetbrains.anko.appcompat.v7
 
+
 import android.content.Context
-import android.widget.*
-import android.view.*
 import android.util.AttributeSet
+import android.view.ViewGroup
+import android.support.v7.widget.ActionMenuView
+import android.view.View
+import android.support.v7.widget.LinearLayoutCompat
+import android.support.v7.widget.Toolbar
+import android.support.v7.app.ActionBar
 
 private val defaultInit: Any.() -> Unit = {}
 
-open class _ActionMenuView(ctx: Context): android.support.v7.widget.ActionMenuView(ctx) {
+open class _ActionMenuView(ctx: Context): ActionMenuView(ctx) {
     fun <T: View> T.lparams(
-            c: android.content.Context?,
-            attrs: android.util.AttributeSet?,
-            init: android.support.v7.widget.ActionMenuView.LayoutParams.() -> Unit = defaultInit
+            c: Context?,
+            attrs: AttributeSet?,
+            init: ActionMenuView.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.ActionMenuView.LayoutParams(c!!, attrs!!)
+        val layoutParams = ActionMenuView.LayoutParams(c!!, attrs!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     fun <T: View> T.lparams(
-            other: android.view.ViewGroup.LayoutParams?,
-            init: android.support.v7.widget.ActionMenuView.LayoutParams.() -> Unit = defaultInit
+            other: ViewGroup.LayoutParams?,
+            init: ActionMenuView.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.ActionMenuView.LayoutParams(other!!)
+        val layoutParams = ActionMenuView.LayoutParams(other!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     fun <T: View> T.lparams(
-            other: android.support.v7.widget.ActionMenuView.LayoutParams?,
-            init: android.support.v7.widget.ActionMenuView.LayoutParams.() -> Unit = defaultInit
+            other: ActionMenuView.LayoutParams?,
+            init: ActionMenuView.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.ActionMenuView.LayoutParams(other!!)
+        val layoutParams = ActionMenuView.LayoutParams(other!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -43,9 +48,9 @@ open class _ActionMenuView(ctx: Context): android.support.v7.widget.ActionMenuVi
     fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: android.support.v7.widget.ActionMenuView.LayoutParams.() -> Unit = defaultInit
+            init: ActionMenuView.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.ActionMenuView.LayoutParams(width, height)
+        val layoutParams = ActionMenuView.LayoutParams(width, height)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -53,13 +58,13 @@ open class _ActionMenuView(ctx: Context): android.support.v7.widget.ActionMenuVi
 
 }
 
-open class _LinearLayoutCompat(ctx: Context): android.support.v7.widget.LinearLayoutCompat(ctx) {
+open class _LinearLayoutCompat(ctx: Context): LinearLayoutCompat(ctx) {
     fun <T: View> T.lparams(
-            c: android.content.Context?,
-            attrs: android.util.AttributeSet?,
-            init: android.support.v7.widget.LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
+            c: Context?,
+            attrs: AttributeSet?,
+            init: LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.LinearLayoutCompat.LayoutParams(c!!, attrs!!)
+        val layoutParams = LinearLayoutCompat.LayoutParams(c!!, attrs!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -68,9 +73,9 @@ open class _LinearLayoutCompat(ctx: Context): android.support.v7.widget.LinearLa
     fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: android.support.v7.widget.LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
+            init: LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.LinearLayoutCompat.LayoutParams(width, height)
+        val layoutParams = LinearLayoutCompat.LayoutParams(width, height)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -80,39 +85,39 @@ open class _LinearLayoutCompat(ctx: Context): android.support.v7.widget.LinearLa
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             weight: Float,
-            init: android.support.v7.widget.LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
+            init: LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.LinearLayoutCompat.LayoutParams(width, height, weight)
+        val layoutParams = LinearLayoutCompat.LayoutParams(width, height, weight)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     fun <T: View> T.lparams(
-            p: android.view.ViewGroup.LayoutParams?,
-            init: android.support.v7.widget.LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
+            p: ViewGroup.LayoutParams?,
+            init: LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.LinearLayoutCompat.LayoutParams(p!!)
+        val layoutParams = LinearLayoutCompat.LayoutParams(p!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     fun <T: View> T.lparams(
-            source: android.view.ViewGroup.MarginLayoutParams?,
-            init: android.support.v7.widget.LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
+            source: ViewGroup.MarginLayoutParams?,
+            init: LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.LinearLayoutCompat.LayoutParams(source!!)
+        val layoutParams = LinearLayoutCompat.LayoutParams(source!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     fun <T: View> T.lparams(
-            source: android.support.v7.widget.LinearLayoutCompat.LayoutParams?,
-            init: android.support.v7.widget.LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
+            source: LinearLayoutCompat.LayoutParams?,
+            init: LinearLayoutCompat.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.LinearLayoutCompat.LayoutParams(source!!)
+        val layoutParams = LinearLayoutCompat.LayoutParams(source!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -120,13 +125,13 @@ open class _LinearLayoutCompat(ctx: Context): android.support.v7.widget.LinearLa
 
 }
 
-open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx) {
+open class _Toolbar(ctx: Context): Toolbar(ctx) {
     fun <T: View> T.lparams(
-            c: android.content.Context?,
-            attrs: android.util.AttributeSet?,
-            init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
+            c: Context?,
+            attrs: AttributeSet?,
+            init: Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.Toolbar.LayoutParams(c!!, attrs!!)
+        val layoutParams = Toolbar.LayoutParams(c!!, attrs!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -135,9 +140,9 @@ open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx) {
     fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
+            init: Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.Toolbar.LayoutParams(width, height)
+        val layoutParams = Toolbar.LayoutParams(width, height)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -147,9 +152,9 @@ open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx) {
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int,
-            init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
+            init: Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.Toolbar.LayoutParams(width, height, gravity)
+        val layoutParams = Toolbar.LayoutParams(width, height, gravity)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -157,49 +162,49 @@ open class _Toolbar(ctx: Context): android.support.v7.widget.Toolbar(ctx) {
 
     fun <T: View> T.lparams(
             gravity: Int,
-            init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
+            init: Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.Toolbar.LayoutParams(gravity)
+        val layoutParams = Toolbar.LayoutParams(gravity)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     fun <T: View> T.lparams(
-            source: android.support.v7.widget.Toolbar.LayoutParams?,
-            init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
+            source: Toolbar.LayoutParams?,
+            init: Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.Toolbar.LayoutParams(source!!)
+        val layoutParams = Toolbar.LayoutParams(source!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     fun <T: View> T.lparams(
-            source: android.support.v7.app.ActionBar.LayoutParams?,
-            init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
+            source: ActionBar.LayoutParams?,
+            init: Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.Toolbar.LayoutParams(source!!)
+        val layoutParams = Toolbar.LayoutParams(source!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     fun <T: View> T.lparams(
-            source: android.view.ViewGroup.MarginLayoutParams?,
-            init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
+            source: ViewGroup.MarginLayoutParams?,
+            init: Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.Toolbar.LayoutParams(source!!)
+        val layoutParams = Toolbar.LayoutParams(source!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     fun <T: View> T.lparams(
-            source: android.view.ViewGroup.LayoutParams?,
-            init: android.support.v7.widget.Toolbar.LayoutParams.() -> Unit = defaultInit
+            source: ViewGroup.LayoutParams?,
+            init: Toolbar.LayoutParams.() -> Unit = defaultInit
     ): T {
-        val layoutParams = android.support.v7.widget.Toolbar.LayoutParams(source!!)
+        val layoutParams = Toolbar.LayoutParams(source!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this

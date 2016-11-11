@@ -46,7 +46,7 @@ internal fun ClassNode.buildTypeParams(): String {
         if (genericMethodSignature.typeParameters.isEmpty()) return ""
 
         genericMethodSignature.typeParameters
-                .map { it.upperBounds.fold("") { s, bound -> s + "out " + genericTypeToStr(bound) } }
+                .map { it.upperBounds.fold("") { s, bound -> s + "out " + genericTypeToKType(bound) } }
                 .joinToString(prefix = "<", postfix = ">")
     } else ""
 }

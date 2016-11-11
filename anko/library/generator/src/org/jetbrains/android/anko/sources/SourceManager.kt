@@ -24,7 +24,7 @@ import org.jetbrains.android.anko.utils.getJavaClassName
 
 class SourceManager(private val provider: SourceProvider) {
 
-    fun getArgumentNames(classFqName: String, methodName: String, argumentJavaTypes: List<String>): List<String>? {
+    fun getParameterNames(classFqName: String, methodName: String, argumentJavaTypes: List<String>): List<String>? {
         val parsed = provider.parse(classFqName) ?: return null
         val className = getJavaClassName(classFqName)
 
