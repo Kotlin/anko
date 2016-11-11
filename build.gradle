@@ -1,3 +1,6 @@
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
+
 buildscript {
     ext.kotlin_version = '1.0.4'
 
@@ -38,8 +41,25 @@ allprojects {
 
 task collectJars(dependsOn: ':utils:run')
 
+task zipIdeaPlugin(dependsOn: ':ide:preview:shadowJar') {
+    File outputFile = new File("build/anko-ide-plugin.zip")
+    ZipOutputStream zipOutputStream = null
+
+    try {
+        zipOutputStream = new ZipOutputStream(new FileOutputStream(outputFile))
+        ZipEntry jar = new ZipEntry("lib/anko-ide-plugin.jar")
+        zipOutputStream.putNextEntry(jar)
+
+        zipOutputStream << new FileInputStream("anko/idea-plugin/preview/build/libs/preview-all.jar")
+    } finally {
+        if (zipOutputStream != null) {
+            zipOutputStream.close()
+        }
+    }
+}
+
 task dist(dependsOn: [
-        ':ide:preview:shadowJar',
+        ':zipIdeaPlugin',
         ':generator:run',
         ':generator:test',
         ':robolectricTests:test',
