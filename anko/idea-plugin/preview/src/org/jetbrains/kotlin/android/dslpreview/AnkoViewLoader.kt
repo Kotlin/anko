@@ -18,7 +18,7 @@ package org.jetbrains.kotlin.android.dslpreview
 
 import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.android.uipreview.ViewLoader
-import org.objectweb.asm.ClassWriter
+import org.jetbrains.org.objectweb.asm.ClassWriter
 import org.jetbrains.org.objectweb.asm.*
 import org.jetbrains.org.objectweb.asm.Opcodes.*
 import java.net.URL
