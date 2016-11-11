@@ -3,6 +3,7 @@ include ':utils'
 include ':generator'
 include ':stubs'
 include ':robolectricTests'
+include ':testUtils'
 
 include ':static:common'
 include ':static:platform'
@@ -35,6 +36,7 @@ project(':utils').projectDir = new File(rootDir, 'utils')
 project(':generator').projectDir = new File(rootDir, 'anko/library/generator')
 project(':stubs').projectDir = new File(rootDir, 'anko/library/stubs')
 project(':robolectricTests').projectDir = new File(rootDir, 'anko/library/robolectricTests')
+project(':testUtils').projectDir = new File(rootDir, 'anko/library/testUtils')
 
 project(':static').projectDir = new File(rootDir, 'anko/library/static')
 project(':static:common').projectDir = new File(rootDir, 'anko/library/static/common')

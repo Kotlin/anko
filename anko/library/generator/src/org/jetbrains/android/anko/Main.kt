@@ -22,6 +22,7 @@ import org.jetbrains.android.anko.utils.JarFileFilter
 import java.io.File
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicBoolean
 
 object Launcher {
     @JvmStatic
@@ -46,6 +47,10 @@ object Launcher {
 
                 when (taskName) {
                     "gen", "generate" -> gen(options)
+                    "check" -> {
+                        options[CHECK_MODE] = true
+                        gen(options)
+                    }
                     "versions" -> versions(options)
                     else -> {
                         println("Invalid task $taskName")
@@ -79,6 +84,7 @@ private fun gen(options: Options) {
     val latch = CountDownLatch(artifactDirs.size)
     val executor = Executors.newFixedThreadPool(artifactDirs.size)
     val outputDirectory = options[OUTPUT_DIRECTORY]
+    val errorFlag = AtomicBoolean(false)
 
     for (artifactDir in artifactDirs) {
         executor.submit {
@@ -94,11 +100,21 @@ private fun gen(options: Options) {
 
                 val configuration = DefaultAnkoConfiguration(outputDirectoryForArtifact, artifactName, options)
                 val context = AnkoBuilderContext.create(File("anko/props"), LogManager.LogLevel.INFO, configuration)
-                DSLGenerator(platformJars, versionJars, context).run()
-                latch.countDown()
+                try {
+                    DSLGenerator(platformJars, versionJars, context).run()
+                } catch (e: Throwable) {
+                    errorFlag.set(true)
+                } finally {
+                    latch.countDown()
+                }
             }
         }
     }
+
     latch.await()
     executor.shutdown()
+
+    if (errorFlag.get()) {
+        throw AssertionError("There were errors during processing.")
+    }
 }

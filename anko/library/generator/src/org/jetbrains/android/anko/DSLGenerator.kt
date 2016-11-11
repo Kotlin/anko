@@ -17,10 +17,14 @@
 package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.config.AnkoBuilderContext
+import org.jetbrains.android.anko.config.CHECK_MODE
 import org.jetbrains.android.anko.config.WithContext
+import org.jetbrains.android.anko.config.get
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.render.RenderFacade
 import org.jetbrains.android.anko.utils.ClassTree
+import org.jetbrains.android.anko.writer.CheckWriter
+import org.jetbrains.android.anko.writer.GeneratorWriter
 import java.io.File
 
 class DSLGenerator(
@@ -33,6 +37,11 @@ class DSLGenerator(
         val classTree = this.classTree ?: ClassProcessor(platformJars, versionJars).genClassTree()
         val generationState = GenerationState(classTree, context)
         val renderer = RenderFacade(generationState)
-        Writer(renderer).write()
+        val writer = if (context.configuration[CHECK_MODE]) {
+            CheckWriter(renderer)
+        } else {
+            GeneratorWriter(renderer)
+        }
+        writer.write()
     }
 }

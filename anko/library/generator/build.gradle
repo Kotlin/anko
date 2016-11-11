@@ -4,7 +4,8 @@ apply plugin: 'application'
 mainClassName = "org.jetbrains.android.anko.Launcher"
 
 run {
-    args = ["versions", "generate",
+    // Replace "check" with "generate" to update generated files
+    args = ["versions", "check",
             "--originalDirectory=dependencies/androidJars",
             "--outputDirectory=anko/library/generated"]
 
@@ -28,6 +29,5 @@ dependencies {
     compile 'org.ow2.asm:asm-debug-all:5.1'
     compile 'org.jetbrains.kotlinx:kotlinx.dom:0.0.8'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-    testCompile 'junit:junit:4.12'
+    compile project(":testUtils")
 }

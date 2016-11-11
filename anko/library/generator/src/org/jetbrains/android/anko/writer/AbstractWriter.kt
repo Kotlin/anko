@@ -1,29 +1,12 @@
-/*
- * Copyright 2016 JetBrains s.r.o.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package org.jetbrains.android.anko
+package org.jetbrains.android.anko.writer
 
 import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.config.AnkoFile.*
 import org.jetbrains.android.anko.render.*
 import org.jetbrains.android.anko.utils.toCamelCase
-import java.io.Closeable
-import java.io.PrintWriter
+import java.io.File
 
-class Writer(private val renderFacade: RenderFacade): WithContext {
+abstract class AbstractWriter(private val renderFacade: RenderFacade): WithContext {
     override val context: AnkoBuilderContext
         get() = renderFacade.generationState.context
 
@@ -37,12 +20,12 @@ class Writer(private val renderFacade: RenderFacade): WithContext {
     }
 
     private fun write(file: AnkoFile): Unit = when (file) {
-        LAYOUTS -> writeLayouts()
-        LISTENERS -> writeListeners()
-        PROPERTIES -> writeProperties()
-        SERVICES -> writeServices()
-        SQL_PARSER_HELPERS -> writeSqlParserHelpers()
-        VIEWS -> writeViews()
+        AnkoFile.LAYOUTS -> writeLayouts()
+        AnkoFile.LISTENERS -> writeListeners()
+        AnkoFile.PROPERTIES -> writeProperties()
+        AnkoFile.SERVICES -> writeServices()
+        AnkoFile.SQL_PARSER_HELPERS -> writeSqlParserHelpers()
+        AnkoFile.VIEWS -> writeViews()
     }
 
     private fun writeLayouts() {
@@ -70,7 +53,7 @@ class Writer(private val renderFacade: RenderFacade): WithContext {
     }
 
     private fun writeViews() {
-        val allViews = if (config[VIEWS] || config[Tune.HELPER_CONSTRUCTORS]) {
+        val allViews = if (config[AnkoFile.VIEWS] || config[Tune.HELPER_CONSTRUCTORS]) {
             renderFacade[ViewRenderer::class.java] + renderFacade[ViewGroupRenderer::class.java]
         } else ""
         val imports = Props.imports["views"] ?: ""
@@ -91,27 +74,23 @@ class Writer(private val renderFacade: RenderFacade): WithContext {
 
         val file = config.getOutputFile(subsystem)
 
-        val dir = file.parentFile
-        if (!dir.exists()) {
-            dir.mkdirs()
-        }
-
-        PrintWriter(file).useIt {
+        val outputText = buildString {
             if (config.generatePackage && generatePackage) {
                 val facadeFilename = config.artifactName.toCamelCase('-') + subsystem.name.toLowerCase().toCamelCase()
-                println("@file:JvmName(\"${facadeFilename}Kt\")")
-                println("package ${config.outputPackage}\n")
+                appendln("@file:JvmName(\"${facadeFilename}Kt\")")
+                appendln("package ${config.outputPackage}\n")
             }
 
             if (config.generateImports) {
-                if (imports.isNotEmpty()) println(imports)
+                if (imports.isNotEmpty()) appendln(imports)
             }
 
-            println()
-            print(text)
+            appendln()
+            append(text)
         }
+
+        write(file, outputText)
     }
 
-    private inline fun <T : Closeable, R> T.useIt(block: T.() -> R) = use { it.block() }
-
+    protected abstract fun write(file: File, text: String)
 }

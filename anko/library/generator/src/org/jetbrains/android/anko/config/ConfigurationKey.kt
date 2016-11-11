@@ -33,6 +33,8 @@ val OUTPUT_DIRECTORY = CliConfiguationKey(
         "outputDirectory",
         mapper = ::File)
 
+val CHECK_MODE = ConfigurationKey("checkMode", false)
+
 val CLI_CONFIGURATION_KEYS: List<CliConfiguationKey<Any>> = listOf(LOG_LEVEL, ORIGINAL_DIRECTORY, OUTPUT_DIRECTORY)
 
 interface Options {
