@@ -5,4 +5,3 @@ build/
 .DS_Store
 *.iml
 /.gradle
-/workdir/
