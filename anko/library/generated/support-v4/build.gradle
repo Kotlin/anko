@@ -5,3 +5,7 @@ dependencies {
     provided project(':generated:common')
     compile project(':static:supportV4')
 }
+
+task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
+    from("src", "../../static/supportV4/src")
+}

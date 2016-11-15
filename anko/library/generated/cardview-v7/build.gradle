@@ -4,3 +4,7 @@ dependencies {
     provided "com.android.support:cardview-v7:$SUPPORT_ARTIFACT_VERSION"
     provided project(':generated:common')
 }
+
+task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
+    from "src"
+}

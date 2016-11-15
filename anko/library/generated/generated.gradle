@@ -1,5 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION
@@ -29,6 +35,49 @@ gradle.projectsEvaluated {
     tasks.generateReleaseBuildConfig.enabled = false
 }
 
-dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+task androidReleaseJar(type: Jar, dependsOn: assembleRelease) {
+    from "$buildDir/intermediates/classes/release/"
+}
+
+publishing {
+    publications {
+        anko(MavenPublication) {
+            groupId POM_ARTIFACT_GROUP
+            artifactId "anko-" + project.name
+            version ANKO_VERSION
+
+            artifact androidReleaseJar
+            artifact androidReleaseSources {
+                classifier "sources"
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            url "$buildDir/repo"
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER') ?: ""
+    key = System.getenv('BINTRAY_API_KEY') ?: ""
+
+    publications = ['anko']
+
+    dryRun = BINTRAY_DRY_RUN
+
+    pkg {
+        userOrg = BINTRAY_USER_NAME
+        repo = BINTRAY_REPO_NAME
+        name = BINTRAY_PACKAGE_NAME
+        licenses = ['Apache-2.0']
+        vcsUrl = SCM_URL
+
+        version {
+            name = ANKO_VERSION
+            released = new Date()
+        }
+    }
 }

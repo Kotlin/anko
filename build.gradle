@@ -18,6 +18,12 @@ buildscript {
     ext.CONNECTION_URL = 'scm:git:https://github.com/JetBrains/anko.git'
     ext.DEVELOPER_CONNECTION_URL = 'scm:git:https://github.com/JetBrains/anko'
 
+    ext.BINTRAY_USER_NAME = 'jetbrains'
+    ext.BINTRAY_PACKAGE_NAME = 'anko'
+    ext.BINTRAY_REPO_NAME = 'anko'
+    
+    ext.BINTRAY_DRY_RUN = true
+
     ext.POM_ARTIFACT_GROUP = 'org.jetbrains.anko'
 
     repositories {
@@ -63,17 +69,17 @@ task dist(dependsOn: [
         ':generator:run',
         ':generator:test',
         ':robolectricTests:test',
-        ':generated:appcompat-v7:assembleRelease',
-        ':generated:cardview-v7:assembleRelease',
-        ':generated:common:assembleRelease',
-        ':generated:design:assembleRelease',
-        ':generated:gridlayout-v7:assembleRelease',
-        ':generated:percent:assembleRelease',
-        ':generated:recyclerview-v7:assembleRelease',
-        ':generated:sdk15:assembleRelease',
-        ':generated:sdk19:assembleRelease',
-        ':generated:sdk21:assembleRelease',
-        ':generated:sdk23:assembleRelease',
-        ':generated:sqlite:assembleRelease',
-        ':generated:support-v4:assembleRelease'
+        ':generated:appcompat-v7:bintrayUpload',
+        ':generated:cardview-v7:bintrayUpload',
+        ':generated:common:bintrayUpload',
+        ':generated:design:bintrayUpload',
+        ':generated:gridlayout-v7:bintrayUpload',
+        ':generated:percent:bintrayUpload',
+        ':generated:recyclerview-v7:bintrayUpload',
+        ':generated:sdk15:bintrayUpload',
+        ':generated:sdk19:bintrayUpload',
+        ':generated:sdk21:bintrayUpload',
+        ':generated:sdk23:bintrayUpload',
+        ':generated:sqlite:bintrayUpload',
+        ':generated:support-v4:bintrayUpload'
 ])
