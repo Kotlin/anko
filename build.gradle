@@ -65,6 +65,28 @@ task zipIdeaPlugin(dependsOn: ':ide:preview:shadowJar') {
 }
 
 task dist(dependsOn: [
+        ':collectJars',
+        ':zipIdeaPlugin',
+        ':generator:run',
+        ':generator:test',
+        ':robolectricTests:test',
+        ':generated:appcompat-v7:assembleRelease',
+        ':generated:cardview-v7:assembleRelease',
+        ':generated:common:assembleRelease',
+        ':generated:design:assembleRelease',
+        ':generated:gridlayout-v7:assembleRelease',
+        ':generated:percent:assembleRelease',
+        ':generated:recyclerview-v7:assembleRelease',
+        ':generated:sdk15:assembleRelease',
+        ':generated:sdk19:assembleRelease',
+        ':generated:sdk21:assembleRelease',
+        ':generated:sdk23:assembleRelease',
+        ':generated:sqlite:assembleRelease',
+        ':generated:support-v4:assembleRelease'
+])
+
+task publish(dependsOn: [
+        ':collectJars',
         ':zipIdeaPlugin',
         ':generator:run',
         ':generator:test',
