@@ -56,11 +56,16 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyDatab
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        // Here you create tables (more info about that is below)
+        // Here you create tables
+        db?.createTable("Customer", ifNotExists = true, 
+                    "_id" to INTEGER + PRIMARY_KEY + UNIQUE,
+                    "name" to TEXT,
+                    "photo" to BLOB)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // Here you can upgrade tables, as usual
+        db?.dropTable("User", true)
     }
 }
 
@@ -108,7 +113,7 @@ With Anko you can easily create new tables and drop existing. The syntax is stra
 
 ```kotlin
 database.use {
-    createTable("Customer", ifNotExists = true, 
+    createTable("Customer", true, 
         "_id" to INTEGER + PRIMARY_KEY + UNIQUE,
         "name" to TEXT,
         "photo" to BLOB)
@@ -120,7 +125,7 @@ In SQLite there are five main types: `NULL`, `INTEGER`, `REAL`, `TEXT` and `BLOB
 To drop table, use the `dropTable` function:
 
 ```kotlin
-dropTable("User", ifNotExists = true)
+dropTable("User", true)
 ```
 
 ## Inserting data
@@ -143,6 +148,17 @@ db.insert("User",
     "name" to "John",
     "email" to "user@domain.org"
 )
+```
+
+or from within `database.use` as:
+
+```kotlin
+database.use {
+    insert("User", 
+        "_id" to 42,
+        "name" to "John",
+        "email" to "user@domain.org"
+}
 ```
 
 Functions `insertOrThrow()`, `replace()`, `replaceOrThrow()` are also exist and have the similar semantics.
