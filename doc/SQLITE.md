@@ -108,7 +108,7 @@ With Anko you can easily create new tables and drop existing. The syntax is stra
 
 ```kotlin
 database.use {
-    createTable("Customer", ifNotExists = true, 
+    createTable("Customer", true, 
         "_id" to INTEGER + PRIMARY_KEY + UNIQUE,
         "name" to TEXT,
         "photo" to BLOB)
