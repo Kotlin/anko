@@ -104,7 +104,7 @@ object AnkoInternals {
     }
 
     @JvmStatic
-    fun <T> createIntent(ctx: Context, clazz: Class<out T>, params: Array<out Pair<String, Any>>): Intent {
+    fun <T> createIntent(ctx: Context, clazz: Class<out T>, params: Array<out Pair<String, Any?>>): Intent {
         val intent = Intent(ctx, clazz)
         if (params.isNotEmpty()) fillIntentArguments(intent, params)
         return intent
@@ -139,10 +139,11 @@ object AnkoInternals {
     }
 
     @JvmStatic
-    private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any>>) {
+    private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any?>>) {
         params.forEach {
             val value = it.second
             when (value) {
+                null -> intent.putExtra(it.first, null as Serializable?)
                 is Int -> intent.putExtra(it.first, value)
                 is Long -> intent.putExtra(it.first, value)
                 is CharSequence -> intent.putExtra(it.first, value)
@@ -170,6 +171,7 @@ object AnkoInternals {
                 is BooleanArray -> intent.putExtra(it.first, value)
                 else -> throw AnkoException("Intent extra ${it.first} has wrong type ${value.javaClass.name}")
             }
+            return@forEach
         }
     }
 
