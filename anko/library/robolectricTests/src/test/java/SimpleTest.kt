@@ -1,15 +1,18 @@
 package test
 
-import android.app.*
+import android.app.Activity
 import android.content.Context
-import android.widget.*
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import org.jetbrains.anko.*
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
-import org.robolectric.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
-import org.junit.Assert.*
+import org.junit.runner.RunWith
+import org.robolectric.Robolectric
+import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.annotation.Config
 
 public open class SimpleTestActivity() : Activity() {
     public var ctxProperty: Context? = null

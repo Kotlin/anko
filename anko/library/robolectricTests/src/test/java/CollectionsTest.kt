@@ -1,13 +1,12 @@
 package test
 
-import android.os.Bundle
-import org.jetbrains.anko.*
 import org.jetbrains.anko.collections.*
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
-import org.robolectric.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.Assert.*
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.annotation.Config
 
 @RunWith(RobolectricGradleTestRunner::class)
 @Config(constants = BuildConfig::class)

@@ -1,18 +1,23 @@
 package test
 
-import android.app.*
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.DialogInterface
-import android.widget.*
 import android.os.Bundle
-import org.jetbrains.anko.*
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
-import org.robolectric.shadows.*
-import org.robolectric.internal.ShadowExtractor
-import org.robolectric.*
-import org.junit.Test
-import org.junit.Assert.*
 import android.view.View
+import android.widget.Button
+import org.jetbrains.anko.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.Robolectric
+import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.annotation.Config
+import org.robolectric.internal.ShadowExtractor
+import org.robolectric.shadows.ShadowAlertDialog
+import org.robolectric.shadows.ShadowHandler
+import org.robolectric.shadows.ShadowToast
 
 public open class DialogsTestActivity() : Activity() {
     public var dialog: AlertDialog? = null

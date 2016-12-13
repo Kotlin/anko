@@ -1,15 +1,15 @@
 package test
 
-import android.app.*
-import android.widget.*
-import android.os.Bundle
-import org.jetbrains.anko.*
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
-import org.robolectric.*
-import org.junit.Test
-import org.junit.Assert.*
+import android.app.Activity
 import android.view.View
+import android.widget.RelativeLayout
+import org.jetbrains.anko.*
+import org.junit.Assert.assertTrue
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.Robolectric
+import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.annotation.Config
 
 public open class RelativeLayoutHelpersTestActivity() : Activity()
 

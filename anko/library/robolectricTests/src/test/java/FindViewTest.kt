@@ -1,15 +1,22 @@
 package test
 
-import android.app.*
-import android.widget.*
+import android.app.Activity
 import android.os.Bundle
-import org.jetbrains.anko.*
-import org.jetbrains.anko.custom.*
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
-import org.robolectric.*
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import org.jetbrains.anko.custom.customView
+import org.jetbrains.anko.relativeLayout
+import org.jetbrains.anko.textView
+import org.jetbrains.anko.verticalLayout
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
-import org.junit.Assert.*
+import org.junit.runner.RunWith
+import org.robolectric.Robolectric
+import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.annotation.Config
 
 public open class FindViewTestActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
