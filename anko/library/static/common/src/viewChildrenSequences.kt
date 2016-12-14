@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko
 
 import android.view.*
@@ -24,9 +25,9 @@ import java.util.*
  *
  * @param action the action to execute.
  */
-inline fun ViewGroup.forEachChild(f: (View) -> Unit) {
+inline fun ViewGroup.forEachChild(action: (View) -> Unit) {
     for (i in 0..childCount - 1) {
-        f(getChildAt(i))
+        action(getChildAt(i))
     }
 }
 
@@ -35,9 +36,9 @@ inline fun ViewGroup.forEachChild(f: (View) -> Unit) {
  *
  * @param action the action to execute. The first index is 0.
  */
-inline fun ViewGroup.forEachChildWithIndex(f: (Int, View) -> Unit) {
+inline fun ViewGroup.forEachChildWithIndex(action: (Int, View) -> Unit) {
     for (i in 0..childCount - 1) {
-        f(i, getChildAt(i))
+        action(i, getChildAt(i))
     }
 }
 
@@ -119,7 +120,7 @@ private class ViewChildrenSequence(private val view: View) : Sequence<View> {
 private class ViewChildrenRecursiveSequence(private val view: View) : Sequence<View> {
     override fun iterator() = RecursiveViewIterator(view)
 
-    private class RecursiveViewIterator(private val view: View) : Iterator<View> {
+    private class RecursiveViewIterator(view: View) : Iterator<View> {
         private val sequences = arrayListOf(sequenceOf(view))
         private var itemIterator: Iterator<View>? = null
 

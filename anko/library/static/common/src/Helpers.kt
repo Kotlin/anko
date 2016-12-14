@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -232,7 +233,7 @@ inline fun <T: Any> Fragment.configuration(
 }
 
 /**
- * Execute [f] inly if the current Android SDK version is [version] or newer.
+ * Execute [f] only if the current Android SDK version is [version] or newer.
  * Do nothing otherwise.
  */
 inline fun doFromSdk(version: Int, f: () -> Unit) {
@@ -254,7 +255,7 @@ inline fun doIfSdk(version: Int, f: () -> Unit) {
  * @property value the return value if code execution was finished without an exception, null otherwise.
  * @property error a caught [Throwable] or null if nothing was caught.
  */
-data class AttemptResult<T>(val value: T?, val error: Throwable?)
+data class AttemptResult<out T>(val value: T?, val error: Throwable?)
 
 /**
  * Execute [f] and return the result or an exception, if an exception was occurred.

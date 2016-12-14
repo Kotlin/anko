@@ -175,20 +175,6 @@ object AnkoInternals {
         }
     }
 
-    // SQLiteDatabase is not closeable in older versions of Android
-    @JvmStatic
-    inline fun <T> useDatabase(db: SQLiteDatabase, f: (SQLiteDatabase) -> T) : T {
-        try {
-            return f(db)
-        } finally {
-            try {
-                db.close()
-            } catch (e: Exception) {
-                // Do nothing
-            }
-        }
-    }
-
     // Cursor is not closeable in older versions of Android
     @JvmStatic
     inline fun <T> useCursor(cursor: Cursor, f: (Cursor) -> T) : T {

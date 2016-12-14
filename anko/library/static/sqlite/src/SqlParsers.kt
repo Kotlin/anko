@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko.db
 
 import android.database.Cursor
@@ -23,15 +24,15 @@ import org.jetbrains.anko.internals.AnkoInternals
 import java.lang.reflect.Modifier
 import java.util.*
 
-interface RowParser<T> {
+interface RowParser<out T> {
     fun parseRow(columns: Array<Any?>): T
 }
 
-interface MapRowParser<T> {
+interface MapRowParser<out T> {
     fun parseRow(columns: Map<String, Any?>): T
 }
 
-private class SingleColumnParser<T> : RowParser<T> {
+private class SingleColumnParser<out T> : RowParser<T> {
     override fun parseRow(columns: Array<Any?>): T {
         if (columns.size != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
@@ -40,7 +41,7 @@ private class SingleColumnParser<T> : RowParser<T> {
     }
 }
 
-private class ScalarColumnParser<R, T>(val modifier: ((R) -> T)? = null) : RowParser<T> {
+private class ScalarColumnParser<in R, out T>(val modifier: ((R) -> T)? = null) : RowParser<T> {
     override fun parseRow(columns: Array<Any?>): T {
         if (columns.size != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
@@ -136,7 +137,7 @@ inline fun <reified T: Any> classParser(): RowParser<T> {
     val constructors = clazz.declaredConstructors.filter {
         val types = it.parameterTypes
         !it.isVarArgs && Modifier.isPublic(it.modifiers) &&
-            types != null && types.size > 0
+            types != null && types.isNotEmpty()
     }
     if (constructors.isEmpty())
         throw AnkoException(

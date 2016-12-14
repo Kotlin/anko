@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+@file:Suppress("unused")
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -43,7 +45,7 @@ class AnkoAsyncContext<T>(val weakRef: WeakReference<T>)
 
 /**
  * Execute [f] on the application UI thread.
- * If the [async] receiver still exists (was not collected by GC), 
+ * If the [doAsync] receiver still exists (was not collected by GC),
  *  [f] gets it as a parameter ([f] gets null if the receiver does not exist anymore).
  */
 fun <T> AnkoAsyncContext<T>.onComplete(f: (T?) -> Unit) {
@@ -57,7 +59,7 @@ fun <T> AnkoAsyncContext<T>.onComplete(f: (T?) -> Unit) {
 
 /**
  * Execute [f] on the application UI thread.
- * [async] receiver will be passed to [f].
+ * [doAsync] receiver will be passed to [f].
  * If the receiver does not exist anymore (it was collected by GC), [f] will not be executed.
  */
 fun <T> AnkoAsyncContext<T>.uiThread(f: (T) -> Unit): Boolean {
@@ -200,5 +202,5 @@ internal object BackgroundExecutor {
 
 private object ContextHelper {
     val handler = Handler(Looper.getMainLooper())
-    val mainThread = Looper.getMainLooper().thread
+    val mainThread: Thread = Looper.getMainLooper().thread
 }

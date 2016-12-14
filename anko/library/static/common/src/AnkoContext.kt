@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-
+@file:Suppress("unused")
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -24,10 +24,9 @@ import android.content.ContextWrapper
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
-import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.internals.AnkoInternals.createAnkoContext
 
-interface AnkoContext<T> : ViewManager {
+interface AnkoContext<out T> : ViewManager {
     val ctx: Context
     val owner: T
     val view: View
@@ -58,7 +57,7 @@ interface AnkoContext<T> : ViewManager {
 }
 
 internal class DelegatingAnkoContext<T: ViewGroup>(override val owner: T): AnkoContext<T> {
-    override val ctx = owner.context
+    override val ctx: Context = owner.context
     override val view: View = owner
 
     override fun addView(view: View?, params: ViewGroup.LayoutParams?) {
@@ -75,7 +74,7 @@ internal class DelegatingAnkoContext<T: ViewGroup>(override val owner: T): AnkoC
 internal class ReusableAnkoContext<T>(
         override val ctx: Context,
         override val owner: T,
-        private val setContentView: Boolean
+        setContentView: Boolean
 ) : AnkoContextImpl<T>(ctx, owner, setContentView) {
     override fun alreadyHasView() {}
 }

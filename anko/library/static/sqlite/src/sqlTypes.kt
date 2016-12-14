@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko.db
 
 interface SqlType {
-    open val name: String
-    open val modifier: String?
+    val name: String
+    val modifier: String?
 }
 
 interface SqlTypeModifier {
-    open val modifier: String
+    val modifier: String
 }
 
 operator fun SqlType.plus(m: SqlTypeModifier) : SqlType {
@@ -47,16 +48,12 @@ val UNIQUE: SqlTypeModifier = SqlTypeModifierImpl("UNIQUE")
 
 fun DEFAULT(value: String): SqlTypeModifier = SqlTypeModifierImpl("DEFAULT $value")
 
-private open class SqlTypeImpl(name: String, modifier: String? = null) : SqlType {
-    override val name: String = name
-
-    override val modifier: String? = modifier
+private open class SqlTypeImpl(override val name: String, override val modifier: String? = null) : SqlType {
     override fun toString(): String {
         return if (modifier == null) name else "$name $modifier"
     }
 }
 
-private open class SqlTypeModifierImpl(modifier: String) : SqlTypeModifier {
-    override val modifier: String = modifier
+private open class SqlTypeModifierImpl(override val modifier: String) : SqlTypeModifier {
     override fun toString(): String = modifier
 }

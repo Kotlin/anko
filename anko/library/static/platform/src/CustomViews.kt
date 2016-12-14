@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.Context
-import android.text.InputType
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager

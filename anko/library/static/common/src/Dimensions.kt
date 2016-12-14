@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko
 
 import android.app.Fragment
@@ -42,8 +42,8 @@ fun Context.sp(value: Int): Int = (value * resources.displayMetrics.scaledDensit
 fun Context.sp(value: Float): Int = (value * resources.displayMetrics.scaledDensity).toInt()
 
 //converts px value into dip or sp
-fun Context.px2dip(px: Int): Float = (px.toFloat() / resources.displayMetrics.density).toFloat()
-fun Context.px2sp(px: Int): Float = (px.toFloat() / resources.displayMetrics.scaledDensity).toFloat()
+fun Context.px2dip(px: Int): Float = px.toFloat() / resources.displayMetrics.density
+fun Context.px2sp(px: Int): Float = px.toFloat() / resources.displayMetrics.scaledDensity
 
 fun Context.dimen(resource: Int): Int = resources.getDimensionPixelSize(resource)
 

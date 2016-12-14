@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko.db
 
 import android.content.ContentValues
@@ -89,7 +90,7 @@ fun SQLiteDatabase.dropTable(tableName: String, ifExists: Boolean = false) {
     execSQL("DROP TABLE $ifExistsText `$escapedTableName`;")
 }
 
-private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^\\{}]+)\\}")
+private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^{}]+)\\}")
 
 internal fun applyArguments(whereClause: String, vararg args: Pair<String, Any>): String {
     val argsMap = args.fold(hashMapOf<String, Any>()) { map, arg ->

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko
 
 import android.R
@@ -62,7 +63,7 @@ class AlertDialogBuilder(val ctx: Context) {
     }
 
     /**
-     * Set the [title] displayed in the [Dialog].
+     * Set the [title] displayed in the dialog.
      */
     fun title(title: CharSequence) {
         checkBuilder()
