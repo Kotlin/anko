@@ -485,7 +485,7 @@ include<TextView>(R.layout.textfield) {
 
 ### Styles
 
-Anko supports styling: `style()` is simply a function that accepts `View`, is applied for the `View` itself, and then recursively to each child of a `View` if it is a `ViewGroup`:
+Anko supports styling: `applyRecursively()` is simply a function that accepts `View`, is applied for the `View` itself, and then recursively to each child of a `View` if it is a `ViewGroup`:
 
 ```kotlin
 verticalLayout {
@@ -495,7 +495,7 @@ verticalLayout {
     editText {
         hint = "Password"
     }
-}.style { view -> when(view) {
+}.applyRecursively { view -> when(view) {
     is EditText -> view.textSize = 20f
 }}
 ```
