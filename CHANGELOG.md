@@ -1,5 +1,47 @@
 ## Change Log
 
+### Anko 0.9.1 *(2016-12-14)*
+
+- Allow to use `AnkoLogger` as an instance #262;
+- `FOREIGN_KEY` now returns `Pair<String, SqlType>` #258 #219;
+- Fix `SparseArray` as sequence returns list which doesn't match its size #243 #240;
+- Allow ManagedSQLiteOpenHelper to accept null for database name #228;
+- Fix ProGuard warning (can't find referenced method 'int getThemeResId()' in library class android.view.ContextThemeWrapper). #206;
+- Add `LayoutParams.baselineOf()` #213;
+- Allow nullable values in `intentFor` #211;
+- Migrate Anko build to Gradle.
+
+### Anko 0.9 *(2016-06-07)*
+
+- Update to Kotlin 1.0.2 and IDEA 2016.1 #161 #177;
+- Support styles in DSL #16 #143;
+- Add KDoc comments for most of Anko utilities #168;
+- Rename `async()` to `doAsync()`, `onUiThread()` to `runOnUiThread()` for `Fragment` and `Context`;
+- Add `AnkoAsyncContext.onComplete()` #181;
+- `uiThread()` now returns `false` if code was not executed;
+- Ability to add an exception handler to `doAsync()` #182;
+- Add `newTask` parameter to `browse()` #186;
+- Add `sendSMS()` #171;
+- Add `makeStyle()` #132;
+- Add `Activity.contentView` property #157;
+- Add `horizontalProgressBar()` #23;
+- Add `doFromSdk()` and `doIfSdk()` #118;
+- Add `alignStart()` and `alignEnd()` to `RelativeLayout.LayoutParams` extensions;
+- `AlertDialogBuilder`: make the `dialog` property public #140;
+- Add `okButton()`, `yesButton()`, `cancelButton()`, `noButton()` to `AlertDialogBuilder`;
+- Add nullable values to SQLite helpers #154;
+- Add `editText()` with input constraints #25;
+- Add `attempt()` #182;
+- Change semantics of `Intent.clearTask()` and similar functions, now add flags, not set (replace old) #173;
+- Rename `forEachReversed` to `forEachReversedByIndex()`;
+- Rename `style()` to `applyRecursively()`;
+- Allow the database to be pluggable for query builders #187;
+- Fix `NOT_NULL` SQL type modifier #175;
+- Fix `startActivityForResult` called on wrong object (for Fragments) #76;
+- Fix `include` doesn't set LayoutParams from the XML #149;
+- `View.backgroundDrawable` is nullable now #169;
+- `classParser` has always not accessible constructor #136 #145.
+
 ### Anko 0.8.3 *(2016-03-02)*
 
 Built for Kotlin 1.0.
