@@ -22,7 +22,7 @@ buildscript {
     ext.BINTRAY_PACKAGE_NAME = 'anko'
     ext.BINTRAY_REPO_NAME = 'anko'
     
-    ext.BINTRAY_DRY_RUN = true
+    ext.BINTRAY_DRY_RUN = false
 
     ext.POM_ARTIFACT_GROUP = 'org.jetbrains.anko'
 
