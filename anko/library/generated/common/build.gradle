@@ -1,7 +1,7 @@
 apply from: '../generated.gradle'
 
 dependencies {
-    compile project(':static:common')
+    embedded project(':static:common')
 }
 
 task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {

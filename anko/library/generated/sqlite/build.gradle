@@ -2,7 +2,7 @@ apply from: '../generated.gradle'
 
 dependencies {
     provided project(':generated:common')
-    compile project(':static:sqlite')
+    embedded project(':static:sqlite')
 }
 
 task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {

@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
+apply from: '../../../../fat-aar.gradle'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -33,6 +34,7 @@ android {
 
 gradle.projectsEvaluated {
     tasks.generateReleaseBuildConfig.enabled = false
+    tasks.generateRJava.enabled = false
 }
 
 task androidReleaseJar(type: Jar, dependsOn: assembleRelease) {
