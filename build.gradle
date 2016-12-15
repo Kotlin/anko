@@ -2,7 +2,7 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 buildscript {
-    ext.kotlin_version = '1.0.4'
+    ext.kotlin_version = '1.0.5-2'
 
     ext.ANKO_VERSION = '0.9.1'
     ext.ANKO_VERSION_CODE = 91
@@ -35,6 +35,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
+        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.11"
     }
 }
 
@@ -64,44 +65,40 @@ task zipIdeaPlugin(dependsOn: ':ide:preview:shadowJar') << {
     }
 }
 
-task dist(dependsOn: [
-        ':collectJars',
-        ':zipIdeaPlugin',
-        ':generator:run',
-        ':generator:test',
-        ':robolectricTests:test',
-        ':generated:appcompat-v7:assembleRelease',
-        ':generated:cardview-v7:assembleRelease',
-        ':generated:common:assembleRelease',
-        ':generated:design:assembleRelease',
-        ':generated:gridlayout-v7:assembleRelease',
-        ':generated:percent:assembleRelease',
-        ':generated:recyclerview-v7:assembleRelease',
-        ':generated:sdk15:assembleRelease',
-        ':generated:sdk19:assembleRelease',
-        ':generated:sdk21:assembleRelease',
-        ':generated:sdk23:assembleRelease',
-        ':generated:sqlite:assembleRelease',
-        ':generated:support-v4:assembleRelease'
-])
+def generatedArtifacts = [
+    ':generated:appcompat-v7',
+    ':generated:cardview-v7',
+    ':generated:common',
+    ':generated:design',
+    ':generated:gridlayout-v7',
+    ':generated:percent',
+    ':generated:recyclerview-v7',
+    ':generated:sdk15',
+    ':generated:sdk19',
+    ':generated:sdk21',
+    ':generated:sdk23',
+    ':generated:sqlite',
+    ':generated:support-v4'
+]
 
-task publish(dependsOn: [
-        ':collectJars',
-        ':zipIdeaPlugin',
-        ':generator:run',
-        ':generator:test',
-        ':robolectricTests:test',
-        ':generated:appcompat-v7:bintrayUpload',
-        ':generated:cardview-v7:bintrayUpload',
-        ':generated:common:bintrayUpload',
-        ':generated:design:bintrayUpload',
-        ':generated:gridlayout-v7:bintrayUpload',
-        ':generated:percent:bintrayUpload',
-        ':generated:recyclerview-v7:bintrayUpload',
-        ':generated:sdk15:bintrayUpload',
-        ':generated:sdk19:bintrayUpload',
-        ':generated:sdk21:bintrayUpload',
-        ':generated:sdk23:bintrayUpload',
-        ':generated:sqlite:bintrayUpload',
-        ':generated:support-v4:bintrayUpload'
-])
+task dist()
+task publish()
+task publishLocal()
+
+afterEvaluate {
+    def commonBuildTasks = [
+            ':collectJars',
+            ':zipIdeaPlugin',
+            ':generator:run',
+            ':generator:test',
+            ':robolectricTests:test'
+    ]
+
+    project.tasks.dist.dependsOn(commonBuildTasks)
+    project.tasks.publish.dependsOn(commonBuildTasks)
+    project.tasks.publishLocal.dependsOn(commonBuildTasks)
+
+    project.tasks.dist.dependsOn(generatedArtifacts.collect { it + ":assembleRelease" })
+    project.tasks.publish.dependsOn(generatedArtifacts.collect { it + ":bintrayUpload" })
+    project.tasks.publishLocal.dependsOn(generatedArtifacts.collect { it + ":publish" })
+}
