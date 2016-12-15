@@ -2,8 +2,8 @@ apply from: '../generated.gradle'
 
 dependencies {
     provided "com.android.support:appcompat-v7:$SUPPORT_ARTIFACT_VERSION"
-    provided project(':generated:common')
-    provided project(':generated:support-v4')
+    compile project(':generated:anko-common')
+    compile project(':generated:anko-support-v4')
 }
 
 task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {

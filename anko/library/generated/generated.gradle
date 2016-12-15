@@ -4,8 +4,11 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 apply from: '../../../../fat-aar.gradle'
 
+group POM_ARTIFACT_GROUP
+version ANKO_VERSION
+
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    provided "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
 android {
@@ -45,12 +48,54 @@ publishing {
     publications {
         anko(MavenPublication) {
             groupId POM_ARTIFACT_GROUP
-            artifactId "anko-" + project.name
+            artifactId project.name
             version ANKO_VERSION
 
             artifact androidReleaseJar
             artifact androidReleaseSources {
                 classifier "sources"
+            }
+
+            pom.withXml {
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+                    name 'anko'
+                    description 'Kotlin DSL for Android'
+                    url PROJECT_URL
+
+                    scm {
+                        url SCM_URL
+                        connection CONNECTION_URL
+                        developerConnection DEVELOPER_CONNECTION_URL
+                    }
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/license/LICENSE-2.0.txt'
+                            distribution 'repo'
+                            comments 'A business-friendly OSS license'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'JetBrains'
+                            name 'JetBrains Team'
+                            organization 'JetBrains'
+                            organizationUrl 'http://www.jetbrains.com'
+                        }
+                    }
+                }
+
+                def dependenciesNode = asNode().appendNode('dependencies')
+
+                configurations.compile.dependencies.each {
+                    if((it.group != null) && (it.name != null) && (it.version != null)) {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', (it.group == "anko.generated") ? POM_ARTIFACT_GROUP : it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', ANKO_VERSION)
+                    }
+                }
             }
         }
     }

@@ -1,7 +1,7 @@
 apply from: '../generated.gradle'
 
 dependencies {
-    provided project(':generated:common')
+    compile project(':generated:anko-common')
     embedded project(':static:platform')
 }
 

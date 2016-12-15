@@ -66,19 +66,19 @@ task zipIdeaPlugin(dependsOn: ':ide:preview:shadowJar') << {
 }
 
 def generatedArtifacts = [
-    ':generated:appcompat-v7',
-    ':generated:cardview-v7',
-    ':generated:common',
-    ':generated:design',
-    ':generated:gridlayout-v7',
-    ':generated:percent',
-    ':generated:recyclerview-v7',
-    ':generated:sdk15',
-    ':generated:sdk19',
-    ':generated:sdk21',
-    ':generated:sdk23',
-    ':generated:sqlite',
-    ':generated:support-v4'
+    ':generated:anko-appcompat-v7',
+    ':generated:anko-cardview-v7',
+    ':generated:anko-common',
+    ':generated:anko-design',
+    ':generated:anko-gridlayout-v7',
+    ':generated:anko-percent',
+    ':generated:anko-recyclerview-v7',
+    ':generated:anko-sdk15',
+    ':generated:anko-sdk19',
+    ':generated:anko-sdk21',
+    ':generated:anko-sdk23',
+    ':generated:anko-sqlite',
+    ':generated:anko-support-v4'
 ]
 
 task dist()
