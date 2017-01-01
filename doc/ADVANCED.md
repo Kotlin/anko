@@ -193,7 +193,7 @@ val future: Future<Result> = doAsyncResult(::apiCall)
 
 ## Logging
 
-Android SDK provides `android.util.Log` class which has some logging methods. Usage is pretty straightforward though the methods require you to pass a `tag` argument. You can elimintate this with using `AnkoLogger` trait:
+Android SDK provides `android.util.Log` class which has some logging methods. Usage is pretty straightforward though the methods require you to pass a `tag` argument. You can eliminate this with using `AnkoLogger` trait:
 
 ```kotlin
 class SomeActivity : Activity(), AnkoLogger {
