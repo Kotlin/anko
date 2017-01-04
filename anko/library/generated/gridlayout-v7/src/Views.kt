@@ -11,11 +11,11 @@ import android.os.Build
 import android.widget.*
 
 object `$$Anko$Factories$GridlayoutV7View` {
-    val SPACE = { ctx: Context -> android.support.v7.widget.Space(ctx) }
+    val SPACE = { ctx: Context -> android.support.v4.widget.Space(ctx) }
 }
 
-inline fun ViewManager.space(theme: Int = 0): android.support.v7.widget.Space = space(theme) {}
-inline fun ViewManager.space(theme: Int = 0, init: android.support.v7.widget.Space.() -> Unit): android.support.v7.widget.Space {
+inline fun ViewManager.space(theme: Int = 0): android.support.v4.widget.Space = space(theme) {}
+inline fun ViewManager.space(theme: Int = 0, init: android.support.v4.widget.Space.() -> Unit): android.support.v4.widget.Space {
     return ankoView(`$$Anko$Factories$GridlayoutV7View`.SPACE, theme) { init() }
 }
 
