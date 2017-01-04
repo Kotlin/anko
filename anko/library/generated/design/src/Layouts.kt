@@ -330,3 +330,69 @@ open class _TextInputLayout(ctx: Context): android.support.design.widget.TextInp
 
 }
 
+open class _BottomNavigationView(ctx: Context): android.support.design.widget.BottomNavigationView(ctx) {
+
+    fun <T: View> T.lparams(
+            c: android.content.Context?,
+            attrs: android.util.AttributeSet?,
+            init: android.widget.LinearLayout.LayoutParams.() -> Unit = defaultInit
+    ): T {
+        val layoutParams = android.widget.LinearLayout.LayoutParams(c!!, attrs!!)
+        layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
+    ): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height)
+        layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            gravity: Int,
+            init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
+    ): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(width, height, gravity)
+        layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    fun <T: View> T.lparams(
+            source: android.view.ViewGroup.LayoutParams?,
+            init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
+    ): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    fun <T: View> T.lparams(
+            source: android.view.ViewGroup.MarginLayoutParams?,
+            init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
+    ): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    fun <T: View> T.lparams(
+            source: android.widget.FrameLayout.LayoutParams?,
+            init: android.widget.FrameLayout.LayoutParams.() -> Unit = defaultInit
+    ): T {
+        val layoutParams = android.widget.FrameLayout.LayoutParams(source!!)
+        layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+}

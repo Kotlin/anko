@@ -1,4 +1,5 @@
 @file:JvmName("DesignViewsKt")
+
 package org.jetbrains.anko.design
 
 import org.jetbrains.anko.custom.*
@@ -79,6 +80,7 @@ object `$$Anko$Factories$DesignViewGroup` {
     val COORDINATOR_LAYOUT = { ctx: Context -> _CoordinatorLayout(ctx) }
     val TAB_LAYOUT = { ctx: Context -> _TabLayout(ctx) }
     val TEXT_INPUT_LAYOUT = { ctx: Context -> _TextInputLayout(ctx) }
+    val BOTTOM_NAVIGATION_VIEW = { ctx: Context -> _BottomNavigationView(ctx) }
 }
 
 inline fun ViewManager.appBarLayout(theme: Int = 0): android.support.design.widget.AppBarLayout = appBarLayout(theme) {}
@@ -154,5 +156,20 @@ inline fun Context.textInputLayout(theme: Int = 0, init: _TextInputLayout.() -> 
 inline fun Activity.textInputLayout(theme: Int = 0): android.support.design.widget.TextInputLayout = textInputLayout(theme) {}
 inline fun Activity.textInputLayout(theme: Int = 0, init: _TextInputLayout.() -> Unit): android.support.design.widget.TextInputLayout {
     return ankoView(`$$Anko$Factories$DesignViewGroup`.TEXT_INPUT_LAYOUT, theme) { init() }
+}
+
+inline fun ViewManager.bottomNavigationView(theme: Int = 0): android.support.design.widget.BottomNavigationView = bottomNavigationView(theme) {}
+inline fun ViewManager.bottomNavigationView(theme: Int = 0, init: _BottomNavigationView.() -> Unit): android.support.design.widget.BottomNavigationView {
+    return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_VIEW, theme) { init() }
+}
+
+inline fun Context.bottomNavigationView(theme: Int = 0): android.support.design.widget.BottomNavigationView = bottomNavigationView(theme) {}
+inline fun Context.bottomNavigationView(theme: Int = 0, init: _BottomNavigationView.() -> Unit): android.support.design.widget.BottomNavigationView {
+    return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_VIEW, theme) { init() }
+}
+
+inline fun Activity.bottomNavigationView(theme: Int = 0): android.support.design.widget.BottomNavigationView = bottomNavigationView(theme) {}
+inline fun Activity.bottomNavigationView(theme: Int = 0, init: _BottomNavigationView.() -> Unit): android.support.design.widget.BottomNavigationView {
+    return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_VIEW, theme) { init() }
 }
 
