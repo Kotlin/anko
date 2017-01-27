@@ -3,7 +3,6 @@ package org.jetbrains.kotlin.android.xmlconverter;
 import kotlin.text.Charsets;
 import org.junit.Rule;
 import org.junit.rules.TestName;
-import sun.plugin.dom.exception.InvalidStateException;
 import java.io.File;
 
 import static kotlin.collections.SetsKt.*;
@@ -20,7 +19,7 @@ public class BaseXmlConverterTest {
         File testDataDir = new File("xml-converter/testData");
         String testName = name.getMethodName();
         if (!testName.startsWith("test")) {
-            throw new InvalidStateException("Test name must start with a 'test' preffix");
+            throw new IllegalStateException("Test name must start with a 'test' preffix");
         }
 
         File testDir = new File(testDataDir, decapitalize(testName.substring("test".length())));
