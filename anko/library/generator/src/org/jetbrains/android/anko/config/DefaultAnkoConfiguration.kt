@@ -22,16 +22,15 @@ open class DefaultAnkoConfiguration(
         final override val outputDirectory: File,
         final override val artifactName: String,
         override val options: Options
-) : AnkoConfiguration() {
+) : AnkoConfiguration {
     final override val outputPackage: String
 
-    final override val excludedClasses = File("anko/props/excluded_classes.txt").readLines().toSet()
+    private fun readProps(name: String) = File("anko/props/$name.txt").readLines().toSet()
 
-    final override val excludedMethods = File("anko/props/excluded_methods.txt").readLines().toSet()
-
-    final override val excludedProperties = File("anko/props/excluded_properties.txt").readLines().toSet()
-
-    final override val propertiesWithoutGetters = File("anko/props/properties_without_getters.txt").readLines().toSet()
+    final override val excludedClasses = readProps("excluded_classes")
+    final override val excludedMethods = readProps("excluded_methods")
+    final override val excludedProperties = readProps("excluded_properties")
+    final override val propertiesWithoutGetters = readProps("properties_without_getters")
 
     init {
         val artifactType = getTargetArtifactType()
