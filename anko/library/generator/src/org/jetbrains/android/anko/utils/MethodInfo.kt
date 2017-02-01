@@ -37,10 +37,6 @@ private val specialLayoutParamsNames = mapOf(
 internal val MethodNode.parameterRawTypes: Array<Type>
     get() = Type.getArgumentTypes(desc)
 
-@Deprecated("Use parameterRawTypes", ReplaceWith("parameterRawTypes"))
-internal val MethodNode.args: Array<Type>
-    get() = parameterRawTypes
-
 internal fun getParameterKTypes(node: MethodNode): List<KType> {
     if (node.signature == null) {
         return node.parameterRawTypes.map { KType(it.asString(false), isNullable = false) }
@@ -115,12 +111,12 @@ fun MethodNode.isGetter(): Boolean {
     val isNonBooleanGetter = name.startsWith("get") && name.length > 3 && Character.isUpperCase(name[3])
     val isBooleanGetter = name.startsWith("is") && name.length > 2 && Character.isUpperCase(name[2])
 
-    return (isNonBooleanGetter || isBooleanGetter) && args.isEmpty() && !returnType.isVoid && isPublic
+    return (isNonBooleanGetter || isBooleanGetter) && parameterRawTypes.isEmpty() && !returnType.isVoid && isPublic
 }
 
 internal fun MethodNode.isNonListenerSetter(): Boolean {
     val isSetter = name.startsWith("set") && name.length > 3 && Character.isUpperCase(name[3])
-    return isSetter && !(isListenerSetter() || name.endsWith("Listener")) && args.size == 1 && isPublic
+    return isSetter && !(isListenerSetter() || name.endsWith("Listener")) && parameterRawTypes.size == 1 && isPublic
 }
 
 internal val MethodNode.isConstructor: Boolean

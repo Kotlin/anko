@@ -16,12 +16,12 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.args
 import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.ViewElement
 import org.jetbrains.android.anko.generator.ViewGenerator
 import org.jetbrains.android.anko.generator.ViewGroupGenerator
+import org.jetbrains.android.anko.parameterRawTypes
 import org.jetbrains.android.anko.utils.*
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
@@ -95,7 +95,7 @@ internal abstract class AbstractViewRenderer(
             factoryClass: ViewFactoryClass
     ) {
         val constructors = ViewConstructorUtils.AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
-            view.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
+            view.getConstructors().firstOrNull { Arrays.equals(it.parameterRawTypes, constructor) }
         }
 
         val (className21, functionName) = handleTintedView(view, className)
@@ -142,7 +142,7 @@ internal abstract class AbstractViewRenderer(
         for (constructor in helperConstructors) {
             val collected = constructor.zip(collectProperties(view, constructor))
             val helperArguments = collected.map {
-                val argumentType = it.second.args[0].asString()
+                val argumentType = it.second.parameterRawTypes[0].asString()
                 "${it.first.name}: $argumentType"
             }.joinToString(", ")
             val setters = collected.map { "${it.second.name}(${it.first.name})" }
@@ -173,7 +173,7 @@ internal abstract class AbstractViewRenderer(
         return properties.map { property ->
             val methodName = "set" + property.name.capitalize()
             val methods = view.allMethods.filter {
-                it.name == methodName && it.args.size == 1 && it.args[0].fqName.endsWith(property.type)
+                it.name == methodName && it.parameterRawTypes.unique?.fqName?.endsWith(property.type) ?: false
             }
 
             when (methods.size) {

@@ -71,9 +71,7 @@ class PropertyRenderer(context: AnkoBuilderContext) : Renderer(context) {
             returnType: KType)
     {
         if (otherSetters.isNotEmpty() && supportsResourceSetter(returnType)) {
-            val resourceSetter = otherSetters.firstOrNull {
-                it.method.args.size == 1 && (it.method.args[0].className == "int")
-            }
+            val resourceSetter = otherSetters.firstOrNull { it.method.parameterRawTypes.unique?.className == "int" }
 
             if (resourceSetter != null) {
                 line("var ${fullPropertyName}Resource: Int")
