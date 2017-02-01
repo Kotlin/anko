@@ -95,7 +95,7 @@ private fun gen(options: Options) {
             }
 
             val configuration = DefaultAnkoConfiguration(outputDirectoryForArtifact, artifactName, options)
-            val context = AnkoBuilderContext.create(File("anko/props"), LogManager.LogLevel.INFO, configuration)
+            val context = AnkoBuilderContext.create(File("anko/props"), Logger.LogLevel.INFO, configuration)
             try {
                 DSLGenerator(platformJars, versionJars, context).run()
             } catch (e: Throwable) {

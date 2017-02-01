@@ -22,8 +22,8 @@ class CliConfigurationKey<out T : Any>(
 
 val LOG_LEVEL = CliConfigurationKey(
         "logLevel",
-        defaultValue = LogManager.LogLevel.WARNING,
-        mapper = { LogManager.LogLevel.valueOf(it) })
+        defaultValue = Logger.LogLevel.WARNING,
+        mapper = { Logger.LogLevel.valueOf(it) })
 
 val ORIGINAL_DIRECTORY = CliConfigurationKey(
         "originalDirectory",

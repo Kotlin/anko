@@ -65,7 +65,7 @@ class PropertyGenerator : Generator<PropertyElement> {
                 if (property.propertyFqName in config.propertiesWithoutGetters) {
                     PropertyElement(property.name, null, s)
                 } else {
-                    log.d("PropertyGenerator # Property was not generated for $id")
+                    logger.d("PropertyGenerator # Property was not generated for $id")
                     null
                 }
             } else null
