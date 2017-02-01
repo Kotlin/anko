@@ -81,40 +81,26 @@ private fun getJars(version: File) = version.listFiles(JarFileFilter()).partitio
 
 private fun gen(options: Options) {
     val artifactDirs = getArtifactDirs(options[ORIGINAL_DIRECTORY])
-    val latch = CountDownLatch(artifactDirs.size)
-    val executor = Executors.newFixedThreadPool(artifactDirs.size)
     val outputDirectory = options[OUTPUT_DIRECTORY]
-    val errorFlag = AtomicBoolean(false)
 
     for (artifactDir in artifactDirs) {
-        executor.submit {
-            val (platformJars, versionJars) = getJars(artifactDir)
-            val artifactName = artifactDir.name
+        val (platformJars, versionJars) = getJars(artifactDir)
+        val artifactName = artifactDir.name
 
-            if (platformJars.isNotEmpty()) {
-                val outputDirectoryForArtifact = File(outputDirectory, artifactName)
-                val fileOutputDirectory = File(outputDirectoryForArtifact, "src/")
-                if (!fileOutputDirectory.exists()) {
-                    fileOutputDirectory.mkdirs()
-                }
+        if (platformJars.isNotEmpty()) {
+            val outputDirectoryForArtifact = File(outputDirectory, artifactName)
+            val fileOutputDirectory = File(outputDirectoryForArtifact, "src/")
+            if (!fileOutputDirectory.exists()) {
+                fileOutputDirectory.mkdirs()
+            }
 
-                val configuration = DefaultAnkoConfiguration(outputDirectoryForArtifact, artifactName, options)
-                val context = AnkoBuilderContext.create(File("anko/props"), LogManager.LogLevel.INFO, configuration)
-                try {
-                    DSLGenerator(platformJars, versionJars, context).run()
-                } catch (e: Throwable) {
-                    errorFlag.set(true)
-                } finally {
-                    latch.countDown()
-                }
+            val configuration = DefaultAnkoConfiguration(outputDirectoryForArtifact, artifactName, options)
+            val context = AnkoBuilderContext.create(File("anko/props"), LogManager.LogLevel.INFO, configuration)
+            try {
+                DSLGenerator(platformJars, versionJars, context).run()
+            } catch (e: Throwable) {
+                throw AssertionError("There was an exception during processing.", e)
             }
         }
-    }
-
-    latch.await()
-    executor.shutdown()
-
-    if (errorFlag.get()) {
-        throw AssertionError("There were errors during processing.")
     }
 }
