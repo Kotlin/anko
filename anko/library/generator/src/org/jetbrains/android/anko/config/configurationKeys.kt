@@ -19,7 +19,5 @@ val ANDROID_SDK_LOCATION = CliConfigurationKey(
         "androidSdk",
         mapper = ::File)
 
-val CHECK_MODE = ConfigurationKey("checkMode", false)
-
 val CLI_CONFIGURATION_KEYS: List<CliConfigurationKey<Any>> = listOf(
         LOG_LEVEL, ORIGINAL_DIRECTORY, OUTPUT_DIRECTORY, ANDROID_SDK_LOCATION)
