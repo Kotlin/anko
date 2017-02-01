@@ -7,7 +7,8 @@ run {
     // Replace "check" with "generate" to update generated files
     args = ["versions", "check",
             "--originalDirectory=dependencies/androidJars",
-            "--outputDirectory=anko/library/generated"]
+            "--outputDirectory=anko/library/generated",
+            "--androidSdk=dependencies/android-sdk"]
 
     workingDir = rootDir
 }

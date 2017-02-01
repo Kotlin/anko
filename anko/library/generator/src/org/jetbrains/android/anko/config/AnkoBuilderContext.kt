@@ -21,7 +21,7 @@ class AnkoBuilderContext(
 
             val annotationManager = AnnotationManager(CompoundAnnotationProvider(
                     CachingAnnotationProvider(zipFileProvider), CachingAnnotationProvider(directoryProvider)))
-            val sourceManager = SourceManager(AndroidHomeSourceProvider(23))
+            val sourceManager = SourceManager(AndroidHomeSourceProvider(config[ANDROID_SDK_LOCATION], 23))
             val templateManager = TemplateManager(MustacheTemplateProvider(File(propsDir, "templates")))
             val logManager = LogManager(logLevel)
 

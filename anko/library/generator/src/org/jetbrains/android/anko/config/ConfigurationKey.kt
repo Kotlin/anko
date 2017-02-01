@@ -33,9 +33,14 @@ val OUTPUT_DIRECTORY = CliConfiguationKey(
         "outputDirectory",
         mapper = ::File)
 
+val ANDROID_SDK_LOCATION = CliConfiguationKey(
+        "androidSdk",
+        mapper = ::File)
+
 val CHECK_MODE = ConfigurationKey("checkMode", false)
 
-val CLI_CONFIGURATION_KEYS: List<CliConfiguationKey<Any>> = listOf(LOG_LEVEL, ORIGINAL_DIRECTORY, OUTPUT_DIRECTORY)
+val CLI_CONFIGURATION_KEYS: List<CliConfiguationKey<Any>> = listOf(
+        LOG_LEVEL, ORIGINAL_DIRECTORY, OUTPUT_DIRECTORY, ANDROID_SDK_LOCATION)
 
 interface Options {
     operator fun <T : Any> get(key: ConfigurationKey<T>): T = opt(key)!!

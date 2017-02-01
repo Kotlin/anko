@@ -26,13 +26,10 @@ interface SourceProvider {
     fun parse(fqName: String): CompilationUnit?
 }
 
-class AndroidHomeSourceProvider(version: Int) : SourceProvider {
-    private val baseDir: File
+class AndroidHomeSourceProvider(androidSdkLocation: File, version: Int) : SourceProvider {
+    private val baseDir = File(androidSdkLocation, "sources/android-$version")
 
     init {
-        val androidHome = System.getenv("ANDROID_HOME")
-                ?: throw InvalidStateException("ANDROID_HOME environment variable is not defined")
-        baseDir = File(androidHome, "sources/android-$version")
         if (!baseDir.exists()) throw InvalidStateException("${baseDir.absolutePath} does not exist")
     }
 
