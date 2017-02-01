@@ -1,13 +1,14 @@
 package org.jetbrains.android.anko.config
 
-import java.io.File
-
 interface ConfigurationKey<out T : Any> {
     val name: String
     val defaultValue: T?
 }
 
-fun <T : Any> ConfigurationKey(name: String, defaultValue: T? = null): ConfigurationKey<T> = ConfigurationKeyImpl(name, defaultValue)
+fun <T : Any> ConfigurationKey(
+        name: String,
+        defaultValue: T? = null
+): ConfigurationKey<T> = ConfigurationKeyImpl(name, defaultValue)
 
 private open class ConfigurationKeyImpl<out T : Any>(
         override val name: String,
@@ -20,37 +21,11 @@ class CliConfigurationKey<out T : Any>(
         val mapper: (String) -> T?
 ) : ConfigurationKey<T> by ConfigurationKeyImpl(name, defaultValue)
 
-val LOG_LEVEL = CliConfigurationKey(
-        "logLevel",
-        defaultValue = Logger.LogLevel.WARNING,
-        mapper = { Logger.LogLevel.valueOf(it) })
-
-val ORIGINAL_DIRECTORY = CliConfigurationKey(
-        "originalDirectory",
-        mapper = ::File)
-
-val OUTPUT_DIRECTORY = CliConfigurationKey(
-        "outputDirectory",
-        mapper = ::File)
-
-val ANDROID_SDK_LOCATION = CliConfigurationKey(
-        "androidSdk",
-        mapper = ::File)
-
-val CHECK_MODE = ConfigurationKey("checkMode", false)
-
-val CLI_CONFIGURATION_KEYS: List<CliConfigurationKey<Any>> = listOf(
-        LOG_LEVEL, ORIGINAL_DIRECTORY, OUTPUT_DIRECTORY, ANDROID_SDK_LOCATION)
-
 interface Options {
     operator fun <T : Any> get(key: ConfigurationKey<T>): T = opt(key)!!
     fun <T : Any> opt(key: ConfigurationKey<T>): T?
 
     operator fun contains(key: ConfigurationKey<*>) = opt(key) != null
-
-    companion object {
-        fun create(): Options = OptionsImpl()
-    }
 }
 
 interface MutableOptions : Options {
