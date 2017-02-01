@@ -34,7 +34,7 @@ object Launcher {
             val split = rawOption.split('=', limit = 2)
             if (split.size != 2) error("Invalid option format: $rawOption")
             val key = split[0]
-            val option: CliConfiguationKey<Any> =
+            val option: CliConfigurationKey<Any> =
                     CLI_CONFIGURATION_KEYS.firstOrNull { it.cliName == key }
                     ?: error("Option not found: $key")
 
