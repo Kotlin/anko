@@ -28,13 +28,12 @@ import org.jetbrains.android.anko.writer.GeneratorWriter
 import java.io.File
 
 class DSLGenerator(
-    val platformJars: List<File>,
-    val versionJars: List<File>,
-    override val context: AnkoBuilderContext,
-    val classTree: ClassTree? = null
+        val platformJars: List<File>,
+        val sourceJars: List<File>,
+        override val context: AnkoBuilderContext
 ): Runnable, WithContext {
     override fun run() {
-        val classTree = this.classTree ?: ClassProcessor(platformJars, versionJars).genClassTree()
+        val classTree = ClassProcessor(platformJars, sourceJars).genClassTree()
         val generationState = GenerationState(classTree, context)
         val renderer = RenderFacade(generationState)
         val writer = if (context.configuration[CHECK_MODE]) {

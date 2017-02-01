@@ -65,8 +65,8 @@ object Launcher {
 
 private fun versions(options: Options) {
     for (version in getArtifactDirs(options[ORIGINAL_DIRECTORY])) {
-        val (platformJars, versionJars) = getJars(version)
-        println(version.name + ": " + (platformJars + versionJars).joinToString())
+        val (platformJars, sourceJars) = getJars(version)
+        println(version.name + ": " + (platformJars + sourceJars).joinToString())
     }
 }
 
@@ -84,7 +84,7 @@ private fun gen(options: Options) {
     val outputDirectory = options[OUTPUT_DIRECTORY]
 
     for (artifactDir in artifactDirs) {
-        val (platformJars, versionJars) = getJars(artifactDir)
+        val (platformJars, sourceJars) = getJars(artifactDir)
         val artifactName = artifactDir.name
 
         if (platformJars.isNotEmpty()) {
@@ -97,7 +97,7 @@ private fun gen(options: Options) {
             val configuration = DefaultAnkoConfiguration(outputDirectoryForArtifact, artifactName, options)
             val context = AnkoBuilderContext.create(File("anko/props"), Logger.LogLevel.INFO, configuration)
             try {
-                DSLGenerator(platformJars, versionJars, context).run()
+                DSLGenerator(platformJars, sourceJars, context).run()
             } catch (e: Throwable) {
                 throw AssertionError("There was an exception during processing.", e)
             }
