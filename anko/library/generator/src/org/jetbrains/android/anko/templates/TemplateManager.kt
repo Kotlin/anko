@@ -16,16 +16,26 @@
 
 package org.jetbrains.android.anko.templates
 
+import java.io.File
+
 interface TemplateProvider {
-    fun render(templateName: String, args: Map<String, Any?>): String
+    val extension: String
+    fun render(templateFile: File, args: Map<String, Any?>): String
 }
 
-class TemplateManager(private val templateProvider: TemplateProvider) {
-
+class TemplateManager(val baseDir: File, vararg val templateProviders: TemplateProvider) {
     fun render(templateName: String, body: TemplateContext.() -> Unit): String {
         val context = TemplateContext()
         context.body()
-        return templateProvider.render(templateName, context.getArguments())
+
+        for (provider in templateProviders) {
+            val templateFile = File(baseDir, "$templateName.${provider.extension}")
+            if (templateFile.exists()) {
+                return provider.render(templateFile, context.getArguments())
+            }
+        }
+
+        error("TemplateProvider was not found for $templateName")
     }
 }
 

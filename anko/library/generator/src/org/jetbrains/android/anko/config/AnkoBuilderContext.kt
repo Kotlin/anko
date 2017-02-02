@@ -3,6 +3,7 @@ package org.jetbrains.android.anko.config
 import org.jetbrains.android.anko.annotations.*
 import org.jetbrains.android.anko.sources.AndroidHomeSourceProvider
 import org.jetbrains.android.anko.sources.SourceManager
+import org.jetbrains.android.anko.templates.JtwigTemplateProvider
 import org.jetbrains.android.anko.templates.MustacheTemplateProvider
 import org.jetbrains.android.anko.templates.TemplateManager
 import java.io.File
@@ -22,7 +23,10 @@ class AnkoBuilderContext(
             val annotationManager = AnnotationManager(CompoundAnnotationProvider(
                     CachingAnnotationProvider(zipFileProvider), CachingAnnotationProvider(directoryProvider)))
             val sourceManager = SourceManager(AndroidHomeSourceProvider(config[ANDROID_SDK_LOCATION], 23))
-            val templateManager = TemplateManager(MustacheTemplateProvider(File(propsDir, "templates")))
+            val templateManager = TemplateManager(
+                    File(propsDir, "templates"),
+                    MustacheTemplateProvider(),
+                    JtwigTemplateProvider())
             val logger = Logger(logLevel)
 
             return AnkoBuilderContext(annotationManager, sourceManager, templateManager, logger, config)

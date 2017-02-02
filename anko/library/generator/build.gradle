@@ -26,6 +26,8 @@ sourceSets {
 
 dependencies {
     compile 'com.github.javaparser:javaparser-core:2.1.0'
+    compile 'org.jtwig:jtwig-core:5.65'
+    compile 'org.jtwig:jtwig-spaceless-extension:1.45'
     compile 'com.samskivert:jmustache:1.10'
     compile 'org.ow2.asm:asm-debug-all:5.1'
     compile 'org.jetbrains.kotlinx:kotlinx.dom:0.0.8'
