@@ -37,6 +37,9 @@
 
         <ant antfile="update_dependencies_idea.xml" target="update"/>
 
+        <rename src="ideaSDK/lib/kotlin-runtime.jar" dest="kotlin-runtime.jar.bak"/>
+        <rename src="ideaSDK/lib/kotlin-reflect.jar" dest="kotlin-reflect.jar.bak"/>
+
         <copydir src="dependencies/Kotlin" dest="ideaSDK/plugins/Kotlin" forceoverwrite="true"/>
     </target>
 
