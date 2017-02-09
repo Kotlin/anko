@@ -4,7 +4,7 @@ import java.util.zip.ZipOutputStream
 buildscript {
     ext.kotlin_version = '1.0.5-2'
 
-    ext.ANKO_VERSION = '0.9.1'
+    ext.ANKO_VERSION = '0.9.1a'
     ext.ANKO_VERSION_CODE = 91
 
     ext.COMPILE_SDK_VERSION = 23

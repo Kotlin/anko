@@ -17,7 +17,6 @@
 package org.jetbrains.android.anko.render
 
 import com.samskivert.mustache.Mustache
-import org.jetbrains.android.anko.args
 import org.jetbrains.android.anko.config.AnkoBuilderContext
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationKey
@@ -26,6 +25,7 @@ import org.jetbrains.android.anko.formatLayoutParamsArgumentsInvoke
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.LayoutElement
 import org.jetbrains.android.anko.generator.LayoutGenerator
+import org.jetbrains.android.anko.parameterRawTypes
 import org.jetbrains.android.anko.utils.*
 import java.util.*
 
@@ -39,7 +39,7 @@ class LayoutRenderer(context: AnkoBuilderContext) : Renderer(context), ViewConst
 
     private fun renderLayout(node: LayoutElement, importList: ImportList): String {
         val constructors = ViewConstructorUtils.AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
-            node.layout.getConstructors().firstOrNull { Arrays.equals(it.args, constructor) }
+            node.layout.getConstructors().firstOrNull { Arrays.equals(it.parameterRawTypes, constructor) }
         }
 
         val layoutParamsClass = node.layoutParams.fqName

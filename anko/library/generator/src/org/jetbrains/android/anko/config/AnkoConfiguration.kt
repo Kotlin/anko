@@ -19,27 +19,31 @@ package org.jetbrains.android.anko.config
 import org.jetbrains.android.anko.config.TargetArtifactType.*
 import java.io.File
 
-abstract class AnkoConfiguration {
-    open val indent: String = "    "
+interface AnkoConfiguration {
+    val indent: String
+        get() = "    "
 
-    open val generateImports: Boolean = true
-    open val generatePackage: Boolean = true
+    val generateImports: Boolean
+        get() = true
 
-    abstract val artifactName: String
+    val generatePackage: Boolean
+        get() = true
 
-    abstract val options: Options
+    val artifactName: String
 
-    abstract val outputPackage: String
+    val options: Options
 
-    abstract val outputDirectory: File
-    abstract val sourceOutputDirectory: File
+    val outputPackage: String
 
-    abstract val excludedClasses: Set<String>
-    abstract val excludedMethods: Set<String>
-    abstract val excludedProperties: Set<String>
-    abstract val propertiesWithoutGetters: Set<String>
+    val outputDirectory: File
+    val sourceOutputDirectory: File
 
-    abstract fun getOutputFile(ankoFile: AnkoFile): File
+    val excludedClasses: Set<String>
+    val excludedMethods: Set<String>
+    val excludedProperties: Set<String>
+    val propertiesWithoutGetters: Set<String>
+
+    fun getOutputFile(ankoFile: AnkoFile): File
 
     fun getTargetArtifactType(): TargetArtifactType {
         return when {

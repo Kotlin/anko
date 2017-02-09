@@ -47,7 +47,7 @@ class ListenerGenerator : Generator<ListenerElement> {
 
     //suppose "setter" is a correct setOn*Listener method
     private fun GenerationState.makeListener(setter: MethodNodeWithClass): ListenerElement {
-        val listener = classTree.findNode(setter.method.args[0].internalName)!!.data
+        val listener = classTree.findNode(setter.method.parameterRawTypes[0].internalName)!!.data
 
         val methods = listener.methods?.filter { !it.isConstructor }
 
