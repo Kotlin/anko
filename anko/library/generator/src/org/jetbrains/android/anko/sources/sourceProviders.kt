@@ -19,7 +19,6 @@ package org.jetbrains.android.anko.sources
 import com.github.javaparser.JavaParser
 import com.github.javaparser.ast.CompilationUnit
 import org.jetbrains.android.anko.utils.getPackageName
-import sun.plugin.dom.exception.InvalidStateException
 import java.io.File
 
 interface SourceProvider {
@@ -30,7 +29,7 @@ class AndroidHomeSourceProvider(androidSdkLocation: File, version: Int) : Source
     private val baseDir = File(androidSdkLocation, "sources/android-$version")
 
     init {
-        if (!baseDir.exists()) throw InvalidStateException("${baseDir.absolutePath} does not exist")
+        if (!baseDir.exists()) throw IllegalStateException("${baseDir.absolutePath} does not exist")
     }
 
     override fun parse(fqName: String): CompilationUnit? {
