@@ -2,7 +2,6 @@ package org.jetbrains.android.anko.templates
 
 import org.jtwig.JtwigModel
 import org.jtwig.JtwigTemplate
-import org.jtwig.environment.DefaultEnvironmentConfiguration
 import org.jtwig.environment.EnvironmentConfigurationBuilder
 import org.jtwig.functions.FunctionRequest
 import org.jtwig.functions.SimpleJtwigFunction

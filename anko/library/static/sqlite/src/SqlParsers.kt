@@ -53,10 +53,10 @@ private class ScalarColumnParser<in R, out T>(val modifier: ((R) -> T)? = null) 
     }
 }
 
-val ShortParser: RowParser<Short> = ScalarColumnParser<Long, Short> { it.toShort() }
-val IntParser: RowParser<Int> = ScalarColumnParser<Long, Int> { it.toInt() }
+val ShortParser: RowParser<Short> = ScalarColumnParser(modifier = Long::toShort)
+val IntParser: RowParser<Int> = ScalarColumnParser(modifier = Long::toInt)
 val LongParser: RowParser<Long> = SingleColumnParser()
-val FloatParser: RowParser<Float> = ScalarColumnParser<Double, Float> { it.toFloat() }
+val FloatParser: RowParser<Float> = ScalarColumnParser(modifier = Double::toFloat)
 val DoubleParser: RowParser<Double> = SingleColumnParser()
 val StringParser: RowParser<String> = SingleColumnParser()
 val BlobParser: RowParser<ByteArray> = SingleColumnParser()

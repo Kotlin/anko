@@ -23,7 +23,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -99,8 +98,6 @@ object AnkoInternals {
 
         val UI_MODE_TYPE_APPLIANCE = 0x05
         val UI_MODE_TYPE_WATCH = 0x06
-
-        val DENSITY_DPI_NONE = 0xffff
     }
 
     @JvmStatic

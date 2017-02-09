@@ -121,7 +121,7 @@ fun Context.UI(init: AnkoContext<Context>.() -> Unit) = createAnkoContext(this, 
 
 fun Fragment.UI(init: AnkoContext<Fragment>.() -> Unit): AnkoContext<Fragment> = createAnkoContext(activity, init)
 
-interface AnkoComponent<T> {
+interface AnkoComponent<in T> {
     fun createView(ui: AnkoContext<T>): View
 }
 

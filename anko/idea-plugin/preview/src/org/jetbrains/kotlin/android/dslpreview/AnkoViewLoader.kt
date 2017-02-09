@@ -24,19 +24,13 @@ import org.jetbrains.org.objectweb.asm.Opcodes.*
 import java.net.URL
 import java.net.URLClassLoader
 
-class AnkoViewLoader : ViewLoader {
-    private val description: PreviewClassDescription
-    private val delegate: ViewLoader
-
-    constructor(facet: AndroidFacet, delegate: ViewLoader, description: PreviewClassDescription) : super(
-            delegate.prop("myLayoutLibrary"),
-            facet,
-            delegate.prop("myLogger"),
-            delegate.prop("myCredential")) {
-        this.description = description
-        this.delegate = delegate
-    }
-
+class AnkoViewLoader(
+        facet: AndroidFacet,
+        private val delegate: ViewLoader,
+        private val description: PreviewClassDescription
+) : ViewLoader(
+        delegate.prop("myLayoutLibrary"), facet, delegate.prop("myLogger"), delegate.prop("myCredential")
+) {
     override fun loadView(className: String?, constructorSignature: Array<out Class<Any>>?, constructorArgs: Array<out Any>?): Any? {
         if (className == "__anko.preview.View") {
             try {

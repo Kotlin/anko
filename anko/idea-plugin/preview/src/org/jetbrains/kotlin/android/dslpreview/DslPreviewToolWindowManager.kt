@@ -344,7 +344,7 @@ class DslPreviewToolWindowManager(
         if (DumbService.isDumb(myProject)) return emptyList()
         val baseClasses = JavaPsiFacade.getInstance(myProject)
                 .findClasses(baseClassName, GlobalSearchScope.allScope(myProject))
-        if (baseClasses.size == 0) return emptyList()
+        if (baseClasses.isEmpty()) return emptyList()
 
         try {
             val cacheService = KotlinCacheService.getInstance(myProject)
@@ -399,8 +399,8 @@ class DslPreviewToolWindowManager(
                 .show(RelativePoint.getCenterOf(statusBar.component), Balloon.Position.atRight)
     }
 
-    protected fun subrender(psiFile: PsiFile, facet: AndroidFacet, description: PreviewClassDescription,
-                            @Suppress("UNUSED_PARAMETER") forceFullRender: Boolean): Boolean {
+    private fun subrender(psiFile: PsiFile, facet: AndroidFacet, description: PreviewClassDescription,
+                          @Suppress("UNUSED_PARAMETER") forceFullRender: Boolean): Boolean {
         callSuperMethod<MergingUpdateQueue>("getRenderingQueue").queue(object : Update("render") {
             override fun run() {
                 ProgressManager.getInstance().runProcess({
