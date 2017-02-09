@@ -10,7 +10,8 @@ import android.content.Context
 import android.os.Build
 import android.widget.*
 
-object `$$Anko$Factories$DesignView` {
+@PublishedApi
+internal object `$$Anko$Factories$DesignView` {
     val NAVIGATION_MENU_ITEM_VIEW = { ctx: Context -> android.support.design.internal.NavigationMenuItemView(ctx) }
     val NAVIGATION_MENU_VIEW = { ctx: Context -> android.support.design.internal.NavigationMenuView(ctx) }
     val SCRIM_INSETS_FRAME_LAYOUT = { ctx: Context -> android.support.design.internal.ScrimInsetsFrameLayout(ctx) }
@@ -73,7 +74,8 @@ inline fun Activity.navigationView(theme: Int = 0, init: android.support.design.
     return ankoView(`$$Anko$Factories$DesignView`.NAVIGATION_VIEW, theme) { init() }
 }
 
-object `$$Anko$Factories$DesignViewGroup` {
+@PublishedApi
+internal object `$$Anko$Factories$DesignViewGroup` {
     val APP_BAR_LAYOUT = { ctx: Context -> _AppBarLayout(ctx) }
     val COLLAPSING_TOOLBAR_LAYOUT = { ctx: Context -> _CollapsingToolbarLayout(ctx) }
     val COORDINATOR_LAYOUT = { ctx: Context -> _CoordinatorLayout(ctx) }

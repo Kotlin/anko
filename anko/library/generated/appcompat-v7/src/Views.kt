@@ -10,7 +10,8 @@ import android.content.Context
 import android.os.Build
 import android.widget.*
 
-object `$$Anko$Factories$AppcompatV7View` {
+@PublishedApi
+internal object `$$Anko$Factories$AppcompatV7View` {
     val TINTED_AUTO_COMPLETE_TEXT_VIEW = { ctx: Context -> if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatAutoCompleteTextView(ctx) else AutoCompleteTextView(ctx) }
     val TINTED_BUTTON = { ctx: Context -> if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatButton(ctx) else Button(ctx) }
     val TINTED_CHECK_BOX = { ctx: Context -> if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatCheckBox(ctx) else CheckBox(ctx) }
@@ -229,7 +230,8 @@ inline fun ViewManager.switchCompat(theme: Int = 0, init: android.support.v7.wid
     return ankoView(`$$Anko$Factories$AppcompatV7View`.SWITCH_COMPAT, theme) { init() }
 }
 
-object `$$Anko$Factories$AppcompatV7ViewGroup` {
+@PublishedApi
+internal object `$$Anko$Factories$AppcompatV7ViewGroup` {
     val ACTION_MENU_VIEW = { ctx: Context -> _ActionMenuView(ctx) }
     val LINEAR_LAYOUT_COMPAT = { ctx: Context -> _LinearLayoutCompat(ctx) }
     val TOOLBAR = { ctx: Context -> _Toolbar(ctx) }

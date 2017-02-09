@@ -28,13 +28,13 @@ import org.objectweb.asm.tree.MethodNode
 import java.util.*
 
 internal class ViewRenderer(context: AnkoBuilderContext) : AbstractViewRenderer(context) {
-    override fun processElements(state: GenerationState) = generatedFile { importList ->
+    override fun processElements(state: GenerationState) = generatedFile {
         renderViews(state[ViewGenerator::class.java]) { it.fqName }
     }
 }
 
 internal class ViewGroupRenderer(context: AnkoBuilderContext) : AbstractViewRenderer(context) {
-    override fun processElements(state: GenerationState) = generatedFile { importList ->
+    override fun processElements(state: GenerationState) = generatedFile {
         renderViews(state[ViewGroupGenerator::class.java]) { "_" + it.simpleName }
     }
 }
@@ -49,7 +49,8 @@ class ViewFactoryClass(val config: AnkoConfiguration, suffix: String) {
         if (entries.isEmpty()) return ""
 
         return StringBuilder().apply {
-            appendln("object $fullName {")
+            appendln("@PublishedApi")
+            appendln("internal object $fullName {")
             entries.forEach { append(config.indent).appendln(it) }
             appendln("}").appendln()
         }.toString()
@@ -75,7 +76,7 @@ internal abstract class AbstractViewRenderer(
                     if (Props.helperConstructors.contains(view.fqName)) {
                         append(renderHelperConstructors(view, factoryClass))
                     } else if (view.clazz.isTinted()) {
-                        val (className21, unused) = handleTintedView(view.clazz, nameResolver(view.clazz))
+                        val (className21, _) = handleTintedView(view.clazz, nameResolver(view.clazz))
                         if (Props.helperConstructors.contains("android.widget.$className21")) {
                             append(renderHelperConstructors(view, factoryClass))
                         }

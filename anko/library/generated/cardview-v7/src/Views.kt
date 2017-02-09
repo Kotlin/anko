@@ -10,7 +10,8 @@ import android.content.Context
 import android.os.Build
 import android.widget.*
 
-object `$$Anko$Factories$CardviewV7View` {
+@PublishedApi
+internal object `$$Anko$Factories$CardviewV7View` {
     val CARD_VIEW = { ctx: Context -> android.support.v7.widget.CardView(ctx) }
 }
 

@@ -10,7 +10,8 @@ import android.content.Context
 import android.os.Build
 import android.widget.*
 
-object `$$Anko$Factories$Sdk15View` {
+@PublishedApi
+internal object `$$Anko$Factories$Sdk15View` {
     val GESTURE_OVERLAY_VIEW = { ctx: Context -> android.gesture.GestureOverlayView(ctx) }
     val EXTRACT_EDIT_TEXT = { ctx: Context -> android.inputmethodservice.ExtractEditText(ctx) }
     val G_L_SURFACE_VIEW = { ctx: Context -> android.opengl.GLSurfaceView(ctx) }
@@ -641,7 +642,8 @@ inline fun Activity.zoomControls(theme: Int = 0, init: android.widget.ZoomContro
     return ankoView(`$$Anko$Factories$Sdk15View`.ZOOM_CONTROLS, theme) { init() }
 }
 
-object `$$Anko$Factories$Sdk15ViewGroup` {
+@PublishedApi
+internal object `$$Anko$Factories$Sdk15ViewGroup` {
     val APP_WIDGET_HOST_VIEW = { ctx: Context -> _AppWidgetHostView(ctx) }
     val WEB_VIEW = { ctx: Context -> _WebView(ctx) }
     val ABSOLUTE_LAYOUT = { ctx: Context -> _AbsoluteLayout(ctx) }

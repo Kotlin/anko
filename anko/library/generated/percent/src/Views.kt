@@ -10,7 +10,8 @@ import android.content.Context
 import android.os.Build
 import android.widget.*
 
-object `$$Anko$Factories$PercentViewGroup` {
+@PublishedApi
+internal object `$$Anko$Factories$PercentViewGroup` {
     val PERCENT_FRAME_LAYOUT = { ctx: Context -> _PercentFrameLayout(ctx) }
     val PERCENT_RELATIVE_LAYOUT = { ctx: Context -> _PercentRelativeLayout(ctx) }
 }

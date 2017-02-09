@@ -10,7 +10,8 @@ import android.content.Context
 import android.os.Build
 import android.widget.*
 
-object `$$Anko$Factories$SupportV4View` {
+@PublishedApi
+internal object `$$Anko$Factories$SupportV4View` {
     val PAGER_TAB_STRIP = { ctx: Context -> android.support.v4.view.PagerTabStrip(ctx) }
     val PAGER_TITLE_STRIP = { ctx: Context -> android.support.v4.view.PagerTitleStrip(ctx) }
     val CONTENT_LOADING_PROGRESS_BAR = { ctx: Context -> android.support.v4.widget.ContentLoadingProgressBar(ctx) }
@@ -73,7 +74,8 @@ inline fun Activity.swipeRefreshLayout(theme: Int = 0, init: android.support.v4.
     return ankoView(`$$Anko$Factories$SupportV4View`.SWIPE_REFRESH_LAYOUT, theme) { init() }
 }
 
-object `$$Anko$Factories$SupportV4ViewGroup` {
+@PublishedApi
+internal object `$$Anko$Factories$SupportV4ViewGroup` {
     val FRAGMENT_TAB_HOST = { ctx: Context -> _FragmentTabHost(ctx) }
     val VIEW_PAGER = { ctx: Context -> _ViewPager(ctx) }
     val DRAWER_LAYOUT = { ctx: Context -> _DrawerLayout(ctx) }

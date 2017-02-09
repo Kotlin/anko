@@ -10,7 +10,8 @@ import android.content.Context
 import android.os.Build
 import android.widget.*
 
-object `$$Anko$Factories$RecyclerviewV7ViewGroup` {
+@PublishedApi
+internal object `$$Anko$Factories$RecyclerviewV7ViewGroup` {
     val RECYCLER_VIEW = { ctx: Context -> _RecyclerView(ctx) }
 }
 

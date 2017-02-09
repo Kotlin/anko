@@ -10,7 +10,8 @@ import android.content.Context
 import android.os.Build
 import android.widget.*
 
-object `$$Anko$Factories$Sdk23View` {
+@PublishedApi
+internal object `$$Anko$Factories$Sdk23View` {
     val MEDIA_ROUTE_BUTTON = { ctx: Context -> android.app.MediaRouteButton(ctx) }
     val GESTURE_OVERLAY_VIEW = { ctx: Context -> android.gesture.GestureOverlayView(ctx) }
     val EXTRACT_EDIT_TEXT = { ctx: Context -> android.inputmethodservice.ExtractEditText(ctx) }
@@ -669,7 +670,8 @@ inline fun Activity.zoomControls(theme: Int = 0, init: android.widget.ZoomContro
     return ankoView(`$$Anko$Factories$Sdk23View`.ZOOM_CONTROLS, theme) { init() }
 }
 
-object `$$Anko$Factories$Sdk23ViewGroup` {
+@PublishedApi
+internal object `$$Anko$Factories$Sdk23ViewGroup` {
     val APP_WIDGET_HOST_VIEW = { ctx: Context -> _AppWidgetHostView(ctx) }
     val WEB_VIEW = { ctx: Context -> _WebView(ctx) }
     val ABSOLUTE_LAYOUT = { ctx: Context -> _AbsoluteLayout(ctx) }
