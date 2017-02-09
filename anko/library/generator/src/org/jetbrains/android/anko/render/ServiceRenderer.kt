@@ -28,13 +28,9 @@ class ServiceRenderer(context: AnkoBuilderContext) : Renderer(context) {
 
     override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.SERVICES)
 
-    override fun processElements(state: GenerationState) = generatedFile { importList ->
-        append(render("services") {
-            "services" % seq(state[ServiceGenerator::class.java]) {
-                "name" % it.service.simpleName.decapitalize()
-                "className" % it.service.fqName
-                "const" % it.name
-            }
+    override fun processElements(state: GenerationState) = generatedFile("Suppress(\"unused\")") { importList ->
+        append(render("services", importList) {
+            "services" % state[ServiceGenerator::class.java]
         })
     }
 

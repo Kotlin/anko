@@ -18,6 +18,7 @@ package org.jetbrains.android.anko.templates
 
 import com.samskivert.mustache.Mustache
 import com.samskivert.mustache.Template
+import org.jetbrains.android.anko.utils.ImportList
 import java.io.File
 
 class MustacheTemplateProvider : TemplateProvider {
@@ -25,7 +26,7 @@ class MustacheTemplateProvider : TemplateProvider {
 
     private val templateCache = hashMapOf<File, Template>()
 
-    override fun render(templateFile: File, args: Map<String, Any?>): String {
+    override fun render(templateFile: File, importList: ImportList, args: Map<String, Any?>): String {
         return getTemplate(templateFile).execute(args)
     }
 

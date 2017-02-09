@@ -16,22 +16,23 @@
 
 package org.jetbrains.android.anko.templates
 
+import org.jetbrains.android.anko.utils.ImportList
 import java.io.File
 
 interface TemplateProvider {
     val extension: String
-    fun render(templateFile: File, args: Map<String, Any?>): String
+    fun render(templateFile: File, importList: ImportList, args: Map<String, Any?>): String
 }
 
 class TemplateManager(val baseDir: File, vararg val templateProviders: TemplateProvider) {
-    fun render(templateName: String, body: TemplateContext.() -> Unit): String {
+    fun render(templateName: String, importList: ImportList, body: TemplateContext.() -> Unit): String {
         val context = TemplateContext()
         context.body()
 
         for (provider in templateProviders) {
             val templateFile = File(baseDir, "$templateName.${provider.extension}")
             if (templateFile.exists()) {
-                return provider.render(templateFile, context.getArguments())
+                return provider.render(templateFile, importList, context.getArguments())
             }
         }
 

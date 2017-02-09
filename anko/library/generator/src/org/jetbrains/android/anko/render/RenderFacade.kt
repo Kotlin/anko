@@ -46,21 +46,23 @@ abstract class Renderer(override val context: AnkoBuilderContext): WithContext {
         return if (option.any { config[it] }) init() else ""
     }
 
-    protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {
-        return templateManager.render(templateName, body)
+    protected fun render(
+            templateName: String,
+            importList: ImportList = ImportList(),
+            body: TemplateContext.() -> Unit
+    ): String {
+        return templateManager.render(templateName, importList, body)
     }
 }
 
-
-
-fun generatedFile(builder: StringBuilder.(ImportList) -> Unit): GeneratedFile {
+fun generatedFile(vararg fileAnnotations: String, builder: StringBuilder.(ImportList) -> Unit): GeneratedFile {
     val sb = StringBuilder()
     val importList = ImportList()
     sb.builder(importList)
-    return GeneratedFile(sb.toString(), importList)
+    return GeneratedFile(sb.toString(), importList, fileAnnotations.toList())
 }
 
-class GeneratedFile(val body: String, val importList: ImportList)
+class GeneratedFile(val body: String, val importList: ImportList, val fileAnnotations: List<String>)
 
 class RenderFacade(
         val generationState: GenerationState

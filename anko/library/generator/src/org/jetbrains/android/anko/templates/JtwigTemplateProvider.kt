@@ -1,5 +1,6 @@
 package org.jetbrains.android.anko.templates
 
+import org.jetbrains.android.anko.utils.ImportList
 import org.jtwig.JtwigModel
 import org.jtwig.JtwigTemplate
 import org.jtwig.environment.EnvironmentConfigurationBuilder
@@ -13,14 +14,12 @@ import java.math.BigDecimal
 class JtwigTemplateProvider : TemplateProvider {
     override val extension = "twig"
 
-    private val templateCache = hashMapOf<File, JtwigTemplate>()
-
-    override fun render(templateFile: File, args: Map<String, Any?>): String {
+    override fun render(templateFile: File, importList: ImportList, args: Map<String, Any?>): String {
         val model = JtwigModel.newModel(args)
-        return getTemplate(templateFile).render(model)
+        return getTemplate(templateFile, importList).render(model)
     }
 
-    private fun getTemplate(templateFile: File) = templateCache.getOrPut(templateFile) {
+    private fun getTemplate(templateFile: File, importList: ImportList): JtwigTemplate {
         val configuration = EnvironmentConfigurationBuilder.configuration()
         configuration.extensions().add(SpacelessExtension(DefaultSpacelessConfiguration()))
         configuration.functions().add(object : SimpleJtwigFunction() {
@@ -43,6 +42,15 @@ class JtwigTemplateProvider : TemplateProvider {
             }
         })
 
-        JtwigTemplate.fileTemplate(templateFile, configuration.build())
+        configuration.functions().add(object : SimpleJtwigFunction() {
+            override fun name() = "imported"
+
+            override fun execute(request: FunctionRequest): Any {
+                request.minimumNumberOfArguments(1).maximumNumberOfArguments(1)
+                return importList[request.arguments[0].toString()]
+            }
+        })
+
+        return JtwigTemplate.fileTemplate(templateFile, configuration.build())
     }
 }

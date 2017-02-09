@@ -18,6 +18,7 @@ package org.jetbrains.android.anko.generator
 
 import org.jetbrains.android.anko.utils.MethodNodeWithClass
 import org.jetbrains.android.anko.utils.fqName
+import org.jetbrains.android.anko.utils.simpleName
 import org.objectweb.asm.Type
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
@@ -33,7 +34,13 @@ class ViewElement(val clazz: ClassNode, val isContainer: Boolean, allMethods: ()
 
 class LayoutElement(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>)
 
-class ServiceElement(val service: ClassNode, val name: String)
+class ServiceElement(val service: ClassNode, val constantName: String) {
+    val simpleName: String
+        get() = service.simpleName.decapitalize()
+
+    val fqName: String
+        get() = service.fqName
+}
 
 class PropertyElement(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)
 
