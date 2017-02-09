@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 package org.jetbrains.anko
 
 import android.util.Log
@@ -46,9 +46,9 @@ fun AnkoLogger(clazz: Class<*>): AnkoLogger = object : AnkoLogger {
     override val loggerTag = getTag(clazz)
 }
 
-fun AnkoLogger(clazz: KClass<*>): AnkoLogger = AnkoLogger(clazz.java)
+inline fun AnkoLogger(clazz: KClass<*>): AnkoLogger = AnkoLogger(clazz.java)
 
-fun AnkoLogger(obj: Any): AnkoLogger = AnkoLogger(obj.javaClass)
+inline fun AnkoLogger(obj: Any): AnkoLogger = AnkoLogger(obj.javaClass)
 
 /**
  * Send a log message with the [Log.VERBOSE] severity.
@@ -241,7 +241,7 @@ inline fun AnkoLogger.error(message: () -> Any?) {
 /**
  * Return the stack trace [String] of a throwable.
  */
-fun Throwable.getStackTraceString(): String = Log.getStackTraceString(this)
+inline fun Throwable.getStackTraceString(): String = Log.getStackTraceString(this)
 
 private inline fun log(
         logger: AnkoLogger,

@@ -23,11 +23,11 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 
-val Fragment.defaultSharedPreferences: SharedPreferences
+inline val Fragment.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(activity)
 
-val Fragment.act: Activity
+inline val Fragment.act: Activity
     get() = activity
 
-val Fragment.ctx: Context
+inline val Fragment.ctx: Context
     get() = activity

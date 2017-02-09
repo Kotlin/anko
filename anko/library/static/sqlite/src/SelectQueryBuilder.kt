@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 package org.jetbrains.anko.db
 
 import android.database.Cursor
@@ -39,37 +39,38 @@ abstract class SelectQueryBuilder(val tableName: String) {
     private var nativeSelectionArgs: Array<out String>? = null
 
     fun <T> exec(f: Cursor.() -> T): T {
-        val cursor = execInternal()
+        val cursor = doExec()
         return AnkoInternals.useCursor(cursor) {
             cursor.f()
         }
     }
 
-    fun <T: Any> parseSingle(parser: RowParser<T>): T = AnkoInternals.useCursor(execInternal()) {
+    inline fun <T: Any> parseSingle(parser: RowParser<T>): T = AnkoInternals.useCursor(doExec()) {
         it.parseSingle(parser)
     }
 
-    fun <T: Any> parseOpt(parser: RowParser<T>): T? = AnkoInternals.useCursor(execInternal()) {
+    inline fun <T: Any> parseOpt(parser: RowParser<T>): T? = AnkoInternals.useCursor(doExec()) {
         it.parseOpt(parser)
     }
 
-    fun <T: Any> parseList(parser: RowParser<T>): List<T> = AnkoInternals.useCursor(execInternal()) {
+    inline fun <T: Any> parseList(parser: RowParser<T>): List<T> = AnkoInternals.useCursor(doExec()) {
         it.parseList(parser)
     }
 
-    fun <T: Any> parseSingle(parser: MapRowParser<T>): T = AnkoInternals.useCursor(execInternal()) {
+    inline fun <T: Any> parseSingle(parser: MapRowParser<T>): T = AnkoInternals.useCursor(doExec()) {
         it.parseSingle(parser)
     }
 
-    fun <T: Any> parseOpt(parser: MapRowParser<T>): T? = AnkoInternals.useCursor(execInternal()) {
+    inline fun <T: Any> parseOpt(parser: MapRowParser<T>): T? = AnkoInternals.useCursor(doExec()) {
         it.parseOpt(parser)
     }
 
-    fun <T: Any> parseList(parser: MapRowParser<T>): List<T> = AnkoInternals.useCursor(execInternal()) {
+    inline fun <T: Any> parseList(parser: MapRowParser<T>): List<T> = AnkoInternals.useCursor(doExec()) {
         it.parseList(parser)
     }
 
-    private fun execInternal(): Cursor {
+    @PublishedApi
+    internal fun doExec(): Cursor {
         val finalSelection = if (selectionApplied) selection else null
         val finalSelectionArgs = if (selectionApplied && useNativeSelection) nativeSelectionArgs else null
         return execQuery(distinct, tableName, columns.toTypedArray(),
@@ -148,7 +149,12 @@ abstract class SelectQueryBuilder(val tableName: String) {
         return this
     }
 
+    @Deprecated("Use whereArgs(select, args) instead.", ReplaceWith("whereArgs(select, args)"))
     fun where(select: String, vararg args: Pair<String, Any>): SelectQueryBuilder {
+        return whereArgs(select, *args)
+    }
+
+    fun whereArgs(select: String, vararg args: Pair<String, Any>): SelectQueryBuilder {
         if (selectionApplied) {
             throw AnkoException("Query selection was already applied.")
         }
@@ -159,7 +165,12 @@ abstract class SelectQueryBuilder(val tableName: String) {
         return this
     }
 
+    @Deprecated("Use whereArgs(select) instead.", ReplaceWith("whereArgs(select)"))
     fun where(select: String): SelectQueryBuilder {
+        return whereArgs(select)
+    }
+
+    fun whereArgs(select: String): SelectQueryBuilder {
         if (selectionApplied) {
             throw AnkoException("Query selection was already applied.")
         }

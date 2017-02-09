@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 package org.jetbrains.anko.collections
 
 /**
@@ -72,7 +72,7 @@ inline fun <T> List<T>.forEachReversedWithIndex(f: (Int, T) -> Unit) {
  *
  * @see [toAndroidPair].
  */
-fun <F, S> android.util.Pair<F, S>.toKotlinPair(): Pair<F, S> {
+inline fun <F, S> android.util.Pair<F, S>.toKotlinPair(): Pair<F, S> {
     return first to second
 }
 
@@ -81,6 +81,6 @@ fun <F, S> android.util.Pair<F, S>.toKotlinPair(): Pair<F, S> {
  *
  * @see [toKotlinPair].
  */
-fun <F, S> Pair<F, S>.toAndroidPair(): android.util.Pair<F, S> {
+inline fun <F, S> Pair<F, S>.toAndroidPair(): android.util.Pair<F, S> {
     return android.util.Pair(first, second)
 }

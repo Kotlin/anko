@@ -21,17 +21,17 @@ import android.app.Fragment
 import android.content.Context
 import android.view.View
 
-val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
-val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
-val HDPI: Int = android.util.DisplayMetrics.DENSITY_HIGH
+const val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
+const val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
+const val HDPI: Int = android.util.DisplayMetrics.DENSITY_HIGH
 
 //May not be available on older Android versions
-val TVDPI: Int = 213
-val XHDPI: Int = 320
-val XXHDPI: Int = 480
-val XXXHDPI: Int = 640
+const val TVDPI: Int = 213
+const val XHDPI: Int = 320
+const val XXHDPI: Int = 480
+const val XXXHDPI: Int = 640
 
-val MAXDPI: Int = 0xfffe
+const val MAXDPI: Int = 0xfffe
 
 //returns dip(dp) dimension value in pixels
 fun Context.dip(value: Int): Int = (value * resources.displayMetrics.density).toInt()

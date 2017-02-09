@@ -24,23 +24,23 @@ import android.widget.ImageView
 import android.widget.TextView
 
 var View.backgroundDrawable: Drawable?
-    get() = background
+    inline get() = background
     set(value) = setBackgroundDrawable(value)
 
 var View.leftPadding: Int
-    get() = paddingLeft
+    inline get() = paddingLeft
     set(value) = setPadding(value, paddingTop, paddingRight, paddingBottom)
 
 var View.topPadding: Int
-    get() = paddingTop
+    inline get() = paddingTop
     set(value) = setPadding(paddingLeft, value, paddingRight, paddingBottom)
 
 var View.rightPadding: Int
-    get() = paddingRight
+    inline get() = paddingRight
     set(value) = setPadding(paddingLeft, paddingTop, value, paddingBottom)
 
 var View.bottomPadding: Int
-    get() = paddingBottom
+    inline get() = paddingBottom
     set(value) = setPadding(paddingLeft, paddingTop, paddingRight, value)
 
 @Deprecated("Use horizontalPadding instead", ReplaceWith("horizontalPadding"))
@@ -63,9 +63,9 @@ var View.verticalPadding: Int
 
 var View.padding: Int
     get() = throw PropertyWithoutGetterException("padding")
-    set(value) = setPadding(value, value, value, value)
+    inline set(value) = setPadding(value, value, value, value)
 
-var TextView.isSelectable: Boolean
+inline var TextView.isSelectable: Boolean
     get() = isTextSelectable
     set(value) = setTextIsSelectable(value)
 
@@ -74,5 +74,5 @@ var TextView.textSizeDimen: Int
     set(value) = setTextSize(TypedValue.COMPLEX_UNIT_PX, context.resources.getDimension(value))
 
 var ImageView.image: Drawable?
-    get() = drawable
-    set(value) = setImageDrawable(value)
+    inline get() = drawable
+    inline set(value) = setImageDrawable(value)

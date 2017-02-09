@@ -260,7 +260,7 @@ data class AttemptResult<out T>(val value: T?, val error: Throwable?)
 /**
  * Execute [f] and return the result or an exception, if an exception was occurred.
  */
-fun <T> attempt(f: () -> T): AttemptResult<T> {
+inline fun <T> attempt(f: () -> T): AttemptResult<T> {
     var value: T? = null
     var error: Throwable? = null
     try {
