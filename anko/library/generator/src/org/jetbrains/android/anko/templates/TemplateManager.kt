@@ -44,12 +44,12 @@ class TemplateContext {
 
     fun getArguments(): Map<String, Any?> = args
 
-    operator fun <T: Any?> String.mod(v: T): T {
+    operator fun <T: Any?> String.rem(v: T): T {
         args.put(this, v)
         return v
     }
 
-    operator fun String.mod(v: TemplateContext.() -> Unit) {
+    operator fun String.rem(v: TemplateContext.() -> Unit) {
         val innerContext = TemplateContext()
         innerContext.v()
         args.put(this, innerContext.getArguments())
