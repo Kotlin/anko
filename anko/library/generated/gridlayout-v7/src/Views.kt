@@ -2,6 +2,7 @@
 package org.jetbrains.anko.gridlayout.v7
 
 import org.jetbrains.anko.custom.*
+import org.jetbrains.anko.AnkoViewDslMarker
 import android.view.ViewManager
 import android.view.ViewGroup.LayoutParams
 import android.app.Activity
@@ -16,7 +17,7 @@ internal object `$$Anko$Factories$GridlayoutV7View` {
 }
 
 inline fun ViewManager.space(theme: Int = 0): android.support.v7.widget.Space = space(theme) {}
-inline fun ViewManager.space(theme: Int = 0, init: android.support.v7.widget.Space.() -> Unit): android.support.v7.widget.Space {
+inline fun ViewManager.space(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v7.widget.Space).() -> Unit): android.support.v7.widget.Space {
     return ankoView(`$$Anko$Factories$GridlayoutV7View`.SPACE, theme) { init() }
 }
 
@@ -26,17 +27,17 @@ internal object `$$Anko$Factories$GridlayoutV7ViewGroup` {
 }
 
 inline fun ViewManager.gridLayout(theme: Int = 0): android.support.v7.widget.GridLayout = gridLayout(theme) {}
-inline fun ViewManager.gridLayout(theme: Int = 0, init: _GridLayout.() -> Unit): android.support.v7.widget.GridLayout {
+inline fun ViewManager.gridLayout(theme: Int = 0, init: (@AnkoViewDslMarker _GridLayout).() -> Unit): android.support.v7.widget.GridLayout {
     return ankoView(`$$Anko$Factories$GridlayoutV7ViewGroup`.GRID_LAYOUT, theme) { init() }
 }
 
 inline fun Context.gridLayout(theme: Int = 0): android.support.v7.widget.GridLayout = gridLayout(theme) {}
-inline fun Context.gridLayout(theme: Int = 0, init: _GridLayout.() -> Unit): android.support.v7.widget.GridLayout {
+inline fun Context.gridLayout(theme: Int = 0, init: (@AnkoViewDslMarker _GridLayout).() -> Unit): android.support.v7.widget.GridLayout {
     return ankoView(`$$Anko$Factories$GridlayoutV7ViewGroup`.GRID_LAYOUT, theme) { init() }
 }
 
 inline fun Activity.gridLayout(theme: Int = 0): android.support.v7.widget.GridLayout = gridLayout(theme) {}
-inline fun Activity.gridLayout(theme: Int = 0, init: _GridLayout.() -> Unit): android.support.v7.widget.GridLayout {
+inline fun Activity.gridLayout(theme: Int = 0, init: (@AnkoViewDslMarker _GridLayout).() -> Unit): android.support.v7.widget.GridLayout {
     return ankoView(`$$Anko$Factories$GridlayoutV7ViewGroup`.GRID_LAYOUT, theme) { init() }
 }
 

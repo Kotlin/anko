@@ -157,7 +157,7 @@ internal abstract class AbstractViewRenderer(
                 line("}")
                 line("}")
 
-                line("inline fun $extendFor.$functionName($helperArguments, theme: Int = 0, init: $lambdaArgType.() -> Unit): $returnType {")
+                line("inline fun $extendFor.$functionName($helperArguments, theme: Int = 0, init: (@AnkoViewDslMarker $lambdaArgType).() -> Unit): $returnType {")
                 line("return ankoView($factory, theme) {")
                 line("init()")
                 lines(setters)

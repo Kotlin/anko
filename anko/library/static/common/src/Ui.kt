@@ -20,6 +20,10 @@ package org.jetbrains.anko
 import android.view.View
 import org.jetbrains.anko.internals.AnkoInternals
 
+@DslMarker
+@Target(AnnotationTarget.TYPE)
+annotation class AnkoViewDslMarker
+
 /**
  * Apply [f] to this [View] and to all of its children recursively.
  * 

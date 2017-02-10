@@ -2,6 +2,7 @@
 package org.jetbrains.anko.cardview.v7
 
 import org.jetbrains.anko.custom.*
+import org.jetbrains.anko.AnkoViewDslMarker
 import android.view.ViewManager
 import android.view.ViewGroup.LayoutParams
 import android.app.Activity
@@ -16,17 +17,17 @@ internal object `$$Anko$Factories$CardviewV7View` {
 }
 
 inline fun ViewManager.cardView(theme: Int = 0): android.support.v7.widget.CardView = cardView(theme) {}
-inline fun ViewManager.cardView(theme: Int = 0, init: android.support.v7.widget.CardView.() -> Unit): android.support.v7.widget.CardView {
+inline fun ViewManager.cardView(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v7.widget.CardView).() -> Unit): android.support.v7.widget.CardView {
     return ankoView(`$$Anko$Factories$CardviewV7View`.CARD_VIEW, theme) { init() }
 }
 
 inline fun Context.cardView(theme: Int = 0): android.support.v7.widget.CardView = cardView(theme) {}
-inline fun Context.cardView(theme: Int = 0, init: android.support.v7.widget.CardView.() -> Unit): android.support.v7.widget.CardView {
+inline fun Context.cardView(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v7.widget.CardView).() -> Unit): android.support.v7.widget.CardView {
     return ankoView(`$$Anko$Factories$CardviewV7View`.CARD_VIEW, theme) { init() }
 }
 
 inline fun Activity.cardView(theme: Int = 0): android.support.v7.widget.CardView = cardView(theme) {}
-inline fun Activity.cardView(theme: Int = 0, init: android.support.v7.widget.CardView.() -> Unit): android.support.v7.widget.CardView {
+inline fun Activity.cardView(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v7.widget.CardView).() -> Unit): android.support.v7.widget.CardView {
     return ankoView(`$$Anko$Factories$CardviewV7View`.CARD_VIEW, theme) { init() }
 }
 

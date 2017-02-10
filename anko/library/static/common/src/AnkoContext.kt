@@ -26,6 +26,10 @@ import android.view.ViewGroup
 import android.view.ViewManager
 import org.jetbrains.anko.internals.AnkoInternals.createAnkoContext
 
+@DslMarker
+private annotation class AnkoContextDslMarker
+
+@AnkoContextDslMarker
 interface AnkoContext<out T> : ViewManager {
     val ctx: Context
     val owner: T
