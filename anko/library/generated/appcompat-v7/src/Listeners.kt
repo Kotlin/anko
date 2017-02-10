@@ -2,15 +2,15 @@
 package org.jetbrains.anko.appcompat.v7
 
 
-fun android.support.v7.widget.ActionMenuView.onMenuItemClick(l: (item: android.view.MenuItem?) -> Boolean) {
+inline fun android.support.v7.widget.ActionMenuView.onMenuItemClick(noinline l: (item: android.view.MenuItem?) -> Boolean) {
     setOnMenuItemClickListener(l)
 }
 
-fun android.support.v7.widget.SearchView.onClose(l: () -> Boolean) {
+inline fun android.support.v7.widget.SearchView.onClose(noinline l: () -> Boolean) {
     setOnCloseListener(l)
 }
 
-fun android.support.v7.widget.SearchView.onQueryTextFocusChange(l: (v: android.view.View, hasFocus: Boolean) -> Unit) {
+inline fun android.support.v7.widget.SearchView.onQueryTextFocusChange(noinline l: (v: android.view.View, hasFocus: Boolean) -> Unit) {
     setOnQueryTextFocusChangeListener(l)
 }
 
@@ -38,7 +38,7 @@ class __SearchView_OnQueryTextListener : android.support.v7.widget.SearchView.On
 
 }
 
-fun android.support.v7.widget.SearchView.onSearchClick(l: (v: android.view.View?) -> Unit) {
+inline fun android.support.v7.widget.SearchView.onSearchClick(noinline l: (v: android.view.View?) -> Unit) {
     setOnSearchClickListener(l)
 }
 
@@ -66,7 +66,7 @@ class __SearchView_OnSuggestionListener : android.support.v7.widget.SearchView.O
 
 }
 
-fun android.support.v7.widget.Toolbar.onMenuItemClick(l: (item: android.view.MenuItem?) -> Boolean) {
+inline fun android.support.v7.widget.Toolbar.onMenuItemClick(noinline l: (item: android.view.MenuItem?) -> Boolean) {
     setOnMenuItemClickListener(l)
 }
 

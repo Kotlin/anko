@@ -39,11 +39,11 @@ class __ViewPager_OnPageChangeListener : android.support.v4.view.ViewPager.OnPag
 
 }
 
-fun android.support.v4.app.FragmentTabHost.onTabChanged(l: (tabId: String?) -> Unit) {
+inline fun android.support.v4.app.FragmentTabHost.onTabChanged(noinline l: (tabId: String?) -> Unit) {
     setOnTabChangedListener(l)
 }
 
-fun android.support.v4.widget.SwipeRefreshLayout.onRefresh(l: () -> Unit) {
+inline fun android.support.v4.widget.SwipeRefreshLayout.onRefresh(noinline l: () -> Unit) {
     setOnRefreshListener(l)
 }
 
