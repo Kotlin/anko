@@ -33,14 +33,15 @@
         <download_android_platform android.versioncode="19_r04" android.sdk.version="19" android.full.version="4.4.2" />
         <download_android_platform android.versioncode="21_r02" android.sdk.version="21" android.full.version="5.0.1" />
         <download_android_platform android.versioncode="23_r01" android.sdk.version="23" android.full.version="6.0" />
+        <download_android_platform_new android.versioncode="25_r01" android.sdk.version="25" android.full.version="7.1.1" />
 
-        <download_platform_tools android.platform.tools.version="23" />
+        <download_platform_tools android.platform.tools.version="25.0.3" />
         <download_tools android.tools.version="24.3.4" />
-        <download_build_tools android.build.tools.version="23.0.1" android.build.tools.full.version="6.0" />
+        <download_build_tools android.build.tools.version="25.0.2" android.build.tools.full.version="7.1.1" />
 
-        <download_sources android.sources.versioncode="23_r01" android.sources.version="23" />
+        <download_sources android.sources.versioncode="25_r01" android.sources.version="25" />
 
-        <download_support_repository android.repo.version="17" android.repo.last="23.0.0" />
+        <download_support_repository android.repo.version="43" android.repo.last="25.1.1" />
     </target>
 
     <target name="download_sources">
@@ -51,7 +52,7 @@
         <mkdir dir="${android.sdk.dir}/platforms"/>
         <mkdir dir="${android.sdk.dir}/build-tools"/>
 
-        <download_sources android.sources.versioncode="21_r01" android.sources.version="21" />
+        <download_sources android.sources.versioncode="23_r01" android.sources.version="23" />
     </target>
 
     <macrodef name="download_android_platform">
@@ -69,6 +70,23 @@
             <delete dir="${android.sdk.dir}/platforms/android-@{android.full.version}"/>
         </sequential>
     </macrodef>
+
+    <macrodef name="download_android_platform_new">
+        <attribute name="android.versioncode" />
+        <attribute name="android.sdk.version" />
+        <attribute name="android.full.version" />
+
+        <sequential>
+            <get src="http://dl-ssl.google.com/android/repository/platform-@{android.versioncode}.zip"
+                 dest="${download.dir}/android-platform-@{android.versioncode}.zip" usetimestamp="true"/>
+
+            <unzip src="${download.dir}/android-platform-@{android.versioncode}.zip" dest="${android.sdk.dir}/platforms"/>
+
+            <move file="${android.sdk.dir}/platforms/android-@{android.full.version}" tofile="${android.sdk.dir}/platforms/android-@{android.sdk.version}"/>
+            <delete dir="${android.sdk.dir}/platforms/android-@{android.full.version}"/>
+        </sequential>
+    </macrodef>
+
 
     <macrodef name="download_platform_tools">
         <attribute name="android.platform.tools.version" />
