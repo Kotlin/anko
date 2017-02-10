@@ -5,7 +5,7 @@ import android.os.Bundle
 import org.jetbrains.anko.*
 import android.widget.LinearLayout
 
-public open class AndroidSimpleTestActivity() : Activity() {
+open class AndroidSimpleTestActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {
@@ -14,7 +14,7 @@ public open class AndroidSimpleTestActivity() : Activity() {
                 val tv1 = textView {
                     text = "9287y4r3"
                 }
-                val b1 = button {
+                button {
                     text = "Buttons1231"
                     onClick {
 
@@ -28,7 +28,7 @@ public open class AndroidSimpleTestActivity() : Activity() {
                     checkBox {
                         text = "34563456"
                     }
-                    val b2 = button {
+                    button {
                         text = "9auhdfg9a"
                     }
                 }

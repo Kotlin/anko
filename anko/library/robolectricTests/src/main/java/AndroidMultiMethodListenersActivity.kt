@@ -3,11 +3,8 @@ package com.example.android_test
 import android.app.Activity
 import android.os.Bundle
 import org.jetbrains.anko.*
-import android.widget.LinearLayout
-import android.view.View
-import android.view.View.OnClickListener
 
-public open class AndroidMultiMethodListenersActivity() : Activity() {
+open class AndroidMultiMethodListenersActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {

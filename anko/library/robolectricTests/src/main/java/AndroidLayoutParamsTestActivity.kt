@@ -2,16 +2,12 @@ package com.example.android_test
 
 import android.app.Activity
 import android.os.Bundle
-import org.jetbrains.anko.*
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.AbsoluteLayout
-import android.widget.FrameLayout
-import android.widget.GridLayout
 import android.view.Gravity
+import android.widget.RelativeLayout
+import org.jetbrains.anko.*
 
 
-public open class AndroidLayoutParamsTestActivity() : Activity() {
+open class AndroidLayoutParamsTestActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {

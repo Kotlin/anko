@@ -3,14 +3,13 @@ package com.example.android_test
 import android.app.Activity
 import android.os.Bundle
 import org.jetbrains.anko.*
-import android.widget.LinearLayout
 
-public open class AndroidPropertiesTestActivity() : Activity() {
+open class AndroidPropertiesTestActivity() : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {
             linearLayout {
-                val bl = baseline
+                baseline
                 baselineAlignedChildIndex = 0
                 dividerPadding = 1
                 orientation = -1
