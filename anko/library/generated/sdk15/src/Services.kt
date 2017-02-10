@@ -1,6 +1,4 @@
 @file:JvmName("Sdk15ServicesKt")
-@file:Suppress("unused")
-
 package org.jetbrains.anko
 
 
