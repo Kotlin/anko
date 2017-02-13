@@ -76,7 +76,7 @@ abstract class AbstractWriter(private val renderFacade: RenderFacade): WithConte
 
         val outputText = buildString {
             if (config.generatePackage && generatePackage) {
-                val facadeFilename = config.artifactName.toCamelCase('-') + subsystem.name.toLowerCase().toCamelCase()
+                val facadeFilename = config.artifact.name.toCamelCase('-') + subsystem.name.toLowerCase().toCamelCase()
                 appendln("@file:JvmName(\"${facadeFilename}Kt\")")
                 appendln("package ${config.outputPackage}\n")
             }

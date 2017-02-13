@@ -12,16 +12,6 @@ import android.os.Build
 import android.widget.*
 
 @PublishedApi
-internal object `$$Anko$Factories$GridlayoutV7View` {
-    val SPACE = { ctx: Context -> android.support.v7.widget.Space(ctx) }
-}
-
-inline fun ViewManager.space(theme: Int = 0): android.support.v7.widget.Space = space(theme) {}
-inline fun ViewManager.space(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v7.widget.Space).() -> Unit): android.support.v7.widget.Space {
-    return ankoView(`$$Anko$Factories$GridlayoutV7View`.SPACE, theme) { init() }
-}
-
-@PublishedApi
 internal object `$$Anko$Factories$GridlayoutV7ViewGroup` {
     val GRID_LAYOUT = { ctx: Context -> _GridLayout(ctx) }
 }

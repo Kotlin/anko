@@ -1,5 +1,5 @@
-@file:JvmName("SupportV4ListenersKt")
-package org.jetbrains.anko.support.v4
+@file:JvmName("SupportCoreUiListenersKt")
+package org.jetbrains.anko.support.core.ui
 
 
 fun android.support.v4.widget.DrawerLayout.drawerListener(init: __DrawerLayout_DrawerListener.() -> Unit) {
@@ -14,32 +14,32 @@ class __DrawerLayout_DrawerListener : android.support.v4.widget.DrawerLayout.Dra
     private var _onDrawerClosed: ((android.view.View?) -> Unit)? = null
     private var _onDrawerStateChanged: ((Int) -> Unit)? = null
 
-    override fun onDrawerSlide(drawerView: android.view.View?, slideOffset: Float) {
-        _onDrawerSlide?.invoke(drawerView, slideOffset)
+    override fun onDrawerSlide(p0: android.view.View?, p1: Float) {
+        _onDrawerSlide?.invoke(p0, p1)
     }
 
     fun onDrawerSlide(listener: (android.view.View?, Float) -> Unit) {
         _onDrawerSlide = listener
     }
 
-    override fun onDrawerOpened(drawerView: android.view.View?) {
-        _onDrawerOpened?.invoke(drawerView)
+    override fun onDrawerOpened(p0: android.view.View?) {
+        _onDrawerOpened?.invoke(p0)
     }
 
     fun onDrawerOpened(listener: (android.view.View?) -> Unit) {
         _onDrawerOpened = listener
     }
 
-    override fun onDrawerClosed(drawerView: android.view.View?) {
-        _onDrawerClosed?.invoke(drawerView)
+    override fun onDrawerClosed(p0: android.view.View?) {
+        _onDrawerClosed?.invoke(p0)
     }
 
     fun onDrawerClosed(listener: (android.view.View?) -> Unit) {
         _onDrawerClosed = listener
     }
 
-    override fun onDrawerStateChanged(newState: Int) {
-        _onDrawerStateChanged?.invoke(newState)
+    override fun onDrawerStateChanged(p0: Int) {
+        _onDrawerStateChanged?.invoke(p0)
     }
 
     fun onDrawerStateChanged(listener: (Int) -> Unit) {
@@ -48,7 +48,7 @@ class __DrawerLayout_DrawerListener : android.support.v4.widget.DrawerLayout.Dra
 
 }
 
-inline fun android.support.v4.view.ViewPager.onAdapterChange(noinline l: (viewPager: android.support.v4.view.ViewPager?, oldAdapter: android.support.v4.view.PagerAdapter?, newAdapter: android.support.v4.view.PagerAdapter?) -> Unit) {
+inline fun android.support.v4.view.ViewPager.onAdapterChange(noinline l: (p0: android.support.v4.view.ViewPager?, p1: android.support.v4.view.PagerAdapter?, p2: android.support.v4.view.PagerAdapter?) -> Unit) {
     addOnAdapterChangeListener(l)
 }
 
@@ -63,24 +63,24 @@ class __ViewPager_OnPageChangeListener : android.support.v4.view.ViewPager.OnPag
     private var _onPageSelected: ((Int) -> Unit)? = null
     private var _onPageScrollStateChanged: ((Int) -> Unit)? = null
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-        _onPageScrolled?.invoke(position, positionOffset, positionOffsetPixels)
+    override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
+        _onPageScrolled?.invoke(p0, p1, p2)
     }
 
     fun onPageScrolled(listener: (Int, Float, Int) -> Unit) {
         _onPageScrolled = listener
     }
 
-    override fun onPageSelected(position: Int) {
-        _onPageSelected?.invoke(position)
+    override fun onPageSelected(p0: Int) {
+        _onPageSelected?.invoke(p0)
     }
 
     fun onPageSelected(listener: (Int) -> Unit) {
         _onPageSelected = listener
     }
 
-    override fun onPageScrollStateChanged(state: Int) {
-        _onPageScrollStateChanged?.invoke(state)
+    override fun onPageScrollStateChanged(p0: Int) {
+        _onPageScrollStateChanged?.invoke(p0)
     }
 
     fun onPageScrollStateChanged(listener: (Int) -> Unit) {
@@ -89,11 +89,7 @@ class __ViewPager_OnPageChangeListener : android.support.v4.view.ViewPager.OnPag
 
 }
 
-inline fun android.support.v4.app.FragmentTabHost.onTabChanged(noinline l: (tabId: String?) -> Unit) {
-    setOnTabChangedListener(l)
-}
-
-inline fun android.support.v4.widget.NestedScrollView.onScrollChange(noinline l: (v: android.support.v4.widget.NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) -> Unit) {
+inline fun android.support.v4.widget.NestedScrollView.onScrollChange(noinline l: (p0: android.support.v4.widget.NestedScrollView?, p1: Int, p2: Int, p3: Int, p4: Int) -> Unit) {
     setOnScrollChangeListener(l)
 }
 

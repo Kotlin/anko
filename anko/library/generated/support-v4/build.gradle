@@ -3,7 +3,9 @@ apply from: '../generated.gradle'
 dependencies {
     provided "com.android.support:support-v4:$SUPPORT_ARTIFACT_VERSION"
     compile project(':generated:anko-common')
-    embedded project(':static:supportV4')
+    embedded(project(':static:supportV4')) {
+        exclude module: 'stubs'
+    }
 }
 
 task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {

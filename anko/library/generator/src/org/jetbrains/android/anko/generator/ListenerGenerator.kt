@@ -18,6 +18,8 @@ package org.jetbrains.android.anko.generator
 
 import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.utils.MethodNodeWithClass
+import org.jetbrains.android.anko.utils.isAbstract
+import org.jetbrains.android.anko.utils.isInterface
 import org.objectweb.asm.tree.ClassNode
 
 class ListenerGenerator : Generator<ListenerElement> {
@@ -27,7 +29,7 @@ class ListenerGenerator : Generator<ListenerElement> {
 
         val addListeners = state.availableMethods
                 .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter(set = false) }
-                .map { makeListener(it) }
+                .mapNotNull { makeListener(it) }
 
         for (listener in addListeners) {
             if (listener is ComplexListenerElement) {
@@ -39,6 +41,7 @@ class ListenerGenerator : Generator<ListenerElement> {
                 .filter { it.clazz.isView && it.method.isPublic && it.method.isListenerSetter(add = false) }
                 .map { makeListener(it) }
                 .filter { it !is ComplexListenerElement || Pair(it.clazz, it.name) !in complexAddListeners }
+                .filterNotNull()
                 .sortedBy { it.setter.identifier }
                 .toMutableList()
         
@@ -46,8 +49,12 @@ class ListenerGenerator : Generator<ListenerElement> {
     }
 
     //suppose "setter" is a correct setOn*Listener method
-    private fun GenerationState.makeListener(setter: MethodNodeWithClass): ListenerElement {
+    private fun GenerationState.makeListener(setter: MethodNodeWithClass): ListenerElement? {
         val listener = classTree.findNode(setter.method.parameterRawTypes[0].internalName)!!.data
+
+        if (!listener.isInterface) {
+            return null
+        }
 
         val methods = listener.methods?.filter { !it.isConstructor }
 

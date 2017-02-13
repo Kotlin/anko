@@ -17,11 +17,10 @@
 @file:JvmName("Main")
 package org.jetbrains.android.anko
 
+import org.jetbrains.android.anko.artifact.Artifact
 import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.render.RenderFacade
-import org.jetbrains.android.anko.utils.AndroidArtifactDirectoryFilter
-import org.jetbrains.android.anko.utils.JarFileFilter
 import org.jetbrains.android.anko.writer.VerifyWriter
 import org.jetbrains.android.anko.writer.GeneratorWriter
 import java.io.File
@@ -60,49 +59,31 @@ fun main(args: Array<String>) {
 }
 
 private fun versions(options: Options) {
-    for (version in getArtifactDirs(options[ORIGINAL_DIRECTORY])) {
-        val (platformJars, sourceJars) = getJars(version)
-        println(version.name + ": " + (platformJars + sourceJars).joinToString())
-    }
+    Artifact.parseArtifacts(options[ARTIFACTS]).forEach(::println)
 }
-
-private fun getArtifactDirs(originalDir: File): Array<File> {
-    if (!originalDir.exists() || !originalDir.isDirectory) {
-        throw RuntimeException("\"${originalDir.absolutePath}\" directory does not exist.")
-    }
-    return originalDir.listFiles(AndroidArtifactDirectoryFilter()) ?: arrayOf<File>()
-}
-
-private fun getJars(version: File) = version.listFiles(JarFileFilter()).partition { it.name.startsWith("platform.") }
 
 private enum class GeneratorMode {
     GENERATE, VERIFY
 }
 
 private fun launchGenerator(options: Options, mode: GeneratorMode) {
-    val artifactDirs = getArtifactDirs(options[ORIGINAL_DIRECTORY])
     val outputDirectory = options[OUTPUT_DIRECTORY]
 
-    for (artifactDir in artifactDirs) {
-        val (platformJars, sourceJars) = getJars(artifactDir)
-        val artifactName = artifactDir.name
-
-        if (platformJars.isNotEmpty()) {
-            val outputDirectoryForArtifact = File(outputDirectory, artifactName)
-            val fileOutputDirectory = File(outputDirectoryForArtifact, "src/")
-            if (!fileOutputDirectory.exists()) {
-                fileOutputDirectory.mkdirs()
-            }
-
-            val configuration = DefaultAnkoConfiguration(outputDirectoryForArtifact, artifactName, options)
-            val context = AnkoBuilderContext.create(File("anko/props"), Logger.LogLevel.INFO, configuration)
-            gen(platformJars, sourceJars, context, mode)
+    for (artifact in Artifact.parseArtifacts(options[ARTIFACTS])) {
+        val outputDirectoryForArtifact = File(outputDirectory, artifact.name)
+        val fileOutputDirectory = File(outputDirectoryForArtifact, "src/")
+        if (!fileOutputDirectory.exists()) {
+            fileOutputDirectory.mkdirs()
         }
+
+        val configuration = DefaultAnkoConfiguration(outputDirectoryForArtifact, artifact, options)
+        val context = AnkoBuilderContext.create(File("anko/props"), Logger.LogLevel.INFO, configuration)
+        gen(artifact, context, mode)
     }
 }
 
-private fun gen(platformJars: List<File>, sourceJars: List<File>, context: AnkoBuilderContext, mode: GeneratorMode) {
-    val classTree = ClassProcessor(platformJars, sourceJars).genClassTree()
+private fun gen(artifact: Artifact, context: AnkoBuilderContext, mode: GeneratorMode) {
+    val classTree = ClassProcessor(artifact).genClassTree()
     val generationState = GenerationState(classTree, context)
     val renderer = RenderFacade(generationState)
 

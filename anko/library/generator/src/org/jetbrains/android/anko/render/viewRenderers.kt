@@ -40,7 +40,7 @@ internal class ViewGroupRenderer(context: AnkoBuilderContext) : AbstractViewRend
 }
 
 class ViewFactoryClass(val config: AnkoConfiguration, suffix: String) {
-    private val name = config.artifactName.toCamelCase('-').capitalize()
+    private val name = config.artifact.name.toCamelCase('-').capitalize()
 
     val entries = arrayListOf<String>()
     val fullName = "`${'$'}${'$'}Anko${'$'}Factories${'$'}$name$suffix`"
@@ -175,7 +175,7 @@ internal abstract class AbstractViewRenderer(
             val methodName = "set" + property.name.capitalize()
             val methods = view.allMethods.filter {
                 it.name == methodName && it.parameterRawTypes.unique?.fqName?.endsWith(property.type) ?: false
-            }
+            }.distinctBy { Pair(it.name, it.desc) }
 
             when (methods.size) {
                 0 -> throw RuntimeException("Can't find a method $methodName for helper constructor ${view.fqName}($properties)")

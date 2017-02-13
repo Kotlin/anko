@@ -6,6 +6,18 @@ inline fun android.support.v7.widget.ActionMenuView.onMenuItemClick(noinline l: 
     setOnMenuItemClickListener(l)
 }
 
+inline fun android.support.v7.widget.ActivityChooserView.onDismiss(noinline l: () -> Unit) {
+    setOnDismissListener(l)
+}
+
+inline fun android.support.v7.widget.FitWindowsFrameLayout.onFitSystemWindows(noinline l: (insets: android.graphics.Rect?) -> Unit) {
+    setOnFitSystemWindowsListener(l)
+}
+
+inline fun android.support.v7.widget.FitWindowsLinearLayout.onFitSystemWindows(noinline l: (insets: android.graphics.Rect?) -> Unit) {
+    setOnFitSystemWindowsListener(l)
+}
+
 inline fun android.support.v7.widget.SearchView.onClose(noinline l: () -> Boolean) {
     setOnCloseListener(l)
 }
@@ -68,5 +80,9 @@ class __SearchView_OnSuggestionListener : android.support.v7.widget.SearchView.O
 
 inline fun android.support.v7.widget.Toolbar.onMenuItemClick(noinline l: (item: android.view.MenuItem?) -> Boolean) {
     setOnMenuItemClickListener(l)
+}
+
+inline fun android.support.v7.widget.ViewStubCompat.onInflate(noinline l: (stub: android.support.v7.widget.ViewStubCompat?, inflated: android.view.View?) -> Unit) {
+    setOnInflateListener(l)
 }
 

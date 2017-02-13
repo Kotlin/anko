@@ -54,6 +54,12 @@ internal fun ClassNode.buildTypeParams(): String {
 val ClassNode.isInner: Boolean
     get() = name.contains("$")
 
+internal val ClassNode.isPublic: Boolean
+    get() = ((access and Opcodes.ACC_PUBLIC) != 0)
+
+internal val ClassNode.isInterface: Boolean
+    get() = ((access and Opcodes.ACC_INTERFACE) != 0)
+
 internal val ClassNode.isAbstract: Boolean
     get() = ((access and Opcodes.ACC_ABSTRACT) != 0)
 

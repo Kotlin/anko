@@ -16,6 +16,7 @@
 
 package org.jetbrains.android.anko.config
 
+import org.jetbrains.android.anko.artifact.Artifact
 import org.jetbrains.android.anko.config.TargetArtifactType.*
 import java.io.File
 
@@ -29,7 +30,7 @@ interface AnkoConfiguration {
     val generatePackage: Boolean
         get() = true
 
-    val artifactName: String
+    val artifact: Artifact
 
     val options: Options
 
@@ -46,6 +47,7 @@ interface AnkoConfiguration {
     fun getOutputFile(ankoFile: AnkoFile): File
 
     fun getTargetArtifactType(): TargetArtifactType {
+        val artifactName = artifact.name
         return when {
             "common" == artifactName -> COMMON
             "sqlite" == artifactName -> SQLITE

@@ -16,27 +16,28 @@
 
 package org.jetbrains.android.anko.config
 
+import org.jetbrains.android.anko.artifact.Artifact
 import java.io.File
 
-open class DefaultAnkoConfiguration(
-        final override val outputDirectory: File,
-        final override val artifactName: String,
+class DefaultAnkoConfiguration(
+        override val outputDirectory: File,
+        override val artifact: Artifact,
         override val options: Options
 ) : AnkoConfiguration {
-    final override val outputPackage: String
+    override val outputPackage: String
 
     private fun readProps(name: String) = File("anko/props/$name.txt").readLines().toSet()
 
-    final override val excludedClasses = readProps("excluded_classes")
-    final override val excludedMethods = readProps("excluded_methods")
-    final override val excludedProperties = readProps("excluded_properties")
-    final override val propertiesWithoutGetters = readProps("properties_without_getters")
+    override val excludedClasses = readProps("excluded_classes")
+    override val excludedMethods = readProps("excluded_methods")
+    override val excludedProperties = readProps("excluded_properties")
+    override val propertiesWithoutGetters = readProps("properties_without_getters")
 
     init {
         val artifactType = getTargetArtifactType()
         outputPackage = "org.jetbrains.anko" + when (artifactType) {
             TargetArtifactType.COMMON, TargetArtifactType.PLATFORM -> ""
-            else -> "." + artifactName.replace('-', '.').toLowerCase()
+            else -> "." + artifact.name.replace('-', '.').toLowerCase()
         }
 
         for (line in propertiesWithoutGetters) {
