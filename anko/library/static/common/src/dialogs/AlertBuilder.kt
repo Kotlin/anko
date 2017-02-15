@@ -1,34 +1,57 @@
+/*
+ * Copyright 2016 JetBrains s.r.o.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 @file:Suppress("NOTHING_TO_INLINE", "unused")
+package org.jetbrains.anko
 
-package dialogs
-
-import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewManager
-import android.widget.AdapterView
-import org.jetbrains.anko.UI
 import org.jetbrains.anko.internals.AnkoInternals.NO_GETTER
-import org.jetbrains.anko.internals.AnkoInternals.noGetter
 import kotlin.DeprecationLevel.ERROR
 
-interface AlertBuilder<T : Any> {
+interface AlertBuilder<out D : DialogInterface> {
     val ctx: Context
 
     var title: CharSequence
-    var titleResource: CharSequence
+        @Deprecated(NO_GETTER, level = ERROR) get
+
+    var titleResource: Int
+        @Deprecated(NO_GETTER, level = ERROR) get
     
     var message: CharSequence
-    var messageResource: CharSequence
+        @Deprecated(NO_GETTER, level = ERROR) get
+
+    var messageResource: Int
+        @Deprecated(NO_GETTER, level = ERROR) get
     
     var icon: Drawable
+        @Deprecated(NO_GETTER, level = ERROR) get
+
     var iconResource: Int
+        @Deprecated(NO_GETTER, level = ERROR) get
     
     var customTitle: View
+        @Deprecated(NO_GETTER, level = ERROR) get
+
     var customView: View
+        @Deprecated(NO_GETTER, level = ERROR) get
 
     fun onCancelled(handler: (dialog: DialogInterface) -> Unit)
 
@@ -43,103 +66,11 @@ interface AlertBuilder<T : Any> {
     fun neutralPressed(buttonText: String, onClicked: (dialog: DialogInterface) -> Unit)
     fun neutralPressed(buttonTextResource: Int, onClicked: (dialog: DialogInterface) -> Unit)
 
-    fun onItemSelected(handler: (item: T?, index: Int) -> Unit)
-
     fun items(items: List<CharSequence>, onItemSelected: (dialog: DialogInterface, index: Int) -> Unit)
-    fun items(items: List<T>, onItemSelected: (dialog: DialogInterface, item: T?, index: Int) -> Unit)
-}
+    fun <T> items(items: List<T>, onItemSelected: (dialog: DialogInterface, item: T, index: Int) -> Unit)
 
-class AndroidAlertBuilder<T : Any>(override val ctx: Context) : AlertBuilder<T> {
-    private val builder = AlertDialog.Builder(ctx)
-
-    override var title: CharSequence
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) { builder.setTitle(value) }
-
-    override var titleResource: CharSequence
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) { builder.setTitle(value) }
-
-    override var message: CharSequence
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) { builder.setMessage(value) }
-
-    override var messageResource: CharSequence
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) { builder.setMessage(value) }
-
-    override var icon: Drawable
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) { builder.setIcon(value) }
-
-    override var iconResource: Int
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) { builder.setIcon(value) }
-
-    override var customTitle: View
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) { builder.setCustomTitle(value) }
-
-    override var customView: View
-        @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
-        set(value) { builder.setView(value) }
-
-    override fun onCancelled(handler: (DialogInterface) -> Unit) {
-        builder.setOnCancelListener(handler)
-    }
-
-    override fun onKeyPressed(handler: (dialog: DialogInterface, keyCode: Int, e: KeyEvent) -> Boolean) {
-        builder.setOnKeyListener(handler)
-    }
-
-    override fun positiveButton(buttonText: String, onClicked: (dialog: DialogInterface) -> Unit) {
-        builder.setPositiveButton(buttonText) { dialog, _ -> onClicked(dialog) }
-    }
-
-    override fun positiveButton(buttonTextResource: Int, onClicked: (dialog: DialogInterface) -> Unit) {
-        builder.setPositiveButton(buttonTextResource) { dialog, _ -> onClicked(dialog) }
-    }
-
-    override fun negativeButton(buttonText: String, onClicked: (dialog: DialogInterface) -> Unit) {
-        builder.setNegativeButton(buttonText) { dialog, _ -> onClicked(dialog) }
-    }
-
-    override fun negativeButton(buttonTextResource: Int, onClicked: (dialog: DialogInterface) -> Unit) {
-        builder.setNegativeButton(buttonTextResource) { dialog, _ -> onClicked(dialog) }
-    }
-
-    override fun neutralPressed(buttonText: String, onClicked: (dialog: DialogInterface) -> Unit) {
-        builder.setNeutralButton(buttonText) { dialog, _ -> onClicked(dialog) }
-    }
-
-    override fun neutralPressed(buttonTextResource: Int, onClicked: (dialog: DialogInterface) -> Unit) {
-        builder.setNeutralButton(buttonTextResource) { dialog, _ -> onClicked(dialog) }
-    }
-
-    override fun onItemSelected(handler: (item: T?, index: Int) -> Unit) {
-        builder.setOnItemSelectedListener(object: AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(adapter: AdapterView<*>) {
-                handler(null, -1)
-            }
-
-            override fun onItemSelected(adapter: AdapterView<*>, view: View, position: Int, id: Long) {
-                @Suppress("UNCHECKED_CAST")
-                handler(adapter.adapter.getItem(position) as T, position)
-            }
-        })
-    }
-
-    override fun items(items: List<CharSequence>, onItemSelected: (dialog: DialogInterface, index: Int) -> Unit) {
-        builder.setItems(Array(items.size) { i -> items[i].toString() }) { dialog, which ->
-            onItemSelected(dialog, which)
-        }
-    }
-
-    override fun items(items: List<T>, onItemSelected: (dialog: DialogInterface, item: T?, index: Int) -> Unit) {
-        builder.setItems(Array(items.size) { i -> items[i].toString() }) { dialog, which ->
-            onItemSelected(dialog, items[which], which)
-        }
-    }
+    fun build(): D
+    fun show(): D
 }
 
 fun AlertBuilder<*>.customTitle(dsl: ViewManager.() -> Unit) {
