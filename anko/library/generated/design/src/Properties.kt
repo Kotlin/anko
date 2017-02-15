@@ -3,11 +3,14 @@ package org.jetbrains.anko.design
 
 import org.jetbrains.anko.*
 
+import org.jetbrains.anko.internals.AnkoInternals
+import kotlin.DeprecationLevel
+
 var android.support.design.widget.TextInputLayout.passwordVisibilityToggleContentDescriptionResource: Int
-    get() = throw AnkoException("'android.support.design.widget.TextInputLayout.passwordVisibilityToggleContentDescriptionResource' property does not have a getter")
+    @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
     set(v) = setPasswordVisibilityToggleContentDescription(v)
 
 var android.support.design.widget.TextInputLayout.passwordVisibilityToggleDrawableResource: Int
-    get() = throw AnkoException("'android.support.design.widget.TextInputLayout.passwordVisibilityToggleDrawableResource' property does not have a getter")
+    @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
     set(v) = setPasswordVisibilityToggleDrawable(v)
 

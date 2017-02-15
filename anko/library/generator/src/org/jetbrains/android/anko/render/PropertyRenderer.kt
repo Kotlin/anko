@@ -30,11 +30,11 @@ class PropertyRenderer(context: AnkoBuilderContext) : Renderer(context) {
 
     override fun processElements(state: GenerationState) = generatedFile { importList ->
         state[PropertyGenerator::class.java].forEach {
-            append(renderProperty(it))
+            append(renderProperty(it, importList))
         }
     }
 
-    private fun renderProperty(property: PropertyElement): String {
+    private fun renderProperty(property: PropertyElement, importList: ImportList): String {
         val getter = property.getter
         val className = (getter ?: property.setters.first()).clazz.fqNameWithTypeArguments
         val fullPropertyName = "$className.${property.name}"
@@ -49,7 +49,7 @@ class PropertyRenderer(context: AnkoBuilderContext) : Renderer(context) {
 
         if (property.getter != null) {
             return buffer {
-                renderResourceProperty(otherSetters, fullPropertyName, returnType)
+                renderResourceProperty(otherSetters, fullPropertyName, returnType, importList)
             }.toString()
         }
 
@@ -58,24 +58,32 @@ class PropertyRenderer(context: AnkoBuilderContext) : Renderer(context) {
             if (getter != null) {
                 indent.line("get() = ${getter.method.name}()")
             } else {
-                indent.line("get() = throw AnkoException(\"'$fullPropertyName' property does not have a getter\")")
+                renderNoGetter(importList)
             }
             if (bestSetter != null) indent.line("set(v) = ${bestSetter.method.name}(v)")
             nl()
         }.toString()
     }
 
+    private fun Buffer.renderNoGetter(importList: ImportList) {
+        val NO_GETTER = importList["org.jetbrains.anko.internals.AnkoInternals.NO_GETTER"]
+        val noGetter = importList["org.jetbrains.anko.internals.AnkoInternals.noGetter"]
+        val ERROR = importList["kotlin.DeprecationLevel.ERROR"]
+        indent.line("@Deprecated($NO_GETTER, level = $ERROR) get() = $noGetter()")
+    }
+
     private fun Buffer.renderResourceProperty(
             otherSetters: List<MethodNodeWithClass>,
             fullPropertyName: String,
-            returnType: KType)
-    {
+            returnType: KType,
+            importList: ImportList
+    ) {
         if (otherSetters.isNotEmpty() && supportsResourceSetter(returnType)) {
             val resourceSetter = otherSetters.firstOrNull { it.method.parameterRawTypes.unique?.className == "int" }
 
             if (resourceSetter != null) {
                 line("var ${fullPropertyName}Resource: Int")
-                indent.line("get() = throw AnkoException(\"'${fullPropertyName}Resource' property does not have a getter\")")
+                renderNoGetter(importList)
                 indent.line("set(v) = ${resourceSetter.method.name}(v)")
                 nl()
             }
