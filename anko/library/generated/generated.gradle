@@ -93,7 +93,7 @@ publishing {
                         def dependencyNode = dependenciesNode.appendNode('dependency')
                         dependencyNode.appendNode('groupId', (it.group == "anko.generated") ? POM_ARTIFACT_GROUP : it.group)
                         dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', ANKO_VERSION)
+                        dependencyNode.appendNode('version', (it.group == "anko.generated") ? ANKO_VERSION : it.version)
                     }
                 }
             }
