@@ -11,14 +11,12 @@ import org.robolectric.Robolectric
 import org.robolectric.RobolectricGradleTestRunner
 import org.robolectric.annotation.Config
 
-public open class RelativeLayoutHelpersTestActivity() : Activity()
+open class RelativeLayoutHelpersTestActivity : Activity()
 
 @RunWith(RobolectricGradleTestRunner::class)
-@Config(constants = BuildConfig::class)
-public class RelativeLayoutHelpersTest() {
+@Config(constants = BuildConfig::class) class RelativeLayoutHelpersTest {
 
-    @Test
-    public fun test() {
+    @Test fun test() {
         val activity = Robolectric.buildActivity(RelativeLayoutHelpersTestActivity::class.java).create().get()
         test(activity)
 

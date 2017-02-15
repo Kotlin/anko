@@ -9,10 +9,8 @@ import org.robolectric.RobolectricGradleTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricGradleTestRunner::class)
-@Config(constants = BuildConfig::class)
-public class AttemptTest() {
-    @Test
-    public fun test() {
+@Config(constants = BuildConfig::class) class AttemptTest {
+    @Test fun test() {
         val (value, error) = attempt { "My String" }
         assertEquals("My String", value)
         assertNull(error)

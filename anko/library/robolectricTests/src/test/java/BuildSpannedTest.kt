@@ -12,10 +12,8 @@ import org.robolectric.RobolectricGradleTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricGradleTestRunner::class)
-@Config(constants = BuildConfig::class)
-public class BuildSpannedTest() {
-    @Test
-    public fun test() {
+@Config(constants = BuildConfig::class) class BuildSpannedTest {
+    @Test fun test() {
         val spannable = buildSpanned {
             append("123")
             appendln("456")
