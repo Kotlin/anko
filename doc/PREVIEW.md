@@ -3,6 +3,8 @@ Anko Preview Plugin
 
 Anko Preview plugin is available for IntelliJ IDEA and Android Studio. It allows you to preview `AnkoComponent` classes written with Anko directly in the IDE tool window.
 
+The Anko Preview plugin does not support Android Studio 2.2+ or IntelliJ IDEA 2016.3+.
+
 ## Using Anko Preview Plugin
 
 ### Installing the Plugin
