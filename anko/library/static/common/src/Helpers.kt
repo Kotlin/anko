@@ -26,21 +26,6 @@ import org.jetbrains.anko.internals.AnkoInternals
 open class AnkoException(message: String = "") : RuntimeException(message)
 
 /**
- * Indicates that the called property does not have a getter.
- * Some of the extension properties only have a getter, because Android SDK does not provide a
- *   method to get the proper value. Another case is when the getter is senseless.
- *
- * Example: there is a [View.padding] extension property, which is used to set the equal padding value
- *   for all paddings (left, top, right, bottom). Technically, the left padding is unrelated to,
- *   for example, the bottom padding, so there is just no right value to return.
- *
- * @param name the property name
- *
- * @see [View.padding] extension property
- */
-class PropertyWithoutGetterException(name: String) : AnkoException("'$name' property does not have a getter")
-
-/**
  * Return the grayscale color with the zero opacity using the single color value.
  * E.g., 0xC0 will be translated to 0xC0C0C0.
  */

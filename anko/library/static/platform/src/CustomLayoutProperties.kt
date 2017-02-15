@@ -18,25 +18,26 @@
 package org.jetbrains.anko
 
 import android.view.ViewGroup
+import org.jetbrains.anko.internals.AnkoInternals.NO_GETTER
+import org.jetbrains.anko.internals.AnkoInternals.noGetter
+import kotlin.DeprecationLevel.ERROR
 
 val matchParent: Int = android.view.ViewGroup.LayoutParams.MATCH_PARENT
 val wrapContent: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 
 var ViewGroup.MarginLayoutParams.verticalMargin: Int
-    get() = throw AnkoException("'ViewGroup.MarginLayoutParams.verticalMargin' property does not have a getter")
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
     set(v) {
         topMargin = v
         bottomMargin = v
     }
 
 var ViewGroup.MarginLayoutParams.horizontalMargin: Int
-    get() = throw AnkoException("'ViewGroup.MarginLayoutParams.horizontalMargin' property does not have a getter")
-    set(v) {
-        leftMargin = v; rightMargin = v
-    }
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+    set(v) { leftMargin = v; rightMargin = v }
 
 var ViewGroup.MarginLayoutParams.margin: Int
-    get() = throw AnkoException("'ViewGroup.MarginLayoutParams.margin' property does not have a getter")
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
     set(v) {
         leftMargin = v
         rightMargin = v

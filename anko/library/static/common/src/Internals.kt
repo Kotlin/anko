@@ -36,6 +36,10 @@ import java.io.Serializable
 import java.util.*
 
 object AnkoInternals {
+    const val NO_GETTER: String = "Property does not have a getter"
+
+    fun noGetter(): Nothing = throw AnkoException("Property does not have a getter")
+
     private class AnkoContextThemeWrapper(base: Context?, val theme: Int) : ContextThemeWrapper(base, theme)
     
     fun <T : View> addView(manager: ViewManager, view: T) {

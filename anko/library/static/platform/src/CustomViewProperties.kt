@@ -22,6 +22,9 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import org.jetbrains.anko.internals.AnkoInternals.NO_GETTER
+import org.jetbrains.anko.internals.AnkoInternals.noGetter
+import kotlin.DeprecationLevel.ERROR
 
 var View.backgroundDrawable: Drawable?
     inline get() = background
@@ -45,24 +48,24 @@ var View.bottomPadding: Int
 
 @Deprecated("Use horizontalPadding instead", ReplaceWith("horizontalPadding"))
 var View.paddingHorizontal: Int
-    get() = throw PropertyWithoutGetterException("paddingHorizontal")
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
     set(value) = setPadding(value, paddingTop, value, paddingBottom)
 
 var View.horizontalPadding: Int
-    get() = throw PropertyWithoutGetterException("horizontalPadding")
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
     set(value) = setPadding(value, paddingTop, value, paddingBottom)
 
 @Deprecated("Use verticalPadding instead", ReplaceWith("verticalPadding"))
 var View.paddingVertical: Int
-    get() = throw PropertyWithoutGetterException("paddingVertical")
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
     set(value) = setPadding(paddingLeft, value, paddingRight, value)
 
 var View.verticalPadding: Int
-    get() = throw PropertyWithoutGetterException("verticalPadding")
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
     set(value) = setPadding(paddingLeft, value, paddingRight, value)
 
 var View.padding: Int
-    get() = throw PropertyWithoutGetterException("padding")
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
     inline set(value) = setPadding(value, value, value, value)
 
 inline var TextView.isSelectable: Boolean
@@ -70,7 +73,7 @@ inline var TextView.isSelectable: Boolean
     set(value) = setTextIsSelectable(value)
 
 var TextView.textSizeDimen: Int
-    get() = throw PropertyWithoutGetterException("textSizeDimen")
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
     set(value) = setTextSize(TypedValue.COMPLEX_UNIT_PX, context.resources.getDimension(value))
 
 var ImageView.image: Drawable?
