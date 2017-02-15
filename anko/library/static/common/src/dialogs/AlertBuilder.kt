@@ -1,4 +1,4 @@
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE", "unused")
 
 package dialogs
 
@@ -15,7 +15,7 @@ import org.jetbrains.anko.internals.AnkoInternals.NO_GETTER
 import org.jetbrains.anko.internals.AnkoInternals.noGetter
 import kotlin.DeprecationLevel.ERROR
 
-interface AlertBuilder<out T : Any> {
+interface AlertBuilder<T : Any> {
     val ctx: Context
 
     var title: CharSequence
@@ -34,16 +34,19 @@ interface AlertBuilder<out T : Any> {
 
     fun onKeyPressed(handler: (dialog: DialogInterface, keyCode: Int, e: KeyEvent) -> Boolean)
 
-    fun positiveButton(buttonText: String, handler: (dialog: DialogInterface) -> Unit)
-    fun positiveButton(buttonTextResource: Int, handler: (dialog: DialogInterface) -> Unit)
+    fun positiveButton(buttonText: String, onClicked: (dialog: DialogInterface) -> Unit)
+    fun positiveButton(buttonTextResource: Int, onClicked: (dialog: DialogInterface) -> Unit)
 
-    fun negativeButton(buttonText: String, handler: (dialog: DialogInterface) -> Unit)
-    fun negativeButton(buttonTextResource: Int, handler: (dialog: DialogInterface) -> Unit)
+    fun negativeButton(buttonText: String, onClicked: (dialog: DialogInterface) -> Unit)
+    fun negativeButton(buttonTextResource: Int, onClicked: (dialog: DialogInterface) -> Unit)
 
-    fun neutralPressed(buttonText: String, handler: (dialog: DialogInterface) -> Unit)
-    fun neutralPressed(buttonTextResource: Int, handler: (dialog: DialogInterface) -> Unit)
+    fun neutralPressed(buttonText: String, onClicked: (dialog: DialogInterface) -> Unit)
+    fun neutralPressed(buttonTextResource: Int, onClicked: (dialog: DialogInterface) -> Unit)
 
     fun onItemSelected(handler: (item: T?, index: Int) -> Unit)
+
+    fun items(items: List<CharSequence>, onItemSelected: (dialog: DialogInterface, index: Int) -> Unit)
+    fun items(items: List<T>, onItemSelected: (dialog: DialogInterface, item: T?, index: Int) -> Unit)
 }
 
 class AndroidAlertBuilder<T : Any>(override val ctx: Context) : AlertBuilder<T> {
@@ -89,28 +92,28 @@ class AndroidAlertBuilder<T : Any>(override val ctx: Context) : AlertBuilder<T> 
         builder.setOnKeyListener(handler)
     }
 
-    override fun positiveButton(buttonText: String, handler: (dialog: DialogInterface) -> Unit) {
-        builder.setPositiveButton(buttonText) { dialog, _ -> handler(dialog) }
+    override fun positiveButton(buttonText: String, onClicked: (dialog: DialogInterface) -> Unit) {
+        builder.setPositiveButton(buttonText) { dialog, _ -> onClicked(dialog) }
     }
 
-    override fun positiveButton(buttonTextResource: Int, handler: (dialog: DialogInterface) -> Unit) {
-        builder.setPositiveButton(buttonTextResource) { dialog, _ -> handler(dialog) }
+    override fun positiveButton(buttonTextResource: Int, onClicked: (dialog: DialogInterface) -> Unit) {
+        builder.setPositiveButton(buttonTextResource) { dialog, _ -> onClicked(dialog) }
     }
 
-    override fun negativeButton(buttonText: String, handler: (dialog: DialogInterface) -> Unit) {
-        builder.setNegativeButton(buttonText) { dialog, _ -> handler(dialog) }
+    override fun negativeButton(buttonText: String, onClicked: (dialog: DialogInterface) -> Unit) {
+        builder.setNegativeButton(buttonText) { dialog, _ -> onClicked(dialog) }
     }
 
-    override fun negativeButton(buttonTextResource: Int, handler: (dialog: DialogInterface) -> Unit) {
-        builder.setNegativeButton(buttonTextResource) { dialog, _ -> handler(dialog) }
+    override fun negativeButton(buttonTextResource: Int, onClicked: (dialog: DialogInterface) -> Unit) {
+        builder.setNegativeButton(buttonTextResource) { dialog, _ -> onClicked(dialog) }
     }
 
-    override fun neutralPressed(buttonText: String, handler: (dialog: DialogInterface) -> Unit) {
-        builder.setNeutralButton(buttonText) { dialog, _ -> handler(dialog) }
+    override fun neutralPressed(buttonText: String, onClicked: (dialog: DialogInterface) -> Unit) {
+        builder.setNeutralButton(buttonText) { dialog, _ -> onClicked(dialog) }
     }
 
-    override fun neutralPressed(buttonTextResource: Int, handler: (dialog: DialogInterface) -> Unit) {
-        builder.setNeutralButton(buttonTextResource) { dialog, _ -> handler(dialog) }
+    override fun neutralPressed(buttonTextResource: Int, onClicked: (dialog: DialogInterface) -> Unit) {
+        builder.setNeutralButton(buttonTextResource) { dialog, _ -> onClicked(dialog) }
     }
 
     override fun onItemSelected(handler: (item: T?, index: Int) -> Unit) {
@@ -124,6 +127,18 @@ class AndroidAlertBuilder<T : Any>(override val ctx: Context) : AlertBuilder<T> 
                 handler(adapter.adapter.getItem(position) as T, position)
             }
         })
+    }
+
+    override fun items(items: List<CharSequence>, onItemSelected: (dialog: DialogInterface, index: Int) -> Unit) {
+        builder.setItems(Array(items.size) { i -> items[i].toString() }) { dialog, which ->
+            onItemSelected(dialog, which)
+        }
+    }
+
+    override fun items(items: List<T>, onItemSelected: (dialog: DialogInterface, item: T?, index: Int) -> Unit) {
+        builder.setItems(Array(items.size) { i -> items[i].toString() }) { dialog, which ->
+            onItemSelected(dialog, items[which], which)
+        }
     }
 }
 
