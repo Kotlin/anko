@@ -255,7 +255,22 @@ inline fun doIfSdk(version: Int, f: () -> Unit) {
  * @property value the return value if code execution was finished without an exception, null otherwise.
  * @property error a caught [Throwable] or null if nothing was caught.
  */
-data class AttemptResult<out T>(val value: T?, val error: Throwable?)
+data class AttemptResult<out T> @PublishedApi internal constructor(val value: T?, val error: Throwable?) {
+    inline fun <R> then(f: (T) -> R): AttemptResult<R> {
+        if (isError) {
+            @Suppress("UNCHECKED_CAST")
+            return this as AttemptResult<R>
+        }
+
+        return attempt { f(value as T) }
+    }
+
+    inline val isError: Boolean
+        get() = error != null
+
+    inline val hasValue: Boolean
+        get() = error == null
+}
 
 /**
  * Execute [f] and return the result or an exception, if an exception was occurred.
