@@ -2,7 +2,7 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 buildscript {
-    ext.kotlin_version = '1.1.0-beta-38'
+    ext.kotlin_version = '1.1.0-rc-69'
 
     ext.ANKO_VERSION = '0.10'
     ext.ANKO_VERSION_CODE = 100
@@ -28,7 +28,7 @@ buildscript {
 
     repositories {
         jcenter()
-        maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
+        maven { url "http://dl.bintray.com/kotlin/kotlin-dev" }
     }
 
     dependencies {
@@ -44,7 +44,7 @@ allprojects {
     repositories {
         jcenter()
         maven { url "http://dl.bintray.com/kotlin/kotlinx.dom" }
-        maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
+        maven { url "http://dl.bintray.com/kotlin/kotlin-dev" }
     }
 }
 
