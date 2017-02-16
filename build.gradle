@@ -2,7 +2,7 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 buildscript {
-    ext.kotlin_version = '1.1.0-rc-69'
+    ext.kotlin_version = '1.1.0-rc-84'
 
     ext.ANKO_VERSION = '0.10.0'
     ext.ANKO_VERSION_CODE = 100
