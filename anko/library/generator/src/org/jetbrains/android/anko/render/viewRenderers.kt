@@ -115,6 +115,7 @@ internal abstract class AbstractViewRenderer(
         fun renderView(receiver: String) = render("view") {
             "receiver" % receiver
             "functionName" % functionName
+            "themedFunctionName" % ("themed" + functionName.capitalize())
             "className" % className
             "lambdaArgType" % if (tinted) className21 else className
             "returnType" % if (tinted) className21 else view.fqName
@@ -151,13 +152,26 @@ internal abstract class AbstractViewRenderer(
             fun add(extendFor: String) = buffer {
                 val returnType = if (tinted) className21 else className
 
-                line("inline fun $extendFor.$functionName($helperArguments, theme: Int = 0): $returnType {")
+                line("inline fun $extendFor.$functionName($helperArguments): $returnType {")
+                line("return ankoView($factory, theme = 0) {")
+                lines(setters)
+                line("}")
+                line("}")
+
+                line("inline fun $extendFor.$functionName($helperArguments, init: (@AnkoViewDslMarker $lambdaArgType).() -> Unit): $returnType {")
+                line("return ankoView($factory, theme = 0) {")
+                line("init()")
+                lines(setters)
+                line("}")
+                line("}")
+
+                line("inline fun $extendFor.themed${functionName.capitalize()}($helperArguments, theme: Int): $returnType {")
                 line("return ankoView($factory, theme) {")
                 lines(setters)
                 line("}")
                 line("}")
 
-                line("inline fun $extendFor.$functionName($helperArguments, theme: Int = 0, init: (@AnkoViewDslMarker $lambdaArgType).() -> Unit): $returnType {")
+                line("inline fun $extendFor.themed${functionName.capitalize()}($helperArguments, theme: Int, init: (@AnkoViewDslMarker $lambdaArgType).() -> Unit): $returnType {")
                 line("return ankoView($factory, theme) {")
                 line("init()")
                 lines(setters)

@@ -1,5 +1,10 @@
-inline fun {{receiver}}.{{functionName}}(theme: Int = 0): {{returnType}} = {{functionName}}(theme) {}
-inline fun {{receiver}}.{{functionName}}(theme: Int = 0, {{additionalParams}}{{#additionalParams}}, {{/additionalParams}}init: (@AnkoViewDslMarker {{lambdaArgType}}).() -> Unit): {{returnType}} {
-    return ankoView({{factory}}, theme) { init() }
+inline fun {{receiver}}.{{functionName}}(): {{returnType}} = {{functionName}}() {}
+inline fun {{receiver}}.{{functionName}}({{additionalParams}}{{#additionalParams}}, {{/additionalParams}}init: (@AnkoViewDslMarker {{lambdaArgType}}).() -> Unit): {{returnType}} {
+    return ankoView({{factory}}, theme = 0) { init() }
+}
+
+inline fun {{receiver}}.{{themedFunctionName}}(theme: Int = 0): {{returnType}} = {{themedFunctionName}}(theme) {}
+inline fun {{receiver}}.{{themedFunctionName}}(theme: Int = 0, {{additionalParams}}{{#additionalParams}}, {{/additionalParams}}init: (@AnkoViewDslMarker {{lambdaArgType}}).() -> Unit): {{returnType}} {
+return ankoView({{factory}}, theme) { init() }
 }
 
