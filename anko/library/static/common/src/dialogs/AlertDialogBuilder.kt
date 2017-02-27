@@ -71,7 +71,7 @@ class AlertDialogBuilder(val ctx: Context) {
         checkBuilder()
         dialog = builder!!.create()
         builder = null
-        return dialog
+        return dialog!!
     }
 
     /**
