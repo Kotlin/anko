@@ -17,30 +17,33 @@
 @file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko
 
-import android.app.AlertDialog
 import android.app.Fragment
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 
-inline fun AnkoContext<*>.alert(
-        message: String,
-        title: String? = null,
-        noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
-) = ctx.alert(message, title, init)
+typealias AlertBuilderFactory<D> = (Context) -> AlertBuilder<D>
 
-inline fun Fragment.alert(
+inline fun <D : DialogInterface> AnkoContext<*>.alert(
+        noinline factory: AlertBuilderFactory<D>,
         message: String,
         title: String? = null,
-        noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
-) = activity.alert(message, title, init)
+        noinline init: (AlertBuilder<D>.() -> Unit)? = null
+) = ctx.alert(factory, message, title, init)
 
-fun Context.alert(
+inline fun <D : DialogInterface> Fragment.alert(
+        noinline factory: AlertBuilderFactory<D>,
         message: String,
         title: String? = null,
-        init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
-): AlertBuilder<AlertDialog> {
-    return AndroidAlertBuilder(this).apply {
+        noinline init: (AlertBuilder<D>.() -> Unit)? = null
+) = activity.alert(factory, message, title, init)
+
+fun <D : DialogInterface> Context.alert(
+        factory: AlertBuilderFactory<D>,
+        message: String,
+        title: String? = null,
+        init: (AlertBuilder<D>.() -> Unit)? = null
+): AlertBuilder<D> {
+    return factory(this).apply {
         if (title != null) {
             this.title = title
         }
@@ -49,24 +52,27 @@ fun Context.alert(
     }
 }
 
-inline fun AnkoContext<*>.alert(
+inline fun <D : DialogInterface> AnkoContext<*>.alert(
+        noinline factory: AlertBuilderFactory<D>,
         message: Int,
         title: Int? = null,
-        noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
-) = ctx.alert(message, title, init)
+        noinline init: (AlertBuilder<D>.() -> Unit)? = null
+) = ctx.alert(factory, message, title, init)
 
-inline fun Fragment.alert(
+inline fun <D : DialogInterface> Fragment.alert(
+        noinline factory: AlertBuilderFactory<D>,
         message: Int,
         title: Int? = null,
-        noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
-) = activity.alert(message, title, init)
+        noinline init: (AlertBuilder<D>.() -> Unit)? = null
+) = activity.alert(factory, message, title, init)
 
-fun Context.alert(
+fun <D : DialogInterface> Context.alert(
+        factory: AlertBuilderFactory<D>,
         messageResource: Int,
         titleResource: Int? = null,
-        init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
-): AlertBuilder<DialogInterface> {
-    return AndroidAlertBuilder(this).apply {
+        init: (AlertBuilder<D>.() -> Unit)? = null
+): AlertBuilder<D> {
+    return factory(this).apply {
         if (titleResource != null) {
             this.titleResource = titleResource
         }
@@ -75,100 +81,19 @@ fun Context.alert(
     }
 }
 
+inline fun <D : DialogInterface> AnkoContext<*>.alert(
+        noinline factory: AlertBuilderFactory<D>,
+        noinline init: AlertBuilder<D>.() -> Unit
+) = ctx.alert(factory, init)
 
-inline fun AnkoContext<*>.alert(noinline init: AlertBuilder<DialogInterface>.() -> Unit) = ctx.alert(init)
-inline fun Fragment.alert(noinline init: AlertBuilder<DialogInterface>.() -> Unit) = activity.alert(init)
+inline fun <D : DialogInterface> Fragment.alert(
+        noinline factory: AlertBuilderFactory<D>,
+        noinline init: AlertBuilder<D>.() -> Unit
+) = activity.alert(factory, init)
 
-fun Context.alert(init: AlertBuilder<DialogInterface>.() -> Unit): AlertBuilder<DialogInterface> {
-    return AndroidAlertBuilder(this).apply { init() }
-}
-
-inline fun AnkoContext<*>.progressDialog(
-        message: Int? = null,
-        title: Int? = null,
-        noinline init: (ProgressDialog.() -> Unit)? = null
-) = ctx.progressDialog(message, title, init)
-
-inline fun Fragment.progressDialog(
-        message: Int? = null,
-        title: Int? = null,
-        noinline init: (ProgressDialog.() -> Unit)? = null
-) = activity.progressDialog(message, title, init)
-
-fun Context.progressDialog(
-        message: Int? = null,
-        title: Int? = null,
-        init: (ProgressDialog.() -> Unit)? = null
-) = progressDialog(false, message?.let { getString(it) }, title?.let { getString(it) }, init)
-
-
-inline fun AnkoContext<*>.indeterminateProgressDialog(
-        message: Int? = null,
-        title: Int? = null,
-        noinline init: (ProgressDialog.() -> Unit)? = null
-) = ctx.indeterminateProgressDialog(message, title, init)
-
-inline fun Fragment.indeterminateProgressDialog(
-        message: Int? = null,
-        title: Int? = null,
-        noinline init: (ProgressDialog.() -> Unit)? = null
-) = activity.progressDialog(message, title, init)
-
-fun Context.indeterminateProgressDialog(
-        message: Int? = null,
-        title: Int? = null,
-        init: (ProgressDialog.() -> Unit)? = null
-) = progressDialog(true, message?.let { getString(it) }, title?.let { getString(it) }, init)
-
-
-inline fun AnkoContext<*>.progressDialog(
-        message: String? = null,
-        title: String? = null,
-        noinline init: (ProgressDialog.() -> Unit)? = null
-) = ctx.progressDialog(message, title, init)
-
-inline fun Fragment.progressDialog(
-        message: String? = null,
-        title: String? = null,
-        noinline init: (ProgressDialog.() -> Unit)? = null
-) = activity.progressDialog(message, title, init)
-
-fun Context.progressDialog(
-        message: String? = null,
-        title: String? = null,
-        init: (ProgressDialog.() -> Unit)? = null
-) = progressDialog(false, message, title, init)
-
-
-inline fun AnkoContext<*>.indeterminateProgressDialog(
-        message: String? = null,
-        title: String? = null,
-        noinline init: (ProgressDialog.() -> Unit)? = null
-) = ctx.indeterminateProgressDialog(message, title, init)
-
-inline fun Fragment.indeterminateProgressDialog(
-        message: String? = null,
-        title: String? = null,
-        noinline init: (ProgressDialog.() -> Unit)? = null
-) = activity.indeterminateProgressDialog(message, title, init)
-
-fun Context.indeterminateProgressDialog(
-        message: String? = null,
-        title: String? = null,
-        init: (ProgressDialog.() -> Unit)? = null
-) = progressDialog(true, message, title, init)
-
-
-private fun Context.progressDialog(
-        indeterminate: Boolean,
-        message: String? = null,
-        title: String? = null,
-        init: (ProgressDialog.() -> Unit)? = null
-) = ProgressDialog(this).apply {
-    isIndeterminate = indeterminate
-    if (!indeterminate) setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
-    if (message != null) setMessage(message)
-    if (title != null) setTitle(title)
-    if (init != null) init()
-    show()
+fun <D : DialogInterface> Context.alert(
+        factory: AlertBuilderFactory<D>,
+        init: AlertBuilder<D>.() -> Unit
+): AlertBuilder<D> {
+    return factory(this).apply { init() }
 }
