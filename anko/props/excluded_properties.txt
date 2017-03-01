@@ -35,6 +35,7 @@ android.widget.TextView#getTotalPaddingLeft
 android.widget.TextView#getTotalPaddingRight
 android.widget.TextView#getTotalPaddingStart
 android.widget.TextView#getTotalPaddingTop
+android.widget.TextView#setEnabled
 android.widget.AbsSpinner#getAdapter
 android.view.ViewGroup#getChildCount
 android.view.ViewGroup#getFocusedChild

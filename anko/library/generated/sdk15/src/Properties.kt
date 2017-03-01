@@ -22,10 +22,6 @@ var android.view.View.minimumWidth: Int
     @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
     set(v) = setMinimumWidth(v)
 
-var android.widget.TextView.enabled: Boolean
-    @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
-    set(v) = setEnabled(v)
-
 var android.widget.TextView.textColor: Int
     @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
     set(v) = setTextColor(v)

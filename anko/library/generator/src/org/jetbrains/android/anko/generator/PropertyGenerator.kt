@@ -36,7 +36,11 @@ class PropertyGenerator : Generator<PropertyElement> {
                 .sortedBy { it.identifier }
 
         val propertySetters = availableMethods
-                .filter { it.clazz.isView && it.method.isNonListenerSetter() && !it.method.isOverridden }
+                .filter {
+                    it.clazz.isView && it.method.isNonListenerSetter() && !it.method.isOverridden &&
+                            !config.excludedProperties.contains(it.clazz.fqName + "#" + it.method.name) &&
+                            !config.excludedProperties.contains(it.clazz.fqName + "#*")
+                }
                 .groupBy { it.identifier }
 
         genProperties(propertyGetters, propertySetters)

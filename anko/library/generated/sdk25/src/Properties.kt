@@ -14,10 +14,6 @@ var android.view.View.backgroundResource: Int
     @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
     set(v) = setBackgroundResource(v)
 
-var android.widget.TextView.enabled: Boolean
-    @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
-    set(v) = setEnabled(v)
-
 var android.widget.TextView.textColor: Int
     @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
     set(v) = setTextColor(v)
