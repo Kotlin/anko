@@ -13,6 +13,7 @@ include ':static:appcompatV7'
 
 include ':generated'
 include ':generated:anko-appcompat-v7'
+include ':generated:anko-appcompat-v7-common'
 include ':generated:anko-cardview-v7'
 include ':generated:anko-common'
 include ':generated:anko-design'
@@ -51,6 +52,7 @@ project(':static:appcompatV7').projectDir = new File(rootDir, 'anko/library/stat
 
 project(':generated').projectDir = new File(rootDir, 'anko/library/generated')
 project(':generated:anko-appcompat-v7').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7')
+project(':generated:anko-appcompat-v7-common').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7-common')
 project(':generated:anko-cardview-v7').projectDir = new File(rootDir, 'anko/library/generated/cardview-v7')
 project(':generated:anko-common').projectDir = new File(rootDir, 'anko/library/generated/common')
 project(':generated:anko-design').projectDir = new File(rootDir, 'anko/library/generated/design')

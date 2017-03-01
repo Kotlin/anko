@@ -71,6 +71,7 @@ task zipIdeaPlugin(dependsOn: ':ide:preview:shadowJar') << {
 
 def generatedArtifacts = [
     ':generated:anko-appcompat-v7',
+    ':generated:anko-appcompat-v7-common',
     ':generated:anko-cardview-v7',
     ':generated:anko-common',
     ':generated:anko-design',
