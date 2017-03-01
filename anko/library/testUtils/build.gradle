@@ -15,3 +15,9 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'junit:junit:4.12'
 }
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}

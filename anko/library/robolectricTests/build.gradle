@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion BUILD_TOOLS_VERSION
     defaultConfig {
         minSdkVersion MIN_SDK_VERSION
@@ -16,6 +16,7 @@ dependencies {
     compile project(':generated:anko-common')
     compile project(':generated:anko-sqlite')
     compile project(':generated:anko-sdk15')
+    compile project(':generated:anko-coroutines')
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile "org.robolectric:robolectric:3.0"
 }

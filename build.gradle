@@ -2,7 +2,7 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 buildscript {
-    ext.kotlin_version = '1.1.0-rc-84'
+    ext.kotlin_version = '1.1.0'
 
     ext.ANKO_VERSION = '0.10.0'
     ext.ANKO_VERSION_CODE = 100
@@ -27,8 +27,9 @@ buildscript {
     ext.POM_ARTIFACT_GROUP = 'org.jetbrains.anko'
 
     repositories {
+        mavenCentral()
         jcenter()
-        maven { url "http://dl.bintray.com/kotlin/kotlin-dev" }
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
     }
 
     dependencies {
@@ -42,9 +43,10 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenCentral()
         jcenter()
         maven { url "http://dl.bintray.com/kotlin/kotlinx.dom" }
-        maven { url "http://dl.bintray.com/kotlin/kotlin-dev" }
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
     }
 }
 
@@ -80,7 +82,8 @@ def generatedArtifacts = [
     ':generated:anko-sdk21',
     ':generated:anko-sdk23',
     ':generated:anko-sqlite',
-    ':generated:anko-support-v4'
+    ':generated:anko-support-v4',
+    ':generated:anko-coroutines'
 ]
 
 task dist()
