@@ -4,6 +4,7 @@ dependencies {
     provided "com.android.support:appcompat-v7:$SUPPORT_ARTIFACT_VERSION"
     compile project(':generated:anko-common')
     compile project(':generated:anko-support-v4')
+    embedded(project(':static:appcompatV7'))
 }
 
 task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {

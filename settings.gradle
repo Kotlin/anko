@@ -9,6 +9,7 @@ include ':static:common'
 include ':static:platform'
 include ':static:sqlite'
 include ':static:supportV4'
+include ':static:appcompatV7'
 
 include ':generated'
 include ':generated:anko-appcompat-v7'
@@ -46,6 +47,7 @@ project(':static:common').projectDir = new File(rootDir, 'anko/library/static/co
 project(':static:platform').projectDir = new File(rootDir, 'anko/library/static/platform')
 project(':static:sqlite').projectDir = new File(rootDir, 'anko/library/static/sqlite')
 project(':static:supportV4').projectDir = new File(rootDir, 'anko/library/static/supportV4')
+project(':static:appcompatV7').projectDir = new File(rootDir, 'anko/library/static/appcompatV7')
 
 project(':generated').projectDir = new File(rootDir, 'anko/library/generated')
 project(':generated:anko-appcompat-v7').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7')
