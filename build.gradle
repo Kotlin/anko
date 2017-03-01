@@ -81,6 +81,7 @@ def generatedArtifacts = [
     ':generated:anko-sdk19',
     ':generated:anko-sdk21',
     ':generated:anko-sdk23',
+    ':generated:anko-sdk25',
     ':generated:anko-sqlite',
     ':generated:anko-support-v4',
     ':generated:anko-support-v4-common',
