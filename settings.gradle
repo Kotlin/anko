@@ -24,6 +24,7 @@ include ':generated:anko-sdk21'
 include ':generated:anko-sdk23'
 include ':generated:anko-sqlite'
 include ':generated:anko-support-v4'
+include ':generated:anko-support-v4-common'
 include ':generated:anko-coroutines'
 
 include ':ide:plugin-classpath'
@@ -59,6 +60,7 @@ project(':generated:anko-sdk21').projectDir = new File(rootDir, 'anko/library/ge
 project(':generated:anko-sdk23').projectDir = new File(rootDir, 'anko/library/generated/sdk23')
 project(':generated:anko-sqlite').projectDir = new File(rootDir, 'anko/library/generated/sqlite')
 project(':generated:anko-support-v4').projectDir = new File(rootDir, 'anko/library/generated/support-v4')
+project(':generated:anko-support-v4-common').projectDir = new File(rootDir, 'anko/library/generated/support-v4-common')
 project(':generated:anko-coroutines').projectDir = new File(rootDir, 'anko/library/generated/coroutines')
 
 project(':ide').projectDir = new File(rootDir, 'anko/idea-plugin')
