@@ -17,60 +17,71 @@
 @file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko
 
+import android.app.AlertDialog
 import android.app.Fragment
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 
 inline fun AnkoContext<*>.alert(
         message: String,
         title: String? = null,
-        noinline init: (AlertDialogBuilder.() -> Unit)? = null
+        noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ) = ctx.alert(message, title, init)
 
 inline fun Fragment.alert(
         message: String,
         title: String? = null,
-        noinline init: (AlertDialogBuilder.() -> Unit)? = null
+        noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ) = activity.alert(message, title, init)
 
 fun Context.alert(
         message: String,
         title: String? = null,
-        init: (AlertDialogBuilder.() -> Unit)? = null
-) = AlertDialogBuilder(this).apply {
-    if (title != null) title(title)
-    message(message)
-    if (init != null) init()
+        init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
+): AlertBuilder<AlertDialog> {
+    return AndroidAlertBuilder(this).apply {
+        if (title != null) {
+            this.title = title
+        }
+        this.message = message
+        if (init != null) init()
+    }
 }
-
 
 inline fun AnkoContext<*>.alert(
         message: Int,
         title: Int? = null,
-        noinline init: (AlertDialogBuilder.() -> Unit)? = null
+        noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ) = ctx.alert(message, title, init)
 
 inline fun Fragment.alert(
         message: Int,
         title: Int? = null,
-        noinline init: (AlertDialogBuilder.() -> Unit)? = null
+        noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ) = activity.alert(message, title, init)
 
 fun Context.alert(
-        message: Int,
-        title: Int? = null,
-        init: (AlertDialogBuilder.() -> Unit)? = null
-) = AlertDialogBuilder(this).apply {
-    if (title != null) title(title)
-    message(message)
-    if (init != null) init()
+        messageResource: Int,
+        titleResource: Int? = null,
+        init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
+): AlertBuilder<DialogInterface> {
+    return AndroidAlertBuilder(this).apply {
+        if (titleResource != null) {
+            this.titleResource = titleResource
+        }
+        this.messageResource = messageResource
+        if (init != null) init()
+    }
 }
 
 
-inline fun AnkoContext<*>.alert(noinline init: AlertDialogBuilder.() -> Unit) = ctx.alert(init)
-inline fun Fragment.alert(noinline init: AlertDialogBuilder.() -> Unit): AlertDialogBuilder = activity.alert(init)
+inline fun AnkoContext<*>.alert(noinline init: AlertBuilder<DialogInterface>.() -> Unit) = ctx.alert(init)
+inline fun Fragment.alert(noinline init: AlertBuilder<DialogInterface>.() -> Unit) = activity.alert(init)
 
-fun Context.alert(init: AlertDialogBuilder.() -> Unit) = AlertDialogBuilder(this).apply { init() }
+fun Context.alert(init: AlertBuilder<DialogInterface>.() -> Unit): AlertBuilder<DialogInterface> {
+    return AndroidAlertBuilder(this).apply { init() }
+}
 
 inline fun AnkoContext<*>.progressDialog(
         message: Int? = null,

@@ -16,28 +16,28 @@
 
 package org.jetbrains.android.anko.config
 
+import org.jetbrains.android.anko.artifact.Artifact
 import java.io.File
 
-open class DefaultAnkoConfiguration(
-        final override val outputDirectory: File,
-        final override val artifactName: String,
+class DefaultAnkoConfiguration(
+        override val outputDirectory: File,
+        override val artifact: Artifact,
         override val options: Options
-) : AnkoConfiguration() {
-    final override val outputPackage: String
+) : AnkoConfiguration {
+    override val outputPackage: String
 
-    final override val excludedClasses = File("anko/props/excluded_classes.txt").readLines().toSet()
+    private fun readProps(name: String) = File("anko/props/$name.txt").readLines().toSet()
 
-    final override val excludedMethods = File("anko/props/excluded_methods.txt").readLines().toSet()
-
-    final override val excludedProperties = File("anko/props/excluded_properties.txt").readLines().toSet()
-
-    final override val propertiesWithoutGetters = File("anko/props/properties_without_getters.txt").readLines().toSet()
+    override val excludedClasses = readProps("excluded_classes")
+    override val excludedMethods = readProps("excluded_methods")
+    override val excludedProperties = readProps("excluded_properties")
+    override val propertiesWithoutGetters = readProps("properties_without_getters")
 
     init {
         val artifactType = getTargetArtifactType()
         outputPackage = "org.jetbrains.anko" + when (artifactType) {
             TargetArtifactType.COMMON, TargetArtifactType.PLATFORM -> ""
-            else -> "." + artifactName.replace('-', '.').toLowerCase()
+            else -> "." + artifact.name.replace('-', '.').toLowerCase()
         }
 
         for (line in propertiesWithoutGetters) {

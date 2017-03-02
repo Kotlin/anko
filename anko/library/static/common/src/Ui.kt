@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 package org.jetbrains.anko
 
 import android.view.View
 import org.jetbrains.anko.internals.AnkoInternals
+
+@DslMarker
+@Target(AnnotationTarget.TYPE)
+annotation class AnkoViewDslMarker
 
 /**
  * Apply [f] to this [View] and to all of its children recursively.
  * 
  * @return the receiver.
  */
-fun <T : View> T.applyRecursively(f: (View) -> Unit): T {
+inline fun <T : View> T.applyRecursively(noinline f: (View) -> Unit): T {
     AnkoInternals.applyRecursively(this, f)
     return this
 }

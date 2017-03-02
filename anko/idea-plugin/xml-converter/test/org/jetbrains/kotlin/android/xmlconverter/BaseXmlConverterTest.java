@@ -1,15 +1,15 @@
 package org.jetbrains.kotlin.android.xmlconverter;
 
+import static kotlin.collections.SetsKt.setOf;
+import static kotlin.io.FilesKt.readText;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+
 import kotlin.text.Charsets;
 import org.junit.Rule;
 import org.junit.rules.TestName;
-import sun.plugin.dom.exception.InvalidStateException;
-import java.io.File;
-
-import static kotlin.collections.SetsKt.*;
-import static kotlin.io.FilesKt.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class BaseXmlConverterTest {
 
@@ -17,10 +17,10 @@ public class BaseXmlConverterTest {
     public TestName name = new TestName();
 
     protected void doLayoutTest() {
-        File testDataDir = new File("xml-converter/testData");
+        File testDataDir = new File("testData");
         String testName = name.getMethodName();
         if (!testName.startsWith("test")) {
-            throw new InvalidStateException("Test name must start with a 'test' preffix");
+            throw new IllegalStateException("Test name must start with a 'test' preffix");
         }
 
         File testDir = new File(testDataDir, decapitalize(testName.substring("test".length())));

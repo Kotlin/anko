@@ -18,17 +18,20 @@ package org.jetbrains.android.anko.templates
 
 import com.samskivert.mustache.Mustache
 import com.samskivert.mustache.Template
+import org.jetbrains.android.anko.utils.ImportList
 import java.io.File
 
-class MustacheTemplateProvider(private val baseDir: File) : TemplateProvider {
-    private val templateCache = hashMapOf<String, Template>()
+class MustacheTemplateProvider : TemplateProvider {
+    override val extension = "mustache"
 
-    override fun render(templateName: String, args: Map<String, Any?>): String {
-        return getTemplate(templateName).execute(args)
+    private val templateCache = hashMapOf<File, Template>()
+
+    override fun render(templateFile: File, importList: ImportList, args: Map<String, Any?>): String {
+        return getTemplate(templateFile).execute(args)
     }
 
-    private fun getTemplate(templateName: String) = templateCache.getOrPut(templateName) {
-        val templateText = File(baseDir, "$templateName.mustache").readText()
+    private fun getTemplate(templateFile: File) = templateCache.getOrPut(templateFile) {
+        val templateText = templateFile.readText()
         Mustache.compiler().escapeHTML(false).emptyStringIsFalse(true).compile(templateText)
     }
 }

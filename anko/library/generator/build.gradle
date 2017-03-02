@@ -1,13 +1,14 @@
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
-mainClassName = "org.jetbrains.android.anko.Launcher"
+mainClassName = "org.jetbrains.android.anko.Main"
 
 run {
-    // Replace "check" with "generate" to update generated files
-    args = ["versions", "check",
-            "--originalDirectory=dependencies/androidJars",
-            "--outputDirectory=anko/library/generated"]
+    // Replace "verify" with "generate" to update generated files
+    args = ["versions", "generate",
+            "--artifacts=anko/props/artifacts.json",
+            "--outputDirectory=anko/library/generated",
+            "--androidSdk=dependencies/android-sdk"]
 
     workingDir = rootDir
 }
@@ -24,8 +25,12 @@ sourceSets {
 }
 
 dependencies {
-    compile 'com.github.javaparser:javaparser-core:2.1.0'
+    compile 'com.github.javaparser:javaparser-core:3.0.1'
+    compile 'org.jtwig:jtwig-core:5.65'
+    compile 'org.jtwig:jtwig-spaceless-extension:1.45'
     compile 'com.samskivert:jmustache:1.10'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'org.slf4j:slf4j-simple:1.7.22'
     compile 'org.ow2.asm:asm-debug-all:5.1'
     compile 'org.jetbrains.kotlinx:kotlinx.dom:0.0.8'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

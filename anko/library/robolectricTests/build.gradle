@@ -14,6 +14,7 @@ android {
 
 dependencies {
     compile project(':generated:anko-common')
+    compile project(':generated:anko-sqlite')
     compile project(':generated:anko-sdk15')
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile "org.robolectric:robolectric:3.0"

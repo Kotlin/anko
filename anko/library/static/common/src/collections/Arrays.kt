@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 package org.jetbrains.anko.collections
 
 import android.util.SparseArray
@@ -75,20 +75,21 @@ inline fun <T> Array<T>.forEachReversedWithIndex(f: (Int, T) -> Unit) {
 /**
  * Create a [Sequence] instance that wraps the original [SparseArray] returning its elements when being iterated.
  */
-fun <T> SparseArray<T>.asSequence(): Sequence<T> = SparseArraySequence(this)
+inline fun <T> SparseArray<T>.asSequence(): Sequence<T> = SparseArraySequence(this)
 
 /**
  * Create a [Sequence] instance that wraps the original [SparseBooleanArray] returning its elements when being iterated.
  */
-fun <T> SparseBooleanArray.asSequence(): Sequence<Boolean> = SparseBooleanArraySequence(this)
+inline fun <T> SparseBooleanArray.asSequence(): Sequence<Boolean> = SparseBooleanArraySequence(this)
 
 /**
  * Create a [Sequence] instance that wraps the original [SparseIntArray] returning its elements when being iterated.
  */
-fun <T> SparseIntArray.asSequence(): Sequence<Int> = SparseIntArraySequence(this)
+inline fun <T> SparseIntArray.asSequence(): Sequence<Int> = SparseIntArraySequence(this)
 
-private class SparseArraySequence<T>(private val a: SparseArray<T>) : Sequence<T> {
-    override fun iterator() = SparseArrayIterator()
+@PublishedApi
+internal class SparseArraySequence<T>(private val a: SparseArray<T>) : Sequence<T> {
+    override fun iterator(): Iterator<T> = SparseArrayIterator()
 
     private inner class SparseArrayIterator : Iterator<T> {
         private var index = 0
@@ -103,8 +104,9 @@ private class SparseArraySequence<T>(private val a: SparseArray<T>) : Sequence<T
     }
 }
 
-private class SparseBooleanArraySequence(private val a: SparseBooleanArray) : Sequence<Boolean> {
-    override fun iterator() = SparseIntArrayIterator()
+@PublishedApi
+internal class SparseBooleanArraySequence(private val a: SparseBooleanArray) : Sequence<Boolean> {
+    override fun iterator(): Iterator<Boolean> = SparseIntArrayIterator()
 
     private inner class SparseIntArrayIterator : Iterator<Boolean> {
         private var index = 0
@@ -119,8 +121,9 @@ private class SparseBooleanArraySequence(private val a: SparseBooleanArray) : Se
     }
 }
 
-private class SparseIntArraySequence(private val a: SparseIntArray) : Sequence<Int> {
-    override fun iterator() = SparseIntArrayIterator()
+@PublishedApi
+internal class SparseIntArraySequence(private val a: SparseIntArray) : Sequence<Int> {
+    override fun iterator(): Iterator<Int> = SparseIntArrayIterator()
 
     private inner class SparseIntArrayIterator : Iterator<Int> {
         private var index = 0

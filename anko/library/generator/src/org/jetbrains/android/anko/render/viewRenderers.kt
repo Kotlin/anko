@@ -16,31 +16,31 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.args
 import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.ViewElement
 import org.jetbrains.android.anko.generator.ViewGenerator
 import org.jetbrains.android.anko.generator.ViewGroupGenerator
+import org.jetbrains.android.anko.parameterRawTypes
 import org.jetbrains.android.anko.utils.*
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 import java.util.*
 
 internal class ViewRenderer(context: AnkoBuilderContext) : AbstractViewRenderer(context) {
-    override fun processElements(state: GenerationState) = generatedFile { importList ->
+    override fun processElements(state: GenerationState) = generatedFile {
         renderViews(state[ViewGenerator::class.java]) { it.fqName }
     }
 }
 
 internal class ViewGroupRenderer(context: AnkoBuilderContext) : AbstractViewRenderer(context) {
-    override fun processElements(state: GenerationState) = generatedFile { importList ->
+    override fun processElements(state: GenerationState) = generatedFile {
         renderViews(state[ViewGroupGenerator::class.java]) { "_" + it.simpleName }
     }
 }
 
 class ViewFactoryClass(val config: AnkoConfiguration, suffix: String) {
-    private val name = config.artifactName.toCamelCase('-').capitalize()
+    private val name = config.artifact.name.toCamelCase('-').capitalize()
 
     val entries = arrayListOf<String>()
     val fullName = "`${'$'}${'$'}Anko${'$'}Factories${'$'}$name$suffix`"
@@ -49,7 +49,8 @@ class ViewFactoryClass(val config: AnkoConfiguration, suffix: String) {
         if (entries.isEmpty()) return ""
 
         return StringBuilder().apply {
-            appendln("object $fullName {")
+            appendln("@PublishedApi")
+            appendln("internal object $fullName {")
             entries.forEach { append(config.indent).appendln(it) }
             appendln("}").appendln()
         }.toString()
@@ -75,7 +76,7 @@ internal abstract class AbstractViewRenderer(
                     if (Props.helperConstructors.contains(view.fqName)) {
                         append(renderHelperConstructors(view, factoryClass))
                     } else if (view.clazz.isTinted()) {
-                        val (className21, unused) = handleTintedView(view.clazz, nameResolver(view.clazz))
+                        val (className21, _) = handleTintedView(view.clazz, nameResolver(view.clazz))
                         if (Props.helperConstructors.contains("android.widget.$className21")) {
                             append(renderHelperConstructors(view, factoryClass))
                         }
@@ -95,7 +96,7 @@ internal abstract class AbstractViewRenderer(
             factoryClass: ViewFactoryClass
     ) {
         val constructors = ViewConstructorUtils.AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
-            view.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
+            view.getConstructors().firstOrNull { Arrays.equals(it.parameterRawTypes, constructor) }
         }
 
         val (className21, functionName) = handleTintedView(view, className)
@@ -114,6 +115,7 @@ internal abstract class AbstractViewRenderer(
         fun renderView(receiver: String) = render("view") {
             "receiver" % receiver
             "functionName" % functionName
+            "themedFunctionName" % ("themed" + functionName.capitalize())
             "className" % className
             "lambdaArgType" % if (tinted) className21 else className
             "returnType" % if (tinted) className21 else view.fqName
@@ -142,7 +144,7 @@ internal abstract class AbstractViewRenderer(
         for (constructor in helperConstructors) {
             val collected = constructor.zip(collectProperties(view, constructor))
             val helperArguments = collected.map {
-                val argumentType = it.second.args[0].asString()
+                val argumentType = it.second.parameterRawTypes[0].asString()
                 "${it.first.name}: $argumentType"
             }.joinToString(", ")
             val setters = collected.map { "${it.second.name}(${it.first.name})" }
@@ -150,13 +152,26 @@ internal abstract class AbstractViewRenderer(
             fun add(extendFor: String) = buffer {
                 val returnType = if (tinted) className21 else className
 
-                line("inline fun $extendFor.$functionName($helperArguments, theme: Int = 0): $returnType {")
+                line("inline fun $extendFor.$functionName($helperArguments): $returnType {")
+                line("return ankoView($factory, theme = 0) {")
+                lines(setters)
+                line("}")
+                line("}")
+
+                line("inline fun $extendFor.$functionName($helperArguments, init: (@AnkoViewDslMarker $lambdaArgType).() -> Unit): $returnType {")
+                line("return ankoView($factory, theme = 0) {")
+                line("init()")
+                lines(setters)
+                line("}")
+                line("}")
+
+                line("inline fun $extendFor.themed${functionName.capitalize()}($helperArguments, theme: Int): $returnType {")
                 line("return ankoView($factory, theme) {")
                 lines(setters)
                 line("}")
                 line("}")
 
-                line("inline fun $extendFor.$functionName($helperArguments, theme: Int = 0, init: $lambdaArgType.() -> Unit): $returnType {")
+                line("inline fun $extendFor.themed${functionName.capitalize()}($helperArguments, theme: Int, init: (@AnkoViewDslMarker $lambdaArgType).() -> Unit): $returnType {")
                 line("return ankoView($factory, theme) {")
                 line("init()")
                 lines(setters)
@@ -173,8 +188,8 @@ internal abstract class AbstractViewRenderer(
         return properties.map { property ->
             val methodName = "set" + property.name.capitalize()
             val methods = view.allMethods.filter {
-                it.name == methodName && it.args.size == 1 && it.args[0].fqName.endsWith(property.type)
-            }
+                it.name == methodName && it.parameterRawTypes.unique?.fqName?.endsWith(property.type) ?: false
+            }.distinctBy { Pair(it.name, it.desc) }
 
             when (methods.size) {
                 0 -> throw RuntimeException("Can't find a method $methodName for helper constructor ${view.fqName}($properties)")

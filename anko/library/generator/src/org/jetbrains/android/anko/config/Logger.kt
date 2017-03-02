@@ -16,7 +16,7 @@
 
 package org.jetbrains.android.anko.config
 
-class LogManager(private val level: LogManager.LogLevel) {
+class Logger(private val level: Logger.LogLevel) {
     enum class LogLevel {
         DEBUG, INFO, WARNING, ERROR
     }
@@ -38,5 +38,4 @@ class LogManager(private val level: LogManager.LogLevel) {
             throw Error(s)
         }
     }
-
 }

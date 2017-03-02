@@ -9,8 +9,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLog
 
 @RunWith(RobolectricGradleTestRunner::class)
-@Config(constants = BuildConfig::class)
-public class AnkoLoggerTest() {
+@Config(constants = BuildConfig::class) class AnkoLoggerTest {
     private val log = AnkoLogger(this)
 
     @Test

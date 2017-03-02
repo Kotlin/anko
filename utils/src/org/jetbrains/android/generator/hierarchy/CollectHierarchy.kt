@@ -18,6 +18,7 @@ package org.jetbrains.android.generator.hierarchy
 
 import com.google.gson.Gson
 import org.jetbrains.android.anko.ClassProcessor
+import org.jetbrains.android.anko.artifact.Artifact
 import org.jetbrains.android.anko.utils.ClassTree
 import org.jetbrains.android.anko.utils.ClassTreeNode
 import org.jetbrains.android.anko.utils.isInner
@@ -30,11 +31,8 @@ object HierarchyCollector {
 
     @JvmStatic
     fun collect() {
-        val ver = File("dependencies/androidJars").listFiles { file -> file.name.matches("[0-9]+".toRegex()) }!!
-                .first { it.listFiles { file -> file.name == "android.jar" }?.isNotEmpty() ?: false }
-        val androidJar = ver.listFiles { file -> file.name == "android.jar" }!!.first()
-
-        val classTree = ClassProcessor(listOf(androidJar), emptyList()).genClassTree()
+        val artifacts = Artifact.parseArtifacts(File("anko/props/artifacts.json"))
+        val classTree = ClassProcessor(artifacts.first { it.name.matches("sdk[0-9]+".toRegex()) }).genClassTree()
         val viewClasses = classTree.filter { it.isView(classTree) && !it.isInner && it.name.startsWith("android/widget/") }
 
         val hierarchy = viewClasses.map {
@@ -70,5 +68,4 @@ object HierarchyCollector {
         val isSuccessor = classTree.isSuccessorOf(this, "android/view/View") || this.name == "android/view/View"
         return isSuccessor && !isInner
     }
-
 }

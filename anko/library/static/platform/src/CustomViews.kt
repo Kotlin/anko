@@ -27,7 +27,8 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import org.jetbrains.anko.custom.ankoView
 
-object `$$Anko$Factories$CustomViews` {
+@PublishedApi
+internal object `$$Anko$Factories$CustomViews` {
     val VERTICAL_LAYOUT_FACTORY = { ctx: Context ->
         val view = _LinearLayout(ctx)
         view.orientation = LinearLayout.VERTICAL

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.support.v4.app.FragmentTabHost
 import android.view.View
+import android.support.v4.view.PagerTitleStrip
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import android.support.v4.widget.NestedScrollView
@@ -75,6 +76,41 @@ open class _FragmentTabHost(ctx: Context): FragmentTabHost(ctx) {
             init: FrameLayout.LayoutParams.() -> Unit = defaultInit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
+        layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+}
+
+open class _PagerTitleStrip(ctx: Context): PagerTitleStrip(ctx) {
+    fun <T: View> T.lparams(
+            c: Context?,
+            attrs: AttributeSet?,
+            init: ViewGroup.LayoutParams.() -> Unit = defaultInit
+    ): T {
+        val layoutParams = ViewGroup.LayoutParams(c!!, attrs!!)
+        layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            init: ViewGroup.LayoutParams.() -> Unit = defaultInit
+    ): T {
+        val layoutParams = ViewGroup.LayoutParams(width, height)
+        layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    fun <T: View> T.lparams(
+            source: ViewGroup.LayoutParams?,
+            init: ViewGroup.LayoutParams.() -> Unit = defaultInit
+    ): T {
+        val layoutParams = ViewGroup.LayoutParams(source!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this

@@ -28,6 +28,7 @@ import android.view.View
 import android.view.ViewManager
 import android.widget.ListAdapter
 
+@Deprecated("Use AlertBuilder class instead.")
 class AlertDialogBuilder(val ctx: Context) {
     private var builder: AlertDialog.Builder? = AlertDialog.Builder(ctx)
 

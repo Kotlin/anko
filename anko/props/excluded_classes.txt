@@ -9,3 +9,4 @@ android.support.v7.internal.view.menu.*
 android.renderscript.RSSurfaceView
 android.renderscript.RenderScriptGL
 android.renderscript.RSTextureView
+android.support.v7.widget.DropDownListView

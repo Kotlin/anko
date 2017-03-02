@@ -18,16 +18,8 @@
         <get src="https://plugins.jetbrains.com/files/6954/28547/kotlin-plugin-1.0.4-release-IJ2016.1-112.zip"
              dest="dependencies/kotlin-plugin.zip" usetimestamp="true"/>
 
-        <get src="http://heanet.dl.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-bin.zip"
-             dest="dependencies/download/ant-contrib-1.0b3-bin.zip" usetimestamp="true"/>
-
-        <delete file="dependencies/ant-contrib.jar" failonerror="false"/>
-        <unzip src="dependencies/download/ant-contrib-1.0b3-bin.zip" dest="dependencies">
-            <patternset>
-                <include name="ant-contrib/ant-contrib-1.0b3.jar"/>
-            </patternset>
-            <mapper type="merge" to="ant-contrib.jar"/>
-        </unzip>
+	<get src="http://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar"
+             dest="dependencies/ant-contrib.jar" usetimestamp="true"/>
 
         <delete dir="dependencies/kotlin-plugin" failonerror="false"/>
         <unzip src="dependencies/kotlin-plugin.zip"
@@ -36,6 +28,9 @@
         <set_unix_perms />
 
         <ant antfile="update_dependencies_idea.xml" target="update"/>
+
+        <rename src="ideaSDK/lib/kotlin-runtime.jar" dest="kotlin-runtime.jar.bak"/>
+        <rename src="ideaSDK/lib/kotlin-reflect.jar" dest="kotlin-reflect.jar.bak"/>
 
         <copydir src="dependencies/Kotlin" dest="ideaSDK/plugins/Kotlin" forceoverwrite="true"/>
     </target>

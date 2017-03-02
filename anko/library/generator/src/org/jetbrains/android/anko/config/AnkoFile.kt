@@ -19,14 +19,6 @@ package org.jetbrains.android.anko.config
 import org.jetbrains.android.anko.config.TargetArtifactType.*
 import org.jetbrains.android.anko.utils.toCamelCase
 
-enum class TargetArtifactType {
-    COMMON, // Common stuff (does not contain platform-dependent functions)
-    SQLITE, // SqLite Database helpers
-    PLATFORM, // Artifacts for the specific Android SDK version (eg. 15, 19, 21 etc.)
-    SUPPORT_V4, // Artifact for Android support-v4 library (contains some helpers for support.v4 Fragments)
-    TOOLKIT; // Helpers for any other Android libraries
-}
-
 enum class AnkoFile(
         type: Set<TargetArtifactType>,
         val shouldBeWritten: (AnkoConfiguration) -> Boolean = { true },
@@ -41,8 +33,6 @@ enum class AnkoFile(
 
     val types: Set<TargetArtifactType> = type.toSet()
 
-    val filename: String by lazy {
-        val extension = if (name.endsWith("_JAVA")) ".java" else ".kt"
-        name.substringBeforeLast("_JAVA").toCamelCase() + extension
-    }
+    val filename: String
+        get() = name.toCamelCase() + ".kt"
 }

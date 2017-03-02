@@ -1,0 +1,6 @@
+{% for service in services %}
+/** Returns the {{ service.simpleName | capitalize }} instance. **/
+val {{ imported("android.content.Context") }}.{{ service.simpleName }}: {{ imported(service.fqName) }}
+    get() = getSystemService(Context.{{ service.constantName }}) as {{ imported(service.fqName) }}
+
+{% endfor %}
