@@ -17,7 +17,7 @@ dependencies {
     compile project(':ide:plugin-classpath')
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    shadow 'org.jetbrains.kotlinx:kotlinx.dom:0.0.8'
+    shadow "org.jetbrains.kotlinx:kotlinx.dom:$kotlinx_dom_version"
 
     shadow(project(':ide:attrs')) {
         transitive = false

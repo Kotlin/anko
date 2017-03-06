@@ -32,7 +32,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'org.slf4j:slf4j-simple:1.7.22'
     compile 'org.ow2.asm:asm-debug-all:5.1'
-    compile 'org.jetbrains.kotlinx:kotlinx.dom:0.0.8'
+    compile "org.jetbrains.kotlinx:kotlinx.dom:$kotlinx_dom_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile project(":testUtils")
 }

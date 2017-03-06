@@ -13,7 +13,7 @@ sourceSets {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'org.jetbrains.kotlinx:kotlinx.dom:0.0.8'
+    compile "org.jetbrains.kotlinx:kotlinx.dom:$kotlinx_dom_version"
 
     compile project(':ide:plugin-classpath')
     compile project(':ide:attrs')

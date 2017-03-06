@@ -60,7 +60,7 @@ task zipIdeaPlugin(dependsOn: ':ide:preview:shadowJar') << {
 
     try {
         zipOutputStream = new ZipOutputStream(new FileOutputStream(outputFile))
-        ZipEntry jar = new ZipEntry("lib/anko-ide-plugin.jar")
+        ZipEntry jar = new ZipEntry("Anko/lib/anko-ide-plugin.jar")
         zipOutputStream.putNextEntry(jar)
 
         zipOutputStream << new FileInputStream("anko/idea-plugin/preview/build/libs/preview-all.jar")
