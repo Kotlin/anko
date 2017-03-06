@@ -3,8 +3,9 @@ subprojects {
 
     sourceSets {
         main {
-            java.srcDirs = ['src']
+            java.srcDirs = ['src', 'resources']
             kotlin.srcDirs = ['src']
+            resources.srcDirs = ['resources']
         }
     }
 

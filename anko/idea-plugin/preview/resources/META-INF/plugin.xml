@@ -1,33 +1,11 @@
-<!--
-  ~ Copyright 2016 JetBrains s.r.o.
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
-
-<idea-plugin version="2">
+<idea-plugin>
     <id>org.jetbrains.kotlin.android.dsl</id>
-    <name>Anko DSL Preview</name>
-    <description>Displays a layout preview for the Anko Android DSL.</description>
-    <version>0.9b</version>
+    <name>Anko Support</name>
+    <description>Anko Android library support.</description>
+    <version>0.10.0</version>
     <vendor url="http://www.jetbrains.com">JetBrains s.r.o.</vendor>
 
-    <idea-version since-build="141.1009" until-build="162.9999"/>
-
-    <application-components>
-    </application-components>
-
-    <project-components>
-    </project-components>
+    <idea-version since-build="141.1009" until-build="172.9999"/>
 
     <depends>org.jetbrains.kotlin</depends>
     <depends>org.jetbrains.android</depends>
@@ -42,10 +20,6 @@
     <extensions defaultExtensionNs="com.intellij">
         <psi.treeChangePreprocessor
                 implementation="org.jetbrains.kotlin.android.dslpreview.SourceFileModificationTracker"/>
-        <applicationService
-                overrides="true"
-                serviceInterface="org.jetbrains.android.uipreview.AndroidEditorSettings"
-                serviceImplementation="org.jetbrains.kotlin.android.dslpreview.DslAndroidEditorSettings"/>
 
         <intentionAction>
             <className>org.jetbrains.anko.idea.intentions.ToastMakeTextShowIntention</className>
@@ -63,9 +37,13 @@
         </intentionAction>
     </extensions>
 
+    <extensions defaultExtensionNs="org.jetbrains.android.uipreview">
+        <viewLoaderExtension implementation="org.jetbrains.kotlin.android.dslpreview.AnkoViewLoaderExtension"/>
+    </extensions>
+
     <project-components>
         <component>
-            <implementation-class>org.jetbrains.kotlin.android.dslpreview.DslPreviewToolWindowManager
+            <implementation-class>org.jetbrains.kotlin.android.dslpreview.AnkoNlPreviewManager
             </implementation-class>
             <skipForDefaultProject/>
             <headless-implementation-class/>

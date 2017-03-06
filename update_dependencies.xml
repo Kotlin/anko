@@ -15,7 +15,7 @@
         <get src="http://search.maven.org/remotecontent?filepath=org/json/json/20080701/json-20080701.jar"
              dest="dependencies/json-20080701.jar" usetimestamp="true"/>
 
-        <get src="https://plugins.jetbrains.com/files/6954/28547/kotlin-plugin-1.0.4-release-IJ2016.1-112.zip"
+        <get src="https://plugins.jetbrains.com/files/6954/32984/kotlin-plugin-1.1.0-release-Studio2.3-1.zip"
              dest="dependencies/kotlin-plugin.zip" usetimestamp="true"/>
 
 	<get src="http://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar"

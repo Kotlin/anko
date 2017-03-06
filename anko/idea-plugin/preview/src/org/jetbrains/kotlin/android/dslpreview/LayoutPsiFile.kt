@@ -35,6 +35,7 @@ import com.intellij.psi.search.SearchScope
 import com.intellij.psi.xml.XmlDocument
 import com.intellij.psi.xml.XmlFile
 import com.intellij.psi.xml.XmlTag
+import com.intellij.testFramework.LightVirtualFile
 import com.intellij.util.IncorrectOperationException
 import org.jetbrains.annotations.NonNls
 
@@ -46,9 +47,17 @@ import javax.swing.*
  */
 class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
     private val myPsiDirectory: PsiDirectory
+    private val myVirtualFile: VirtualFile
 
     init {
         myPsiDirectory = LayoutPsiDirectory()
+        myVirtualFile = object : LightVirtualFile(myPsiFile.name, myPsiFile.text) {
+            private val myParent = object : LightVirtualFile("layout") {
+                override fun isDirectory() = true
+            }
+
+            override fun getParent() = myParent
+        }
     }
 
     override fun getParent(): PsiDirectory? {
@@ -64,7 +73,7 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
     }
 
     override fun getVirtualFile(): VirtualFile? {
-        return myPsiFile.virtualFile
+        return myVirtualFile
     }
 
     override fun getContainingDirectory(): PsiDirectory? {
