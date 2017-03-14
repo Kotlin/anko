@@ -5,7 +5,7 @@ mainClassName = "org.jetbrains.android.anko.Main"
 
 run {
     // Replace "verify" with "generate" to update generated files
-    args = ["versions", "generate",
+    args = ["versions", "verify",
             "--artifacts=anko/props/artifacts.json",
             "--outputDirectory=anko/library/generated",
             "--androidSdk=dependencies/android-sdk"]

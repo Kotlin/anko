@@ -52,6 +52,8 @@ interface AnkoConfiguration {
             "common" == artifactName -> COMMON
             "sqlite" == artifactName -> SQLITE
             "support-v4" == artifactName -> SUPPORT_V4
+            artifactName.endsWith("-listeners") -> SIMPLE_LISTENERS
+            artifactName.endsWith("-coroutines") -> COROUTINE_LISTENERS
             artifactName.matches("sdk\\d{2}".toRegex()) -> PLATFORM
             else -> TOOLKIT
         }

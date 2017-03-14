@@ -19,6 +19,7 @@ package org.jetbrains.anko
 
 import android.app.Fragment
 import android.content.Context
+import android.support.annotation.DimenRes
 import android.view.View
 
 const val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
@@ -45,7 +46,7 @@ fun Context.sp(value: Float): Int = (value * resources.displayMetrics.scaledDens
 fun Context.px2dip(px: Int): Float = px.toFloat() / resources.displayMetrics.density
 fun Context.px2sp(px: Int): Float = px.toFloat() / resources.displayMetrics.scaledDensity
 
-fun Context.dimen(resource: Int): Int = resources.getDimensionPixelSize(resource)
+fun Context.dimen(@DimenRes resource: Int): Int = resources.getDimensionPixelSize(resource)
 
 
 //the same for nested DSL components
@@ -55,7 +56,7 @@ inline fun AnkoContext<*>.sp(value: Int): Int = ctx.sp(value)
 inline fun AnkoContext<*>.sp(value: Float): Int = ctx.sp(value)
 inline fun AnkoContext<*>.px2dip(px: Int): Float = ctx.px2dip(px)
 inline fun AnkoContext<*>.px2sp(px: Int): Float = ctx.px2sp(px)
-inline fun AnkoContext<*>.dimen(resource: Int): Int = ctx.dimen(resource)
+inline fun AnkoContext<*>.dimen(@DimenRes resource: Int): Int = ctx.dimen(resource)
 
 //the same for the views
 inline fun View.dip(value: Int): Int = context.dip(value)
@@ -64,7 +65,7 @@ inline fun View.sp(value: Int): Int = context.sp(value)
 inline fun View.sp(value: Float): Int = context.sp(value)
 inline fun View.px2dip(px: Int): Float = context.px2dip(px)
 inline fun View.px2sp(px: Int): Float = context.px2sp(px)
-inline fun View.dimen(resource: Int): Int = context.dimen(resource)
+inline fun View.dimen(@DimenRes resource: Int): Int = context.dimen(resource)
 
 //the same for Fragments
 inline fun Fragment.dip(value: Int): Int = activity.dip(value)
@@ -73,4 +74,4 @@ inline fun Fragment.sp(value: Int): Int = activity.sp(value)
 inline fun Fragment.sp(value: Float): Int = activity.sp(value)
 inline fun Fragment.px2dip(px: Int): Float = activity.px2dip(px)
 inline fun Fragment.px2sp(px: Int): Float = activity.px2sp(px)
-inline fun Fragment.dimen(resource: Int): Int = activity.dimen(resource)
+inline fun Fragment.dimen(@DimenRes resource: Int): Int = activity.dimen(resource)

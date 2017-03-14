@@ -17,6 +17,7 @@
 @file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko
 
+import android.support.annotation.IdRes
 import android.view.View
 import android.widget.RelativeLayout.*
 
@@ -76,63 +77,63 @@ inline fun LayoutParams.sameBottom(view: View): Unit = addRule(ALIGN_BOTTOM, vie
  * Place the current View above the View with a given [id].
  * It is an alias for [above].
  */
-inline fun LayoutParams.topOf(id: Int): Unit = addRule(ABOVE, id)
+inline fun LayoutParams.topOf(@IdRes id: Int): Unit = addRule(ABOVE, id)
 
 /**
  * Place the current View above the View with a given [id].
  */
-inline fun LayoutParams.above(id: Int): Unit = addRule(ABOVE, id)
+inline fun LayoutParams.above(@IdRes id: Int): Unit = addRule(ABOVE, id)
 
 /**
  * Place the current View below the View with a given [id].
  */
-inline fun LayoutParams.below(id: Int): Unit = addRule(BELOW, id)
+inline fun LayoutParams.below(@IdRes id: Int): Unit = addRule(BELOW, id)
 
 /**
  * Place the current View below the View with a given [id].
  * It is an alias for [below].
  */
-inline fun LayoutParams.bottomOf(id: Int): Unit = addRule(BELOW, id)
+inline fun LayoutParams.bottomOf(@IdRes id: Int): Unit = addRule(BELOW, id)
 
 /**
  * Place the current View to the left of the View with a given [id].
  */
-inline fun LayoutParams.leftOf(id: Int): Unit = addRule(LEFT_OF, id)
+inline fun LayoutParams.leftOf(@IdRes id: Int): Unit = addRule(LEFT_OF, id)
 
 /**
  * Place the current View to the left of the View with a given [id].
  */
-inline fun LayoutParams.rightOf(id: Int): Unit = addRule(RIGHT_OF, id)
+inline fun LayoutParams.rightOf(@IdRes id: Int): Unit = addRule(RIGHT_OF, id)
 
 /**
  * Set the current View left attribute the same as for View with a given [id].
  */
-inline fun LayoutParams.sameLeft(id: Int): Unit = addRule(ALIGN_LEFT, id)
+inline fun LayoutParams.sameLeft(@IdRes id: Int): Unit = addRule(ALIGN_LEFT, id)
 
 /**
  * Set the current View top attribute the same as for View with a given [id].
  */
-inline fun LayoutParams.sameTop(id: Int): Unit = addRule(ALIGN_TOP, id)
+inline fun LayoutParams.sameTop(@IdRes id: Int): Unit = addRule(ALIGN_TOP, id)
 
 /**
  * Set the current View right attribute the same as for View with a given [id].
  */
-inline fun LayoutParams.sameRight(id: Int): Unit = addRule(ALIGN_RIGHT, id)
+inline fun LayoutParams.sameRight(@IdRes id: Int): Unit = addRule(ALIGN_RIGHT, id)
 
 /**
  * Set the current View bottom attribute the same as for View with a given [id].
  */
-inline fun LayoutParams.sameBottom(id: Int): Unit = addRule(ALIGN_BOTTOM, id)
+inline fun LayoutParams.sameBottom(@IdRes id: Int): Unit = addRule(ALIGN_BOTTOM, id)
 
 /**
  * Align the current View's start edge with another child's start edge.
  */
-inline fun LayoutParams.alignStart(id: Int): Unit = addRule(18, id) // ALIGN_END
+inline fun LayoutParams.alignStart(@IdRes id: Int): Unit = addRule(18, id) // ALIGN_END
 
 /**
  * Align the current View's end edge with another child's end edge.
  */
-inline fun LayoutParams.alignEnd(id: Int): Unit = addRule(19, id) // ALIGN_END
+inline fun LayoutParams.alignEnd(@IdRes id: Int): Unit = addRule(19, id) // ALIGN_END
 
 /**
  * Align the current View's top edge with its parent's top edge.
@@ -187,4 +188,4 @@ inline fun LayoutParams.baselineOf(view: View): Unit = addRule(ALIGN_BASELINE, v
 /**
  * Positions the baseline of this view on the baseline of the anchor View with a given [id].
  */
-inline fun LayoutParams.baselineOf(id: Int): Unit = addRule(ALIGN_BASELINE, id)
+inline fun LayoutParams.baselineOf(@IdRes id: Int): Unit = addRule(ALIGN_BASELINE, id)

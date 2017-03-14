@@ -21,7 +21,15 @@
       "platform": [ "%platforms%/android-15/android.jar" ]
     },
     {
+      "name": "sdk15-listeners",
+      "platform": [ "%platforms%/android-15/android.jar" ]
+    },
+    {
       "name": "sdk19",
+      "platform": [ "%platforms%/android-19/android.jar" ]
+    },
+    {
+      "name": "sdk19-listeners",
       "platform": [ "%platforms%/android-19/android.jar" ]
     },
     {
@@ -29,11 +37,23 @@
       "platform": [ "%platforms%/android-21/android.jar" ]
     },
     {
+      "name": "sdk21-listeners",
+      "platform": [ "%platforms%/android-21/android.jar" ]
+    },
+    {
       "name": "sdk23",
       "platform": [ "%platforms%/android-23/android.jar" ]
     },
     {
+      "name": "sdk23-listeners",
+      "platform": [ "%platforms%/android-23/android.jar" ]
+    },
+    {
       "name": "sdk25",
+      "platform": [ "%platforms%/android-25/android.jar" ]
+    },
+    {
+      "name": "sdk25-listeners",
       "platform": [ "%platforms%/android-25/android.jar" ]
     },
     {
@@ -62,12 +82,30 @@
       "target": [ "%support%/appcompat-v7/%supportVer%/appcompat-v7-%supportVer%.aar" ]
     },
     {
+      "name": "appcompat-v7-listeners",
+      "platform": [
+        "%platforms%/android-25/android.jar",
+        "%support%/support-v4/%supportVer%/support-v4-%supportVer%.aar",
+        "%support%/support-compat/%supportVer%/support-compat-%supportVer%.aar",
+        "%support%/support-media-compat/%supportVer%/support-media-compat-%supportVer%.aar",
+        "%support%/support-core-ui/%supportVer%/support-core-ui-%supportVer%.aar",
+        "%support%/support-core-utils/%supportVer%/support-core-utils-%supportVer%.aar",
+        "%support%/support-fragment/%supportVer%/support-fragment-%supportVer%.aar"
+      ],
+      "target": [ "%support%/appcompat-v7/%supportVer%/appcompat-v7-%supportVer%.aar" ]
+    },
+    {
       "name": "cardview-v7",
       "platform": [ "%platforms%/android-25/android.jar" ],
       "target": [ "%support%/cardview-v7/%supportVer%/cardview-v7-%supportVer%.aar" ]
     },
     {
       "name": "design",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [ "%support%/design/%supportVer%/design-%supportVer%.aar" ]
+    },
+    {
+      "name": "design-listeners",
       "platform": [ "%platforms%/android-25/android.jar" ],
       "target": [ "%support%/design/%supportVer%/design-%supportVer%.aar" ]
     },
@@ -83,6 +121,11 @@
     },
     {
       "name": "recyclerview-v7",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [ "%support%/recyclerview-v7/%supportVer%/recyclerview-v7-%supportVer%.aar" ]
+    },
+    {
+      "name": "recyclerview-v7-listeners",
       "platform": [ "%platforms%/android-25/android.jar" ],
       "target": [ "%support%/recyclerview-v7/%supportVer%/recyclerview-v7-%supportVer%.aar" ]
     }

@@ -26,6 +26,7 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.os.Parcelable
 import android.preference.PreferenceManager
+import android.support.annotation.IdRes
 import android.view.View
 import android.view.ViewGroup
 import java.io.Serializable
@@ -63,13 +64,13 @@ inline val Activity.act: Activity
 inline val Activity.contentView: View?
     get() = findOptional<ViewGroup>(android.R.id.content)?.getChildAt(0)
 
-inline fun <reified T : View> View.find(id: Int): T = findViewById(id) as T
-inline fun <reified T : View> Activity.find(id: Int): T = findViewById(id) as T
-inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
+inline fun <reified T : View> View.find(@IdRes id: Int): T = findViewById(id) as T
+inline fun <reified T : View> Activity.find(@IdRes id: Int): T = findViewById(id) as T
+inline fun <reified T : View> Fragment.find(@IdRes id: Int): T = view?.findViewById(id) as T
 
-inline fun <reified T : View> View.findOptional(id: Int): T? = findViewById(id) as? T
-inline fun <reified T : View> Activity.findOptional(id: Int): T? = findViewById(id) as? T
-inline fun <reified T : View> Fragment.findOptional(id: Int): T? = view?.findViewById(id) as? T
+inline fun <reified T : View> View.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
+inline fun <reified T : View> Activity.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
+inline fun <reified T : View> Fragment.findOptional(@IdRes id: Int): T? = view?.findViewById(id) as? T
 
 inline fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
     arguments = bundleOf(*params)

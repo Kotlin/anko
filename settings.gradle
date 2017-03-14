@@ -13,18 +13,26 @@ include ':static:appcompatV7'
 
 include ':generated'
 include ':generated:anko-appcompat-v7'
+include ':generated:anko-appcompat-v7-listeners'
 include ':generated:anko-appcompat-v7-common'
 include ':generated:anko-cardview-v7'
 include ':generated:anko-common'
 include ':generated:anko-design'
+include ':generated:anko-design-listeners'
 include ':generated:anko-gridlayout-v7'
 include ':generated:anko-percent'
 include ':generated:anko-recyclerview-v7'
+include ':generated:anko-recyclerview-v7-listeners'
 include ':generated:anko-sdk15'
+include ':generated:anko-sdk15-listeners'
 include ':generated:anko-sdk19'
+include ':generated:anko-sdk19-listeners'
 include ':generated:anko-sdk21'
+include ':generated:anko-sdk21-listeners'
 include ':generated:anko-sdk23'
+include ':generated:anko-sdk23-listeners'
 include ':generated:anko-sdk25'
+include ':generated:anko-sdk25-listeners'
 include ':generated:anko-sqlite'
 include ':generated:anko-support-v4'
 include ':generated:anko-support-v4-common'
@@ -52,18 +60,26 @@ project(':static:appcompatV7').projectDir = new File(rootDir, 'anko/library/stat
 
 project(':generated').projectDir = new File(rootDir, 'anko/library/generated')
 project(':generated:anko-appcompat-v7').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7')
+project(':generated:anko-appcompat-v7-listeners').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7-listeners')
 project(':generated:anko-appcompat-v7-common').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7-common')
 project(':generated:anko-cardview-v7').projectDir = new File(rootDir, 'anko/library/generated/cardview-v7')
 project(':generated:anko-common').projectDir = new File(rootDir, 'anko/library/generated/common')
 project(':generated:anko-design').projectDir = new File(rootDir, 'anko/library/generated/design')
+project(':generated:anko-design-listeners').projectDir = new File(rootDir, 'anko/library/generated/design-listeners')
 project(':generated:anko-gridlayout-v7').projectDir = new File(rootDir, 'anko/library/generated/gridlayout-v7')
 project(':generated:anko-percent').projectDir = new File(rootDir, 'anko/library/generated/percent')
 project(':generated:anko-recyclerview-v7').projectDir = new File(rootDir, 'anko/library/generated/recyclerview-v7')
+project(':generated:anko-recyclerview-v7-listeners').projectDir = new File(rootDir, 'anko/library/generated/recyclerview-v7-listeners')
 project(':generated:anko-sdk15').projectDir = new File(rootDir, 'anko/library/generated/sdk15')
+project(':generated:anko-sdk15-listeners').projectDir = new File(rootDir, 'anko/library/generated/sdk15-listeners')
 project(':generated:anko-sdk19').projectDir = new File(rootDir, 'anko/library/generated/sdk19')
+project(':generated:anko-sdk19-listeners').projectDir = new File(rootDir, 'anko/library/generated/sdk19-listeners')
 project(':generated:anko-sdk21').projectDir = new File(rootDir, 'anko/library/generated/sdk21')
+project(':generated:anko-sdk21-listeners').projectDir = new File(rootDir, 'anko/library/generated/sdk21-listeners')
 project(':generated:anko-sdk23').projectDir = new File(rootDir, 'anko/library/generated/sdk23')
+project(':generated:anko-sdk23-listeners').projectDir = new File(rootDir, 'anko/library/generated/sdk23-listeners')
 project(':generated:anko-sdk25').projectDir = new File(rootDir, 'anko/library/generated/sdk25')
+project(':generated:anko-sdk25-listeners').projectDir = new File(rootDir, 'anko/library/generated/sdk25-listeners')
 project(':generated:anko-sqlite').projectDir = new File(rootDir, 'anko/library/generated/sqlite')
 project(':generated:anko-support-v4').projectDir = new File(rootDir, 'anko/library/generated/support-v4')
 project(':generated:anko-support-v4-common').projectDir = new File(rootDir, 'anko/library/generated/support-v4-common')

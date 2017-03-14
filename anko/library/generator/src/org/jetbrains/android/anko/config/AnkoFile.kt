@@ -25,7 +25,7 @@ enum class AnkoFile(
         override val defaultValue: Boolean = true
 ) : ConfigurationKey<Boolean> {
     LAYOUTS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
-    LISTENERS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
+    LISTENERS(setOf(SIMPLE_LISTENERS)),
     PROPERTIES(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     SERVICES(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     SQL_PARSER_HELPERS(setOf(SQLITE)),
