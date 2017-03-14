@@ -8,13 +8,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 
-private val defaultInit: Any.() -> Unit = {}
-
 open class _GridLayout(ctx: Context): GridLayout(ctx) {
-    fun <T: View> T.lparams(
+
+    inline fun <T: View> T.lparams(
             rowSpec: GridLayout.Spec?,
             columnSpec: GridLayout.Spec?,
-            init: GridLayout.LayoutParams.() -> Unit = defaultInit
+            init: GridLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = GridLayout.LayoutParams(rowSpec!!, columnSpec!!)
         layoutParams.init()
@@ -22,8 +21,17 @@ open class _GridLayout(ctx: Context): GridLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
-            init: GridLayout.LayoutParams.() -> Unit = defaultInit
+    inline fun <T: View> T.lparams(
+            rowSpec: GridLayout.Spec?,
+            columnSpec: GridLayout.Spec?
+    ): T {
+        val layoutParams = GridLayout.LayoutParams(rowSpec!!, columnSpec!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
+            init: GridLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = GridLayout.LayoutParams()
         layoutParams.init()
@@ -31,9 +39,17 @@ open class _GridLayout(ctx: Context): GridLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            
+    ): T {
+        val layoutParams = GridLayout.LayoutParams()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             params: ViewGroup.LayoutParams?,
-            init: GridLayout.LayoutParams.() -> Unit = defaultInit
+            init: GridLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = GridLayout.LayoutParams(params!!)
         layoutParams.init()
@@ -41,9 +57,17 @@ open class _GridLayout(ctx: Context): GridLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            params: ViewGroup.LayoutParams?
+    ): T {
+        val layoutParams = GridLayout.LayoutParams(params!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             params: ViewGroup.MarginLayoutParams?,
-            init: GridLayout.LayoutParams.() -> Unit = defaultInit
+            init: GridLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = GridLayout.LayoutParams(params!!)
         layoutParams.init()
@@ -51,9 +75,17 @@ open class _GridLayout(ctx: Context): GridLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            params: ViewGroup.MarginLayoutParams?
+    ): T {
+        val layoutParams = GridLayout.LayoutParams(params!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: GridLayout.LayoutParams?,
-            init: GridLayout.LayoutParams.() -> Unit = defaultInit
+            init: GridLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = GridLayout.LayoutParams(source!!)
         layoutParams.init()
@@ -61,13 +93,30 @@ open class _GridLayout(ctx: Context): GridLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            source: GridLayout.LayoutParams?
+    ): T {
+        val layoutParams = GridLayout.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             context: Context?,
             attrs: AttributeSet?,
-            init: GridLayout.LayoutParams.() -> Unit = defaultInit
+            init: GridLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = GridLayout.LayoutParams(context!!, attrs!!)
         layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
+            context: Context?,
+            attrs: AttributeSet?
+    ): T {
+        val layoutParams = GridLayout.LayoutParams(context!!, attrs!!)
         this@lparams.layoutParams = layoutParams
         return this
     }

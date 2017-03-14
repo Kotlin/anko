@@ -33,7 +33,6 @@ class LayoutRenderer(context: AnkoBuilderContext) : Renderer(context), ViewConst
     override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.LAYOUTS)
 
     override fun processElements(state: GenerationState) = generatedFile { importList ->
-        append("private val defaultInit: Any.() -> Unit = {}").appendln().appendln()
         state[LayoutGenerator::class.java].forEach { append(renderLayout(it, importList)) }
     }
 
@@ -44,9 +43,7 @@ class LayoutRenderer(context: AnkoBuilderContext) : Renderer(context), ViewConst
 
         val layoutParamsClass = node.layoutParams.fqName
 
-        return render("layout") {
-            "fq" % Mustache.Lambda { frag, out -> out.write(importList[frag.execute()]) }
-
+        return render("layout", importList) {
             "layoutName" % "_${node.layout.simpleName}"
             "layoutConstructorArgs" % renderConstructorArgs(node.layout, constructors, "ctx", argumentNames = true)
 

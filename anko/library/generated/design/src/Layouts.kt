@@ -17,13 +17,12 @@ import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.TabLayout
 import android.support.design.widget.TextInputLayout
 
-private val defaultInit: Any.() -> Unit = {}
-
 open class _BottomNavigationItemView(ctx: Context): BottomNavigationItemView(ctx) {
-    fun <T: View> T.lparams(
+
+    inline fun <T: View> T.lparams(
             c: Context?,
             attrs: AttributeSet?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
@@ -31,10 +30,19 @@ open class _BottomNavigationItemView(ctx: Context): BottomNavigationItemView(ctx
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            c: Context?,
+            attrs: AttributeSet?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(c!!, attrs!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(width, height)
         layoutParams.init()
@@ -42,11 +50,20 @@ open class _BottomNavigationItemView(ctx: Context): BottomNavigationItemView(ctx
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(width, height)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(width, height, gravity)
         layoutParams.init()
@@ -54,9 +71,19 @@ open class _BottomNavigationItemView(ctx: Context): BottomNavigationItemView(ctx
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            gravity: Int
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(width, height, gravity)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: ViewGroup.LayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
         layoutParams.init()
@@ -64,9 +91,17 @@ open class _BottomNavigationItemView(ctx: Context): BottomNavigationItemView(ctx
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            source: ViewGroup.LayoutParams?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: ViewGroup.MarginLayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
         layoutParams.init()
@@ -74,12 +109,28 @@ open class _BottomNavigationItemView(ctx: Context): BottomNavigationItemView(ctx
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            source: ViewGroup.MarginLayoutParams?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: FrameLayout.LayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
         layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
+            source: FrameLayout.LayoutParams?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(source!!)
         this@lparams.layoutParams = layoutParams
         return this
     }
@@ -87,10 +138,11 @@ open class _BottomNavigationItemView(ctx: Context): BottomNavigationItemView(ctx
 }
 
 open class _BottomNavigationMenuView(ctx: Context): BottomNavigationMenuView(ctx) {
-    fun <T: View> T.lparams(
+
+    inline fun <T: View> T.lparams(
             c: Context?,
             attrs: AttributeSet?,
-            init: ViewGroup.LayoutParams.() -> Unit = defaultInit
+            init: ViewGroup.LayoutParams.() -> Unit
     ): T {
         val layoutParams = ViewGroup.LayoutParams(c!!, attrs!!)
         layoutParams.init()
@@ -98,10 +150,19 @@ open class _BottomNavigationMenuView(ctx: Context): BottomNavigationMenuView(ctx
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            c: Context?,
+            attrs: AttributeSet?
+    ): T {
+        val layoutParams = ViewGroup.LayoutParams(c!!, attrs!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: ViewGroup.LayoutParams.() -> Unit = defaultInit
+            init: ViewGroup.LayoutParams.() -> Unit
     ): T {
         val layoutParams = ViewGroup.LayoutParams(width, height)
         layoutParams.init()
@@ -109,9 +170,18 @@ open class _BottomNavigationMenuView(ctx: Context): BottomNavigationMenuView(ctx
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+    ): T {
+        val layoutParams = ViewGroup.LayoutParams(width, height)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: ViewGroup.LayoutParams?,
-            init: ViewGroup.LayoutParams.() -> Unit = defaultInit
+            init: ViewGroup.LayoutParams.() -> Unit
     ): T {
         val layoutParams = ViewGroup.LayoutParams(source!!)
         layoutParams.init()
@@ -119,13 +189,22 @@ open class _BottomNavigationMenuView(ctx: Context): BottomNavigationMenuView(ctx
         return this
     }
 
+    inline fun <T: View> T.lparams(
+            source: ViewGroup.LayoutParams?
+    ): T {
+        val layoutParams = ViewGroup.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
 }
 
 open class _AppBarLayout(ctx: Context): AppBarLayout(ctx) {
-    fun <T: View> T.lparams(
+
+    inline fun <T: View> T.lparams(
             c: Context?,
             attrs: AttributeSet?,
-            init: AppBarLayout.LayoutParams.() -> Unit = defaultInit
+            init: AppBarLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = AppBarLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
@@ -133,10 +212,19 @@ open class _AppBarLayout(ctx: Context): AppBarLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            c: Context?,
+            attrs: AttributeSet?
+    ): T {
+        val layoutParams = AppBarLayout.LayoutParams(c!!, attrs!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: AppBarLayout.LayoutParams.() -> Unit = defaultInit
+            init: AppBarLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = AppBarLayout.LayoutParams(width, height)
         layoutParams.init()
@@ -144,11 +232,20 @@ open class _AppBarLayout(ctx: Context): AppBarLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+    ): T {
+        val layoutParams = AppBarLayout.LayoutParams(width, height)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             weight: Float,
-            init: AppBarLayout.LayoutParams.() -> Unit = defaultInit
+            init: AppBarLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = AppBarLayout.LayoutParams(width, height, weight)
         layoutParams.init()
@@ -156,9 +253,19 @@ open class _AppBarLayout(ctx: Context): AppBarLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            weight: Float
+    ): T {
+        val layoutParams = AppBarLayout.LayoutParams(width, height, weight)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             p: ViewGroup.LayoutParams?,
-            init: AppBarLayout.LayoutParams.() -> Unit = defaultInit
+            init: AppBarLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = AppBarLayout.LayoutParams(p!!)
         layoutParams.init()
@@ -166,9 +273,17 @@ open class _AppBarLayout(ctx: Context): AppBarLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            p: ViewGroup.LayoutParams?
+    ): T {
+        val layoutParams = AppBarLayout.LayoutParams(p!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: ViewGroup.MarginLayoutParams?,
-            init: AppBarLayout.LayoutParams.() -> Unit = defaultInit
+            init: AppBarLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = AppBarLayout.LayoutParams(source!!)
         layoutParams.init()
@@ -176,9 +291,17 @@ open class _AppBarLayout(ctx: Context): AppBarLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            source: ViewGroup.MarginLayoutParams?
+    ): T {
+        val layoutParams = AppBarLayout.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: LinearLayout.LayoutParams?,
-            init: AppBarLayout.LayoutParams.() -> Unit = defaultInit
+            init: AppBarLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = AppBarLayout.LayoutParams(source!!)
         layoutParams.init()
@@ -186,12 +309,28 @@ open class _AppBarLayout(ctx: Context): AppBarLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            source: LinearLayout.LayoutParams?
+    ): T {
+        val layoutParams = AppBarLayout.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: AppBarLayout.LayoutParams?,
-            init: AppBarLayout.LayoutParams.() -> Unit = defaultInit
+            init: AppBarLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = AppBarLayout.LayoutParams(source!!)
         layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
+            source: AppBarLayout.LayoutParams?
+    ): T {
+        val layoutParams = AppBarLayout.LayoutParams(source!!)
         this@lparams.layoutParams = layoutParams
         return this
     }
@@ -199,10 +338,11 @@ open class _AppBarLayout(ctx: Context): AppBarLayout(ctx) {
 }
 
 open class _BottomNavigationView(ctx: Context): BottomNavigationView(ctx) {
-    fun <T: View> T.lparams(
+
+    inline fun <T: View> T.lparams(
             c: Context?,
             attrs: AttributeSet?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
@@ -210,10 +350,19 @@ open class _BottomNavigationView(ctx: Context): BottomNavigationView(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            c: Context?,
+            attrs: AttributeSet?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(c!!, attrs!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(width, height)
         layoutParams.init()
@@ -221,11 +370,20 @@ open class _BottomNavigationView(ctx: Context): BottomNavigationView(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(width, height)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(width, height, gravity)
         layoutParams.init()
@@ -233,9 +391,19 @@ open class _BottomNavigationView(ctx: Context): BottomNavigationView(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            gravity: Int
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(width, height, gravity)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: ViewGroup.LayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
         layoutParams.init()
@@ -243,9 +411,17 @@ open class _BottomNavigationView(ctx: Context): BottomNavigationView(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            source: ViewGroup.LayoutParams?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: ViewGroup.MarginLayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
         layoutParams.init()
@@ -253,12 +429,28 @@ open class _BottomNavigationView(ctx: Context): BottomNavigationView(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            source: ViewGroup.MarginLayoutParams?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: FrameLayout.LayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
         layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
+            source: FrameLayout.LayoutParams?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(source!!)
         this@lparams.layoutParams = layoutParams
         return this
     }
@@ -266,10 +458,11 @@ open class _BottomNavigationView(ctx: Context): BottomNavigationView(ctx) {
 }
 
 open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) {
-    fun <T: View> T.lparams(
+
+    inline fun <T: View> T.lparams(
             c: Context?,
             attrs: AttributeSet?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
@@ -277,10 +470,19 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            c: Context?,
+            attrs: AttributeSet?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(c!!, attrs!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(width, height)
         layoutParams.init()
@@ -288,11 +490,20 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(width, height)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(width, height, gravity)
         layoutParams.init()
@@ -300,9 +511,19 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            gravity: Int
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(width, height, gravity)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: ViewGroup.LayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
         layoutParams.init()
@@ -310,9 +531,17 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            source: ViewGroup.LayoutParams?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: ViewGroup.MarginLayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
         layoutParams.init()
@@ -320,12 +549,28 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            source: ViewGroup.MarginLayoutParams?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: FrameLayout.LayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
         layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
+            source: FrameLayout.LayoutParams?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(source!!)
         this@lparams.layoutParams = layoutParams
         return this
     }
@@ -333,10 +578,11 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
 }
 
 open class _CoordinatorLayout(ctx: Context): CoordinatorLayout(ctx) {
-    fun <T: View> T.lparams(
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: CoordinatorLayout.LayoutParams.() -> Unit = defaultInit
+            init: CoordinatorLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = CoordinatorLayout.LayoutParams(width, height)
         layoutParams.init()
@@ -344,9 +590,18 @@ open class _CoordinatorLayout(ctx: Context): CoordinatorLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+    ): T {
+        val layoutParams = CoordinatorLayout.LayoutParams(width, height)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             p: CoordinatorLayout.LayoutParams?,
-            init: CoordinatorLayout.LayoutParams.() -> Unit = defaultInit
+            init: CoordinatorLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = CoordinatorLayout.LayoutParams(p!!)
         layoutParams.init()
@@ -354,9 +609,17 @@ open class _CoordinatorLayout(ctx: Context): CoordinatorLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            p: CoordinatorLayout.LayoutParams?
+    ): T {
+        val layoutParams = CoordinatorLayout.LayoutParams(p!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             p: ViewGroup.MarginLayoutParams?,
-            init: CoordinatorLayout.LayoutParams.() -> Unit = defaultInit
+            init: CoordinatorLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = CoordinatorLayout.LayoutParams(p!!)
         layoutParams.init()
@@ -364,12 +627,28 @@ open class _CoordinatorLayout(ctx: Context): CoordinatorLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            p: ViewGroup.MarginLayoutParams?
+    ): T {
+        val layoutParams = CoordinatorLayout.LayoutParams(p!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             p: ViewGroup.LayoutParams?,
-            init: CoordinatorLayout.LayoutParams.() -> Unit = defaultInit
+            init: CoordinatorLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = CoordinatorLayout.LayoutParams(p!!)
         layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
+            p: ViewGroup.LayoutParams?
+    ): T {
+        val layoutParams = CoordinatorLayout.LayoutParams(p!!)
         this@lparams.layoutParams = layoutParams
         return this
     }
@@ -377,10 +656,11 @@ open class _CoordinatorLayout(ctx: Context): CoordinatorLayout(ctx) {
 }
 
 open class _TabLayout(ctx: Context): TabLayout(ctx) {
-    fun <T: View> T.lparams(
+
+    inline fun <T: View> T.lparams(
             c: Context?,
             attrs: AttributeSet?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
@@ -388,10 +668,19 @@ open class _TabLayout(ctx: Context): TabLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            c: Context?,
+            attrs: AttributeSet?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(c!!, attrs!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(width, height)
         layoutParams.init()
@@ -399,11 +688,20 @@ open class _TabLayout(ctx: Context): TabLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(width, height)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(width, height, gravity)
         layoutParams.init()
@@ -411,9 +709,19 @@ open class _TabLayout(ctx: Context): TabLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            gravity: Int
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(width, height, gravity)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: ViewGroup.LayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
         layoutParams.init()
@@ -421,9 +729,17 @@ open class _TabLayout(ctx: Context): TabLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            source: ViewGroup.LayoutParams?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: ViewGroup.MarginLayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
         layoutParams.init()
@@ -431,12 +747,28 @@ open class _TabLayout(ctx: Context): TabLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            source: ViewGroup.MarginLayoutParams?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: FrameLayout.LayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit = defaultInit
+            init: FrameLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
         layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
+            source: FrameLayout.LayoutParams?
+    ): T {
+        val layoutParams = FrameLayout.LayoutParams(source!!)
         this@lparams.layoutParams = layoutParams
         return this
     }
@@ -444,10 +776,11 @@ open class _TabLayout(ctx: Context): TabLayout(ctx) {
 }
 
 open class _TextInputLayout(ctx: Context): TextInputLayout(ctx) {
-    fun <T: View> T.lparams(
+
+    inline fun <T: View> T.lparams(
             c: Context?,
             attrs: AttributeSet?,
-            init: LinearLayout.LayoutParams.() -> Unit = defaultInit
+            init: LinearLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = LinearLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
@@ -455,10 +788,19 @@ open class _TextInputLayout(ctx: Context): TextInputLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            c: Context?,
+            attrs: AttributeSet?
+    ): T {
+        val layoutParams = LinearLayout.LayoutParams(c!!, attrs!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: LinearLayout.LayoutParams.() -> Unit = defaultInit
+            init: LinearLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = LinearLayout.LayoutParams(width, height)
         layoutParams.init()
@@ -466,11 +808,20 @@ open class _TextInputLayout(ctx: Context): TextInputLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+    ): T {
+        val layoutParams = LinearLayout.LayoutParams(width, height)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             weight: Float,
-            init: LinearLayout.LayoutParams.() -> Unit = defaultInit
+            init: LinearLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = LinearLayout.LayoutParams(width, height, weight)
         layoutParams.init()
@@ -478,9 +829,19 @@ open class _TextInputLayout(ctx: Context): TextInputLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+            weight: Float
+    ): T {
+        val layoutParams = LinearLayout.LayoutParams(width, height, weight)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             p: ViewGroup.LayoutParams?,
-            init: LinearLayout.LayoutParams.() -> Unit = defaultInit
+            init: LinearLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = LinearLayout.LayoutParams(p!!)
         layoutParams.init()
@@ -488,9 +849,17 @@ open class _TextInputLayout(ctx: Context): TextInputLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            p: ViewGroup.LayoutParams?
+    ): T {
+        val layoutParams = LinearLayout.LayoutParams(p!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: ViewGroup.MarginLayoutParams?,
-            init: LinearLayout.LayoutParams.() -> Unit = defaultInit
+            init: LinearLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = LinearLayout.LayoutParams(source!!)
         layoutParams.init()
@@ -498,12 +867,28 @@ open class _TextInputLayout(ctx: Context): TextInputLayout(ctx) {
         return this
     }
 
-    fun <T: View> T.lparams(
+    inline fun <T: View> T.lparams(
+            source: ViewGroup.MarginLayoutParams?
+    ): T {
+        val layoutParams = LinearLayout.LayoutParams(source!!)
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
             source: LinearLayout.LayoutParams?,
-            init: LinearLayout.LayoutParams.() -> Unit = defaultInit
+            init: LinearLayout.LayoutParams.() -> Unit
     ): T {
         val layoutParams = LinearLayout.LayoutParams(source!!)
         layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: View> T.lparams(
+            source: LinearLayout.LayoutParams?
+    ): T {
+        val layoutParams = LinearLayout.LayoutParams(source!!)
         this@lparams.layoutParams = layoutParams
         return this
     }
