@@ -1,3 +1,6 @@
+/**
+ * Created by yan on 15/03/2017.
+ */
 /*
  * Copyright 2016 JetBrains s.r.o.
  *
@@ -16,19 +19,11 @@
 
 package org.jetbrains.anko.coroutines.experimental
 
-import java.lang.ref.WeakReference
-import java.util.concurrent.CancellationException
-import kotlin.coroutines.experimental.intrinsics.suspendCoroutineOrReturn
+import kotlinx.coroutines.experimental.*
 
-class Ref<out T : Any> internal constructor(obj: T) {
-    private val weakRef = WeakReference(obj)
+@PublishedApi
+internal var POOL = newFixedThreadPoolContext(2 * Runtime.getRuntime().availableProcessors(), "bg")
 
-    suspend operator fun invoke(): T {
-        return suspendCoroutineOrReturn {
-            val ref = weakRef.get() ?: throw CancellationException()
-            ref
-        }
-    }
+inline fun <T> bg(crossinline block: () -> T): Deferred<T> = async(POOL) {
+    block()
 }
-
-fun <T : Any> T.asReference() = Ref(this)
