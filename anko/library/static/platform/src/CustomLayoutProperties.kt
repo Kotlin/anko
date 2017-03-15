@@ -19,8 +19,8 @@ package org.jetbrains.anko
 
 import android.view.ViewGroup
 
-val matchParent: Int = android.view.ViewGroup.LayoutParams.MATCH_PARENT
-val wrapContent: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+const val matchParent: Int = android.view.ViewGroup.LayoutParams.MATCH_PARENT
+const val wrapContent: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 
 var ViewGroup.MarginLayoutParams.verticalMargin: Int
     get() = throw AnkoException("'ViewGroup.MarginLayoutParams.verticalMargin' property does not have a getter")
