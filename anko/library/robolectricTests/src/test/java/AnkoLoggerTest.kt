@@ -10,7 +10,7 @@ import org.robolectric.shadows.ShadowLog
 
 @RunWith(RobolectricGradleTestRunner::class)
 @Config(constants = BuildConfig::class) class AnkoLoggerTest {
-    private val log = AnkoLogger(this)
+    private val log = AnkoLogger<AnkoLoggerTest>()
 
     @Test
     fun test() {

@@ -15,10 +15,10 @@
  */
 
 @file:Suppress("unused", "NOTHING_TO_INLINE")
+@file:JvmName("Logging")
 package org.jetbrains.anko
 
 import android.util.Log
-import kotlin.reflect.KClass
 
 /**
  * Interface for the Anko logger.
@@ -51,10 +51,6 @@ fun AnkoLogger(tag: String): AnkoLogger = object : AnkoLogger {
 }
 
 inline fun <reified T: Any> AnkoLogger(): AnkoLogger = AnkoLogger(T::class.java)
-
-inline fun AnkoLogger(clazz: KClass<*>): AnkoLogger = AnkoLogger(clazz.java)
-
-inline fun AnkoLogger(obj: Any): AnkoLogger = AnkoLogger(obj.javaClass)
 
 /**
  * Send a log message with the [Log.VERBOSE] severity.
