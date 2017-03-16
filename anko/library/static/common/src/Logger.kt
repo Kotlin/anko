@@ -46,6 +46,10 @@ fun AnkoLogger(clazz: Class<*>): AnkoLogger = object : AnkoLogger {
     override val loggerTag = getTag(clazz)
 }
 
+fun AnkoLogger(tag: String): AnkoLogger = object : AnkoLogger {
+    override val loggerTag = tag
+}
+
 inline fun AnkoLogger(clazz: KClass<*>): AnkoLogger = AnkoLogger(clazz.java)
 
 inline fun AnkoLogger(obj: Any): AnkoLogger = AnkoLogger(obj.javaClass)
