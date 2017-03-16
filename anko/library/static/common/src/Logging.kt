@@ -47,6 +47,9 @@ fun AnkoLogger(clazz: Class<*>): AnkoLogger = object : AnkoLogger {
 }
 
 fun AnkoLogger(tag: String): AnkoLogger = object : AnkoLogger {
+    init {
+        assert(tag.length <= 23) { "The maximum tag length is 23, got $tag" }
+    }
     override val loggerTag = tag
 }
 
