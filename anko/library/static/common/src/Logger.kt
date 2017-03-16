@@ -50,6 +50,8 @@ fun AnkoLogger(tag: String): AnkoLogger = object : AnkoLogger {
     override val loggerTag = tag
 }
 
+inline fun <reified T: Any> AnkoLogger(): AnkoLogger = AnkoLogger(T::class.java)
+
 inline fun AnkoLogger(clazz: KClass<*>): AnkoLogger = AnkoLogger(clazz.java)
 
 inline fun AnkoLogger(obj: Any): AnkoLogger = AnkoLogger(obj.javaClass)
