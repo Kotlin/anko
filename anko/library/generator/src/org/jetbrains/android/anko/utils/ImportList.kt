@@ -12,7 +12,7 @@ class ImportList {
     fun hasImport(fqName: String) = fqName in myImports
 
     operator fun get(fqName: String): String {
-        val (packageName, className) = fqName.toPackageClassName()
+        val (packageName, className) = fqName.substringBeforeLast("?").toPackageClassName()
         val nameToImport = getNameToImport(packageName, className)
 
         if (packageName.isEmpty() || hasImport(nameToImport)) return className
@@ -43,9 +43,24 @@ class ImportList {
         if ('.' !in this) return Pair("", this)
 
         val path = split('.')
-        val packageName = path.takeWhile { it.all(Char::isPackageSymbol) }
-        val simpleName = path.drop(packageName.size)
+        val packageName = StringBuilder()
+        val simpleName = StringBuilder()
 
-        return Pair(packageName.joinToString("."), simpleName.joinToString("."))
+        fun StringBuilder.appendPath(s: String) {
+            if (length > 0) {
+                append('.')
+            }
+            append(s)
+        }
+
+        path.forEachIndexed { index, s ->
+            if (index < path.lastIndex && s.all(Char::isPackageSymbol)) {
+                packageName.appendPath(s)
+            } else {
+                simpleName.appendPath(s)
+            }
+        }
+
+        return Pair(packageName.toString(), simpleName.toString())
     }
 }

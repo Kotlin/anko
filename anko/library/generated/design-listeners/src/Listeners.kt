@@ -13,9 +13,8 @@ fun android.support.design.widget.TabLayout.onTabSelectedListener(init: __TabLay
 }
 
 class __TabLayout_OnTabSelectedListener : android.support.design.widget.TabLayout.OnTabSelectedListener {
+
     private var _onTabSelected: ((android.support.design.widget.TabLayout.Tab?) -> Unit)? = null
-    private var _onTabUnselected: ((android.support.design.widget.TabLayout.Tab?) -> Unit)? = null
-    private var _onTabReselected: ((android.support.design.widget.TabLayout.Tab?) -> Unit)? = null
 
     override fun onTabSelected(tab: android.support.design.widget.TabLayout.Tab?) {
         _onTabSelected?.invoke(tab)
@@ -25,6 +24,8 @@ class __TabLayout_OnTabSelectedListener : android.support.design.widget.TabLayou
         _onTabSelected = listener
     }
 
+    private var _onTabUnselected: ((android.support.design.widget.TabLayout.Tab?) -> Unit)? = null
+
     override fun onTabUnselected(tab: android.support.design.widget.TabLayout.Tab?) {
         _onTabUnselected?.invoke(tab)
     }
@@ -32,6 +33,8 @@ class __TabLayout_OnTabSelectedListener : android.support.design.widget.TabLayou
     fun onTabUnselected(listener: (android.support.design.widget.TabLayout.Tab?) -> Unit) {
         _onTabUnselected = listener
     }
+
+    private var _onTabReselected: ((android.support.design.widget.TabLayout.Tab?) -> Unit)? = null
 
     override fun onTabReselected(tab: android.support.design.widget.TabLayout.Tab?) {
         _onTabReselected?.invoke(tab)
@@ -54,8 +57,8 @@ fun android.support.design.widget.CoordinatorLayout.onHierarchyChangeListener(in
 }
 
 class __ViewGroup_OnHierarchyChangeListener : android.view.ViewGroup.OnHierarchyChangeListener {
+
     private var _onChildViewAdded: ((android.view.View?, android.view.View?) -> Unit)? = null
-    private var _onChildViewRemoved: ((android.view.View?, android.view.View?) -> Unit)? = null
 
     override fun onChildViewAdded(parent: android.view.View?, child: android.view.View?) {
         _onChildViewAdded?.invoke(parent, child)
@@ -64,6 +67,8 @@ class __ViewGroup_OnHierarchyChangeListener : android.view.ViewGroup.OnHierarchy
     fun onChildViewAdded(listener: (android.view.View?, android.view.View?) -> Unit) {
         _onChildViewAdded = listener
     }
+
+    private var _onChildViewRemoved: ((android.view.View?, android.view.View?) -> Unit)? = null
 
     override fun onChildViewRemoved(parent: android.view.View?, child: android.view.View?) {
         _onChildViewRemoved?.invoke(parent, child)

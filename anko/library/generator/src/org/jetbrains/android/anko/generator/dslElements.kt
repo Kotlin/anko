@@ -46,13 +46,18 @@ class PropertyElement(val name: String, val getter: MethodNodeWithClass?, val se
 
 class ListenerMethod(val methodWithClass: MethodNodeWithClass, val name: String, val returnType: Type)
 
-abstract class ListenerElement(val setter: MethodNodeWithClass, val clazz: ClassNode)
+abstract class ListenerElement(val setter: MethodNodeWithClass, val clazz: ClassNode) {
+    abstract val id: String
+}
 
 class SimpleListenerElement(
         setter: MethodNodeWithClass,
         clazz: ClassNode,
         val method: ListenerMethod
-) : ListenerElement(setter, clazz)
+) : ListenerElement(setter, clazz) {
+    override val id: String
+        get() = "${clazz.name}#${method.name}"
+}
 
 class ComplexListenerElement(
         setter: MethodNodeWithClass,
@@ -60,8 +65,6 @@ class ComplexListenerElement(
         val name: String,
         val methods: List<ListenerMethod>
 ) : ListenerElement(setter, clazz) {
-
-    val id: String
-        get() = "${clazz.name}#name"
-
+    override val id: String
+        get() = "${clazz.name}#$name"
 }

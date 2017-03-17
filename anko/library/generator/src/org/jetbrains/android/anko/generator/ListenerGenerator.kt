@@ -45,7 +45,7 @@ class ListenerGenerator : Generator<ListenerElement> {
                 .sortedBy { it.setter.identifier }
                 .toMutableList()
         
-        addListeners + setListeners
+        (addListeners + setListeners).distinctBy { it.id }
     }
 
     //suppose "setter" is a correct setOn*Listener method

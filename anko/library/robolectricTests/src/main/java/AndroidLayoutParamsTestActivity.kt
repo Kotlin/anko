@@ -6,8 +6,7 @@ import android.view.Gravity
 import android.widget.RelativeLayout
 import org.jetbrains.anko.*
 
-
-open class AndroidLayoutParamsTestActivity() : Activity() {
+open class AndroidLayoutParamsTestActivity : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {

@@ -20,99 +20,75 @@ import org.jetbrains.android.anko.config.*
 import org.jetbrains.android.anko.formatArguments
 import org.jetbrains.android.anko.formatArgumentsNames
 import org.jetbrains.android.anko.formatArgumentsTypes
-import org.jetbrains.android.anko.generator.ComplexListenerElement
-import org.jetbrains.android.anko.generator.GenerationState
-import org.jetbrains.android.anko.generator.ListenerGenerator
-import org.jetbrains.android.anko.generator.SimpleListenerElement
+import org.jetbrains.android.anko.generator.*
 import org.jetbrains.android.anko.returnType
 import org.jetbrains.android.anko.utils.*
+import org.objectweb.asm.Type
 
-class ListenerRenderer(context: AnkoBuilderContext) : Renderer(context) {
+class ListenerRenderer(context: AnkoBuilderContext) : AbstractListenerRenderer(context) {
+    override val simpleListenerTemplateName = "simple_listener"
+    override val complexListenerTemplateName = "complex_listener"
+}
+
+class CoroutineListenerRenderer(context: AnkoBuilderContext) : AbstractListenerRenderer(context) {
+    override val simpleListenerTemplateName = "simple_listener_coroutines"
+    override val complexListenerTemplateName = "complex_listener_coroutines"
+}
+
+abstract class AbstractListenerRenderer(context: AnkoBuilderContext) : Renderer(context) {
+    abstract val simpleListenerTemplateName: String
+    abstract val complexListenerTemplateName: String
 
     override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.LISTENERS)
 
     override fun processElements(state: GenerationState) = generatedFile { importList ->
-        val renderedClasses = hashSetOf<String>()
-
         for (listener in state[ListenerGenerator::class.java]) {
             when (listener) {
-                is SimpleListenerElement -> if (config[Tune.SIMPLE_LISTENERS]) append(listener.render())
-                is ComplexListenerElement -> {
-                    if (config[Tune.COMPLEX_LISTENER_SETTERS]) append(listener.renderSetter())
-                    if (config[Tune.COMPLEX_LISTENER_CLASSES] && !renderedClasses.contains(listener.id)) {
-                        append(listener.renderClass())
-                        renderedClasses.add(listener.id)
-                    }
-                }
+                is SimpleListenerElement -> append(listener.render(importList))
+                is ComplexListenerElement -> append(listener.render(importList))
                 else -> throw RuntimeException("Invalid listener type: ${listener.javaClass.name}")
             }
         }
     }
 
-    private fun SimpleListenerElement.render() = render("simple_listener") {
+    private fun SimpleListenerElement.render(importList: ImportList) = render(simpleListenerTemplateName, importList) {
         "receiver" % setter.clazz.fqNameWithTypeArguments
         "name" % method.name
         "args" % method.methodWithClass.formatArguments(context)
+        "argNames" % method.methodWithClass.formatArgumentsNames(context)
+        "hasArgs" % Type.getType(method.methodWithClass.method.desc).argumentTypes.isNotEmpty()
         "returnType" % method.returnType.asString()
+        "returnDefaultValue" % method.returnType.getDefaultValue(onlyPrimitive = true)
         "setter" % setter.method.name
     }
 
-    private fun ComplexListenerElement.renderSetter(): String {
-        return render("complex_listener_setter") {
-            "receiver" % setter.clazz.fqNameWithTypeArguments
-            "methodName" % name
-            "listener" % getHelperClassName(this@renderSetter)
-            "setter" % setter.method.name
+    private fun ComplexListenerElement.render(importList: ImportList): String {
+        return render(complexListenerTemplateName, importList) {
+            "helperClassName" % getHelperClassName(this@render)
+            "listenerClassName" % clazz.fqName
+            "superConstructorCall" % (if (clazz.getConstructors().isNotEmpty()) "()" else "")
+
+            "setter" % mapOf(
+                "receiver" to setter.clazz.fqNameWithTypeArguments,
+                "methodName" to name,
+                "listener" to getHelperClassName(this@render),
+                "setter" to setter.method.name
+            )
+
+            "methods" % seq(methods) { method ->
+                val methodWithClass = method.methodWithClass
+
+                "methodName" % method.name
+                "args" % methodWithClass.formatArguments(context)
+                "hasArgs" % Type.getType(method.methodWithClass.method.desc).argumentTypes.isNotEmpty()
+                "argNames" % methodWithClass.formatArgumentsNames(context)
+                "argTypes" % methodWithClass.formatArgumentsTypes(context)
+                "returnDefaultValue" % methodWithClass.method.returnType.getDefaultValue(onlyPrimitive = true)
+                "varName" % method.name.decapitalize()
+                "returnType" % method.returnType.asString()
+                "possiblyNullableReturnType" % method.returnType.asString(isNullable = true)
+            }
         }
-    }
-
-    private fun ComplexListenerElement.renderClass(): String {
-        val listenerClassName = clazz.fqName
-        //ListenerHelper class name (helper mutable class, generates real listener)
-        val helperClassName = getHelperClassName(this)
-
-        //field list (already with indentation)
-        val fields = methods.map { method ->
-            val varName = method.name.decapitalize()
-            val argumentTypes = method.methodWithClass.formatArgumentsTypes(context)
-            val lambdaType = "(($argumentTypes) -> ${method.returnType.asString()})"
-            "private var _$varName: $lambdaType? = null"
-        }
-
-        val listenerMethods = methods.flatMap { method ->
-            val varName = method.name.decapitalize()
-            val methodWithClass = method.methodWithClass
-
-            val arguments = methodWithClass.formatArguments(context)
-            val argumentNames = methodWithClass.formatArgumentsNames(context)
-            val argumentTypes = methodWithClass.formatArgumentsTypes(context)
-
-            buffer {
-                val defaultValue = methodWithClass.method.returnType.getDefaultValue()
-                val returnDefaultValue = if (defaultValue.isNotEmpty()) " ?: $defaultValue" else ""
-
-                if (!method.returnType.isVoid) {
-                    line("override fun ${method.name}($arguments) = _$varName?.invoke($argumentNames)$returnDefaultValue").nl()
-                } else {
-                    line("override fun ${method.name}($arguments) {")
-                    line("_$varName?.invoke($argumentNames)$returnDefaultValue")
-                    line("}").nl()
-                }
-
-                line("fun ${method.name}(listener: ($argumentTypes) -> ${method.returnType.asString()}) {")
-                line("_$varName = listener")
-                line("}")
-            }.getLines()
-        }
-
-        return buffer {
-            val superConstructorCall = if (clazz.getConstructors().isNotEmpty()) "()" else ""
-            line("class $helperClassName : $listenerClassName$superConstructorCall {")
-            lines(fields).nl()
-            lines(listenerMethods)
-            line("}")
-            nl()
-        }.toString()
     }
 
     // Get a name for helper class. Listener interfaces are often inner so we'll separate the base class name with "_"

@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import org.jetbrains.anko.*
 
-open class AndroidWidgetTestActivity() : Activity() {
+open class AndroidWidgetTestActivity : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {

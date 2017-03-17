@@ -16,6 +16,7 @@ dependencies {
     compile project(':generated:anko-common')
     compile project(':generated:anko-sqlite')
     compile project(':generated:anko-sdk15')
+    compile project(':generated:anko-sdk15-listeners')
     compile project(':generated:anko-coroutines')
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile "org.robolectric:robolectric:3.0"

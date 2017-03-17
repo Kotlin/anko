@@ -2,6 +2,7 @@ apply from: '../generated.gradle'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
 }
 
 kotlin {

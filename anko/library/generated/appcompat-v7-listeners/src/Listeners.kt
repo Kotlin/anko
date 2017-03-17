@@ -14,10 +14,6 @@ inline fun android.support.v7.widget.FitWindowsFrameLayout.onFitSystemWindows(no
     setOnFitSystemWindowsListener(l)
 }
 
-inline fun android.support.v7.widget.FitWindowsLinearLayout.onFitSystemWindows(noinline l: (insets: android.graphics.Rect?) -> Unit) {
-    setOnFitSystemWindowsListener(l)
-}
-
 inline fun android.support.v7.widget.SearchView.onClose(noinline l: () -> Boolean) {
     setOnCloseListener(l)
 }
@@ -33,14 +29,16 @@ fun android.support.v7.widget.SearchView.onQueryTextListener(init: __SearchView_
 }
 
 class __SearchView_OnQueryTextListener : android.support.v7.widget.SearchView.OnQueryTextListener {
+
     private var _onQueryTextSubmit: ((String?) -> Boolean)? = null
-    private var _onQueryTextChange: ((String?) -> Boolean)? = null
 
     override fun onQueryTextSubmit(query: String?) = _onQueryTextSubmit?.invoke(query) ?: false
 
     fun onQueryTextSubmit(listener: (String?) -> Boolean) {
         _onQueryTextSubmit = listener
     }
+
+    private var _onQueryTextChange: ((String?) -> Boolean)? = null
 
     override fun onQueryTextChange(newText: String?) = _onQueryTextChange?.invoke(newText) ?: false
 
@@ -61,14 +59,16 @@ fun android.support.v7.widget.SearchView.onSuggestionListener(init: __SearchView
 }
 
 class __SearchView_OnSuggestionListener : android.support.v7.widget.SearchView.OnSuggestionListener {
+
     private var _onSuggestionSelect: ((Int) -> Boolean)? = null
-    private var _onSuggestionClick: ((Int) -> Boolean)? = null
 
     override fun onSuggestionSelect(position: Int) = _onSuggestionSelect?.invoke(position) ?: false
 
     fun onSuggestionSelect(listener: (Int) -> Boolean) {
         _onSuggestionSelect = listener
     }
+
+    private var _onSuggestionClick: ((Int) -> Boolean)? = null
 
     override fun onSuggestionClick(position: Int) = _onSuggestionClick?.invoke(position) ?: false
 

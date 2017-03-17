@@ -13,8 +13,8 @@ fun android.view.View.onAttachStateChangeListener(init: __View_OnAttachStateChan
 }
 
 class __View_OnAttachStateChangeListener : android.view.View.OnAttachStateChangeListener {
+
     private var _onViewAttachedToWindow: ((android.view.View) -> Unit)? = null
-    private var _onViewDetachedFromWindow: ((android.view.View) -> Unit)? = null
 
     override fun onViewAttachedToWindow(v: android.view.View) {
         _onViewAttachedToWindow?.invoke(v)
@@ -23,6 +23,8 @@ class __View_OnAttachStateChangeListener : android.view.View.OnAttachStateChange
     fun onViewAttachedToWindow(listener: (android.view.View) -> Unit) {
         _onViewAttachedToWindow = listener
     }
+
+    private var _onViewDetachedFromWindow: ((android.view.View) -> Unit)? = null
 
     override fun onViewDetachedFromWindow(v: android.view.View) {
         _onViewDetachedFromWindow?.invoke(v)
@@ -41,9 +43,8 @@ fun android.widget.TextView.textChangedListener(init: __TextWatcher.() -> Unit) 
 }
 
 class __TextWatcher : android.text.TextWatcher {
+
     private var _beforeTextChanged: ((CharSequence?, Int, Int, Int) -> Unit)? = null
-    private var _onTextChanged: ((CharSequence?, Int, Int, Int) -> Unit)? = null
-    private var _afterTextChanged: ((android.text.Editable?) -> Unit)? = null
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         _beforeTextChanged?.invoke(s, start, count, after)
@@ -53,6 +54,8 @@ class __TextWatcher : android.text.TextWatcher {
         _beforeTextChanged = listener
     }
 
+    private var _onTextChanged: ((CharSequence?, Int, Int, Int) -> Unit)? = null
+
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         _onTextChanged?.invoke(s, start, before, count)
     }
@@ -60,6 +63,8 @@ class __TextWatcher : android.text.TextWatcher {
     fun onTextChanged(listener: (CharSequence?, Int, Int, Int) -> Unit) {
         _onTextChanged = listener
     }
+
+    private var _afterTextChanged: ((android.text.Editable?) -> Unit)? = null
 
     override fun afterTextChanged(s: android.text.Editable?) {
         _afterTextChanged?.invoke(s)
@@ -78,10 +83,8 @@ fun android.gesture.GestureOverlayView.onGestureListener(init: __GestureOverlayV
 }
 
 class __GestureOverlayView_OnGestureListener : android.gesture.GestureOverlayView.OnGestureListener {
+
     private var _onGestureStarted: ((android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit)? = null
-    private var _onGesture: ((android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit)? = null
-    private var _onGestureEnded: ((android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit)? = null
-    private var _onGestureCancelled: ((android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit)? = null
 
     override fun onGestureStarted(overlay: android.gesture.GestureOverlayView?, event: android.view.MotionEvent?) {
         _onGestureStarted?.invoke(overlay, event)
@@ -91,6 +94,8 @@ class __GestureOverlayView_OnGestureListener : android.gesture.GestureOverlayVie
         _onGestureStarted = listener
     }
 
+    private var _onGesture: ((android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit)? = null
+
     override fun onGesture(overlay: android.gesture.GestureOverlayView?, event: android.view.MotionEvent?) {
         _onGesture?.invoke(overlay, event)
     }
@@ -99,6 +104,8 @@ class __GestureOverlayView_OnGestureListener : android.gesture.GestureOverlayVie
         _onGesture = listener
     }
 
+    private var _onGestureEnded: ((android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit)? = null
+
     override fun onGestureEnded(overlay: android.gesture.GestureOverlayView?, event: android.view.MotionEvent?) {
         _onGestureEnded?.invoke(overlay, event)
     }
@@ -106,6 +113,8 @@ class __GestureOverlayView_OnGestureListener : android.gesture.GestureOverlayVie
     fun onGestureEnded(listener: (android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit) {
         _onGestureEnded = listener
     }
+
+    private var _onGestureCancelled: ((android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit)? = null
 
     override fun onGestureCancelled(overlay: android.gesture.GestureOverlayView?, event: android.view.MotionEvent?) {
         _onGestureCancelled?.invoke(overlay, event)
@@ -128,8 +137,8 @@ fun android.gesture.GestureOverlayView.onGesturingListener(init: __GestureOverla
 }
 
 class __GestureOverlayView_OnGesturingListener : android.gesture.GestureOverlayView.OnGesturingListener {
+
     private var _onGesturingStarted: ((android.gesture.GestureOverlayView?) -> Unit)? = null
-    private var _onGesturingEnded: ((android.gesture.GestureOverlayView?) -> Unit)? = null
 
     override fun onGesturingStarted(overlay: android.gesture.GestureOverlayView?) {
         _onGesturingStarted?.invoke(overlay)
@@ -138,6 +147,8 @@ class __GestureOverlayView_OnGesturingListener : android.gesture.GestureOverlayV
     fun onGesturingStarted(listener: (android.gesture.GestureOverlayView?) -> Unit) {
         _onGesturingStarted = listener
     }
+
+    private var _onGesturingEnded: ((android.gesture.GestureOverlayView?) -> Unit)? = null
 
     override fun onGesturingEnded(overlay: android.gesture.GestureOverlayView?) {
         _onGesturingEnded?.invoke(overlay)
@@ -196,8 +207,8 @@ fun android.view.ViewGroup.onHierarchyChangeListener(init: __ViewGroup_OnHierarc
 }
 
 class __ViewGroup_OnHierarchyChangeListener : android.view.ViewGroup.OnHierarchyChangeListener {
+
     private var _onChildViewAdded: ((android.view.View?, android.view.View?) -> Unit)? = null
-    private var _onChildViewRemoved: ((android.view.View?, android.view.View?) -> Unit)? = null
 
     override fun onChildViewAdded(parent: android.view.View?, child: android.view.View?) {
         _onChildViewAdded?.invoke(parent, child)
@@ -206,6 +217,8 @@ class __ViewGroup_OnHierarchyChangeListener : android.view.ViewGroup.OnHierarchy
     fun onChildViewAdded(listener: (android.view.View?, android.view.View?) -> Unit) {
         _onChildViewAdded = listener
     }
+
+    private var _onChildViewRemoved: ((android.view.View?, android.view.View?) -> Unit)? = null
 
     override fun onChildViewRemoved(parent: android.view.View?, child: android.view.View?) {
         _onChildViewRemoved?.invoke(parent, child)
@@ -228,8 +241,8 @@ fun android.widget.AbsListView.onScrollListener(init: __AbsListView_OnScrollList
 }
 
 class __AbsListView_OnScrollListener : android.widget.AbsListView.OnScrollListener {
+
     private var _onScrollStateChanged: ((android.widget.AbsListView?, Int) -> Unit)? = null
-    private var _onScroll: ((android.widget.AbsListView?, Int, Int, Int) -> Unit)? = null
 
     override fun onScrollStateChanged(view: android.widget.AbsListView?, scrollState: Int) {
         _onScrollStateChanged?.invoke(view, scrollState)
@@ -239,6 +252,8 @@ class __AbsListView_OnScrollListener : android.widget.AbsListView.OnScrollListen
         _onScrollStateChanged = listener
     }
 
+    private var _onScroll: ((android.widget.AbsListView?, Int, Int, Int) -> Unit)? = null
+
     override fun onScroll(view: android.widget.AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
         _onScroll?.invoke(view, firstVisibleItem, visibleItemCount, totalItemCount)
     }
@@ -247,10 +262,6 @@ class __AbsListView_OnScrollListener : android.widget.AbsListView.OnScrollListen
         _onScroll = listener
     }
 
-}
-
-inline fun android.widget.AdapterView<out android.widget.Adapter>.onClick(noinline l: (v: android.view.View?) -> Unit) {
-    setOnClickListener(l)
 }
 
 inline fun android.widget.AdapterView<out android.widget.Adapter>.onItemClick(noinline l: (p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) -> Unit) {
@@ -268,8 +279,8 @@ fun android.widget.AdapterView<out android.widget.Adapter>.onItemSelectedListene
 }
 
 class __AdapterView_OnItemSelectedListener : android.widget.AdapterView.OnItemSelectedListener {
+
     private var _onItemSelected: ((android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit)? = null
-    private var _onNothingSelected: ((android.widget.AdapterView<*>?) -> Unit)? = null
 
     override fun onItemSelected(p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) {
         _onItemSelected?.invoke(p0, p1, p2, p3)
@@ -279,6 +290,8 @@ class __AdapterView_OnItemSelectedListener : android.widget.AdapterView.OnItemSe
         _onItemSelected = listener
     }
 
+    private var _onNothingSelected: ((android.widget.AdapterView<*>?) -> Unit)? = null
+
     override fun onNothingSelected(p0: android.widget.AdapterView<*>?) {
         _onNothingSelected?.invoke(p0)
     }
@@ -287,20 +300,6 @@ class __AdapterView_OnItemSelectedListener : android.widget.AdapterView.OnItemSe
         _onNothingSelected = listener
     }
 
-}
-
-inline fun android.widget.AutoCompleteTextView.onClick(noinline l: (v: android.view.View?) -> Unit) {
-    setOnClickListener(l)
-}
-
-inline fun android.widget.AutoCompleteTextView.onItemClick(noinline l: (p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) -> Unit) {
-    setOnItemClickListener(l)
-}
-
-fun android.widget.AutoCompleteTextView.onItemSelectedListener(init: __AdapterView_OnItemSelectedListener.() -> Unit) {
-    val listener = __AdapterView_OnItemSelectedListener()
-    listener.init()
-    setOnItemSelectedListener(listener)
 }
 
 inline fun android.widget.CalendarView.onDateChange(noinline l: (view: android.widget.CalendarView?, year: Int, month: Int, dayOfMonth: Int) -> Unit) {
@@ -331,10 +330,6 @@ inline fun android.widget.ExpandableListView.onGroupExpand(noinline l: (groupPos
     setOnGroupExpandListener(l)
 }
 
-inline fun android.widget.ExpandableListView.onItemClick(noinline l: (p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) -> Unit) {
-    setOnItemClickListener(l)
-}
-
 inline fun android.widget.NumberPicker.onScroll(noinline l: (view: android.widget.NumberPicker?, scrollState: Int) -> Unit) {
     setOnScrollListener(l)
 }
@@ -345,12 +340,6 @@ inline fun android.widget.NumberPicker.onValueChanged(noinline l: (picker: andro
 
 inline fun android.widget.RadioGroup.onCheckedChange(noinline l: (group: android.widget.RadioGroup?, checkedId: Int) -> Unit) {
     setOnCheckedChangeListener(l)
-}
-
-fun android.widget.RadioGroup.onHierarchyChangeListener(init: __ViewGroup_OnHierarchyChangeListener.() -> Unit) {
-    val listener = __ViewGroup_OnHierarchyChangeListener()
-    listener.init()
-    setOnHierarchyChangeListener(listener)
 }
 
 inline fun android.widget.RatingBar.onRatingBarChange(noinline l: (ratingBar: android.widget.RatingBar?, rating: Float, fromUser: Boolean) -> Unit) {
@@ -372,14 +361,16 @@ fun android.widget.SearchView.onQueryTextListener(init: __SearchView_OnQueryText
 }
 
 class __SearchView_OnQueryTextListener : android.widget.SearchView.OnQueryTextListener {
+
     private var _onQueryTextSubmit: ((String?) -> Boolean)? = null
-    private var _onQueryTextChange: ((String?) -> Boolean)? = null
 
     override fun onQueryTextSubmit(query: String?) = _onQueryTextSubmit?.invoke(query) ?: false
 
     fun onQueryTextSubmit(listener: (String?) -> Boolean) {
         _onQueryTextSubmit = listener
     }
+
+    private var _onQueryTextChange: ((String?) -> Boolean)? = null
 
     override fun onQueryTextChange(newText: String?) = _onQueryTextChange?.invoke(newText) ?: false
 
@@ -400,14 +391,16 @@ fun android.widget.SearchView.onSuggestionListener(init: __SearchView_OnSuggesti
 }
 
 class __SearchView_OnSuggestionListener : android.widget.SearchView.OnSuggestionListener {
+
     private var _onSuggestionSelect: ((Int) -> Boolean)? = null
-    private var _onSuggestionClick: ((Int) -> Boolean)? = null
 
     override fun onSuggestionSelect(position: Int) = _onSuggestionSelect?.invoke(position) ?: false
 
     fun onSuggestionSelect(listener: (Int) -> Boolean) {
         _onSuggestionSelect = listener
     }
+
+    private var _onSuggestionClick: ((Int) -> Boolean)? = null
 
     override fun onSuggestionClick(position: Int) = _onSuggestionClick?.invoke(position) ?: false
 
@@ -424,9 +417,8 @@ fun android.widget.SeekBar.onSeekBarChangeListener(init: __SeekBar_OnSeekBarChan
 }
 
 class __SeekBar_OnSeekBarChangeListener : android.widget.SeekBar.OnSeekBarChangeListener {
+
     private var _onProgressChanged: ((android.widget.SeekBar?, Int, Boolean) -> Unit)? = null
-    private var _onStartTrackingTouch: ((android.widget.SeekBar?) -> Unit)? = null
-    private var _onStopTrackingTouch: ((android.widget.SeekBar?) -> Unit)? = null
 
     override fun onProgressChanged(seekBar: android.widget.SeekBar?, progress: Int, fromUser: Boolean) {
         _onProgressChanged?.invoke(seekBar, progress, fromUser)
@@ -436,6 +428,8 @@ class __SeekBar_OnSeekBarChangeListener : android.widget.SeekBar.OnSeekBarChange
         _onProgressChanged = listener
     }
 
+    private var _onStartTrackingTouch: ((android.widget.SeekBar?) -> Unit)? = null
+
     override fun onStartTrackingTouch(seekBar: android.widget.SeekBar?) {
         _onStartTrackingTouch?.invoke(seekBar)
     }
@@ -443,6 +437,8 @@ class __SeekBar_OnSeekBarChangeListener : android.widget.SeekBar.OnSeekBarChange
     fun onStartTrackingTouch(listener: (android.widget.SeekBar?) -> Unit) {
         _onStartTrackingTouch = listener
     }
+
+    private var _onStopTrackingTouch: ((android.widget.SeekBar?) -> Unit)? = null
 
     override fun onStopTrackingTouch(seekBar: android.widget.SeekBar?) {
         _onStopTrackingTouch?.invoke(seekBar)
@@ -469,8 +465,8 @@ fun android.widget.SlidingDrawer.onDrawerScrollListener(init: __SlidingDrawer_On
 }
 
 class __SlidingDrawer_OnDrawerScrollListener : android.widget.SlidingDrawer.OnDrawerScrollListener {
+
     private var _onScrollStarted: (() -> Unit)? = null
-    private var _onScrollEnded: (() -> Unit)? = null
 
     override fun onScrollStarted() {
         _onScrollStarted?.invoke()
@@ -479,6 +475,8 @@ class __SlidingDrawer_OnDrawerScrollListener : android.widget.SlidingDrawer.OnDr
     fun onScrollStarted(listener: () -> Unit) {
         _onScrollStarted = listener
     }
+
+    private var _onScrollEnded: (() -> Unit)? = null
 
     override fun onScrollEnded() {
         _onScrollEnded?.invoke()
@@ -490,24 +488,8 @@ class __SlidingDrawer_OnDrawerScrollListener : android.widget.SlidingDrawer.OnDr
 
 }
 
-inline fun android.widget.Spinner.onItemClick(noinline l: (p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) -> Unit) {
-    setOnItemClickListener(l)
-}
-
 inline fun android.widget.TabHost.onTabChanged(noinline l: (tabId: String?) -> Unit) {
     setOnTabChangedListener(l)
-}
-
-fun android.widget.TableLayout.onHierarchyChangeListener(init: __ViewGroup_OnHierarchyChangeListener.() -> Unit) {
-    val listener = __ViewGroup_OnHierarchyChangeListener()
-    listener.init()
-    setOnHierarchyChangeListener(listener)
-}
-
-fun android.widget.TableRow.onHierarchyChangeListener(init: __ViewGroup_OnHierarchyChangeListener.() -> Unit) {
-    val listener = __ViewGroup_OnHierarchyChangeListener()
-    listener.init()
-    setOnHierarchyChangeListener(listener)
 }
 
 inline fun android.widget.TextView.onEditorAction(noinline l: (v: android.widget.TextView?, actionId: Int, event: android.view.KeyEvent?) -> Boolean) {

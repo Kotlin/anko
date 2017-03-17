@@ -84,7 +84,7 @@ internal fun Type.asJavaString(): String {
     }
 }
 
-internal fun Type.getDefaultValue() : String {
+internal fun Type.getDefaultValue(onlyPrimitive: Boolean = false) : String {
     return when (sort) {
         Type.BOOLEAN -> "false"
         Type.INT -> "0"
@@ -95,14 +95,20 @@ internal fun Type.getDefaultValue() : String {
         Type.CHAR -> "\'\\u0000\'" //default value of a char
         Type.SHORT -> "0"
         Type.VOID -> ""
-        Type.ARRAY -> when (elementType.sort) {
-            Type.INT -> "IntArray()"
-            Type.FLOAT -> "FloatArray()"
-            Type.DOUBLE -> "DoubleArray()"
-            Type.LONG -> "LongArray()"
-            else -> "Array<" + mapJavaToKotlinType(elementType.asString(isNullable = false)) + ">()"
+        else -> {
+            if (onlyPrimitive) {
+                return ""
+            } else when (sort) {
+                Type.ARRAY -> when (elementType.sort) {
+                    Type.INT -> "IntArray()"
+                    Type.FLOAT -> "FloatArray()"
+                    Type.DOUBLE -> "DoubleArray()"
+                    Type.LONG -> "LongArray()"
+                    else -> "Array<" + mapJavaToKotlinType(elementType.asString(isNullable = false)) + ">()"
+                }
+                else -> mapJavaToKotlinType(fqName) + "()"
+            }
         }
-        else -> mapJavaToKotlinType(fqName) + "()"
     }
 }
 

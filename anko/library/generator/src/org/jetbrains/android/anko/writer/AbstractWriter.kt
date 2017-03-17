@@ -22,10 +22,15 @@ abstract class AbstractWriter(private val renderFacade: RenderFacade): WithConte
     private fun write(file: AnkoFile): Unit = when (file) {
         AnkoFile.LAYOUTS -> writeLayouts()
         AnkoFile.LISTENERS -> writeListeners()
+        AnkoFile.LISTENERS_WITH_COROUTINES -> writeCoroutineListeners()
         AnkoFile.PROPERTIES -> writeProperties()
         AnkoFile.SERVICES -> writeServices()
         AnkoFile.SQL_PARSER_HELPERS -> writeSqlParserHelpers()
         AnkoFile.VIEWS -> writeViews()
+    }
+
+    private fun writeCoroutineListeners() {
+        write(AnkoFile.LISTENERS_WITH_COROUTINES, CoroutineListenerRenderer::class.java)
     }
 
     private fun writeLayouts() {
