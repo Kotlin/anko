@@ -171,6 +171,7 @@ internal object `$$Anko$Factories$DesignViewGroup` {
     val COORDINATOR_LAYOUT = { ctx: Context -> _CoordinatorLayout(ctx) }
     val TAB_LAYOUT = { ctx: Context -> _TabLayout(ctx) }
     val TEXT_INPUT_LAYOUT = { ctx: Context -> _TextInputLayout(ctx) }
+    val BOTTOM_NAVIGATION_VIEW = { ctx: Context -> _BottomNavigationView(ctx) }
 }
 
 inline fun ViewManager.bottomNavigationItemView(): android.support.design.internal.BottomNavigationItemView = bottomNavigationItemView() {}
@@ -413,3 +414,17 @@ inline fun Activity.themedTextInputLayout(theme: Int = 0, init: (@AnkoViewDslMar
 return ankoView(`$$Anko$Factories$DesignViewGroup`.TEXT_INPUT_LAYOUT, theme) { init() }
 }
 
+inline fun ViewManager.bottomNavigationView(theme: Int = 0): android.support.design.widget.BottomNavigationView = bottomNavigationView(theme) {}
+inline fun ViewManager.bottomNavigationView(theme: Int = 0, init: _BottomNavigationView.() -> Unit): android.support.design.widget.BottomNavigationView {
+    return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_VIEW, theme) { init() }
+}
+
+inline fun Context.bottomNavigationView(theme: Int = 0): android.support.design.widget.BottomNavigationView = bottomNavigationView(theme) {}
+inline fun Context.bottomNavigationView(theme: Int = 0, init: _BottomNavigationView.() -> Unit): android.support.design.widget.BottomNavigationView {
+    return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_VIEW, theme) { init() }
+}
+
+inline fun Activity.bottomNavigationView(theme: Int = 0): android.support.design.widget.BottomNavigationView = bottomNavigationView(theme) {}
+inline fun Activity.bottomNavigationView(theme: Int = 0, init: _BottomNavigationView.() -> Unit): android.support.design.widget.BottomNavigationView {
+    return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_VIEW, theme) { init() }
+}

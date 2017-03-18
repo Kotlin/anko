@@ -1,6 +1,8 @@
 @file:JvmName("DesignListenersKt")
 package org.jetbrains.anko.design
 
+import android.view.MenuItem
+
 
 inline fun android.support.design.widget.AppBarLayout.onOffsetChanged(noinline l: (appBarLayout: android.support.design.widget.AppBarLayout?, verticalOffset: Int) -> Unit) {
     addOnOffsetChangedListener(l)
@@ -43,6 +45,17 @@ class __TabLayout_OnTabSelectedListener : android.support.design.widget.TabLayou
 
 }
 
+class __BottomNavigationView_OnNavigationItemSelectedListener : android.support.design.widget.BottomNavigationView.OnNavigationItemSelectedListener {
+    private var _onNavigationItemSelected: ((MenuItem) -> Boolean)? = null
+
+    fun onNavigationItemSelected(listener: (MenuItem) -> Boolean) {
+        _onNavigationItemSelected = listener
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem) = _onNavigationItemSelected?.invoke(item) ?: false
+
+}
+
 inline fun android.support.design.widget.BottomNavigationView.onNavigationItemSelected(noinline l: (item: android.view.MenuItem?) -> Boolean) {
     setOnNavigationItemSelectedListener(l)
 }
@@ -74,4 +87,3 @@ class __ViewGroup_OnHierarchyChangeListener : android.view.ViewGroup.OnHierarchy
     }
 
 }
-
