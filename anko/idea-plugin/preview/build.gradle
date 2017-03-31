@@ -1,4 +1,12 @@
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'kotlin'
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+        kotlin.srcDirs = ['src']
+    }
+}
 
 configurations {
     shadow
@@ -8,6 +16,7 @@ configurations {
 dependencies {
     compile project(':ide:plugin-classpath')
 
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     shadow 'org.jetbrains.kotlinx:kotlinx.dom:0.0.8'
 
     shadow(project(':ide:attrs')) {
