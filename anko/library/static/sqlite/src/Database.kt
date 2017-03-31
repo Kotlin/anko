@@ -79,7 +79,7 @@ fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = false, 
     val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
     execSQL(
         columns.map { col ->
-            "${col.first} ${col.second}"
+            "${col.first} ${col.second.render()}"
         }.joinToString(", ", prefix = "CREATE TABLE $ifNotExistsText `$escapedTableName`(", postfix = ");")
     )
 }

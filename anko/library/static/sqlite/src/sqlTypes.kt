@@ -19,22 +19,27 @@ package org.jetbrains.anko.db
 
 interface SqlType {
     val name: String
-    val modifier: String?
+
+    fun render(): String
+    operator fun plus(m: SqlTypeModifier): SqlType
+
+    companion object {
+        fun create(name: String): SqlType = SqlTypeImpl(name)
+    }
 }
 
 interface SqlTypeModifier {
     val modifier: String
-}
 
-operator fun SqlType.plus(m: SqlTypeModifier) : SqlType {
-    return SqlTypeImpl(name, if (modifier == null) m.toString() else "$modifier $m")
+    companion object {
+        fun create(modifier: String): SqlTypeModifier = SqlTypeModifierImpl(modifier)
+    }
 }
 
 val NULL: SqlType = SqlTypeImpl("NULL")
 val INTEGER: SqlType = SqlTypeImpl("INTEGER")
 val REAL: SqlType = SqlTypeImpl("REAL")
 val TEXT: SqlType = SqlTypeImpl("TEXT")
-
 val BLOB: SqlType = SqlTypeImpl("BLOB")
 
 fun FOREIGN_KEY(columnName: String, referenceTable: String, referenceColumn: String): Pair<String, SqlType> {
@@ -48,12 +53,12 @@ val UNIQUE: SqlTypeModifier = SqlTypeModifierImpl("UNIQUE")
 
 fun DEFAULT(value: String): SqlTypeModifier = SqlTypeModifierImpl("DEFAULT $value")
 
-private open class SqlTypeImpl(override val name: String, override val modifier: String? = null) : SqlType {
-    override fun toString(): String {
-        return if (modifier == null) name else "$name $modifier"
+private open class SqlTypeImpl(override val name: String, val modifiers: String? = null) : SqlType {
+    override fun render() = if (modifiers == null) name else "$name $modifiers"
+
+    override fun plus(m: SqlTypeModifier): SqlType {
+        return SqlTypeImpl(name, if (modifiers == null) m.modifier else "$modifiers $m")
     }
 }
 
-private open class SqlTypeModifierImpl(override val modifier: String) : SqlTypeModifier {
-    override fun toString(): String = modifier
-}
+private open class SqlTypeModifierImpl(override val modifier: String) : SqlTypeModifier
