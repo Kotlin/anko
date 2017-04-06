@@ -18,6 +18,7 @@
 package org.jetbrains.anko
 
 import android.app.Activity
+import android.app.Dialog
 import android.app.Fragment
 import android.content.Context
 import android.content.SharedPreferences
@@ -67,10 +68,12 @@ inline val Activity.contentView: View?
 inline fun <reified T : View> View.find(@IdRes id: Int): T = findViewById(id) as T
 inline fun <reified T : View> Activity.find(@IdRes id: Int): T = findViewById(id) as T
 inline fun <reified T : View> Fragment.find(@IdRes id: Int): T = view?.findViewById(id) as T
+inline fun <reified T : View> Dialog.find(@IdRes id: Int): T = findViewById(id) as T
 
 inline fun <reified T : View> View.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 inline fun <reified T : View> Activity.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 inline fun <reified T : View> Fragment.findOptional(@IdRes id: Int): T? = view?.findViewById(id) as? T
+inline fun <reified T : View> Dialog.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 
 inline fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
     arguments = bundleOf(*params)
