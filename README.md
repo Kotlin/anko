@@ -221,7 +221,7 @@ Kotlin is similar enough to Java, so learning it will be easy.
 
 In Anko, you don't need to inherit from any special classes: just use standard `Activity`, `Fragment`, `FragmentActivity` or whatever you want.
 
-First of all, import `org.jetbrains.anko.*` to use Anko DSL in your classes.
+First of all, import `kotlinx.android.anko.*` to use Anko DSL in your classes.
 
 DSL is available in `onCreate()`:
 
