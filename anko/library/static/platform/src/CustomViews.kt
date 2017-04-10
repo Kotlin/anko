@@ -35,6 +35,12 @@ internal object `$$Anko$Factories$CustomViews` {
         view
     }
 
+    val HORIZONTAL_LAYOUT_FACTORY = { ctx: Context ->
+        val view = _LinearLayout(ctx)
+        view.orientation = LinearLayout.HORIZONTAL
+        view
+    }
+
     val EDIT_TEXT = { ctx: Context -> EditText(ctx) }
 
     val HORIZONTAL_PROGRESS_BAR_FACTORY = { ctx: Context ->
@@ -55,6 +61,21 @@ inline fun Context.verticalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit
 inline fun Activity.verticalLayout(theme: Int = 0): LinearLayout = verticalLayout(theme) {}
 inline fun Activity.verticalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): LinearLayout {
     return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, theme, init)
+}
+
+inline fun ViewManager.horizontalLayout(theme: Int = 0): LinearLayout = horizontalLayout(theme) {}
+inline fun ViewManager.horizontalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): LinearLayout {
+    return ankoView(`$$Anko$Factories$CustomViews`.HORIZONTAL_LAYOUT_FACTORY, theme, init)
+}
+
+inline fun Context.horizontalLayout(theme: Int = 0): LinearLayout = horizontalLayout(theme) {}
+inline fun Context.horizontalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): LinearLayout {
+    return ankoView(`$$Anko$Factories$CustomViews`.HORIZONTAL_LAYOUT_FACTORY, theme, init)
+}
+
+inline fun Activity.horizontalLayout(theme: Int = 0): LinearLayout = horizontalLayout(theme) {}
+inline fun Activity.horizontalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): LinearLayout {
+    return ankoView(`$$Anko$Factories$CustomViews`.HORIZONTAL_LAYOUT_FACTORY, theme, init)
 }
 
 inline fun ViewManager.editText(constraints: InputConstraints, theme: Int = 0): EditText = editText(constraints, theme) {}
