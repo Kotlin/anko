@@ -1,12 +1,15 @@
 <project name="Update Dependencies" default="update" xmlns:if="ant:if" xmlns:unless="ant:unless">
 
     <property name="automerge_dummy" value="This property is used to trick git merge. Do not delete empty lines around."/>
-    <property name="ideaVersion" value="2016.1"/>
+    <property name="ideaVersion" value="2017.1"/>
     <property name="idea.kotlin.branch" value="rc"/>
 
     <property name="android.studio.version" value="2.4.0.2"/>
     <property name="android.studio.build.number" value="171.3829324"/>
     <property name="android.studio.intellij-core.build.number" value="171.3780.107"/>
+
+    <property name="android.version" value="2.4.0.3"/>
+    <property name="android.build.version" value="171.3870562"/>
 
     <property name="markdown.locator" value="buildType:IntelliJMarkdownParser_Build,status:SUCCESS,tag:forKotlin"/>
 

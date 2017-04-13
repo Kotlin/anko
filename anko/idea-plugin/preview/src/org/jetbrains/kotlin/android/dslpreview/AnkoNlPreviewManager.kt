@@ -1,9 +1,11 @@
 package org.jetbrains.kotlin.android.dslpreview
 
-import com.android.tools.idea.gradle.invoker.GradleInvoker
 import com.android.tools.idea.gradle.project.BuildSettings
+import com.android.tools.idea.gradle.project.GradleProjectInfo
+import com.android.tools.idea.gradle.project.build.invoker.GradleBuildInvoker
 import com.android.tools.idea.gradle.util.BuildMode
-import com.android.tools.idea.gradle.util.Projects
+import com.android.tools.idea.project.AndroidProjectInfo
+import com.android.tools.idea.uibuilder.editor.NlPreviewForm
 import com.android.tools.idea.uibuilder.editor.NlPreviewManager
 import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.openapi.Disposable
@@ -11,7 +13,9 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.extensions.Extensions
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.TextEditor
+import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleManager
+import com.intellij.openapi.module.ModuleUtilCore
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.ThreeComponentsSplitter
@@ -22,14 +26,16 @@ import com.intellij.psi.xml.XmlFile
 import com.intellij.uiDesigner.core.GridConstraints
 import com.intellij.uiDesigner.core.GridLayoutManager
 import com.intellij.util.Alarm
-import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.android.uipreview.ViewLoaderExtension
 import org.jetbrains.kotlin.idea.util.InfinitePeriodicalTask
-import org.jetbrains.kotlin.psi.KtConstructor
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.utils.addToStdlib.firstIsInstanceOrNull
+import java.awt.BorderLayout
+import java.awt.event.HierarchyEvent
 import java.awt.event.ItemEvent
+import javax.swing.ComboBoxModel
 import javax.swing.DefaultComboBoxModel
+import javax.swing.JComponent
 import javax.swing.JPanel
 
 class AnkoNlPreviewManager(
@@ -41,7 +47,7 @@ class AnkoNlPreviewManager(
     @Volatile
     private var lastSourceFileModification = -1L
 
-    internal var myActivityListModel: DefaultComboBoxModel<Any>? = null
+    internal var myActivityListModel: DefaultComboBoxModel<Any> = DefaultComboBoxModel()
 
     private val sourceFileModificationTracker by lazy {
         project.getExtensions(PsiTreeChangePreprocessor.EP_NAME)
@@ -76,10 +82,12 @@ class AnkoNlPreviewManager(
             return null
         }
 
+        val module = ModuleUtilCore.findModuleForPsiElement(file) ?: return null
+
         requestCompileIfNeeded()
         refresh()
 
-        return generateStubXmlFile()
+        return generateStubXmlFile(module, file)
     }
 
     fun getActiveTextEditor(): TextEditor? {
@@ -87,8 +95,8 @@ class AnkoNlPreviewManager(
             return ApplicationManager.getApplication().runReadAction(Computable<TextEditor> { getActiveTextEditor() })
         }
         ApplicationManager.getApplication().assertReadAccessAllowed()
-        val fileEditors = fileEditorManager.selectedEditors
-        if (fileEditors.isNotEmpty() && fileEditors[0] is TextEditor) {
+        val fileEditors = fileEditorManager?.selectedEditors
+        if (fileEditors != null && fileEditors.isNotEmpty() && fileEditors[0] is TextEditor) {
             val textEditor = fileEditors[0] as TextEditor
             if (isApplicableEditor(textEditor)) {
                 return textEditor
@@ -97,7 +105,7 @@ class AnkoNlPreviewManager(
         return null
     }
 
-    internal fun generateStubXmlFile(): LayoutPsiFile {
+    internal fun generateStubXmlFile(module: Module, originalFile: KtFile): LayoutPsiFile {
         val filename = "anko_preview.xml"
         val content = """<?xml version="1.0" encoding="utf-8"?>
                 <__anko.preview.View xmlns:android="http://schemas.android.com/apk/res/android"
@@ -105,12 +113,12 @@ class AnkoNlPreviewManager(
                 android:layout_height="match_parent"/>"""
 
         val psiFile = PsiFileFactory.getInstance(project).createFileFromText(filename, XmlFileType.INSTANCE, content)
-        return LayoutPsiFile(psiFile as XmlFile)
+        return LayoutPsiFile(psiFile as XmlFile, originalFile, module)
     }
 
     private fun refresh() {
         val viewLoaderExtension = this.viewLoaderExtension ?: return
-        val description = myActivityListModel?.selectedItem as? PreviewClassDescription
+        val description = myActivityListModel.selectedItem as? PreviewClassDescription
                 ?: classResolver.getOnCursorPreviewClassDescription()
 
         if (description != null && viewLoaderExtension.description != description) {
@@ -122,92 +130,99 @@ class AnkoNlPreviewManager(
         val document = textEditor?.editor?.document ?: return false
         val psiFile = PsiDocumentManager.getInstance(project).getPsiFile(document) ?: return false
 
-        val facet = AndroidFacet.getInstance(psiFile) ?: return false
-        if (!Projects.isBuildWithGradle(facet.module) && !Projects.isLegacyIdeaAndroidModule(facet.module)) {
+        if (!GradleProjectInfo.getInstance(project).isBuildWithGradle &&
+                !AndroidProjectInfo.getInstance(project).isLegacyIdeaAndroidProject) {
             return false
         }
 
-        return psiFile is KtFile
+        if (psiFile is KtFile) {
+            isToolWindowInitialized = false
+            return true
+        } else {
+            return false
+        }
     }
+
+    private val NlPreviewForm.actionsToolbarComponent: JComponent?
+        get() = with(NlPreviewForm::class.java.getDeclaredField("myActionsToolbar")) {
+            val actionsToolbarOldAccessible = isAccessible
+            try {
+                isAccessible = true
+                val toolbar = get(this@actionsToolbarComponent) ?: return null
+                val method = toolbar::class.java.getDeclaredMethod("getToolbarComponent")
+                val methodOldAccessible = method.isAccessible
+                try {
+                    method.isAccessible = true
+                    method.invoke(toolbar) as? JComponent
+                } finally {
+                    method.isAccessible = methodOldAccessible
+                }
+            } finally {
+                isAccessible = actionsToolbarOldAccessible
+            }
+        }
+
+    private val fileEditorManager: FileEditorManager?
+        get() = with(NlPreviewManager::class.java.getDeclaredField("myFileEditorManager")) {
+            val oldAccessible = isAccessible
+            try {
+                isAccessible = true
+                get(this@AnkoNlPreviewManager) as? FileEditorManager
+            } finally {
+                isAccessible = oldAccessible
+            }
+        }
 
     override fun initToolWindow() {
         super.initToolWindow()
-
-        val panel = (previewForm.contentPanel as? ThreeComponentsSplitter)?.innerComponent?.getComponent(0)
-
-        if (panel is JPanel) {
-            val firstToolbar = panel.getComponent(0)
-            val secondToolbar = panel.getComponent(1)
-
-            panel.remove(firstToolbar)
-            panel.remove(secondToolbar)
-            val manager = GridLayoutManager(2, 1)
-            panel.layout = manager
-
-            myActivityListModel = DefaultComboBoxModel()
-            val comboBox = ComboBox(myActivityListModel)
-
-            comboBox.addItemListener { itemEvent ->
-                if (itemEvent.stateChange == ItemEvent.SELECTED) {
-                    updatePreview()
-                }
-            }
-
-            fun constraints(row: Int, column: Int, init: GridConstraints.() -> Unit): GridConstraints {
-                return with(GridConstraints()) {
-                    setRow(row)
-                    setColumn(column)
-                    init()
-                    this
-                }
-            }
-
-            // Hide the action panel
-//            panel.add(firstToolbar, constraints(0, 0) {
-//                fill = GridConstraints.FILL_BOTH
-//            })
-
-            panel.add(secondToolbar, constraints(0, 0) {
-                fill = GridConstraints.FILL_VERTICAL
-                anchor = GridConstraints.ANCHOR_EAST
-            })
-
-            panel.add(comboBox, constraints(1, 0) {
-                fill = GridConstraints.FILL_BOTH
-            })
-        }
-
         resolveAvailableClasses()
     }
+
+    private var isToolWindowInitialized = false
+
+    internal fun updateToolWindowIfNeeded() {
+        val actionsToolbarComponent = previewForm.actionsToolbarComponent
+        if (actionsToolbarComponent == null && isToolWindowInitialized) {
+            isToolWindowInitialized = false
+        } else if (actionsToolbarComponent != null && !isToolWindowInitialized) {
+            isToolWindowInitialized = true
+            if (actionsToolbarComponent is JPanel) {
+                modifyActionPanel(actionsToolbarComponent)
+            }
+        }
+    }
+
+    private fun modifyActionPanel(panel: JPanel) {
+        if (panel.components.firstIsInstanceOrNull<PreviewCandidateComboBox>() != null) {
+            return
+        }
+
+        val comboBox = PreviewCandidateComboBox(myActivityListModel)
+        comboBox.addItemListener { itemEvent ->
+            if (itemEvent.stateChange == ItemEvent.SELECTED) {
+                updatePreview()
+            }
+        }
+
+        panel.add(comboBox, BorderLayout.SOUTH)
+    }
+
+    private class PreviewCandidateComboBox(model: ComboBoxModel<Any>?) : ComboBox<Any>(model)
 
     private fun updatePreview() {
         getActiveTextEditor()?.let { notifyFileShown(it, true) }
     }
 
     fun resolveAvailableClasses() {
-        fun isZeroParameterConstructor(constructor: KtConstructor<*>?): Boolean {
-            if (constructor == null) return false
-            val parameters = constructor.getValueParameters()
-            return parameters.isEmpty() || parameters.all { it.hasDefaultValue() }
-        }
+        val activityClasses = classResolver
+                .getAncestors(DslPreviewClassResolver.ANKO_COMPONENT_CLASS_NAME)
+                .filter { classResolver.isClassApplicableForPreview(it.ktClass) }
 
-        val activityClasses = classResolver.getAncestors("org.jetbrains.anko.AnkoComponent").filter { description ->
-            val clazz = description.ktClass
-            val primaryConstructor = clazz.primaryConstructor
-            val secondaryConstructors = clazz.secondaryConstructors
-
-            (primaryConstructor == null && secondaryConstructors.isEmpty())
-                    || isZeroParameterConstructor(primaryConstructor)
-                    || secondaryConstructors.any(::isZeroParameterConstructor)
-        }
-
-        if (myActivityListModel != null) {
-            with(myActivityListModel!!) {
-                selectedItem = null
-                removeAllElements()
-                val items = activityClasses
-                items.sortedBy { it.toString() }.forEach { addElement(it) }
-            }
+        with(myActivityListModel) {
+            selectedItem = null
+            removeAllElements()
+            val items = activityClasses
+            items.sortedBy { it.toString() }.forEach { addElement(it) }
         }
     }
 
@@ -218,12 +233,12 @@ class AnkoNlPreviewManager(
         if (actualSourceFileModification == lastSourceFileModification) return
 
         val modules = ModuleManager.getInstance(project).modules
-        val gradleInvoker = GradleInvoker.getInstance(project)
+        val gradleInvoker = GradleBuildInvoker.getInstance(project)
         val buildMode = BuildMode.COMPILE_JAVA
         BuildSettings.getInstance(project).buildMode = buildMode
-        val tasks = GradleInvoker.findTasksToExecute(modules, buildMode, GradleInvoker.TestCompileType.NONE)
+        val tasks = GradleBuildInvoker.findTasksToExecute(modules, buildMode, GradleBuildInvoker.TestCompileType.NONE)
 
-        gradleInvoker.addAfterGradleInvocationTask { result ->
+        gradleInvoker.add { result ->
             if (result.isBuildSuccessful) {
                 ApplicationManager.getApplication().invokeLater {
                     lastSourceFileModification = actualSourceFileModification
