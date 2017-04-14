@@ -52,8 +52,6 @@ allprojects {
     }
 }
 
-task collectJars(dependsOn: ':utils:run')
-
 task zipIdeaPlugin(dependsOn: ':ide:preview:shadowJar') << {
     File outputFile = new File("build/anko-ide-plugin.zip")
     ZipOutputStream zipOutputStream = null
@@ -113,7 +111,6 @@ task publishLocal()
 
 afterEvaluate {
     def commonBuildTasks = [
-            ':collectJars',
             ':zipIdeaPlugin',
             ':generator:run',
             ':generator:test',
