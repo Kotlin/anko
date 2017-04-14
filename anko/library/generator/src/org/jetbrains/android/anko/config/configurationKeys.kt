@@ -7,8 +7,8 @@ val LOG_LEVEL = CliConfigurationKey(
         defaultValue = Logger.LogLevel.WARNING,
         mapper = { Logger.LogLevel.valueOf(it) })
 
-val ARTIFACTS = CliConfigurationKey(
-        "artifacts",
+val CONFIGURATION = CliConfigurationKey(
+        "configuration",
         mapper = ::File)
 
 val OUTPUT_DIRECTORY = CliConfigurationKey(
@@ -20,4 +20,4 @@ val ANDROID_SDK_LOCATION = CliConfigurationKey(
         mapper = ::File)
 
 val CLI_CONFIGURATION_KEYS: List<CliConfigurationKey<Any>> = listOf(
-        LOG_LEVEL, ARTIFACTS, OUTPUT_DIRECTORY, ANDROID_SDK_LOCATION)
+        LOG_LEVEL, CONFIGURATION, OUTPUT_DIRECTORY, ANDROID_SDK_LOCATION)

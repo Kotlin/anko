@@ -17,18 +17,20 @@
 package org.jetbrains.android.anko.config
 
 import org.jetbrains.android.anko.artifact.Artifact
+import org.jetbrains.android.anko.artifact.Tunes
 import java.io.File
 
 class DefaultAnkoConfiguration(
         override val outputDirectory: File,
         override val artifact: Artifact,
-        override val options: Options
+        override val options: Options,
+        val tunes: Tunes
 ) : AnkoConfiguration {
     override val outputPackage: String
 
     private fun readProps(name: String) = File("anko/props/$name.txt").readLines().toSet()
 
-    override val excludedClasses = readProps("excluded_classes")
+    override val excludedClasses = tunes.excludedClasses
     override val excludedMethods = readProps("excluded_methods")
     override val excludedProperties = readProps("excluded_properties")
     override val propertiesWithoutGetters = readProps("properties_without_getters")

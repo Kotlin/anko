@@ -59,7 +59,7 @@ fun main(args: Array<String>) {
 }
 
 private fun versions(options: Options) {
-    Artifact.parseArtifacts(options[ARTIFACTS]).forEach(::println)
+    Artifact.parseConfiguration(options[CONFIGURATION]).artifacts.forEach(::println)
 }
 
 private enum class GeneratorMode {
@@ -69,14 +69,15 @@ private enum class GeneratorMode {
 private fun launchGenerator(options: Options, mode: GeneratorMode) {
     val outputDirectory = options[OUTPUT_DIRECTORY]
 
-    for (artifact in Artifact.parseArtifacts(options[ARTIFACTS])) {
+    val configuration = Artifact.parseConfiguration(options[CONFIGURATION])
+    for (artifact in configuration.artifacts) {
         val outputDirectoryForArtifact = File(outputDirectory, artifact.name)
         val fileOutputDirectory = File(outputDirectoryForArtifact, "src/")
         if (!fileOutputDirectory.exists()) {
             fileOutputDirectory.mkdirs()
         }
 
-        val configuration = DefaultAnkoConfiguration(outputDirectoryForArtifact, artifact, options)
+        val configuration = DefaultAnkoConfiguration(outputDirectoryForArtifact, artifact, options, configuration.tunes)
         val context = AnkoBuilderContext.create(File("anko/props"), Logger.LogLevel.INFO, configuration)
         gen(artifact, context, mode)
     }

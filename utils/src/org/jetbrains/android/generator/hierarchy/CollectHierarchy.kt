@@ -31,8 +31,8 @@ object HierarchyCollector {
 
     @JvmStatic
     fun collect() {
-        val artifacts = Artifact.parseArtifacts(File("anko/props/artifacts.json"))
-        val classTree = ClassProcessor(artifacts.first { it.name.matches("sdk[0-9]+".toRegex()) }).genClassTree()
+        val configuration = Artifact.parseConfiguration(File("anko/props/configuration.json"))
+        val classTree = ClassProcessor(configuration.artifacts.first { it.name.matches("sdk[0-9]+".toRegex()) }).genClassTree()
         val viewClasses = classTree.filter { it.isView(classTree) && !it.isInner && it.name.startsWith("android/widget/") }
 
         val hierarchy = viewClasses.map {

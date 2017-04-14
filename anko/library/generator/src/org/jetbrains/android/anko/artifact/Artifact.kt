@@ -9,9 +9,10 @@ class Artifact(val name: String, val platformJars: List<File>, val targetJars: L
     }
 
     companion object {
-        fun parseArtifacts(file: File): List<Artifact> {
-            val data = Gson().fromJson(file.readText(), ArtifactsData::class.java)
+        fun parseConfiguration(file: File): Configuration {
+            val data = Gson().fromJson(file.readText(), ConfigurationData::class.java)
             val templates = data.templates
+            val tunes = data.tunes
 
             val artifacts = mutableListOf<Artifact>()
             for (artifactData in data.artifacts) {
@@ -21,7 +22,7 @@ class Artifact(val name: String, val platformJars: List<File>, val targetJars: L
                 artifacts += Artifact(artifactData.name, platformJars, targetJars)
             }
 
-            return artifacts
+            return Configuration(artifacts, tunes)
         }
 
         private fun substituteTemplates(s: String, templates: Map<String, String>): String {
@@ -34,6 +35,14 @@ class Artifact(val name: String, val platformJars: List<File>, val targetJars: L
     }
 }
 
-private class ArtifactsData(val templates: Map<String, String>, val artifacts: List<ArtifactData>) {
+class Tunes(val excludedClasses: Set<String>)
+
+class Configuration(val artifacts: List<Artifact>, val tunes: Tunes)
+
+private class ConfigurationData(
+        val templates: Map<String, String>,
+        val artifacts: List<ArtifactData>,
+        val tunes: Tunes
+) {
     class ArtifactData(val name: String, val platform: List<String>, val target: List<String>?)
 }
