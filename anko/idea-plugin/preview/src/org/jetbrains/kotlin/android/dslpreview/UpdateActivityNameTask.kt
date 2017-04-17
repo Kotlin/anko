@@ -57,8 +57,6 @@ class UpdateActivityNameTask(
     }
 
     override fun onResultReady(requestInfo: PsiElement, description: PreviewClassDescription?) = with (previewManager) {
-        previewManager.updateToolWindowIfNeeded()
-
         if (description == null) return
         val model = myActivityListModel
 

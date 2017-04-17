@@ -7,6 +7,7 @@ import com.android.tools.idea.gradle.util.BuildMode
 import com.android.tools.idea.project.AndroidProjectInfo
 import com.android.tools.idea.uibuilder.editor.NlPreviewForm
 import com.android.tools.idea.uibuilder.editor.NlPreviewManager
+import com.android.tools.idea.uibuilder.model.NlModel
 import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
@@ -18,24 +19,20 @@ import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.module.ModuleUtilCore
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
-import com.intellij.openapi.ui.ThreeComponentsSplitter
 import com.intellij.openapi.util.Computable
+import com.intellij.openapi.wm.ToolWindow
 import com.intellij.psi.*
 import com.intellij.psi.impl.PsiTreeChangePreprocessor
 import com.intellij.psi.xml.XmlFile
-import com.intellij.uiDesigner.core.GridConstraints
-import com.intellij.uiDesigner.core.GridLayoutManager
 import com.intellij.util.Alarm
 import org.jetbrains.android.uipreview.ViewLoaderExtension
 import org.jetbrains.kotlin.idea.util.InfinitePeriodicalTask
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.utils.addToStdlib.firstIsInstanceOrNull
 import java.awt.BorderLayout
-import java.awt.event.HierarchyEvent
 import java.awt.event.ItemEvent
 import javax.swing.ComboBoxModel
 import javax.swing.DefaultComboBoxModel
-import javax.swing.JComponent
 import javax.swing.JPanel
 
 class AnkoNlPreviewManager(
@@ -68,6 +65,10 @@ class AnkoNlPreviewManager(
         ApplicationManager.getApplication().invokeLater {
             val task = Computable { UpdateActivityNameTask(this) }
             InfinitePeriodicalTask(1000, Alarm.ThreadToUse.SWING_THREAD, this@AnkoNlPreviewManager, task).start()
+        }
+
+        GradleBuildInvoker.getInstance(project).add {
+            refresh()
         }
     }
 
@@ -117,6 +118,9 @@ class AnkoNlPreviewManager(
     }
 
     private fun refresh() {
+        val toolWindow: ToolWindow = toolWindow ?: return
+        if (!toolWindow.isVisible) return
+
         val viewLoaderExtension = this.viewLoaderExtension ?: return
         val description = myActivityListModel.selectedItem as? PreviewClassDescription
                 ?: classResolver.getOnCursorPreviewClassDescription()
@@ -135,32 +139,8 @@ class AnkoNlPreviewManager(
             return false
         }
 
-        if (psiFile is KtFile) {
-            isToolWindowInitialized = false
-            return true
-        } else {
-            return false
-        }
+        return psiFile is KtFile
     }
-
-    private val NlPreviewForm.actionsToolbarComponent: JComponent?
-        get() = with(NlPreviewForm::class.java.getDeclaredField("myActionsToolbar")) {
-            val actionsToolbarOldAccessible = isAccessible
-            try {
-                isAccessible = true
-                val toolbar = get(this@actionsToolbarComponent) ?: return null
-                val method = toolbar::class.java.getDeclaredMethod("getToolbarComponent")
-                val methodOldAccessible = method.isAccessible
-                try {
-                    method.isAccessible = true
-                    method.invoke(toolbar) as? JComponent
-                } finally {
-                    method.isAccessible = methodOldAccessible
-                }
-            } finally {
-                isAccessible = actionsToolbarOldAccessible
-            }
-        }
 
     private val fileEditorManager: FileEditorManager?
         get() = with(NlPreviewManager::class.java.getDeclaredField("myFileEditorManager")) {
@@ -178,21 +158,19 @@ class AnkoNlPreviewManager(
         resolveAvailableClasses()
     }
 
-    private var isToolWindowInitialized = false
+    override fun createPreviewForm(): NlPreviewForm {
+        return object : NlPreviewForm(this@AnkoNlPreviewManager) {
+            override fun setActiveModel(model: NlModel?) {
+                super.setActiveModel(model)
 
-    internal fun updateToolWindowIfNeeded() {
-        val actionsToolbarComponent = previewForm.actionsToolbarComponent
-        if (actionsToolbarComponent == null && isToolWindowInitialized) {
-            isToolWindowInitialized = false
-        } else if (actionsToolbarComponent != null && !isToolWindowInitialized) {
-            isToolWindowInitialized = true
-            if (actionsToolbarComponent is JPanel) {
-                modifyActionPanel(actionsToolbarComponent)
+                if (model != null) {
+                    (this.toolbarComponent as? JPanel)?.let { addLayoutComboBox(it) }
+                }
             }
         }
     }
 
-    private fun modifyActionPanel(panel: JPanel) {
+    private fun addLayoutComboBox(panel: JPanel) {
         if (panel.components.firstIsInstanceOrNull<PreviewCandidateComboBox>() != null) {
             return
         }
