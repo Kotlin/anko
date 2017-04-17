@@ -51,7 +51,7 @@ inline val Fragment.act: Activity
     get() = activity
 
 inline val Fragment.ctx: Context
-    get() = activity
+    get() = context
 
 inline val Context.ctx: Context
     get() = this
