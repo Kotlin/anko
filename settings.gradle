@@ -11,6 +11,7 @@ include ':static:supportV4'
 include ':static:appcompatV7'
 
 include ':generated'
+include ':generated:anko'
 include ':generated:anko-appcompat-v7'
 include ':generated:anko-appcompat-v7-listeners'
 include ':generated:anko-appcompat-v7-coroutines'
@@ -65,6 +66,7 @@ project(':static:supportV4').projectDir = new File(rootDir, 'anko/library/static
 project(':static:appcompatV7').projectDir = new File(rootDir, 'anko/library/static/appcompatV7')
 
 project(':generated').projectDir = new File(rootDir, 'anko/library/generated')
+project(':generated:anko').projectDir = new File(rootDir, 'anko/library/generated/anko')
 project(':generated:anko-appcompat-v7').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7')
 project(':generated:anko-appcompat-v7-listeners').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7-listeners')
 project(':generated:anko-appcompat-v7-coroutines').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7-coroutines')
