@@ -27,13 +27,13 @@ import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
 import java.util.*
 
-internal class ViewRenderer(context: AnkoBuilderContext) : AbstractViewRenderer(context) {
+internal class ViewRenderer(context: GeneratorContext) : AbstractViewRenderer(context) {
     override fun processElements(state: GenerationState) = generatedFile {
         renderViews(state[ViewGenerator::class.java]) { it.fqName }
     }
 }
 
-internal class ViewGroupRenderer(context: AnkoBuilderContext) : AbstractViewRenderer(context) {
+internal class ViewGroupRenderer(context: GeneratorContext) : AbstractViewRenderer(context) {
     override fun processElements(state: GenerationState) = generatedFile {
         renderViews(state[ViewGroupGenerator::class.java]) { "_" + it.simpleName }
     }
@@ -58,14 +58,14 @@ class ViewFactoryClass(val config: AnkoConfiguration, suffix: String) {
 }
 
 internal abstract class AbstractViewRenderer(
-        context: AnkoBuilderContext
+        context: GeneratorContext
 ) : Renderer(context), ViewConstructorUtils {
 
-    override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.VIEWS, Tune.HELPER_CONSTRUCTORS)
+    override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.VIEWS)
 
     protected fun StringBuilder.renderViews(views: Iterable<ViewElement>, nameResolver: (ClassNode) -> String) {
         val renderViews = config[AnkoFile.VIEWS]
-        val renderHelperConstructors = config[Tune.HELPER_CONSTRUCTORS]
+        val renderHelperConstructors = true
 
         val factoryClass = ViewFactoryClass(config, this@AbstractViewRenderer.javaClass.simpleName.replace("Renderer", ""))
         val functions = StringBuilder().apply {
@@ -124,7 +124,7 @@ internal abstract class AbstractViewRenderer(
         }
 
         append(renderView("ViewManager"))
-        if (config[Tune.TOP_LEVEL_DSL_ITEMS] && isContainer) {
+        if (isContainer) {
             append(renderView("Context"))
             append(renderView("Activity"))
         }

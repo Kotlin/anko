@@ -17,7 +17,7 @@
 package org.jetbrains.android.anko
 
 import org.jetbrains.android.anko.annotations.ExternalAnnotation.*
-import org.jetbrains.android.anko.config.AnkoBuilderContext
+import org.jetbrains.android.anko.config.GeneratorContext
 import org.jetbrains.android.anko.utils.*
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.Type
@@ -46,7 +46,7 @@ internal fun getParameterKTypes(node: MethodNode): List<KType> {
     return parsed.valueParameters.map { genericTypeToKType(it.genericType) }
 }
 
-internal fun MethodNodeWithClass.toKMethod(context: AnkoBuilderContext): KMethod {
+internal fun MethodNodeWithClass.toKMethod(context: GeneratorContext): KMethod {
     val parameterTypes = getParameterKTypes(this.method)
     val localVariables = method.localVariables?.map { it.index to it }?.toMap() ?: emptyMap()
 
@@ -70,12 +70,12 @@ internal fun MethodNodeWithClass.toKMethod(context: AnkoBuilderContext): KMethod
     return KMethod(method.name, parameters, method.returnType.toKType())
 }
 
-internal fun MethodNodeWithClass.formatArguments(context: AnkoBuilderContext): String {
+internal fun MethodNodeWithClass.formatArguments(context: GeneratorContext): String {
     return toKMethod(context).parameters.joinToString { "${it.name}: ${it.type}" }
 }
 
 internal fun MethodNodeWithClass.formatLayoutParamsArguments(
-        context: AnkoBuilderContext,
+        context: GeneratorContext,
         importList: ImportList
 ): List<String> {
     return toKMethod(context).parameters.map { param ->
@@ -91,7 +91,7 @@ internal fun MethodNodeWithClass.formatLayoutParamsArguments(
     }
 }
 
-internal fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(context: AnkoBuilderContext): String {
+internal fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(context: GeneratorContext): String {
     return toKMethod(context).parameters.joinToString { param ->
         val realName = specialLayoutParamsNames.getOrElse(param.name, { param.name })
         val explicitNotNull = if (param.type.isNullable) "!!" else ""
@@ -99,11 +99,11 @@ internal fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(context: Anko
     }
 }
 
-internal fun MethodNodeWithClass.formatArgumentsTypes(context: AnkoBuilderContext): String {
+internal fun MethodNodeWithClass.formatArgumentsTypes(context: GeneratorContext): String {
     return toKMethod(context).parameters.joinToString { it.type.toString() }
 }
 
-internal fun MethodNodeWithClass.formatArgumentsNames(context: AnkoBuilderContext): String {
+internal fun MethodNodeWithClass.formatArgumentsNames(context: GeneratorContext): String {
     return toKMethod(context).parameters.joinToString { it.name }
 }
 

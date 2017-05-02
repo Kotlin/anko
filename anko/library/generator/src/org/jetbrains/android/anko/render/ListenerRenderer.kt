@@ -25,17 +25,17 @@ import org.jetbrains.android.anko.returnType
 import org.jetbrains.android.anko.utils.*
 import org.objectweb.asm.Type
 
-class ListenerRenderer(context: AnkoBuilderContext) : AbstractListenerRenderer(context) {
+class ListenerRenderer(context: GeneratorContext) : AbstractListenerRenderer(context) {
     override val simpleListenerTemplateName = "simple_listener"
     override val complexListenerTemplateName = "complex_listener"
 }
 
-class CoroutineListenerRenderer(context: AnkoBuilderContext) : AbstractListenerRenderer(context) {
+class CoroutineListenerRenderer(context: GeneratorContext) : AbstractListenerRenderer(context) {
     override val simpleListenerTemplateName = "simple_listener_coroutines"
     override val complexListenerTemplateName = "complex_listener_coroutines"
 }
 
-abstract class AbstractListenerRenderer(context: AnkoBuilderContext) : Renderer(context) {
+abstract class AbstractListenerRenderer(context: GeneratorContext) : Renderer(context) {
     abstract val simpleListenerTemplateName: String
     abstract val complexListenerTemplateName: String
 

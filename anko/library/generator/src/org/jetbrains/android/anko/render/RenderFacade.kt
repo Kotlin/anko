@@ -16,16 +16,16 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.config.AnkoBuilderContext
+import org.jetbrains.android.anko.config.GeneratorContext
 import org.jetbrains.android.anko.config.ConfigurationKey
-import org.jetbrains.android.anko.config.WithContext
+import org.jetbrains.android.anko.config.WithGeneratorContext
 import org.jetbrains.android.anko.config.get
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.templates.TemplateContext
 import org.jetbrains.android.anko.utils.ImportList
 import org.jetbrains.android.anko.utils.ReflectionUtils
 
-abstract class Renderer(override val context: AnkoBuilderContext): WithContext {
+abstract class Renderer(override val context: GeneratorContext): WithGeneratorContext {
     protected abstract fun processElements(state: GenerationState): GeneratedFile
 
     abstract val renderIf: Array<ConfigurationKey<Boolean>>
@@ -70,6 +70,6 @@ class RenderFacade(
     private val cachedResults: MutableMap<Class<out Renderer>, String> = hashMapOf()
 
     operator fun get(clazz: Class<out Renderer>): String = cachedResults.getOrPut(clazz) {
-        initializeClassWithArgs(clazz, generationState.context to AnkoBuilderContext::class.java).process(generationState)
+        initializeClassWithArgs(clazz, generationState.context to GeneratorContext::class.java).process(generationState)
     }
 }

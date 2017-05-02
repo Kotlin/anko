@@ -16,9 +16,9 @@
 
 package org.jetbrains.android.anko.utils
 
-import org.jetbrains.android.anko.config.WithContext
+import org.jetbrains.android.anko.config.WithGeneratorContext
 
-internal fun WithContext.buffer(init: Buffer.() -> Unit) = Buffer(config.indent, 0, init)
+internal fun WithGeneratorContext.buffer(init: Buffer.() -> Unit) = Buffer(config.indent, 0, init)
 
 class Buffer(private val indentString: String, indent: Int = 0, init: Buffer.() -> Unit) {
 

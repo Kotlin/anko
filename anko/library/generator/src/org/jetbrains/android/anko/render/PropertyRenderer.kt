@@ -17,7 +17,7 @@
 package org.jetbrains.android.anko.render
 
 import org.jetbrains.android.anko.*
-import org.jetbrains.android.anko.config.AnkoBuilderContext
+import org.jetbrains.android.anko.config.GeneratorContext
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationKey
 import org.jetbrains.android.anko.generator.GenerationState
@@ -25,7 +25,7 @@ import org.jetbrains.android.anko.generator.PropertyElement
 import org.jetbrains.android.anko.generator.PropertyGenerator
 import org.jetbrains.android.anko.utils.*
 
-class PropertyRenderer(context: AnkoBuilderContext) : Renderer(context) {
+class PropertyRenderer(context: GeneratorContext) : Renderer(context) {
     override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.PROPERTIES)
 
     override fun processElements(state: GenerationState) = generatedFile { importList ->

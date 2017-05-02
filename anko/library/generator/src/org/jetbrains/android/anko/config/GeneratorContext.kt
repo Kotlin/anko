@@ -8,7 +8,7 @@ import org.jetbrains.android.anko.templates.MustacheTemplateProvider
 import org.jetbrains.android.anko.templates.TemplateManager
 import java.io.File
 
-class AnkoBuilderContext(
+class GeneratorContext(
         val annotationManager: AnnotationManager,
         val sourceManager: SourceManager,
         val templateManager: TemplateManager,
@@ -16,7 +16,7 @@ class AnkoBuilderContext(
         val configuration: AnkoConfiguration
 ) {
     companion object {
-        fun create(propsDir: File, logLevel: Logger.LogLevel, config: AnkoConfiguration): AnkoBuilderContext {
+        fun create(propsDir: File, logLevel: Logger.LogLevel, config: AnkoConfiguration): GeneratorContext {
             val zipFileProvider = ZipFileAnnotationProvider(File(propsDir, "kotlin-android-sdk-annotations-1.0.0.jar"))
             val directoryProvider = DirectoryAnnotationProvider(File(propsDir, "annotations"))
 
@@ -29,13 +29,13 @@ class AnkoBuilderContext(
                     JtwigTemplateProvider())
             val logger = Logger(logLevel)
 
-            return AnkoBuilderContext(annotationManager, sourceManager, templateManager, logger, config)
+            return GeneratorContext(annotationManager, sourceManager, templateManager, logger, config)
         }
     }
 }
 
-interface WithContext {
-    val context: AnkoBuilderContext
+interface WithGeneratorContext {
+    val context: GeneratorContext
 
     val annotationManager: AnnotationManager
         get() = context.annotationManager

@@ -36,9 +36,9 @@ class DefaultAnkoConfiguration(
     override val propertiesWithoutGetters = readProps("properties_without_getters")
 
     init {
-        val artifactType = getTargetArtifactType()
+        val artifactType = artifact.type
         outputPackage = "org.jetbrains.anko" + when (artifactType) {
-            TargetArtifactType.COMMON, TargetArtifactType.PLATFORM -> ""
+            ArtifactType.COMMON, ArtifactType.PLATFORM -> ""
             else -> "." + artifact.name.replace('-', '.').toLowerCase()
         }
 

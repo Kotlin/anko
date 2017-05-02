@@ -27,18 +27,7 @@ import java.io.File
 
 fun main(args: Array<String>) {
     val (rawOptions, tasks) = args.partition { it.startsWith("--") }
-
-    val options = MutableOptions.create()
-    rawOptions.map { it.drop(2) }.forEach { rawOption ->
-        val split = rawOption.split('=', limit = 2)
-        if (split.size != 2) error("Invalid option format: $rawOption")
-        val key = split[0]
-        val option: CliConfigurationKey<Any> =
-                CLI_CONFIGURATION_KEYS.firstOrNull { it.cliName == key }
-                        ?: error("Option not found: $key")
-
-        options.setCliOption(option, split[1])
-    }
+    val options = parseOptions(rawOptions)
 
     if (tasks.isNotEmpty()) {
         tasks.forEach { taskName ->
@@ -56,6 +45,22 @@ fun main(args: Array<String>) {
         }
         println("Done.")
     } else println("Please specify a task.")
+}
+
+private fun parseOptions(rawOptions: List<String>): MutableOptions {
+    val options = MutableOptions.create()
+    rawOptions.map { it.drop(2) }.forEach { rawOption ->
+        val split = rawOption.split('=', limit = 2)
+        if (split.size != 2) error("Invalid option format: $rawOption")
+        val key = split[0]
+        val option: CliConfigurationKey<Any> =
+                CLI_CONFIGURATION_KEYS.firstOrNull { it.cliName == key }
+                        ?: error("Option not found: $key")
+
+        options.setCliOption(option, split[1])
+    }
+
+    return options
 }
 
 private fun versions(options: Options) {
@@ -78,12 +83,12 @@ private fun launchGenerator(options: Options, mode: GeneratorMode) {
         }
 
         val configuration = DefaultAnkoConfiguration(outputDirectoryForArtifact, artifact, options, configuration.tunes)
-        val context = AnkoBuilderContext.create(File("anko/props"), Logger.LogLevel.INFO, configuration)
+        val context = GeneratorContext.create(File("anko/props"), Logger.LogLevel.INFO, configuration)
         gen(artifact, context, mode)
     }
 }
 
-private fun gen(artifact: Artifact, context: AnkoBuilderContext, mode: GeneratorMode) {
+private fun gen(artifact: Artifact, context: GeneratorContext, mode: GeneratorMode) {
     val classTree = ClassProcessor(artifact).genClassTree()
     val generationState = GenerationState(classTree, context)
     val renderer = RenderFacade(generationState)

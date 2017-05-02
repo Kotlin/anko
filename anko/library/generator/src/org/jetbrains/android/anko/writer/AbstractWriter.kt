@@ -6,14 +6,14 @@ import org.jetbrains.android.anko.render.*
 import org.jetbrains.android.anko.utils.toCamelCase
 import java.io.File
 
-abstract class AbstractWriter(private val renderFacade: RenderFacade): WithContext {
-    override val context: AnkoBuilderContext
+abstract class AbstractWriter(private val renderFacade: RenderFacade): WithGeneratorContext {
+    override val context: GeneratorContext
         get() = renderFacade.generationState.context
 
     fun write() {
-        val versionType = config.getTargetArtifactType()
+        val versionType = config.artifact.type
         values().forEach { file ->
-            if (config[file] && versionType in file.types && file.shouldBeWritten(config)) {
+            if (config[file] && versionType in file.types) {
                 write(file)
             }
         }
@@ -58,7 +58,7 @@ abstract class AbstractWriter(private val renderFacade: RenderFacade): WithConte
     }
 
     private fun writeViews() {
-        val allViews = if (config[AnkoFile.VIEWS] || config[Tune.HELPER_CONSTRUCTORS]) {
+        val allViews = if (config[AnkoFile.VIEWS]) {
             renderFacade[ViewRenderer::class.java] + renderFacade[ViewGroupRenderer::class.java]
         } else ""
         val imports = Props.imports["views"] ?: ""

@@ -16,8 +16,7 @@
 
 package org.jetbrains.android.anko.render
 
-import com.samskivert.mustache.Mustache
-import org.jetbrains.android.anko.config.AnkoBuilderContext
+import org.jetbrains.android.anko.config.GeneratorContext
 import org.jetbrains.android.anko.config.AnkoFile
 import org.jetbrains.android.anko.config.ConfigurationKey
 import org.jetbrains.android.anko.formatLayoutParamsArguments
@@ -29,7 +28,7 @@ import org.jetbrains.android.anko.parameterRawTypes
 import org.jetbrains.android.anko.utils.*
 import java.util.*
 
-class LayoutRenderer(context: AnkoBuilderContext) : Renderer(context), ViewConstructorUtils {
+class LayoutRenderer(context: GeneratorContext) : Renderer(context), ViewConstructorUtils {
     override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.LAYOUTS)
 
     override fun processElements(state: GenerationState) = generatedFile { importList ->

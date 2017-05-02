@@ -16,23 +16,21 @@
 
 package org.jetbrains.android.anko.config
 
-import org.jetbrains.android.anko.config.TargetArtifactType.*
+import org.jetbrains.android.anko.config.ArtifactType.*
 import org.jetbrains.android.anko.utils.toCamelCase
 
-enum class AnkoFile(
-        type: Set<TargetArtifactType>,
-        val shouldBeWritten: (AnkoConfiguration) -> Boolean = { true },
-        override val defaultValue: Boolean = true
-) : ConfigurationKey<Boolean> {
+enum class AnkoFile(applicableArtifactTypes: Set<ArtifactType>) : ConfigurationKey<Boolean> {
     LAYOUTS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     LISTENERS(setOf(SIMPLE_LISTENERS)),
     LISTENERS_WITH_COROUTINES(setOf(COROUTINE_LISTENERS)),
     PROPERTIES(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     SERVICES(setOf(PLATFORM, SUPPORT_V4, TOOLKIT)),
     SQL_PARSER_HELPERS(setOf(SQLITE)),
-    VIEWS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT), { it[VIEWS] || it[Tune.HELPER_CONSTRUCTORS] });
+    VIEWS(setOf(PLATFORM, SUPPORT_V4, TOOLKIT));
 
-    val types: Set<TargetArtifactType> = type.toSet()
+    val types: Set<ArtifactType> = applicableArtifactTypes.toSet()
+
+    override val defaultValue = true
 
     val filename: String
         get() = name.toCamelCase() + ".kt"
