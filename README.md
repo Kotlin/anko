@@ -43,6 +43,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [UI wrapper](#ui-wrapper)
 	* [Include tag](#include-tag)
 	* [Styles](#styles)
+    * [Themes](#themes)
 * [Anko Preview Plugin](doc/PREVIEW.md)
 * [Advanced topics](doc/ADVANCED.md)
 	* [Intents](doc/ADVANCED.md#intents)
@@ -498,4 +499,15 @@ verticalLayout {
 }.applyRecursively { view -> when(view) {
     is EditText -> view.textSize = 20f
 }}
+```
+
+### Themes
+
+Anko support theme override (the xml way is adding `android:theme` parameter to any view) too by `themed` prefix before any view or layout:
+
+```kotlin
+themedLinearLayout(ThemeOverlay_AppCompat_Dark) {
+    orientation = VERTICAL
+    gravity = BOTTOM
+}
 ```
