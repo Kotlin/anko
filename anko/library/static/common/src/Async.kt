@@ -136,10 +136,15 @@ fun <T> T.doAsync(
 ): Future<Unit> {
     val context = AnkoAsyncContext(WeakReference(this))
     return BackgroundExecutor.submit {
-        try {
+        return@submit try {
             context.task()
         } catch (thr: Throwable) {
-            exceptionHandler?.invoke(thr) ?: Unit
+            val result = exceptionHandler?.invoke(thr)
+            if (result != null) {
+                result
+            } else {
+                Unit
+            }
         }
     }
 }
