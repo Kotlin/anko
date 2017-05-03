@@ -25,53 +25,93 @@ import android.widget.RelativeLayout.*
  * Place the current View above [view].
  * It is an alias for [above].
  */
-inline fun LayoutParams.topOf(view: View): Unit = addRule(ABOVE, view.id)
+fun LayoutParams.topOf(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(ABOVE, id)
+}
 
 /**
  * Place the current View above [view].
  */
-inline fun LayoutParams.above(view: View): Unit = addRule(ABOVE, view.id)
+fun LayoutParams.above(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(ABOVE, id)
+}
 
 /**
  * Place the current View below [view].
  * It is an alias for [below].
  */
-inline fun LayoutParams.bottomOf(view: View): Unit = addRule(BELOW, view.id)
+fun LayoutParams.bottomOf(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(BELOW, id)
+}
 
 /**
  * Place the current View below [view].
  */
-inline fun LayoutParams.below(view: View): Unit = addRule(BELOW, view.id)
+fun LayoutParams.below(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(BELOW, id)
+}
 
 /**
  * Place the current View to the left of [view].
  */
-inline fun LayoutParams.leftOf(view: View): Unit = addRule(LEFT_OF, view.id)
+inline fun LayoutParams.leftOf(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(LEFT_OF, id)
+}
 
 /**
  * Place the current View to the right of [view].
  */
-inline fun LayoutParams.rightOf(view: View): Unit = addRule(RIGHT_OF, view.id)
+inline fun LayoutParams.rightOf(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(RIGHT_OF, id)
+}
 
 /**
  * Set the current View left attribute the same as for [view].
  */
-inline fun LayoutParams.sameLeft(view: View): Unit = addRule(ALIGN_LEFT, view.id)
+inline fun LayoutParams.sameLeft(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(ALIGN_LEFT, id)
+}
 
 /**
  * Set the current View top attribute the same as for [view].
  */
-inline fun LayoutParams.sameTop(view: View): Unit = addRule(ALIGN_TOP, view.id)
+inline fun LayoutParams.sameTop(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(ALIGN_TOP, id)
+}
 
 /**
  * Set the current View right attribute the same as for [view].
  */
-inline fun LayoutParams.sameRight(view: View): Unit = addRule(ALIGN_RIGHT, view.id)
+inline fun LayoutParams.sameRight(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(ALIGN_RIGHT, id)
+}
 
 /**
  * Set the current View bottom attribute the same as for [view].
  */
-inline fun LayoutParams.sameBottom(view: View): Unit = addRule(ALIGN_BOTTOM, view.id)
+inline fun LayoutParams.sameBottom(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(ALIGN_BOTTOM, id)
+}
 
 /**
  * Place the current View above the View with a given [id].
@@ -183,7 +223,11 @@ inline fun LayoutParams.alignParentEnd(): Unit = addRule(21) // ALIGN_PARENT_END
 /**
  * Positions the baseline of this view on the baseline of the given anchor [view].
  */
-inline fun LayoutParams.baselineOf(view: View): Unit = addRule(ALIGN_BASELINE, view.id)
+inline fun LayoutParams.baselineOf(view: View): Unit {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(ALIGN_BASELINE, id)
+}
 
 /**
  * Positions the baseline of this view on the baseline of the anchor View with a given [id].
