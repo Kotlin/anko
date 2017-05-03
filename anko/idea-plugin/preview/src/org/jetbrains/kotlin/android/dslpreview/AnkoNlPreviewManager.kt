@@ -85,10 +85,11 @@ class AnkoNlPreviewManager(
 
         val module = ModuleUtilCore.findModuleForPsiElement(file) ?: return null
 
-        requestCompileIfNeeded()
-        refresh()
-
-        return generateStubXmlFile(module, file)
+        return if (refresh() || previewForm.file == null) {
+            generateStubXmlFile(module, file)
+        } else {
+            previewForm.file
+        }
     }
 
     fun getActiveTextEditor(): TextEditor? {
@@ -117,17 +118,20 @@ class AnkoNlPreviewManager(
         return LayoutPsiFile(psiFile as XmlFile, originalFile, module)
     }
 
-    private fun refresh() {
-        val toolWindow: ToolWindow = toolWindow ?: return
-        if (!toolWindow.isVisible) return
+    private fun refresh(): Boolean {
+        val toolWindow: ToolWindow = toolWindow ?: return false
+        if (!toolWindow.isVisible) return false
 
-        val viewLoaderExtension = this.viewLoaderExtension ?: return
+        val viewLoaderExtension = this.viewLoaderExtension ?: return false
         val description = myActivityListModel.selectedItem as? PreviewClassDescription
                 ?: classResolver.getOnCursorPreviewClassDescription()
 
         if (description != null && viewLoaderExtension.description != description) {
             viewLoaderExtension.description = description
+            return true
         }
+
+        return false
     }
 
     override fun isApplicableEditor(textEditor: TextEditor?): Boolean {
@@ -209,21 +213,13 @@ class AnkoNlPreviewManager(
     private fun requestCompileIfNeeded() {
         val actualSourceFileModification = sourceFileModificationTracker.modificationCount
         if (actualSourceFileModification == lastSourceFileModification) return
+        lastSourceFileModification = actualSourceFileModification
 
         val modules = ModuleManager.getInstance(project).modules
         val gradleInvoker = GradleBuildInvoker.getInstance(project)
         val buildMode = BuildMode.COMPILE_JAVA
         BuildSettings.getInstance(project).buildMode = buildMode
         val tasks = GradleBuildInvoker.findTasksToExecute(modules, buildMode, GradleBuildInvoker.TestCompileType.NONE)
-
-        gradleInvoker.add { result ->
-            if (result.isBuildSuccessful) {
-                ApplicationManager.getApplication().invokeLater {
-                    lastSourceFileModification = actualSourceFileModification
-                    refresh()
-                }
-            }
-        }
 
         gradleInvoker.executeTasks(tasks)
     }
