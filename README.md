@@ -1,8 +1,12 @@
-[ ![Download](https://api.bintray.com/packages/jetbrains/anko/anko/images/download.svg) ](https://bintray.com/jetbrains/anko/anko/_latestVersion)
-[![TeamCity (simple build status)](https://img.shields.io/teamcity/http/teamcity.jetbrains.com/s/ProjectsWrittenInKotlin_Anko.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=ProjectsWrittenInKotlin_Anko&tab=buildTypeStatusDiv)
-[![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
+<p align="center">
+<a href="https://bintray.com/jetbrains/anko/anko/_latestVersion"><img alt="Download" src="https://api.bintray.com/packages/jetbrains/anko/anko/images/download.svg"/></a>
+<a href="https://teamcity.jetbrains.com/viewType.html?buildTypeId=ProjectsWrittenInKotlin_Anko&tab=buildTypeStatusDiv"><img alt="TeamCity (simple build status)" src="https://img.shields.io/teamcity/http/teamcity.jetbrains.com/s/ProjectsWrittenInKotlin_Anko.svg"/></a>
+<a href="http://www.apache.org/licenses/LICENSE-2.0"><img alt="GitHub License" src="https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat"/><a/>
+</p>
 
+<p align="center">
 <img src="doc/logo.png" alt="Anko logo" height="101" width="220" />
+</p>
 
 Anko is a library which makes Android application development faster and easier. It makes your code clean and easy to read, and lets you forget about rough edges of Android SDK for Java.
 
