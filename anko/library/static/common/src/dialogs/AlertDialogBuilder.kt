@@ -62,6 +62,17 @@ class AlertDialogBuilder(val ctx: Context) {
         dialog!!.show()
         return this
     }
+    
+    /**
+     * Build the [AlertDialog] 
+     *
+     */
+    fun build(): AlertDialog {
+        checkBuilder()
+        dialog = builder!!.create()
+        builder = null
+        return dialog!!
+    }
 
     /**
      * Set the [title] displayed in the dialog.
