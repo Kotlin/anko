@@ -24,7 +24,7 @@ Anko provides lots of extension functions to simplify communication with SQLite 
 Add the following to your `build.gradle`:
 
 ```groovy
-compile 'org.jetbrains.anko:anko-sqlite:0.8.3'
+compile 'org.jetbrains.anko:anko-sqlite:0.9'
 ```
 
 ## Db package
@@ -56,11 +56,16 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "MyDatab
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        // Here you create tables (more info about that is below)
+        // Here you create tables
+        db?.createTable("Customer", ifNotExists = true, 
+                    "_id" to INTEGER + PRIMARY_KEY + UNIQUE,
+                    "name" to TEXT,
+                    "photo" to BLOB)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // Here you can upgrade tables, as usual
+        db?.dropTable("User", true)
     }
 }
 
@@ -108,7 +113,7 @@ With Anko you can easily create new tables and drop existing. The syntax is stra
 
 ```kotlin
 database.use {
-    createTable("Customer", ifNotExists = true, 
+    createTable("Customer", true, 
         "_id" to INTEGER + PRIMARY_KEY + UNIQUE,
         "name" to TEXT,
         "photo" to BLOB)
@@ -120,7 +125,7 @@ In SQLite there are five main types: `NULL`, `INTEGER`, `REAL`, `TEXT` and `BLOB
 To drop table, use the `dropTable` function:
 
 ```kotlin
-dropTable("User", ifNotExists = true)
+dropTable("User", true)
 ```
 
 ## Inserting data
@@ -145,6 +150,17 @@ db.insert("User",
 )
 ```
 
+or from within `database.use` as:
+
+```kotlin
+database.use {
+    insert("User", 
+        "_id" to 42,
+        "name" to "John",
+        "email" to "user@domain.org"
+}
+```
+
 Functions `insertOrThrow()`, `replace()`, `replaceOrThrow()` are also exist and have the similar semantics.
 
 ## Querying data
@@ -158,7 +174,7 @@ Method                                | Description
 `distinct(Boolean)`                   | Distinct query
 `where(String)`                       | Specify raw String `where` query
 `where(String, args)` :star:          | Specify a `where` query with arguments
-`where?(String, args)`                | Specify a `where` query with `?` mark arguments
+`whereSimple(String, args)`           | Specify a `where` query with `?` mark arguments
 `orderBy(String, [ASC/DESC])`         | Order by this column
 `groupBy(String)`                     | Group by this column
 `limit(count: Int)`                   | Limit query result row count
@@ -177,7 +193,7 @@ db.select("User", "name")
 
 Here, `{userId}` part will be replaced with `42` and `{userName}` — with `'John'`. Value will be escaped if its type is not numeric (`Int`, `Float` etc.) or `Boolean`. For any other types, `toString()` representation will be used.
 
-`where?` function accepts arguments of `String` type. It works the same as [`query()`](http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html#query(java.lang.String,%20java.lang.String[],%20java.lang.String,%20java.lang.String[],%20java.lang.String,%20java.lang.String,%20java.lang.String)) from `SQLiteDatabase` (question marks `?` will be replaced with actual values from arguments).
+`whereSimple` function accepts arguments of `String` type. It works the same as [`query()`](http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html#query(java.lang.String,%20java.lang.String[],%20java.lang.String,%20java.lang.String[],%20java.lang.String,%20java.lang.String,%20java.lang.String)) from `SQLiteDatabase` (question marks `?` will be replaced with actual values from arguments).
 
 How can we execute the query? Using `exec()` function. It accepts an extension function which type is `Cursor.() -> T`. It simply launches the received extension function and then closes `Cursor` so you don't need to do it by yourself:
 
@@ -275,11 +291,11 @@ update("User", "name" to "Alice")
     .exec()
 ```
 
-Update also contains `where?()` function in case you want to provide query in a traditional way:
+Update also contains `whereSimple()` function in case you want to provide query in a traditional way:
 
 ```kotlin
 update("User", "name" to "Alice")
-    .`where?`("_id = ?", 42)
+    .`whereSimple`("_id = ?", 42)
     .exec()
 ```
 

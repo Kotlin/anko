@@ -14,26 +14,27 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko
 
 import android.app.Fragment
 import android.content.Context
 import android.os.Build
+import android.support.annotation.DimenRes
 import android.util.TypedValue
 import android.view.View
 
-val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
-val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
-val HDPI: Int = android.util.DisplayMetrics.DENSITY_HIGH
+const val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
+const val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
+const val HDPI: Int = android.util.DisplayMetrics.DENSITY_HIGH
 
 //May not be available on older Android versions
-val TVDPI: Int = 213
-val XHDPI: Int = 320
-val XXHDPI: Int = 480
-val XXXHDPI: Int = 640
+const val TVDPI: Int = 213
+const val XHDPI: Int = 320
+const val XXHDPI: Int = 480
+const val XXXHDPI: Int = 640
 
-val MAXDPI: Int = 0xfffe
+const val MAXDPI: Int = 0xfffe
 
 //returns dip(dp) dimension value in pixels
 fun Context.dip(value: Int): Int = (value * resources.displayMetrics.density).toInt()
@@ -44,10 +45,10 @@ fun Context.sp(value: Int): Int = (value * resources.displayMetrics.scaledDensit
 fun Context.sp(value: Float): Int = (value * resources.displayMetrics.scaledDensity).toInt()
 
 //converts px value into dip or sp
-fun Context.px2dip(px: Int): Float = (px.toFloat() / resources.displayMetrics.density).toFloat()
-fun Context.px2sp(px: Int): Float = (px.toFloat() / resources.displayMetrics.scaledDensity).toFloat()
+fun Context.px2dip(px: Int): Float = px.toFloat() / resources.displayMetrics.density
+fun Context.px2sp(px: Int): Float = px.toFloat() / resources.displayMetrics.scaledDensity
 
-fun Context.dimen(resource: Int): Int = resources.getDimensionPixelSize(resource)
+fun Context.dimen(@DimenRes resource: Int): Int = resources.getDimensionPixelSize(resource)
 
 fun Context.attr(attribute: Int): TypedValue {
     var typed = TypedValue()
@@ -76,7 +77,7 @@ inline fun AnkoContext<*>.sp(value: Int): Int = ctx.sp(value)
 inline fun AnkoContext<*>.sp(value: Float): Int = ctx.sp(value)
 inline fun AnkoContext<*>.px2dip(px: Int): Float = ctx.px2dip(px)
 inline fun AnkoContext<*>.px2sp(px: Int): Float = ctx.px2sp(px)
-inline fun AnkoContext<*>.dimen(resource: Int): Int = ctx.dimen(resource)
+inline fun AnkoContext<*>.dimen(@DimenRes resource: Int): Int = ctx.dimen(resource)
 inline fun AnkoContext<*>.dimenAttr(attribute: Int): Int = ctx.dimenAttr(attribute)
 inline fun AnkoContext<*>.colorAttr(attribute: Int): Int = ctx.colorAttr(attribute)
 inline fun AnkoContext<*>.attribute(attribute: Int): TypedValue = ctx.attr(attribute)
@@ -88,7 +89,7 @@ inline fun View.sp(value: Int): Int = context.sp(value)
 inline fun View.sp(value: Float): Int = context.sp(value)
 inline fun View.px2dip(px: Int): Float = context.px2dip(px)
 inline fun View.px2sp(px: Int): Float = context.px2sp(px)
-inline fun View.dimen(resource: Int): Int = context.dimen(resource)
+inline fun View.dimen(@DimenRes resource: Int): Int = context.dimen(resource)
 inline fun View.dimenAttr(attribute: Int): Int = context.dimenAttr(attribute)
 inline fun View.colorAttr(attribute: Int): Int = context.colorAttr(attribute)
 inline fun View.attr(attribute: Int): TypedValue = context.attr(attribute)
@@ -100,7 +101,7 @@ inline fun Fragment.sp(value: Int): Int = activity.sp(value)
 inline fun Fragment.sp(value: Float): Int = activity.sp(value)
 inline fun Fragment.px2dip(px: Int): Float = activity.px2dip(px)
 inline fun Fragment.px2sp(px: Int): Float = activity.px2sp(px)
-inline fun Fragment.dimen(resource: Int): Int = activity.dimen(resource)
+inline fun Fragment.dimen(@DimenRes resource: Int): Int = activity.dimen(resource)
 inline fun Fragment.dimenAttr(attribute: Int): Int = activity.dimenAttr(attribute)
 inline fun Fragment.colorAttr(attribute: Int): Int = activity.colorAttr(attribute)
 inline fun Fragment.attr(attribute: Int): TypedValue = activity.attr(attribute)

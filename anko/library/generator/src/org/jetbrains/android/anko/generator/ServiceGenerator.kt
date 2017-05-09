@@ -30,8 +30,8 @@ class ServiceGenerator : Generator<ServiceElement> {
                     } else null
                 }
                 ?.filterNotNull()
-                ?.sortedBy { it.name }
-                ?: listOf()
+                ?.sortedBy { it.simpleName }
+                ?: emptyList()
     }
 
     private fun FieldNode.toServiceClassName(): String {

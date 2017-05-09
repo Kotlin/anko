@@ -16,26 +16,20 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.config.AnkoConfiguration
+import org.jetbrains.android.anko.config.GeneratorContext
 import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.config.ConfigurationOption
-import org.jetbrains.android.anko.utils.fqName
+import org.jetbrains.android.anko.config.ConfigurationKey
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.ServiceGenerator
-import org.jetbrains.android.anko.utils.simpleName
 
-class ServiceRenderer(config: AnkoConfiguration) : Renderer(config) {
+class ServiceRenderer(context: GeneratorContext) : Renderer(context) {
 
-    override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.SERVICES)
+    override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.SERVICES)
 
-    override fun processElements(state: GenerationState) = StringBuilder().apply {
-        append(render("services") {
-            "services" % seq(state[ServiceGenerator::class.java]) {
-                "name" % it.service.simpleName.decapitalize()
-                "className" % it.service.fqName
-                "const" % it.name
-            }
+    override fun processElements(state: GenerationState) = generatedFile("Suppress(\"unused\")") { importList ->
+        append(render("services", importList) {
+            "services" % state[ServiceGenerator::class.java]
         })
-    }.toString()
+    }
 
 }

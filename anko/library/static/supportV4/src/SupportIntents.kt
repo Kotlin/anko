@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko.support.v4
 
 import android.app.Activity

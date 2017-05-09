@@ -141,3 +141,11 @@ class NewElement(val element: KtExpression, vararg val newNames: String) {
     operator fun component1() = element
     operator fun component2() = newNames //fqName or name in anko package
 }
+
+abstract class A {
+    open fun test(a: CharSequence) {}
+}
+
+class B : A() {
+    override fun test(a: CharSequence) {}
+}

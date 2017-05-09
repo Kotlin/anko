@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.Context
-import android.text.InputType
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
@@ -29,7 +27,8 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import org.jetbrains.anko.custom.ankoView
 
-object `$$Anko$Factories$CustomViews` {
+@PublishedApi
+internal object `$$Anko$Factories$CustomViews` {
     val VERTICAL_LAYOUT_FACTORY = { ctx: Context ->
         val view = _LinearLayout(ctx)
         view.orientation = LinearLayout.VERTICAL

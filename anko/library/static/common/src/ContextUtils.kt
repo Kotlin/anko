@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 package org.jetbrains.anko
 
 import android.app.Activity
+import android.app.Dialog
 import android.app.Fragment
 import android.content.Context
 import android.content.SharedPreferences
@@ -25,52 +27,55 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.os.Parcelable
 import android.preference.PreferenceManager
+import android.support.annotation.IdRes
 import android.view.View
 import android.view.ViewGroup
 import java.io.Serializable
 
-val AnkoContext<*>.resources: Resources
+inline val AnkoContext<*>.resources: Resources
     get() = ctx.resources
 
-val AnkoContext<*>.assets: AssetManager
+inline val AnkoContext<*>.assets: AssetManager
     get() = ctx.assets
 
-val AnkoContext<*>.defaultSharedPreferences: SharedPreferences
+inline val AnkoContext<*>.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(ctx)
 
-val Context.defaultSharedPreferences: SharedPreferences
+inline val Context.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(this)
 
-val Fragment.defaultSharedPreferences: SharedPreferences
+inline val Fragment.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(activity)
 
-val Fragment.act: Activity
+inline val Fragment.act: Activity
     get() = activity
 
-val Fragment.ctx: Context
+inline val Fragment.ctx: Context
     get() = activity
 
-val Context.ctx: Context
+inline val Context.ctx: Context
     get() = this
 
-val Activity.act: Activity
+inline val Activity.act: Activity
     get() = this
 
 /**
  * Returns the content view of this Activity if set, null otherwise.
  */
-val Activity.contentView: View?
+inline val Activity.contentView: View?
     get() = findOptional<ViewGroup>(android.R.id.content)?.getChildAt(0)
 
-inline fun <reified T : View> View.find(id: Int): T = findViewById(id) as T
-inline fun <reified T : View> Activity.find(id: Int): T = findViewById(id) as T
-inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
+inline fun <reified T : View> View.find(@IdRes id: Int): T = findViewById(id) as T
+inline fun <reified T : View> Activity.find(@IdRes id: Int): T = findViewById(id) as T
+inline fun <reified T : View> Fragment.find(@IdRes id: Int): T = view?.findViewById(id) as T
+inline fun <reified T : View> Dialog.find(@IdRes id: Int): T = findViewById(id) as T
 
-inline fun <reified T : View> View.findOptional(id: Int): T? = findViewById(id) as? T
-inline fun <reified T : View> Activity.findOptional(id: Int): T? = findViewById(id) as? T
-inline fun <reified T : View> Fragment.findOptional(id: Int): T? = view?.findViewById(id) as? T
+inline fun <reified T : View> View.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
+inline fun <reified T : View> Activity.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
+inline fun <reified T : View> Fragment.findOptional(@IdRes id: Int): T? = view?.findViewById(id) as? T
+inline fun <reified T : View> Dialog.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 
-fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
+inline fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
     arguments = bundleOf(*params)
     return this
 }
@@ -117,23 +122,23 @@ fun bundleOf(vararg params: Pair<String, Any>): Bundle {
     return b
 }
 
-val Context.displayMetrics: android.util.DisplayMetrics
+inline val Context.displayMetrics: android.util.DisplayMetrics
     get() = resources.displayMetrics
 
-val Context.configuration: android.content.res.Configuration
+inline val Context.configuration: android.content.res.Configuration
     get() = resources.configuration
 
-val AnkoContext<*>.displayMetrics: android.util.DisplayMetrics
+inline val AnkoContext<*>.displayMetrics: android.util.DisplayMetrics
     get() = ctx.resources.displayMetrics
 
-val AnkoContext<*>.configuration: android.content.res.Configuration
+inline val AnkoContext<*>.configuration: android.content.res.Configuration
     get() = ctx.resources.configuration
 
-val android.content.res.Configuration.portrait: Boolean
+inline val android.content.res.Configuration.portrait: Boolean
     get() = orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT
 
-val android.content.res.Configuration.landscape: Boolean
+inline val android.content.res.Configuration.landscape: Boolean
     get() = orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
 
-val android.content.res.Configuration.long: Boolean
+inline val android.content.res.Configuration.long: Boolean
     get() = (screenLayout and android.content.res.Configuration.SCREENLAYOUT_LONG_YES) != 0

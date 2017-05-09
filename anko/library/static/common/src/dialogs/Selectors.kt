@@ -14,31 +14,37 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko
 
 import android.app.Fragment
 import android.content.Context
+import android.content.DialogInterface
 
-inline fun AnkoContext<*>.selector(
+inline fun <D : DialogInterface> AnkoContext<*>.selector(
+        noinline factory: AlertBuilderFactory<D>,
         title: CharSequence? = null,
         items: List<CharSequence>,
-        noinline onClick: (Int) -> Unit
-): Unit = ctx.selector(title, items, onClick)
+        noinline onClick: (DialogInterface, CharSequence, Int) -> Unit
+): Unit = ctx.selector(factory, title, items, onClick)
 
-inline fun Fragment.selector(
+inline fun <D : DialogInterface> Fragment.selector(
+        noinline factory: AlertBuilderFactory<D>,
         title: CharSequence? = null,
         items: List<CharSequence>,
-        noinline onClick: (Int) -> Unit
-): Unit = activity.selector(title, items, onClick)
+        noinline onClick: (DialogInterface, CharSequence, Int) -> Unit
+): Unit = activity.selector(factory, title, items, onClick)
 
-fun Context.selector(
+fun <D : DialogInterface> Context.selector(
+        factory: AlertBuilderFactory<D>,
         title: CharSequence? = null,
         items: List<CharSequence>,
-        onClick: (Int) -> Unit
+        onClick: (DialogInterface, CharSequence, Int) -> Unit
 ) {
-    with(AlertDialogBuilder(this)) {
-        if (title != null) title(title)
+    with(factory(this)) {
+        if (title != null) {
+            this.title = title
+        }
         items(items, onClick)
         show()
     }

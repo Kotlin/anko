@@ -1,0 +1,35 @@
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'kotlin'
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+        kotlin.srcDirs = ['src']
+    }
+}
+
+configurations {
+    shadow
+    compile.extendsFrom shadow
+}
+
+dependencies {
+    compile project(':ide:plugin-classpath')
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    shadow "org.jetbrains.kotlinx:kotlinx.dom:$kotlinx_dom_version"
+
+    shadow(project(':ide:attrs')) {
+        transitive = false
+    }
+    shadow(project(':ide:intentions')) {
+        transitive = false
+    }
+    shadow(project(':ide:xml-converter')) {
+        transitive = false
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadow]
+}

@@ -16,16 +16,27 @@
 
 package org.jetbrains.android.anko.templates
 
+import org.jetbrains.android.anko.utils.ImportList
+import java.io.File
+
 interface TemplateProvider {
-    fun render(templateName: String, args: Map<String, Any?>): String
+    val extension: String
+    fun render(templateFile: File, importList: ImportList, args: Map<String, Any?>): String
 }
 
-class TemplateManager(private val templateProvider: TemplateProvider) {
-
-    fun render(templateName: String, body: TemplateContext.() -> Unit): String {
+class TemplateManager(val baseDir: File, vararg val templateProviders: TemplateProvider) {
+    fun render(templateName: String, importList: ImportList, body: TemplateContext.() -> Unit): String {
         val context = TemplateContext()
         context.body()
-        return templateProvider.render(templateName, context.getArguments())
+
+        for (provider in templateProviders) {
+            val templateFile = File(baseDir, "$templateName.${provider.extension}")
+            if (templateFile.exists()) {
+                return provider.render(templateFile, importList, context.getArguments())
+            }
+        }
+
+        error("TemplateProvider was not found for $templateName")
     }
 }
 
@@ -34,12 +45,12 @@ class TemplateContext {
 
     fun getArguments(): Map<String, Any?> = args
 
-    operator fun <T: Any?> String.mod(v: T): T {
+    operator fun <T: Any?> String.rem(v: T): T {
         args.put(this, v)
         return v
     }
 
-    operator fun String.mod(v: TemplateContext.() -> Unit) {
+    operator fun String.rem(v: TemplateContext.() -> Unit) {
         val innerContext = TemplateContext()
         innerContext.v()
         args.put(this, innerContext.getArguments())

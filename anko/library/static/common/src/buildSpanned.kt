@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused", "NOTHING_TO_INLINE")
 package org.jetbrains.anko
 
 import android.graphics.*
@@ -25,23 +26,23 @@ inline fun buildSpanned(f: SpannableStringBuilder.() -> Unit): Spanned {
     return SpannableStringBuilder().apply(f)
 }
 
-val SpannableStringBuilder.Bold: StyleSpan
+inline val SpannableStringBuilder.Bold: StyleSpan
     get() = StyleSpan(Typeface.BOLD)
 
-val SpannableStringBuilder.Italic: StyleSpan
+inline val SpannableStringBuilder.Italic: StyleSpan
     get() = StyleSpan(Typeface.ITALIC)
 
-val SpannableStringBuilder.Underline: UnderlineSpan
+inline val SpannableStringBuilder.Underline: UnderlineSpan
     get() = UnderlineSpan()
 
-val SpannableStringBuilder.Strikethrough: StrikethroughSpan
+inline val SpannableStringBuilder.Strikethrough: StrikethroughSpan
     get() = StrikethroughSpan()
 
-fun SpannableStringBuilder.foregroundColor(color: Int): ForegroundColorSpan {
+inline fun SpannableStringBuilder.foregroundColor(color: Int): ForegroundColorSpan {
     return ForegroundColorSpan(color)
 }
 
-fun SpannableStringBuilder.backgroundColor(color: Int): BackgroundColorSpan {
+inline fun SpannableStringBuilder.backgroundColor(color: Int): BackgroundColorSpan {
     return BackgroundColorSpan(color)
 }
 
@@ -65,12 +66,12 @@ inline fun SpannableStringBuilder.append(span: Any, f: SpannableStringBuilder.()
     setSpan(span, start, length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
 }
 
-fun SpannableStringBuilder.appendln(text: CharSequence, vararg spans: Any) {
+inline fun SpannableStringBuilder.appendln(text: CharSequence, vararg spans: Any) {
     append(text, *spans)
     appendln()
 }
 
-fun SpannableStringBuilder.appendln(text: CharSequence, span: Any) {
+inline fun SpannableStringBuilder.appendln(text: CharSequence, span: Any) {
     append(text, span)
     appendln()
 }

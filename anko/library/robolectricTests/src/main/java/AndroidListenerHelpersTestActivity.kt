@@ -3,24 +3,21 @@ package com.example.android_test
 import android.app.Activity
 import android.os.Bundle
 import org.jetbrains.anko.*
-import android.widget.LinearLayout
-import android.view.View
-import android.view.View.OnClickListener
+import org.jetbrains.anko.sdk15.listeners.*
 
-public open class AndroidListenerHelpersTestActivity() : Activity() {
+open class AndroidListenerHelpersTestActivity : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {
             linearLayout {
-               button() {
+               button {
                   onClick {
                       text = "clicked"
                   }
                }
                checkBox {
-                  onCheckedChange {
-                     cb, checkstate ->
-                        if(checkstate)
+                  onCheckedChange { _, checkState ->
+                        if(checkState)
                             text = "checked"
                   }
                }

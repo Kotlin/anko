@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko.db
 
 import android.database.Cursor
@@ -23,15 +24,15 @@ import org.jetbrains.anko.internals.AnkoInternals
 import java.lang.reflect.Modifier
 import java.util.*
 
-interface RowParser<T> {
+interface RowParser<out T> {
     fun parseRow(columns: Array<Any?>): T
 }
 
-interface MapRowParser<T> {
+interface MapRowParser<out T> {
     fun parseRow(columns: Map<String, Any?>): T
 }
 
-private class SingleColumnParser<T> : RowParser<T> {
+private class SingleColumnParser<out T> : RowParser<T> {
     override fun parseRow(columns: Array<Any?>): T {
         if (columns.size != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
@@ -40,7 +41,7 @@ private class SingleColumnParser<T> : RowParser<T> {
     }
 }
 
-private class ScalarColumnParser<R, T>(val modifier: ((R) -> T)? = null) : RowParser<T> {
+private class ScalarColumnParser<in R, out T>(val modifier: ((R) -> T)? = null) : RowParser<T> {
     override fun parseRow(columns: Array<Any?>): T {
         if (columns.size != 1)
             throw SQLiteException("Invalid row: row for SingleColumnParser must contain exactly one column")
@@ -52,10 +53,10 @@ private class ScalarColumnParser<R, T>(val modifier: ((R) -> T)? = null) : RowPa
     }
 }
 
-val ShortParser: RowParser<Short> = ScalarColumnParser<Long, Short> { it.toShort() }
-val IntParser: RowParser<Int> = ScalarColumnParser<Long, Int> { it.toInt() }
+val ShortParser: RowParser<Short> = ScalarColumnParser(modifier = Long::toShort)
+val IntParser: RowParser<Int> = ScalarColumnParser(modifier = Long::toInt)
 val LongParser: RowParser<Long> = SingleColumnParser()
-val FloatParser: RowParser<Float> = ScalarColumnParser<Double, Float> { it.toFloat() }
+val FloatParser: RowParser<Float> = ScalarColumnParser(modifier = Double::toFloat)
 val DoubleParser: RowParser<Double> = SingleColumnParser()
 val StringParser: RowParser<String> = SingleColumnParser()
 val BlobParser: RowParser<ByteArray> = SingleColumnParser()
@@ -128,41 +129,6 @@ fun Cursor.asSequence(): Sequence<Array<Any?>> {
 
 fun Cursor.asMapSequence(): Sequence<Map<String, Any?>> {
     return CursorMapSequence(this)
-}
-
-@Suppress("NOTHING_TO_INLINE")
-inline fun <reified T: Any> classParser(): RowParser<T> {
-    val clazz = T::class.java
-    val constructors = clazz.declaredConstructors.filter {
-        val types = it.parameterTypes
-        !it.isVarArgs && Modifier.isPublic(it.modifiers) &&
-            types != null && types.size > 0
-    }
-    if (constructors.isEmpty())
-        throw AnkoException(
-            "Can't initialize object parser for ${clazz.canonicalName}, no acceptable constructors found")
-
-    val c = constructors[0]
-
-    for (type in c.parameterTypes) {
-        @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
-        val valid = when (type) {
-            Long::class.java, java.lang.Long::class.java -> true
-            Double::class.java, java.lang.Double::class.java -> true
-            String::class.java, ByteArray::class.java -> true
-            else -> false
-        }
-        if (!valid)
-            throw AnkoException(
-                "Invalid argument type ${type.canonicalName} in ${clazz.canonicalName} constructor." +
-                "Supported types are: Long, Double, String, Array<Byte>.")
-    }
-
-    return object : RowParser<T> {
-        override fun parseRow(columns: Array<Any?>): T {
-            return c.newInstance(*columns) as T
-        }
-    }
 }
 
 private fun Cursor.getColumnValue(index: Int): Any? {

@@ -3,9 +3,8 @@ package com.example.android_test
 import android.app.Activity
 import android.os.Bundle
 import org.jetbrains.anko.*
-import android.widget.LinearLayout
 
-public open class AndroidWidgetTestActivity() : Activity() {
+open class AndroidWidgetTestActivity : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {

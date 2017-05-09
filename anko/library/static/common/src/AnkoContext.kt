@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-
+@file:Suppress("unused")
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -24,10 +24,13 @@ import android.content.ContextWrapper
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
-import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.internals.AnkoInternals.createAnkoContext
 
-interface AnkoContext<T> : ViewManager {
+@DslMarker
+private annotation class AnkoContextDslMarker
+
+@AnkoContextDslMarker
+interface AnkoContext<out T> : ViewManager {
     val ctx: Context
     val owner: T
     val view: View
@@ -58,7 +61,7 @@ interface AnkoContext<T> : ViewManager {
 }
 
 internal class DelegatingAnkoContext<T: ViewGroup>(override val owner: T): AnkoContext<T> {
-    override val ctx = owner.context
+    override val ctx: Context = owner.context
     override val view: View = owner
 
     override fun addView(view: View?, params: ViewGroup.LayoutParams?) {
@@ -75,7 +78,7 @@ internal class DelegatingAnkoContext<T: ViewGroup>(override val owner: T): AnkoC
 internal class ReusableAnkoContext<T>(
         override val ctx: Context,
         override val owner: T,
-        private val setContentView: Boolean
+        setContentView: Boolean
 ) : AnkoContextImpl<T>(ctx, owner, setContentView) {
     override fun alreadyHasView() {}
 }
@@ -115,16 +118,22 @@ open class AnkoContextImpl<T>(
     open protected fun alreadyHasView(): Unit = throw IllegalStateException("View is already set: $myView")
 }
 
-fun Context.UI(setContentView: Boolean, init: AnkoContext<Context>.() -> Unit) =
-        createAnkoContext(this, init, setContentView)
+inline fun Context.UI(setContentView: Boolean, init: AnkoContext<Context>.() -> Unit): AnkoContext<Context> {
+    return createAnkoContext(this, init, setContentView)
+}
 
-fun Context.UI(init: AnkoContext<Context>.() -> Unit) = createAnkoContext(this, init)
+inline fun Context.UI(init: AnkoContext<Context>.() -> Unit): AnkoContext<Context> {
+    return createAnkoContext(this, init)
+}
 
-fun Fragment.UI(init: AnkoContext<Fragment>.() -> Unit): AnkoContext<Fragment> = createAnkoContext(activity, init)
+inline fun Fragment.UI(init: AnkoContext<Fragment>.() -> Unit): AnkoContext<Fragment> {
+    return createAnkoContext(activity, init)
+}
 
-interface AnkoComponent<T> {
+interface AnkoComponent<in T> {
     fun createView(ui: AnkoContext<T>): View
 }
 
-fun <T : Activity> AnkoComponent<T>.setContentView(activity: T) =
-        createView(AnkoContextImpl(activity, activity, true))
+fun <T : Activity> AnkoComponent<T>.setContentView(activity: T): View {
+    return createView(AnkoContextImpl(activity, activity, true))
+}

@@ -23,7 +23,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -37,6 +36,10 @@ import java.io.Serializable
 import java.util.*
 
 object AnkoInternals {
+    const val NO_GETTER: String = "Property does not have a getter"
+
+    fun noGetter(): Nothing = throw AnkoException("Property does not have a getter")
+
     private class AnkoContextThemeWrapper(base: Context?, val theme: Int) : ContextThemeWrapper(base, theme)
     
     fun <T : View> addView(manager: ViewManager, view: T) {
@@ -99,12 +102,10 @@ object AnkoInternals {
 
         val UI_MODE_TYPE_APPLIANCE = 0x05
         val UI_MODE_TYPE_WATCH = 0x06
-
-        val DENSITY_DPI_NONE = 0xffff
     }
 
     @JvmStatic
-    fun <T> createIntent(ctx: Context, clazz: Class<out T>, params: Array<out Pair<String, Any>>): Intent {
+    fun <T> createIntent(ctx: Context, clazz: Class<out T>, params: Array<out Pair<String, Any?>>): Intent {
         val intent = Intent(ctx, clazz)
         if (params.isNotEmpty()) fillIntentArguments(intent, params)
         return intent
@@ -139,10 +140,11 @@ object AnkoInternals {
     }
 
     @JvmStatic
-    private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any>>) {
+    private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any?>>) {
         params.forEach {
             val value = it.second
             when (value) {
+                null -> intent.putExtra(it.first, null as Serializable?)
                 is Int -> intent.putExtra(it.first, value)
                 is Long -> intent.putExtra(it.first, value)
                 is CharSequence -> intent.putExtra(it.first, value)
@@ -170,20 +172,7 @@ object AnkoInternals {
                 is BooleanArray -> intent.putExtra(it.first, value)
                 else -> throw AnkoException("Intent extra ${it.first} has wrong type ${value.javaClass.name}")
             }
-        }
-    }
-
-    // SQLiteDatabase is not closeable in older versions of Android
-    @JvmStatic
-    inline fun <T> useDatabase(db: SQLiteDatabase, f: (SQLiteDatabase) -> T) : T {
-        try {
-            return f(db)
-        } finally {
-            try {
-                db.close()
-            } catch (e: Exception) {
-                // Do nothing
-            }
+            return@forEach
         }
     }
 

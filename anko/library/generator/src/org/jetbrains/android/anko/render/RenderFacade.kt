@@ -16,39 +16,60 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.config.AnkoConfiguration
-import org.jetbrains.android.anko.config.Configurable
-import org.jetbrains.android.anko.config.ConfigurationOption
-import org.jetbrains.android.anko.config.generate
+import org.jetbrains.android.anko.config.GeneratorContext
+import org.jetbrains.android.anko.config.ConfigurationKey
+import org.jetbrains.android.anko.config.WithGeneratorContext
+import org.jetbrains.android.anko.config.get
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.templates.TemplateContext
+import org.jetbrains.android.anko.utils.ImportList
 import org.jetbrains.android.anko.utils.ReflectionUtils
 
-abstract class Renderer(config: AnkoConfiguration): Configurable(config) {
-    protected abstract fun processElements(state: GenerationState): String
-    abstract val renderIf: Array<ConfigurationOption>
+abstract class Renderer(override val context: GeneratorContext): WithGeneratorContext {
+    protected abstract fun processElements(state: GenerationState): GeneratedFile
+
+    abstract val renderIf: Array<ConfigurationKey<Boolean>>
 
     fun process(state: GenerationState): String = generate(*renderIf) {
-        processElements(state)
+        val generatedFile = processElements(state)
+        buildString {
+            if (!generatedFile.importList.isEmpty()) {
+                generatedFile.importList.imports.joinTo(this, "\n") { "import $it" }
+                appendln().appendln()
+            }
+
+            append(generatedFile.body)
+        }
     }
 
-    protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {
-        return config.templateManager.render(templateName, body)
+    private fun generate(vararg option: ConfigurationKey<Boolean>, init: () -> String) : String {
+        return if (option.any { config[it] }) init() else ""
+    }
+
+    protected fun render(
+            templateName: String,
+            importList: ImportList = ImportList(),
+            body: TemplateContext.() -> Unit
+    ): String {
+        return templateManager.render(templateName, importList, body)
     }
 }
 
+fun generatedFile(vararg fileAnnotations: String, builder: StringBuilder.(ImportList) -> Unit): GeneratedFile {
+    val sb = StringBuilder()
+    val importList = ImportList()
+    sb.builder(importList)
+    return GeneratedFile(sb.toString(), importList, fileAnnotations.toList())
+}
+
+class GeneratedFile(val body: String, val importList: ImportList, val fileAnnotations: List<String>)
+
 class RenderFacade(
         val generationState: GenerationState
-) : Configurable(generationState.config), ViewConstructorUtils, ReflectionUtils {
-
+) : ViewConstructorUtils, ReflectionUtils {
     private val cachedResults: MutableMap<Class<out Renderer>, String> = hashMapOf()
 
     operator fun get(clazz: Class<out Renderer>): String = cachedResults.getOrPut(clazz) {
-        initializeClassWithArgs(clazz, config to AnkoConfiguration::class.java).process(generationState)
+        initializeClassWithArgs(clazz, generationState.context to GeneratorContext::class.java).process(generationState)
     }
-
-    protected fun render(templateName: String, body: TemplateContext.() -> Unit): String {
-        return config.templateManager.render(templateName, body)
-    }
-
 }

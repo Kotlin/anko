@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+@file:Suppress("unused")
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -43,7 +45,7 @@ class AnkoAsyncContext<T>(val weakRef: WeakReference<T>)
 
 /**
  * Execute [f] on the application UI thread.
- * If the [async] receiver still exists (was not collected by GC), 
+ * If the [doAsync] receiver still exists (was not collected by GC),
  *  [f] gets it as a parameter ([f] gets null if the receiver does not exist anymore).
  */
 fun <T> AnkoAsyncContext<T>.onComplete(f: (T?) -> Unit) {
@@ -57,7 +59,7 @@ fun <T> AnkoAsyncContext<T>.onComplete(f: (T?) -> Unit) {
 
 /**
  * Execute [f] on the application UI thread.
- * [async] receiver will be passed to [f].
+ * [doAsync] receiver will be passed to [f].
  * If the receiver does not exist anymore (it was collected by GC), [f] will not be executed.
  */
 fun <T> AnkoAsyncContext<T>.uiThread(f: (T) -> Unit): Boolean {
@@ -120,7 +122,7 @@ fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T)
     activity.runOnUiThread { activity.f(fragment) }
     return true
 }
-
+private val crashLogger = { throwable : Throwable -> throwable.printStackTrace() }
 /**
  * Execute [task] asynchronously.
  * 
@@ -129,21 +131,26 @@ fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T)
  * @param task the code to execute asynchronously.
  */
 fun <T> T.doAsync(
-        exceptionHandler: ((Throwable) -> Unit)? = null,
+        exceptionHandler: ((Throwable) -> Unit)? = crashLogger,
         task: AnkoAsyncContext<T>.() -> Unit
 ): Future<Unit> {
     val context = AnkoAsyncContext(WeakReference(this))
     return BackgroundExecutor.submit {
-        try {
+        return@submit try {
             context.task()
         } catch (thr: Throwable) {
-            exceptionHandler?.invoke(thr) ?: Unit
+            val result = exceptionHandler?.invoke(thr)
+            if (result != null) {
+                result
+            } else {
+                Unit
+            }
         }
     }
 }
 
 fun <T> T.doAsync(
-        exceptionHandler: ((Throwable) -> Unit)? = null,
+        exceptionHandler: ((Throwable) -> Unit)? = crashLogger,
         executorService: ExecutorService,
         task: AnkoAsyncContext<T>.() -> Unit
 ): Future<Unit> {
@@ -158,7 +165,7 @@ fun <T> T.doAsync(
 }
 
 fun <T, R> T.doAsyncResult(
-        exceptionHandler: ((Throwable) -> Unit)? = null,
+        exceptionHandler: ((Throwable) -> Unit)? = crashLogger,
         task: AnkoAsyncContext<T>.() -> R
 ): Future<R> {
     val context = AnkoAsyncContext(WeakReference(this))
@@ -173,7 +180,7 @@ fun <T, R> T.doAsyncResult(
 }
 
 fun <T, R> T.doAsyncResult(
-        exceptionHandler: ((Throwable) -> Unit)? = null,
+        exceptionHandler: ((Throwable) -> Unit)? = crashLogger,
         executorService: ExecutorService,
         task: AnkoAsyncContext<T>.() -> R
 ): Future<R> {
@@ -200,5 +207,5 @@ internal object BackgroundExecutor {
 
 private object ContextHelper {
     val handler = Handler(Looper.getMainLooper())
-    val mainThread = Looper.getMainLooper().thread
+    val mainThread: Thread = Looper.getMainLooper().thread
 }

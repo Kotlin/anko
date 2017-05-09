@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko.db
 
 import android.content.ContentValues
@@ -78,7 +79,7 @@ fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = false, 
     val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
     execSQL(
         columns.map { col ->
-            "${col.first} ${col.second}"
+            "${col.first} ${col.second.render()}"
         }.joinToString(", ", prefix = "CREATE TABLE $ifNotExistsText `$escapedTableName`(", postfix = ");")
     )
 }
@@ -89,7 +90,7 @@ fun SQLiteDatabase.dropTable(tableName: String, ifExists: Boolean = false) {
     execSQL("DROP TABLE $ifExistsText `$escapedTableName`;")
 }
 
-private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^\\{}]+)\\}")
+private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^{}]+)\\}")
 
 internal fun applyArguments(whereClause: String, vararg args: Pair<String, Any>): String {
     val argsMap = args.fold(hashMapOf<String, Any>()) { map, arg ->
@@ -143,7 +144,7 @@ internal fun Array<out Pair<String, Any?>>.toContentValues(): ContentValues {
 
 abstract class ManagedSQLiteOpenHelper(
     ctx: Context,
-    name: String,
+    name: String?,
     factory: SQLiteDatabase.CursorFactory? = null,
     version: Int = 1
 ): SQLiteOpenHelper(ctx, name, factory, version) {

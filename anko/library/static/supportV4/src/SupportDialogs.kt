@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko.support.v4
 
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.support.v4.app.Fragment
 import org.jetbrains.anko.*
 
@@ -32,22 +33,22 @@ inline fun Fragment.longToast(text: CharSequence): Unit = activity.longToast(tex
 inline fun Fragment.selector(
         title: CharSequence? = null,
         items: List<CharSequence>,
-        noinline onClick: (Int) -> Unit
+        noinline onClick: (DialogInterface, Int) -> Unit
 ): Unit = activity.selector(title, items, onClick)
 
 inline fun Fragment.alert(
         message: String,
         title: String? = null,
-        noinline init: (AlertDialogBuilder.() -> Unit)? = null
+        noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ) = activity.alert(message, title, init)
 
 inline fun Fragment.alert(
         message: Int,
         title: Int? = null,
-        noinline init: (AlertDialogBuilder.() -> Unit)? = null
+        noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ) = activity.alert(message, title, init)
 
-inline fun Fragment.alert(noinline init: AlertDialogBuilder.() -> Unit) = activity.alert(init)
+inline fun Fragment.alert(noinline init: AlertBuilder<DialogInterface>.() -> Unit) = activity.alert(init)
 
 inline fun Fragment.progressDialog(
         message: String? = null,

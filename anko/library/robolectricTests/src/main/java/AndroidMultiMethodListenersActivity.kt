@@ -3,32 +3,30 @@ package com.example.android_test
 import android.app.Activity
 import android.os.Bundle
 import org.jetbrains.anko.*
-import android.widget.LinearLayout
-import android.view.View
-import android.view.View.OnClickListener
+import org.jetbrains.anko.sdk15.listeners.*
 
-public open class AndroidMultiMethodListenersActivity() : Activity() {
+open class AndroidMultiMethodListenersActivity : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {
             linearLayout {
                 listView {
                     onScrollListener {
-                        onScroll { a, b, c, d ->  }
-                        onScrollStateChanged { a, b -> }
+                        onScroll { _, _, _, _ ->  }
+                        onScrollStateChanged { _, _ -> }
                     }
                 }
                 searchView {
                     onQueryTextListener {
-                        onQueryTextChange { a -> true }
-                        onQueryTextSubmit { a -> true }
+                        onQueryTextChange { _ -> true }
+                        onQueryTextSubmit { _ -> true }
                     }
                 }
                 seekBar {
                     onSeekBarChangeListener {
-                        onProgressChanged { a, b, c -> }
-                        onStartTrackingTouch { a -> }
-                        onStopTrackingTouch { a -> }
+                        onProgressChanged { _, _, _ -> }
+                        onStartTrackingTouch { _ -> }
+                        onStopTrackingTouch { _ -> }
                     }
                 }
             }

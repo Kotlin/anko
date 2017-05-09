@@ -1,0 +1,223 @@
+{
+  "templates": {
+    "support": "dependencies/android-sdk/extras/android/m2repository/com/android/support",
+    "platforms": "dependencies/android-sdk/platforms",
+    "supportVer": "25.1.1"
+  },
+
+  "artifacts": [
+    {
+      "name" : "common",
+      "type": "common",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": []
+    },
+    {
+      "name": "sqlite",
+      "type": "sqlite",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": []
+    },
+    {
+      "name": "sdk15",
+      "type": "platform",
+      "platform": [ "%platforms%/android-15/android.jar" ]
+    },
+    {
+      "name": "sdk15-listeners",
+      "type": "simpleListeners",
+      "platform": [ "%platforms%/android-15/android.jar" ]
+    },
+    {
+      "name": "sdk15-coroutines",
+      "type": "coroutineListeners",
+      "platform": [ "%platforms%/android-15/android.jar" ]
+    },
+    {
+      "name": "sdk19",
+      "type": "platform",
+      "platform": [ "%platforms%/android-19/android.jar" ]
+    },
+    {
+      "name": "sdk19-listeners",
+      "type": "simpleListeners",
+      "platform": [ "%platforms%/android-19/android.jar" ]
+    },
+    {
+      "name": "sdk19-coroutines",
+      "type": "coroutineListeners",
+      "platform": [ "%platforms%/android-19/android.jar" ]
+    },
+    {
+      "name": "sdk21",
+      "type": "platform",
+      "platform": [ "%platforms%/android-21/android.jar" ]
+    },
+    {
+      "name": "sdk21-listeners",
+      "type": "simpleListeners",
+      "platform": [ "%platforms%/android-21/android.jar" ]
+    },
+    {
+      "name": "sdk21-coroutines",
+      "type": "coroutineListeners",
+      "platform": [ "%platforms%/android-21/android.jar" ]
+    },
+    {
+      "name": "sdk23",
+      "type": "platform",
+      "platform": [ "%platforms%/android-23/android.jar" ]
+    },
+    {
+      "name": "sdk23-listeners",
+      "type": "simpleListeners",
+      "platform": [ "%platforms%/android-23/android.jar" ]
+    },
+    {
+      "name": "sdk23-coroutines",
+      "type": "coroutineListeners",
+      "platform": [ "%platforms%/android-23/android.jar" ]
+    },
+    {
+      "name": "sdk25",
+      "type": "platform",
+      "platform": [ "%platforms%/android-25/android.jar" ]
+    },
+    {
+      "name": "sdk25-listeners",
+      "type": "simpleListeners",
+      "platform": [ "%platforms%/android-25/android.jar" ]
+    },
+    {
+      "name": "sdk25-coroutines",
+      "type": "coroutineListeners",
+      "platform": [ "%platforms%/android-25/android.jar" ]
+    },
+    {
+      "name": "support-v4",
+      "type": "supportV4",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [
+        "%support%/support-v4/%supportVer%/support-v4-%supportVer%.aar",
+        "%support%/support-compat/%supportVer%/support-compat-%supportVer%.aar",
+        "%support%/support-media-compat/%supportVer%/support-media-compat-%supportVer%.aar",
+        "%support%/support-core-ui/%supportVer%/support-core-ui-%supportVer%.aar",
+        "%support%/support-core-utils/%supportVer%/support-core-utils-%supportVer%.aar",
+        "%support%/support-fragment/%supportVer%/support-fragment-%supportVer%.aar"
+      ]
+    },
+    {
+      "name": "appcompat-v7",
+      "type": "toolkit",
+      "platform": [
+        "%platforms%/android-25/android.jar",
+        "%support%/support-v4/%supportVer%/support-v4-%supportVer%.aar",
+        "%support%/support-compat/%supportVer%/support-compat-%supportVer%.aar",
+        "%support%/support-media-compat/%supportVer%/support-media-compat-%supportVer%.aar",
+        "%support%/support-core-ui/%supportVer%/support-core-ui-%supportVer%.aar",
+        "%support%/support-core-utils/%supportVer%/support-core-utils-%supportVer%.aar",
+        "%support%/support-fragment/%supportVer%/support-fragment-%supportVer%.aar"
+      ],
+      "target": [ "%support%/appcompat-v7/%supportVer%/appcompat-v7-%supportVer%.aar" ]
+    },
+    {
+      "name": "appcompat-v7-listeners",
+      "type": "simpleListeners",
+      "platform": [
+        "%platforms%/android-25/android.jar",
+        "%support%/support-v4/%supportVer%/support-v4-%supportVer%.aar",
+        "%support%/support-compat/%supportVer%/support-compat-%supportVer%.aar",
+        "%support%/support-media-compat/%supportVer%/support-media-compat-%supportVer%.aar",
+        "%support%/support-core-ui/%supportVer%/support-core-ui-%supportVer%.aar",
+        "%support%/support-core-utils/%supportVer%/support-core-utils-%supportVer%.aar",
+        "%support%/support-fragment/%supportVer%/support-fragment-%supportVer%.aar"
+      ],
+      "target": [ "%support%/appcompat-v7/%supportVer%/appcompat-v7-%supportVer%.aar" ]
+    },
+    {
+      "name": "appcompat-v7-coroutines",
+      "type": "coroutineListeners",
+      "platform": [
+        "%platforms%/android-25/android.jar",
+        "%support%/support-v4/%supportVer%/support-v4-%supportVer%.aar",
+        "%support%/support-compat/%supportVer%/support-compat-%supportVer%.aar",
+        "%support%/support-media-compat/%supportVer%/support-media-compat-%supportVer%.aar",
+        "%support%/support-core-ui/%supportVer%/support-core-ui-%supportVer%.aar",
+        "%support%/support-core-utils/%supportVer%/support-core-utils-%supportVer%.aar",
+        "%support%/support-fragment/%supportVer%/support-fragment-%supportVer%.aar"
+      ],
+      "target": [ "%support%/appcompat-v7/%supportVer%/appcompat-v7-%supportVer%.aar" ]
+    },
+    {
+      "name": "cardview-v7",
+      "type": "toolkit",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [ "%support%/cardview-v7/%supportVer%/cardview-v7-%supportVer%.aar" ]
+    },
+    {
+      "name": "design",
+      "type": "toolkit",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [ "%support%/design/%supportVer%/design-%supportVer%.aar" ]
+    },
+    {
+      "name": "design-listeners",
+      "type": "simpleListeners",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [ "%support%/design/%supportVer%/design-%supportVer%.aar" ]
+    },
+    {
+      "name": "design-coroutines",
+      "type": "coroutineListeners",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [ "%support%/design/%supportVer%/design-%supportVer%.aar" ]
+    },
+    {
+      "name": "gridlayout-v7",
+      "type": "toolkit",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [ "%support%/gridlayout-v7/%supportVer%/gridlayout-v7-%supportVer%.aar" ]
+    },
+    {
+      "name": "percent",
+      "type": "toolkit",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [ "%support%/percent/%supportVer%/percent-%supportVer%.aar" ]
+    },
+    {
+      "name": "recyclerview-v7",
+      "type": "toolkit",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [ "%support%/recyclerview-v7/%supportVer%/recyclerview-v7-%supportVer%.aar" ]
+    },
+    {
+      "name": "recyclerview-v7-listeners",
+      "type": "simpleListeners",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [ "%support%/recyclerview-v7/%supportVer%/recyclerview-v7-%supportVer%.aar" ]
+    },
+    {
+      "name": "recyclerview-v7-coroutines",
+      "type": "coroutineListeners",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [ "%support%/recyclerview-v7/%supportVer%/recyclerview-v7-%supportVer%.aar" ]
+    }
+  ],
+
+  "tunes": {
+    "excludedClasses": [
+      "android.support.v4.app.NoSaveStateFrameLayout",
+      "android.app.FragmentBreadCrumbs",
+      "android.widget.MediaController",
+      "android.provider.ContactsContract.BaseSyncColumns",
+      "android.inputmethodservice.KeyboardView",
+      "android.support.v4.widget.CircleImageView",
+      "android.support.v7.internal.widget.*",
+      "android.support.v7.internal.view.menu.*",
+      "android.renderscript.RSSurfaceView",
+      "android.renderscript.RenderScriptGL",
+      "android.renderscript.RSTextureView",
+      "android.support.v7.widget.DropDownListView"
+    ]
+  }
+}

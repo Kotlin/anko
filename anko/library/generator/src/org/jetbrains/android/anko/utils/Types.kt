@@ -41,8 +41,12 @@ private fun mapJavaToKotlinType(str: String): String {
     }
 }
 
-internal fun Type.asString(nullable: Boolean = true): String {
-    val nullability = if (nullable) "?" else ""
+fun Type.toKType(isNullable: Boolean = false): KType {
+    return KType(asString(false), isNullable)
+}
+
+internal fun Type.asString(isNullable: Boolean = true): String {
+    val nullability = if (isNullable) "?" else ""
     return when (sort) {
         Type.BOOLEAN -> "Boolean"
         Type.INT -> "Int"
@@ -58,7 +62,7 @@ internal fun Type.asString(nullable: Boolean = true): String {
             Type.FLOAT -> "FloatArray$nullability"
             Type.DOUBLE -> "DoubleArray$nullability"
             Type.LONG -> "LongArray$nullability"
-            else -> "Array<" + mapJavaToKotlinType(elementType.asString(nullable = false)) + ">$nullability"
+            else -> "Array<" + mapJavaToKotlinType(elementType.asString(isNullable = false)) + ">$nullability"
         }
         else -> mapJavaToKotlinType(fqName) + nullability
     }
@@ -80,7 +84,7 @@ internal fun Type.asJavaString(): String {
     }
 }
 
-internal fun Type.getDefaultValue() : String {
+internal fun Type.getDefaultValue(onlyPrimitive: Boolean = false) : String {
     return when (sort) {
         Type.BOOLEAN -> "false"
         Type.INT -> "0"
@@ -91,52 +95,54 @@ internal fun Type.getDefaultValue() : String {
         Type.CHAR -> "\'\\u0000\'" //default value of a char
         Type.SHORT -> "0"
         Type.VOID -> ""
-        Type.ARRAY -> when (elementType.sort) {
-            Type.INT -> "IntArray()"
-            Type.FLOAT -> "FloatArray()"
-            Type.DOUBLE -> "DoubleArray()"
-            Type.LONG -> "LongArray()"
-            else -> "Array<" + mapJavaToKotlinType(elementType.asString(nullable = false)) + ">()"
+        else -> {
+            if (onlyPrimitive) {
+                return ""
+            } else when (sort) {
+                Type.ARRAY -> when (elementType.sort) {
+                    Type.INT -> "IntArray()"
+                    Type.FLOAT -> "FloatArray()"
+                    Type.DOUBLE -> "DoubleArray()"
+                    Type.LONG -> "LongArray()"
+                    else -> "Array<" + mapJavaToKotlinType(elementType.asString(isNullable = false)) + ">()"
+                }
+                else -> mapJavaToKotlinType(fqName) + "()"
+            }
         }
-        else -> mapJavaToKotlinType(fqName) + "()"
     }
 }
 
-internal fun genericTypeToStr(param: GenericType, nullable: Boolean = true): String {
-    var res = StringBuilder()
+internal fun genericTypeToKType(
+        type: GenericType,
+        isNullable: Boolean = false,
+        variance: KType.Variance = KType.Variance.INVARIANT
+): KType {
+    val classifier = type.classifier
 
-    val classifier = param.classifier
-
-    res.append(when(classifier) {
+    val fqName = when (classifier) {
         is TopLevelClass -> classifier.internalName.replace('/', '.').replace('$', '.')
-        is BaseType -> Type.getType(classifier.descriptor.toString()).asString(nullable)
-        else -> return ""
-    })
-
-    if (param.arguments.size > 0) {
-        res.append("<")
-        for (arg in param.arguments) {
-            res.append(when(arg) {
-                is UnboundedWildcard -> "*"
-                is NoWildcard -> genericTypeToStr(arg.genericType)
-                is BoundedWildcard ->
-                    return when(arg.wildcard) {
-                        Wildcard.EXTENDS -> "out ${genericTypeToStr(arg.bound)}"
-                        Wildcard.SUPER -> "in ${genericTypeToStr(arg.bound)}"
-                    }
-                else -> throw RuntimeException("Unexpected generic argument type: $arg")
-            })
-            res.append(", ")
-        }
-        res.delete(res.length - 2, res.length)
-        res.append(">")
+        is BaseType -> Type.getType(classifier.descriptor.toString()).asString(isNullable = false)
+        else -> error("Invalid classifier type: $classifier")
     }
-    if (classifier is TopLevelClass && nullable) res.append("?")
-    return res.toString()
+
+    val args = type.arguments.map { arg ->
+        when(arg) {
+            is UnboundedWildcard -> KType.STAR_TYPE
+            is NoWildcard -> genericTypeToKType(arg.genericType)
+            is BoundedWildcard ->
+                return when(arg.wildcard) {
+                    Wildcard.EXTENDS -> genericTypeToKType(arg.bound, false, KType.Variance.COVARIANT)
+                    Wildcard.SUPER -> genericTypeToKType(arg.bound, false, KType.Variance.CONTRAVARIANT)
+                }
+            else -> throw RuntimeException("Unexpected generic argument type: $arg")
+        }
+    }
+
+    return KType(fqName, isNullable, variance, args)
 }
 
 internal fun getPackageName(fqName: String): String {
-    val indexOfFirstCapital = fqName.indexOfFirst { it.isUpperCase() }
+    val indexOfFirstCapital = fqName.indexOfFirst(Char::isUpperCase)
     return fqName.substring(0, indexOfFirstCapital).substringBeforeLast('.')
 }
 

@@ -3,14 +3,13 @@ package com.example.android_test
 import android.app.Activity
 import android.os.Bundle
 import org.jetbrains.anko.*
-import android.widget.LinearLayout
 
-public open class AndroidPropertiesTestActivity() : Activity() {
+open class AndroidPropertiesTestActivity : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         UI {
             linearLayout {
-                val bl = baseline
+                baseline
                 baselineAlignedChildIndex = 0
                 dividerPadding = 1
                 orientation = -1
@@ -30,11 +29,11 @@ public open class AndroidPropertiesTestActivity() : Activity() {
                 }
                 imageButton {}
                 videoView {
-                    val vv_currentPosition = currentPosition
+                    currentPosition
                 }
                 horizontalScrollView {}
                 numberPicker {
-                    val np_displayedValues = displayedValues
+                    displayedValues
                     maxValue = 3
                     value = 2134
                 }
@@ -49,7 +48,7 @@ public open class AndroidPropertiesTestActivity() : Activity() {
                     linksClickable = true
                 }
                 tabWidget {
-                    val tw_tabCount = tabCount
+                    tabCount
                 }
                 radioButton {}
                 toggleButton {
@@ -58,9 +57,9 @@ public open class AndroidPropertiesTestActivity() : Activity() {
                 }
                 seekBar {}
                 datePicker {
-                    val dp_calendarView = calendarView
-                    val dp_month = month
-                    val dp_year = year
+                    calendarView
+                    month
+                    year
                 }
                 timePicker {
                     currentHour = 3
@@ -86,7 +85,7 @@ public open class AndroidPropertiesTestActivity() : Activity() {
                 }
                 space {}
                 listView {
-                    val lv_checkItemIds = checkItemIds
+                    checkItemIds
                     itemsCanFocus = true
                     overscrollHeader = null
                 }
@@ -114,17 +113,17 @@ public open class AndroidPropertiesTestActivity() : Activity() {
                 quickContactBadge {}
                 twoLineListItem {}
                 dialerFilter {
-                    val df_digits = digits
+                    digits
                 }
                 tabHost {
                     currentTab = 2
-                    val th_currentTabView = currentTabView
+                    currentTabView
 
                 }
                 viewAnimator {}
                 expandableListView {
                     adapter = null
-                    val elv_selectedPosition = selectedPosition
+                    selectedPosition
                 }
                 viewFlipper {}
             }

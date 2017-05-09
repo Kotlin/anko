@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -23,21 +24,6 @@ import android.os.Build
 import org.jetbrains.anko.internals.AnkoInternals
 
 open class AnkoException(message: String = "") : RuntimeException(message)
-
-/**
- * Indicates that the called property does not have a getter.
- * Some of the extension properties only have a getter, because Android SDK does not provide a
- *   method to get the proper value. Another case is when the getter is senseless.
- *
- * Example: there is a [View.padding] extension property, which is used to set the equal padding value
- *   for all paddings (left, top, right, bottom). Technically, the left padding is unrelated to,
- *   for example, the bottom padding, so there is just no right value to return.
- *
- * @param name the property name
- *
- * @see [View.padding] extension property
- */
-class PropertyWithoutGetterException(name: String) : AnkoException("'$name' property does not have a getter")
 
 /**
  * Return the grayscale color with the zero opacity using the single color value.
@@ -232,7 +218,7 @@ inline fun <T: Any> Fragment.configuration(
 }
 
 /**
- * Execute [f] inly if the current Android SDK version is [version] or newer.
+ * Execute [f] only if the current Android SDK version is [version] or newer.
  * Do nothing otherwise.
  */
 inline fun doFromSdk(version: Int, f: () -> Unit) {
@@ -254,12 +240,27 @@ inline fun doIfSdk(version: Int, f: () -> Unit) {
  * @property value the return value if code execution was finished without an exception, null otherwise.
  * @property error a caught [Throwable] or null if nothing was caught.
  */
-data class AttemptResult<T>(val value: T?, val error: Throwable?)
+data class AttemptResult<out T> @PublishedApi internal constructor(val value: T?, val error: Throwable?) {
+    inline fun <R> then(f: (T) -> R): AttemptResult<R> {
+        if (isError) {
+            @Suppress("UNCHECKED_CAST")
+            return this as AttemptResult<R>
+        }
+
+        return attempt { f(value as T) }
+    }
+
+    inline val isError: Boolean
+        get() = error != null
+
+    inline val hasValue: Boolean
+        get() = error == null
+}
 
 /**
  * Execute [f] and return the result or an exception, if an exception was occurred.
  */
-fun <T> attempt(f: () -> T): AttemptResult<T> {
+inline fun <T> attempt(f: () -> T): AttemptResult<T> {
     var value: T? = null
     var error: Throwable? = null
     try {

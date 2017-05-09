@@ -1,0 +1,20 @@
+fun {{ setter.receiver }}.{{ setter.methodName }}Listener(init: {{ setter.listener }}.() -> Unit) {
+    val listener = {{ setter.listener }}()
+    listener.init()
+    {{ setter.setter }}(listener)
+}
+
+class {{ helperClassName }} : {{ listenerClassName }}{{ superConstructorCall }} {
+{% for method in methods %}
+    private var _{{ method.varName }}: (({{ method.argTypes }}) -> {{ imported(method.returnType) }})? = null
+
+    override fun {{ method.methodName }}({{ method.args }}){% if (method.returnType != "Unit") %} = _{{ method.varName }}?.invoke({{ method.argNames }}) ?: {{ method.returnDefaultValue }}{% else %} {
+        _{{ method.varName }}?.invoke({{ method.argNames }})
+    }{% endif %}
+
+    fun {{ method.methodName }}(listener: ({{ method.argTypes }}) -> {{ imported(method.returnType) }}) {
+        _{{ method.varName }} = listener
+    }
+{% endfor %}
+}
+

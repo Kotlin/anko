@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko
 
 import android.app.Fragment
@@ -82,7 +82,7 @@ inline fun Fragment.longToast(message: Int): Unit = activity.longToast(message)
  *
  * @param message the message text resource.
  */
-fun Context.longToast(message: Int) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+inline fun Context.longToast(message: Int) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 
 /**
  * Display the simple Toast message with the [Toast.LENGTH_LONG] duration.
@@ -103,4 +103,4 @@ inline fun Fragment.longToast(message: CharSequence): Unit = activity.longToast(
  *
  * @param message the message text.
  */
-fun Context.longToast(message: CharSequence) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+inline fun Context.longToast(message: CharSequence) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()

@@ -1,0 +1,27 @@
+{% for n in range(1, count) -%}
+
+{%- set typeArgs = "" -%}
+{%- set parseSeq = "" -%}
+
+{%- for i in range(1, n) -%}
+    {%- if (not(loop.first)) -%}
+        {%- set typeArgs = typeArgs ~ ", " -%}
+        {%- set parseSeq = parseSeq ~ ", " -%}
+    {%- endif -%}
+    {%- set typeArgs = typeArgs ~ "T" ~ i -%}
+    {%- set parseSeq = parseSeq ~ "columns[" ~ (i - 1) ~ "] as T" ~ i -%}
+{%- endfor -%}
+fun <{{- typeArgs }}, R> rowParser(parser: ({{ typeArgs }}) -> R): RowParser<R> {
+    return object : RowParser<R> {
+        override fun parseRow(columns: Array<Any?>): R {
+            if (columns.size != {{ n }}) {
+                throw SQLiteException("Invalid row: {{ n }} {{ (n > 1) ? "columns" : "column" }} required")
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            return parser({{ parseSeq }})
+        }
+    }
+}
+
+{% endfor %}

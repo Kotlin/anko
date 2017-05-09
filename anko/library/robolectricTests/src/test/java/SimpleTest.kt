@@ -1,19 +1,23 @@
 package test
 
-import android.app.*
+import android.app.Activity
 import android.content.Context
-import android.widget.*
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import org.jetbrains.anko.*
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
-import org.robolectric.*
+import org.jetbrains.anko.sdk15.listeners.onClick
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
-import org.junit.Assert.*
+import org.junit.runner.RunWith
+import org.robolectric.Robolectric
+import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.annotation.Config
 
-public open class SimpleTestActivity() : Activity() {
-    public var ctxProperty: Context? = null
-    public var actProperty: Activity? = null
+open class SimpleTestActivity : Activity() {
+    var ctxProperty: Context? = null
+    var actProperty: Activity? = null
 
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
@@ -34,11 +38,9 @@ public open class SimpleTestActivity() : Activity() {
 }
 
 @RunWith(RobolectricGradleTestRunner::class)
-@Config(constants = BuildConfig::class)
-public class SimpleTest() {
+@Config(constants = BuildConfig::class) class SimpleTest {
 
-    @Test
-    public fun test() {
+    @Test fun test() {
         val activity = Robolectric.buildActivity(SimpleTestActivity::class.java).create().get()
         val textView = activity.findViewById(1) as TextView
         val button = activity.findViewById(2) as Button
@@ -49,9 +51,9 @@ public class SimpleTest() {
         assertEquals(activity.ctxProperty, activity)
         assertEquals(activity.actProperty, activity)
 
-        assertEquals("Some text", textView.getText().toString())
+        assertEquals("Some text", textView.text.toString())
         button.performClick()
-        assertEquals("New text", textView.getText().toString())
+        assertEquals("New text", textView.text.toString())
 
         println("[COMPLETE]")
     }

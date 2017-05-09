@@ -1,0 +1,51 @@
+<idea-plugin>
+    <id>org.jetbrains.kotlin.android.dsl</id>
+    <name>Anko Support</name>
+    <description>Anko Android library support.</description>
+    <version>0.10.0</version>
+    <vendor url="http://www.jetbrains.com">JetBrains s.r.o.</vendor>
+
+    <idea-version since-build="171.1" until-build="172.*"/>
+
+    <depends>org.jetbrains.kotlin</depends>
+    <depends>org.jetbrains.android</depends>
+
+    <actions>
+        <action id="XmlConvertAction" class="org.jetbrains.kotlin.android.xmlconverter.ConvertAction"
+                text="Convert to Koan DSL" description="Convert XML layout to Koan DSL code (Kotlin)">
+            <add-to-group group-id="CodeMenu" anchor="last"/>
+        </action>
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <psi.treeChangePreprocessor
+                implementation="org.jetbrains.kotlin.android.dslpreview.SourceFileModificationTracker"/>
+
+        <intentionAction>
+            <className>org.jetbrains.anko.idea.intentions.ToastMakeTextShowIntention</className>
+            <category>Anko</category>
+        </intentionAction>
+
+        <intentionAction>
+            <className>org.jetbrains.anko.idea.intentions.FindViewByIdIntention</className>
+            <category>Anko</category>
+        </intentionAction>
+
+        <intentionAction>
+            <className>org.jetbrains.anko.idea.intentions.ReplaceColorGrayOpaqueIntention</className>
+            <category>Anko</category>
+        </intentionAction>
+    </extensions>
+
+    <extensions defaultExtensionNs="org.jetbrains.android.uipreview">
+        <viewLoaderExtension implementation="org.jetbrains.kotlin.android.dslpreview.AnkoViewLoaderExtension"/>
+    </extensions>
+
+    <project-components>
+        <component>
+            <implementation-class>org.jetbrains.kotlin.android.dslpreview.AnkoNlPreviewManager</implementation-class>
+            <skipForDefaultProject/>
+            <headless-implementation-class/>
+        </component>
+    </project-components>
+</idea-plugin>

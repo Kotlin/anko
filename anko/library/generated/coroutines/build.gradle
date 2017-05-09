@@ -1,0 +1,16 @@
+apply from: '../generated.gradle'
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+
+task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
+    from("src", "../../static/common/src")
+}

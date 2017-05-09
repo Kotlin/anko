@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -58,15 +58,15 @@ inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String
     AnkoInternals.internalStartService(activity, T::class.java, params)
 }
 
-inline fun <reified T: Any> Context.intentFor(vararg params: Pair<String, Any>): Intent {
+inline fun <reified T: Any> Context.intentFor(vararg params: Pair<String, Any?>): Intent {
     return AnkoInternals.createIntent(this, T::class.java, params)
 }
 
-inline fun <reified T: Any> AnkoContext<*>.intentFor(vararg params: Pair<String, Any>): Intent {
+inline fun <reified T: Any> AnkoContext<*>.intentFor(vararg params: Pair<String, Any?>): Intent {
     return AnkoInternals.createIntent(ctx, T::class.java, params)
 }
 
-inline fun <reified T: Any> Fragment.intentFor(vararg params: Pair<String, Any>): Intent {
+inline fun <reified T: Any> Fragment.intentFor(vararg params: Pair<String, Any?>): Intent {
     return AnkoInternals.createIntent(activity, T::class.java, params)
 }
 
@@ -175,9 +175,9 @@ fun Context.email(email: String, subject: String = "", text: String = ""): Boole
     val intent = Intent(Intent.ACTION_SENDTO)
     intent.data = Uri.parse("mailto:")
     intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-    if (subject.length > 0)
+    if (subject.isNotEmpty())
         intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-    if (text.length > 0)
+    if (text.isNotEmpty())
         intent.putExtra(Intent.EXTRA_TEXT, text)
     if (intent.resolveActivity(packageManager) != null) {
         startActivity(intent)

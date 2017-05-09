@@ -16,46 +16,43 @@
 
 package org.jetbrains.android.anko.render
 
-import org.jetbrains.android.anko.*
-import org.jetbrains.android.anko.config.AnkoConfiguration
+import org.jetbrains.android.anko.config.GeneratorContext
 import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.config.ConfigurationOption
+import org.jetbrains.android.anko.config.ConfigurationKey
+import org.jetbrains.android.anko.formatLayoutParamsArguments
+import org.jetbrains.android.anko.formatLayoutParamsArgumentsInvoke
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.LayoutElement
 import org.jetbrains.android.anko.generator.LayoutGenerator
-import org.jetbrains.android.anko.utils.MethodNodeWithClass
-import org.jetbrains.android.anko.utils.fqName
-import org.jetbrains.android.anko.utils.getConstructors
-import org.jetbrains.android.anko.utils.simpleName
+import org.jetbrains.android.anko.parameterRawTypes
+import org.jetbrains.android.anko.utils.*
 import java.util.*
 
-class LayoutRenderer(config: AnkoConfiguration) : Renderer(config), ViewConstructorUtils {
+class LayoutRenderer(context: GeneratorContext) : Renderer(context), ViewConstructorUtils {
+    override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.LAYOUTS)
 
-    override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.LAYOUTS)
+    override fun processElements(state: GenerationState) = generatedFile { importList ->
+        state[LayoutGenerator::class.java].forEach { append(renderLayout(it, importList)) }
+    }
 
-    override fun processElements(state: GenerationState) = StringBuilder().apply {
-        append("private val defaultInit: Any.() -> Unit = {}").appendln().appendln()
-        state[LayoutGenerator::class.java].forEach { append(renderLayout(it)) }
-    }.toString()
-
-    private fun renderLayout(node: LayoutElement): String {
+    private fun renderLayout(node: LayoutElement, importList: ImportList): String {
         val constructors = ViewConstructorUtils.AVAILABLE_VIEW_CONSTRUCTORS.map { constructor ->
-            node.layout.getConstructors().firstOrNull() { Arrays.equals(it.args, constructor) }
+            node.layout.getConstructors().firstOrNull { Arrays.equals(it.parameterRawTypes, constructor) }
         }
 
         val layoutParamsClass = node.layoutParams.fqName
 
-        return render("layout") {
-            "name" % "_${node.layout.simpleName}"
-            "constructor" % renderConstructorArgs(node.layout, constructors, "ctx", argumentNames = true)
+        return render("layout", importList) {
+            "layoutName" % "_${node.layout.simpleName}"
+            "layoutConstructorArgs" % renderConstructorArgs(node.layout, constructors, "ctx", argumentNames = true)
 
-            "baseClass" % node.layout.fqName
-            "baseConstructor" % renderConstructorArgs(node.layout, constructors, "ctx")
+            "baseClassName" % node.layout.fqName
+            "baseClassConstructorArgs" % renderConstructorArgs(node.layout, constructors, "ctx")
 
-            "functions" % seq(node.constructors) { item ->
+            "lparamsFunctions" % seq(node.constructors) { item ->
                 val function = MethodNodeWithClass(node.layoutParams, item)
-                "params" % function.formatLayoutParamsArguments(config)
-                "substituted" % function.formatLayoutParamsArgumentsInvoke(config)
+                "params" % function.formatLayoutParamsArguments(context, importList)
+                "substituted" % function.formatLayoutParamsArgumentsInvoke(context)
                 "layoutParamsClass" % layoutParamsClass
             }
         }

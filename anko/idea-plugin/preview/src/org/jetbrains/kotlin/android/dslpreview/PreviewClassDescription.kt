@@ -16,9 +16,9 @@
 
 package org.jetbrains.kotlin.android.dslpreview
 
-import org.jetbrains.android.facet.AndroidFacet
+import org.jetbrains.kotlin.psi.KtClass
 
-class PreviewClassDescription(val fqName: String, val internalName: String, val androidFacet: AndroidFacet) {
+class PreviewClassDescription(val ktClass: KtClass, val fqName: String, val internalName: String) {
     val packageName = fqName.substringBeforeLast('.')
     val name = fqName.substringAfterLast('.')
 
@@ -46,6 +46,4 @@ class PreviewClassDescription(val fqName: String, val internalName: String, val 
         result += 31 * result + internalName.hashCode()
         return result
     }
-
-
 }

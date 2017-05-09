@@ -1,4 +1,4 @@
-![GitHub version](https://badge.fury.io/gh/Kotlin%2Fanko.svg)
+[![Download](https://api.bintray.com/packages/jetbrains/anko/anko/images/download.svg) ](https://bintray.com/jetbrains/anko/anko/_latestVersion)
 [![TeamCity (simple build status)](https://img.shields.io/teamcity/http/teamcity.jetbrains.com/s/ProjectsWrittenInKotlin_Anko.svg)](https://teamcity.jetbrains.com/viewType.html?buildTypeId=ProjectsWrittenInKotlin_Anko&tab=buildTypeStatusDiv)
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
@@ -43,6 +43,7 @@ As you might have guessed, it's a DSL for Android. It is written in [Kotlin](htt
 	* [UI wrapper](#ui-wrapper)
 	* [Include tag](#include-tag)
 	* [Styles](#styles)
+    * [Themes](#themes)
 * [Anko Preview Plugin](doc/PREVIEW.md)
 * [Advanced topics](doc/ADVANCED.md)
 	* [Intents](doc/ADVANCED.md#intents)
@@ -144,9 +145,9 @@ Basically, all you have to do is to add an additional repository and a compile d
 
 ```gradle
 dependencies {
-    compile 'org.jetbrains.anko:anko-sdk15:0.9' // sdk19, sdk21, sdk23 are also available
-    compile 'org.jetbrains.anko:anko-support-v4:0.9' // In case you need support-v4 bindings
-    compile 'org.jetbrains.anko:anko-appcompat-v7:0.9' // For appcompat-v7 bindings
+    compile 'org.jetbrains.anko:anko-sdk15:0.9.1' // sdk19, sdk21, sdk23 are also available
+    compile 'org.jetbrains.anko:anko-support-v4:0.9.1' // In case you need support-v4 bindings
+    compile 'org.jetbrains.anko:anko-appcompat-v7:0.9.1' // For appcompat-v7 bindings
 }
 ```
 
@@ -197,13 +198,13 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin-version"
-    compile "org.jetbrains.anko:anko-sdk15:$anko-version" // So here it's 15 too
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.anko:anko-sdk15:$anko_version" // So here it's 15 too
 
     // Anko libs matching support libs
-    compile "org.jetbrains.anko:anko-appcompat-v7:$anko-version"
-    compile "org.jetbrains.anko:anko-design:$anko-version"
-    compile "org.jetbrains.anko:anko-recyclerview-v7:$anko-version"
+    compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+    compile "org.jetbrains.anko:anko-design:$anko_version"
+    compile "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
 }
 ````
 
@@ -485,7 +486,7 @@ include<TextView>(R.layout.textfield) {
 
 ### Styles
 
-Anko supports styling: `style()` is simply a function that accepts `View`, is applied for the `View` itself, and then recursively to each child of a `View` if it is a `ViewGroup`:
+Anko supports styling: `applyRecursively()` is simply a function that accepts `View`, is applied for the `View` itself, and then recursively to each child of a `View` if it is a `ViewGroup`:
 
 ```kotlin
 verticalLayout {
@@ -495,7 +496,18 @@ verticalLayout {
     editText {
         hint = "Password"
     }
-}.style { view -> when(view) {
+}.applyRecursively { view -> when(view) {
     is EditText -> view.textSize = 20f
 }}
+```
+
+### Themes
+
+Anko support theme override (the xml way is adding `android:theme` parameter to any view) too by `themed` prefix before any view or layout:
+
+```kotlin
+themedLinearLayout(ThemeOverlay_AppCompat_Dark) {
+    orientation = VERTICAL
+    gravity = BOTTOM
+}
 ```

@@ -1,59 +1,128 @@
-configurations {
-    robolectric
-    androidall
-    gson
-    jmustache
-    jeromq
-    javaparser
-    kotlindom
-}
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 
-String ROBOLECTRIC_VERSION = "3.1"
+buildscript {
+    ext.kotlin_version = '1.1.0'
+    ext.kotlinx_dom_version = '0.0.10'
+    ext.kotlinx_coroutines_version = '0.13'
 
-dependencies {
-    robolectric "org.robolectric:robolectric:${ROBOLECTRIC_VERSION}"
-    robolectric "org.robolectric:robolectric:${ROBOLECTRIC_VERSION}:sources"
+    ext.ANKO_VERSION = '0.10.0-beta-2'
+    ext.ANKO_VERSION_CODE = 100
 
-    robolectric "org.robolectric:shadows-core:${ROBOLECTRIC_VERSION}"
-    robolectric "org.robolectric:shadows-core:${ROBOLECTRIC_VERSION}:sources"
-    robolectric "org.robolectric:shadows-support-v4:${ROBOLECTRIC_VERSION}"
+    ext.COMPILE_SDK_VERSION = 25
+    ext.BUILD_TOOLS_VERSION = "25.0.2"
+    ext.MIN_SDK_VERSION = 15
+    ext.TARGET_SDK_VERSION = 25
+    ext.SUPPORT_ARTIFACT_VERSION = "25.1.1"
 
-    robolectric 'org.robolectric:android-all:5.0.0_r2-robolectric-1'
-    robolectric 'org.robolectric:android-all:5.0.0_r2-robolectric-1'
+    ext.PROJECT_URL = 'https://github.com/JetBrains/anko'
+    ext.SCM_URL = 'https://github.com/JetBrains/anko.git'
+    ext.CONNECTION_URL = 'scm:git:https://github.com/JetBrains/anko.git'
+    ext.DEVELOPER_CONNECTION_URL = 'scm:git:https://github.com/JetBrains/anko'
 
-    gson 'com.google.code.gson:gson:2.3.1'
-    jmustache 'com.samskivert:jmustache:1.10'
-    jeromq 'org.zeromq:jeromq:0.3.4'
-    javaparser 'com.github.javaparser:javaparser-core:2.1.0'
-    kotlindom 'org.jetbrains.kotlinx:kotlinx.dom:0.0.7-rc'
-}
+    ext.BINTRAY_USER_NAME = 'jetbrains'
+    ext.BINTRAY_PACKAGE_NAME = 'anko'
+    ext.BINTRAY_REPO_NAME = 'anko'
+    
+    ext.BINTRAY_DRY_RUN = false
 
-repositories {
-    mavenCentral()
-    maven { url "http://dl.bintray.com/kotlin/kotlinx.dom" }
-    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
-}
+    ext.POM_ARTIFACT_GROUP = 'org.jetbrains.anko'
 
-task(collectDependencies) << {
-    groovy.util.AntBuilder antBuilder = new groovy.util.AntBuilder()
-    for (configuration in project.getConfigurations().asList()) {
-        println("Resolving configuration " + configuration.name)
-
-        Set<File> files = configuration.resolve()
-        if (files.size() < 1) continue
-
-        File targetDirectory = new File("dependencies", configuration.name)
-        targetDirectory.mkdirs()
-
-        for (file in files) {
-            copy {
-                from file
-                into targetDirectory
-            }
-        }
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
     }
 
-    def src = new File("dependencies/robolectric/shadows-core-${ROBOLECTRIC_VERSION}.jar")
-    def dst = new File("dependencies/robolectric/shadows-core-${ROBOLECTRIC_VERSION}-21.jar")
-    dst << src.bytes
+    dependencies {
+        classpath "com.android.tools.build:gradle:2.1.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
+        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.11"
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "http://dl.bintray.com/kotlin/kotlinx.dom" }
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
+    }
+}
+
+task zipIdeaPlugin(dependsOn: ':ide:preview:shadowJar') << {
+    File outputFile = new File("build/anko-ide-plugin.zip")
+    ZipOutputStream zipOutputStream = null
+
+    try {
+        zipOutputStream = new ZipOutputStream(new FileOutputStream(outputFile))
+        ZipEntry jar = new ZipEntry("Anko/lib/anko-ide-plugin.jar")
+        zipOutputStream.putNextEntry(jar)
+
+        zipOutputStream << new FileInputStream("anko/idea-plugin/preview/build/libs/preview-all.jar")
+    } finally {
+        if (zipOutputStream != null) {
+            zipOutputStream.close()
+        }
+    }
+}
+
+def generatedArtifacts = [
+    ':generated:anko-appcompat-v7',
+    ':generated:anko-appcompat-v7-listeners',
+    ':generated:anko-appcompat-v7-coroutines',
+    ':generated:anko-appcompat-v7-common',
+    ':generated:anko-cardview-v7',
+    ':generated:anko-common',
+    ':generated:anko-design',
+    ':generated:anko-design-listeners',
+    ':generated:anko-design-coroutines',
+    ':generated:anko-gridlayout-v7',
+    ':generated:anko-percent',
+    ':generated:anko-recyclerview-v7',
+    ':generated:anko-recyclerview-v7-listeners',
+    ':generated:anko-recyclerview-v7-coroutines',
+    ':generated:anko-sdk15',
+    ':generated:anko-sdk15-listeners',
+    ':generated:anko-sdk15-coroutines',
+    ':generated:anko-sdk19',
+    ':generated:anko-sdk19-listeners',
+    ':generated:anko-sdk19-coroutines',
+    ':generated:anko-sdk21',
+    ':generated:anko-sdk21-listeners',
+    ':generated:anko-sdk21-coroutines',
+    ':generated:anko-sdk23',
+    ':generated:anko-sdk23-listeners',
+    ':generated:anko-sdk23-coroutines',
+    ':generated:anko-sdk25',
+    ':generated:anko-sdk25-listeners',
+    ':generated:anko-sdk25-coroutines',
+    ':generated:anko-sqlite',
+    ':generated:anko-support-v4',
+    ':generated:anko-support-v4-common',
+    ':generated:anko-coroutines',
+    ':generated:anko'
+]
+
+task dist()
+task publish()
+task publishLocal()
+
+afterEvaluate {
+    def commonBuildTasks = [
+            ':zipIdeaPlugin',
+            ':generator:run',
+            ':generator:test',
+            ':robolectricTests:test'
+    ]
+
+    project.tasks.dist.dependsOn(commonBuildTasks)
+    project.tasks.publish.dependsOn(commonBuildTasks)
+    project.tasks.publishLocal.dependsOn(commonBuildTasks)
+
+    project.tasks.dist.dependsOn(generatedArtifacts.collect { it + ":assembleRelease" })
+    project.tasks.publish.dependsOn(generatedArtifacts.collect { it + ":bintrayUpload" })
+    project.tasks.publishLocal.dependsOn(generatedArtifacts.collect { it + ":publish" })
 }

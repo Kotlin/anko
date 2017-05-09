@@ -22,6 +22,9 @@ import com.intellij.lang.FileASTNode
 import com.intellij.lang.Language
 import com.intellij.navigation.ItemPresentation
 import com.intellij.openapi.fileTypes.FileType
+import com.intellij.openapi.module.Module
+import com.intellij.openapi.module.ModuleManager
+import com.intellij.openapi.module.ModuleUtilCore
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Iconable.IconFlags
 import com.intellij.openapi.util.Key
@@ -35,8 +38,13 @@ import com.intellij.psi.search.SearchScope
 import com.intellij.psi.xml.XmlDocument
 import com.intellij.psi.xml.XmlFile
 import com.intellij.psi.xml.XmlTag
+import com.intellij.testFramework.LightVirtualFile
 import com.intellij.util.IncorrectOperationException
+import org.jetbrains.android.facet.AndroidFacet
+import org.jetbrains.android.resourceManagers.ModuleResourceManagers
 import org.jetbrains.annotations.NonNls
+import org.jetbrains.kotlin.psi.KtFile
+import org.jetbrains.kotlin.utils.addToStdlib.firstIsInstanceOrNull
 
 import javax.swing.*
 
@@ -44,271 +52,102 @@ import javax.swing.*
   Reason for these stubs:
   Android Preview checks that the xml file is placed inside "layout-*" directory.
  */
-class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
+class LayoutPsiFile(private val myPsiFile: XmlFile, private val originalFile: KtFile, module: Module) : XmlFile {
     private val myPsiDirectory: PsiDirectory
+    private val myVirtualFile: VirtualFile
 
     init {
-        myPsiDirectory = LayoutPsiDirectory()
+        myPsiDirectory = LayoutPsiDirectory(module)
+        myVirtualFile = object : LightVirtualFile(myPsiFile.name, myPsiFile.text) {
+            private val myParent = object : LightVirtualFile("layout") {
+                override fun isDirectory() = true
+            }
+
+            override fun getParent() = myParent
+        }
     }
 
-    override fun getParent(): PsiDirectory? {
-        return myPsiDirectory
-    }
+    override fun getParent() = myPsiDirectory
+    override fun getDocument() = myPsiFile.document
+    override fun getRootTag() = myPsiFile.rootTag
+    override fun getVirtualFile(): VirtualFile? = originalFile.virtualFile
+    override fun getContainingDirectory() = myPsiDirectory
+    override fun getModificationStamp() = myPsiFile.modificationStamp
+    override fun getOriginalFile() = this
+    override fun getFileType() = myPsiFile.fileType
+    override fun getViewProvider() = myPsiFile.viewProvider
+    override fun getNode(): FileASTNode? = myPsiFile.node
+    override fun getPsiRoots(): Array<PsiFile> = myPsiFile.psiRoots
+    override fun subtreeChanged() = myPsiFile.subtreeChanged()
+    override fun isDirectory() = myPsiFile.isDirectory
+    override fun getName() = myPsiFile.name
+    override fun checkSetName(s: String) = myPsiFile.checkSetName(s)
+    override fun setName(s: String): PsiElement = myPsiFile.setName(s)
+    override fun getProject() = myPsiFile.project
+    override fun getLanguage() = myPsiFile.language
+    override fun getManager(): PsiManager? = myPsiFile.manager
+    override fun getChildren(): Array<PsiElement> = myPsiFile.children
+    override fun getFirstChild(): PsiElement? = myPsiFile.firstChild
+    override fun getLastChild(): PsiElement? = myPsiFile.lastChild
+    override fun getNextSibling(): PsiElement? = myPsiFile.nextSibling
+    override fun getPrevSibling(): PsiElement? = myPsiFile.prevSibling
+    override fun getContainingFile(): PsiFile? = myPsiFile.containingFile
+    override fun getTextRange(): TextRange? = myPsiFile.textRange
+    override fun getStartOffsetInParent() = myPsiFile.startOffsetInParent
+    override fun getTextLength() = myPsiFile.textLength
+    override fun findElementAt(i: Int) = myPsiFile.findElementAt(i)
+    override fun findReferenceAt(i: Int) = myPsiFile.findReferenceAt(i)
+    override fun getTextOffset() = myPsiFile.textOffset
+    override fun getText(): String? = myPsiFile.text
+    override fun textToCharArray() = myPsiFile.textToCharArray()
+    override fun getNavigationElement(): PsiElement? = myPsiFile.navigationElement
+    override fun getOriginalElement(): PsiElement? = myPsiFile.originalElement
+    override fun textMatches(charSequence: CharSequence) = myPsiFile.textMatches(charSequence)
+    override fun textMatches(psiElement: PsiElement) = myPsiFile.textMatches(psiElement)
+    override fun textContains(c: Char) = myPsiFile.textContains(c)
+    override fun accept(psiElementVisitor: PsiElementVisitor) = myPsiFile.accept(psiElementVisitor)
+    override fun acceptChildren(psiElementVisitor: PsiElementVisitor) = myPsiFile.acceptChildren(psiElementVisitor)
+    override fun copy(): PsiElement? = myPsiFile.copy()
+    override fun add(psiElement: PsiElement): PsiElement? = myPsiFile.add(psiElement)
 
-    override fun getDocument(): XmlDocument? {
-        return myPsiFile.document
-    }
-
-    override fun getRootTag(): XmlTag? {
-        return myPsiFile.rootTag
-    }
-
-    override fun getVirtualFile(): VirtualFile? {
-        return myPsiFile.virtualFile
-    }
-
-    override fun getContainingDirectory(): PsiDirectory? {
-        return myPsiFile.containingDirectory
-    }
-
-    override fun getModificationStamp(): Long {
-        return myPsiFile.modificationStamp
-    }
-
-    override fun getOriginalFile(): PsiFile {
-        return myPsiFile.originalFile
-    }
-
-    override fun getFileType(): FileType {
-        return myPsiFile.fileType
-    }
-
-    override fun getViewProvider(): FileViewProvider {
-        return myPsiFile.viewProvider
-    }
-
-    override fun getNode(): FileASTNode? {
-        return myPsiFile.node
-    }
-
-    @Deprecated("")
-    @SuppressWarnings("deprecation")
-    override fun getPsiRoots(): Array<PsiFile> {
-        return myPsiFile.psiRoots
-    }
-
-    override fun subtreeChanged() {
-        myPsiFile.subtreeChanged()
-    }
-
-    override fun isDirectory(): Boolean {
-        return myPsiFile.isDirectory
-    }
-
-    @NonNls
-    override fun getName(): String {
-        return myPsiFile.name
-    }
-
-    override fun processChildren(
-            psiFileSystemItemPsiElementProcessor: PsiElementProcessor<PsiFileSystemItem>?
-    ): Boolean {
+    override fun processChildren(psiFileSystemItemPsiElementProcessor: PsiElementProcessor<PsiFileSystemItem>?): Boolean {
         return myPsiFile.processChildren(psiFileSystemItemPsiElementProcessor)
     }
 
-    @Throws(IncorrectOperationException::class)
-    override fun checkSetName(s: String) {
-        myPsiFile.checkSetName(s)
-    }
+    override fun addBefore(psiElement: PsiElement, psiElement2: PsiElement?): PsiElement? =
+            myPsiFile.addBefore(psiElement, psiElement2)
 
-    @Throws(IncorrectOperationException::class)
-    override fun setName(@NonNls s: String): PsiElement {
-        return myPsiFile.setName(s)
-    }
+    override fun addAfter(psiElement: PsiElement, psiElement2: PsiElement?): PsiElement? =
+            myPsiFile.addAfter(psiElement, psiElement2)
 
-    @Throws(PsiInvalidElementAccessException::class)
-    override fun getProject(): Project {
-        return myPsiFile.project
-    }
+    override fun checkAdd(psiElement: PsiElement) = myPsiFile.checkAdd(psiElement)
 
-    override fun getLanguage(): Language {
-        return myPsiFile.language
-    }
-
-    override fun getManager(): PsiManager? {
-        return myPsiFile.manager
-    }
-
-    override fun getChildren(): Array<PsiElement> {
-        return myPsiFile.children
-    }
-
-    override fun getFirstChild(): PsiElement? {
-        return myPsiFile.firstChild
-    }
-
-    override fun getLastChild(): PsiElement? {
-        return myPsiFile.lastChild
-    }
-
-    override fun getNextSibling(): PsiElement? {
-        return myPsiFile.nextSibling
-    }
-
-    override fun getPrevSibling(): PsiElement? {
-        return myPsiFile.prevSibling
-    }
-
-    @Throws(PsiInvalidElementAccessException::class)
-    override fun getContainingFile(): PsiFile? {
-        return myPsiFile.containingFile
-    }
-
-    override fun getTextRange(): TextRange? {
-        return myPsiFile.textRange
-    }
-
-    override fun getStartOffsetInParent(): Int {
-        return myPsiFile.startOffsetInParent
-    }
-
-    override fun getTextLength(): Int {
-        return myPsiFile.textLength
-    }
-
-    override fun findElementAt(i: Int): PsiElement? {
-        return myPsiFile.findElementAt(i)
-    }
-
-    override fun findReferenceAt(i: Int): PsiReference? {
-        return myPsiFile.findReferenceAt(i)
-    }
-
-    override fun getTextOffset(): Int {
-        return myPsiFile.textOffset
-    }
-
-    @NonNls
-    override fun getText(): String? {
-        return myPsiFile.text
-    }
-
-    override fun textToCharArray(): CharArray {
-        return myPsiFile.textToCharArray()
-    }
-
-    override fun getNavigationElement(): PsiElement? {
-        return myPsiFile.navigationElement
-    }
-
-    override fun getOriginalElement(): PsiElement? {
-        return myPsiFile.originalElement
-    }
-
-    override fun textMatches(@NonNls charSequence: CharSequence): Boolean {
-        return myPsiFile.textMatches(charSequence)
-    }
-
-    override fun textMatches(psiElement: PsiElement): Boolean {
-        return myPsiFile.textMatches(psiElement)
-    }
-
-    override fun textContains(c: Char): Boolean {
-        return myPsiFile.textContains(c)
-    }
-
-    override fun accept(psiElementVisitor: PsiElementVisitor) {
-        myPsiFile.accept(psiElementVisitor)
-    }
-
-    override fun acceptChildren(psiElementVisitor: PsiElementVisitor) {
-        myPsiFile.acceptChildren(psiElementVisitor)
-    }
-
-    override fun copy(): PsiElement? {
-        return myPsiFile.copy()
-    }
-
-    @Throws(IncorrectOperationException::class)
-    override fun add(psiElement: PsiElement): PsiElement? {
-        return myPsiFile.add(psiElement)
-    }
-
-    @Throws(IncorrectOperationException::class)
-    override fun addBefore(psiElement: PsiElement, psiElement2: PsiElement?): PsiElement? {
-        return myPsiFile.addBefore(psiElement, psiElement2)
-    }
-
-    @Throws(IncorrectOperationException::class)
-    override fun addAfter(psiElement: PsiElement, psiElement2: PsiElement?): PsiElement? {
-        return myPsiFile.addAfter(psiElement, psiElement2)
-    }
-
-    @SuppressWarnings("deprecation")
-    @Throws(IncorrectOperationException::class)
-    override fun checkAdd(psiElement: PsiElement) {
-        myPsiFile.checkAdd(psiElement)
-    }
-
-    @Throws(IncorrectOperationException::class)
     override fun addRange(psiElement: PsiElement, psiElement2: PsiElement): PsiElement? {
         return myPsiFile.addRange(psiElement, psiElement2)
     }
 
-    @Throws(IncorrectOperationException::class)
     override fun addRangeBefore(psiElement: PsiElement, psiElement2: PsiElement, psiElement3: PsiElement): PsiElement? {
         return myPsiFile.addRangeBefore(psiElement, psiElement2, psiElement3)
     }
 
-    @Throws(IncorrectOperationException::class)
     override fun addRangeAfter(psiElement: PsiElement, psiElement2: PsiElement, psiElement3: PsiElement): PsiElement? {
         return myPsiFile.addRangeAfter(psiElement, psiElement2, psiElement3)
     }
 
-    @Throws(IncorrectOperationException::class)
-    override fun delete() {
-        myPsiFile.delete()
-    }
+    override fun delete() = myPsiFile.delete()
 
-    @SuppressWarnings("deprecation")
-    @Throws(IncorrectOperationException::class)
-    override fun checkDelete() {
-        myPsiFile.checkDelete()
-    }
+    override fun checkDelete() = myPsiFile.checkDelete()
 
-    @Throws(IncorrectOperationException::class)
-    override fun deleteChildRange(psiElement: PsiElement, psiElement2: PsiElement) {
-        myPsiFile.deleteChildRange(psiElement, psiElement2)
-    }
+    override fun deleteChildRange(psiElement: PsiElement, psiElement2: PsiElement)
+            = myPsiFile.deleteChildRange(psiElement, psiElement2)
 
-    @Throws(IncorrectOperationException::class)
-    override fun replace(psiElement: PsiElement): PsiElement? {
-        return myPsiFile.replace(psiElement)
-    }
-
-    override fun isValid(): Boolean {
-        return myPsiFile.isValid
-    }
-
-    override fun isWritable(): Boolean {
-        return myPsiFile.isWritable
-    }
-
-    override fun getReference(): PsiReference? {
-        return myPsiFile.reference
-    }
-
-    override fun getReferences(): Array<PsiReference> {
-        return myPsiFile.references
-    }
-
-    override fun <T> getCopyableUserData(tKey: Key<T>): T? {
-        return myPsiFile.getCopyableUserData(tKey)
-    }
-
-    override fun <T> putCopyableUserData(tKey: Key<T>, t: T?) {
-        myPsiFile.putCopyableUserData(tKey, t)
-    }
+    override fun replace(psiElement: PsiElement): PsiElement? = myPsiFile.replace(psiElement)
+    override fun isValid() = myPsiFile.isValid
+    override fun isWritable() = myPsiFile.isWritable
+    override fun getReference() = myPsiFile.reference
+    override fun getReferences(): Array<PsiReference> = myPsiFile.references
+    override fun <T> getCopyableUserData(tKey: Key<T>) = myPsiFile.getCopyableUserData(tKey)
+    override fun <T> putCopyableUserData(tKey: Key<T>, t: T?) = myPsiFile.putCopyableUserData(tKey, t)
 
     override fun processDeclarations(
             psiScopeProcessor: PsiScopeProcessor,
@@ -319,73 +158,37 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
         return myPsiFile.processDeclarations(psiScopeProcessor, resolveState, psiElement, psiElement2)
     }
 
-    override fun getContext(): PsiElement? {
-        return myPsiFile.context
-    }
+    override fun getContext() = myPsiFile.context
 
-    override fun isPhysical(): Boolean {
-        return myPsiFile.isPhysical
-    }
+    override fun isPhysical() = myPsiFile.isPhysical
 
-    override fun getResolveScope(): GlobalSearchScope {
-        return myPsiFile.resolveScope
-    }
+    override fun getResolveScope() = myPsiFile.resolveScope
 
-    override fun getUseScope(): SearchScope {
-        return myPsiFile.useScope
-    }
+    override fun getUseScope() = myPsiFile.useScope
 
-    @NonNls
-    override fun toString(): String {
-        return myPsiFile.toString()
-    }
-
-    override fun isEquivalentTo(psiElement: PsiElement): Boolean {
-        return myPsiFile.isEquivalentTo(psiElement)
-    }
-
-    override fun <T> getUserData(tKey: Key<T>): T? {
-        return myPsiFile.getUserData(tKey)
-    }
-
-    override fun <T> putUserData(tKey: Key<T>, t: T?) {
-        myPsiFile.putUserData(tKey, t)
-    }
-
-    override fun getIcon(@IconFlags i: Int): Icon {
-        return myPsiFile.getIcon(i)
-    }
-
-    override fun getPresentation(): ItemPresentation? {
-        return myPsiFile.presentation
-    }
-
-    override fun navigate(b: Boolean) {
-        myPsiFile.navigate(b)
-    }
-
-    override fun canNavigate(): Boolean {
-        return myPsiFile.canNavigate()
-    }
-
-    override fun canNavigateToSource(): Boolean {
-        return myPsiFile.canNavigateToSource()
-    }
+    override fun toString() = myPsiFile.toString()
+    override fun isEquivalentTo(psiElement: PsiElement) = myPsiFile.isEquivalentTo(psiElement)
+    override fun <T> getUserData(tKey: Key<T>) = myPsiFile.getUserData(tKey)
+    override fun <T> putUserData(tKey: Key<T>, t: T?) = myPsiFile.putUserData(tKey, t)
+    override fun getIcon(i: Int): Icon = myPsiFile.getIcon(i)
+    override fun getPresentation() = myPsiFile.presentation
+    override fun navigate(b: Boolean) = myPsiFile.navigate(b)
+    override fun canNavigate() = myPsiFile.canNavigate()
+    override fun canNavigateToSource() = myPsiFile.canNavigateToSource()
+    override fun getFileResolveScope() = myPsiFile.fileResolveScope
+    override fun ignoreReferencedElementAccessibility() = myPsiFile.ignoreReferencedElementAccessibility()
 
     override fun processElements(psiElementProcessor: PsiElementProcessor<PsiElement>, psiElement: PsiElement): Boolean {
         return myPsiFile.processElements(psiElementProcessor, psiElement)
     }
 
-    override fun getFileResolveScope(): GlobalSearchScope {
-        return myPsiFile.fileResolveScope
-    }
-
-    override fun ignoreReferencedElementAccessibility(): Boolean {
-        return myPsiFile.ignoreReferencedElementAccessibility()
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    private class LayoutPsiDirectory : PsiDirectory {
+    private class LayoutPsiDirectory(val module: Module) : PsiDirectory {
+        private val parentDir by lazy {
+            val facet = AndroidFacet.getInstance(module) ?: return@lazy null
+            val dir = ModuleResourceManagers.getInstance(facet).localResourceManager.resourceDirs
+                    .firstOrNull() ?: return@lazy null
+            PsiManager.getInstance(module.project).findDirectory(dir)
+        }
 
         override fun getName(): String {
             return "layout"
@@ -400,13 +203,9 @@ class LayoutPsiFile(private val myPsiFile: XmlFile) : XmlFile {
             return null!!
         }
 
-        override fun getParentDirectory(): PsiDirectory? {
-            return null
-        }
+        override fun getParentDirectory(): PsiDirectory? = parentDir
 
-        override fun getParent(): PsiDirectory? {
-            return null
-        }
+        override fun getParent() = parentDir
 
         override fun getSubdirectories(): Array<PsiDirectory?> {
             return arrayOfNulls(0)

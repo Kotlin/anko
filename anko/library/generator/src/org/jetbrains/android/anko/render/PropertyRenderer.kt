@@ -17,93 +17,80 @@
 package org.jetbrains.android.anko.render
 
 import org.jetbrains.android.anko.*
-import org.jetbrains.android.anko.annotations.ExternalAnnotation
-import org.jetbrains.android.anko.config.AnkoConfiguration
+import org.jetbrains.android.anko.config.GeneratorContext
 import org.jetbrains.android.anko.config.AnkoFile
-import org.jetbrains.android.anko.config.ConfigurationOption
+import org.jetbrains.android.anko.config.ConfigurationKey
 import org.jetbrains.android.anko.generator.GenerationState
 import org.jetbrains.android.anko.generator.PropertyElement
 import org.jetbrains.android.anko.generator.PropertyGenerator
 import org.jetbrains.android.anko.utils.*
 
-class PropertyRenderer(config: AnkoConfiguration) : Renderer(config) {
+class PropertyRenderer(context: GeneratorContext) : Renderer(context) {
+    override val renderIf: Array<ConfigurationKey<Boolean>> = arrayOf(AnkoFile.PROPERTIES)
 
-    override val renderIf: Array<ConfigurationOption> = arrayOf(AnkoFile.PROPERTIES)
-
-    override fun processElements(state: GenerationState) = StringBuilder().apply {
+    override fun processElements(state: GenerationState) = generatedFile { importList ->
         state[PropertyGenerator::class.java].forEach {
-            append(renderProperty(it))
+            append(renderProperty(it, importList))
         }
-    }.toString()
+    }
 
-    private fun renderProperty(property: PropertyElement): String {
+    private fun renderProperty(property: PropertyElement, importList: ImportList): String {
         val getter = property.getter
         val className = (getter ?: property.setters.first()).clazz.fqNameWithTypeArguments
         val fullPropertyName = "$className.${property.name}"
         val bestSetter = property.setters.firstOrNull()
         val mutability = if (bestSetter != null) "var" else "val"
 
-        val javaReturnType = getter?.method?.returnType?.asJavaString()
-                ?: bestSetter?.method?.args?.get(0)?.asJavaString()
-                ?: "java.lang.Object"
+        val returnType = getter?.toKMethod(context)?.returnType
+                ?: bestSetter?.toKMethod(context)?.parameters?.firstOrNull()?.type
+                ?: KType.ANY_TYPE
 
-        val rawReturnType = getter?.method?.renderReturnType(false)
-                ?: bestSetter?.method?.args?.get(0)?.asString(false)
-                ?: "Any"
-
-        val nullable = if (javaReturnType.indexOf('.') < 0) {
-            false // Do not look up annotations for simple types
-        } else if (getter != null) {
-            val annotationSignature = "${getter.clazz.fqName} $javaReturnType ${getter.method.name}()"
-            val foundAnnotations = config.annotationManager.findAnnotationsFor(annotationSignature)
-            ExternalAnnotation.NotNull !in foundAnnotations
-        } else true // Default is nullable
-
-        val nullability = if (nullable) "?" else ""
-
-        val otherSetters = if (property.setters.size > 1) property.setters.drop(1) else listOf()
+        val otherSetters = if (property.setters.size > 1) property.setters.drop(1) else emptyList()
 
         if (property.getter != null) {
             return buffer {
-                renderResourceProperty(otherSetters, fullPropertyName, rawReturnType)
+                renderResourceProperty(otherSetters, fullPropertyName, returnType, importList)
             }.toString()
         }
 
         return buffer {
-            line("$mutability $fullPropertyName: $rawReturnType$nullability")
+            line("$mutability $fullPropertyName: $returnType")
             if (getter != null) {
                 indent.line("get() = ${getter.method.name}()")
             } else {
-                indent.line("get() = throw AnkoException(\"'$fullPropertyName' property does not have a getter\")")
+                renderNoGetter(importList)
             }
             if (bestSetter != null) indent.line("set(v) = ${bestSetter.method.name}(v)")
             nl()
         }.toString()
     }
 
+    private fun Buffer.renderNoGetter(importList: ImportList) {
+        val NO_GETTER = importList["org.jetbrains.anko.internals.AnkoInternals.NO_GETTER"]
+        val noGetter = importList["org.jetbrains.anko.internals.AnkoInternals.noGetter"]
+        val ERROR = importList["kotlin.DeprecationLevel.ERROR"]
+        indent.line("@Deprecated($NO_GETTER, level = $ERROR) get() = $noGetter()")
+    }
+
     private fun Buffer.renderResourceProperty(
             otherSetters: List<MethodNodeWithClass>,
             fullPropertyName: String,
-            returnType: String)
-    {
+            returnType: KType,
+            importList: ImportList
+    ) {
         if (otherSetters.isNotEmpty() && supportsResourceSetter(returnType)) {
-            val resourceSetter = otherSetters.firstOrNull {
-                it.method.args.size == 1 && (it.method.args[0].className == "int")
-            }
+            val resourceSetter = otherSetters.firstOrNull { it.method.parameterRawTypes.unique?.className == "int" }
 
             if (resourceSetter != null) {
                 line("var ${fullPropertyName}Resource: Int")
-                indent.line("get() = throw AnkoException(\"'${fullPropertyName}Resource' property does not have a getter\")")
+                renderNoGetter(importList)
                 indent.line("set(v) = ${resourceSetter.method.name}(v)")
                 nl()
             }
         }
     }
 
-    private fun supportsResourceSetter(typ: String): Boolean {
-        return (
-                typ.matches("^CharSequence\\??$".toRegex()) ||
-                        (typ.matches("^android.graphics.drawable.Drawable\\??$".toRegex()))
-                )
+    private fun supportsResourceSetter(type: KType): Boolean {
+        return type.className == "CharSequence" || type.fqName == "android.graphics.drawable.Drawable"
     }
 }

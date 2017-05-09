@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko
 
 import android.R
@@ -27,6 +28,7 @@ import android.view.View
 import android.view.ViewManager
 import android.widget.ListAdapter
 
+@Deprecated("Use AlertBuilder class instead.")
 class AlertDialogBuilder(val ctx: Context) {
     private var builder: AlertDialog.Builder? = AlertDialog.Builder(ctx)
 
@@ -62,7 +64,7 @@ class AlertDialogBuilder(val ctx: Context) {
     }
 
     /**
-     * Set the [title] displayed in the [Dialog].
+     * Set the [title] displayed in the dialog.
      */
     fun title(title: CharSequence) {
         checkBuilder()
