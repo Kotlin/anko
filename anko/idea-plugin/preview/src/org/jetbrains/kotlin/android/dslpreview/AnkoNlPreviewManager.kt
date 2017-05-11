@@ -72,7 +72,7 @@ class AnkoNlPreviewManager(
         }
     }
 
-    override fun getToolWindowId() = "Anko DSL Preview"
+    override fun getToolWindowId() = "Anko Layout Preview"
     override fun getComponentName() = "AnkoNlPreviewManager"
     public override fun getToolWindow() = super.getToolWindow()
 
