@@ -7,8 +7,8 @@
 
   "artifacts": [
     {
-      "name" : "common",
-      "type": "common",
+      "name" : "commons",
+      "type": "commons",
       "platform": [ "%platforms%/android-25/android.jar" ],
       "target": []
     },

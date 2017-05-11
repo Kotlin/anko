@@ -1,7 +1,7 @@
 apply from: '../generated.gradle'
 
 dependencies {
-    compile project(':generated:anko-common')
+    compile project(':generated:anko-commons')
     embedded project(':static:sqlite')
 }
 

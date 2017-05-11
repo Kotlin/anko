@@ -3,7 +3,7 @@ include ':stubs'
 include ':robolectricTests'
 include ':testUtils'
 
-include ':static:common'
+include ':static:commons'
 include ':static:platform'
 include ':static:sqlite'
 include ':static:design'
@@ -15,8 +15,9 @@ include ':generated:anko'
 include ':generated:anko-appcompat-v7'
 include ':generated:anko-appcompat-v7-listeners'
 include ':generated:anko-appcompat-v7-coroutines'
-include ':generated:anko-appcompat-v7-common'
+include ':generated:anko-appcompat-v7-commons'
 include ':generated:anko-cardview-v7'
+include ':generated:anko-commons'
 include ':generated:anko-common'
 include ':generated:anko-design'
 include ':generated:anko-design-listeners'
@@ -43,7 +44,7 @@ include ':generated:anko-sdk25-listeners'
 include ':generated:anko-sdk25-coroutines'
 include ':generated:anko-sqlite'
 include ':generated:anko-support-v4'
-include ':generated:anko-support-v4-common'
+include ':generated:anko-support-v4-commons'
 include ':generated:anko-coroutines'
 
 include ':ide:plugin-classpath'
@@ -58,7 +59,7 @@ project(':robolectricTests').projectDir = new File(rootDir, 'anko/library/robole
 project(':testUtils').projectDir = new File(rootDir, 'anko/library/testUtils')
 
 project(':static').projectDir = new File(rootDir, 'anko/library/static')
-project(':static:common').projectDir = new File(rootDir, 'anko/library/static/common')
+project(':static:commons').projectDir = new File(rootDir, 'anko/library/static/commons')
 project(':static:platform').projectDir = new File(rootDir, 'anko/library/static/platform')
 project(':static:sqlite').projectDir = new File(rootDir, 'anko/library/static/sqlite')
 project(':static:design').projectDir = new File(rootDir, 'anko/library/static/design')
@@ -70,8 +71,9 @@ project(':generated:anko').projectDir = new File(rootDir, 'anko/library/generate
 project(':generated:anko-appcompat-v7').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7')
 project(':generated:anko-appcompat-v7-listeners').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7-listeners')
 project(':generated:anko-appcompat-v7-coroutines').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7-coroutines')
-project(':generated:anko-appcompat-v7-common').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7-common')
+project(':generated:anko-appcompat-v7-commons').projectDir = new File(rootDir, 'anko/library/generated/appcompat-v7-commons')
 project(':generated:anko-cardview-v7').projectDir = new File(rootDir, 'anko/library/generated/cardview-v7')
+project(':generated:anko-commons').projectDir = new File(rootDir, 'anko/library/generated/commons')
 project(':generated:anko-common').projectDir = new File(rootDir, 'anko/library/generated/common')
 project(':generated:anko-design').projectDir = new File(rootDir, 'anko/library/generated/design')
 project(':generated:anko-design-listeners').projectDir = new File(rootDir, 'anko/library/generated/design-listeners')
@@ -98,7 +100,7 @@ project(':generated:anko-sdk25-listeners').projectDir = new File(rootDir, 'anko/
 project(':generated:anko-sdk25-coroutines').projectDir = new File(rootDir, 'anko/library/generated/sdk25-coroutines')
 project(':generated:anko-sqlite').projectDir = new File(rootDir, 'anko/library/generated/sqlite')
 project(':generated:anko-support-v4').projectDir = new File(rootDir, 'anko/library/generated/support-v4')
-project(':generated:anko-support-v4-common').projectDir = new File(rootDir, 'anko/library/generated/support-v4-common')
+project(':generated:anko-support-v4-commons').projectDir = new File(rootDir, 'anko/library/generated/support-v4-commons')
 project(':generated:anko-coroutines').projectDir = new File(rootDir, 'anko/library/generated/coroutines')
 
 project(':ide').projectDir = new File(rootDir, 'anko/idea-plugin')
