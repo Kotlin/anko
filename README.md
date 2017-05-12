@@ -4,13 +4,13 @@
 
 <img src="doc/logo.png" alt="Anko logo" height="101" width="220" />
 
-Anko is a Kotlin library which makes Android application development faster and easier. It makes your code clean and easy to read, and lets you forget about rough edges of Android SDK for Java.
+Anko is a [Kotlin](http://www.kotlinlang.org/) library which makes Android application development faster and easier. It makes your code clean and easy to read, and lets you forget about rough edges of the Android SDK for Java.
 
 Anko consists of several parts:
 
 * *Anko Commons*: a lightweight library full of helpers for intents, dialogs, logging and so on;
 * *Anko Layouts*: a fast and type-safe way to write dynamic Android layouts;
-* *Anko SQLite*: a query DSL and parser collection for Android SQLite.
+* *Anko SQLite*: a query DSL and parser collection for Android SQLite;
 * *Anko Coroutines*: utilities based on the [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines) library.
 
 ## Anko Commons
@@ -35,17 +35,17 @@ verticalLayout {
 }
 ```
 
-The code above creates a button inside a `LinearLayout` and attaches an `OnClickListener` to that button. Moreover, `onClick` accepts a `suspend` lambda, so you can write your asynchronous code right inside the listener!
+The code above creates a button inside a `LinearLayout` and attaches an `OnClickListener` to that button. Moreover, `onClick` accepts a [`suspend` lambda](http://kotlinlang.org/docs/reference/coroutines.html), so you can write your asynchronous code right inside the listener!
 
 Note that this is the complete layout code. No XML is required!
 
 <img src="doc/helloworld.png" alt="Hello world" height="90" width="373" />
 
-There is also a [plugin](https://github.com/Kotlin/anko/wiki/Anko-Layouts#anko-support-plugin) for Android Studio with a DSL layout preview functionality.
+There is also a [plugin](https://github.com/Kotlin/anko/wiki/Anko-Layouts#anko-support-plugin) for Android Studio that supports previewing Anko DSL layouts.
 
 ## Anko SQLite ([wiki](https://github.com/Kotlin/anko/wiki/Anko-SQLite))
 
-Have you ever been tired of parsing SQLite query results using Android cursors? *Anko SQLite* provides lots of helpers to simplify communication with SQLite database.
+Have you ever been tired of parsing SQLite query results using Android cursors? *Anko SQLite* provides lots of helpers to simplify working with SQLite databases.
 
 For example, here is how you can fetch the list of users with a particular name:
 
@@ -60,16 +60,16 @@ fun getUsers(db: ManagedSQLiteOpenHelper): List<User> = db.use {
 
 ## Anko Coroutines ([wiki](https://github.com/Kotlin/anko/wiki/Anko-Coroutines))
 
-*Anko Coroutines* is based on `kotlin.coroutines` library and provides:
+*Anko Coroutines* is based on the [`kotlinx.coroutines`](https://github.com/kotlin/kotlinx.coroutines) library and provides:
 
 * [`bg()`](https://github.com/Kotlin/anko/wiki/Anko-Coroutines#bg) function that executes your code in a common pool.
-* [`asReference()`](https://github.com/Kotlin/anko/wiki/Anko-Coroutines#asreference) function which creates a weak reference wrapper. By default, a coroutine holds references to captured objects until it will be finished or canceled. If your asynchronous framework does not support cancellation, the values you use inside the asynchonous block can be leaked. `asReference()` prevents you from this.
+* [`asReference()`](https://github.com/Kotlin/anko/wiki/Anko-Coroutines#asreference) function which creates a weak reference wrapper. By default, a coroutine holds references to captured objects until it is finished or canceled. If your asynchronous framework does not support cancellation, the values you use inside the asynchonous block can be leaked. `asReference()` protects you from this.
 
 ## Using Anko
 
 ### Gradle-based project
 
-Anko has a meta-dependency which plugs in all available features (including Commons, Layouts, SQLite) to your project at once:
+Anko has a meta-dependency which plugs in all available features (including Commons, Layouts, SQLite) into your project at once:
 
 ```gradle
 dependencies {
@@ -77,7 +77,7 @@ dependencies {
 }
 ```
 
-If you only need some of the features, you can reference any of its parts:
+If you only need some of the features, you can reference any of Anko's parts:
 
 ```gradle
 dependencies {
@@ -133,9 +133,9 @@ dependencies {
 }
 ```
 
-There is an [example project](https://github.com/yanex/anko-example) showing how to include Anko library into your Android Gradle project.
+There is an [example project](https://github.com/kotlin/anko-example) showing how to include Anko library into your Android Gradle project.
 
-### IDEA project
+### IntelliJ IDEA project
 
 If your project is not based on Gradle, just attach the required JARs from the [jcenter repository](https://jcenter.bintray.com/org/jetbrains/anko/) as the library dependencies and that's it.
 
@@ -143,6 +143,6 @@ If your project is not based on Gradle, just attach the required JARs from the [
 
 The best way to submit a patch is to send us a [pull request](https://help.github.com/articles/about-pull-requests/). Before submitting the pull request, make sure all existing tests are passing, and add the new test if it is required.
 
-If you want to add the new functionality, please file the new *proposal* issue firstly to make sure that it is not in progress already. If you have any questions, feel free to create a *question* issue.
+If you want to add new functionality, please file a new *proposal* issue first to make sure that it is not in progress already. If you have any questions, feel free to create a *question* issue.
 
 Instructions for building Anko are available in the [Wiki](https://github.com/Kotlin/anko/wiki/Building-Anko).
