@@ -3,10 +3,10 @@ import java.util.zip.ZipOutputStream
 
 buildscript {
     ext.kotlin_version = '1.1.0'
-    ext.kotlinx_dom_version = '0.0.10-rc'
+    ext.kotlinx_dom_version = '0.0.10'
     ext.kotlinx_coroutines_version = '0.13'
 
-    ext.ANKO_VERSION = '0.10.0'
+    ext.ANKO_VERSION = '0.10.0-rc'
     ext.ANKO_VERSION_CODE = 100
 
     ext.COMPILE_SDK_VERSION = 25
