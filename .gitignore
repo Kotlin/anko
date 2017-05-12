@@ -5,3 +5,4 @@ build/
 .DS_Store
 *.iml
 /.gradle
+/out
