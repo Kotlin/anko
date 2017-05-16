@@ -47,10 +47,10 @@ inline val Context.defaultSharedPreferences: SharedPreferences
 inline val Fragment.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(activity)
 
-inline val Fragment.act: Activity
+inline val Fragment.act: Activity?
     get() = activity
 
-inline val Fragment.ctx: Context
+inline val Fragment.ctx: Context?
     get() = activity
 
 inline val Context.ctx: Context
