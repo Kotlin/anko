@@ -57,7 +57,7 @@ private open class SqlTypeImpl(override val name: String, val modifiers: String?
     override fun render() = if (modifiers == null) name else "$name $modifiers"
 
     override fun plus(m: SqlTypeModifier): SqlType {
-        return SqlTypeImpl(name, if (modifiers == null) m.modifier else "$modifiers $m")
+        return SqlTypeImpl(name, if (modifiers == null) m.modifier else "$modifiers ${m.modifier}")
     }
 }
 
