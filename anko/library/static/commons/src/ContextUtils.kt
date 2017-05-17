@@ -75,16 +75,17 @@ inline fun <reified T : View> Activity.findOptional(@IdRes id: Int): T? = findVi
 inline fun <reified T : View> Fragment.findOptional(@IdRes id: Int): T? = view?.findViewById(id) as? T
 inline fun <reified T : View> Dialog.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 
-inline fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
+inline fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any?>): T {
     arguments = bundleOf(*params)
     return this
 }
 
-fun bundleOf(vararg params: Pair<String, Any>): Bundle {
+fun bundleOf(vararg params: Pair<String, Any?>): Bundle {
     val b = Bundle()
     for (p in params) {
         val (k, v) = p
         when (v) {
+            null -> b.putSerializable(k, null)
             is Boolean -> b.putBoolean(k, v)
             is Byte -> b.putByte(k, v)
             is Char -> b.putChar(k, v)
