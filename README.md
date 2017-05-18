@@ -102,7 +102,7 @@ There are also a number of artifacts for the Android support libraries:
 ```gradle
 dependencies {
     // Appcompat-v7 (only Anko Commons)
-    compile "org.jetbrains.anko:anko-appcompat-v7-common:$anko_version"
+    compile "org.jetbrains.anko:anko-appcompat-v7-commons:$anko_version"
 
     // Appcompat-v7 (Anko Layouts)
     compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
@@ -126,7 +126,7 @@ dependencies {
     compile "org.jetbrains.anko:anko-recyclerview-v7-coroutines:$anko_version"
 
     // Support-v4 (only Anko Commons)
-    compile "org.jetbrains.anko:anko-support-v4-common:$anko_version"
+    compile "org.jetbrains.anko:anko-support-v4-commons:$anko_version"
 
     // Support-v4 (Anko Layouts)
     compile "org.jetbrains.anko:anko-support-v4:$anko_version"
