@@ -12,7 +12,7 @@
 
     <actions>
         <action id="XmlConvertAction" class="org.jetbrains.kotlin.android.xmlconverter.ConvertAction"
-                text="Convert to Koan DSL" description="Convert XML layout to Koan DSL code (Kotlin)">
+                text="Convert to Anko Layouts DSL" description="Convert XML layout to Anko Layouts code (Kotlin)">
             <add-to-group group-id="CodeMenu" anchor="last"/>
         </action>
     </actions>

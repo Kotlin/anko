@@ -25,5 +25,5 @@ gradle.projectsEvaluated {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     provided "com.android.support:support-v4:$SUPPORT_ARTIFACT_VERSION"
-    compile project(':static:common')
+    compile project(':static:commons')
 }

@@ -6,7 +6,7 @@ buildscript {
     ext.kotlinx_dom_version = '0.0.10'
     ext.kotlinx_coroutines_version = '0.13'
 
-    ext.ANKO_VERSION = '0.10.0-beta-2'
+    ext.ANKO_VERSION = '0.10.0'
     ext.ANKO_VERSION_CODE = 100
 
     ext.COMPILE_SDK_VERSION = 25
@@ -73,9 +73,10 @@ def generatedArtifacts = [
     ':generated:anko-appcompat-v7',
     ':generated:anko-appcompat-v7-listeners',
     ':generated:anko-appcompat-v7-coroutines',
-    ':generated:anko-appcompat-v7-common',
+    ':generated:anko-appcompat-v7-commons',
     ':generated:anko-cardview-v7',
     ':generated:anko-common',
+    ':generated:anko-commons',
     ':generated:anko-design',
     ':generated:anko-design-listeners',
     ':generated:anko-design-coroutines',
@@ -101,7 +102,7 @@ def generatedArtifacts = [
     ':generated:anko-sdk25-coroutines',
     ':generated:anko-sqlite',
     ':generated:anko-support-v4',
-    ':generated:anko-support-v4-common',
+    ':generated:anko-support-v4-commons',
     ':generated:anko-coroutines',
     ':generated:anko'
 ]

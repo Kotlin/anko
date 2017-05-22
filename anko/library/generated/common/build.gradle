@@ -1,9 +1,9 @@
 apply from: '../generated.gradle'
 
 dependencies {
-    embedded project(':static:common')
+    compile project(':generated:anko-commons')
 }
 
 task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
-    from("src", "../../static/common/src")
+    from("src", "../../static/commons/src")
 }

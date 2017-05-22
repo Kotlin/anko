@@ -17,6 +17,7 @@
 @file:Suppress("unused")
 package org.jetbrains.anko
 
+import android.os.Build
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.View
@@ -71,6 +72,10 @@ var View.padding: Int
 inline var TextView.isSelectable: Boolean
     get() = isTextSelectable
     set(value) = setTextIsSelectable(value)
+
+var TextView.textAppearance: Int
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+    set(value) = if (Build.VERSION.SDK_INT >= 23) setTextAppearance(value) else setTextAppearance(context, value)
 
 var TextView.textSizeDimen: Int
     @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()

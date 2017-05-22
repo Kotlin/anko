@@ -38,7 +38,7 @@ class DefaultAnkoConfiguration(
     init {
         val artifactType = artifact.type
         outputPackage = "org.jetbrains.anko" + when (artifactType) {
-            ArtifactType.COMMON, ArtifactType.PLATFORM -> ""
+            ArtifactType.COMMONS, ArtifactType.PLATFORM -> ""
             else -> "." + artifact.name.replace('-', '.').toLowerCase()
         }
 

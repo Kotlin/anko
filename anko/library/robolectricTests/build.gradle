@@ -13,7 +13,7 @@ android {
 }
 
 dependencies {
-    compile project(':generated:anko-common')
+    compile project(':generated:anko-commons')
     compile project(':generated:anko-sqlite')
     compile project(':generated:anko-sdk15')
     compile project(':generated:anko-sdk15-listeners')
