@@ -118,17 +118,18 @@ private class ViewChildrenSequence(private val view: View) : Sequence<View> {
 }
 
 private class ViewChildrenRecursiveSequence(private val view: View) : Sequence<View> {
-    override fun iterator() = RecursiveViewIterator(view)
+    override fun iterator(): Iterator<View> {
+        if (view !is ViewGroup) return emptyList<View>().iterator()
+        return RecursiveViewIterator(view)
+    }
 
     private class RecursiveViewIterator(view: View) : Iterator<View> {
-        private val sequences = arrayListOf(sequenceOf(view))
-        private var itemIterator: Iterator<View>? = null
+        private val sequences = arrayListOf(view.childrenSequence())
+        private var current = sequences.removeLast().iterator()
 
         override fun next(): View {
-            initItemIterator()
-            val iterator = itemIterator ?: throw NoSuchElementException()
-
-            val view = iterator.next()
+            if (!hasNext()) throw NoSuchElementException()
+            val view = current.next()
             if (view is ViewGroup && view.childCount > 0) {
                 sequences.add(view.childrenSequence())
             }
@@ -136,25 +137,15 @@ private class ViewChildrenRecursiveSequence(private val view: View) : Sequence<V
         }
 
         override fun hasNext(): Boolean {
-            initItemIterator()
-            val iterator = itemIterator ?: return false
-            return iterator.hasNext()
-        }
-
-        private fun initItemIterator() {
-            val seqs = sequences
-            val iterator = itemIterator
-
-            if (iterator == null || (!iterator.hasNext() && seqs.isNotEmpty())) {
-                itemIterator = seqs.removeLast()?.iterator()
-            } else {
-                itemIterator = null
+            if (!current.hasNext() && sequences.isNotEmpty()) {
+                current = sequences.removeLast().iterator()
             }
+            return current.hasNext()
         }
 
         @Suppress("NOTHING_TO_INLINE")
-        private inline fun <T: Any> MutableList<T>.removeLast(): T? {
-            if (isEmpty()) return null
+        private inline fun <T : Any> MutableList<T>.removeLast(): T {
+            if (isEmpty()) throw NoSuchElementException()
             return removeAt(size - 1)
         }
     }
