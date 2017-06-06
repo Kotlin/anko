@@ -78,6 +78,16 @@ inline fun Activity.editText(constraints: InputConstraints, theme: Int = 0, init
     return v
 }
 
+inline fun Context.textView(theme: Int = 0): android.widget.TextView = textView(theme) {}
+inline fun Context.textView(theme: Int = 0, init: android.widget.TextView.() -> Unit): android.widget.TextView {
+    return ankoView(`$$Anko$Factories$Sdk15View`.TEXT_VIEW, theme) { init() }
+}
+
+inline fun Activity.textView(theme: Int = 0): android.widget.TextView = textView(theme) {}
+inline fun Activity.textView(theme: Int = 0, init: android.widget.TextView.() -> Unit): android.widget.TextView {
+    return ankoView(`$$Anko$Factories$Sdk15View`.TEXT_VIEW, theme) { init() }
+}
+
 inline fun ViewManager.horizontalProgressBar(theme: Int = 0): ProgressBar = horizontalProgressBar(theme) {}
 inline fun ViewManager.horizontalProgressBar(theme: Int = 0, init: ProgressBar.() -> Unit): ProgressBar {
     return ankoView(`$$Anko$Factories$CustomViews`.HORIZONTAL_PROGRESS_BAR_FACTORY, theme, init)
