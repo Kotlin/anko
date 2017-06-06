@@ -90,7 +90,7 @@ dependencies {
 
     // Coroutine listeners for Anko Layouts
     compile "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
-    compile "org.jetbrains.anko:anko-appcompat-v7-couroutines:$anko_version"
+    compile "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
 
     // Anko SQLite
     compile "org.jetbrains.anko:anko-sqlite:$anko_version"
