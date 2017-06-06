@@ -82,7 +82,7 @@ If you only need some of the features, you can reference any of Anko's parts:
 ```gradle
 dependencies {
     // Anko Commons
-    compile "org.jetbrains.anko:anko-commons:$anko_version"
+    compile "org.jetbrains.anko:anko-common:$anko_version"
 
     // Anko Layouts
     compile "org.jetbrains.anko:anko-sdk25:$anko_version" // sdk15, sdk19, sdk21, sdk23 are also available
