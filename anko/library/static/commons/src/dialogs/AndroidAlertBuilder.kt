@@ -107,6 +107,10 @@ internal class AndroidAlertBuilder(override val ctx: Context) : AlertBuilder<Ale
         }
     }
 
+    override fun isCancelable(canCancel: Boolean) {
+        builder.setCancelable(canCancel)
+    }
+
     override fun build(): AlertDialog = builder.create()
 
     override fun show(): AlertDialog = builder.show()

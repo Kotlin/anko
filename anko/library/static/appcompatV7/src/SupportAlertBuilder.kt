@@ -16,13 +16,14 @@
 
 package org.jetbrains.anko.appcompat.v7
 
-import org.jetbrains.anko.*
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.support.v7.app.AlertDialog
 import android.view.KeyEvent
 import android.view.View
+import org.jetbrains.anko.AlertBuilder
+import org.jetbrains.anko.AlertBuilderFactory
 import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.internals.AnkoInternals.NO_GETTER
 import kotlin.DeprecationLevel.ERROR
@@ -106,6 +107,10 @@ internal class AppcompatAlertBuilder(override val ctx: Context) : AlertBuilder<A
         builder.setItems(Array(items.size) { i -> items[i].toString() }) { dialog, which ->
             onItemSelected(dialog, items[which], which)
         }
+    }
+
+    override fun isCancelable(canCancel: Boolean) {
+        builder.setCancelable(canCancel)
     }
 
     override fun build(): AlertDialog = builder.create()

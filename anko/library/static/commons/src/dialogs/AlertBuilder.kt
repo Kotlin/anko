@@ -74,6 +74,8 @@ interface AlertBuilder<out D : DialogInterface> {
     fun items(items: List<CharSequence>, onItemSelected: (dialog: DialogInterface, index: Int) -> Unit)
     fun <T> items(items: List<T>, onItemSelected: (dialog: DialogInterface, item: T, index: Int) -> Unit)
 
+    fun isCancelable(canCancel: Boolean)
+
     fun build(): D
     fun show(): D
 }
