@@ -7,8 +7,7 @@ import android.view.View
 import android.widget.Button
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk15.listeners.onClick
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -41,6 +40,15 @@ open class DialogsTestActivity : Activity() {
                     }.show()
                 }
             }
+            button {
+                id = 4
+                onClick {
+                    alert("Message", "NonCancelable") {
+                        isCancelable(false)
+                        positiveButton("Ok") { dialog -> dialog.dismiss()  }
+                    }.show()
+                }
+            }
         }
     }
 }
@@ -53,6 +61,7 @@ open class DialogsTestActivity : Activity() {
         val button1 = activity.findViewById(1) as Button
         val button2 = activity.findViewById(2) as Button
         val button3 = activity.findViewById(3) as Button
+        val button4 = activity.findViewById(4) as Button
 
         button1.performClick()
         ShadowLooper.idleMainLooper()
@@ -77,7 +86,15 @@ open class DialogsTestActivity : Activity() {
         assertEquals(View.GONE, alert.getButton(DialogInterface.BUTTON_NEUTRAL).visibility)
         alert.dismiss()
 
+        ShadowLooper.idleMainLooper()
+
+        button4.performClick()
+        val nonCancelableAlert = ShadowAlertDialog.getLatestAlertDialog()
+        assertNotNull(nonCancelableAlert)
+        val nonCancelableAlertShadow = ShadowExtractor.extract(nonCancelableAlert) as ShadowAlertDialog
+        assertEquals("NonCancelable", nonCancelableAlertShadow.title.toString())
+        assertFalse(nonCancelableAlertShadow.isCancelable)
+
         println("[COMPLETE]")
     }
-
 }
