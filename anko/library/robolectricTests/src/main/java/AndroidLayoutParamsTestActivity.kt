@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.RelativeLayout
 import org.jetbrains.anko.*
+import org.jetbrains.anko.cardview.v7.cardView
 
 open class AndroidLayoutParamsTestActivity : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
@@ -56,6 +57,16 @@ open class AndroidLayoutParamsTestActivity : Activity() {
                     rightMargin = 3
                     topMargin = 4
                     height = 9
+                }
+            }
+            cardView {
+                editText().lparams {
+                    bottomMargin = 1
+                    leftMargin = 2
+                    rightMargin = 3
+                    topMargin = 4
+                    height = 9
+                    gravity = Gravity.RIGHT
                 }
             }
         }
