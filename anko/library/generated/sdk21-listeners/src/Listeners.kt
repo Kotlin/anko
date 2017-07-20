@@ -42,6 +42,12 @@ fun android.widget.TextView.textChangedListener(init: __TextWatcher.() -> Unit) 
     addTextChangedListener(listener)
 }
 
+fun android.widget.TextView.beforeTextChanged(listener: (CharSequence?, Int, Int, Int) -> Unit) = textChangedListener { beforeTextChanged(listener) }
+
+fun android.widget.TextView.onTextChanged(listener: (CharSequence?, Int, Int, Int) -> Unit) = textChangedListener { onTextChanged(listener) }
+
+fun android.widget.TextView.afterTextChanged(listener: (android.text.Editable?) -> Unit) = textChangedListener { afterTextChanged(listener) }
+
 class __TextWatcher : android.text.TextWatcher {
 
     private var _beforeTextChanged: ((CharSequence?, Int, Int, Int) -> Unit)? = null
