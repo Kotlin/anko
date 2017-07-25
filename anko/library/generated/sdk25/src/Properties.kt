@@ -122,3 +122,12 @@ var android.widget.Toolbar.titleResource: Int
     @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
     set(v) = setTitle(v)
 
+var android.widget.TextView.textAppearance: Int
+	@Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
+	set(v) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			setTextAppearance(v)
+		} else {
+			setTextAppearance(context, v)
+		}
+	}
