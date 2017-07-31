@@ -51,6 +51,18 @@ val NOT_NULL: SqlTypeModifier = SqlTypeModifierImpl("NOT NULL")
 val AUTOINCREMENT: SqlTypeModifier = SqlTypeModifierImpl("AUTOINCREMENT")
 val UNIQUE: SqlTypeModifier = SqlTypeModifierImpl("UNIQUE")
 
+fun UNIQUE(conflictClause: ConflictClause): SqlTypeModifier {
+    return SqlTypeModifierImpl("UNIQUE ON CONFLICT $conflictClause")
+}
+
+enum class ConflictClause {
+    ROLLBACK,
+    ABORT,
+    FAIL,
+    IGNORE,
+    REPLACE
+}
+
 fun DEFAULT(value: String): SqlTypeModifier = SqlTypeModifierImpl("DEFAULT $value")
 
 private open class SqlTypeImpl(override val name: String, val modifiers: String? = null) : SqlType {
