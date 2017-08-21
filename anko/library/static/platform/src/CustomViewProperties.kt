@@ -69,6 +69,10 @@ var View.padding: Int
     @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
     inline set(value) = setPadding(value, value, value, value)
 
+var TextView.allCaps: Boolean
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+    inline set(value) = setAllCaps(value)
+
 inline var TextView.isSelectable: Boolean
     get() = isTextSelectable
     set(value) = setTextIsSelectable(value)
