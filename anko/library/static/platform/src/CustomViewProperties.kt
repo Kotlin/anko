@@ -73,6 +73,10 @@ var TextView.allCaps: Boolean
     @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
     inline set(value) = setAllCaps(value)
 
+var TextView.ems: Int
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+    inline set(value) = setEms(value)
+
 inline var TextView.isSelectable: Boolean
     get() = isTextSelectable
     set(value) = setTextIsSelectable(value)
