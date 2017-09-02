@@ -122,7 +122,7 @@ private fun castValue(value: Any?, type: Class<*>): Any? {
         } else if (type == java.lang.Byte.TYPE || type == java.lang.Byte::class.java) {
             return value.toByte()
         } else if (type == java.lang.Boolean.TYPE || type == java.lang.Boolean::class.java) {
-            return value != 0
+            return value != 0L
         } else if (type == java.lang.Character.TYPE || type == java.lang.Character::class.java) {
             return value.toChar()
         }
