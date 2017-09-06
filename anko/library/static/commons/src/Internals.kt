@@ -115,7 +115,7 @@ object AnkoInternals {
     fun internalStartActivity(
             ctx: Context,
             activity: Class<out Activity>,
-            params: Array<out Pair<String, Any>>
+            params: Array<out Pair<String, Any?>>
     ) {
         ctx.startActivity(createIntent(ctx, activity, params))
     }
@@ -125,7 +125,7 @@ object AnkoInternals {
             act: Activity,
             activity: Class<out Activity>,
             requestCode: Int,
-            params: Array<out Pair<String, Any>>
+            params: Array<out Pair<String, Any?>>
     ) {
         act.startActivityForResult(createIntent(act, activity, params), requestCode)
     }
@@ -134,7 +134,7 @@ object AnkoInternals {
     fun internalStartService(
             ctx: Context,
             activity: Class<out Service>,
-            params: Array<out Pair<String, Any>>
+            params: Array<out Pair<String, Any?>>
     ) {
         ctx.startService(createIntent(ctx, activity, params))
     }
