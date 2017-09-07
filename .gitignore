@@ -1,8 +1,14 @@
 /dependencies/
 /ideaSDK/
-/.idea/
 build/
 .DS_Store
 *.iml
 /.gradle
 /out
+.idea/libraries
+.idea/inspectionProfiles
+.idea/modules
+.idea/gradle.xml
+.idea/modules.xml
+.idea/tasks.xml
+.idea/workspace.xml

@@ -1,0 +1,5 @@
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(dir: new File(project.rootDir, "ideaSDK/lib"), include: ['*.jar'])
+}

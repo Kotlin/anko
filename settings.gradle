@@ -52,6 +52,7 @@ include ':ide:attrs'
 include ':ide:intentions'
 include ':ide:preview'
 include ':ide:xml-converter'
+include ':ide:idea-runner'
 
 project(':generator').projectDir = new File(rootDir, 'anko/library/generator')
 project(':stubs').projectDir = new File(rootDir, 'anko/library/stubs')
@@ -109,3 +110,4 @@ project(':ide:attrs').projectDir = new File(rootDir, 'anko/idea-plugin/attrs')
 project(':ide:intentions').projectDir = new File(rootDir, 'anko/idea-plugin/intentions')
 project(':ide:preview').projectDir = new File(rootDir, 'anko/idea-plugin/preview')
 project(':ide:xml-converter').projectDir = new File(rootDir, 'anko/idea-plugin/xml-converter')
+project(':ide:idea-runner').projectDir = new File(rootDir, 'anko/idea-plugin/idea-runner')
