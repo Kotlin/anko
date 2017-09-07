@@ -7,7 +7,9 @@ import com.android.tools.idea.gradle.util.BuildMode
 import com.android.tools.idea.project.AndroidProjectInfo
 import com.android.tools.idea.uibuilder.editor.NlPreviewForm
 import com.android.tools.idea.uibuilder.editor.NlPreviewManager
-import com.android.tools.idea.uibuilder.model.NlModel
+import com.android.tools.idea.common.model.NlModel
+import com.android.tools.idea.gradle.project.build.invoker.GradleTaskFinder
+import com.android.tools.idea.gradle.project.build.invoker.TestCompileType
 import com.intellij.ide.highlighter.XmlFileType
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
@@ -92,7 +94,7 @@ class AnkoNlPreviewManager(
         }
     }
 
-    fun getActiveTextEditor(): TextEditor? {
+    private fun getActiveTextEditor(): TextEditor? {
         if (!ApplicationManager.getApplication().isReadAccessAllowed) {
             return ApplicationManager.getApplication().runReadAction(Computable<TextEditor> { getActiveTextEditor() })
         }
@@ -100,7 +102,7 @@ class AnkoNlPreviewManager(
         val fileEditors = fileEditorManager?.selectedEditors
         if (fileEditors != null && fileEditors.isNotEmpty() && fileEditors[0] is TextEditor) {
             val textEditor = fileEditors[0] as TextEditor
-            if (isApplicableEditor(textEditor)) {
+            if (isApplicableEditor(textEditor, null)) {
                 return textEditor
             }
         }
@@ -134,10 +136,9 @@ class AnkoNlPreviewManager(
         return false
     }
 
-    override fun isApplicableEditor(textEditor: TextEditor?): Boolean {
-        val document = textEditor?.editor?.document ?: return false
-        val psiFile = PsiDocumentManager.getInstance(project).getPsiFile(document) ?: return false
-
+    override fun isApplicableEditor(textEditor: TextEditor, file: PsiFile?): Boolean {
+        val psiFile =
+                file ?: PsiDocumentManager.getInstance(project).getPsiFile(textEditor.editor.document) ?: return false
         if (!GradleProjectInfo.getInstance(project).isBuildWithGradle &&
                 !AndroidProjectInfo.getInstance(project).isLegacyIdeaAndroidProject) {
             return false
@@ -219,8 +220,7 @@ class AnkoNlPreviewManager(
         val gradleInvoker = GradleBuildInvoker.getInstance(project)
         val buildMode = BuildMode.COMPILE_JAVA
         BuildSettings.getInstance(project).buildMode = buildMode
-        val tasks = GradleBuildInvoker.findTasksToExecute(modules, buildMode, GradleBuildInvoker.TestCompileType.NONE)
-
+        val tasks = GradleTaskFinder.getInstance().findTasksToExecute(modules, buildMode, TestCompileType.NONE)
         gradleInvoker.executeTasks(tasks)
     }
 

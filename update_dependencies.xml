@@ -15,10 +15,10 @@
         <get src="http://search.maven.org/remotecontent?filepath=org/json/json/20080701/json-20080701.jar"
              dest="dependencies/json-20080701.jar" usetimestamp="true"/>
 
-        <get src="https://plugins.jetbrains.com/files/6954/33480/kotlin-plugin-1.1.1-release-Studio2.4-1.zip"
+        <get src="http://download.plugins.jetbrains.com/6954/38245/kotlin-plugin-1.1.4-release-Studio3.0-3.zip"
              dest="dependencies/kotlin-plugin.zip" usetimestamp="true"/>
 
-	<get src="http://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar"
+	    <get src="http://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar"
              dest="dependencies/ant-contrib.jar" usetimestamp="true"/>
 
         <delete dir="dependencies/kotlin-plugin" failonerror="false"/>
