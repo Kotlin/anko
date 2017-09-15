@@ -48,14 +48,11 @@ inline fun <T : View> Activity.ankoView(factory: (ctx: Context) -> T, theme: Int
     return view
 }
 
-inline fun <reified T : View> ViewManager.customView(theme: Int = 0, init: T.() -> Unit): T {
-    return ankoView({ ctx -> AnkoInternals.initiateView(ctx, T::class.java) }, theme) { init() }
-}
+inline fun <reified T : View> ViewManager.customView(theme: Int = 0, init: T.() -> Unit): T =
+        ankoView({ ctx -> AnkoInternals.initiateView(ctx, T::class.java) }, theme) { init() }
 
-inline fun <reified T : View> Context.customView(theme: Int = 0, init: T.() -> Unit): T {
-    return ankoView({ ctx -> AnkoInternals.initiateView(ctx, T::class.java) }, theme) { init() }
-}
+inline fun <reified T : View> Context.customView(theme: Int = 0, init: T.() -> Unit): T =
+        ankoView({ ctx -> AnkoInternals.initiateView(ctx, T::class.java) }, theme) { init() }
 
-inline fun <reified T : View> Activity.customView(theme: Int = 0, init: T.() -> Unit): T {
-    return ankoView({ ctx -> AnkoInternals.initiateView(ctx, T::class.java) }, theme) { init() }
-}
+inline fun <reified T : View> Activity.customView(theme: Int = 0, init: T.() -> Unit): T =
+        ankoView({ ctx -> AnkoInternals.initiateView(ctx, T::class.java) }, theme) { init() }
