@@ -90,6 +90,26 @@ fun SQLiteDatabase.dropTable(tableName: String, ifExists: Boolean = false) {
     execSQL("DROP TABLE $ifExistsText `$escapedTableName`;")
 }
 
+fun SQLiteDatabase.createIndex(indexName: String, tableName:String, unique:Boolean=false, ifNotExists: Boolean = false, vararg columns:String) {
+	val escapedIndexName = indexName.replace("`","``")
+	val escapedTableName = tableName.replace("`", "``")
+	val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
+    val uniqueText = if(unique) "UNIQUE" else ""
+	execSQL(
+		columns.joinToString(
+            separator = ",",
+            prefix = "CREATE $uniqueText INDEX $ifNotExistsText `$escapedIndexName` ON `$escapedTableName`(",
+            postfix = ");"
+        )
+    )
+}
+
+fun SQLiteDatabase.dropIndex(indexName: String, ifExists: Boolean = false) {
+	val escapedIndexName = indexName.replace("`","``")
+	val ifExistsText = if (ifExists) "IF EXISTS" else ""
+    execSQL("DROP INDEX $ifExistsText `$escapedIndexName`;")
+}
+
 private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^{}]+)\\}")
 
 internal fun applyArguments(whereClause: String, vararg args: Pair<String, Any>): String {
