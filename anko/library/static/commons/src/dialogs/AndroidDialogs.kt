@@ -112,7 +112,7 @@ inline fun Fragment.indeterminateProgressDialog(
         message: Int? = null,
         title: Int? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
-) = activity.progressDialog(message, title, init)
+) = activity.indeterminateProgressDialog(message, title, init)
 
 fun Context.indeterminateProgressDialog(
         message: Int? = null,
