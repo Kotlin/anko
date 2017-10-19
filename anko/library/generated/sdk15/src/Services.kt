@@ -8,7 +8,7 @@ import android.accounts.AccountManager
 import android.app.ActivityManager
 import android.app.AlarmManager
 import android.media.AudioManager
-import android.text.ClipboardManager
+import android.content.ClipboardManager
 import android.net.ConnectivityManager
 import android.app.admin.DevicePolicyManager
 import android.app.DownloadManager
