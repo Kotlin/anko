@@ -20,6 +20,7 @@ package org.jetbrains.anko
 import android.graphics.*
 import android.text.*
 import android.text.style.*
+import android.view.View
 import org.jetbrains.anko.collections.forEachByIndex
 
 inline fun buildSpanned(f: SpannableStringBuilder.() -> Unit): Spanned {
@@ -44,6 +45,18 @@ inline fun SpannableStringBuilder.foregroundColor(color: Int): ForegroundColorSp
 
 inline fun SpannableStringBuilder.backgroundColor(color: Int): BackgroundColorSpan {
     return BackgroundColorSpan(color)
+}
+
+inline fun SpannableStringBuilder.clickable(crossinline onClick: (View) -> Unit): ClickableSpan {
+    return object : ClickableSpan() {
+        override fun onClick(widget: View) {
+            onClick(widget)
+        }
+    }
+}
+
+inline fun SpannableStringBuilder.link(url: String): URLSpan {
+    return URLSpan(url)
 }
 
 fun SpannableStringBuilder.append(text: CharSequence, vararg spans: Any) {
