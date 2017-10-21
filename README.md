@@ -74,7 +74,7 @@ Anko has a meta-dependency which plugs in all available features (including Comm
 
 ```gradle
 dependencies {
-    compile "org.jetbrains.anko:anko:$anko_version"
+    classpath "org.jetbrains.anko:anko:$anko_version"
 }
 ```
 
