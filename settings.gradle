@@ -24,6 +24,7 @@ include ':generated:anko-design-listeners'
 include ':generated:anko-design-coroutines'
 include ':generated:anko-gridlayout-v7'
 include ':generated:anko-percent'
+include ':generated:anko-constraint-layout'
 include ':generated:anko-recyclerview-v7'
 include ':generated:anko-recyclerview-v7-listeners'
 include ':generated:anko-recyclerview-v7-coroutines'
@@ -81,6 +82,7 @@ project(':generated:anko-design-listeners').projectDir = new File(rootDir, 'anko
 project(':generated:anko-design-coroutines').projectDir = new File(rootDir, 'anko/library/generated/design-coroutines')
 project(':generated:anko-gridlayout-v7').projectDir = new File(rootDir, 'anko/library/generated/gridlayout-v7')
 project(':generated:anko-percent').projectDir = new File(rootDir, 'anko/library/generated/percent')
+project(':generated:anko-constraint-layout').projectDir = new File(rootDir, 'anko/library/generated/constraint-layout')
 project(':generated:anko-recyclerview-v7').projectDir = new File(rootDir, 'anko/library/generated/recyclerview-v7')
 project(':generated:anko-recyclerview-v7-listeners').projectDir = new File(rootDir, 'anko/library/generated/recyclerview-v7-listeners')
 project(':generated:anko-recyclerview-v7-coroutines').projectDir = new File(rootDir, 'anko/library/generated/recyclerview-v7-coroutines')
