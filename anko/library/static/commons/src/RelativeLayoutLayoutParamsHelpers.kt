@@ -69,6 +69,15 @@ inline fun LayoutParams.leftOf(view: View) {
 }
 
 /**
+ * Place the current View to the start of [view].
+ */
+inline fun LayoutParams.startOf(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(16, id) // START_OF
+}
+
+/**
  * Place the current View to the right of [view].
  */
 inline fun LayoutParams.rightOf(view: View) {
@@ -78,12 +87,30 @@ inline fun LayoutParams.rightOf(view: View) {
 }
 
 /**
+ * Place the current View to the end of [view].
+ */
+inline fun LayoutParams.endOf(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(17, id) // END_OF
+}
+
+/**
  * Set the current View left attribute the same as for [view].
  */
 inline fun LayoutParams.sameLeft(view: View) {
     val id = view.id
     if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
     addRule(ALIGN_LEFT, id)
+}
+
+/**
+ * Set the current View start attribute the same as for [view].
+ */
+inline fun LayoutParams.sameStart(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(18, id) // ALIGN_START
 }
 
 /**
@@ -102,6 +129,15 @@ inline fun LayoutParams.sameRight(view: View) {
     val id = view.id
     if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
     addRule(ALIGN_RIGHT, id)
+}
+
+/**
+ * Set the current View end attribute the same as for [view].
+ */
+inline fun LayoutParams.sameEnd(view: View) {
+    val id = view.id
+    if (id == View.NO_ID) throw AnkoException("Id is not set for $view")
+    addRule(19, id) // ALIGN_END
 }
 
 /**
@@ -141,14 +177,29 @@ inline fun LayoutParams.bottomOf(@IdRes id: Int): Unit = addRule(BELOW, id)
 inline fun LayoutParams.leftOf(@IdRes id: Int): Unit = addRule(LEFT_OF, id)
 
 /**
+ * Place the current View to the start of the View with a given [id].
+ */
+inline fun LayoutParams.startOf(@IdRes id: Int): Unit = addRule(16, id) // START_OF
+
+/**
  * Place the current View to the left of the View with a given [id].
  */
 inline fun LayoutParams.rightOf(@IdRes id: Int): Unit = addRule(RIGHT_OF, id)
 
 /**
+ * Place the current View to the end of the View with a given [id].
+ */
+inline fun LayoutParams.endOf(@IdRes id: Int): Unit = addRule(17, id) // END_OF
+
+/**
  * Set the current View left attribute the same as for View with a given [id].
  */
 inline fun LayoutParams.sameLeft(@IdRes id: Int): Unit = addRule(ALIGN_LEFT, id)
+
+/**
+ * Set the current View start attribute the same as for View with a given [id].
+ */
+inline fun LayoutParams.sameStart(@IdRes id: Int): Unit = addRule(18, id) // ALIGN_START
 
 /**
  * Set the current View top attribute the same as for View with a given [id].
@@ -159,6 +210,11 @@ inline fun LayoutParams.sameTop(@IdRes id: Int): Unit = addRule(ALIGN_TOP, id)
  * Set the current View right attribute the same as for View with a given [id].
  */
 inline fun LayoutParams.sameRight(@IdRes id: Int): Unit = addRule(ALIGN_RIGHT, id)
+
+/**
+ * Set the current View end attribute the same as for View with a given [id].
+ */
+inline fun LayoutParams.sameEnd(@IdRes id: Int): Unit = addRule(19, id) // ALIGN_END
 
 /**
  * Set the current View bottom attribute the same as for View with a given [id].
