@@ -18,8 +18,13 @@
 @file:Suppress("NOTHING_TO_INLINE")
 package org.jetbrains.anko.design
 
+import android.R
+import android.app.Activity
+import android.app.Fragment
 import android.support.design.widget.Snackbar
 import android.view.View
+import org.jetbrains.anko.find
+
 
 /**
  * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
@@ -104,3 +109,211 @@ inline fun longSnackbar(view: View, message: String, actionText: String, noinlin
             setAction(actionText, action)
             show()
         }
+
+/**
+ * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun Activity.snackbar(message: Int) = snackbar(find(R.id.content), message)
+
+/**
+ * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun Activity.longSnackbar(message: Int) = longSnackbar(find(R.id.content), message)
+
+/**
+ * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
+ *
+ * @param message the message text.
+ */
+inline fun Activity.snackbar(message: String) = snackbar(find(R.id.content), message)
+
+/**
+ * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
+ *
+ * @param message the message text.
+ */
+inline fun Activity.longSnackbar(message: String) = longSnackbar(find(R.id.content), message)
+
+/**
+ * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun Activity.snackbar(message: Int, actionText: Int, noinline action: (View) -> Unit) =
+        snackbar(find(R.id.content), message, actionText, action)
+
+/**
+ * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun Activity.longSnackbar(message: Int, actionText: Int, noinline action: (View) -> Unit) =
+        longSnackbar(find(R.id.content), message, actionText, action)
+
+/**
+ * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
+ *
+ * @param message the message text.
+ */
+inline fun Activity.snackbar(message: String, actionText: String, noinline action: (View) -> Unit) =
+        snackbar(find(R.id.content), message, actionText, action)
+
+/**
+ * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
+ *
+ * @param message the message text.
+ */
+inline fun Activity.longSnackbar(message: String, actionText: String, noinline action: (View) -> Unit) =
+        longSnackbar(find(R.id.content), message, actionText, action)
+
+/**
+ * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun Fragment.snackbar(message: Int) = snackbar(activity.find(R.id.content), message)
+
+/**
+ * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun Fragment.longSnackbar(message: Int) = longSnackbar(activity.find(R.id.content), message)
+
+/**
+ * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
+ *
+ * @param message the message text.
+ */
+inline fun Fragment.snackbar(message: String) = snackbar(activity.find(R.id.content), message)
+
+/**
+ * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
+ *
+ * @param message the message text.
+ */
+inline fun Fragment.longSnackbar(message: String) = longSnackbar(activity.find(R.id.content), message)
+
+/**
+ * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun Fragment.snackbar(message: Int, actionText: Int, noinline action: (View) -> Unit) =
+        snackbar(activity.find(R.id.content), message, actionText, action)
+
+/**
+ * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun Fragment.longSnackbar(message: Int, actionText: Int, noinline action: (View) -> Unit) =
+        longSnackbar(activity.find(R.id.content), message, actionText, action)
+
+/**
+ * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
+ *
+ * @param message the message text.
+ */
+inline fun Fragment.snackbar(message: String, actionText: String, noinline action: (View) -> Unit) =
+        snackbar(activity.find(R.id.content), message, actionText, action)
+
+/**
+ * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
+ *
+ * @param message the message text.
+ */
+inline fun Fragment.longSnackbar(message: String, actionText: String, noinline action: (View) -> Unit) =
+        longSnackbar(activity.find(R.id.content), message, actionText, action)
+
+/**
+ * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun View.snackbar(message: Int) {
+    val activity = context
+    if (activity is Activity) snackbar(activity.find(android.R.id.content), message)
+    else throw IllegalStateException("Context is not an Activity, can't show Snackbar")
+}
+
+/**
+ * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun View.longSnackbar(message: Int) {
+    val activity = context
+    if (activity is Activity) longSnackbar(activity.find(android.R.id.content), message)
+    else throw IllegalStateException("Context is not an Activity, can't show Snackbar")
+}
+
+/**
+ * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
+ *
+ * @param message the message text.
+ */
+inline fun View.snackbar(message: String) {
+    val activity = context
+    if (activity is Activity) snackbar(activity.find(android.R.id.content), message)
+    else throw IllegalStateException("Context is not an Activity, can't show Snackbar")
+}
+
+/**
+ * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
+ *
+ * @param message the message text.
+ */
+inline fun View.longSnackbar(message: String) {
+    val activity = context
+    if (activity is Activity) longSnackbar(activity.find(android.R.id.content), message)
+    else throw IllegalStateException("Context is not an Activity, can't show Snackbar")
+}
+
+/**
+ * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun View.snackbar(message: Int, actionText: Int, noinline action: (View) -> Unit) {
+    val activity = context
+    if (activity is Activity) snackbar(activity.find(android.R.id.content), message, actionText, action)
+    else throw IllegalStateException("Context is not an Activity, can't show Snackbar")
+}
+
+/**
+ * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
+ *
+ * @param message the message text resource.
+ */
+inline fun View.longSnackbar(message: Int, actionText: Int, noinline action: (View) -> Unit) {
+    val activity = context
+    if (activity is Activity) longSnackbar(activity.find(android.R.id.content), message, actionText, action)
+    else throw IllegalStateException("Context is not an Activity, can't show Snackbar")
+}
+
+/**
+ * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
+ *
+ * @param message the message text.
+ */
+inline fun View.snackbar(message: String, actionText: String, noinline action: (View) -> Unit) {
+    val activity = context
+    if (activity is Activity) snackbar(activity.find(android.R.id.content), message, actionText, action)
+    else throw IllegalStateException("Context is not an Activity, can't show Snackbar")
+}
+
+/**
+ * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
+ *
+ * @param message the message text.
+ */
+inline fun View.longSnackbar(message: String, actionText: String, noinline action: (View) -> Unit) {
+    val activity = context
+    if (activity is Activity) longSnackbar(activity.find(android.R.id.content), message, actionText, action)
+    else throw IllegalStateException("Context is not an Activity, can't show Snackbar")
+}
