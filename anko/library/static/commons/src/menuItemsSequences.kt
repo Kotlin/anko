@@ -24,9 +24,7 @@ import java.util.*
 fun Menu.itemsSequence(): Sequence<MenuItem> = MenuItemsSequence(this)
 
 private class MenuItemsSequence(private val menu: Menu) : Sequence<MenuItem> {
-    override fun iterator(): Iterator<MenuItem> {
-        return MenuItemIterator(menu)
-    }
+    override fun iterator(): Iterator<MenuItem> = MenuItemIterator(menu)
 
     private class MenuItemIterator(private val menu: Menu) : Iterator<MenuItem> {
         private var index = 0

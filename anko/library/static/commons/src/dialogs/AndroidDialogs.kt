@@ -79,9 +79,8 @@ fun Context.alert(
 inline fun AnkoContext<*>.alert(noinline init: AlertBuilder<DialogInterface>.() -> Unit) = ctx.alert(init)
 inline fun Fragment.alert(noinline init: AlertBuilder<DialogInterface>.() -> Unit) = activity.alert(init)
 
-fun Context.alert(init: AlertBuilder<DialogInterface>.() -> Unit): AlertBuilder<DialogInterface> {
-    return AndroidAlertBuilder(this).apply { init() }
-}
+fun Context.alert(init: AlertBuilder<DialogInterface>.() -> Unit): AlertBuilder<DialogInterface> =
+        AndroidAlertBuilder(this).apply { init() }
 
 inline fun AnkoContext<*>.progressDialog(
         message: Int? = null,
