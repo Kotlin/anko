@@ -15,6 +15,7 @@
  */
 
 @file:Suppress("NOTHING_TO_INLINE", "unused")
+
 package org.jetbrains.anko
 
 import android.app.Fragment
@@ -25,13 +26,13 @@ inline fun AnkoContext<*>.selector(
         title: CharSequence? = null,
         items: List<CharSequence>,
         noinline onClick: (DialogInterface, Int) -> Unit
-): Unit = ctx.selector(title, items, onClick)
+) = ctx.selector(title, items, onClick)
 
 inline fun Fragment.selector(
         title: CharSequence? = null,
         items: List<CharSequence>,
         noinline onClick: (DialogInterface, Int) -> Unit
-): Unit = activity.selector(title, items, onClick)
+) = activity.selector(title, items, onClick)
 
 fun Context.selector(
         title: CharSequence? = null,

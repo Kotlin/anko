@@ -118,22 +118,18 @@ open class AnkoContextImpl<T>(
     open protected fun alreadyHasView(): Unit = throw IllegalStateException("View is already set: $myView")
 }
 
-inline fun Context.UI(setContentView: Boolean, init: AnkoContext<Context>.() -> Unit): AnkoContext<Context> {
-    return createAnkoContext(this, init, setContentView)
-}
+inline fun Context.UI(setContentView: Boolean, init: AnkoContext<Context>.() -> Unit): AnkoContext<Context> =
+        createAnkoContext(this, init, setContentView)
 
-inline fun Context.UI(init: AnkoContext<Context>.() -> Unit): AnkoContext<Context> {
-    return createAnkoContext(this, init)
-}
+inline fun Context.UI(init: AnkoContext<Context>.() -> Unit): AnkoContext<Context> =
+        createAnkoContext(this, init)
 
-inline fun Fragment.UI(init: AnkoContext<Fragment>.() -> Unit): AnkoContext<Fragment> {
-    return createAnkoContext(activity, init)
-}
+inline fun Fragment.UI(init: AnkoContext<Fragment>.() -> Unit): AnkoContext<Fragment> =
+        createAnkoContext(activity, init)
 
 interface AnkoComponent<in T> {
     fun createView(ui: AnkoContext<T>): View
 }
 
-fun <T : Activity> AnkoComponent<T>.setContentView(activity: T): View {
-    return createView(AnkoContextImpl(activity, activity, true))
-}
+fun <T : Activity> AnkoComponent<T>.setContentView(activity: T): View =
+        createView(AnkoContextImpl(activity, activity, true))
