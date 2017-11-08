@@ -20,16 +20,14 @@ import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtConstructor
 import org.jetbrains.kotlin.psi.KtFile
+import org.jetbrains.kotlin.resolve.BindingContext
 import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameSafe
 import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameUnsafe
 import org.jetbrains.kotlin.resolve.lazy.ResolveSession
 import org.jetbrains.kotlin.types.typeUtil.supertypes
 import java.util.ArrayList
 
-internal class DslPreviewClassResolver(val project: Project) {
-    companion object {
-        val ANKO_COMPONENT_CLASS_NAME = "org.jetbrains.anko.AnkoComponent"
-    }
+internal class DslPreviewClassResolver(private val project: Project) {
 
     private fun getKtClass(psiElement: PsiElement?): KtClass? {
         return if (psiElement is KtLightElement<*, *>) {
@@ -63,7 +61,7 @@ internal class DslPreviewClassResolver(val project: Project) {
 
         if (baseClasses.isEmpty()) return emptyList()
 
-        try {
+        return try {
             val cacheService = KotlinCacheService.getInstance(project)
 
             val previewClasses = ArrayList<PreviewClassDescription>(0)
@@ -71,10 +69,10 @@ internal class DslPreviewClassResolver(val project: Project) {
                 resolveClassDescription(element, cacheService)?.let { previewClasses += it }
             }
 
-            return previewClasses
+            previewClasses
         }
         catch (e: IndexNotReadyException) {
-            return emptyList()
+            emptyList()
         }
     }
 
@@ -110,13 +108,38 @@ internal class DslPreviewClassResolver(val project: Project) {
             return null
         }
 
-        val typeMapper = KotlinTypeMapper(resolveSession.bindingContext,
-                ClassBuilderMode.LIGHT_CLASSES, CodegenFileClassesProvider(), IncompatibleClassTracker.DoNothing, "main",
-                false, false)
+        val typeMapper = createTypeMapper(resolveSession.bindingContext)
 
         return PreviewClassDescription(ktClass, classDescriptor.fqNameSafe.asString(),
                 typeMapper.mapType(classDescriptor).internalName)
     }
 
+    companion object {
+        val ANKO_COMPONENT_CLASS_NAME = "org.jetbrains.anko.AnkoComponent"
+
+        private fun createTypeMapper(bindingContext: BindingContext): KotlinTypeMapper {
+            // TODO: remove this hack when kotlin 1.2 will be bundled in AS
+            val typeMapperConstructor12 = KotlinTypeMapper::class.java.constructors.find { it.parameterCount == 6 }
+            if (typeMapperConstructor12 != null) {
+                return typeMapperConstructor12
+                        .newInstance(
+                                bindingContext,
+                                ClassBuilderMode.LIGHT_CLASSES,
+                                IncompatibleClassTracker.DoNothing,
+                                "main",
+                                false,
+                                false) as KotlinTypeMapper
+            }
+
+            return KotlinTypeMapper(
+                    bindingContext,
+                    ClassBuilderMode.LIGHT_CLASSES,
+                    CodegenFileClassesProvider(),
+                    IncompatibleClassTracker.DoNothing,
+                    "main",
+                    false,
+                    false)
+        }
+    }
 
 }
