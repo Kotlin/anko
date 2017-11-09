@@ -94,6 +94,4 @@ inline fun <D : DialogInterface> Fragment.alert(
 fun <D : DialogInterface> Context.alert(
         factory: AlertBuilderFactory<D>,
         init: AlertBuilder<D>.() -> Unit
-): AlertBuilder<D> {
-    return factory(this).apply { init() }
-}
+): AlertBuilder<D> = factory(this).apply { init() }

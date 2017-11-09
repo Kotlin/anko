@@ -199,9 +199,7 @@ internal object BackgroundExecutor {
     var executor: ExecutorService =
         Executors.newScheduledThreadPool(2 * Runtime.getRuntime().availableProcessors())
 
-    fun <T> submit(task: () -> T): Future<T> {
-        return executor.submit(task)
-    }
+    fun <T> submit(task: () -> T): Future<T> = executor.submit(task)
 
 }
 

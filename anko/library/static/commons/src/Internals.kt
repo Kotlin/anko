@@ -42,12 +42,10 @@ object AnkoInternals {
 
     private class AnkoContextThemeWrapper(base: Context?, val theme: Int) : ContextThemeWrapper(base, theme)
     
-    fun <T : View> addView(manager: ViewManager, view: T) {
-        return when (manager) {
-            is ViewGroup -> manager.addView(view)
-            is AnkoContext<*> -> manager.addView(view, null)
-            else -> throw AnkoException("$manager is the wrong parent")
-        }
+    fun <T : View> addView(manager: ViewManager, view: T) = when (manager) {
+        is ViewGroup -> manager.addView(view)
+        is AnkoContext<*> -> manager.addView(view, null)
+        else -> throw AnkoException("$manager is the wrong parent")
     }
 
     fun <T : View> addView(ctx: Context, view: T) {

@@ -15,24 +15,23 @@
         <get src="http://search.maven.org/remotecontent?filepath=org/json/json/20080701/json-20080701.jar"
              dest="dependencies/json-20080701.jar" usetimestamp="true"/>
 
-        <get src="https://plugins.jetbrains.com/files/6954/33480/kotlin-plugin-1.1.1-release-Studio2.4-1.zip"
-             dest="dependencies/kotlin-plugin.zip" usetimestamp="true"/>
-
-	<get src="http://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar"
+	    <get src="http://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar"
              dest="dependencies/ant-contrib.jar" usetimestamp="true"/>
+
+        <ant antfile="update_dependencies_idea.xml" target="update"/>
+
+        <!-- Uncomment this to build against custom version of Kotlin plugin instead of bundled into AS -->
+        <!--
+        <get src="http://download.plugins.jetbrains.com/6954/38245/kotlin-plugin-1.1.4-release-Studio3.0-3.zip"
+             dest="dependencies/kotlin-plugin.zip" usetimestamp="true"/>
 
         <delete dir="dependencies/kotlin-plugin" failonerror="false"/>
         <unzip src="dependencies/kotlin-plugin.zip"
                dest="dependencies/"/>
 
         <set_unix_perms />
-
-        <ant antfile="update_dependencies_idea.xml" target="update"/>
-
-        <rename src="ideaSDK/lib/kotlin-runtime.jar" dest="kotlin-runtime.jar.bak"/>
-        <rename src="ideaSDK/lib/kotlin-reflect.jar" dest="kotlin-reflect.jar.bak"/>
-
         <copydir src="dependencies/Kotlin" dest="ideaSDK/plugins/Kotlin" forceoverwrite="true"/>
+        -->
     </target>
 
     <macrodef name="set_unix_perms">

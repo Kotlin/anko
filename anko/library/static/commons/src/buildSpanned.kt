@@ -22,9 +22,8 @@ import android.text.*
 import android.text.style.*
 import org.jetbrains.anko.collections.forEachByIndex
 
-inline fun buildSpanned(f: SpannableStringBuilder.() -> Unit): Spanned {
-    return SpannableStringBuilder().apply(f)
-}
+inline fun buildSpanned(f: SpannableStringBuilder.() -> Unit): Spanned =
+        SpannableStringBuilder().apply(f)
 
 inline val SpannableStringBuilder.Bold: StyleSpan
     get() = StyleSpan(Typeface.BOLD)
@@ -38,13 +37,11 @@ inline val SpannableStringBuilder.Underline: UnderlineSpan
 inline val SpannableStringBuilder.Strikethrough: StrikethroughSpan
     get() = StrikethroughSpan()
 
-inline fun SpannableStringBuilder.foregroundColor(color: Int): ForegroundColorSpan {
-    return ForegroundColorSpan(color)
-}
+inline fun SpannableStringBuilder.foregroundColor(color: Int): ForegroundColorSpan =
+        ForegroundColorSpan(color)
 
-inline fun SpannableStringBuilder.backgroundColor(color: Int): BackgroundColorSpan {
-    return BackgroundColorSpan(color)
-}
+inline fun SpannableStringBuilder.backgroundColor(color: Int): BackgroundColorSpan =
+        BackgroundColorSpan(color)
 
 fun SpannableStringBuilder.append(text: CharSequence, vararg spans: Any) {
     val textLength = text.length

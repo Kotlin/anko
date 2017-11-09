@@ -5,8 +5,8 @@
     <property name="idea.kotlin.branch" value="rc"/>
 
     <property name="android.studio.intellij-core.build.number" value="171.3780.107"/>
-    <property name="android.version" value="2.4.0.5"/>
-    <property name="android.build.version" value="171.3909050"/>
+    <property name="android.version" value="3.0.0.16"/>
+    <property name="android.build.version" value="171.4392136"/>
 
     <property name="markdown.locator" value="buildType:IntelliJMarkdownParser_Build,status:SUCCESS,tag:forKotlin"/>
 
@@ -851,11 +851,14 @@
         </condition>
 
         <exec executable="chmod" if:set="android.studio.mac">
+            <arg value="-R"/>
             <arg value="a+x"/>
-            <arg path="${android.destination.dir}/bin/fsnotifier"/>
-            <arg path="${android.destination.dir}/bin/inspect.sh"/>
-            <arg path="${android.destination.dir}/bin/printenv.py"/>
-            <arg path="${android.destination.dir}/bin/restarter"/>
+            <arg path="${android.destination.dir}/bin/"/>
+            <!-- Needed to run gradle -->
+            <arg path="${android.destination.dir}/jre/jdk/Contents/Home/bin/"/>
+            <arg path="${android.destination.dir}/jre/jdk/Contents/Home/lib/"/>
+            <arg path="${android.destination.dir}/jre/jdk/Contents/Home/jre/bin/"/>
+            <arg path="${android.destination.dir}/jre/jdk/Contents/Home/jre/lib/"/>
         </exec>
 
         <exec executable="chmod" if:set="android.studio.linux">

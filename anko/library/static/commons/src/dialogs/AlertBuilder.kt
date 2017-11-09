@@ -86,18 +86,14 @@ fun AlertBuilder<*>.customView(dsl: ViewManager.() -> Unit) {
     customView = ctx.UI(dsl).view
 }
 
-inline fun AlertBuilder<*>.okButton(noinline handler: (dialog: DialogInterface) -> Unit) {
+inline fun AlertBuilder<*>.okButton(noinline handler: (dialog: DialogInterface) -> Unit) =
     positiveButton(android.R.string.ok, handler)
-}
 
-inline fun AlertBuilder<*>.cancelButton(noinline handler: (dialog: DialogInterface) -> Unit) {
+inline fun AlertBuilder<*>.cancelButton(noinline handler: (dialog: DialogInterface) -> Unit) =
     negativeButton(android.R.string.cancel, handler)
-}
 
-inline fun AlertBuilder<*>.yesButton(noinline handler: (dialog: DialogInterface) -> Unit) {
+inline fun AlertBuilder<*>.yesButton(noinline handler: (dialog: DialogInterface) -> Unit) =
     positiveButton(android.R.string.yes, handler)
-}
 
-inline fun AlertBuilder<*>.noButton(noinline handler: (dialog: DialogInterface) -> Unit) {
+inline fun AlertBuilder<*>.noButton(noinline handler: (dialog: DialogInterface) -> Unit) =
     negativeButton(android.R.string.no, handler)
-}
