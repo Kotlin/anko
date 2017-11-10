@@ -13,6 +13,8 @@ android {
 }
 
 dependencies {
+    compile "com.android.support:cardview-v7:$SUPPORT_ARTIFACT_VERSION"
+    compile project(':generated:anko-cardview-v7')
     compile project(':generated:anko-commons')
     compile project(':generated:anko-sqlite')
     compile project(':generated:anko-sdk15')
