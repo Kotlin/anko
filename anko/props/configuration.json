@@ -217,7 +217,8 @@
       "android.renderscript.RSSurfaceView",
       "android.renderscript.RenderScriptGL",
       "android.renderscript.RSTextureView",
-      "android.support.v7.widget.DropDownListView"
+      "android.support.v7.widget.DropDownListView",
+      "android.text.ClipboardManager"
     ]
   }
 }
