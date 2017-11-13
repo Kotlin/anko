@@ -118,3 +118,23 @@ var android.widget.Toolbar.titleResource: Int
     @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
     set(v) = setTitle(v)
 
+var android.widget.Toolbar.overflowIconResource: Int
+    @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
+    set(v) = setOverflowIcon(context.getDrawable(v))
+
+var android.widget.Toolbar.subtitleTextColor: Int
+    @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
+    set(v) = setSubtitleTextColor(v)
+
+var android.widget.Toolbar.subtitleTextColorResource: Int
+    @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
+    set(v) = setSubtitleTextColor(context.getColor(v))
+
+var android.widget.Toolbar.titleTextColor: Int
+    @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
+    set(v) = setTitleTextColor(v)
+
+var android.widget.Toolbar.titleTextColorResource: Int
+    @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
+    set(v) = setTitleTextColor(context.getColor(v))
+

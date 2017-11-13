@@ -114,3 +114,11 @@ var android.widget.Toolbar.titleResource: Int
     @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
     set(v) = setTitle(v)
 
+var android.widget.Toolbar.subtitleTextColor: Int
+    @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
+    set(v) = setSubtitleTextColor(v)
+
+var android.widget.Toolbar.titleTextColor: Int
+    @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = AnkoInternals.noGetter()
+    set(v) = setTitleTextColor(v)
+
