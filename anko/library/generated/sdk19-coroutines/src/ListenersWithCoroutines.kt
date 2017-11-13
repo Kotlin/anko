@@ -70,6 +70,18 @@ class __View_OnAttachStateChangeListener(private val context: CoroutineContext) 
     addTextChangedListener(listener)
 }
 
+fun android.widget.TextView.beforeTextChanged(context: CoroutineContext = UI, listener: suspend CoroutineScope.(CharSequence?, Int, Int, Int) -> Unit) {
+    textChangedListener(context) { beforeTextChanged(listener) }
+}
+
+fun android.widget.TextView.onTextChanged(context: CoroutineContext = UI, listener: suspend CoroutineScope.(CharSequence?, Int, Int, Int) -> Unit) {
+    textChangedListener(context) { onTextChanged(listener) }
+}
+
+fun android.widget.TextView.afterTextChanged(context: CoroutineContext = UI, listener: suspend CoroutineScope.(android.text.Editable?) -> Unit) {
+    textChangedListener(context) { afterTextChanged(listener) }
+}
+
 class __TextWatcher(private val context: CoroutineContext) : android.text.TextWatcher {
 
     private var _beforeTextChanged: (suspend CoroutineScope.(CharSequence?, Int, Int, Int) -> Unit)? = null
