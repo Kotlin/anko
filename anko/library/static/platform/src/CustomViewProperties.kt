@@ -31,6 +31,10 @@ var View.backgroundDrawable: Drawable?
     inline get() = background
     set(value) = setBackgroundDrawable(value)
 
+var View.backgroundColorResource: Int
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+    set(colorId) = setBackgroundColor(context.resources.getColor(colorId))
+
 var View.leftPadding: Int
     inline get() = paddingLeft
     set(value) = setPadding(value, paddingTop, paddingRight, paddingBottom)
@@ -88,6 +92,10 @@ var TextView.textAppearance: Int
 var TextView.textSizeDimen: Int
     @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
     set(value) = setTextSize(TypedValue.COMPLEX_UNIT_PX, context.resources.getDimension(value))
+
+var TextView.textColorResource: Int
+    @Deprecated(NO_GETTER, level = ERROR) get() = noGetter()
+    set(colorId) = setTextColor(context.resources.getColor(colorId))
 
 var ImageView.image: Drawable?
     inline get() = drawable
