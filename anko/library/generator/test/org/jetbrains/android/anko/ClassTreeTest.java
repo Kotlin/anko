@@ -28,23 +28,23 @@ import java.util.Collections;
 
 public class ClassTreeTest extends Assert {
 
-    private final ArrayList<ClassNode> classes = new ArrayList<ClassNode>();
+    private final ArrayList<ClassNode> classes = new ArrayList<>();
     private ArrayList<ClassNode> shuffledClasses;
 
     @Before
     public void setUp() throws Exception {
         classes.clear();
-        classes.add(new SimpleClassNode("java.lang.Object", null));
-        classes.add(new SimpleClassNode("java.lang.Integer", "java.lang.Object"));
-        classes.add(new SimpleClassNode("com.example.A", "java.lang.Object"));
-        classes.add(new SimpleClassNode("com.example.B", "com.example.A"));
-        classes.add(new SimpleClassNode("com.example.C", "com.example.A"));
-        classes.add(new SimpleClassNode("com.example.D", "com.example.B"));
-        classes.add(new SimpleClassNode("com.example.E", "com.example.B"));
-        classes.add(new SimpleClassNode("com.example.F", "com.example.E"));
-        classes.add(new SimpleClassNode("com.example.G", "com.example.F"));
-        classes.add(new SimpleClassNode("com.example.H", "com.example.F"));
-        shuffledClasses = new ArrayList<ClassNode>(classes);
+        classes.add(createNode("java.lang.Object", null));
+        classes.add(createNode("java.lang.Integer", "java.lang.Object"));
+        classes.add(createNode("com.example.A", "java.lang.Object"));
+        classes.add(createNode("com.example.B", "com.example.A"));
+        classes.add(createNode("com.example.C", "com.example.A"));
+        classes.add(createNode("com.example.D", "com.example.B"));
+        classes.add(createNode("com.example.E", "com.example.B"));
+        classes.add(createNode("com.example.F", "com.example.E"));
+        classes.add(createNode("com.example.G", "com.example.F"));
+        classes.add(createNode("com.example.H", "com.example.F"));
+        shuffledClasses = new ArrayList<>(classes);
         Collections.shuffle(shuffledClasses);
     }
 
@@ -107,12 +107,11 @@ public class ClassTreeTest extends Assert {
         }
         assertEquals(arrayElementCount, treeElementCount);
     }
-
-    class SimpleClassNode extends ClassNode {
-        SimpleClassNode(String name, String superName) {
-            this.name = name;
-            this.superName = superName;
-        }
+    
+    private static ClassNode createNode(String name, String superName) {
+        ClassNode node = new ClassNode();
+        node.name = name;
+        node.superName = superName;
+        return node;
     }
-
 }

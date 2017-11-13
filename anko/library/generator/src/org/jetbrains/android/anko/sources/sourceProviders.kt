@@ -19,21 +19,17 @@ package org.jetbrains.android.anko.sources
 import com.github.javaparser.JavaParser
 import com.github.javaparser.ast.CompilationUnit
 import org.jetbrains.android.anko.utils.getPackageName
-import sun.plugin.dom.exception.InvalidStateException
 import java.io.File
 
 interface SourceProvider {
     fun parse(fqName: String): CompilationUnit?
 }
 
-class AndroidHomeSourceProvider(version: Int) : SourceProvider {
-    private val baseDir: File
+class AndroidHomeSourceProvider(androidSdkLocation: File, version: Int) : SourceProvider {
+    private val baseDir = File(androidSdkLocation, "sources/android-$version")
 
     init {
-        val androidHome = System.getenv("ANDROID_HOME")
-                ?: throw InvalidStateException("ANDROID_HOME environment variable is not defined")
-        baseDir = File(androidHome, "sources/android-$version")
-        if (!baseDir.exists()) throw InvalidStateException("${baseDir.absolutePath} does not exist")
+        if (!baseDir.exists()) throw IllegalStateException("${baseDir.absolutePath} does not exist")
     }
 
     override fun parse(fqName: String): CompilationUnit? {

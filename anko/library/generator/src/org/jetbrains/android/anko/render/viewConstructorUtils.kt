@@ -44,7 +44,7 @@ interface ViewConstructorUtils {
             }
         } else {
             when {
-                constructors[0] != null -> "$ctxName"
+                constructors[0] != null -> ctxName
                 constructors[1] != null -> "$ctxName, null"
                 else -> throw IllegalArgumentException("No available constructors for ${view.fqName}.")
             }

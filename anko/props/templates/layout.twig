@@ -1,0 +1,23 @@
+open class {{ layoutName }}({{ layoutConstructorArgs }}): {{ imported(baseClassName) }}({{ baseClassConstructorArgs }}) {
+{% for fun in lparamsFunctions %}
+    inline fun <T: {{ imported("android.view.View") }}> T.lparams(
+            {% for param in fun.params %}{{ param }},
+            {% endfor %}init: {{ imported(fun.layoutParamsClass) }}.() -> Unit
+    ): T {
+        val layoutParams = {{ imported(fun.layoutParamsClass) }}({{ fun.substituted }})
+        layoutParams.init()
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+
+    inline fun <T: {{ imported("android.view.View") }}> T.lparams(
+            {% for param in fun.params %}{{ param }}{% if (loop.last == false) %},
+            {% endif %}{% endfor %}
+    ): T {
+        val layoutParams = {{ imported(fun.layoutParamsClass) }}({{ fun.substituted }})
+        this@lparams.layoutParams = layoutParams
+        return this
+    }
+{% endfor %}
+}
+

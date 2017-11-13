@@ -1,4 +1,4 @@
-fun {{receiver}}.{{name}}(l: ({{args}}) -> {{returnType}}) {
+inline fun {{receiver}}.{{name}}(noinline l: ({{args}}) -> {{returnType}}) {
     {{setter}}(l)
 }
 

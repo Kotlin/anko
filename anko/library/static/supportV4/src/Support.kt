@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko.support.v4
 
 import android.support.v4.app.Fragment
@@ -49,8 +50,8 @@ inline fun <T: Any> Fragment.configuration(
     else null
 }
 
-fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
-    setArguments(bundleOf(*params))
+fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any?>): T {
+    arguments = bundleOf(*params)
     return this
 }
 

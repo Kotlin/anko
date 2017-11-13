@@ -1,17 +1,26 @@
 package test
 
-import android.app.*
-import android.widget.*
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
-import org.jetbrains.anko.*
-import org.jetbrains.anko.custom.*
-import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
-import org.robolectric.*
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import org.jetbrains.anko.custom.customView
+import org.jetbrains.anko.relativeLayout
+import org.jetbrains.anko.textView
+import org.jetbrains.anko.verticalLayout
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
-import org.junit.Assert.*
+import org.junit.runner.RunWith
+import org.robolectric.Robolectric
+import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.annotation.Config
 
-public open class FindViewTestActivity() : Activity() {
+open class FindViewTestActivity : Activity() {
+    @SuppressLint("SetTextI18n")
     public override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
 
@@ -27,7 +36,7 @@ public open class FindViewTestActivity() : Activity() {
                 }
             }
 
-            val text = textView {
+            textView {
                 id = 4
             }
         }
@@ -35,11 +44,9 @@ public open class FindViewTestActivity() : Activity() {
 }
 
 @RunWith(RobolectricGradleTestRunner::class)
-@Config(constants = BuildConfig::class)
-public class FindViewTest() {
+@Config(constants = BuildConfig::class) class FindViewTest {
 
-    @Test
-    public fun test() {
+    @Test fun test() {
         val activity = Robolectric.buildActivity(FindViewTestActivity::class.java).create().get()
 
         val verticalLayout = activity.findViewById(1) as? LinearLayout
@@ -54,10 +61,10 @@ public class FindViewTest() {
         assertNotNull(button)
         assertNotNull(textView)
 
-        assertEquals("Button text", button!!.getText().toString())
+        assertEquals("Button text", button!!.text.toString())
 
-        assertEquals(2, verticalLayout!!.getChildCount())
-        assertEquals(1, relativeLayout!!.getChildCount())
+        assertEquals(2, verticalLayout.childCount)
+        assertEquals(1, relativeLayout.childCount)
 
         println("[COMPLETE]")
     }

@@ -23,9 +23,9 @@ import org.jetbrains.kotlin.android.attrs.readResource
 
 private val INTENT = "    "
 
-internal val attrs = Gson().fromJson(readResource("attrs.json"), Attrs::class.java)
+internal val attrs = Gson().fromJson(readResource("../attrs.json"), Attrs::class.java)
 
-internal val viewHierarchy = Gson().fromJson<Map<String, List<String>>>(readResource("views.json"),
+internal val viewHierarchy = Gson().fromJson<Map<String, List<String>>>(readResource("../views.json"),
         (object : TypeToken<Map<String, List<String>>>() {}).type)
 
 internal data class KeyValuePair(val key: String, val value: String) {

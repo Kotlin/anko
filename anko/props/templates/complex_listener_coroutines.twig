@@ -1,0 +1,36 @@
+fun {{ setter.receiver }}.{{ setter.methodName }}Listener(
+        context: {{ imported("kotlin.coroutines.experimental.CoroutineContext") }} = {{ imported("kotlinx.coroutines.experimental.android.UI") }},
+        init: {{ setter.listener }}.() -> Unit
+) {
+    val listener = {{ setter.listener }}(context)
+    listener.init()
+    {{ setter.setter }}(listener)
+}
+
+class {{ helperClassName }}(private val context: {{ imported("kotlin.coroutines.experimental.CoroutineContext") }}) : {{ listenerClassName }}{{ superConstructorCall }} {
+{% for method in methods %}
+    private var _{{ method.varName }}: (suspend {{ imported("kotlinx.coroutines.experimental.CoroutineScope") }}.({{ method.argTypes }}) -> {{ imported(method.returnType) }})? = null
+    {% if (method.returnType != "Unit") %}private var _{{ method.varName }}_returnValue: {{ method.possiblyNullableReturnType }}{% if (method.returnDefaultValue != "") %} = {{ method.returnDefaultValue }}{% endif %}{% endif %}
+
+    override fun {{ method.methodName }}({{ method.args }}){% if (method.returnType != "Unit") %} : {{ method.returnType }}{% endif %} {
+        {% if (method.returnType != "Unit") %}val returnValue = _{{ method.varName }}_returnValue
+        {% endif %}val handler = _{{ method.varName }} ?: return{% if (method.returnType != "Unit") %} returnValue{% endif %}
+        {% if (method.hasArgs == true) -%}
+        {{ imported("kotlinx.coroutines.experimental.launch") }}(context) {
+            handler({{ method.argNames }})
+        }
+        {%- else -%}
+        {{ imported("kotlinx.coroutines.experimental.launch") }}(context, block = handler)
+        {%- endif %}{% if (method.returnType != "Unit") %}
+        return returnValue{% endif %}
+    }
+
+    fun {{ method.methodName }}(
+            {% if (method.returnType != "Unit") %}returnValue: {{ method.returnType }}{% if (method.returnDefaultValue != "") %} = {{ method.returnDefaultValue }}{% endif %},
+            {% endif %}listener: suspend {{ imported("kotlinx.coroutines.experimental.CoroutineScope") }}.({{ method.argTypes }}) -> {{ imported(method.returnType) }}
+    ) {
+        _{{ method.varName }} = listener{% if (method.returnType != "Unit") %}
+        _{{ method.varName }}_returnValue = returnValue{% endif %}
+    }
+{% endfor %}
+}

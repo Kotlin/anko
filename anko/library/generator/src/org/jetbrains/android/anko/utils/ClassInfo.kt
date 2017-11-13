@@ -19,7 +19,6 @@ package org.jetbrains.android.anko.utils
 import org.jetbrains.android.anko.isConstructor
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.tree.ClassNode
-import org.objectweb.asm.tree.InnerClassNode
 import org.objectweb.asm.tree.MethodNode
 
 data class MethodNodeWithClass(var clazz: ClassNode, val method: MethodNode) {
@@ -47,7 +46,7 @@ internal fun ClassNode.buildTypeParams(): String {
         if (genericMethodSignature.typeParameters.isEmpty()) return ""
 
         genericMethodSignature.typeParameters
-                .map { it.upperBounds.fold("") { s, bound -> s + "out " + genericTypeToStr(bound) } }
+                .map { it.upperBounds.fold("") { s, bound -> s + "out " + genericTypeToKType(bound) } }
                 .joinToString(prefix = "<", postfix = ">")
     } else ""
 }
@@ -55,20 +54,14 @@ internal fun ClassNode.buildTypeParams(): String {
 val ClassNode.isInner: Boolean
     get() = name.contains("$")
 
-internal val ClassNode.isAbstract: Boolean
-    get() = ((access and Opcodes.ACC_ABSTRACT) != 0)
-
 internal val ClassNode.isPublic: Boolean
     get() = ((access and Opcodes.ACC_PUBLIC) != 0)
 
-internal val InnerClassNode.isPublic: Boolean
-    get() = ((access and Opcodes.ACC_PUBLIC) != 0)
-
-internal val InnerClassNode.isProtected: Boolean
-    get() = ((access and Opcodes.ACC_PROTECTED) != 0)
-
-internal val InnerClassNode.isInterface: Boolean
+internal val ClassNode.isInterface: Boolean
     get() = ((access and Opcodes.ACC_INTERFACE) != 0)
+
+internal val ClassNode.isAbstract: Boolean
+    get() = ((access and Opcodes.ACC_ABSTRACT) != 0)
 
 internal fun ClassNode.getConstructors(): List<MethodNode> {
     return (methods as List<MethodNode>).filter { it.isConstructor }

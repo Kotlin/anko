@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="test" >
-    <uses-sdk android:targetSdkVersion="23" />
+    <uses-sdk android:targetSdkVersion="21" />
     <application/>
 </manifest>

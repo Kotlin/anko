@@ -20,6 +20,7 @@ import org.jetbrains.android.anko.*
 import org.jetbrains.android.anko.utils.MethodNodeWithClass
 import org.jetbrains.android.anko.utils.fqName
 import org.jetbrains.android.anko.utils.toProperty
+import org.jetbrains.android.anko.utils.unique
 import org.objectweb.asm.tree.MethodNode
 
 class PropertyGenerator : Generator<PropertyElement> {
@@ -35,7 +36,11 @@ class PropertyGenerator : Generator<PropertyElement> {
                 .sortedBy { it.identifier }
 
         val propertySetters = availableMethods
-                .filter { it.clazz.isView && it.method.isNonListenerSetter() && !it.method.isOverridden }
+                .filter {
+                    it.clazz.isView && it.method.isNonListenerSetter() && !it.method.isOverridden &&
+                            !config.excludedProperties.contains(it.clazz.fqName + "#" + it.method.name) &&
+                            !config.excludedProperties.contains(it.clazz.fqName + "#*")
+                }
                 .groupBy { it.identifier }
 
         genProperties(propertyGetters, propertySetters)
@@ -48,10 +53,10 @@ class PropertyGenerator : Generator<PropertyElement> {
 
         val propertyWithGetters = getters.map { getter ->
             val property = getter.toProperty()
-            val settersList = setters[property.setterIdentifier] ?: listOf()
+            val settersList = setters[property.setterIdentifier] ?: emptyList()
 
             val (best, others) = settersList.partition {
-                it.method.args.size == 1 && it.method.args[0] == getter.method.returnType
+                it.method.parameterRawTypes.unique == getter.method.returnType
             }
 
             existingProperties.add(property.setterIdentifier)
@@ -65,7 +70,7 @@ class PropertyGenerator : Generator<PropertyElement> {
                 if (property.propertyFqName in config.propertiesWithoutGetters) {
                     PropertyElement(property.name, null, s)
                 } else {
-                    log.d("PropertyGenerator # Property was not generated for $id")
+                    logger.d("PropertyGenerator # Property was not generated for $id")
                     null
                 }
             } else null

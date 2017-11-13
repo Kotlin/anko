@@ -1,0 +1,38 @@
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+mainClassName = "org.jetbrains.android.anko.Main"
+
+run {
+    // Replace "verify" with "generate" to update generated files
+    args = ["versions", System.getenv("ANKO_GENERATOR_MODE") ?: "verify",
+            "--configuration=anko/props/configuration.json",
+            "--outputDirectory=anko/library/generated",
+            "--androidSdk=dependencies/android-sdk"]
+
+    workingDir = rootDir
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+        kotlin.srcDirs = ['src']
+    }
+    test {
+        java.srcDirs = ['test']
+        kotlin.srcDirs = ['test']
+    }
+}
+
+dependencies {
+    compile 'com.github.javaparser:javaparser-core:3.0.1'
+    compile 'org.jtwig:jtwig-core:5.65'
+    compile 'org.jtwig:jtwig-spaceless-extension:1.45'
+    compile 'com.samskivert:jmustache:1.10'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'org.slf4j:slf4j-simple:1.7.22'
+    compile 'org.ow2.asm:asm-debug-all:5.1'
+    compile "org.jetbrains.kotlinx:kotlinx.dom:$kotlinx_dom_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile project(":testUtils")
+}

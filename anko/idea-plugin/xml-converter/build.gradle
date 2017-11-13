@@ -1,0 +1,20 @@
+apply plugin: 'kotlin'
+
+sourceSets {
+    main {
+        java.srcDirs = ['src']
+        kotlin.srcDirs = ['src']
+    }
+    test {
+        java.srcDirs = ['test']
+        kotlin.srcDirs = ['test']
+    }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlinx:kotlinx.dom:$kotlinx_dom_version"
+
+    compile project(':ide:plugin-classpath')
+    compile project(':ide:attrs')
+}

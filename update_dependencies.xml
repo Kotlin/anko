@@ -15,35 +15,23 @@
         <get src="http://search.maven.org/remotecontent?filepath=org/json/json/20080701/json-20080701.jar"
              dest="dependencies/json-20080701.jar" usetimestamp="true"/>
 
-        <get src="http://search.maven.org/remotecontent?filepath=org/ccil/cowan/tagsoup/tagsoup/1.2/tagsoup-1.2.jar"
-             dest="dependencies/tagsoup-1.2.jar" usetimestamp="true"/>
+	    <get src="http://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar"
+             dest="dependencies/ant-contrib.jar" usetimestamp="true"/>
 
-        <get src="http://search.maven.org/remotecontent?filepath=org/robolectric/android-all/4.3_r2-robolectric-0/android-all-4.3_r2-robolectric-0.jar"
-             dest="dependencies/android-all-4.1.2_r1-robolectric-0.jar" usetimestamp="true"/>
+        <ant antfile="update_dependencies_idea.xml" target="update"/>
 
-        <get src="http://plugins.jetbrains.com/files/6954/26796/kotlin-plugin-1.0.3-release-IJ2016.1-103.zip"
+        <!-- Uncomment this to build against custom version of Kotlin plugin instead of bundled into AS -->
+        <!--
+        <get src="http://download.plugins.jetbrains.com/6954/38245/kotlin-plugin-1.1.4-release-Studio3.0-3.zip"
              dest="dependencies/kotlin-plugin.zip" usetimestamp="true"/>
-
-        <get src="http://heanet.dl.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-bin.zip"
-             dest="dependencies/download/ant-contrib-1.0b3-bin.zip" usetimestamp="true"/>
-
-        <delete file="dependencies/ant-contrib.jar" failonerror="false"/>
-        <unzip src="dependencies/download/ant-contrib-1.0b3-bin.zip" dest="dependencies">
-            <patternset>
-                <include name="ant-contrib/ant-contrib-1.0b3.jar"/>
-            </patternset>
-            <mapper type="merge" to="ant-contrib.jar"/>
-        </unzip>
 
         <delete dir="dependencies/kotlin-plugin" failonerror="false"/>
         <unzip src="dependencies/kotlin-plugin.zip"
                dest="dependencies/"/>
 
         <set_unix_perms />
-
-        <ant antfile="update_dependencies_idea.xml" target="update"/>
-
         <copydir src="dependencies/Kotlin" dest="ideaSDK/plugins/Kotlin" forceoverwrite="true"/>
+        -->
     </target>
 
     <macrodef name="set_unix_perms">

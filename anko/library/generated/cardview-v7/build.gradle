@@ -1,0 +1,10 @@
+apply from: '../generated.gradle'
+
+dependencies {
+    provided "com.android.support:cardview-v7:$SUPPORT_ARTIFACT_VERSION"
+    compile project(':generated:anko-commons')
+}
+
+task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
+    from "src"
+}

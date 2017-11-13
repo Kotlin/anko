@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko.db
 
 import android.content.ContentValues
@@ -30,7 +31,10 @@ abstract class UpdateQueryBuilder(
     private var selection: String? = null
     private var nativeSelectionArgs: Array<out String>? = null
 
-    fun where(select: String, vararg args: Pair<String, Any>): UpdateQueryBuilder {
+    @Deprecated("Use whereArgs() instead.", ReplaceWith("whereArgs(select, *args)"))
+    fun where(select: String, vararg args: Pair<String, Any>) = whereArgs(select, *args)
+
+    fun whereArgs(select: String, vararg args: Pair<String, Any>): UpdateQueryBuilder {
         if (selectionApplied) {
             throw AnkoException("Query selection was already applied.")
         }
@@ -45,7 +49,10 @@ abstract class UpdateQueryBuilder(
         return this
     }
 
-    fun where(select: String): UpdateQueryBuilder {
+    @Deprecated("Use whereArgs() instead.", ReplaceWith("whereArgs(select)"))
+    fun where(select: String) = whereArgs(select)
+
+    fun whereArgs(select: String): UpdateQueryBuilder {
         if (selectionApplied)
             throw AnkoException("Query selection was already applied.")
 

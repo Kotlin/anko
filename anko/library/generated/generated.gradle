@@ -1,0 +1,128 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+apply from: '../../../../fat-aar.gradle'
+
+group POM_ARTIFACT_GROUP
+version ANKO_VERSION
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
+android {
+    compileSdkVersion COMPILE_SDK_VERSION
+    buildToolsVersion BUILD_TOOLS_VERSION
+    defaultConfig {
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        versionCode ANKO_VERSION_CODE
+        versionName ANKO_VERSION
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            kotlin.srcDirs = ['src']
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
+    }
+}
+
+gradle.projectsEvaluated {
+    tasks.generateReleaseBuildConfig.enabled = false
+    tasks.generateRJava.enabled = false
+}
+
+task androidReleaseJar(type: Jar, dependsOn: assembleRelease) {
+    from "$buildDir/intermediates/classes/release/"
+}
+
+publishing {
+    publications {
+        anko(MavenPublication) {
+            groupId POM_ARTIFACT_GROUP
+            artifactId project.name
+            version ANKO_VERSION
+
+            artifact androidReleaseJar
+            artifact androidReleaseSources {
+                classifier "sources"
+            }
+
+            pom.withXml {
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+                    name 'anko'
+                    description 'Kotlin DSL for Android'
+                    url PROJECT_URL
+
+                    scm {
+                        url SCM_URL
+                        connection CONNECTION_URL
+                        developerConnection DEVELOPER_CONNECTION_URL
+                    }
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/license/LICENSE-2.0.txt'
+                            distribution 'repo'
+                            comments 'A business-friendly OSS license'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'JetBrains'
+                            name 'JetBrains Team'
+                            organization 'JetBrains'
+                            organizationUrl 'http://www.jetbrains.com'
+                        }
+                    }
+                }
+
+                def dependenciesNode = asNode().appendNode('dependencies')
+
+                configurations.compile.dependencies.each {
+                    if((it.group != null) && (it.name != null) && (it.version != null)) {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', (it.group == "anko.generated") ? POM_ARTIFACT_GROUP : it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', (it.group == "anko.generated") ? ANKO_VERSION : it.version)
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal()
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER') ?: ""
+    key = System.getenv('BINTRAY_API_KEY') ?: ""
+
+    publications = ['anko']
+
+    dryRun = BINTRAY_DRY_RUN
+
+    pkg {
+        userOrg = BINTRAY_USER_NAME
+        repo = BINTRAY_REPO_NAME
+        name = BINTRAY_PACKAGE_NAME
+        licenses = ['Apache-2.0']
+        vcsUrl = SCM_URL
+
+        version {
+            name = ANKO_VERSION
+            released = new Date()
+        }
+    }
+}

@@ -36,7 +36,7 @@ internal fun renderLayoutAttributes(attributes: List<KeyValuePair>, parentName: 
     val width = renderLayoutDimension(map["width"] ?: "wrap_content")
     val height = renderLayoutDimension(map["height"] ?: "wrap_content")
 
-    val options = (layoutAttributeRenderers.findFirst { it(parentName, map) } ?: listOf()).filterNotNull()
+    val options = (layoutAttributeRenderers.findFirst { it(parentName, map) } ?: emptyList()).filterNotNull()
     val optionsString = if (options.isNotEmpty()) {
         options.map { it.toString().indent(1) }.joinToString("\n", " {\n", "\n}")
     } else ""

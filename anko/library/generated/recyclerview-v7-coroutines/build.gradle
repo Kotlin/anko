@@ -1,0 +1,11 @@
+apply from: '../generated.gradle'
+
+dependencies {
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
+    provided "com.android.support:recyclerview-v7:$SUPPORT_ARTIFACT_VERSION"
+    compile project(':generated:anko-commons')
+}
+
+task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
+    from "src"
+}

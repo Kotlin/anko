@@ -16,61 +16,40 @@
 
 package org.jetbrains.android.anko.config
 
-import org.jetbrains.android.anko.annotations.*
-import org.jetbrains.android.anko.sources.AndroidHomeSourceProvider
-import org.jetbrains.android.anko.sources.SourceManager
-import org.jetbrains.android.anko.templates.MustacheTemplateProvider
-import org.jetbrains.android.anko.templates.TemplateManager
+import org.jetbrains.android.anko.artifact.Artifact
+import org.jetbrains.android.anko.artifact.Tunes
 import java.io.File
 
-open class DefaultAnkoConfiguration(
-        outputDirectory: File,
-        override val artifactName: String,
-        override val generatorOptions: Set<GeneratorOption>
-) : AnkoConfiguration() {
+class DefaultAnkoConfiguration(
+        override val outputDirectory: File,
+        override val artifact: Artifact,
+        override val options: Options,
+        val tunes: Tunes
+) : AnkoConfiguration {
     override val outputPackage: String
 
-    override val excludedClasses = File("anko/props/excluded_classes.txt").readLines().toSet()
+    private fun readProps(name: String) = File("anko/props/$name.txt").readLines().toSet()
 
-    override val excludedMethods = File("anko/props/excluded_methods.txt").readLines().toSet()
-
-    override val excludedProperties = File("anko/props/excluded_properties.txt").readLines().toSet()
-
-    override val propertiesWithoutGetters = File("anko/props/properties_without_getters.txt").readLines().toSet()
-
-    override val annotationManager: AnnotationManager
-    override val sourceManager: SourceManager
-    override val templateManager: TemplateManager
-    override val logManager: LogManager
+    override val excludedClasses = tunes.excludedClasses
+    override val excludedMethods = readProps("excluded_methods")
+    override val excludedProperties = readProps("excluded_properties")
+    override val propertiesWithoutGetters = readProps("properties_without_getters")
 
     init {
-        val zipFileProvider = ZipFileAnnotationProvider(File("anko/props/kotlin-android-sdk-annotations-1.0.0.jar"))
-        val directoryProvider = DirectoryAnnotationProvider(File("anko/props/annotations"))
-
-        annotationManager = AnnotationManager(CompoundAnnotationProvider(
-                CachingAnnotationProvider(zipFileProvider), CachingAnnotationProvider(directoryProvider)))
-
-        sourceManager = SourceManager(AndroidHomeSourceProvider(23))
-
-        templateManager = TemplateManager(MustacheTemplateProvider(File("anko/props/templates")))
-
-        logManager = LogManager(this)
-
-        val artifactType = getTargetArtifactType()
+        val artifactType = artifact.type
         outputPackage = "org.jetbrains.anko" + when (artifactType) {
-            TargetArtifactType.COMMON, TargetArtifactType.PLATFORM -> ""
-            else -> "." + artifactName.replace('-', '.').toLowerCase()
+            ArtifactType.COMMONS, ArtifactType.PLATFORM -> ""
+            else -> "." + artifact.name.replace('-', '.').toLowerCase()
         }
 
         for (line in propertiesWithoutGetters) {
             if (!line.matches("[A-Za-z0-9]+(\\.((?!set)[A-Za-z0-9]+))*".toRegex())) {
-                logManager.e("Invalid line in properties_without_getters.txt: $line")
+                error("Invalid line in properties_without_getters.txt: $line")
             }
         }
     }
 
-    override val outputDirectory = outputDirectory
-    override val sourceOutputDirectory = File(outputDirectory, "src/main/kotlin/" + outputPackage.replace('.', '/'))
+    override val sourceOutputDirectory = File(outputDirectory, "src")
 
     override fun getOutputFile(ankoFile: AnkoFile): File {
         return File(sourceOutputDirectory, ankoFile.filename)

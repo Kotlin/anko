@@ -16,58 +16,34 @@
 
 package org.jetbrains.android.anko.config
 
-import org.jetbrains.android.anko.annotations.AnnotationManager
-import org.jetbrains.android.anko.config.TargetArtifactType.COMMON
-import org.jetbrains.android.anko.config.TargetArtifactType.SQLITE
-import org.jetbrains.android.anko.config.TargetArtifactType.PLATFORM
-import org.jetbrains.android.anko.config.TargetArtifactType.SUPPORT_V4
-import org.jetbrains.android.anko.config.TargetArtifactType.TOOLKIT
-import org.jetbrains.android.anko.sources.SourceManager
-import org.jetbrains.android.anko.templates.TemplateManager
+import org.jetbrains.android.anko.artifact.Artifact
 import java.io.File
 
-abstract class AnkoConfiguration {
-    open val indent: String = "    "
+interface AnkoConfiguration {
+    val indent: String
+        get() = "    "
 
-    open val files: MutableSet<AnkoFile> = hashSetOf(*AnkoFile.values())
-    open val tunes: MutableSet<ConfigurationTune> = hashSetOf(*ConfigurationTune.values())
+    val generateImports: Boolean
+        get() = true
 
-    open val generateStaticFiles: Boolean = true
+    val generatePackage: Boolean
+        get() = true
 
-    open var generateImports: Boolean = true
-    open var generatePackage: Boolean = true
-    open var generateMavenArtifact: Boolean = true
+    val artifact: Artifact
 
-    abstract val artifactName: String
+    val options: Options
 
-    abstract val generatorOptions: Set<GeneratorOption>
+    val outputPackage: String
 
-    abstract val outputPackage: String
+    val outputDirectory: File
+    val sourceOutputDirectory: File
 
-    abstract val outputDirectory: File
-    abstract val sourceOutputDirectory: File
+    val excludedClasses: Set<String>
+    val excludedMethods: Set<String>
+    val excludedProperties: Set<String>
+    val propertiesWithoutGetters: Set<String>
 
-    abstract val excludedClasses: Set<String>
-    abstract val excludedMethods: Set<String>
-    abstract val excludedProperties: Set<String>
-    abstract val propertiesWithoutGetters: Set<String>
-
-    abstract val annotationManager: AnnotationManager
-    abstract val sourceManager: SourceManager
-    abstract val templateManager: TemplateManager
-    abstract val logManager: LogManager
-
-    operator fun get(option: ConfigurationOption): Boolean = tunes.contains(option) || files.contains(option)
-
-    abstract fun getOutputFile(ankoFile: AnkoFile): File
-
-    fun getTargetArtifactType(): TargetArtifactType {
-        return when {
-            "common" == artifactName -> COMMON
-            "sqlite" == artifactName -> SQLITE
-            "support-v4" == artifactName -> SUPPORT_V4
-            artifactName.matches("sdk\\d{2}".toRegex()) -> PLATFORM
-            else -> TOOLKIT
-        }
-    }
+    fun getOutputFile(ankoFile: AnkoFile): File
 }
+
+operator fun <T : Any> AnkoConfiguration.get(key: ConfigurationKey<T>) = options[key]

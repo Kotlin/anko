@@ -26,7 +26,6 @@ class Variable(val name: String, val type: String) {
 }
 
 object Props {
-
     val imports: Map<String, String> by lazy {
         val map = hashMapOf<String, String>()
         File("anko/props")

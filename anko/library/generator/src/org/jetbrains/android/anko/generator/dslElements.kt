@@ -18,6 +18,7 @@ package org.jetbrains.android.anko.generator
 
 import org.jetbrains.android.anko.utils.MethodNodeWithClass
 import org.jetbrains.android.anko.utils.fqName
+import org.jetbrains.android.anko.utils.simpleName
 import org.objectweb.asm.Type
 import org.objectweb.asm.tree.ClassNode
 import org.objectweb.asm.tree.MethodNode
@@ -33,19 +34,30 @@ class ViewElement(val clazz: ClassNode, val isContainer: Boolean, allMethods: ()
 
 class LayoutElement(val layout: ClassNode, val layoutParams: ClassNode, val constructors: List<MethodNode>)
 
-class ServiceElement(val service: ClassNode, val name: String)
+class ServiceElement(val service: ClassNode, val constantName: String) {
+    val simpleName: String
+        get() = service.simpleName.decapitalize()
+
+    val fqName: String
+        get() = service.fqName
+}
 
 class PropertyElement(val name: String, val getter: MethodNodeWithClass?, val setters: List<MethodNodeWithClass>)
 
 class ListenerMethod(val methodWithClass: MethodNodeWithClass, val name: String, val returnType: Type)
 
-abstract class ListenerElement(val setter: MethodNodeWithClass, val clazz: ClassNode)
+abstract class ListenerElement(val setter: MethodNodeWithClass, val clazz: ClassNode) {
+    abstract val id: String
+}
 
 class SimpleListenerElement(
         setter: MethodNodeWithClass,
         clazz: ClassNode,
         val method: ListenerMethod
-) : ListenerElement(setter, clazz)
+) : ListenerElement(setter, clazz) {
+    override val id: String
+        get() = "${clazz.name}#${method.name}"
+}
 
 class ComplexListenerElement(
         setter: MethodNodeWithClass,
@@ -53,8 +65,6 @@ class ComplexListenerElement(
         val name: String,
         val methods: List<ListenerMethod>
 ) : ListenerElement(setter, clazz) {
-
-    val id: String
-        get() = "${clazz.name}#name"
-
+    override val id: String
+        get() = "${clazz.name}#$name"
 }

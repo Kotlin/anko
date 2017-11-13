@@ -1,0 +1,15 @@
+subprojects {
+    apply plugin: 'kotlin'
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src', 'resources']
+            kotlin.srcDirs = ['src']
+            resources.srcDirs = ['resources']
+        }
+    }
+
+    dependencies {
+        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    }
+}

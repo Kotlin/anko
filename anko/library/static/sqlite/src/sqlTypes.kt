@@ -14,30 +14,36 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko.db
 
 interface SqlType {
-    open val name: String
-    open val modifier: String?
+    val name: String
+
+    fun render(): String
+    operator fun plus(m: SqlTypeModifier): SqlType
+
+    companion object {
+        fun create(name: String): SqlType = SqlTypeImpl(name)
+    }
 }
 
 interface SqlTypeModifier {
-    open val modifier: String
-}
+    val modifier: String
 
-operator fun SqlType.plus(m: SqlTypeModifier) : SqlType {
-    return SqlTypeImpl(name, if (modifier == null) m.toString() else "$modifier $m")
+    companion object {
+        fun create(modifier: String): SqlTypeModifier = SqlTypeModifierImpl(modifier)
+    }
 }
 
 val NULL: SqlType = SqlTypeImpl("NULL")
 val INTEGER: SqlType = SqlTypeImpl("INTEGER")
 val REAL: SqlType = SqlTypeImpl("REAL")
 val TEXT: SqlType = SqlTypeImpl("TEXT")
-
 val BLOB: SqlType = SqlTypeImpl("BLOB")
 
-fun FOREIGN_KEY(columnName: String, referenceTable: String, referenceColumn: String): SqlType {
-    return SqlTypeImpl("FOREIGN KEY($columnName) REFERENCES $referenceTable($referenceColumn)")
+fun FOREIGN_KEY(columnName: String, referenceTable: String, referenceColumn: String): Pair<String, SqlType> {
+    return "" to SqlTypeImpl("FOREIGN KEY($columnName) REFERENCES $referenceTable($referenceColumn)")
 }
 
 val PRIMARY_KEY: SqlTypeModifier = SqlTypeModifierImpl("PRIMARY KEY")
@@ -45,18 +51,26 @@ val NOT_NULL: SqlTypeModifier = SqlTypeModifierImpl("NOT NULL")
 val AUTOINCREMENT: SqlTypeModifier = SqlTypeModifierImpl("AUTOINCREMENT")
 val UNIQUE: SqlTypeModifier = SqlTypeModifierImpl("UNIQUE")
 
+fun UNIQUE(conflictClause: ConflictClause): SqlTypeModifier {
+    return SqlTypeModifierImpl("UNIQUE ON CONFLICT $conflictClause")
+}
+
+enum class ConflictClause {
+    ROLLBACK,
+    ABORT,
+    FAIL,
+    IGNORE,
+    REPLACE
+}
+
 fun DEFAULT(value: String): SqlTypeModifier = SqlTypeModifierImpl("DEFAULT $value")
 
-private open class SqlTypeImpl(name: String, modifier: String? = null) : SqlType {
-    override val name: String = name
+private open class SqlTypeImpl(override val name: String, val modifiers: String? = null) : SqlType {
+    override fun render() = if (modifiers == null) name else "$name $modifiers"
 
-    override val modifier: String? = modifier
-    override fun toString(): String {
-        return if (modifier == null) name else "$name $modifier"
+    override fun plus(m: SqlTypeModifier): SqlType {
+        return SqlTypeImpl(name, if (modifiers == null) m.modifier else "$modifiers ${m.modifier}")
     }
 }
 
-private open class SqlTypeModifierImpl(modifier: String) : SqlTypeModifier {
-    override val modifier: String = modifier
-    override fun toString(): String = modifier
-}
+private open class SqlTypeModifierImpl(override val modifier: String) : SqlTypeModifier

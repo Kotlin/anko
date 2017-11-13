@@ -1,0 +1,11 @@
+apply from: '../generated.gradle'
+
+dependencies {
+    provided "com.android.support:appcompat-v7:$SUPPORT_ARTIFACT_VERSION"
+    compile project(':generated:anko-support-v4')
+    compile project(':generated:anko-appcompat-v7-commons')
+}
+
+task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
+    from "src"
+}

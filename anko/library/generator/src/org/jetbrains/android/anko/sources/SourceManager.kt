@@ -24,7 +24,7 @@ import org.jetbrains.android.anko.utils.getJavaClassName
 
 class SourceManager(private val provider: SourceProvider) {
 
-    fun getArgumentNames(classFqName: String, methodName: String, argumentJavaTypes: List<String>): List<String>? {
+    fun getParameterNames(classFqName: String, methodName: String, argumentJavaTypes: List<String>): List<String>? {
         val parsed = provider.parse(classFqName) ?: return null
         val className = getJavaClassName(classFqName)
 
@@ -34,7 +34,7 @@ class SourceManager(private val provider: SourceProvider) {
         object : VoidVisitorAdapter<Any>() {
             override fun visit(method: MethodDeclaration, arg: Any?) {
                 if (done) return
-                if (methodName != method.name || argumentJavaTypes.size != method.parameters.size) return
+                if (methodName != method.nameAsString || argumentJavaTypes.size != method.parameters.size) return
                 if (method.getParentClassName() != className) return
 
                 val parameters = method.parameters
@@ -42,7 +42,7 @@ class SourceManager(private val provider: SourceProvider) {
                     if (argumentFqType.substringAfterLast('.') != param.type.toString()) return
                 }
 
-                parameters.forEach { argumentNames.add(it.id.name) }
+                parameters.forEach { argumentNames.add(it.nameAsString) }
                 done = true
             }
         }.visit(parsed, null)
@@ -51,10 +51,10 @@ class SourceManager(private val provider: SourceProvider) {
     }
 
     private fun Node.getParentClassName(): String {
-        val parent = parentNode
-        return if (parent is TypeDeclaration) {
+        val parent = parentNode.orElse(null)
+        return if (parent is TypeDeclaration<*>) {
             val outerName = parent.getParentClassName()
-            if (outerName.isNotEmpty()) "$outerName.${parent.name}" else parent.name
+            if (outerName.isNotEmpty()) "$outerName.${parent.name}" else parent.nameAsString
         } else ""
     }
 

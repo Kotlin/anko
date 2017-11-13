@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="Copyright scope" pattern="src[anko]:*..*||src[attrs]:*..*||src[stubs]:Stubs||src[stubs]:SupportStubs||src[xml-converter]:*..*||src[robowrapper]:*..*||src[message-bus]:*..*||src[idea-plugin]:*..*||src[utils]:*..*||src[static]:Async||src[static]:ContextUtils||src[static]:Custom||src[static]:Database||src[static]:Dialogs||src[static]:Helpers||src[static]:Internals||src[static]:Logger||src[static]:Other||src[static]:SqlParsers||src[static]:Support" />
-</component>

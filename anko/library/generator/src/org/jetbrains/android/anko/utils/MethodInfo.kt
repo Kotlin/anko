@@ -16,8 +16,8 @@
 
 package org.jetbrains.android.anko
 
-import org.jetbrains.android.anko.annotations.ExternalAnnotation
-import org.jetbrains.android.anko.config.AnkoConfiguration
+import org.jetbrains.android.anko.annotations.ExternalAnnotation.*
+import org.jetbrains.android.anko.config.GeneratorContext
 import org.jetbrains.android.anko.utils.*
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.Type
@@ -34,99 +34,89 @@ private val specialLayoutParamsNames = mapOf(
         "w" to "width", "h" to "height"
 )
 
-internal val MethodNode.args: Array<Type>
+internal val MethodNode.parameterRawTypes: Array<Type>
     get() = Type.getArgumentTypes(desc)
 
-internal fun buildKotlinSignature(node: MethodNode): List<String> {
-    if (node.signature == null) return listOf()
+internal fun getParameterKTypes(node: MethodNode): List<KType> {
+    if (node.signature == null) {
+        return node.parameterRawTypes.map { KType(it.asString(false), isNullable = false) }
+    }
 
     val parsed = parseGenericMethodSignature(node.signature)
-    return parsed.valueParameters.map { genericTypeToStr(it.genericType) }
+    return parsed.valueParameters.map { genericTypeToKType(it.genericType) }
 }
 
-internal fun MethodNodeWithClass.processArguments(
-        config: AnkoConfiguration,
-        template: (argName: String, argType: String, explicitNotNull: String) -> String
-): String {
-    if (method.args.isEmpty()) return ""
+internal fun MethodNodeWithClass.toKMethod(context: GeneratorContext): KMethod {
+    val parameterTypes = getParameterKTypes(this.method)
+    val localVariables = method.localVariables?.map { it.index to it }?.toMap() ?: emptyMap()
 
-    val locals = method.localVariables?.map { it.index to it }?.toMap() ?: hashMapOf()
-    val buffer = StringBuffer()
-    var argNum = 0
-    var nameIndex = if (method.isStatic) 0 else 1
-    val genericArgs = buildKotlinSignature(method)
-
-    val javaArgs = method.args.map { it.asJavaString() }
-    val argNames = config.sourceManager.getArgumentNames(clazz.fqName, method.name, javaArgs)
+    val parameterRawTypes = this.method.parameterRawTypes
+    val javaArgs = parameterRawTypes.map(Type::asJavaString)
+    val parameterNames = context.sourceManager.getParameterNames(clazz.fqName, method.name, javaArgs)
     val javaArgsString = javaArgs.joinToString()
+    val methodAnnotationSignature = "${clazz.fqName} ${method.returnType.asJavaString()} ${method.name}($javaArgsString)"
 
-    for ((index, arg) in method.args.withIndex()) {
-        val rawArgType = arg.asString(false)
+    var nameIndex = if (method.isStatic) 0 else 1
+    val parameters = parameterTypes.mapIndexed { index, type ->
+        val parameterAnnotationSignature = "$methodAnnotationSignature $index"
+        val isSimpleType = parameterRawTypes[index].isSimpleType
+        val isNullable = !isSimpleType && !context.annotationManager.hasAnnotation(parameterAnnotationSignature, NotNull)
 
-        val annotationSignature = "${clazz.fqName} ${method.returnType.asJavaString()} ${method.name}($javaArgsString) $index"
-        val nullable = !arg.isSimpleType &&
-                ExternalAnnotation.NotNull !in config.annotationManager.findAnnotationsFor(annotationSignature)
-        val argType = if (nullable) rawArgType + "?" else rawArgType
-
-        val explicitNotNull = if (argType.endsWith("?")) "!!" else ""
-        val argName = argNames?.get(index) ?: locals[nameIndex]?.name ?: "p$argNum"
-        if (argType.isNotEmpty()) {
-            buffer.append(template(argName,
-                    if (method.signature != null) genericArgs[argNum] else argType, explicitNotNull))
-        }
-        argNum++
-        nameIndex += arg.size
+        val parameterName = parameterNames?.get(index) ?: localVariables[nameIndex]?.name ?: "p$index"
+        nameIndex += parameterRawTypes[index].size
+        KVariable(parameterName, type.copy(isNullable = isNullable))
     }
 
-    if ( buffer.length >= 2) buffer.delete(buffer.length - 2, buffer.length)
-    return buffer.toString()
+    return KMethod(method.name, parameters, method.returnType.toKType())
 }
 
-internal fun MethodNodeWithClass.formatArguments(config: AnkoConfiguration): String {
-    return processArguments(config) { name, type, nul -> "$name: $type, " }
+internal fun MethodNodeWithClass.formatArguments(context: GeneratorContext): String {
+    return toKMethod(context).parameters.joinToString { "${it.name}: ${it.type}" }
 }
 
-internal fun MethodNodeWithClass.formatLayoutParamsArguments(config: AnkoConfiguration): List<String> {
-    val args = arrayListOf<String>()
-    processArguments(config) { name, type, nul ->
-        val defaultValue = specialLayoutParamsArguments[name]
-        val realName = specialLayoutParamsNames.getOrElse(name, {name})
-        val arg = if (defaultValue == null)
-            "$realName: $type"
+internal fun MethodNodeWithClass.formatLayoutParamsArguments(
+        context: GeneratorContext,
+        importList: ImportList
+): List<String> {
+    return toKMethod(context).parameters.map { param ->
+        val renderType = importList.let { it[param.type] }
+
+        val defaultValue = specialLayoutParamsArguments[param.name]
+        val realName = specialLayoutParamsNames.getOrElse(param.name, { param.name })
+
+        if (defaultValue == null)
+            "$realName: $renderType"
         else
-            "$realName: $type = $defaultValue"
-        args += arg
-        arg
-    }
-    return args
-}
-
-internal fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(config: AnkoConfiguration): String {
-    return processArguments(config) { name, type, nul ->
-        val realName = specialLayoutParamsNames.getOrElse(name, {name})
-        "$realName$nul, "
+            "$realName: $renderType = $defaultValue"
     }
 }
 
-internal fun MethodNodeWithClass.formatArgumentsTypes(config: AnkoConfiguration): String {
-    return processArguments(config) { name, type, nul -> "$type, " }
+internal fun MethodNodeWithClass.formatLayoutParamsArgumentsInvoke(context: GeneratorContext): String {
+    return toKMethod(context).parameters.joinToString { param ->
+        val realName = specialLayoutParamsNames.getOrElse(param.name, { param.name })
+        val explicitNotNull = if (param.type.isNullable) "!!" else ""
+        "$realName$explicitNotNull"
+    }
 }
 
-internal fun MethodNodeWithClass.formatArgumentsNames(config: AnkoConfiguration): String {
-    return processArguments(config) { name, type, nul -> "$name, " }
+internal fun MethodNodeWithClass.formatArgumentsTypes(context: GeneratorContext): String {
+    return toKMethod(context).parameters.joinToString { it.type.toString() }
 }
 
+internal fun MethodNodeWithClass.formatArgumentsNames(context: GeneratorContext): String {
+    return toKMethod(context).parameters.joinToString { it.name }
+}
 
 fun MethodNode.isGetter(): Boolean {
     val isNonBooleanGetter = name.startsWith("get") && name.length > 3 && Character.isUpperCase(name[3])
     val isBooleanGetter = name.startsWith("is") && name.length > 2 && Character.isUpperCase(name[2])
 
-    return (isNonBooleanGetter || isBooleanGetter) && args.isEmpty() && !returnType.isVoid && isPublic
+    return (isNonBooleanGetter || isBooleanGetter) && parameterRawTypes.isEmpty() && !returnType.isVoid && isPublic
 }
 
 internal fun MethodNode.isNonListenerSetter(): Boolean {
     val isSetter = name.startsWith("set") && name.length > 3 && Character.isUpperCase(name[3])
-    return isSetter && !(isListenerSetter() || name.endsWith("Listener")) && args.size == 1 && isPublic
+    return isSetter && !(isListenerSetter() || name.endsWith("Listener")) && parameterRawTypes.size == 1 && isPublic
 }
 
 internal val MethodNode.isConstructor: Boolean
@@ -147,11 +137,3 @@ internal val MethodNode.isStatic: Boolean
 
 internal val MethodNode.returnType: Type
     get() = Type.getReturnType(desc)
-
-internal fun MethodNode.renderReturnType(nullable: Boolean = true): String {
-    return if (signature != null) {
-        genericTypeToStr(parseGenericMethodSignature(signature).returnType, nullable)
-    } else {
-        returnType.asString(nullable)
-    }
-}

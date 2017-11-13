@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko
 
 import android.app.Activity
-import android.app.Fragment
 import android.content.Context
-import android.text.InputType
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
@@ -29,7 +27,8 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import org.jetbrains.anko.custom.ankoView
 
-object `$$Anko$Factories$CustomViews` {
+@PublishedApi
+internal object `$$Anko$Factories$CustomViews` {
     val VERTICAL_LAYOUT_FACTORY = { ctx: Context ->
         val view = _LinearLayout(ctx)
         view.orientation = LinearLayout.VERTICAL
@@ -44,76 +43,76 @@ object `$$Anko$Factories$CustomViews` {
 }
 
 inline fun ViewManager.verticalLayout(theme: Int = 0): LinearLayout = verticalLayout(theme) {}
-inline fun ViewManager.verticalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): LinearLayout {
+inline fun ViewManager.verticalLayout(theme: Int = 0, init: (@AnkoViewDslMarker _LinearLayout).() -> Unit): LinearLayout {
     return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, theme, init)
 }
 
 inline fun Context.verticalLayout(theme: Int = 0): LinearLayout = verticalLayout(theme) {}
-inline fun Context.verticalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): LinearLayout {
+inline fun Context.verticalLayout(theme: Int = 0, init: (@AnkoViewDslMarker _LinearLayout).() -> Unit): LinearLayout {
     return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, theme, init)
 }
 
 inline fun Activity.verticalLayout(theme: Int = 0): LinearLayout = verticalLayout(theme) {}
-inline fun Activity.verticalLayout(theme: Int = 0, init: _LinearLayout.() -> Unit): LinearLayout {
+inline fun Activity.verticalLayout(theme: Int = 0, init: (@AnkoViewDslMarker _LinearLayout).() -> Unit): LinearLayout {
     return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, theme, init)
 }
 
 inline fun ViewManager.editText(constraints: InputConstraints, theme: Int = 0): EditText = editText(constraints, theme) {}
-inline fun ViewManager.editText(constraints: InputConstraints, theme: Int = 0, init: EditText.() -> Unit): EditText {
+inline fun ViewManager.editText(constraints: InputConstraints, theme: Int = 0, init: (@AnkoViewDslMarker EditText).() -> Unit): EditText {
     val v = ankoView(`$$Anko$Factories$CustomViews`.EDIT_TEXT, theme, init)
     v.inputType = constraints.value
     return v
 }
 
 inline fun Context.editText(constraints: InputConstraints, theme: Int = 0): EditText = editText(constraints, theme) {}
-inline fun Context.editText(constraints: InputConstraints, theme: Int = 0, init: EditText.() -> Unit): EditText {
+inline fun Context.editText(constraints: InputConstraints, theme: Int = 0, init: (@AnkoViewDslMarker EditText).() -> Unit): EditText {
     val v = ankoView(`$$Anko$Factories$CustomViews`.EDIT_TEXT, theme, init)
     v.inputType = constraints.value
     return v
 }
 
 inline fun Activity.editText(constraints: InputConstraints, theme: Int = 0): EditText = editText(constraints, theme) {}
-inline fun Activity.editText(constraints: InputConstraints, theme: Int = 0, init: EditText.() -> Unit): EditText {
+inline fun Activity.editText(constraints: InputConstraints, theme: Int = 0, init: (@AnkoViewDslMarker EditText).() -> Unit): EditText {
     val v = ankoView(`$$Anko$Factories$CustomViews`.EDIT_TEXT, theme, init)
     v.inputType = constraints.value
     return v
 }
 
 inline fun ViewManager.horizontalProgressBar(theme: Int = 0): ProgressBar = horizontalProgressBar(theme) {}
-inline fun ViewManager.horizontalProgressBar(theme: Int = 0, init: ProgressBar.() -> Unit): ProgressBar {
+inline fun ViewManager.horizontalProgressBar(theme: Int = 0, init: (@AnkoViewDslMarker ProgressBar).() -> Unit): ProgressBar {
     return ankoView(`$$Anko$Factories$CustomViews`.HORIZONTAL_PROGRESS_BAR_FACTORY, theme, init)
 }
 
 inline fun Context.horizontalProgressBar(theme: Int = 0): ProgressBar = horizontalProgressBar(theme) {}
-inline fun Context.horizontalProgressBar(theme: Int = 0, init: ProgressBar.() -> Unit): ProgressBar {
+inline fun Context.horizontalProgressBar(theme: Int = 0, init: (@AnkoViewDslMarker ProgressBar).() -> Unit): ProgressBar {
     return ankoView(`$$Anko$Factories$CustomViews`.HORIZONTAL_PROGRESS_BAR_FACTORY, theme, init)
 }
 
 inline fun Activity.horizontalProgressBar(theme: Int = 0): ProgressBar = horizontalProgressBar(theme) {}
-inline fun Activity.horizontalProgressBar(theme: Int = 0, init: ProgressBar.() -> Unit): ProgressBar {
+inline fun Activity.horizontalProgressBar(theme: Int = 0, init: (@AnkoViewDslMarker ProgressBar).() -> Unit): ProgressBar {
     return ankoView(`$$Anko$Factories$CustomViews`.HORIZONTAL_PROGRESS_BAR_FACTORY, theme, init)
 }
 
 inline fun <T: View> ViewManager.include(layoutId: Int): T = include(layoutId, {})
-inline fun <T: View> ViewManager.include(layoutId: Int, init: T.() -> Unit): T {
+inline fun <T: View> ViewManager.include(layoutId: Int, init: (@AnkoViewDslMarker T).() -> Unit): T {
     @Suppress("UNCHECKED_CAST")
     return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }, 0) { init() }
 }
 
 inline fun <T: View> ViewGroup.include(layoutId: Int): T = include(layoutId, {})
-inline fun <T: View> ViewGroup.include(layoutId: Int, init: T.() -> Unit): T {
+inline fun <T: View> ViewGroup.include(layoutId: Int, init: (@AnkoViewDslMarker T).() -> Unit): T {
     @Suppress("UNCHECKED_CAST")
     return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, this, false) as T }, 0) { init() }
 }
 
 inline fun <T: View> Context.include(layoutId: Int): T = include(layoutId, {})
-inline fun <T: View> Context.include(layoutId: Int, init: T.() -> Unit): T {
+inline fun <T: View> Context.include(layoutId: Int, init: (@AnkoViewDslMarker T).() -> Unit): T {
     @Suppress("UNCHECKED_CAST")
     return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }, 0) { init() }
 }
 
 inline fun <T: View> Activity.include(layoutId: Int): T = include(layoutId, {})
-inline fun <T: View> Activity.include(layoutId: Int, init: T.() -> Unit): T {
+inline fun <T: View> Activity.include(layoutId: Int, init: (@AnkoViewDslMarker T).() -> Unit): T {
     @Suppress("UNCHECKED_CAST")
     return ankoView({ ctx -> ctx.layoutInflater.inflate(layoutId, null) as T }, 0) { init() }
 }

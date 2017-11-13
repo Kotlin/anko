@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko.db
 
 import android.content.ContentValues
@@ -78,7 +79,7 @@ fun SQLiteDatabase.createTable(tableName: String, ifNotExists: Boolean = false, 
     val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
     execSQL(
         columns.map { col ->
-            "${col.first} ${col.second}"
+            "${col.first} ${col.second.render()}"
         }.joinToString(", ", prefix = "CREATE TABLE $ifNotExistsText `$escapedTableName`(", postfix = ");")
     )
 }
@@ -89,7 +90,27 @@ fun SQLiteDatabase.dropTable(tableName: String, ifExists: Boolean = false) {
     execSQL("DROP TABLE $ifExistsText `$escapedTableName`;")
 }
 
-private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^\\{}]+)\\}")
+fun SQLiteDatabase.createIndex(indexName: String, tableName: String, unique: Boolean = false, ifNotExists: Boolean = false, vararg columns: String) {
+	val escapedIndexName = indexName.replace("`", "``")
+	val escapedTableName = tableName.replace("`", "``")
+	val ifNotExistsText = if (ifNotExists) "IF NOT EXISTS" else ""
+	val uniqueText = if (unique) "UNIQUE" else ""
+	execSQL(
+		columns.joinToString(
+			separator = ",",
+			prefix = "CREATE $uniqueText INDEX $ifNotExistsText `$escapedIndexName` ON `$escapedTableName`(",
+			postfix = ");"
+		)
+	)
+}
+
+fun SQLiteDatabase.dropIndex(indexName: String, ifExists: Boolean = false) {
+	val escapedIndexName = indexName.replace("`", "``")
+	val ifExistsText = if (ifExists) "IF EXISTS" else ""
+	execSQL("DROP INDEX $ifExistsText `$escapedIndexName`;")
+}
+
+private val ARG_PATTERN: Pattern = Pattern.compile("([^\\\\])\\{([^{}]+)\\}")
 
 internal fun applyArguments(whereClause: String, vararg args: Pair<String, Any>): String {
     val argsMap = args.fold(hashMapOf<String, Any>()) { map, arg ->

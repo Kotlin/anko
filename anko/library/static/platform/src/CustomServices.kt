@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
 package org.jetbrains.anko
 
 import android.content.Context
 
-val Context.vibrator: android.os.Vibrator
+inline val Context.vibrator: android.os.Vibrator
     get() = getSystemService(Context.VIBRATOR_SERVICE) as android.os.Vibrator
 
-val Context.layoutInflater: android.view.LayoutInflater
+inline val Context.layoutInflater: android.view.LayoutInflater
     get() = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as android.view.LayoutInflater

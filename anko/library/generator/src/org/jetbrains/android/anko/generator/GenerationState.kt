@@ -16,24 +16,19 @@
 
 package org.jetbrains.android.anko.generator
 
-import org.jetbrains.android.anko.utils.ClassTree
-import org.jetbrains.android.anko.utils.MethodNodeWithClass
-import org.jetbrains.android.anko.config.AnkoConfiguration
-import org.jetbrains.android.anko.config.Configurable
-import org.jetbrains.android.anko.utils.fqName
-import org.jetbrains.android.anko.utils.packageName
-import org.jetbrains.android.anko.utils.ClassTreeUtils
-import org.jetbrains.android.anko.utils.ReflectionUtils
+import org.jetbrains.android.anko.config.GeneratorContext
+import org.jetbrains.android.anko.config.WithGeneratorContext
+import org.jetbrains.android.anko.utils.*
 import org.objectweb.asm.tree.ClassNode
 
-interface Generator<R> {
+interface Generator<out R> {
     fun generate(state: GenerationState): Iterable<R>
 }
 
 class GenerationState(
         override val classTree: ClassTree,
-        config: AnkoConfiguration
-): ClassTreeUtils, Configurable(config), ReflectionUtils {
+        override val context: GeneratorContext
+): ClassTreeUtils, WithGeneratorContext, ReflectionUtils {
 
     val availableClasses: List<ClassNode> =
             classTree.filter { !isExcluded(it) && !classTree.findNode(it)!!.fromPlatformJar }
