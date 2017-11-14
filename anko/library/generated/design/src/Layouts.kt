@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.support.design.internal.BottomNavigationItemView
 import android.view.View
-import android.support.design.internal.BottomNavigationMenuView
 import android.widget.LinearLayout
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomNavigationView
@@ -131,68 +130,6 @@ open class _BottomNavigationItemView(ctx: Context): BottomNavigationItemView(ctx
             source: FrameLayout.LayoutParams?
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-}
-
-open class _BottomNavigationMenuView(ctx: Context): BottomNavigationMenuView(ctx) {
-
-    inline fun <T: View> T.lparams(
-            c: Context?,
-            attrs: AttributeSet?,
-            init: ViewGroup.LayoutParams.() -> Unit
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(c!!, attrs!!)
-        layoutParams.init()
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            c: Context?,
-            attrs: AttributeSet?
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(c!!, attrs!!)
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: ViewGroup.LayoutParams.() -> Unit
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(width, height)
-        layoutParams.init()
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(width, height)
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            source: ViewGroup.LayoutParams?,
-            init: ViewGroup.LayoutParams.() -> Unit
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(source!!)
-        layoutParams.init()
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            source: ViewGroup.LayoutParams?
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(source!!)
         this@lparams.layoutParams = layoutParams
         return this
     }
@@ -462,9 +399,9 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
     inline fun <T: View> T.lparams(
             c: Context?,
             attrs: AttributeSet?,
-            init: FrameLayout.LayoutParams.() -> Unit
+            init: CollapsingToolbarLayout.LayoutParams.() -> Unit
     ): T {
-        val layoutParams = FrameLayout.LayoutParams(c!!, attrs!!)
+        val layoutParams = CollapsingToolbarLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -474,7 +411,7 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
             c: Context?,
             attrs: AttributeSet?
     ): T {
-        val layoutParams = FrameLayout.LayoutParams(c!!, attrs!!)
+        val layoutParams = CollapsingToolbarLayout.LayoutParams(c!!, attrs!!)
         this@lparams.layoutParams = layoutParams
         return this
     }
@@ -482,9 +419,9 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
     inline fun <T: View> T.lparams(
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: FrameLayout.LayoutParams.() -> Unit
+            init: CollapsingToolbarLayout.LayoutParams.() -> Unit
     ): T {
-        val layoutParams = FrameLayout.LayoutParams(width, height)
+        val layoutParams = CollapsingToolbarLayout.LayoutParams(width, height)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -494,7 +431,7 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
     ): T {
-        val layoutParams = FrameLayout.LayoutParams(width, height)
+        val layoutParams = CollapsingToolbarLayout.LayoutParams(width, height)
         this@lparams.layoutParams = layoutParams
         return this
     }
@@ -503,9 +440,9 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
             width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int,
-            init: FrameLayout.LayoutParams.() -> Unit
+            init: CollapsingToolbarLayout.LayoutParams.() -> Unit
     ): T {
-        val layoutParams = FrameLayout.LayoutParams(width, height, gravity)
+        val layoutParams = CollapsingToolbarLayout.LayoutParams(width, height, gravity)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -516,34 +453,34 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
             height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
             gravity: Int
     ): T {
-        val layoutParams = FrameLayout.LayoutParams(width, height, gravity)
+        val layoutParams = CollapsingToolbarLayout.LayoutParams(width, height, gravity)
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     inline fun <T: View> T.lparams(
-            source: ViewGroup.LayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit
+            p: ViewGroup.LayoutParams?,
+            init: CollapsingToolbarLayout.LayoutParams.() -> Unit
     ): T {
-        val layoutParams = FrameLayout.LayoutParams(source!!)
+        val layoutParams = CollapsingToolbarLayout.LayoutParams(p!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     inline fun <T: View> T.lparams(
-            source: ViewGroup.LayoutParams?
+            p: ViewGroup.LayoutParams?
     ): T {
-        val layoutParams = FrameLayout.LayoutParams(source!!)
+        val layoutParams = CollapsingToolbarLayout.LayoutParams(p!!)
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     inline fun <T: View> T.lparams(
             source: ViewGroup.MarginLayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit
+            init: CollapsingToolbarLayout.LayoutParams.() -> Unit
     ): T {
-        val layoutParams = FrameLayout.LayoutParams(source!!)
+        val layoutParams = CollapsingToolbarLayout.LayoutParams(source!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -552,16 +489,16 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
     inline fun <T: View> T.lparams(
             source: ViewGroup.MarginLayoutParams?
     ): T {
-        val layoutParams = FrameLayout.LayoutParams(source!!)
+        val layoutParams = CollapsingToolbarLayout.LayoutParams(source!!)
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     inline fun <T: View> T.lparams(
             source: FrameLayout.LayoutParams?,
-            init: FrameLayout.LayoutParams.() -> Unit
+            init: CollapsingToolbarLayout.LayoutParams.() -> Unit
     ): T {
-        val layoutParams = FrameLayout.LayoutParams(source!!)
+        val layoutParams = CollapsingToolbarLayout.LayoutParams(source!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
@@ -570,7 +507,7 @@ open class _CollapsingToolbarLayout(ctx: Context): CollapsingToolbarLayout(ctx) 
     inline fun <T: View> T.lparams(
             source: FrameLayout.LayoutParams?
     ): T {
-        val layoutParams = FrameLayout.LayoutParams(source!!)
+        val layoutParams = CollapsingToolbarLayout.LayoutParams(source!!)
         this@lparams.layoutParams = layoutParams
         return this
     }

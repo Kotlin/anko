@@ -14,6 +14,7 @@ import android.widget.*
 @PublishedApi
 internal object `$$Anko$Factories$DesignView` {
     val BASELINE_LAYOUT = { ctx: Context -> android.support.design.internal.BaselineLayout(ctx) }
+    val BOTTOM_NAVIGATION_MENU_VIEW = { ctx: Context -> android.support.design.internal.BottomNavigationMenuView(ctx) }
     val SCRIM_INSETS_FRAME_LAYOUT = { ctx: Context -> android.support.design.internal.ScrimInsetsFrameLayout(ctx) }
     val SNACKBAR_CONTENT_LAYOUT = { ctx: Context -> android.support.design.internal.SnackbarContentLayout(ctx) }
     val FLOATING_ACTION_BUTTON = { ctx: Context -> android.support.design.widget.FloatingActionButton(ctx) }
@@ -49,6 +50,36 @@ inline fun Activity.baselineLayout(init: (@AnkoViewDslMarker android.support.des
 inline fun Activity.themedBaselineLayout(theme: Int = 0): android.support.design.internal.BaselineLayout = themedBaselineLayout(theme) {}
 inline fun Activity.themedBaselineLayout(theme: Int = 0, init: (@AnkoViewDslMarker android.support.design.internal.BaselineLayout).() -> Unit): android.support.design.internal.BaselineLayout {
 return ankoView(`$$Anko$Factories$DesignView`.BASELINE_LAYOUT, theme) { init() }
+}
+
+inline fun ViewManager.bottomNavigationMenuView(): android.support.design.internal.BottomNavigationMenuView = bottomNavigationMenuView() {}
+inline fun ViewManager.bottomNavigationMenuView(init: (@AnkoViewDslMarker android.support.design.internal.BottomNavigationMenuView).() -> Unit): android.support.design.internal.BottomNavigationMenuView {
+    return ankoView(`$$Anko$Factories$DesignView`.BOTTOM_NAVIGATION_MENU_VIEW, theme = 0) { init() }
+}
+
+inline fun ViewManager.themedBottomNavigationMenuView(theme: Int = 0): android.support.design.internal.BottomNavigationMenuView = themedBottomNavigationMenuView(theme) {}
+inline fun ViewManager.themedBottomNavigationMenuView(theme: Int = 0, init: (@AnkoViewDslMarker android.support.design.internal.BottomNavigationMenuView).() -> Unit): android.support.design.internal.BottomNavigationMenuView {
+return ankoView(`$$Anko$Factories$DesignView`.BOTTOM_NAVIGATION_MENU_VIEW, theme) { init() }
+}
+
+inline fun Context.bottomNavigationMenuView(): android.support.design.internal.BottomNavigationMenuView = bottomNavigationMenuView() {}
+inline fun Context.bottomNavigationMenuView(init: (@AnkoViewDslMarker android.support.design.internal.BottomNavigationMenuView).() -> Unit): android.support.design.internal.BottomNavigationMenuView {
+    return ankoView(`$$Anko$Factories$DesignView`.BOTTOM_NAVIGATION_MENU_VIEW, theme = 0) { init() }
+}
+
+inline fun Context.themedBottomNavigationMenuView(theme: Int = 0): android.support.design.internal.BottomNavigationMenuView = themedBottomNavigationMenuView(theme) {}
+inline fun Context.themedBottomNavigationMenuView(theme: Int = 0, init: (@AnkoViewDslMarker android.support.design.internal.BottomNavigationMenuView).() -> Unit): android.support.design.internal.BottomNavigationMenuView {
+return ankoView(`$$Anko$Factories$DesignView`.BOTTOM_NAVIGATION_MENU_VIEW, theme) { init() }
+}
+
+inline fun Activity.bottomNavigationMenuView(): android.support.design.internal.BottomNavigationMenuView = bottomNavigationMenuView() {}
+inline fun Activity.bottomNavigationMenuView(init: (@AnkoViewDslMarker android.support.design.internal.BottomNavigationMenuView).() -> Unit): android.support.design.internal.BottomNavigationMenuView {
+    return ankoView(`$$Anko$Factories$DesignView`.BOTTOM_NAVIGATION_MENU_VIEW, theme = 0) { init() }
+}
+
+inline fun Activity.themedBottomNavigationMenuView(theme: Int = 0): android.support.design.internal.BottomNavigationMenuView = themedBottomNavigationMenuView(theme) {}
+inline fun Activity.themedBottomNavigationMenuView(theme: Int = 0, init: (@AnkoViewDslMarker android.support.design.internal.BottomNavigationMenuView).() -> Unit): android.support.design.internal.BottomNavigationMenuView {
+return ankoView(`$$Anko$Factories$DesignView`.BOTTOM_NAVIGATION_MENU_VIEW, theme) { init() }
 }
 
 inline fun ViewManager.scrimInsetsFrameLayout(): android.support.design.internal.ScrimInsetsFrameLayout = scrimInsetsFrameLayout() {}
@@ -164,7 +195,6 @@ return ankoView(`$$Anko$Factories$DesignView`.TAB_ITEM, theme) { init() }
 @PublishedApi
 internal object `$$Anko$Factories$DesignViewGroup` {
     val BOTTOM_NAVIGATION_ITEM_VIEW = { ctx: Context -> _BottomNavigationItemView(ctx) }
-    val BOTTOM_NAVIGATION_MENU_VIEW = { ctx: Context -> _BottomNavigationMenuView(ctx) }
     val APP_BAR_LAYOUT = { ctx: Context -> _AppBarLayout(ctx) }
     val BOTTOM_NAVIGATION_VIEW = { ctx: Context -> _BottomNavigationView(ctx) }
     val COLLAPSING_TOOLBAR_LAYOUT = { ctx: Context -> _CollapsingToolbarLayout(ctx) }
@@ -201,36 +231,6 @@ inline fun Activity.bottomNavigationItemView(init: (@AnkoViewDslMarker _BottomNa
 inline fun Activity.themedBottomNavigationItemView(theme: Int = 0): android.support.design.internal.BottomNavigationItemView = themedBottomNavigationItemView(theme) {}
 inline fun Activity.themedBottomNavigationItemView(theme: Int = 0, init: (@AnkoViewDslMarker _BottomNavigationItemView).() -> Unit): android.support.design.internal.BottomNavigationItemView {
 return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_ITEM_VIEW, theme) { init() }
-}
-
-inline fun ViewManager.bottomNavigationMenuView(): android.support.design.internal.BottomNavigationMenuView = bottomNavigationMenuView() {}
-inline fun ViewManager.bottomNavigationMenuView(init: (@AnkoViewDslMarker _BottomNavigationMenuView).() -> Unit): android.support.design.internal.BottomNavigationMenuView {
-    return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_MENU_VIEW, theme = 0) { init() }
-}
-
-inline fun ViewManager.themedBottomNavigationMenuView(theme: Int = 0): android.support.design.internal.BottomNavigationMenuView = themedBottomNavigationMenuView(theme) {}
-inline fun ViewManager.themedBottomNavigationMenuView(theme: Int = 0, init: (@AnkoViewDslMarker _BottomNavigationMenuView).() -> Unit): android.support.design.internal.BottomNavigationMenuView {
-return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_MENU_VIEW, theme) { init() }
-}
-
-inline fun Context.bottomNavigationMenuView(): android.support.design.internal.BottomNavigationMenuView = bottomNavigationMenuView() {}
-inline fun Context.bottomNavigationMenuView(init: (@AnkoViewDslMarker _BottomNavigationMenuView).() -> Unit): android.support.design.internal.BottomNavigationMenuView {
-    return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_MENU_VIEW, theme = 0) { init() }
-}
-
-inline fun Context.themedBottomNavigationMenuView(theme: Int = 0): android.support.design.internal.BottomNavigationMenuView = themedBottomNavigationMenuView(theme) {}
-inline fun Context.themedBottomNavigationMenuView(theme: Int = 0, init: (@AnkoViewDslMarker _BottomNavigationMenuView).() -> Unit): android.support.design.internal.BottomNavigationMenuView {
-return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_MENU_VIEW, theme) { init() }
-}
-
-inline fun Activity.bottomNavigationMenuView(): android.support.design.internal.BottomNavigationMenuView = bottomNavigationMenuView() {}
-inline fun Activity.bottomNavigationMenuView(init: (@AnkoViewDslMarker _BottomNavigationMenuView).() -> Unit): android.support.design.internal.BottomNavigationMenuView {
-    return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_MENU_VIEW, theme = 0) { init() }
-}
-
-inline fun Activity.themedBottomNavigationMenuView(theme: Int = 0): android.support.design.internal.BottomNavigationMenuView = themedBottomNavigationMenuView(theme) {}
-inline fun Activity.themedBottomNavigationMenuView(theme: Int = 0, init: (@AnkoViewDslMarker _BottomNavigationMenuView).() -> Unit): android.support.design.internal.BottomNavigationMenuView {
-return ankoView(`$$Anko$Factories$DesignViewGroup`.BOTTOM_NAVIGATION_MENU_VIEW, theme) { init() }
 }
 
 inline fun ViewManager.appBarLayout(): android.support.design.widget.AppBarLayout = appBarLayout() {}

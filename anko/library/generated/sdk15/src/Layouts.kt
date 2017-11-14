@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.appwidget.AppWidgetHostView
 import android.view.View
 import android.widget.FrameLayout
-import android.webkit.WebView
 import android.widget.AbsoluteLayout
 import android.widget.Gallery
 import android.widget.GridLayout
@@ -122,68 +121,6 @@ open class _AppWidgetHostView(ctx: Context): AppWidgetHostView(ctx) {
             source: ViewGroup.MarginLayoutParams?
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-}
-
-open class _WebView(ctx: Context): WebView(ctx) {
-
-    inline fun <T: View> T.lparams(
-            c: Context?,
-            attrs: AttributeSet?,
-            init: ViewGroup.LayoutParams.() -> Unit
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(c!!, attrs!!)
-        layoutParams.init()
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            c: Context?,
-            attrs: AttributeSet?
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(c!!, attrs!!)
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: ViewGroup.LayoutParams.() -> Unit
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(width, height)
-        layoutParams.init()
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(width, height)
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            source: ViewGroup.LayoutParams?,
-            init: ViewGroup.LayoutParams.() -> Unit
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(source!!)
-        layoutParams.init()
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            source: ViewGroup.LayoutParams?
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(source!!)
         this@lparams.layoutParams = layoutParams
         return this
     }

@@ -20,6 +20,7 @@ internal object `$$Anko$Factories$Sdk15View` {
     val TEXTURE_VIEW = { ctx: Context -> android.view.TextureView(ctx) }
     val VIEW = { ctx: Context -> android.view.View(ctx) }
     val VIEW_STUB = { ctx: Context -> android.view.ViewStub(ctx) }
+    val WEB_VIEW = { ctx: Context -> android.webkit.WebView(ctx) }
     val ADAPTER_VIEW_FLIPPER = { ctx: Context -> android.widget.AdapterViewFlipper(ctx) }
     val ANALOG_CLOCK = { ctx: Context -> android.widget.AnalogClock(ctx) }
     val AUTO_COMPLETE_TEXT_VIEW = { ctx: Context -> android.widget.AutoCompleteTextView(ctx) }
@@ -149,6 +150,36 @@ inline fun ViewManager.viewStub(init: (@AnkoViewDslMarker android.view.ViewStub)
 inline fun ViewManager.themedViewStub(theme: Int = 0): android.view.ViewStub = themedViewStub(theme) {}
 inline fun ViewManager.themedViewStub(theme: Int = 0, init: (@AnkoViewDslMarker android.view.ViewStub).() -> Unit): android.view.ViewStub {
 return ankoView(`$$Anko$Factories$Sdk15View`.VIEW_STUB, theme) { init() }
+}
+
+inline fun ViewManager.webView(): android.webkit.WebView = webView() {}
+inline fun ViewManager.webView(init: (@AnkoViewDslMarker android.webkit.WebView).() -> Unit): android.webkit.WebView {
+    return ankoView(`$$Anko$Factories$Sdk15View`.WEB_VIEW, theme = 0) { init() }
+}
+
+inline fun ViewManager.themedWebView(theme: Int = 0): android.webkit.WebView = themedWebView(theme) {}
+inline fun ViewManager.themedWebView(theme: Int = 0, init: (@AnkoViewDslMarker android.webkit.WebView).() -> Unit): android.webkit.WebView {
+return ankoView(`$$Anko$Factories$Sdk15View`.WEB_VIEW, theme) { init() }
+}
+
+inline fun Context.webView(): android.webkit.WebView = webView() {}
+inline fun Context.webView(init: (@AnkoViewDslMarker android.webkit.WebView).() -> Unit): android.webkit.WebView {
+    return ankoView(`$$Anko$Factories$Sdk15View`.WEB_VIEW, theme = 0) { init() }
+}
+
+inline fun Context.themedWebView(theme: Int = 0): android.webkit.WebView = themedWebView(theme) {}
+inline fun Context.themedWebView(theme: Int = 0, init: (@AnkoViewDslMarker android.webkit.WebView).() -> Unit): android.webkit.WebView {
+return ankoView(`$$Anko$Factories$Sdk15View`.WEB_VIEW, theme) { init() }
+}
+
+inline fun Activity.webView(): android.webkit.WebView = webView() {}
+inline fun Activity.webView(init: (@AnkoViewDslMarker android.webkit.WebView).() -> Unit): android.webkit.WebView {
+    return ankoView(`$$Anko$Factories$Sdk15View`.WEB_VIEW, theme = 0) { init() }
+}
+
+inline fun Activity.themedWebView(theme: Int = 0): android.webkit.WebView = themedWebView(theme) {}
+inline fun Activity.themedWebView(theme: Int = 0, init: (@AnkoViewDslMarker android.webkit.WebView).() -> Unit): android.webkit.WebView {
+return ankoView(`$$Anko$Factories$Sdk15View`.WEB_VIEW, theme) { init() }
 }
 
 inline fun ViewManager.adapterViewFlipper(): android.widget.AdapterViewFlipper = adapterViewFlipper() {}
@@ -1214,7 +1245,6 @@ return ankoView(`$$Anko$Factories$Sdk15View`.ZOOM_CONTROLS, theme) { init() }
 @PublishedApi
 internal object `$$Anko$Factories$Sdk15ViewGroup` {
     val APP_WIDGET_HOST_VIEW = { ctx: Context -> _AppWidgetHostView(ctx) }
-    val WEB_VIEW = { ctx: Context -> _WebView(ctx) }
     val ABSOLUTE_LAYOUT = { ctx: Context -> _AbsoluteLayout(ctx) }
     val FRAME_LAYOUT = { ctx: Context -> _FrameLayout(ctx) }
     val GALLERY = { ctx: Context -> _Gallery(ctx) }
@@ -1261,36 +1291,6 @@ inline fun Activity.appWidgetHostView(init: (@AnkoViewDslMarker _AppWidgetHostVi
 inline fun Activity.themedAppWidgetHostView(theme: Int = 0): android.appwidget.AppWidgetHostView = themedAppWidgetHostView(theme) {}
 inline fun Activity.themedAppWidgetHostView(theme: Int = 0, init: (@AnkoViewDslMarker _AppWidgetHostView).() -> Unit): android.appwidget.AppWidgetHostView {
 return ankoView(`$$Anko$Factories$Sdk15ViewGroup`.APP_WIDGET_HOST_VIEW, theme) { init() }
-}
-
-inline fun ViewManager.webView(): android.webkit.WebView = webView() {}
-inline fun ViewManager.webView(init: (@AnkoViewDslMarker _WebView).() -> Unit): android.webkit.WebView {
-    return ankoView(`$$Anko$Factories$Sdk15ViewGroup`.WEB_VIEW, theme = 0) { init() }
-}
-
-inline fun ViewManager.themedWebView(theme: Int = 0): android.webkit.WebView = themedWebView(theme) {}
-inline fun ViewManager.themedWebView(theme: Int = 0, init: (@AnkoViewDslMarker _WebView).() -> Unit): android.webkit.WebView {
-return ankoView(`$$Anko$Factories$Sdk15ViewGroup`.WEB_VIEW, theme) { init() }
-}
-
-inline fun Context.webView(): android.webkit.WebView = webView() {}
-inline fun Context.webView(init: (@AnkoViewDslMarker _WebView).() -> Unit): android.webkit.WebView {
-    return ankoView(`$$Anko$Factories$Sdk15ViewGroup`.WEB_VIEW, theme = 0) { init() }
-}
-
-inline fun Context.themedWebView(theme: Int = 0): android.webkit.WebView = themedWebView(theme) {}
-inline fun Context.themedWebView(theme: Int = 0, init: (@AnkoViewDslMarker _WebView).() -> Unit): android.webkit.WebView {
-return ankoView(`$$Anko$Factories$Sdk15ViewGroup`.WEB_VIEW, theme) { init() }
-}
-
-inline fun Activity.webView(): android.webkit.WebView = webView() {}
-inline fun Activity.webView(init: (@AnkoViewDslMarker _WebView).() -> Unit): android.webkit.WebView {
-    return ankoView(`$$Anko$Factories$Sdk15ViewGroup`.WEB_VIEW, theme = 0) { init() }
-}
-
-inline fun Activity.themedWebView(theme: Int = 0): android.webkit.WebView = themedWebView(theme) {}
-inline fun Activity.themedWebView(theme: Int = 0, init: (@AnkoViewDslMarker _WebView).() -> Unit): android.webkit.WebView {
-return ankoView(`$$Anko$Factories$Sdk15ViewGroup`.WEB_VIEW, theme) { init() }
 }
 
 inline fun ViewManager.absoluteLayout(): android.widget.AbsoluteLayout = absoluteLayout() {}

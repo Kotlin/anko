@@ -10,7 +10,6 @@ import android.support.v7.view.menu.ListMenuItemView
 import android.view.View
 import android.widget.FrameLayout
 import android.support.v7.widget.ActionBarContainer
-import android.support.v7.widget.ActionBarContextView
 import android.support.v7.widget.ActionBarOverlayLayout
 import android.support.v7.widget.ActionMenuView
 import android.support.v7.widget.LinearLayoutCompat
@@ -256,68 +255,6 @@ open class _ActionBarContainer(ctx: Context): ActionBarContainer(ctx) {
             source: FrameLayout.LayoutParams?
     ): T {
         val layoutParams = FrameLayout.LayoutParams(source!!)
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-}
-
-open class _ActionBarContextView(ctx: Context): ActionBarContextView(ctx) {
-
-    inline fun <T: View> T.lparams(
-            c: Context?,
-            attrs: AttributeSet?,
-            init: ViewGroup.LayoutParams.() -> Unit
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(c!!, attrs!!)
-        layoutParams.init()
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            c: Context?,
-            attrs: AttributeSet?
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(c!!, attrs!!)
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            init: ViewGroup.LayoutParams.() -> Unit
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(width, height)
-        layoutParams.init()
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            width: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-            height: Int = android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(width, height)
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            source: ViewGroup.LayoutParams?,
-            init: ViewGroup.LayoutParams.() -> Unit
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(source!!)
-        layoutParams.init()
-        this@lparams.layoutParams = layoutParams
-        return this
-    }
-
-    inline fun <T: View> T.lparams(
-            source: ViewGroup.LayoutParams?
-    ): T {
-        val layoutParams = ViewGroup.LayoutParams(source!!)
         this@lparams.layoutParams = layoutParams
         return this
     }
