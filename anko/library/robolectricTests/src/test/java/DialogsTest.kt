@@ -44,7 +44,7 @@ open class DialogsTestActivity : Activity() {
                 id = 4
                 onClick {
                     alert("Message", "NonCancelable") {
-                        isCancelable(false)
+                        isCancelable = false
                         positiveButton("Ok") { dialog -> dialog.dismiss()  }
                     }.show()
                 }

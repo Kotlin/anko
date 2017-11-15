@@ -58,6 +58,9 @@ interface AlertBuilder<out D : DialogInterface> {
     var customView: View
         @Deprecated(NO_GETTER, level = ERROR) get
 
+    var isCancelable: Boolean
+        @Deprecated(NO_GETTER, level = ERROR) get
+
     fun onCancelled(handler: (dialog: DialogInterface) -> Unit)
 
     fun onKeyPressed(handler: (dialog: DialogInterface, keyCode: Int, e: KeyEvent) -> Boolean)
@@ -73,8 +76,6 @@ interface AlertBuilder<out D : DialogInterface> {
 
     fun items(items: List<CharSequence>, onItemSelected: (dialog: DialogInterface, index: Int) -> Unit)
     fun <T> items(items: List<T>, onItemSelected: (dialog: DialogInterface, item: T, index: Int) -> Unit)
-
-    fun isCancelable(canCancel: Boolean)
 
     fun build(): D
     fun show(): D
