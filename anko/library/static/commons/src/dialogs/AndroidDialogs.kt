@@ -24,20 +24,20 @@ import android.content.Context
 import android.content.DialogInterface
 
 inline fun AnkoContext<*>.alert(
-        message: String,
-        title: String? = null,
+        message: CharSequence,
+        title: CharSequence? = null,
         noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ) = ctx.alert(message, title, init)
 
 inline fun Fragment.alert(
-        message: String,
-        title: String? = null,
+        message: CharSequence,
+        title: CharSequence? = null,
         noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ) = activity.alert(message, title, init)
 
 fun Context.alert(
-        message: String,
-        title: String? = null,
+        message: CharSequence,
+        title: CharSequence? = null,
         init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ): AlertBuilder<AlertDialog> {
     return AndroidAlertBuilder(this).apply {
@@ -121,47 +121,47 @@ fun Context.indeterminateProgressDialog(
 
 
 inline fun AnkoContext<*>.progressDialog(
-        message: String? = null,
-        title: String? = null,
+        message: CharSequence? = null,
+        title: CharSequence? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = ctx.progressDialog(message, title, init)
 
 inline fun Fragment.progressDialog(
-        message: String? = null,
-        title: String? = null,
+        message: CharSequence? = null,
+        title: CharSequence? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = activity.progressDialog(message, title, init)
 
 fun Context.progressDialog(
-        message: String? = null,
-        title: String? = null,
+        message: CharSequence? = null,
+        title: CharSequence? = null,
         init: (ProgressDialog.() -> Unit)? = null
 ) = progressDialog(false, message, title, init)
 
 
 inline fun AnkoContext<*>.indeterminateProgressDialog(
-        message: String? = null,
-        title: String? = null,
+        message: CharSequence? = null,
+        title: CharSequence? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = ctx.indeterminateProgressDialog(message, title, init)
 
 inline fun Fragment.indeterminateProgressDialog(
-        message: String? = null,
-        title: String? = null,
+        message: CharSequence? = null,
+        title: CharSequence? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = activity.indeterminateProgressDialog(message, title, init)
 
 fun Context.indeterminateProgressDialog(
-        message: String? = null,
-        title: String? = null,
+        message: CharSequence? = null,
+        title: CharSequence? = null,
         init: (ProgressDialog.() -> Unit)? = null
 ) = progressDialog(true, message, title, init)
 
 
 private fun Context.progressDialog(
         indeterminate: Boolean,
-        message: String? = null,
-        title: String? = null,
+        message: CharSequence? = null,
+        title: CharSequence? = null,
         init: (ProgressDialog.() -> Unit)? = null
 ) = ProgressDialog(this).apply {
     isIndeterminate = indeterminate
