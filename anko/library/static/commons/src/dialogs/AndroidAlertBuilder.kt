@@ -63,6 +63,10 @@ internal class AndroidAlertBuilder(override val ctx: Context) : AlertBuilder<Ale
         @Deprecated(NO_GETTER, level = ERROR) get() = AnkoInternals.noGetter()
         set(value) { builder.setView(value) }
 
+    override var isCancelable: Boolean
+        @Deprecated(NO_GETTER, level = ERROR) get() = AnkoInternals.noGetter()
+        set(value) { builder.setCancelable(value) }
+
     override fun onCancelled(handler: (DialogInterface) -> Unit) {
         builder.setOnCancelListener(handler)
     }
