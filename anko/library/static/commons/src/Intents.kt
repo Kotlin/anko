@@ -28,28 +28,28 @@ import org.jetbrains.anko.internals.AnkoInternals
 
 
 inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<String, Any?>) =
-    AnkoInternals.internalStartActivity(this, T::class.java, params)
+        AnkoInternals.internalStartActivity(this, T::class.java, params)
 
 inline fun <reified T: Activity> AnkoContext<*>.startActivity(vararg params: Pair<String, Any?>) =
-    AnkoInternals.internalStartActivity(ctx, T::class.java, params)
+        AnkoInternals.internalStartActivity(ctx, T::class.java, params)
 
 inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any?>) =
-    AnkoInternals.internalStartActivity(activity, T::class.java, params)
+        AnkoInternals.internalStartActivity(activity, T::class.java, params)
 
 inline fun <reified T: Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any?>) =
-    AnkoInternals.internalStartActivityForResult(this, T::class.java, requestCode, params)
+        AnkoInternals.internalStartActivityForResult(this, T::class.java, requestCode, params)
 
 inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any?>) =
-    startActivityForResult(AnkoInternals.createIntent(act, T::class.java, params), requestCode)
+        startActivityForResult(AnkoInternals.createIntent(act, T::class.java, params), requestCode)
 
 inline fun <reified T: Service> Context.startService(vararg params: Pair<String, Any?>) =
-    AnkoInternals.internalStartService(this, T::class.java, params)
+        AnkoInternals.internalStartService(this, T::class.java, params)
 
 inline fun <reified T: Service> AnkoContext<*>.startService(vararg params: Pair<String, Any?>) =
-    AnkoInternals.internalStartService(ctx, T::class.java, params)
+        AnkoInternals.internalStartService(ctx, T::class.java, params)
 
 inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any?>) =
-    AnkoInternals.internalStartService(activity, T::class.java, params)
+        AnkoInternals.internalStartService(activity, T::class.java, params)
 
 inline fun <reified T: Any> Context.intentFor(vararg params: Pair<String, Any?>): Intent =
         AnkoInternals.createIntent(this, T::class.java, params)
