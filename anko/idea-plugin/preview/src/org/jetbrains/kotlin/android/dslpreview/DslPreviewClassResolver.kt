@@ -1,10 +1,12 @@
 package org.jetbrains.kotlin.android.dslpreview
 
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.editor.ex.EditorEx
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.DumbService
 import com.intellij.openapi.project.IndexNotReadyException
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.Computable
 import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiElement
@@ -16,6 +18,7 @@ import org.jetbrains.kotlin.codegen.ClassBuilderMode
 import org.jetbrains.kotlin.codegen.CodegenFileClassesProvider
 import org.jetbrains.kotlin.codegen.state.IncompatibleClassTracker
 import org.jetbrains.kotlin.codegen.state.KotlinTypeMapper
+import org.jetbrains.kotlin.idea.util.application.runReadAction
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtConstructor
@@ -42,7 +45,10 @@ internal class DslPreviewClassResolver(private val project: Project) {
     }
 
     fun getOnCursorPreviewClassDescription(): PreviewClassDescription? {
-        val editor = FileEditorManager.getInstance(project).selectedTextEditor ?: return null
+        val editor = ApplicationManager.getApplication().runReadAction(Computable {
+            FileEditorManager.getInstance(project).selectedTextEditor
+        }) ?: return null
+
         val psiFile = PsiDocumentManager.getInstance(project).getPsiFile(editor.document)
 
         if (psiFile !is KtFile || editor !is EditorEx) return null
