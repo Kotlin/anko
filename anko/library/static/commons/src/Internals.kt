@@ -19,6 +19,7 @@ package org.jetbrains.anko.internals
 import android.app.Activity
 import android.app.Service
 import android.app.UiModeManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -133,9 +134,7 @@ object AnkoInternals {
             ctx: Context,
             activity: Class<out Service>,
             params: Array<out Pair<String, Any?>>
-    ) {
-        ctx.startService(createIntent(ctx, activity, params))
-    }
+    ): ComponentName? = ctx.startService(createIntent(ctx, activity, params))
 
     @JvmStatic
     private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any?>>) {
