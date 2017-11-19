@@ -132,9 +132,16 @@ object AnkoInternals {
     @JvmStatic
     fun internalStartService(
             ctx: Context,
-            activity: Class<out Service>,
+            service: Class<out Service>,
             params: Array<out Pair<String, Any?>>
-    ): ComponentName? = ctx.startService(createIntent(ctx, activity, params))
+    ): ComponentName? = ctx.startService(createIntent(ctx, service, params))
+
+    @JvmStatic
+    fun internalStopService(
+            ctx: Context,
+            service: Class<out Service>,
+            params: Array<out Pair<String, Any?>>
+    ): Boolean = ctx.stopService(createIntent(ctx, service, params))
 
     @JvmStatic
     private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any?>>) {
