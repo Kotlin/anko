@@ -51,6 +51,15 @@ inline fun <reified T: Service> AnkoContext<*>.startService(vararg params: Pair<
 inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStartService(activity, T::class.java, params)
 
+inline fun <reified T : Service> Context.stopService(vararg params: Pair<String, Any?>) =
+        AnkoInternals.internalStopService(this, T::class.java, params)
+
+inline fun <reified T : Service> AnkoContext<*>.stopService(vararg params: Pair<String, Any?>) =
+        AnkoInternals.internalStopService(ctx, T::class.java, params)
+
+inline fun <reified T : Service> Fragment.stopService(vararg params: Pair<String, Any?>) =
+        AnkoInternals.internalStopService(activity, T::class.java, params)
+
 inline fun <reified T: Any> Context.intentFor(vararg params: Pair<String, Any?>): Intent =
         AnkoInternals.createIntent(this, T::class.java, params)
 
