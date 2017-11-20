@@ -80,7 +80,7 @@ dependencies {
 Make sure that you have the ```$anko_version``` settled in your gradle file at the project level:
 
 ```
-ext.anko_version='0.10.1'
+ext.anko_version='0.10.2'
 ```
 
 If you only need some of the features, you can reference any of Anko's parts:
