@@ -40,7 +40,11 @@ inline fun Fragment.toast(message: Int) = activity.toast(message)
  *
  * @param message the message text resource.
  */
-fun Context.toast(message: Int) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+inline fun Context.toast(message: Int): Toast = Toast
+        .makeText(this, message, Toast.LENGTH_SHORT)
+        .apply {
+            show()
+        }
 
 /**
  * Display the simple Toast message with the [Toast.LENGTH_SHORT] duration.
@@ -61,7 +65,11 @@ inline fun Fragment.toast(message: CharSequence) = activity.toast(message)
  *
  * @param message the message text.
  */
-fun Context.toast(message: CharSequence) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+inline fun Context.toast(message: CharSequence): Toast = Toast
+        .makeText(this, message, Toast.LENGTH_SHORT)
+        .apply {
+            show()
+        }
 
 /**
  * Display the simple Toast message with the [Toast.LENGTH_LONG] duration.
@@ -82,7 +90,11 @@ inline fun Fragment.longToast(message: Int) = activity.longToast(message)
  *
  * @param message the message text resource.
  */
-inline fun Context.longToast(message: Int) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+inline fun Context.longToast(message: Int): Toast = Toast
+        .makeText(this, message, Toast.LENGTH_LONG)
+        .apply {
+            show()
+        }
 
 /**
  * Display the simple Toast message with the [Toast.LENGTH_LONG] duration.
@@ -103,4 +115,8 @@ inline fun Fragment.longToast(message: CharSequence) = activity.longToast(messag
  *
  * @param message the message text.
  */
-inline fun Context.longToast(message: CharSequence) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+inline fun Context.longToast(message: CharSequence): Toast = Toast
+        .makeText(this, message, Toast.LENGTH_LONG)
+        .apply {
+            show()
+        }

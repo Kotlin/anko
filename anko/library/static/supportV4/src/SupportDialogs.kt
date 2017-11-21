@@ -22,13 +22,13 @@ import android.content.DialogInterface
 import android.support.v4.app.Fragment
 import org.jetbrains.anko.*
 
-inline fun Fragment.toast(textResource: Int): Unit = activity.toast(textResource)
+inline fun Fragment.toast(textResource: Int) = activity.toast(textResource)
 
-inline fun Fragment.toast(text: CharSequence): Unit = activity.toast(text)
+inline fun Fragment.toast(text: CharSequence) = activity.toast(text)
 
-inline fun Fragment.longToast(textResource: Int): Unit = activity.longToast(textResource)
+inline fun Fragment.longToast(textResource: Int) = activity.longToast(textResource)
 
-inline fun Fragment.longToast(text: CharSequence): Unit = activity.longToast(text)
+inline fun Fragment.longToast(text: CharSequence) = activity.longToast(text)
 
 inline fun Fragment.selector(
         title: CharSequence? = null,
