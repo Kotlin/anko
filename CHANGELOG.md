@@ -1,5 +1,129 @@
 ## Change Log
 
+### Anko 0.10.3 *(2017-11-22)*
+
+#### Bugfixes
+- Anko support plugin compatibility with Kotlin 1.1.60+
+- Fix Xml to Dsl converter ([#370](https://github.com/Kotlin/anko/issues/370))
+- `lparams` for `CollapsingToolbarLayout`, now returns correct LayoutParams ([#275](https://github.com/Kotlin/anko/issues/275), [#269](https://github.com/Kotlin/anko/issues/269))
+- `Context.clipboardManager` now returns new `ClipboardManager` instead of deprecated one ([#180](https://github.com/Kotlin/anko/issues/180))
+- Generate layout wrapper for `CardView` ([#269](https://github.com/Kotlin/anko/issues/269), [#357](https://github.com/Kotlin/anko/issues/357))
+- Fix ClassParser's Boolean parser when type is Long ([#464](https://github.com/Kotlin/anko/issues/464))
+
+#### Breaking Changes
+- Removed Dsl for classes from `android.support.design.internal.*` as they shouldn't be used outside of support library
+
+#### Other Changes
+- `TextInputEditText` added to anko-design ([#205](https://github.com/Kotlin/anko/issues/205))
+- Anko commons dialog extensions now accept `CharSequence` instead of `String` ([#422](https://github.com/Kotlin/anko/issues/422))
+- Add start and end rules to RelativeLayout.LayoutParams extensions ([#497](https://github.com/Kotlin/anko/pull/497))
+- Add `allCaps` and `ems` properties to TextView ([#459](https://github.com/Kotlin/anko/pull/459))
+- Add snackbar helpers with indefinite duration [(#454](https://github.com/Kotlin/anko/pull/454))
+- Allow nullable values in `createIntent` and `startActivity` ([#465](https://github.com/Kotlin/anko/pull/465))
+- Add extensions for `View::backgroundColorResource` and `TextView::textColorResource` ([#254](https://github.com/Kotlin/anko/pull/254))
+- Return `ComponentName` from `startService` methods ([#435](https://github.com/Kotlin/anko/issues/435))
+- Allow alerts to be cancelable ([#405](https://github.com/Kotlin/anko/pull/405))
+- Add intent helpers for stopping services ([#509](https://github.com/Kotlin/anko/pull/509))
+- Return toast object in toast helper functions ([#512](https://github.com/Kotlin/anko/pull/512))
+
+### Anko 0.10.2 *(2017-10-17)*
+
+- Fixed Anko Support IDE plugin compatibility with Android Studio 3.0 RC1
+- `Fragment.indeterminateProgressDialog` now shows indeterminate progress dialog instead of classic ([#487](https://github.com/Kotlin/anko/pull/487))
+- Added methods for creating and dropping a index for SQLiteDatabase ([#472](https://github.com/Kotlin/anko/pull/472))
+
+### Anko 0.10.1 *(2017-05-31)*
+
+#### Bugfixes
+
+- Fix assertion in the Anko Support IDE plugin ([#387](https://github.com/Kotlin/anko/issues/387));
+- Update `kotlinx.coroutines.android` dependency (the old one fails to resolve in Android Studio 3.0) )[#381](https://github.com/Kotlin/anko/issues/381));
+- Fix inconsistency between `hasNext()` and `next()` in `childrenRecursiveSequence()` ([#388](https://github.com/Kotlin/anko/pull/388)).
+
+### Anko 0.10 *(2017-05-17)*
+
+#### 🐧 Notable changes:
+
+- Coroutines and `DslMarker` annotation support;
+- Anko Support IDE plugin updated for Android Studio 2.4.
+
+#### Breaking changes:
+
+- `DslMarker` annotation support (calling `lparams()` inside View blocks is finally forbidden);
+- DSL listeners moved to `anko-<platformName>-listeners` artifacts (e.g. `anko-sdk25-listeners`);
+- View blocks with the `theme` parameter renamed to `themed…()` to avoid disambiguation;
+- Removed `AnkoLogger(clazz: KClass<*>)` and `AnkoLogger(obj: Any)`.
+
+#### New API:
+
+- `anko-<platformName>-coroutines` (e.g. `anko-sdk25-coroutines`) artifacts with the new listener helpers with coroutines support;
+- `bg()` function that executes code in background (wrapper on top of [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines));
+- `AlertBuilder` interface with *core* and *appcompat* implementations. `AlertDialogBuilder` is deprecated;
+- `Snackbar` helpers #203;
+- `Dialog.find()` method #351;
+- `foreach()` extensions for `SparseArray` #255;
+- Reified version for `AnkoLogger` (`AnkoLogger<MyClass>()`);
+- `isError` and `hasValue` to `AttemptResult`.
+
+#### Other changes:
+
+- Anko Support IDE plugin upated in order to support Android Studio 2.4;
+- Added meta-artifact `org.jetbrains.anko:anko`;
+- Added *Anko Commons* artifacts for Android support libraries (`anko-support-v4-commons`, `anko-appcompat-v7-commons`) #158;
+- New Android SDK target: `sdk-25`;
+- Updated Android Support library dependencies;
+- `anko-common` artifact renamed to `anko-commons` to reflect the naming changes. `anko-common` is deprecated;
+- `ClassParser` now accepts all primitive types #320;
+- Synthetic properties (such as `act` or `ctx`) are now `inline`;
+- `lparams` functions are now `inline` #338;
+- Removed `TextView.enabled` generated property #245;
+- Accessing setter-only property values is now forbidden.
+
+#### Bugfixes:
+
+- Fix `NoSuchMethodError` on accessing `act` property from the support Fragment #311;
+- Fix compatibility with Proguard #235;
+- Require the relative view `id` to be set in `RelativeView` helpers #363.
+
+### Anko 0.10 Beta 2 *(2017-03-22)*
+
+#### Breaking changes:
+
+- DSL listeners moved to `anko-<platformName>-listeners` (e.g. `anko-sdk15-listeners`) artifacts;
+- The custom `async()` function introduced in 0.10.0-beta1 was removed (use `async()` from [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines));
+- `AnkoLogger(clazz: KClass<*>)` and `AnkoLogger(obj: Any)` functions are removed;
+
+#### Other changes:
+
+- `anko-<platformName>-coroutines` (e.g. `anko-sdk15-coroutines`) artifacts with the new listener helpers with coroutines support;
+- `lparams` functions are now `inline` #338;
+- `bg()` function that executes code in a background thread and returns `Deferred<T>`;
+- `AnkoLogger` now has the reified version: `AnkoLogger<MyClass>()`;
+
+### Anko 0.10 Beta 1 *(2017-03-06)*
+
+**Anko 0.10 requires Kotlin 1.1.**
+
+#### Breaking changes:
+
+- View DSL functions that accept the `theme` parameter are renamed to `themed…()` to avoid disambiguation;
+- `DslMarker` support (`lparams` inside the View lambda are now forbidden);
+
+#### Other changes:
+
+- Add `anko-coroutines` artifact with the Kotlin 1.1 coroutines support (`async` / `bg`);
+- New Android SDK target: `sdk-25`;
+- Android Support library dependencies updated;
+- `AlertBuilder` interface with core and app-compat implementations. `AlertDialogBuilder` is deprecated;
+- `ClassParser` now accepts all primitive types #320;
+- New artifacts: `anko-support-v4-common` and `anko-appcompat-v7-common` (with basic helpers, without the DSL functionality) #158;
+- Synthetic properties (such as `act` or `ctx`) are now `inline`;
+- `TextView.enabled` generated property is removed #245;
+- Accessing setter-only property values is forbidden;
+- SAM View listener setter functions are now `inline`;
+- Add `isError` and `hasValue` to `AttemptResult`;
+- Fix `NoSuchMethodError` on accessing `act` property from the support Fragment #311.
+
 ### Anko 0.9.1 *(2016-12-14)*
 
 - Allow to use `AnkoLogger` as an instance #262;
