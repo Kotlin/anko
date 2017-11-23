@@ -13,7 +13,30 @@ import android.widget.*
 
 @PublishedApi
 internal object `$$Anko$Factories$ConstraintLayoutView` {
+    val BARRIER = { ctx: Context -> android.support.constraint.Barrier(ctx) }
+    val GROUP = { ctx: Context -> android.support.constraint.Group(ctx) }
     val GUIDELINE = { ctx: Context -> android.support.constraint.Guideline(ctx) }
+    val PLACEHOLDER = { ctx: Context -> android.support.constraint.Placeholder(ctx) }
+}
+
+inline fun ViewManager.barrier(): android.support.constraint.Barrier = barrier() {}
+inline fun ViewManager.barrier(init: (@AnkoViewDslMarker android.support.constraint.Barrier).() -> Unit): android.support.constraint.Barrier {
+    return ankoView(`$$Anko$Factories$ConstraintLayoutView`.BARRIER, theme = 0) { init() }
+}
+
+inline fun ViewManager.themedBarrier(theme: Int = 0): android.support.constraint.Barrier = themedBarrier(theme) {}
+inline fun ViewManager.themedBarrier(theme: Int = 0, init: (@AnkoViewDslMarker android.support.constraint.Barrier).() -> Unit): android.support.constraint.Barrier {
+return ankoView(`$$Anko$Factories$ConstraintLayoutView`.BARRIER, theme) { init() }
+}
+
+inline fun ViewManager.group(): android.support.constraint.Group = group() {}
+inline fun ViewManager.group(init: (@AnkoViewDslMarker android.support.constraint.Group).() -> Unit): android.support.constraint.Group {
+    return ankoView(`$$Anko$Factories$ConstraintLayoutView`.GROUP, theme = 0) { init() }
+}
+
+inline fun ViewManager.themedGroup(theme: Int = 0): android.support.constraint.Group = themedGroup(theme) {}
+inline fun ViewManager.themedGroup(theme: Int = 0, init: (@AnkoViewDslMarker android.support.constraint.Group).() -> Unit): android.support.constraint.Group {
+return ankoView(`$$Anko$Factories$ConstraintLayoutView`.GROUP, theme) { init() }
 }
 
 inline fun ViewManager.guideline(): android.support.constraint.Guideline = guideline() {}
@@ -26,9 +49,20 @@ inline fun ViewManager.themedGuideline(theme: Int = 0, init: (@AnkoViewDslMarker
 return ankoView(`$$Anko$Factories$ConstraintLayoutView`.GUIDELINE, theme) { init() }
 }
 
+inline fun ViewManager.placeholder(): android.support.constraint.Placeholder = placeholder() {}
+inline fun ViewManager.placeholder(init: (@AnkoViewDslMarker android.support.constraint.Placeholder).() -> Unit): android.support.constraint.Placeholder {
+    return ankoView(`$$Anko$Factories$ConstraintLayoutView`.PLACEHOLDER, theme = 0) { init() }
+}
+
+inline fun ViewManager.themedPlaceholder(theme: Int = 0): android.support.constraint.Placeholder = themedPlaceholder(theme) {}
+inline fun ViewManager.themedPlaceholder(theme: Int = 0, init: (@AnkoViewDslMarker android.support.constraint.Placeholder).() -> Unit): android.support.constraint.Placeholder {
+return ankoView(`$$Anko$Factories$ConstraintLayoutView`.PLACEHOLDER, theme) { init() }
+}
+
 @PublishedApi
 internal object `$$Anko$Factories$ConstraintLayoutViewGroup` {
     val CONSTRAINT_LAYOUT = { ctx: Context -> _ConstraintLayout(ctx) }
+    val CONSTRAINTS = { ctx: Context -> _Constraints(ctx) }
 }
 
 inline fun ViewManager.constraintLayout(): android.support.constraint.ConstraintLayout = constraintLayout() {}
@@ -59,5 +93,35 @@ inline fun Activity.constraintLayout(init: (@AnkoViewDslMarker _ConstraintLayout
 inline fun Activity.themedConstraintLayout(theme: Int = 0): android.support.constraint.ConstraintLayout = themedConstraintLayout(theme) {}
 inline fun Activity.themedConstraintLayout(theme: Int = 0, init: (@AnkoViewDslMarker _ConstraintLayout).() -> Unit): android.support.constraint.ConstraintLayout {
 return ankoView(`$$Anko$Factories$ConstraintLayoutViewGroup`.CONSTRAINT_LAYOUT, theme) { init() }
+}
+
+inline fun ViewManager.constraints(): android.support.constraint.Constraints = constraints() {}
+inline fun ViewManager.constraints(init: (@AnkoViewDslMarker _Constraints).() -> Unit): android.support.constraint.Constraints {
+    return ankoView(`$$Anko$Factories$ConstraintLayoutViewGroup`.CONSTRAINTS, theme = 0) { init() }
+}
+
+inline fun ViewManager.themedConstraints(theme: Int = 0): android.support.constraint.Constraints = themedConstraints(theme) {}
+inline fun ViewManager.themedConstraints(theme: Int = 0, init: (@AnkoViewDslMarker _Constraints).() -> Unit): android.support.constraint.Constraints {
+return ankoView(`$$Anko$Factories$ConstraintLayoutViewGroup`.CONSTRAINTS, theme) { init() }
+}
+
+inline fun Context.constraints(): android.support.constraint.Constraints = constraints() {}
+inline fun Context.constraints(init: (@AnkoViewDslMarker _Constraints).() -> Unit): android.support.constraint.Constraints {
+    return ankoView(`$$Anko$Factories$ConstraintLayoutViewGroup`.CONSTRAINTS, theme = 0) { init() }
+}
+
+inline fun Context.themedConstraints(theme: Int = 0): android.support.constraint.Constraints = themedConstraints(theme) {}
+inline fun Context.themedConstraints(theme: Int = 0, init: (@AnkoViewDslMarker _Constraints).() -> Unit): android.support.constraint.Constraints {
+return ankoView(`$$Anko$Factories$ConstraintLayoutViewGroup`.CONSTRAINTS, theme) { init() }
+}
+
+inline fun Activity.constraints(): android.support.constraint.Constraints = constraints() {}
+inline fun Activity.constraints(init: (@AnkoViewDslMarker _Constraints).() -> Unit): android.support.constraint.Constraints {
+    return ankoView(`$$Anko$Factories$ConstraintLayoutViewGroup`.CONSTRAINTS, theme = 0) { init() }
+}
+
+inline fun Activity.themedConstraints(theme: Int = 0): android.support.constraint.Constraints = themedConstraints(theme) {}
+inline fun Activity.themedConstraints(theme: Int = 0, init: (@AnkoViewDslMarker _Constraints).() -> Unit): android.support.constraint.Constraints {
+return ankoView(`$$Anko$Factories$ConstraintLayoutViewGroup`.CONSTRAINTS, theme) { init() }
 }
 
