@@ -2,6 +2,8 @@
   "templates": {
     "support": "dependencies/android-sdk/extras/android/m2repository/com/android/support",
     "platforms": "dependencies/android-sdk/platforms",
+    "constraint": "dependencies/android-sdk/extras/m2repository/com/android/support",
+    "constraintVer": "1.1.0-beta3" ,
     "supportVer": "25.1.1"
   },
 
@@ -186,6 +188,12 @@
       "type": "toolkit",
       "platform": [ "%platforms%/android-25/android.jar" ],
       "target": [ "%support%/percent/%supportVer%/percent-%supportVer%.aar" ]
+    },
+    {
+      "name": "constraint-layout",
+      "type": "toolkit",
+      "platform": [ "%platforms%/android-25/android.jar" ],
+      "target": [ "%constraint%/constraint/constraint-layout/%constraintVer%/constraint-layout-%constraintVer%.aar" ]
     },
     {
       "name": "recyclerview-v7",
