@@ -17,6 +17,7 @@ open class _ConstraintLayout(ctx: Context): ConstraintLayout(ctx) {
     ): T {
         val layoutParams = ConstraintLayout.LayoutParams(source!!)
         layoutParams.init()
+        layoutParams.validate()
         this@lparams.layoutParams = layoutParams
         return this
     }
@@ -36,6 +37,7 @@ open class _ConstraintLayout(ctx: Context): ConstraintLayout(ctx) {
     ): T {
         val layoutParams = ConstraintLayout.LayoutParams(c!!, attrs!!)
         layoutParams.init()
+        layoutParams.validate()
         this@lparams.layoutParams = layoutParams
         return this
     }
@@ -56,6 +58,7 @@ open class _ConstraintLayout(ctx: Context): ConstraintLayout(ctx) {
     ): T {
         val layoutParams = ConstraintLayout.LayoutParams(width, height)
         layoutParams.init()
+        layoutParams.validate()
         this@lparams.layoutParams = layoutParams
         return this
     }
@@ -75,6 +78,7 @@ open class _ConstraintLayout(ctx: Context): ConstraintLayout(ctx) {
     ): T {
         val layoutParams = ConstraintLayout.LayoutParams(source!!)
         layoutParams.init()
+        layoutParams.validate()
         this@lparams.layoutParams = layoutParams
         return this
     }

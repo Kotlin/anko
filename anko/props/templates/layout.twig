@@ -6,6 +6,9 @@ open class {{ layoutName }}({{ layoutConstructorArgs }}): {{ imported(baseClassN
     ): T {
         val layoutParams = {{ imported(fun.layoutParamsClass) }}({{ fun.substituted }})
         layoutParams.init()
+{%- if imported(fun.layoutParamsClass) == "ConstraintLayout.LayoutParams" %}
+        layoutParams.validate()
+{%- endif %}
         this@lparams.layoutParams = layoutParams
         return this
     }
