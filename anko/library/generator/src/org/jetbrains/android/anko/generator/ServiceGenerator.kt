@@ -16,6 +16,8 @@
 
 package org.jetbrains.android.anko.generator
 
+import org.jetbrains.android.anko.utils.packageName
+import org.jetbrains.android.anko.utils.simpleName
 import org.objectweb.asm.tree.FieldNode
 
 class ServiceGenerator : Generator<ServiceElement> {
@@ -23,13 +25,13 @@ class ServiceGenerator : Generator<ServiceElement> {
     override fun generate(state: GenerationState): Iterable<ServiceElement> {
         return state.classTree.findNode("android/content/Context")?.data?.fields
                 ?.filter { it.name.endsWith("_SERVICE") }
-                ?.map {
-                    val service = state.classTree.findNode("android", it.toServiceClassName())?.data
-                    if (service != null && service in state.availableClasses) {
-                        ServiceElement(service, it.name)
-                    } else null
+                ?.mapNotNull { serviceField ->
+                    state.availableClasses.find { classNode ->
+                        classNode.packageName.startsWith("android")
+                                && classNode.simpleName == serviceField.toServiceClassName()
+                    }
+                    ?.let { ServiceElement(it, serviceField.name) }
                 }
-                ?.filterNotNull()
                 ?.sortedBy { it.simpleName }
                 ?: emptyList()
     }

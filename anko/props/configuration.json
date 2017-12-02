@@ -157,7 +157,10 @@
     {
       "name": "design",
       "type": "toolkit",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [
+        "%platforms%/android-25/android.jar",
+        "%support%/appcompat-v7/%supportVer%/appcompat-v7-%supportVer%.aar"
+      ],
       "target": [ "%support%/design/%supportVer%/design-%supportVer%.aar" ]
     },
     {
@@ -217,7 +220,10 @@
       "android.renderscript.RSSurfaceView",
       "android.renderscript.RenderScriptGL",
       "android.renderscript.RSTextureView",
-      "android.support.v7.widget.DropDownListView"
+      "android.support.v7.widget.DropDownListView",
+      "android.text.ClipboardManager",
+      "android.support.design.internal.*",
+      "android.support.design.widget.CheckableImageButton"
     ]
   }
 }

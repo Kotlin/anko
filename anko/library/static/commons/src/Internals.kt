@@ -19,6 +19,7 @@ package org.jetbrains.anko.internals
 import android.app.Activity
 import android.app.Service
 import android.app.UiModeManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -42,12 +43,10 @@ object AnkoInternals {
 
     private class AnkoContextThemeWrapper(base: Context?, val theme: Int) : ContextThemeWrapper(base, theme)
     
-    fun <T : View> addView(manager: ViewManager, view: T) {
-        return when (manager) {
-            is ViewGroup -> manager.addView(view)
-            is AnkoContext<*> -> manager.addView(view, null)
-            else -> throw AnkoException("$manager is the wrong parent")
-        }
+    fun <T : View> addView(manager: ViewManager, view: T) = when (manager) {
+        is ViewGroup -> manager.addView(view)
+        is AnkoContext<*> -> manager.addView(view, null)
+        else -> throw AnkoException("$manager is the wrong parent")
     }
 
     fun <T : View> addView(ctx: Context, view: T) {
@@ -115,7 +114,7 @@ object AnkoInternals {
     fun internalStartActivity(
             ctx: Context,
             activity: Class<out Activity>,
-            params: Array<out Pair<String, Any>>
+            params: Array<out Pair<String, Any?>>
     ) {
         ctx.startActivity(createIntent(ctx, activity, params))
     }
@@ -125,7 +124,7 @@ object AnkoInternals {
             act: Activity,
             activity: Class<out Activity>,
             requestCode: Int,
-            params: Array<out Pair<String, Any>>
+            params: Array<out Pair<String, Any?>>
     ) {
         act.startActivityForResult(createIntent(act, activity, params), requestCode)
     }
@@ -133,11 +132,16 @@ object AnkoInternals {
     @JvmStatic
     fun internalStartService(
             ctx: Context,
-            activity: Class<out Service>,
-            params: Array<out Pair<String, Any>>
-    ) {
-        ctx.startService(createIntent(ctx, activity, params))
-    }
+            service: Class<out Service>,
+            params: Array<out Pair<String, Any?>>
+    ): ComponentName? = ctx.startService(createIntent(ctx, service, params))
+
+    @JvmStatic
+    fun internalStopService(
+            ctx: Context,
+            service: Class<out Service>,
+            params: Array<out Pair<String, Any?>>
+    ): Boolean = ctx.stopService(createIntent(ctx, service, params))
 
     @JvmStatic
     private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any?>>) {

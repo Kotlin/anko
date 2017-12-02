@@ -50,8 +50,8 @@ inline fun <T: Any> Fragment.configuration(
     else null
 }
 
-fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
-    setArguments(bundleOf(*params))
+fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any?>): T {
+    arguments = bundleOf(*params)
     return this
 }
 

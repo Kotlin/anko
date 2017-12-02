@@ -11,7 +11,7 @@ import android.app.AppOpsManager
 import android.media.AudioManager
 import android.bluetooth.BluetoothManager
 import android.view.accessibility.CaptioningManager
-import android.text.ClipboardManager
+import android.content.ClipboardManager
 import android.net.ConnectivityManager
 import android.hardware.ConsumerIrManager
 import android.app.admin.DevicePolicyManager

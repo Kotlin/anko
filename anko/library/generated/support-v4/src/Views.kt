@@ -14,6 +14,7 @@ import android.widget.*
 @PublishedApi
 internal object `$$Anko$Factories$SupportV4View` {
     val PAGER_TAB_STRIP = { ctx: Context -> android.support.v4.view.PagerTabStrip(ctx) }
+    val PAGER_TITLE_STRIP = { ctx: Context -> android.support.v4.view.PagerTitleStrip(ctx) }
     val CONTENT_LOADING_PROGRESS_BAR = { ctx: Context -> android.support.v4.widget.ContentLoadingProgressBar(ctx) }
     val SPACE = { ctx: Context -> android.support.v4.widget.Space(ctx) }
     val SWIPE_REFRESH_LAYOUT = { ctx: Context -> android.support.v4.widget.SwipeRefreshLayout(ctx) }
@@ -47,6 +48,36 @@ inline fun Activity.pagerTabStrip(init: (@AnkoViewDslMarker android.support.v4.v
 inline fun Activity.themedPagerTabStrip(theme: Int = 0): android.support.v4.view.PagerTabStrip = themedPagerTabStrip(theme) {}
 inline fun Activity.themedPagerTabStrip(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v4.view.PagerTabStrip).() -> Unit): android.support.v4.view.PagerTabStrip {
 return ankoView(`$$Anko$Factories$SupportV4View`.PAGER_TAB_STRIP, theme) { init() }
+}
+
+inline fun ViewManager.pagerTitleStrip(): android.support.v4.view.PagerTitleStrip = pagerTitleStrip() {}
+inline fun ViewManager.pagerTitleStrip(init: (@AnkoViewDslMarker android.support.v4.view.PagerTitleStrip).() -> Unit): android.support.v4.view.PagerTitleStrip {
+    return ankoView(`$$Anko$Factories$SupportV4View`.PAGER_TITLE_STRIP, theme = 0) { init() }
+}
+
+inline fun ViewManager.themedPagerTitleStrip(theme: Int = 0): android.support.v4.view.PagerTitleStrip = themedPagerTitleStrip(theme) {}
+inline fun ViewManager.themedPagerTitleStrip(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v4.view.PagerTitleStrip).() -> Unit): android.support.v4.view.PagerTitleStrip {
+return ankoView(`$$Anko$Factories$SupportV4View`.PAGER_TITLE_STRIP, theme) { init() }
+}
+
+inline fun Context.pagerTitleStrip(): android.support.v4.view.PagerTitleStrip = pagerTitleStrip() {}
+inline fun Context.pagerTitleStrip(init: (@AnkoViewDslMarker android.support.v4.view.PagerTitleStrip).() -> Unit): android.support.v4.view.PagerTitleStrip {
+    return ankoView(`$$Anko$Factories$SupportV4View`.PAGER_TITLE_STRIP, theme = 0) { init() }
+}
+
+inline fun Context.themedPagerTitleStrip(theme: Int = 0): android.support.v4.view.PagerTitleStrip = themedPagerTitleStrip(theme) {}
+inline fun Context.themedPagerTitleStrip(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v4.view.PagerTitleStrip).() -> Unit): android.support.v4.view.PagerTitleStrip {
+return ankoView(`$$Anko$Factories$SupportV4View`.PAGER_TITLE_STRIP, theme) { init() }
+}
+
+inline fun Activity.pagerTitleStrip(): android.support.v4.view.PagerTitleStrip = pagerTitleStrip() {}
+inline fun Activity.pagerTitleStrip(init: (@AnkoViewDslMarker android.support.v4.view.PagerTitleStrip).() -> Unit): android.support.v4.view.PagerTitleStrip {
+    return ankoView(`$$Anko$Factories$SupportV4View`.PAGER_TITLE_STRIP, theme = 0) { init() }
+}
+
+inline fun Activity.themedPagerTitleStrip(theme: Int = 0): android.support.v4.view.PagerTitleStrip = themedPagerTitleStrip(theme) {}
+inline fun Activity.themedPagerTitleStrip(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v4.view.PagerTitleStrip).() -> Unit): android.support.v4.view.PagerTitleStrip {
+return ankoView(`$$Anko$Factories$SupportV4View`.PAGER_TITLE_STRIP, theme) { init() }
 }
 
 inline fun ViewManager.contentLoadingProgressBar(): android.support.v4.widget.ContentLoadingProgressBar = contentLoadingProgressBar() {}
@@ -102,7 +133,6 @@ return ankoView(`$$Anko$Factories$SupportV4View`.SWIPE_REFRESH_LAYOUT, theme) { 
 @PublishedApi
 internal object `$$Anko$Factories$SupportV4ViewGroup` {
     val FRAGMENT_TAB_HOST = { ctx: Context -> _FragmentTabHost(ctx) }
-    val PAGER_TITLE_STRIP = { ctx: Context -> _PagerTitleStrip(ctx) }
     val VIEW_PAGER = { ctx: Context -> _ViewPager(ctx) }
     val DRAWER_LAYOUT = { ctx: Context -> _DrawerLayout(ctx) }
     val NESTED_SCROLL_VIEW = { ctx: Context -> _NestedScrollView(ctx) }
@@ -137,36 +167,6 @@ inline fun Activity.fragmentTabHost(init: (@AnkoViewDslMarker _FragmentTabHost).
 inline fun Activity.themedFragmentTabHost(theme: Int = 0): android.support.v4.app.FragmentTabHost = themedFragmentTabHost(theme) {}
 inline fun Activity.themedFragmentTabHost(theme: Int = 0, init: (@AnkoViewDslMarker _FragmentTabHost).() -> Unit): android.support.v4.app.FragmentTabHost {
 return ankoView(`$$Anko$Factories$SupportV4ViewGroup`.FRAGMENT_TAB_HOST, theme) { init() }
-}
-
-inline fun ViewManager.pagerTitleStrip(): android.support.v4.view.PagerTitleStrip = pagerTitleStrip() {}
-inline fun ViewManager.pagerTitleStrip(init: (@AnkoViewDslMarker _PagerTitleStrip).() -> Unit): android.support.v4.view.PagerTitleStrip {
-    return ankoView(`$$Anko$Factories$SupportV4ViewGroup`.PAGER_TITLE_STRIP, theme = 0) { init() }
-}
-
-inline fun ViewManager.themedPagerTitleStrip(theme: Int = 0): android.support.v4.view.PagerTitleStrip = themedPagerTitleStrip(theme) {}
-inline fun ViewManager.themedPagerTitleStrip(theme: Int = 0, init: (@AnkoViewDslMarker _PagerTitleStrip).() -> Unit): android.support.v4.view.PagerTitleStrip {
-return ankoView(`$$Anko$Factories$SupportV4ViewGroup`.PAGER_TITLE_STRIP, theme) { init() }
-}
-
-inline fun Context.pagerTitleStrip(): android.support.v4.view.PagerTitleStrip = pagerTitleStrip() {}
-inline fun Context.pagerTitleStrip(init: (@AnkoViewDslMarker _PagerTitleStrip).() -> Unit): android.support.v4.view.PagerTitleStrip {
-    return ankoView(`$$Anko$Factories$SupportV4ViewGroup`.PAGER_TITLE_STRIP, theme = 0) { init() }
-}
-
-inline fun Context.themedPagerTitleStrip(theme: Int = 0): android.support.v4.view.PagerTitleStrip = themedPagerTitleStrip(theme) {}
-inline fun Context.themedPagerTitleStrip(theme: Int = 0, init: (@AnkoViewDslMarker _PagerTitleStrip).() -> Unit): android.support.v4.view.PagerTitleStrip {
-return ankoView(`$$Anko$Factories$SupportV4ViewGroup`.PAGER_TITLE_STRIP, theme) { init() }
-}
-
-inline fun Activity.pagerTitleStrip(): android.support.v4.view.PagerTitleStrip = pagerTitleStrip() {}
-inline fun Activity.pagerTitleStrip(init: (@AnkoViewDslMarker _PagerTitleStrip).() -> Unit): android.support.v4.view.PagerTitleStrip {
-    return ankoView(`$$Anko$Factories$SupportV4ViewGroup`.PAGER_TITLE_STRIP, theme = 0) { init() }
-}
-
-inline fun Activity.themedPagerTitleStrip(theme: Int = 0): android.support.v4.view.PagerTitleStrip = themedPagerTitleStrip(theme) {}
-inline fun Activity.themedPagerTitleStrip(theme: Int = 0, init: (@AnkoViewDslMarker _PagerTitleStrip).() -> Unit): android.support.v4.view.PagerTitleStrip {
-return ankoView(`$$Anko$Factories$SupportV4ViewGroup`.PAGER_TITLE_STRIP, theme) { init() }
 }
 
 inline fun ViewManager.viewPager(): android.support.v4.view.ViewPager = viewPager() {}

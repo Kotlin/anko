@@ -16,13 +16,14 @@
 
 package org.jetbrains.anko.appcompat.v7
 
-import org.jetbrains.anko.*
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.support.v7.app.AlertDialog
 import android.view.KeyEvent
 import android.view.View
+import org.jetbrains.anko.AlertBuilder
+import org.jetbrains.anko.AlertBuilderFactory
 import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.internals.AnkoInternals.NO_GETTER
 import kotlin.DeprecationLevel.ERROR
@@ -63,6 +64,10 @@ internal class AppcompatAlertBuilder(override val ctx: Context) : AlertBuilder<A
     override var customView: View
         @Deprecated(NO_GETTER, level = ERROR) get() = AnkoInternals.noGetter()
         set(value) { builder.setView(value) }
+
+    override var isCancelable: Boolean
+        @Deprecated(NO_GETTER, level = ERROR) get() = AnkoInternals.noGetter()
+        set(value) { builder.setCancelable(value) }
 
     override fun onCancelled(handler: (DialogInterface) -> Unit) {
         builder.setOnCancelListener(handler)

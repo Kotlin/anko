@@ -13,7 +13,7 @@ import android.os.BatteryManager
 import android.bluetooth.BluetoothManager
 import android.hardware.camera2.CameraManager
 import android.view.accessibility.CaptioningManager
-import android.text.ClipboardManager
+import android.content.ClipboardManager
 import android.net.ConnectivityManager
 import android.hardware.ConsumerIrManager
 import android.app.admin.DevicePolicyManager

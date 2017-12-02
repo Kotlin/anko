@@ -15,6 +15,7 @@ import android.widget.*
 internal object `$$Anko$Factories$AppcompatV7View` {
     val ACTION_MENU_ITEM_VIEW = { ctx: Context -> android.support.v7.view.menu.ActionMenuItemView(ctx) }
     val EXPANDED_MENU_VIEW = { ctx: Context -> android.support.v7.view.menu.ExpandedMenuView(ctx, null) }
+    val ACTION_BAR_CONTEXT_VIEW = { ctx: Context -> android.support.v7.widget.ActionBarContextView(ctx) }
     val ACTIVITY_CHOOSER_VIEW = { ctx: Context -> android.support.v7.widget.ActivityChooserView(ctx) }
     val TINTED_AUTO_COMPLETE_TEXT_VIEW = { ctx: Context -> if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatAutoCompleteTextView(ctx) else AutoCompleteTextView(ctx) }
     val TINTED_BUTTON = { ctx: Context -> if (Build.VERSION.SDK_INT < 21) android.support.v7.widget.AppCompatButton(ctx) else Button(ctx) }
@@ -76,6 +77,36 @@ inline fun Activity.expandedMenuView(init: (@AnkoViewDslMarker android.support.v
 inline fun Activity.themedExpandedMenuView(theme: Int = 0): android.support.v7.view.menu.ExpandedMenuView = themedExpandedMenuView(theme) {}
 inline fun Activity.themedExpandedMenuView(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v7.view.menu.ExpandedMenuView).() -> Unit): android.support.v7.view.menu.ExpandedMenuView {
 return ankoView(`$$Anko$Factories$AppcompatV7View`.EXPANDED_MENU_VIEW, theme) { init() }
+}
+
+inline fun ViewManager.actionBarContextView(): android.support.v7.widget.ActionBarContextView = actionBarContextView() {}
+inline fun ViewManager.actionBarContextView(init: (@AnkoViewDslMarker android.support.v7.widget.ActionBarContextView).() -> Unit): android.support.v7.widget.ActionBarContextView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.ACTION_BAR_CONTEXT_VIEW, theme = 0) { init() }
+}
+
+inline fun ViewManager.themedActionBarContextView(theme: Int = 0): android.support.v7.widget.ActionBarContextView = themedActionBarContextView(theme) {}
+inline fun ViewManager.themedActionBarContextView(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v7.widget.ActionBarContextView).() -> Unit): android.support.v7.widget.ActionBarContextView {
+return ankoView(`$$Anko$Factories$AppcompatV7View`.ACTION_BAR_CONTEXT_VIEW, theme) { init() }
+}
+
+inline fun Context.actionBarContextView(): android.support.v7.widget.ActionBarContextView = actionBarContextView() {}
+inline fun Context.actionBarContextView(init: (@AnkoViewDslMarker android.support.v7.widget.ActionBarContextView).() -> Unit): android.support.v7.widget.ActionBarContextView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.ACTION_BAR_CONTEXT_VIEW, theme = 0) { init() }
+}
+
+inline fun Context.themedActionBarContextView(theme: Int = 0): android.support.v7.widget.ActionBarContextView = themedActionBarContextView(theme) {}
+inline fun Context.themedActionBarContextView(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v7.widget.ActionBarContextView).() -> Unit): android.support.v7.widget.ActionBarContextView {
+return ankoView(`$$Anko$Factories$AppcompatV7View`.ACTION_BAR_CONTEXT_VIEW, theme) { init() }
+}
+
+inline fun Activity.actionBarContextView(): android.support.v7.widget.ActionBarContextView = actionBarContextView() {}
+inline fun Activity.actionBarContextView(init: (@AnkoViewDslMarker android.support.v7.widget.ActionBarContextView).() -> Unit): android.support.v7.widget.ActionBarContextView {
+    return ankoView(`$$Anko$Factories$AppcompatV7View`.ACTION_BAR_CONTEXT_VIEW, theme = 0) { init() }
+}
+
+inline fun Activity.themedActionBarContextView(theme: Int = 0): android.support.v7.widget.ActionBarContextView = themedActionBarContextView(theme) {}
+inline fun Activity.themedActionBarContextView(theme: Int = 0, init: (@AnkoViewDslMarker android.support.v7.widget.ActionBarContextView).() -> Unit): android.support.v7.widget.ActionBarContextView {
+return ankoView(`$$Anko$Factories$AppcompatV7View`.ACTION_BAR_CONTEXT_VIEW, theme) { init() }
 }
 
 inline fun ViewManager.activityChooserView(): android.support.v7.widget.ActivityChooserView = activityChooserView() {}
@@ -742,7 +773,6 @@ return ankoView(`$$Anko$Factories$AppcompatV7View`.VIEW_STUB_COMPAT, theme) { in
 internal object `$$Anko$Factories$AppcompatV7ViewGroup` {
     val LIST_MENU_ITEM_VIEW = { ctx: Context -> _ListMenuItemView(ctx, null) }
     val ACTION_BAR_CONTAINER = { ctx: Context -> _ActionBarContainer(ctx) }
-    val ACTION_BAR_CONTEXT_VIEW = { ctx: Context -> _ActionBarContextView(ctx) }
     val ACTION_BAR_OVERLAY_LAYOUT = { ctx: Context -> _ActionBarOverlayLayout(ctx) }
     val ACTION_MENU_VIEW = { ctx: Context -> _ActionMenuView(ctx) }
     val ALERT_DIALOG_LAYOUT = { ctx: Context -> _AlertDialogLayout(ctx) }
@@ -811,36 +841,6 @@ inline fun Activity.actionBarContainer(init: (@AnkoViewDslMarker _ActionBarConta
 inline fun Activity.themedActionBarContainer(theme: Int = 0): android.support.v7.widget.ActionBarContainer = themedActionBarContainer(theme) {}
 inline fun Activity.themedActionBarContainer(theme: Int = 0, init: (@AnkoViewDslMarker _ActionBarContainer).() -> Unit): android.support.v7.widget.ActionBarContainer {
 return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_BAR_CONTAINER, theme) { init() }
-}
-
-inline fun ViewManager.actionBarContextView(): android.support.v7.widget.ActionBarContextView = actionBarContextView() {}
-inline fun ViewManager.actionBarContextView(init: (@AnkoViewDslMarker _ActionBarContextView).() -> Unit): android.support.v7.widget.ActionBarContextView {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_BAR_CONTEXT_VIEW, theme = 0) { init() }
-}
-
-inline fun ViewManager.themedActionBarContextView(theme: Int = 0): android.support.v7.widget.ActionBarContextView = themedActionBarContextView(theme) {}
-inline fun ViewManager.themedActionBarContextView(theme: Int = 0, init: (@AnkoViewDslMarker _ActionBarContextView).() -> Unit): android.support.v7.widget.ActionBarContextView {
-return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_BAR_CONTEXT_VIEW, theme) { init() }
-}
-
-inline fun Context.actionBarContextView(): android.support.v7.widget.ActionBarContextView = actionBarContextView() {}
-inline fun Context.actionBarContextView(init: (@AnkoViewDslMarker _ActionBarContextView).() -> Unit): android.support.v7.widget.ActionBarContextView {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_BAR_CONTEXT_VIEW, theme = 0) { init() }
-}
-
-inline fun Context.themedActionBarContextView(theme: Int = 0): android.support.v7.widget.ActionBarContextView = themedActionBarContextView(theme) {}
-inline fun Context.themedActionBarContextView(theme: Int = 0, init: (@AnkoViewDslMarker _ActionBarContextView).() -> Unit): android.support.v7.widget.ActionBarContextView {
-return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_BAR_CONTEXT_VIEW, theme) { init() }
-}
-
-inline fun Activity.actionBarContextView(): android.support.v7.widget.ActionBarContextView = actionBarContextView() {}
-inline fun Activity.actionBarContextView(init: (@AnkoViewDslMarker _ActionBarContextView).() -> Unit): android.support.v7.widget.ActionBarContextView {
-    return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_BAR_CONTEXT_VIEW, theme = 0) { init() }
-}
-
-inline fun Activity.themedActionBarContextView(theme: Int = 0): android.support.v7.widget.ActionBarContextView = themedActionBarContextView(theme) {}
-inline fun Activity.themedActionBarContextView(theme: Int = 0, init: (@AnkoViewDslMarker _ActionBarContextView).() -> Unit): android.support.v7.widget.ActionBarContextView {
-return ankoView(`$$Anko$Factories$AppcompatV7ViewGroup`.ACTION_BAR_CONTEXT_VIEW, theme) { init() }
 }
 
 inline fun ViewManager.actionBarOverlayLayout(): android.support.v7.widget.ActionBarOverlayLayout = actionBarOverlayLayout() {}

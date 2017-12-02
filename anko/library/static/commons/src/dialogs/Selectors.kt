@@ -26,14 +26,14 @@ inline fun <D : DialogInterface> AnkoContext<*>.selector(
         title: CharSequence? = null,
         items: List<CharSequence>,
         noinline onClick: (DialogInterface, CharSequence, Int) -> Unit
-): Unit = ctx.selector(factory, title, items, onClick)
+) = ctx.selector(factory, title, items, onClick)
 
 inline fun <D : DialogInterface> Fragment.selector(
         noinline factory: AlertBuilderFactory<D>,
         title: CharSequence? = null,
         items: List<CharSequence>,
         noinline onClick: (DialogInterface, CharSequence, Int) -> Unit
-): Unit = activity.selector(factory, title, items, onClick)
+) = activity.selector(factory, title, items, onClick)
 
 fun <D : DialogInterface> Context.selector(
         factory: AlertBuilderFactory<D>,

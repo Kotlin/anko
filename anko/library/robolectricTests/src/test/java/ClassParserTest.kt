@@ -66,6 +66,19 @@ class ClassParserTest {
         classParser<Class10>()
 
         assertThrows { classParser<Class11>() }
+
+        with (classParser<Class12>()) {
+            arrayOf<Any?>(0).also {
+                val clTrue = Class12(true)
+                val clFalse = Class12(false)
+
+                assertEquals(clFalse, parseRow(it))
+                assertEquals(clFalse, parseRow(arrayOf(0L)))
+
+                assertEquals(clTrue, parseRow(arrayOf(1)))
+                assertEquals(clTrue, parseRow(arrayOf(1L)))
+            }
+        }
     }
 
     data class Class1(val s: String, val l: Long, val d: Double?)
@@ -102,4 +115,6 @@ class ClassParserTest {
         }
         throw AssertionError("Exception was not thrown")
     }
+
+    data class Class12(val b: Boolean)
 }
