@@ -33,19 +33,19 @@ fun Fragment.email(email: String, subject: String = "", text: String = ""): Bool
 
 fun Fragment.makeCall(number: String): Boolean = activity.makeCall(number)
 
-inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any>) {
+inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any?>) {
     AnkoInternals.internalStartActivity(activity, T::class.java, params)
 }
 
-inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any>) {
+inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any?>) {
     startActivityForResult(AnkoInternals.createIntent(act, T::class.java, params), requestCode)
 }
 
-inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any>) {
+inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any?>) {
     AnkoInternals.internalStartService(activity, T::class.java, params)
 }
 
-inline fun <reified T : Service> Fragment.stopService(vararg params: Pair<String, Any>) {
+inline fun <reified T : Service> Fragment.stopService(vararg params: Pair<String, Any?>) {
     AnkoInternals.internalStopService(activity, T::class.java, params)
 }
 
