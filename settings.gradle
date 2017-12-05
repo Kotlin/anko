@@ -9,6 +9,7 @@ include ':static:sqlite'
 include ':static:design'
 include ':static:supportV4'
 include ':static:appcompatV7'
+include ':static:constraint-layout'
 
 include ':generated'
 include ':generated:anko'
@@ -67,6 +68,8 @@ project(':static:sqlite').projectDir = new File(rootDir, 'anko/library/static/sq
 project(':static:design').projectDir = new File(rootDir, 'anko/library/static/design')
 project(':static:supportV4').projectDir = new File(rootDir, 'anko/library/static/supportV4')
 project(':static:appcompatV7').projectDir = new File(rootDir, 'anko/library/static/appcompatV7')
+project(':static:constraint-layout').projectDir = new File(rootDir, 'anko/library/static/constraint-layout')
+
 
 project(':generated').projectDir = new File(rootDir, 'anko/library/generated')
 project(':generated:anko').projectDir = new File(rootDir, 'anko/library/generated/anko')
