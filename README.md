@@ -40,6 +40,8 @@ The code above creates a button inside a `LinearLayout` and attaches an `OnClick
 
 Note that this is the complete layout code. No XML is required!
 
+Anko has a [DSL for ConstraintLayout](https://github.com/Kotlin/anko/wiki/ConstraintLayout) since 0.10.4
+
 <img src="doc/helloworld.png" alt="Hello world" height="90" width="373" />
 
 There is also a [plugin](https://github.com/Kotlin/anko/wiki/Anko-Layouts#anko-support-plugin) for Android Studio that supports previewing Anko DSL layouts.
@@ -136,6 +138,9 @@ dependencies {
 
     // Support-v4 (Anko Layouts)
     compile "org.jetbrains.anko:anko-support-v4:$anko_version"
+
+    // ConstraintLayout
+    compile "org.jetbrains.anko:anko-constraint-layout:$anko_version"
 }
 ```
 
