@@ -63,7 +63,7 @@ fun ON_DELETE(constraintActions: ConstraintActions): SqlTypeModifier {
 }
 
 fun FOREIGN_KEY(columnName: String, referenceTable: String, referenceColumn: String, vararg actions: SqlTypeModifier): Pair<String, SqlType> {
-    return "" to SqlTypeImpl("FOREIGN KEY($columnName) REFERENCES $referenceTable($referenceColumn)${actions.map { it.modifier }.joinToString { " $it" }}")
+    return "" to SqlTypeImpl("FOREIGN KEY($columnName) REFERENCES $referenceTable($referenceColumn)${actions.map { it.modifier }.joinToString("") { " $it" }}")
 }
 
 val PRIMARY_KEY: SqlTypeModifier = SqlTypeModifierImpl("PRIMARY KEY")
