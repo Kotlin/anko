@@ -17,65 +17,55 @@
 @file:Suppress("UNREACHABLE_CODE", "OverridingDeprecatedMember", "DEPRECATION")
 package org.jetbrains.kotlin.android.dslpreview
 
+import com.intellij.injected.editor.DocumentWindow
+import com.intellij.injected.editor.VirtualFileWindow
 import com.intellij.lang.ASTNode
 import com.intellij.lang.FileASTNode
 import com.intellij.lang.Language
 import com.intellij.navigation.ItemPresentation
-import com.intellij.openapi.fileTypes.FileType
+import com.intellij.openapi.editor.Document
 import com.intellij.openapi.module.Module
-import com.intellij.openapi.module.ModuleManager
-import com.intellij.openapi.module.ModuleUtilCore
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Iconable.IconFlags
 import com.intellij.openapi.util.Key
+import com.intellij.openapi.util.Segment
 import com.intellij.openapi.util.TextRange
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.*
+import com.intellij.psi.impl.PsiDocumentManagerImpl
 import com.intellij.psi.scope.PsiScopeProcessor
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.PsiElementProcessor
 import com.intellij.psi.search.SearchScope
-import com.intellij.psi.xml.XmlDocument
 import com.intellij.psi.xml.XmlFile
-import com.intellij.psi.xml.XmlTag
 import com.intellij.testFramework.LightVirtualFile
 import com.intellij.util.IncorrectOperationException
 import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.android.resourceManagers.ModuleResourceManagers
 import org.jetbrains.annotations.NonNls
 import org.jetbrains.kotlin.psi.KtFile
-import org.jetbrains.kotlin.utils.addToStdlib.firstIsInstanceOrNull
-
-import javax.swing.*
+import javax.swing.Icon
 
 /*
   Reason for these stubs:
   Android Preview checks that the xml file is placed inside "layout-*" directory.
+  TODO: Implement some kind of stable api in Android plugin for this
  */
-class LayoutPsiFile(private val myPsiFile: XmlFile, private val originalFile: KtFile, module: Module) : XmlFile {
-    private val myPsiDirectory: PsiDirectory
-    private val myVirtualFile: VirtualFile
-
-    init {
-        myPsiDirectory = LayoutPsiDirectory(module)
-        myVirtualFile = object : LightVirtualFile(myPsiFile.name, myPsiFile.text) {
-            private val myParent = object : LightVirtualFile("layout") {
-                override fun isDirectory() = true
-            }
-
-            override fun getParent() = myParent
-        }
-    }
+class LayoutPsiFile(private val myPsiFile: XmlFile, val originalFile: KtFile, module: Module) : XmlFile {
+    private val myPsiDirectory: PsiDirectory = LayoutPsiDirectory(module)
+    private val myVirtualFile: VirtualFile = LayoutLightVirtualFile(myPsiFile.name, myPsiFile.text)
 
     override fun getParent() = myPsiDirectory
     override fun getDocument() = myPsiFile.document
     override fun getRootTag() = myPsiFile.rootTag
-    override fun getVirtualFile(): VirtualFile? = originalFile.virtualFile
+    override fun getVirtualFile(): VirtualFile? = myVirtualFile
     override fun getContainingDirectory() = myPsiDirectory
     override fun getModificationStamp() = myPsiFile.modificationStamp
     override fun getOriginalFile() = this
     override fun getFileType() = myPsiFile.fileType
-    override fun getViewProvider() = myPsiFile.viewProvider
+    override fun getViewProvider() = object : FileViewProvider by myPsiFile.viewProvider {
+        override fun getPsi(p0: Language): PsiFile = this@LayoutPsiFile
+    }
     override fun getNode(): FileASTNode? = myPsiFile.node
     override fun getPsiRoots(): Array<PsiFile> = myPsiFile.psiRoots
     override fun subtreeChanged() = myPsiFile.subtreeChanged()
@@ -504,4 +494,66 @@ class LayoutPsiFile(private val myPsiFile: XmlFile, private val originalFile: Kt
         }
     }
 
+    inner class LayoutLightVirtualFile(name: String, text: String) : LightVirtualFile(name, text), VirtualFileWindow {
+        /*
+         * This hack is needed to force PsiDocumentManager return our LayoutPsiFile for LayoutLightVirtualFile
+         */
+        override fun getDocumentWindow(): DocumentWindow? {
+            val documentManager = PsiDocumentManager.getInstance(project)
+            val document = documentManager.getDocument(this@LayoutPsiFile.originalFile)!!
+            val documentWindowStub =  object : DocumentWindow, Document by document {
+                override fun getHostRanges(): Array<Segment> {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun getHostRange(p0: Int): TextRange? {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun areRangesEqual(p0: DocumentWindow): Boolean {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun isValid(): Boolean {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun injectedToHostLine(p0: Int): Int {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun intersectWithEditable(p0: TextRange): TextRange? {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun hostToInjected(p0: Int): Int {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun getDelegate(): Document {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun containsRange(p0: Int, p1: Int): Boolean {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun injectedToHost(p0: Int): Int {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun injectedToHost(p0: TextRange): TextRange {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+            }
+            (documentManager as PsiDocumentManagerImpl).associatePsi(documentWindowStub, this@LayoutPsiFile)
+            return documentWindowStub
+        }
+
+        override fun getDelegate(): VirtualFile = this@LayoutPsiFile.originalFile.virtualFile
+
+        override fun getParent() = object : LightVirtualFile("layout") {
+            override fun isDirectory() = true
+        }
+    }
 }
