@@ -70,7 +70,9 @@ class AnkoNlPreviewManager(
         }
 
         GradleBuildInvoker.getInstance(project).add {
-            refresh()
+            ApplicationManager.getApplication().invokeLater {
+                refresh()
+            }
         }
     }
 
