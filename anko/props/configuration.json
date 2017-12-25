@@ -229,7 +229,8 @@
       "android.support.v7.widget.DropDownListView",
       "android.text.ClipboardManager",
       "android.support.design.internal.*",
-      "android.support.design.widget.CheckableImageButton"
+      "android.support.design.widget.CheckableImageButton",
+      "android.support.constraint.Constraints"
     ]
   }
 }
