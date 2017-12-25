@@ -1,6 +1,6 @@
 <project name="Update Dependencies" default="update">
 
-    <property name="constraint.layout.version" value="1.1.0-beta3" />
+    <property name="constraint.layout.version" value="1.1.0-beta4" />
 
     <target name="update">
         <mkdir dir="dependencies/download"/>
@@ -20,7 +20,7 @@
 	    <get src="http://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar"
              dest="dependencies/ant-contrib.jar" usetimestamp="true"/>
 
-        <get src="https://dl.google.com/dl/android/maven2/com/android/support/constraint/constraint-layout/1.1.0-beta3/constraint-layout-1.1.0-beta3.aar"
+        <get src="https://dl.google.com/dl/android/maven2/com/android/support/constraint/constraint-layout/${constraint.layout.version}/constraint-layout-${constraint.layout.version}.aar"
              dest="dependencies/download/constraint-layout-${constraint.layout.version}.aar" usetimestamp="true"/>
 
         <copy file="dependencies/download/constraint-layout-${constraint.layout.version}.aar"
