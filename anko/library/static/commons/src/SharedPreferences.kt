@@ -18,6 +18,7 @@
 package org.jetbrains.anko
 
 import android.content.SharedPreferences
+
 /**
  * Opens the [SharedPreferences.Editor], applies the [modifer] to it and then applies the changes asynchronously
  */
