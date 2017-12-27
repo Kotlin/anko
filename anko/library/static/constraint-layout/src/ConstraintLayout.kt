@@ -22,6 +22,7 @@ import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintSet
 import android.view.View
 import org.jetbrains.anko.constraint.layout.ConstraintSetBuilder.Connection.BasicConnection
+import org.jetbrains.anko.constraint.layout.ConstraintSetBuilder.Side
 import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.internals.AnkoInternals.noGetter
 
@@ -38,10 +39,10 @@ class ViewConstraintBuilder(
         private @IdRes val viewId: Int,
         private val constraintSetBuilder: ConstraintSetBuilder) {
 
-    infix fun Pair<Int, Int>.of(@IdRes targetViewId: Int): BasicConnection =
+    infix fun Pair<Side, Side>.of(@IdRes targetViewId: Int): BasicConnection =
             constraintSetBuilder.run { (first of viewId) to (second of targetViewId) }
 
-    infix fun Pair<Int, Int>.of(targetView: View): BasicConnection = this of targetView.id
+    infix fun Pair<Side, Side>.of(targetView: View): BasicConnection = this of targetView.id
 
     fun clear() {
         constraintSetBuilder.clear(viewId)
@@ -235,22 +236,21 @@ class ConstraintSetBuilder : ConstraintSet() {
 
     operator fun View.invoke(init: ViewConstraintBuilder.() -> Unit) = id.invoke(init)
 
-    infix fun Int.of(@IdRes viewId: Int) = when (this) {
-        ConstraintSet.LEFT -> ViewSide.Left(viewId)
-        ConstraintSet.RIGHT -> ViewSide.Right(viewId)
-        ConstraintSet.TOP -> ViewSide.Top(viewId)
-        ConstraintSet.BOTTOM -> ViewSide.Bottom(viewId)
-        ConstraintSet.BASELINE -> ViewSide.Baseline(viewId)
-        ConstraintSet.START -> ViewSide.Start(viewId)
-        ConstraintSet.END -> ViewSide.End(viewId)
-        else -> error("Unknown side id: $this")
+    infix fun Side.of(@IdRes viewId: Int) = when (this) {
+        Side.LEFT -> ViewSide.Left(viewId)
+        Side.RIGHT -> ViewSide.Right(viewId)
+        Side.TOP -> ViewSide.Top(viewId)
+        Side.BOTTOM -> ViewSide.Bottom(viewId)
+        Side.BASELINE -> ViewSide.Baseline(viewId)
+        Side.START -> ViewSide.Start(viewId)
+        Side.END -> ViewSide.End(viewId)
     }
 
-    infix fun Int.of(view: View) = this of view.id
+    infix fun Side.of(view: View) = this of view.id
 
-    infix fun Pair<ViewSide, Int>.of(@IdRes viewId: Int) = first to (second of viewId)
+    infix fun Pair<ViewSide, Side>.of(@IdRes viewId: Int) = first to (second of viewId)
 
-    infix fun Pair<ViewSide, Int>.of(view: View) = first to (second of view.id)
+    infix fun Pair<ViewSide, Side>.of(view: View) = first to (second of view.id)
 
     infix fun ViewSide.to(targetSide: ViewSide) = BasicConnection(this, targetSide)
 
@@ -274,6 +274,16 @@ class ConstraintSetBuilder : ConstraintSet() {
                 )
             }
         }
+    }
+
+    enum class Side {
+        LEFT,
+        RIGHT,
+        TOP,
+        BOTTOM,
+        BASELINE,
+        START,
+        END,
     }
 
     sealed class ViewSide(@IdRes val viewId: Int) {
