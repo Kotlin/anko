@@ -25,7 +25,6 @@ gradle.projectsEvaluated {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "com.android.support:support-annotations:$SUPPORT_ARTIFACT_VERSION"
-    compile "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_ARTIFACT_VERSION"
-
+    provided "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_ARTIFACT_VERSION"
     compile project(':static:commons')
 }

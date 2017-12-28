@@ -2,6 +2,7 @@ apply from: '../generated.gradle'
 
 dependencies {
     provided "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_ARTIFACT_VERSION"
+    compile project(':generated:anko-commons')
     embedded project(':static:constraint-layout')
 }
 
