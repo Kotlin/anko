@@ -26,6 +26,7 @@ abstract class SelectQueryBuilder(val tableName: String) {
     private val columns = arrayListOf<String>()
     private val groupBy = arrayListOf<String>()
     private val orderBy = arrayListOf<String>()
+    private val joins = arrayListOf<String>()
 
     private var distinct: Boolean = false
 
@@ -73,7 +74,7 @@ abstract class SelectQueryBuilder(val tableName: String) {
     internal fun doExec(): Cursor {
         val finalSelection = if (selectionApplied) selection else null
         val finalSelectionArgs = if (selectionApplied && useNativeSelection) nativeSelectionArgs else null
-        return execQuery(distinct, tableName, columns.toTypedArray(),
+        return execQuery(distinct, tableName, columns.toTypedArray(), joins.toTypedArray(),
                 finalSelection, finalSelectionArgs,
                 groupBy.joinToString(", "), having, orderBy.joinToString(", "), limit)
     }
@@ -82,6 +83,7 @@ abstract class SelectQueryBuilder(val tableName: String) {
             distinct: Boolean,
             tableName: String,
             columns: Array<String>,
+            joins: Array<String>?
             selection: String?,
             selectionArgs: Array<out String>?,
             groupBy: String,
@@ -97,6 +99,21 @@ abstract class SelectQueryBuilder(val tableName: String) {
 
     fun column(name: String): SelectQueryBuilder {
         columns.add(name)
+        return this
+    }
+
+    fun innerJoin(table: String, args: String) {
+        joins.add("INNER JOIN $table ON $args")
+        return this
+    }
+
+    fun leftJoin(table: String, args: String) {
+        joins.add("LEFT JOIN $table ON $args")
+        return this
+    }
+
+    fun  rightJoin(table: String, args: String) {
+        joins.add("RIGHT JOIN $table ON $args")
         return this
     }
 
@@ -208,6 +225,7 @@ class AndroidSdkDatabaseSelectQueryBuilder(
             distinct: Boolean,
             tableName: String,
             columns: Array<String>,
+            joins: Array<String>?,
             selection: String?,
             selectionArgs: Array<out String>?,
             groupBy: String,
@@ -215,7 +233,7 @@ class AndroidSdkDatabaseSelectQueryBuilder(
             orderBy: String,
             limit: String?
     ): Cursor {
-        return db.query(distinct, tableName, columns, selection, selectionArgs, groupBy, having, orderBy, limit)
+        return db.query(distinct, tableName, columns, joins, selection, selectionArgs, groupBy, having, orderBy, limit)
     }
 
 }
