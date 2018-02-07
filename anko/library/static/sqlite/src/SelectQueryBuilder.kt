@@ -112,11 +112,6 @@ abstract class SelectQueryBuilder(val tableName: String) {
         return this
     }
 
-    fun  rightJoin(table: String, args: String) {
-        joins.add("RIGHT JOIN $table ON $args")
-        return this
-    }
-
     fun groupBy(value: String): SelectQueryBuilder {
         groupBy.add(value)
         return this
