@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package collections
-
+package org.jetbrains.anko.collections
 
 import android.util.SparseArray
 import android.util.SparseBooleanArray
 import android.util.SparseIntArray
-import java.util.*
-
+import java.util.ConcurrentModificationException
 
 /**
  *  Iterate the receiver [SparseArray]
@@ -61,5 +59,3 @@ inline fun SparseIntArray.forEach(action: (Int, Int) -> Unit) {
         action(this.keyAt(i), this.valueAt(i))
     }
 }
-
-
