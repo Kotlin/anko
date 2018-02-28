@@ -77,10 +77,10 @@ private fun renderAttribute(attr: Attr, key: String, value: String): KeyValuePai
     return null
 }
 
-fun String.parseReference(): XmlReference {
+fun String.parseReference(): XmlReference? {
     val matcher = Pattern.compile("@((([A-Za-z0-9._]+)\\:)?)([+A-Za-z0-9_]+)\\/([A-Za-z0-9_]+)").matcher(this)
     if (!matcher.matches()) {
-        throw RuntimeException("Invalid reference: $this")
+        return null
     }
     return XmlReference(matcher.group(3) ?: "", matcher.group(4), matcher.group(5))
 }

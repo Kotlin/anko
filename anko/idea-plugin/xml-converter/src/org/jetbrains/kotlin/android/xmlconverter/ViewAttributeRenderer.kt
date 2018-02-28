@@ -105,14 +105,18 @@ internal fun renderColor(attr: Attr, key: String, value: String) = if (attr acce
         key * displayColor
     } else null
 
-internal fun renderReference(attr: Attr, key: String, value: String) = if (attr accepts "reference" && value.isReference()) {
-        val reference = value.parseReference()
+internal fun renderReference(attr: Attr, key: String, value: String): KeyValuePair? {
+    if (attr accepts "reference" && value.isReference()) {
+        val reference = value.parseReference() ?: return null
         val packageName = if (reference.packageName.isNotEmpty()) "${reference.packageName}." else ""
-        when (reference.type) {
+        return when (reference.type) {
             "+id" -> key * "${packageName}Ids.${reference.value}"
             else -> key * "${packageName}R.${reference.type}.${reference.value}"
         }
-    } else null
+    }
+    else
+        return null
+}
 
 internal fun renderEnum(attr: Attr, key: String, value: String) = if (attr accepts "enum" && attr.enum != null) {
         val enumEntry = attr.enum?.firstOrNull { it.name == value }
