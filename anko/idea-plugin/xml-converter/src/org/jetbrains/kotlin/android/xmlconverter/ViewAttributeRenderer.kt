@@ -128,11 +128,7 @@ internal fun renderFlags(attr: Attr, key: String, value: String) = if (attr acce
     } else null
 
 internal fun renderDimension(attr: Attr, key: String, value: String) = if (attr accepts "dimension" && value.isDimension()) {
-    val rawDimension = value.parseDimension()
-    val dimension = when (rawDimension.second) {
-        "dp" -> rawDimension.first to "dip"
-        else -> rawDimension
-    }
+    val dimension = value.parseDimension()
     key * "${dimension.second}(${dimension.first})"
 } else null
 

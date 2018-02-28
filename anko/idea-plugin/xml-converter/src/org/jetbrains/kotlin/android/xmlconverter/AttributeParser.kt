@@ -113,5 +113,6 @@ fun String.parseDimension(): Pair<String, String> {
         throw RuntimeException("Invalid dimension: $this")
     }
     val numericValue = matcher.group(1)
-    return (if ("." in numericValue) "${numericValue}f" else numericValue) to matcher.group(2)
+    val dimensionUnit = matcher.group(2).let { if (it == "dp") "dip" else it }
+    return (if ("." in numericValue) "${numericValue}f" else numericValue) to dimensionUnit
 }
