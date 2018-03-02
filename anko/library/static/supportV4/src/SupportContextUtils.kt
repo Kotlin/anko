@@ -17,16 +17,16 @@
 @file:Suppress("unused")
 package org.jetbrains.anko.support.v4
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 
 inline val Fragment.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(activity)
 
-inline val Fragment.act: Activity
+inline val Fragment.act: FragmentActivity
     get() = activity
 
 inline val Fragment.ctx: Context
