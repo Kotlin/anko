@@ -42,8 +42,28 @@ val REAL: SqlType = SqlTypeImpl("REAL")
 val TEXT: SqlType = SqlTypeImpl("TEXT")
 val BLOB: SqlType = SqlTypeImpl("BLOB")
 
-fun FOREIGN_KEY(columnName: String, referenceTable: String, referenceColumn: String): Pair<String, SqlType> {
-    return "" to SqlTypeImpl("FOREIGN KEY($columnName) REFERENCES $referenceTable($referenceColumn)")
+enum class ConstraintActions {
+    SET_NULL,
+    SET_DEFAULT,
+    SET_RESTRICT,
+    CASCADE,
+    NO_ACTION;
+
+    override fun toString(): String {
+        return super.toString().replace("_", " ")
+    }
+}
+
+fun ON_UPDATE(constraintActions: ConstraintActions): SqlTypeModifier {
+    return SqlTypeModifierImpl("ON UPDATE $constraintActions")
+}
+
+fun ON_DELETE(constraintActions: ConstraintActions): SqlTypeModifier {
+    return SqlTypeModifierImpl("ON DELETE $constraintActions")
+}
+
+fun FOREIGN_KEY(columnName: String, referenceTable: String, referenceColumn: String, vararg actions: SqlTypeModifier): Pair<String, SqlType> {
+    return "" to SqlTypeImpl("FOREIGN KEY($columnName) REFERENCES $referenceTable($referenceColumn)${actions.map { it.modifier }.joinToString("") { " $it" }}")
 }
 
 val PRIMARY_KEY: SqlTypeModifier = SqlTypeModifierImpl("PRIMARY KEY")
