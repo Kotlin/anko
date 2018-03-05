@@ -106,6 +106,58 @@ import test.BuildConfig
         }
     }
 
+    @Test
+    fun testForeignKeyOnDeleteCascade() = databaseTest {
+
+        rawQuery("PRAGMA foreign_keys = ON", emptyArray()).close()
+
+        createTable(
+                "users",
+                true,
+                "id" to INTEGER + PRIMARY_KEY + UNIQUE,
+                "name" to TEXT
+        )
+
+        insert("users", "name" to "John")
+        insert("users", "name" to "Vasya")
+
+        createTable(
+                "emails",
+                true,
+                "id" to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+                "email" to TEXT,
+                "userId" to INTEGER,
+                FOREIGN_KEY("userId", "users", "id", ON_DELETE(ConstraintActions.CASCADE))
+        )
+
+        insert("emails",  "email" to "johny@domain.org", "userId" to 1)
+        insert("emails",  "email" to "vasiliy@domain.org", "userId" to 2)
+
+        select("emails").exec {
+            moveToNext()
+            assertEquals("johny@domain.org", getString(1))
+        }
+
+        select("users").exec {
+            moveToNext()
+            assertEquals("John", getString(1))
+        }
+
+
+        delete("users", "id = {userId}", "userId" to 1)
+
+
+        select("emails").exec {
+            moveToNext()
+            assertEquals("vasiliy@domain.org", getString(1))
+        }
+
+        select("users").exec {
+            moveToNext()
+            assertEquals("Vasya", getString(1))
+        }
+    }
+
     private fun databaseTest(f: SQLiteDatabase.() -> Unit) =
             databaseHelper!!.writableDatabase.let(f)
 }
