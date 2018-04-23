@@ -37,6 +37,7 @@ import com.intellij.openapi.util.UserDataHolderBase
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.*
 import com.intellij.psi.impl.PsiDocumentManagerImpl
+import com.intellij.psi.impl.PsiManagerEx
 import com.intellij.psi.scope.PsiScopeProcessor
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.PsiElementProcessor
@@ -58,7 +59,16 @@ import javax.swing.Icon
  */
 class LayoutPsiFile(private val myPsiFile: XmlFile, val originalFile: KtFile, module: Module) : XmlFile {
     private val myPsiDirectory: PsiDirectory = LayoutPsiDirectory(module)
-    private val myVirtualFile: VirtualFile = LayoutLightVirtualFile(myPsiFile.name, myPsiFile.text)
+
+    private val myViewProvider: FileViewProvider = object : FileViewProvider by myPsiFile.viewProvider {
+        override fun getPsi(p0: Language): PsiFile = this@LayoutPsiFile
+    }
+
+    private val myVirtualFile: VirtualFile by lazy {
+        LayoutLightVirtualFile(myPsiFile.name, myPsiFile.text).also { virtualFile ->
+            (myPsiFile.manager as? PsiManagerEx)?.fileManager?.setViewProvider(virtualFile, myViewProvider)
+        }
+    }
 
     override fun getParent() = myPsiDirectory
     override fun getDocument() = myPsiFile.document
@@ -68,9 +78,7 @@ class LayoutPsiFile(private val myPsiFile: XmlFile, val originalFile: KtFile, mo
     override fun getModificationStamp() = myPsiFile.modificationStamp
     override fun getOriginalFile() = this
     override fun getFileType() = myPsiFile.fileType
-    override fun getViewProvider() = object : FileViewProvider by myPsiFile.viewProvider {
-        override fun getPsi(p0: Language): PsiFile = this@LayoutPsiFile
-    }
+    override fun getViewProvider() = myViewProvider
     override fun getNode(): FileASTNode? = myPsiFile.node
     override fun getPsiRoots(): Array<PsiFile> = myPsiFile.psiRoots
     override fun subtreeChanged() = myPsiFile.subtreeChanged()
