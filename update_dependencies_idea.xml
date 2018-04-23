@@ -4,9 +4,9 @@
     <property name="ideaVersion" value="2017.1"/>
     <property name="idea.kotlin.branch" value="rc"/>
 
-    <property name="android.studio.intellij-core.build.number" value="171.3780.107"/>
-    <property name="android.version" value="3.0.1.0"/>
-    <property name="android.build.version" value="171.4443003"/>
+    <property name="android.studio.intellij-core.build.number" value="173.3727.127"/>
+    <property name="android.version" value="3.1.1.0"/>
+    <property name="android.build.version" value="173.4697961"/>
 
     <property name="markdown.locator" value="buildType:IntelliJMarkdownParser_Build,status:SUCCESS,tag:forKotlin"/>
 
