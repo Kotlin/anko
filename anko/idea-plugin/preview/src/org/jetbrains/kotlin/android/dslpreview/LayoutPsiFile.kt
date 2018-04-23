@@ -511,9 +511,17 @@ class LayoutPsiFile(private val myPsiFile: XmlFile, val originalFile: KtFile, mo
         /*
          * This hack is needed to force PsiDocumentManager return our LayoutPsiFile for LayoutLightVirtualFile
          */
-        override fun getDocumentWindow(): DocumentWindow? {
+        override fun getDocumentWindow(): DocumentWindow {
             val documentManager = PsiDocumentManager.getInstance(project)
             val documentWindowStub =  object : UserDataHolderBase(), DocumentWindow {
+                override fun hostToInjectedUnescaped(p0: Int): Int {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun isOneLine(): Boolean {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
                 override fun removeDocumentListener(p0: DocumentListener) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
