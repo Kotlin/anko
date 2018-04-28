@@ -6,7 +6,7 @@ buildscript {
     ext.kotlinx_dom_version = '0.0.10'
     ext.kotlinx_coroutines_version = '0.15'
 
-    ext.ANKO_VERSION = '0.10.4'
+    ext.ANKO_VERSION = '0.10.5'
     ext.ANKO_VERSION_CODE = 104
 
     ext.COMPILE_SDK_VERSION = 25

@@ -1,6 +1,6 @@
 ## Change Log
 
-### Anko 0.10.4 *(2017-12-28)*
+### Anko 0.10.5 *(2018-04-28)*
 
 - [DSL for ConstraintLayout](https://github.com/Kotlin/anko/wiki/ConstraintLayout)
 - Preview plugin compatibility with Android Studio 3.1 C6
