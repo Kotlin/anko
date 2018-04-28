@@ -702,37 +702,6 @@
     -->
     <target name="fetch-annotations"/>
 
-    <macrodef name="copy_intellij_core_files">
-        <attribute name="core" />
-        <attribute name="download.dir.intellij-core" />
-        <attribute name="idea.dir" />
-        <attribute name="xstream.version" default="1.4.3" />
-
-        <sequential>
-            <mkdir dir="@{core}"/>
-            <copy todir="@{core}" flatten="true" verbose="true">
-                <resources>
-                    <file file="@{download.dir.intellij-core}/intellij-core.jar"/>
-                    <file file="@{download.dir.intellij-core}/annotations.jar"/>
-                    <file file="@{download.dir.intellij-core}/guava-21.0.jar"/>
-                    <file file="@{download.dir.intellij-core}/picocontainer.jar"/>
-                    <file file="@{download.dir.intellij-core}/trove4j.jar"/>
-
-                    <file file="@{idea.dir}/lib/jdom.jar"/>
-                    <file file="@{idea.dir}/lib/jna.jar"/>
-                    <file file="@{idea.dir}/lib/log4j.jar"/>
-                    <file file="@{idea.dir}/lib/xstream-1.4.8.jar"/>
-                    <file file="@{idea.dir}/lib/xpp3-1.1.4-min.jar"/>
-                    <file file="@{idea.dir}/lib/asm-all.jar"/>
-                    <file file="@{idea.dir}/lib/snappy-in-java-0.5.1.jar"/>
-
-                    <!-- TODO temporary workaround since util-rt is not packaged into intellij-core.jar -->
-                    <file file="@{idea.dir}/lib/util.jar"/>
-                </resources>
-            </copy>
-        </sequential>
-    </macrodef>
-
     <macrodef name="copy_intellij_jps_files">
         <attribute name="jps" />
         <attribute name="download.dir.jps-standalone" />
@@ -902,16 +871,5 @@
             usetimestamp="true"/>
 
         <unzip src="${android.download.dir}/jps-standalone-${android.studio.intellij-core.build.number}.zip" dest="${android.download.dir}/jps-standalone" />
-
-        <copy_intellij_core_files idea.dir="${android.destination.dir}"
-                                  download.dir.intellij-core="${android.download.dir}/intellij-core"
-                                  core="${android.destination.dir}/core"
-                                  xstream.version="1.4.8" />
-
-        <copy_intellij_jps_files jps="${android.destination.dir}/jps" download.dir.jps-standalone="${android.download.dir}/jps-standalone" />
-
-        <mkdir dir="${android.destination.dir}/core-analysis"/>
-        <copy file="${android.download.dir}/intellij-core/intellij-core-analysis.jar"
-              tofile="${android.destination.dir}/core-analysis/intellij-core-analysis.jar"/>
     </target>
 </project>
