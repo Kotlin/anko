@@ -1,19 +1,40 @@
-package test
+package com.example.android_test
 
 import android.app.Activity
 import android.view.View
 import android.widget.RelativeLayout
-import org.jetbrains.anko.*
+import org.jetbrains.anko.UI
+import org.jetbrains.anko.above
+import org.jetbrains.anko.alignParentBottom
+import org.jetbrains.anko.alignParentEnd
+import org.jetbrains.anko.alignParentLeft
+import org.jetbrains.anko.alignParentRight
+import org.jetbrains.anko.alignParentStart
+import org.jetbrains.anko.alignParentTop
+import org.jetbrains.anko.below
+import org.jetbrains.anko.bottomOf
+import org.jetbrains.anko.centerHorizontally
+import org.jetbrains.anko.centerInParent
+import org.jetbrains.anko.centerVertically
+import org.jetbrains.anko.leftOf
+import org.jetbrains.anko.relativeLayout
+import org.jetbrains.anko.rightOf
+import org.jetbrains.anko.sameBottom
+import org.jetbrains.anko.sameLeft
+import org.jetbrains.anko.sameRight
+import org.jetbrains.anko.sameTop
+import org.jetbrains.anko.textView
+import org.jetbrains.anko.topOf
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
-import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 open class RelativeLayoutHelpersTestActivity : Activity()
 
-@RunWith(RobolectricGradleTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class) class RelativeLayoutHelpersTest {
 
     @Test fun test() {
@@ -72,4 +93,4 @@ fun Activity.test(fst: Int, snd: Int, l: RelativeLayout.LayoutParams.(View) -> U
             id = snd
         }.lparams { l(fstView) }
     }
-}.view as RelativeLayout).findViewById(snd)?.layoutParams as RelativeLayout.LayoutParams
+}.view as RelativeLayout).findViewById<View>(snd)?.layoutParams as RelativeLayout.LayoutParams

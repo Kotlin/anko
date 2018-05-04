@@ -1,3 +1,5 @@
+package com.example.android_test
+
 import android.app.Activity
 import org.jetbrains.anko.internals.AnkoInternals
 import org.junit.Test
@@ -5,7 +7,6 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
-import test.BuildConfig
 
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class)

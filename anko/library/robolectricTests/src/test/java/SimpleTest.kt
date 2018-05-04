@@ -1,4 +1,4 @@
-package test
+package com.example.android_test
 
 import android.app.Activity
 import android.content.Context
@@ -12,7 +12,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
-import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 open class SimpleTestActivity : Activity() {
@@ -37,7 +37,7 @@ open class SimpleTestActivity : Activity() {
     }
 }
 
-@RunWith(RobolectricGradleTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class) class SimpleTest {
 
     @Test fun test() {

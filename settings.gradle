@@ -1,15 +1,14 @@
 include ':generator'
-include ':stubs'
 include ':robolectricTests'
 include ':testUtils'
 
-include ':static:commons'
-include ':static:platform'
-include ':static:sqlite'
-include ':static:design'
-include ':static:supportV4'
-include ':static:appcompatV7'
-include ':static:constraint-layout'
+include ':static:internal-commons'
+include ':static:internal-platform'
+include ':static:internal-sqlite'
+include ':static:internal-design'
+include ':static:internal-supportV4'
+include ':static:internal-appcompatV7'
+include ':static:internal-constraint-layout'
 
 include ':generated'
 include ':generated:anko'
@@ -57,19 +56,17 @@ include ':ide:xml-converter'
 include ':ide:idea-runner'
 
 project(':generator').projectDir = new File(rootDir, 'anko/library/generator')
-project(':stubs').projectDir = new File(rootDir, 'anko/library/stubs')
 project(':robolectricTests').projectDir = new File(rootDir, 'anko/library/robolectricTests')
 project(':testUtils').projectDir = new File(rootDir, 'anko/library/testUtils')
 
 project(':static').projectDir = new File(rootDir, 'anko/library/static')
-project(':static:commons').projectDir = new File(rootDir, 'anko/library/static/commons')
-project(':static:platform').projectDir = new File(rootDir, 'anko/library/static/platform')
-project(':static:sqlite').projectDir = new File(rootDir, 'anko/library/static/sqlite')
-project(':static:design').projectDir = new File(rootDir, 'anko/library/static/design')
-project(':static:supportV4').projectDir = new File(rootDir, 'anko/library/static/supportV4')
-project(':static:appcompatV7').projectDir = new File(rootDir, 'anko/library/static/appcompatV7')
-project(':static:constraint-layout').projectDir = new File(rootDir, 'anko/library/static/constraint-layout')
-
+project(':static:internal-commons').projectDir = new File(rootDir, 'anko/library/static/commons')
+project(':static:internal-platform').projectDir = new File(rootDir, 'anko/library/static/platform')
+project(':static:internal-sqlite').projectDir = new File(rootDir, 'anko/library/static/sqlite')
+project(':static:internal-design').projectDir = new File(rootDir, 'anko/library/static/design')
+project(':static:internal-supportV4').projectDir = new File(rootDir, 'anko/library/static/supportV4')
+project(':static:internal-appcompatV7').projectDir = new File(rootDir, 'anko/library/static/appcompatV7')
+project(':static:internal-constraint-layout').projectDir = new File(rootDir, 'anko/library/static/constraint-layout')
 
 project(':generated').projectDir = new File(rootDir, 'anko/library/generated')
 project(':generated:anko').projectDir = new File(rootDir, 'anko/library/generated/anko')

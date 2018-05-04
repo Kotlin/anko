@@ -1,9 +1,5 @@
-apply from: '../generated.gradle'
+apply from: '../../library.gradle'
 
 dependencies {
     compile project(':generated:anko-commons')
-}
-
-task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
-    from("src", "../../static/platform/src")
 }

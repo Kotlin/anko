@@ -22,7 +22,7 @@ class GeneratorContext(
 
             val annotationManager = AnnotationManager(CompoundAnnotationProvider(
                     CachingAnnotationProvider(zipFileProvider), CachingAnnotationProvider(directoryProvider)))
-            val sourceManager = SourceManager(AndroidHomeSourceProvider(config[ANDROID_SDK_LOCATION], 25))
+            val sourceManager = SourceManager(AndroidHomeSourceProvider(config[ANDROID_SDK_LOCATION], 27))
             val templateManager = TemplateManager(
                     File(propsDir, "templates"),
                     MustacheTemplateProvider(),
