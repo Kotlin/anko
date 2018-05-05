@@ -17,14 +17,17 @@
 @file:Suppress("unused")
 package org.jetbrains.anko
 
-import android.view.*
-import java.util.*
+import android.view.View
+import android.view.ViewGroup
+import java.util.ConcurrentModificationException
+import java.util.NoSuchElementException
 
 /**
  * Execute [action] for each child of the received [ViewGroup].
  *
  * @param action the action to execute.
  */
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("forEach(action)", "androidx.core.view.forEach"))
 inline fun ViewGroup.forEachChild(action: (View) -> Unit) {
     for (i in 0..childCount - 1) {
         action(getChildAt(i))
@@ -36,6 +39,7 @@ inline fun ViewGroup.forEachChild(action: (View) -> Unit) {
  *
  * @param action the action to execute. The first index is 0.
  */
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("forEachIndexed(action)", "androidx.core.view.forEachIndexed"))
 inline fun ViewGroup.forEachChildWithIndex(action: (Int, View) -> Unit) {
     for (i in 0..childCount - 1) {
         action(i, getChildAt(i))
@@ -50,13 +54,8 @@ inline fun ViewGroup.forEachChildWithIndex(action: (Int, View) -> Unit) {
  *   [NoSuchElementException] will be thrown if no such child was found.
  */
 inline fun ViewGroup.firstChild(predicate: (View) -> Boolean): View {
-    for (i in 0..childCount - 1) {
-        val child = getChildAt(i)
-        if (predicate(child)) {
-            return child
-        }
-    }
-    throw NoSuchElementException("No element matching predicate was found.")
+    return firstChildOrNull(predicate)
+            ?: throw NoSuchElementException("No element matching predicate was found.")
 }
 
 /**
@@ -81,6 +80,7 @@ inline fun ViewGroup.firstChildOrNull(predicate: (View) -> Boolean): View? {
  *
  * @return the [Sequence] of children.
  */
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("children", "androidx.core.view.children"))
 fun View.childrenSequence(): Sequence<View> = ViewChildrenSequence(this)
 
 /**

@@ -44,18 +44,23 @@ inline val AnkoContext<*>.defaultSharedPreferences: SharedPreferences
 inline val Context.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(this)
 
+@Deprecated(message = "Use support library fragments instead.")
 inline val Fragment.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(activity)
 
+@Deprecated(message = "Use support library fragments instead.")
 inline val Fragment.act: Activity
     get() = activity
 
+@Deprecated(message = "Use support library fragments instead.")
 inline val Fragment.ctx: Context
     get() = activity
 
+@Deprecated(message = "Inline", replaceWith = ReplaceWith("this"))
 inline val Context.ctx: Context
     get() = this
 
+@Deprecated(message = "Inline", replaceWith = ReplaceWith("this"))
 inline val Activity.act: Activity
     get() = this
 
@@ -65,21 +70,25 @@ inline val Activity.act: Activity
 inline val Activity.contentView: View?
     get() = findOptional<ViewGroup>(android.R.id.content)?.getChildAt(0)
 
-inline fun <reified T : View> View.find(@IdRes id: Int): T = findViewById(id) as T
-inline fun <reified T : View> Activity.find(@IdRes id: Int): T = findViewById(id) as T
-inline fun <reified T : View> Fragment.find(@IdRes id: Int): T = view?.findViewById(id) as T
-inline fun <reified T : View> Dialog.find(@IdRes id: Int): T = findViewById(id) as T
+inline fun <reified T : View> View.find(@IdRes id: Int): T = findViewById(id)
+inline fun <reified T : View> Activity.find(@IdRes id: Int): T = findViewById(id)
+@Deprecated(message = "Use support library fragments instead.")
+inline fun <reified T : View> Fragment.find(@IdRes id: Int): T = view!!.findViewById(id)
+inline fun <reified T : View> Dialog.find(@IdRes id: Int): T = findViewById(id)
 
 inline fun <reified T : View> View.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 inline fun <reified T : View> Activity.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
+@Deprecated(message = "Use support library fragments instead.")
 inline fun <reified T : View> Fragment.findOptional(@IdRes id: Int): T? = view?.findViewById(id) as? T
 inline fun <reified T : View> Dialog.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 
+@Deprecated(message = "Use support library fragments instead.")
 inline fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any?>): T {
     arguments = bundleOf(*params)
     return this
 }
 
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("bundleOf(params)", "androidx.core.os.bundleOf"))
 fun bundleOf(vararg params: Pair<String, Any?>): Bundle {
     val b = Bundle()
     for (p in params) {

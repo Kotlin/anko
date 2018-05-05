@@ -23,7 +23,7 @@ import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.*
 import org.jetbrains.anko.internals.AnkoInternals.createAnkoContext
 
-inline fun <reified T : View> Fragment.find(id: Int): T = view?.findViewById(id) as T
+inline fun <reified T : View> Fragment.find(id: Int): T = view!!.findViewById(id)
 inline fun <reified T : View> Fragment.findOptional(id: Int): T? = view?.findViewById(id) as? T
 
 fun Fragment.UI(init: AnkoContext<Fragment>.() -> Unit) = createAnkoContext(activity, init)

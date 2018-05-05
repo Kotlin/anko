@@ -26,19 +26,20 @@ import android.content.Intent
 import android.net.Uri
 import org.jetbrains.anko.internals.AnkoInternals
 
-
 inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStartActivity(this, T::class.java, params)
 
 inline fun <reified T: Activity> AnkoContext<*>.startActivity(vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStartActivity(ctx, T::class.java, params)
 
+@Deprecated(message = "Use support library fragments instead.")
 inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStartActivity(activity, T::class.java, params)
 
 inline fun <reified T: Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStartActivityForResult(this, T::class.java, requestCode, params)
 
+@Deprecated(message = "Use support library fragments instead.")
 inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any?>) =
         startActivityForResult(AnkoInternals.createIntent(act, T::class.java, params), requestCode)
 
@@ -48,6 +49,7 @@ inline fun <reified T: Service> Context.startService(vararg params: Pair<String,
 inline fun <reified T: Service> AnkoContext<*>.startService(vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStartService(ctx, T::class.java, params)
 
+@Deprecated(message = "Use support library fragments instead.")
 inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStartService(activity, T::class.java, params)
 
@@ -57,6 +59,7 @@ inline fun <reified T : Service> Context.stopService(vararg params: Pair<String,
 inline fun <reified T : Service> AnkoContext<*>.stopService(vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStopService(ctx, T::class.java, params)
 
+@Deprecated(message = "Use support library fragments instead.")
 inline fun <reified T : Service> Fragment.stopService(vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStopService(activity, T::class.java, params)
 
@@ -66,6 +69,7 @@ inline fun <reified T: Any> Context.intentFor(vararg params: Pair<String, Any?>)
 inline fun <reified T: Any> AnkoContext<*>.intentFor(vararg params: Pair<String, Any?>): Intent =
         AnkoInternals.createIntent(ctx, T::class.java, params)
 
+@Deprecated(message = "Use support library fragments instead.")
 inline fun <reified T: Any> Fragment.intentFor(vararg params: Pair<String, Any?>): Intent =
         AnkoInternals.createIntent(activity, T::class.java, params)
 
@@ -88,6 +92,7 @@ inline fun Intent.clearTop(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_CLE
  *
  * @return the same intent with the flag applied.
  */
+@Deprecated(message = "Deprecated in Android")
 inline fun Intent.clearWhenTaskReset(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET) }
 
 /**
@@ -133,6 +138,7 @@ inline fun Intent.noHistory(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NO
 inline fun Intent.singleTop(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) }
 
 inline fun AnkoContext<*>.browse(url: String, newTask: Boolean = false) = ctx.browse(url, newTask)
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.browse(url: String, newTask: Boolean = false) = activity.browse(url, newTask)
 
 fun Context.browse(url: String, newTask: Boolean = false): Boolean {
@@ -151,6 +157,7 @@ fun Context.browse(url: String, newTask: Boolean = false): Boolean {
 }
 
 inline fun AnkoContext<*>.share(text: String, subject: String = "") = ctx.share(text, subject)
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.share(text: String, subject: String = "") = activity.share(text, subject)
 
 fun Context.share(text: String, subject: String = ""): Boolean {
@@ -168,6 +175,7 @@ fun Context.share(text: String, subject: String = ""): Boolean {
 }
 
 inline fun AnkoContext<*>.email(email: String, subject: String = "", text: String = "") = ctx.email(email, subject, text)
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.email(email: String, subject: String = "", text: String = "") = activity.email(email, subject, text)
 
 fun Context.email(email: String, subject: String = "", text: String = ""): Boolean {
@@ -187,6 +195,7 @@ fun Context.email(email: String, subject: String = "", text: String = ""): Boole
 }
 
 inline fun AnkoContext<*>.makeCall(number: String): Boolean = ctx.makeCall(number)
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.makeCall(number: String): Boolean = activity.makeCall(number)
 
 fun Context.makeCall(number: String): Boolean {
@@ -201,6 +210,7 @@ fun Context.makeCall(number: String): Boolean {
 }
 
 inline fun AnkoContext<*>.sendSMS(number: String, text: String = ""): Boolean = ctx.sendSMS(number, text)
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.sendSMS(number: String, text: String = ""): Boolean = activity.sendSMS(number, text)
 
 fun Context.sendSMS(number: String, text: String = ""): Boolean {

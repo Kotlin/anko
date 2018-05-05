@@ -19,8 +19,10 @@ package org.jetbrains.anko
 
 import android.view.Menu
 import android.view.MenuItem
-import java.util.*
+import java.util.ConcurrentModificationException
+import java.util.NoSuchElementException
 
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("children", "androidx.core.view.children"))
 fun Menu.itemsSequence(): Sequence<MenuItem> = MenuItemsSequence(this)
 
 private class MenuItemsSequence(private val menu: Menu) : Sequence<MenuItem> {

@@ -26,6 +26,7 @@ import java.util.ConcurrentModificationException
  *  @action an action to invoke on each key value pair
  *  @throws [ConcurrentModificationException] if modified while iterating
  */
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("forEach(action)", "androidx.core.util.forEach"))
 inline fun <E> SparseArray<E>.forEach(action: (Int, E) -> Unit) {
     val size = this.size()
     for (i in 0..size - 1) {
@@ -39,6 +40,7 @@ inline fun <E> SparseArray<E>.forEach(action: (Int, E) -> Unit) {
  *  @action an action to invoke on each key value pair
  *  @throws [ConcurrentModificationException] if modified while iterating
  */
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("forEach(action)", "androidx.core.util.forEach"))
 inline fun SparseBooleanArray.forEach(action: (Int, Boolean) -> Unit) {
     val size = this.size()
     for (i in 0..size - 1) {
@@ -52,6 +54,7 @@ inline fun SparseBooleanArray.forEach(action: (Int, Boolean) -> Unit) {
  *  @action an action to invoke on each key value pair
  *  @throws [ConcurrentModificationException] if modified while iterating
  */
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("forEach(action)", "androidx.core.util.forEach"))
 inline fun SparseIntArray.forEach(action: (Int, Int) -> Unit) {
     val size = this.size()
     for (i in 0..size - 1) {

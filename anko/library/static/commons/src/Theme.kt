@@ -58,9 +58,12 @@ inline fun View.attr(@AttrRes attribute: Int): TypedValue = context.attr(attribu
 
 
 @Dimension(unit = Dimension.PX)
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.dimenAttr(@AttrRes attribute: Int): Int = activity.dimenAttr(attribute)
 
 @ColorInt
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.colorAttr(@AttrRes attribute: Int): Int = activity.colorAttr(attribute)
 
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.attr(@AttrRes attribute: Int): TypedValue = activity.attr(attribute)

@@ -22,6 +22,7 @@ import android.content.SharedPreferences
 /**
  * Opens the [SharedPreferences.Editor], applies the [modifer] to it and then applies the changes asynchronously
  */
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("edit(modifier)", "androidx.core.content.edit"))
 inline fun SharedPreferences.apply(modifier: SharedPreferences.Editor.() -> Unit) {
     val editor = this.edit()
     editor.modifier()
@@ -31,6 +32,7 @@ inline fun SharedPreferences.apply(modifier: SharedPreferences.Editor.() -> Unit
 /**
  * Opens the [SharedPreferences.Editor], applies the [modifer] to it and then applies the changes synchronously
  */
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("edit(true, modifier)", "androidx.core.content.edit"))
 inline fun SharedPreferences.commit(modifier: SharedPreferences.Editor.() -> Unit) {
     val editor = this.edit()
     editor.modifier()

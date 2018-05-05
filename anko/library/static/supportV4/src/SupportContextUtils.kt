@@ -26,8 +26,10 @@ import android.support.v4.app.FragmentActivity
 inline val Fragment.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(activity)
 
+@Deprecated(message = "Use either activity or requireActivity", replaceWith = ReplaceWith("activity"))
 inline val Fragment.act: FragmentActivity
     get() = activity
 
+@Deprecated(message = "Use either context or requireContext", replaceWith = ReplaceWith("context"))
 inline val Fragment.ctx: Context
     get() = activity

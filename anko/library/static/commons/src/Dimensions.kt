@@ -26,11 +26,10 @@ const val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
 const val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
 const val HDPI: Int = android.util.DisplayMetrics.DENSITY_HIGH
 
-//May not be available on older Android versions
-const val TVDPI: Int = 213
-const val XHDPI: Int = 320
-const val XXHDPI: Int = 480
-const val XXXHDPI: Int = 640
+const val TVDPI: Int = android.util.DisplayMetrics.DENSITY_TV
+const val XHDPI: Int = android.util.DisplayMetrics.DENSITY_XHIGH
+const val XXHDPI: Int = android.util.DisplayMetrics.DENSITY_XXHIGH
+const val XXXHDPI: Int = android.util.DisplayMetrics.DENSITY_XXXHIGH
 
 const val MAXDPI: Int = 0xfffe
 
@@ -68,10 +67,17 @@ inline fun View.px2sp(px: Int): Float = context.px2sp(px)
 inline fun View.dimen(@DimenRes resource: Int): Int = context.dimen(resource)
 
 //the same for Fragments
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.dip(value: Int): Int = activity.dip(value)
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.dip(value: Float): Int = activity.dip(value)
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.sp(value: Int): Int = activity.sp(value)
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.sp(value: Float): Int = activity.sp(value)
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.px2dip(px: Int): Float = activity.px2dip(px)
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.px2sp(px: Int): Float = activity.px2sp(px)
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.dimen(@DimenRes resource: Int): Int = activity.dimen(resource)

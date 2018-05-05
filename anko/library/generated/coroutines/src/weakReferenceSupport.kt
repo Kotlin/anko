@@ -25,8 +25,7 @@ class Ref<out T : Any> internal constructor(obj: T) {
 
     suspend operator fun invoke(): T {
         return suspendCoroutineOrReturn {
-            val ref = weakRef.get() ?: throw CancellationException()
-            ref
+            weakRef.get() ?: throw CancellationException()
         }
     }
 }

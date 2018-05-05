@@ -1,15 +1,11 @@
 @file:JvmName("GridlayoutV7ViewsKt")
 package org.jetbrains.anko.gridlayout.v7
 
-import org.jetbrains.anko.custom.*
-import org.jetbrains.anko.AnkoViewDslMarker
-import android.view.ViewManager
-import android.view.ViewGroup.LayoutParams
 import android.app.Activity
-import android.app.Fragment
 import android.content.Context
-import android.os.Build
-import android.widget.*
+import android.view.ViewManager
+import org.jetbrains.anko.AnkoViewDslMarker
+import org.jetbrains.anko.custom.ankoView
 
 @PublishedApi
 internal object `$$Anko$Factories$GridlayoutV7ViewGroup` {

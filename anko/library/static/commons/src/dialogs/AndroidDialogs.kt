@@ -29,6 +29,7 @@ inline fun AnkoContext<*>.alert(
         noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ) = ctx.alert(message, title, init)
 
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.alert(
         message: CharSequence,
         title: CharSequence? = null,
@@ -55,6 +56,7 @@ inline fun AnkoContext<*>.alert(
         noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ) = ctx.alert(message, title, init)
 
+@Deprecated(message = "Use support library fragments instead.")
 inline fun Fragment.alert(
         message: Int,
         title: Int? = null,
@@ -82,18 +84,21 @@ inline fun Fragment.alert(noinline init: AlertBuilder<DialogInterface>.() -> Uni
 fun Context.alert(init: AlertBuilder<DialogInterface>.() -> Unit): AlertBuilder<DialogInterface> =
         AndroidAlertBuilder(this).apply { init() }
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 inline fun AnkoContext<*>.progressDialog(
         message: Int? = null,
         title: Int? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = ctx.progressDialog(message, title, init)
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 inline fun Fragment.progressDialog(
         message: Int? = null,
         title: Int? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = activity.progressDialog(message, title, init)
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 fun Context.progressDialog(
         message: Int? = null,
         title: Int? = null,
@@ -101,18 +106,21 @@ fun Context.progressDialog(
 ) = progressDialog(false, message?.let { getString(it) }, title?.let { getString(it) }, init)
 
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 inline fun AnkoContext<*>.indeterminateProgressDialog(
         message: Int? = null,
         title: Int? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = ctx.indeterminateProgressDialog(message, title, init)
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 inline fun Fragment.indeterminateProgressDialog(
         message: Int? = null,
         title: Int? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = activity.indeterminateProgressDialog(message, title, init)
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 fun Context.indeterminateProgressDialog(
         message: Int? = null,
         title: Int? = null,
@@ -120,18 +128,21 @@ fun Context.indeterminateProgressDialog(
 ) = progressDialog(true, message?.let { getString(it) }, title?.let { getString(it) }, init)
 
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 inline fun AnkoContext<*>.progressDialog(
         message: CharSequence? = null,
         title: CharSequence? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = ctx.progressDialog(message, title, init)
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 inline fun Fragment.progressDialog(
         message: CharSequence? = null,
         title: CharSequence? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = activity.progressDialog(message, title, init)
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 fun Context.progressDialog(
         message: CharSequence? = null,
         title: CharSequence? = null,
@@ -139,18 +150,21 @@ fun Context.progressDialog(
 ) = progressDialog(false, message, title, init)
 
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 inline fun AnkoContext<*>.indeterminateProgressDialog(
         message: CharSequence? = null,
         title: CharSequence? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = ctx.indeterminateProgressDialog(message, title, init)
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 inline fun Fragment.indeterminateProgressDialog(
         message: CharSequence? = null,
         title: CharSequence? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = activity.indeterminateProgressDialog(message, title, init)
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 fun Context.indeterminateProgressDialog(
         message: CharSequence? = null,
         title: CharSequence? = null,
@@ -158,6 +172,7 @@ fun Context.indeterminateProgressDialog(
 ) = progressDialog(true, message, title, init)
 
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 private fun Context.progressDialog(
         indeterminate: Boolean,
         message: CharSequence? = null,
