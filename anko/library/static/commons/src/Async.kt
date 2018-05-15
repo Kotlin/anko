@@ -24,8 +24,10 @@ import android.os.Handler
 import android.os.Looper
 import java.lang.ref.WeakReference
 import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 import java.util.concurrent.Future
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
 
 /**
  * Execute [f] on the application UI thread.
@@ -196,11 +198,13 @@ fun <T, R> T.doAsyncResult(
 }
 
 internal object BackgroundExecutor {
-    var executor: ExecutorService =
-        Executors.newScheduledThreadPool(2 * Runtime.getRuntime().availableProcessors())
+    private val executor: ExecutorService = ThreadPoolExecutor(
+        2, 2 * Runtime.getRuntime().availableProcessors(),
+        30, TimeUnit.SECONDS,
+        LinkedBlockingQueue<Runnable>()
+    )
 
     fun <T> submit(task: () -> T): Future<T> = executor.submit(task)
-
 }
 
 private object ContextHelper {
