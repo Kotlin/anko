@@ -5,8 +5,8 @@
     <property name="idea.kotlin.branch" value="rc"/>
 
     <property name="android.studio.intellij-core.build.number" value="181.2784.17"/>
-    <property name="android.version" value="3.2.0.10"/>
-    <property name="android.build.version" value="181.4720098"/>
+    <property name="android.version" value="3.2.0.13"/>
+    <property name="android.build.version" value="181.4763614"/>
 
     <property name="markdown.locator" value="buildType:IntelliJMarkdownParser_Build,status:SUCCESS,tag:forKotlin"/>
 
