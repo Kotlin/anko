@@ -264,6 +264,8 @@ inline fun Activity.textInputLayout(init: (@AnkoViewDslMarker _TextInputLayout).
     return ankoView(`$$Anko$Factories$DesignViewGroup`.TEXT_INPUT_LAYOUT, theme = 0) { init() }
 }
 
+inline fun <T:View> Activity.find(id:Int) : T = this.findViewById(id) as T 
+
 inline fun Activity.themedTextInputLayout(theme: Int = 0): android.support.design.widget.TextInputLayout = themedTextInputLayout(theme) {}
 inline fun Activity.themedTextInputLayout(theme: Int = 0, init: (@AnkoViewDslMarker _TextInputLayout).() -> Unit): android.support.design.widget.TextInputLayout {
 return ankoView(`$$Anko$Factories$DesignViewGroup`.TEXT_INPUT_LAYOUT, theme) { init() }
