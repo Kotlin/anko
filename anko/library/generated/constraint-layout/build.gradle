@@ -1,11 +1,7 @@
-apply from: '../generated.gradle'
+apply from: '../../library.gradle'
 
 dependencies {
     provided "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_ARTIFACT_VERSION"
     compile project(':generated:anko-commons')
-    embedded project(':static:constraint-layout')
-}
-
-task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
-    from "src"
+    compile  project(':static:internal-constraint-layout')
 }

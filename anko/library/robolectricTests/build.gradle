@@ -3,21 +3,26 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION
-    buildToolsVersion BUILD_TOOLS_VERSION
     defaultConfig {
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion 21
         versionCode ANKO_VERSION_CODE
         versionName ANKO_VERSION
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-    compile project(':generated:anko-commons')
-    compile project(':generated:anko-sqlite')
-    compile project(':generated:anko-sdk15')
-    compile project(':generated:anko-sdk15-listeners')
-    compile project(':generated:anko-coroutines')
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testCompile "org.robolectric:robolectric:3.0"
+    implementation project(':generated:anko-commons')
+    implementation project(':generated:anko-sqlite')
+    implementation project(':generated:anko-sdk15')
+    implementation project(':generated:anko-sdk15-listeners')
+    implementation project(':generated:anko-coroutines')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    testImplementation "org.robolectric:robolectric:3.8"
+    testImplementation 'junit:junit:4.12'
 }

@@ -1,13 +1,13 @@
-package test
+package com.example.android_test
 
 import android.app.Fragment
 import org.jetbrains.anko.withArguments
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@RunWith(RobolectricGradleTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class)
 class WithArgumentsTest {
 

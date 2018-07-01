@@ -1,17 +1,17 @@
 @file:Suppress("UNUSED_PARAMETER", "EqualsOrHashCode")
 
-package test
+package com.example.android_test
 
 import android.text.SpannedString
 import org.jetbrains.anko.db.ClassParserConstructor
 import org.jetbrains.anko.db.classParser
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@RunWith(RobolectricGradleTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class)
 class ClassParserTest {
     @Test
@@ -43,9 +43,9 @@ class ClassParserTest {
                 assertThrows { parseRow(arrayOf('c', 4.0, -2, -10.0)) }
             }
         }
-        
+
         assertThrows { classParser<Class3>() }
-        
+
         with (classParser<Class4>()) {
             arrayOf<Any?>("ABC", "BCD", null).also {
                 assertEquals(Class4("ABC", "BCD", null), parseRow(it))

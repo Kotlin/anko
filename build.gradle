@@ -2,19 +2,18 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 buildscript {
-    ext.kotlin_version = '1.1.0'
+    ext.kotlin_version = '1.2.41'
     ext.kotlinx_dom_version = '0.0.10'
-    ext.kotlinx_coroutines_version = '0.15'
+    ext.kotlinx_coroutines_version = '0.22.5'
 
     ext.ANKO_VERSION = '0.10.5'
     ext.ANKO_VERSION_CODE = 104
 
-    ext.COMPILE_SDK_VERSION = 25
-    ext.BUILD_TOOLS_VERSION = "25.0.2"
+    ext.COMPILE_SDK_VERSION = 27
     ext.MIN_SDK_VERSION = 15
     ext.TARGET_SDK_VERSION = 25
-    ext.SUPPORT_ARTIFACT_VERSION = "25.1.1"
-    ext.CONSTRAINT_LAYOUT_ARTIFACT_VERSION = "1.1.0-beta4"
+    ext.SUPPORT_ARTIFACT_VERSION = "27.1.1"
+    ext.CONSTRAINT_LAYOUT_ARTIFACT_VERSION = "1.1.0"
 
     ext.PROJECT_URL = 'https://github.com/JetBrains/anko'
     ext.SCM_URL = 'https://github.com/JetBrains/anko.git'
@@ -24,33 +23,29 @@ buildscript {
     ext.BINTRAY_USER_NAME = 'jetbrains'
     ext.BINTRAY_PACKAGE_NAME = 'anko'
     ext.BINTRAY_REPO_NAME = 'anko'
-    
+
     ext.BINTRAY_DRY_RUN = false
 
     ext.POM_ARTIFACT_GROUP = 'org.jetbrains.anko'
 
     repositories {
-        mavenCentral()
+        google()
         jcenter()
-        maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:2.1.0"
+        classpath "com.android.tools.build:gradle:3.1.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
-        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.11"
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.16"
     }
 }
 
 allprojects {
     repositories {
-        mavenCentral()
+        google()
         jcenter()
-        maven { url "https://dl.google.com/dl/android/maven2" }
-        maven { url "http://dl.bintray.com/kotlin/kotlinx.dom" }
-        maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
     }
 }
 
@@ -107,7 +102,15 @@ def generatedArtifacts = [
     ':generated:anko-support-v4',
     ':generated:anko-support-v4-commons',
     ':generated:anko-coroutines',
-    ':generated:anko'
+    ':generated:anko',
+
+    ':static:internal-commons',
+    ':static:internal-platform',
+    ':static:internal-sqlite',
+    ':static:internal-design',
+    ':static:internal-supportV4',
+    ':static:internal-appcompatV7',
+    ':static:internal-constraint-layout'
 ]
 
 task dist()

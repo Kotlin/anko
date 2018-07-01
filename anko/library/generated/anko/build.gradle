@@ -1,4 +1,4 @@
-apply from: '../generated.gradle'
+apply from: '../../library.gradle'
 
 dependencies {
     compile project(':generated:anko-commons')
@@ -8,8 +8,4 @@ dependencies {
     compile project(':generated:anko-sdk25-coroutines')
     compile project(':generated:anko-appcompat-v7')
     compile project(':generated:anko-appcompat-v7-coroutines')
-}
-
-task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
-    from "src"
 }

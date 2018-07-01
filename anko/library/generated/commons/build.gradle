@@ -1,9 +1,5 @@
-apply from: '../generated.gradle'
+apply from: '../../library.gradle'
 
 dependencies {
-    embedded project(':static:commons')
-}
-
-task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
-    from("src", "../../static/commons/src")
+    compile project(':static:internal-commons')
 }

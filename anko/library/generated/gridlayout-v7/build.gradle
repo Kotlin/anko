@@ -1,10 +1,6 @@
-apply from: '../generated.gradle'
+apply from: '../../library.gradle'
 
 dependencies {
     provided "com.android.support:gridlayout-v7:$SUPPORT_ARTIFACT_VERSION"
     compile project(':generated:anko-commons')
-}
-
-task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
-    from "src"
 }

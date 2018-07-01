@@ -1,4 +1,4 @@
-apply from: '../generated.gradle'
+apply from: '../../library.gradle'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -9,8 +9,4 @@ kotlin {
     experimental {
         coroutines "enable"
     }
-}
-
-task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
-    from("src", "../../static/common/src")
 }

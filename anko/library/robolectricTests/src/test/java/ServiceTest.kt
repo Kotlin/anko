@@ -1,4 +1,4 @@
-package test
+package com.example.android_test
 
 import android.app.Activity
 import android.os.Bundle
@@ -7,7 +7,7 @@ import org.jetbrains.anko.vibrator
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
-import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 open class ServiceTestActivity : Activity() {
@@ -17,7 +17,7 @@ open class ServiceTestActivity : Activity() {
     }
 }
 
-@RunWith(RobolectricGradleTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class) class ServiceTest {
 
     @Test fun test() {

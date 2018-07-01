@@ -1,19 +1,31 @@
+package com.example.android_test
+
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import org.jetbrains.anko.db.*
+import org.jetbrains.anko.db.AUTOINCREMENT
+import org.jetbrains.anko.db.ConstraintActions
+import org.jetbrains.anko.db.FOREIGN_KEY
+import org.jetbrains.anko.db.INTEGER
+import org.jetbrains.anko.db.ON_DELETE
+import org.jetbrains.anko.db.PRIMARY_KEY
+import org.jetbrains.anko.db.TEXT
+import org.jetbrains.anko.db.UNIQUE
+import org.jetbrains.anko.db.createTable
+import org.jetbrains.anko.db.delete
+import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.select
+import org.jetbrains.anko.db.update
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
-import test.BuildConfig
 
-
-@RunWith(RobolectricGradleTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class) class AnkoSQliteTest {
 
     private var databaseHelper: DbHelper? = null

@@ -1,4 +1,4 @@
-package test
+package com.example.android_test
 
 import android.app.Activity
 import android.os.Bundle
@@ -6,7 +6,7 @@ import org.jetbrains.anko.intentFor
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
-import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 open class IntentForTestActivity : Activity() {
@@ -15,7 +15,7 @@ open class IntentForTestActivity : Activity() {
     }
 }
 
-@RunWith(RobolectricGradleTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class)
 class IntentForTest {
 
