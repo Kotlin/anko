@@ -5,7 +5,11 @@ mainClassName = "org.jetbrains.android.anko.Main"
 
 run {
     // Replace "verify" with "generate" to update generated files
-    args = ["versions", System.getenv("ANKO_GENERATOR_MODE") ?: "verify",
+    def generatorMode = findProperty("anko.generator.mode") ?: System.getenv("ANKO_GENERATOR_MODE") ?: "verify"
+    logger.debug("Anko generator mode: {}", generatorMode)
+
+    args = ["versions",
+            generatorMode,
             "--configuration=anko/props/configuration.json",
             "--outputDirectory=anko/library/generated",
             "--androidSdk=dependencies/android-sdk"]
