@@ -84,7 +84,7 @@ publishing {
     }
 
     repositories {
-        mavenLocal()
+        maven { url "${rootProject.buildDir}/maven" }
     }
 }
 
