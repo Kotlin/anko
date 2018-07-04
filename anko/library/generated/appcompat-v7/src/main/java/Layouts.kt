@@ -15,7 +15,6 @@ import android.support.v7.widget.ActionMenuView
 import android.support.v7.widget.LinearLayoutCompat
 import android.support.v7.widget.AlertDialogLayout
 import android.support.v7.widget.ButtonBarLayout
-import android.widget.AbsListView
 import android.support.v7.widget.ScrollingTabContainerView
 import android.support.v7.widget.Toolbar
 import android.support.v7.app.ActionBar
