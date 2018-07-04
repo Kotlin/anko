@@ -223,6 +223,7 @@
       "android.support.v4.widget.CircleImageView",
       "android.support.v7.internal.widget.*",
       "android.support.v7.internal.view.menu.*",
+      "android.support.v7.widget.ListViewCompat",
       "android.renderscript.RSSurfaceView",
       "android.renderscript.RenderScriptGL",
       "android.renderscript.RSTextureView",
