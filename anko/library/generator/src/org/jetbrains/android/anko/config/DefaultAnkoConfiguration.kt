@@ -49,7 +49,7 @@ class DefaultAnkoConfiguration(
         }
     }
 
-    override val sourceOutputDirectory = File(outputDirectory, "src")
+    override val sourceOutputDirectory = File(outputDirectory, "src/main/java")
 
     override fun getOutputFile(ankoFile: AnkoFile): File {
         return File(sourceOutputDirectory, ankoFile.filename)
