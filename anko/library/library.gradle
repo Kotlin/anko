@@ -18,10 +18,6 @@ android {
         versionCode ANKO_VERSION_CODE
         versionName ANKO_VERSION
     }
-
-    lintOptions {
-        abortOnError false
-    }
 }
 
 task sourcesJar(type: Jar) {
