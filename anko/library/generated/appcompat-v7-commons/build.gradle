@@ -1,7 +1,7 @@
 apply from: '../../library.gradle'
 
 dependencies {
-    provided "com.android.support:support-v4:$SUPPORT_ARTIFACT_VERSION"
+    api "com.android.support:support-v4:$SUPPORT_ARTIFACT_VERSION"
     compile project(':generated:anko-support-v4-commons')
     compile project(':static:internal-appcompatV7')
 }

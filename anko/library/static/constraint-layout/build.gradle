@@ -1,7 +1,7 @@
 apply from: '../../library.gradle'
 
 dependencies {
-    compile "com.android.support:support-annotations:$SUPPORT_ARTIFACT_VERSION"
-    provided "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_ARTIFACT_VERSION"
+    api "com.android.support:support-annotations:$SUPPORT_ARTIFACT_VERSION"
+    api "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_ARTIFACT_VERSION"
     compile project(':static:internal-commons')
 }

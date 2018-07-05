@@ -1,6 +1,6 @@
 apply from: '../../library.gradle'
 
 dependencies {
-    provided "com.android.support:percent:$SUPPORT_ARTIFACT_VERSION"
+    api "com.android.support:percent:$SUPPORT_ARTIFACT_VERSION"
     compile project(':generated:anko-commons')
 }

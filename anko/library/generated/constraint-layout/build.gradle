@@ -1,7 +1,7 @@
 apply from: '../../library.gradle'
 
 dependencies {
-    provided "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_ARTIFACT_VERSION"
+    api "com.android.support.constraint:constraint-layout:$CONSTRAINT_LAYOUT_ARTIFACT_VERSION"
     compile project(':generated:anko-commons')
     compile  project(':static:internal-constraint-layout')
 }

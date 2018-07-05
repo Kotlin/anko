@@ -2,6 +2,6 @@ apply from: '../../library.gradle'
 
 dependencies {
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
-    provided "com.android.support:recyclerview-v7:$SUPPORT_ARTIFACT_VERSION"
+    api "com.android.support:recyclerview-v7:$SUPPORT_ARTIFACT_VERSION"
     compile project(':generated:anko-commons')
 }

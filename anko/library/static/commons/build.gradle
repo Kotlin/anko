@@ -1,5 +1,5 @@
 apply from: '../../library.gradle'
 
 dependencies {
-    compile "com.android.support:support-annotations:$SUPPORT_ARTIFACT_VERSION"
+    api "com.android.support:support-annotations:$SUPPORT_ARTIFACT_VERSION"
 }
