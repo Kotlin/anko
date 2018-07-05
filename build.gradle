@@ -4,7 +4,7 @@ import java.util.zip.ZipOutputStream
 buildscript {
     ext.kotlin_version = '1.2.41'
     ext.kotlinx_dom_version = '0.0.10'
-    ext.kotlinx_coroutines_version = '0.22.5'
+    ext.kotlinx_coroutines_version = '0.23.4'
 
     ext.ANKO_VERSION = '0.10.5'
     ext.ANKO_VERSION_CODE = 104
