@@ -7,7 +7,7 @@ group POM_ARTIFACT_GROUP
 version ANKO_VERSION
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
 android {
