@@ -2,7 +2,7 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 buildscript {
-    ext.kotlin_version = '1.2.41'
+    ext.kotlin_version = '1.2.51'
     ext.kotlinx_dom_version = '0.0.10'
     ext.kotlinx_coroutines_version = '0.23.4'
 
