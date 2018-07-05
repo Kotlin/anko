@@ -13,7 +13,7 @@ buildscript {
     ext.MIN_SDK_VERSION = 15
     ext.TARGET_SDK_VERSION = 27
     ext.SUPPORT_ARTIFACT_VERSION = "27.1.1"
-    ext.CONSTRAINT_LAYOUT_ARTIFACT_VERSION = "1.1.0"
+    ext.CONSTRAINT_LAYOUT_ARTIFACT_VERSION = "1.1.2"
 
     ext.PROJECT_URL = 'https://github.com/JetBrains/anko'
     ext.SCM_URL = 'https://github.com/JetBrains/anko.git'
