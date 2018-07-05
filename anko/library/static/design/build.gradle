@@ -1,7 +1,6 @@
 apply from: '../../library.gradle'
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     provided "com.android.support:design:$SUPPORT_ARTIFACT_VERSION"
     compile project(':static:internal-commons')
 }
