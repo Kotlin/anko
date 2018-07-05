@@ -1,6 +1,6 @@
 apply from: '../../library.gradle'
 
 dependencies {
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
     compile project(':generated:anko-commons')
 }
