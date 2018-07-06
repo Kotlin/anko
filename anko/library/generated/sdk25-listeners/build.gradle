@@ -1,5 +1,5 @@
 apply from: '../../library.gradle'
 
 dependencies {
-    compile project(':generated:anko-commons')
+    api project(':generated:anko-commons')
 }

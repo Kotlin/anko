@@ -3,5 +3,5 @@ apply from: '../../library.gradle'
 dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
     api "com.android.support:design:$SUPPORT_ARTIFACT_VERSION"
-    compile project(':generated:anko-commons')
+    api project(':generated:anko-commons')
 }

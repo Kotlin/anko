@@ -1,6 +1,6 @@
 apply from: '../../library.gradle'
 
 dependencies {
-    compile project(':generated:anko-commons')
-    compile  project(':static:internal-platform')
+    api project(':generated:anko-commons')
+    api project(':static:internal-platform')
 }

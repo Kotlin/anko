@@ -2,5 +2,5 @@ apply from: '../../library.gradle'
 
 dependencies {
     api "com.android.support:design:$SUPPORT_ARTIFACT_VERSION"
-    compile project(':static:internal-commons')
+    api project(':static:internal-commons')
 }

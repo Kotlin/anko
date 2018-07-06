@@ -2,6 +2,6 @@ apply from: '../../library.gradle'
 
 dependencies {
     api "com.android.support:support-v4:$SUPPORT_ARTIFACT_VERSION"
-    compile project(':generated:anko-commons')
-    compile project(':generated:anko-support-v4-commons')
+    api project(':generated:anko-commons')
+    api project(':generated:anko-support-v4-commons')
 }

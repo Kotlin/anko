@@ -3,6 +3,6 @@ apply from: '../../library.gradle'
 dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
     api "com.android.support:appcompat-v7:$SUPPORT_ARTIFACT_VERSION"
-    compile project(':generated:anko-support-v4-commons')
-    compile project(':generated:anko-appcompat-v7-commons')
+    api project(':generated:anko-support-v4-commons')
+    api project(':generated:anko-appcompat-v7-commons')
 }
