@@ -49,19 +49,30 @@ allprojects {
     }
 }
 
-task zipIdeaPlugin(dependsOn: ':ide:preview:shadowJar') << {
-    File outputFile = new File("build/anko-ide-plugin.zip")
-    ZipOutputStream zipOutputStream = null
+task clean {
+    doLast {
+        delete(buildDir)
+    }
+}
 
-    try {
-        zipOutputStream = new ZipOutputStream(new FileOutputStream(outputFile))
-        ZipEntry jar = new ZipEntry("Anko/lib/anko-ide-plugin.jar")
-        zipOutputStream.putNextEntry(jar)
+task zipIdeaPlugin {
+    dependsOn(':ide:preview:shadowJar')
+    outputs.files("$buildDir/anko-ide-plugin.zip")
 
-        zipOutputStream << new FileInputStream("anko/idea-plugin/preview/build/libs/preview-all.jar")
-    } finally {
-        if (zipOutputStream != null) {
-            zipOutputStream.close()
+    doLast {
+        File outputFile = new File("$buildDir/anko-ide-plugin.zip")
+        ZipOutputStream zipOutputStream = null
+
+        try {
+            zipOutputStream = new ZipOutputStream(new FileOutputStream(outputFile))
+            ZipEntry jar = new ZipEntry("Anko/lib/anko-ide-plugin.jar")
+            zipOutputStream.putNextEntry(jar)
+
+            zipOutputStream << new FileInputStream("anko/idea-plugin/preview/build/libs/preview-all.jar")
+        } finally {
+            if (zipOutputStream != null) {
+                zipOutputStream.close()
+            }
         }
     }
 }
