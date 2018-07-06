@@ -2,13 +2,13 @@ include ':generator'
 include ':robolectricTests'
 include ':testUtils'
 
-include ':static:internal-commons'
-include ':static:internal-platform'
-include ':static:internal-sqlite'
-include ':static:internal-design'
-include ':static:internal-supportV4'
-include ':static:internal-appcompatV7'
-include ':static:internal-constraint-layout'
+include ':static:commons-base'
+include ':static:platform-base'
+include ':static:sqlite-base'
+include ':static:design-base'
+include ':static:supportV4-base'
+include ':static:appcompatV7-base'
+include ':static:constraint-layout-base'
 
 include ':generated'
 include ':generated:anko'
@@ -60,13 +60,13 @@ project(':robolectricTests').projectDir = new File(rootDir, 'anko/library/robole
 project(':testUtils').projectDir = new File(rootDir, 'anko/library/testUtils')
 
 project(':static').projectDir = new File(rootDir, 'anko/library/static')
-project(':static:internal-commons').projectDir = new File(rootDir, 'anko/library/static/commons')
-project(':static:internal-platform').projectDir = new File(rootDir, 'anko/library/static/platform')
-project(':static:internal-sqlite').projectDir = new File(rootDir, 'anko/library/static/sqlite')
-project(':static:internal-design').projectDir = new File(rootDir, 'anko/library/static/design')
-project(':static:internal-supportV4').projectDir = new File(rootDir, 'anko/library/static/supportV4')
-project(':static:internal-appcompatV7').projectDir = new File(rootDir, 'anko/library/static/appcompatV7')
-project(':static:internal-constraint-layout').projectDir = new File(rootDir, 'anko/library/static/constraint-layout')
+project(':static:commons-base').projectDir = new File(rootDir, 'anko/library/static/commons')
+project(':static:platform-base').projectDir = new File(rootDir, 'anko/library/static/platform')
+project(':static:sqlite-base').projectDir = new File(rootDir, 'anko/library/static/sqlite')
+project(':static:design-base').projectDir = new File(rootDir, 'anko/library/static/design')
+project(':static:supportV4-base').projectDir = new File(rootDir, 'anko/library/static/supportV4')
+project(':static:appcompatV7-base').projectDir = new File(rootDir, 'anko/library/static/appcompatV7')
+project(':static:constraint-layout-base').projectDir = new File(rootDir, 'anko/library/static/constraint-layout')
 
 project(':generated').projectDir = new File(rootDir, 'anko/library/generated')
 project(':generated:anko').projectDir = new File(rootDir, 'anko/library/generated/anko')

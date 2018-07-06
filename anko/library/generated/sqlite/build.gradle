@@ -2,5 +2,5 @@ apply from: '../../library.gradle'
 
 dependencies {
     api project(':generated:anko-commons')
-    api project(':static:internal-sqlite')
+    api project(':static:sqlite-base')
 }

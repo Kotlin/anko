@@ -77,7 +77,7 @@ task zipIdeaPlugin {
     }
 }
 
-def generatedArtifacts = [
+def publishedArtifacts = [
     ':generated:anko-appcompat-v7',
     ':generated:anko-appcompat-v7-listeners',
     ':generated:anko-appcompat-v7-coroutines',
@@ -115,13 +115,13 @@ def generatedArtifacts = [
     ':generated:anko-coroutines',
     ':generated:anko',
 
-    ':static:internal-commons',
-    ':static:internal-platform',
-    ':static:internal-sqlite',
-    ':static:internal-design',
-    ':static:internal-supportV4',
-    ':static:internal-appcompatV7',
-    ':static:internal-constraint-layout'
+    ':static:commons-base',
+    ':static:platform-base',
+    ':static:sqlite-base',
+    ':static:design-base',
+    ':static:supportV4-base',
+    ':static:appcompatV7-base',
+    ':static:constraint-layout-base'
 ]
 
 task dist()
@@ -140,7 +140,7 @@ afterEvaluate {
     project.tasks.publish.dependsOn(commonBuildTasks)
     project.tasks.publishLocal.dependsOn(commonBuildTasks)
 
-    project.tasks.dist.dependsOn(generatedArtifacts.collect { it + ":assembleRelease" })
-    project.tasks.publish.dependsOn(generatedArtifacts.collect { it + ":bintrayUpload" })
-    project.tasks.publishLocal.dependsOn(generatedArtifacts.collect { it + ":publish" })
+    project.tasks.dist.dependsOn(publishedArtifacts.collect { it + ":assembleRelease" })
+    project.tasks.publish.dependsOn(publishedArtifacts.collect { it + ":bintrayUpload" })
+    project.tasks.publishLocal.dependsOn(publishedArtifacts.collect { it + ":publish" })
 }
