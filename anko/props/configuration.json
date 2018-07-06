@@ -9,13 +9,13 @@
     {
       "name" : "commons",
       "type": "commons",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [ "%platforms%/android-27/android.jar" ],
       "target": []
     },
     {
       "name": "sqlite",
       "type": "sqlite",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [ "%platforms%/android-27/android.jar" ],
       "target": []
     },
     {
@@ -94,9 +94,24 @@
       "platform": [ "%platforms%/android-25/android.jar" ]
     },
     {
+      "name": "sdk27",
+      "type": "platform",
+      "platform": [ "%platforms%/android-27/android.jar" ]
+    },
+    {
+      "name": "sdk27-listeners",
+      "type": "simpleListeners",
+      "platform": [ "%platforms%/android-27/android.jar" ]
+    },
+    {
+      "name": "sdk27-coroutines",
+      "type": "coroutineListeners",
+      "platform": [ "%platforms%/android-27/android.jar" ]
+    },
+    {
       "name": "support-v4",
       "type": "supportV4",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [ "%platforms%/android-27/android.jar" ],
       "target": [
         "%support%/support-v4/%supportVer%/support-v4-%supportVer%.aar",
         "%support%/support-compat/%supportVer%/support-compat-%supportVer%.aar",
@@ -110,7 +125,7 @@
       "name": "appcompat-v7",
       "type": "toolkit",
       "platform": [
-        "%platforms%/android-25/android.jar",
+        "%platforms%/android-27/android.jar",
         "%support%/support-v4/%supportVer%/support-v4-%supportVer%.aar",
         "%support%/support-compat/%supportVer%/support-compat-%supportVer%.aar",
         "%support%/support-media-compat/%supportVer%/support-media-compat-%supportVer%.aar",
@@ -124,7 +139,7 @@
       "name": "appcompat-v7-listeners",
       "type": "simpleListeners",
       "platform": [
-        "%platforms%/android-25/android.jar",
+        "%platforms%/android-27/android.jar",
         "%support%/support-v4/%supportVer%/support-v4-%supportVer%.aar",
         "%support%/support-compat/%supportVer%/support-compat-%supportVer%.aar",
         "%support%/support-media-compat/%supportVer%/support-media-compat-%supportVer%.aar",
@@ -138,7 +153,7 @@
       "name": "appcompat-v7-coroutines",
       "type": "coroutineListeners",
       "platform": [
-        "%platforms%/android-25/android.jar",
+        "%platforms%/android-27/android.jar",
         "%support%/support-v4/%supportVer%/support-v4-%supportVer%.aar",
         "%support%/support-compat/%supportVer%/support-compat-%supportVer%.aar",
         "%support%/support-media-compat/%supportVer%/support-media-compat-%supportVer%.aar",
@@ -151,14 +166,14 @@
     {
       "name": "cardview-v7",
       "type": "toolkit",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [ "%platforms%/android-27/android.jar" ],
       "target": [ "%support%/cardview-v7/%supportVer%/cardview-v7-%supportVer%.aar" ]
     },
     {
       "name": "design",
       "type": "toolkit",
       "platform": [
-        "%platforms%/android-25/android.jar",
+        "%platforms%/android-27/android.jar",
         "%support%/appcompat-v7/%supportVer%/appcompat-v7-%supportVer%.aar"
       ],
       "target": [ "%support%/design/%supportVer%/design-%supportVer%.aar" ]
@@ -166,49 +181,49 @@
     {
       "name": "design-listeners",
       "type": "simpleListeners",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [ "%platforms%/android-27/android.jar" ],
       "target": [ "%support%/design/%supportVer%/design-%supportVer%.aar" ]
     },
     {
       "name": "design-coroutines",
       "type": "coroutineListeners",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [ "%platforms%/android-27/android.jar" ],
       "target": [ "%support%/design/%supportVer%/design-%supportVer%.aar" ]
     },
     {
       "name": "gridlayout-v7",
       "type": "toolkit",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [ "%platforms%/android-27/android.jar" ],
       "target": [ "%support%/gridlayout-v7/%supportVer%/gridlayout-v7-%supportVer%.aar" ]
     },
     {
       "name": "percent",
       "type": "toolkit",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [ "%platforms%/android-27/android.jar" ],
       "target": [ "%support%/percent/%supportVer%/percent-%supportVer%.aar" ]
     },
     {
       "name": "constraint-layout",
       "type": "toolkit",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [ "%platforms%/android-27/android.jar" ],
       "target": [ "dependencies/constraint-layout.aar" ]
     },
     {
       "name": "recyclerview-v7",
       "type": "toolkit",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [ "%platforms%/android-27/android.jar" ],
       "target": [ "%support%/recyclerview-v7/%supportVer%/recyclerview-v7-%supportVer%.aar" ]
     },
     {
       "name": "recyclerview-v7-listeners",
       "type": "simpleListeners",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [ "%platforms%/android-27/android.jar" ],
       "target": [ "%support%/recyclerview-v7/%supportVer%/recyclerview-v7-%supportVer%.aar" ]
     },
     {
       "name": "recyclerview-v7-coroutines",
       "type": "coroutineListeners",
-      "platform": [ "%platforms%/android-25/android.jar" ],
+      "platform": [ "%platforms%/android-27/android.jar" ],
       "target": [ "%support%/recyclerview-v7/%supportVer%/recyclerview-v7-%supportVer%.aar" ]
     }
   ],

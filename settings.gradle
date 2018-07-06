@@ -43,6 +43,9 @@ include ':generated:anko-sdk23-coroutines'
 include ':generated:anko-sdk25'
 include ':generated:anko-sdk25-listeners'
 include ':generated:anko-sdk25-coroutines'
+include ':generated:anko-sdk27'
+include ':generated:anko-sdk27-listeners'
+include ':generated:anko-sdk27-coroutines'
 include ':generated:anko-sqlite'
 include ':generated:anko-support-v4'
 include ':generated:anko-support-v4-commons'
@@ -101,6 +104,9 @@ project(':generated:anko-sdk23-coroutines').projectDir = new File(rootDir, 'anko
 project(':generated:anko-sdk25').projectDir = new File(rootDir, 'anko/library/generated/sdk25')
 project(':generated:anko-sdk25-listeners').projectDir = new File(rootDir, 'anko/library/generated/sdk25-listeners')
 project(':generated:anko-sdk25-coroutines').projectDir = new File(rootDir, 'anko/library/generated/sdk25-coroutines')
+project(':generated:anko-sdk27').projectDir = new File(rootDir, 'anko/library/generated/sdk27')
+project(':generated:anko-sdk27-listeners').projectDir = new File(rootDir, 'anko/library/generated/sdk27-listeners')
+project(':generated:anko-sdk27-coroutines').projectDir = new File(rootDir, 'anko/library/generated/sdk27-coroutines')
 project(':generated:anko-sqlite').projectDir = new File(rootDir, 'anko/library/generated/sqlite')
 project(':generated:anko-support-v4').projectDir = new File(rootDir, 'anko/library/generated/support-v4')
 project(':generated:anko-support-v4-commons').projectDir = new File(rootDir, 'anko/library/generated/support-v4-commons')
