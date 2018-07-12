@@ -1,0 +1,118 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+
+group POM_ARTIFACT_GROUP
+version ANKO_VERSION
+
+dependencies {
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
+android {
+    compileSdkVersion COMPILE_SDK_VERSION
+    defaultConfig {
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        versionCode ANKO_VERSION_CODE
+        versionName ANKO_VERSION
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+publishing {
+    publications {
+        anko(MavenPublication) {
+            groupId POM_ARTIFACT_GROUP
+            artifactId project.name
+            version ANKO_VERSION
+
+            artifact sourcesJar
+            artifact bundleRelease
+
+            pom.withXml {
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+                    name 'anko'
+                    description 'Kotlin DSL for Android'
+                    url PROJECT_URL
+
+                    scm {
+                        url SCM_URL
+                        connection CONNECTION_URL
+                        developerConnection DEVELOPER_CONNECTION_URL
+                    }
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/license/LICENSE-2.0.txt'
+                            distribution 'repo'
+                            comments 'A business-friendly OSS license'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'JetBrains'
+                            name 'JetBrains Team'
+                            organization 'JetBrains'
+                            organizationUrl 'http://www.jetbrains.com'
+                        }
+                    }
+                }
+
+                def dependenciesNode = asNode().appendNode('dependencies')
+
+                configurations.api.dependencies.each { Dependency dep ->
+                    final dependencyNode = dependenciesNode.appendNode('dependency')
+                    dependencyNode.appendNode('groupId', dep.group)
+                    dependencyNode.appendNode('artifactId', dep.name)
+                    dependencyNode.appendNode('version', dep.version)
+                    dependencyNode.appendNode('scope', "compile")
+                }
+
+                configurations.implementation.dependencies.each { Dependency dep ->
+                    final dependencyNode = dependenciesNode.appendNode('dependency')
+                    dependencyNode.appendNode('groupId', dep.group)
+                    dependencyNode.appendNode('artifactId', dep.name)
+                    dependencyNode.appendNode('version', dep.version)
+                    dependencyNode.appendNode('scope', "runtime")
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven { url "${rootProject.buildDir}/maven" }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER') ?: ""
+    key = System.getenv('BINTRAY_API_KEY') ?: ""
+
+    publications = ['anko']
+
+    dryRun = BINTRAY_DRY_RUN
+
+    pkg {
+        userOrg = BINTRAY_USER_NAME
+        repo = BINTRAY_REPO_NAME
+        name = BINTRAY_PACKAGE_NAME
+        licenses = ['Apache-2.0']
+        vcsUrl = SCM_URL
+
+        version {
+            name = ANKO_VERSION
+            released = new Date()
+        }
+    }
+}

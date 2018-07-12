@@ -5,8 +5,8 @@
     <property name="idea.kotlin.branch" value="rc"/>
 
     <property name="android.studio.intellij-core.build.number" value="181.2784.17"/>
-    <property name="android.version" value="3.2.0.10"/>
-    <property name="android.build.version" value="181.4720098"/>
+    <property name="android.version" value="3.2.0.19"/>
+    <property name="android.build.version" value="181.4860949"/>
 
     <property name="markdown.locator" value="buildType:IntelliJMarkdownParser_Build,status:SUCCESS,tag:forKotlin"/>
 
@@ -130,49 +130,10 @@
         </sequential>
     </macrodef>
 
-    <target name="make-native-platform-uberjar">
+    <target name="fetch-third-party">
         <property name="dependencies" value="dependencies"/>
         <property name="download" value="${dependencies}/download"/>
-        <property name="server" value="${gradle.libs.repo}"/>
-        <property name="version" value="${native-platform-lib-version}"/>
-        <property name="common.name" value="native-platform"/>
-        <property name="common.prefix" value="${server}/net/rubygrapefruit/${common.name}"/>
 
-        <macrodef name="get-lib">
-            <attribute name="suffix"/>
-            <sequential>
-                <get src="${common.prefix}@{suffix}/${version}/${common.name}@{suffix}-${version}.jar" dest="${download}/${common.name}@{suffix}.jar" usetimestamp="true"/>
-            </sequential>
-        </macrodef>
-
-        <mkdir dir="${dependencies}"/>
-        <mkdir dir="${download}"/>
-
-        <get-lib suffix=""/>
-        <get-lib suffix="-windows-amd64"/>
-        <get-lib suffix="-windows-i386"/>
-        <get-lib suffix="-osx-amd64"/>
-        <get-lib suffix="-osx-i386"/>
-        <get-lib suffix="-linux-amd64"/>
-        <get-lib suffix="-linux-i386"/>
-        <get-lib suffix="-freebsd-amd64"/>
-        <get-lib suffix="-freebsd-i386"/>
-
-        <jar destfile="${dependencies}/${common.name}-uberjar.jar">
-            <zipfileset src="${download}/${common.name}.jar" includes="**" />
-            <zipfileset src="${download}/${common.name}-windows-amd64.jar" includes="**" />
-            <zipfileset src="${download}/${common.name}-windows-i386.jar" includes="**" />
-            <zipfileset src="${download}/${common.name}-osx-amd64.jar" includes="**" />
-            <zipfileset src="${download}/${common.name}-osx-i386.jar" includes="**" />
-            <zipfileset src="${download}/${common.name}-linux-amd64.jar" includes="**" />
-            <zipfileset src="${download}/${common.name}-linux-i386.jar" includes="**" />
-            <zipfileset src="${download}/${common.name}-freebsd-amd64.jar" includes="**" />
-            <zipfileset src="${download}/${common.name}-freebsd-i386.jar" includes="**" />
-        </jar>
-
-    </target>
-
-    <target name="fetch-third-party" depends="make-native-platform-uberjar">
         <mkdir dir="dependencies"/>
         <mkdir dir="dependencies/download"/>
 

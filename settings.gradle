@@ -1,15 +1,14 @@
 include ':generator'
-include ':stubs'
 include ':robolectricTests'
 include ':testUtils'
 
-include ':static:commons'
-include ':static:platform'
-include ':static:sqlite'
-include ':static:design'
-include ':static:supportV4'
-include ':static:appcompatV7'
-include ':static:constraint-layout'
+include ':static:commons-base'
+include ':static:platform-base'
+include ':static:sqlite-base'
+include ':static:design-base'
+include ':static:supportV4-base'
+include ':static:appcompatV7-base'
+include ':static:constraint-layout-base'
 
 include ':generated'
 include ':generated:anko'
@@ -44,6 +43,9 @@ include ':generated:anko-sdk23-coroutines'
 include ':generated:anko-sdk25'
 include ':generated:anko-sdk25-listeners'
 include ':generated:anko-sdk25-coroutines'
+include ':generated:anko-sdk27'
+include ':generated:anko-sdk27-listeners'
+include ':generated:anko-sdk27-coroutines'
 include ':generated:anko-sqlite'
 include ':generated:anko-support-v4'
 include ':generated:anko-support-v4-commons'
@@ -57,19 +59,17 @@ include ':ide:xml-converter'
 include ':ide:idea-runner'
 
 project(':generator').projectDir = new File(rootDir, 'anko/library/generator')
-project(':stubs').projectDir = new File(rootDir, 'anko/library/stubs')
 project(':robolectricTests').projectDir = new File(rootDir, 'anko/library/robolectricTests')
 project(':testUtils').projectDir = new File(rootDir, 'anko/library/testUtils')
 
 project(':static').projectDir = new File(rootDir, 'anko/library/static')
-project(':static:commons').projectDir = new File(rootDir, 'anko/library/static/commons')
-project(':static:platform').projectDir = new File(rootDir, 'anko/library/static/platform')
-project(':static:sqlite').projectDir = new File(rootDir, 'anko/library/static/sqlite')
-project(':static:design').projectDir = new File(rootDir, 'anko/library/static/design')
-project(':static:supportV4').projectDir = new File(rootDir, 'anko/library/static/supportV4')
-project(':static:appcompatV7').projectDir = new File(rootDir, 'anko/library/static/appcompatV7')
-project(':static:constraint-layout').projectDir = new File(rootDir, 'anko/library/static/constraint-layout')
-
+project(':static:commons-base').projectDir = new File(rootDir, 'anko/library/static/commons')
+project(':static:platform-base').projectDir = new File(rootDir, 'anko/library/static/platform')
+project(':static:sqlite-base').projectDir = new File(rootDir, 'anko/library/static/sqlite')
+project(':static:design-base').projectDir = new File(rootDir, 'anko/library/static/design')
+project(':static:supportV4-base').projectDir = new File(rootDir, 'anko/library/static/supportV4')
+project(':static:appcompatV7-base').projectDir = new File(rootDir, 'anko/library/static/appcompatV7')
+project(':static:constraint-layout-base').projectDir = new File(rootDir, 'anko/library/static/constraint-layout')
 
 project(':generated').projectDir = new File(rootDir, 'anko/library/generated')
 project(':generated:anko').projectDir = new File(rootDir, 'anko/library/generated/anko')
@@ -104,6 +104,9 @@ project(':generated:anko-sdk23-coroutines').projectDir = new File(rootDir, 'anko
 project(':generated:anko-sdk25').projectDir = new File(rootDir, 'anko/library/generated/sdk25')
 project(':generated:anko-sdk25-listeners').projectDir = new File(rootDir, 'anko/library/generated/sdk25-listeners')
 project(':generated:anko-sdk25-coroutines').projectDir = new File(rootDir, 'anko/library/generated/sdk25-coroutines')
+project(':generated:anko-sdk27').projectDir = new File(rootDir, 'anko/library/generated/sdk27')
+project(':generated:anko-sdk27-listeners').projectDir = new File(rootDir, 'anko/library/generated/sdk27-listeners')
+project(':generated:anko-sdk27-coroutines').projectDir = new File(rootDir, 'anko/library/generated/sdk27-coroutines')
 project(':generated:anko-sqlite').projectDir = new File(rootDir, 'anko/library/generated/sqlite')
 project(':generated:anko-support-v4').projectDir = new File(rootDir, 'anko/library/generated/support-v4')
 project(':generated:anko-support-v4-commons').projectDir = new File(rootDir, 'anko/library/generated/support-v4-commons')

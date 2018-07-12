@@ -1,10 +1,6 @@
-apply from: '../generated.gradle'
+apply from: '../../library.gradle'
 
 dependencies {
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
-    compile project(':generated:anko-commons')
-}
-
-task androidReleaseSources(type: Jar, dependsOn: assembleRelease) {
-    from("src", "../../static/platform/src")
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
+    api project(':generated:anko-commons')
 }

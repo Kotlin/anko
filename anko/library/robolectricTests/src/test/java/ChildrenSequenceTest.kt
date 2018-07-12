@@ -1,4 +1,4 @@
-package test
+package com.example.android_test
 
 import android.app.Activity
 import android.os.Bundle
@@ -13,7 +13,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
-import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 open class ChildrenSequenceTestActivity: Activity() {
@@ -45,7 +45,7 @@ open class ChildrenSequenceTestActivity: Activity() {
     }
 }
 
-@RunWith(RobolectricGradleTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class) class ChildrenSequenceTest {
     @Test fun testChildrenRecursiveSequence() {
         val activity = Robolectric.buildActivity(ChildrenSequenceTestActivity::class.java).create().get()

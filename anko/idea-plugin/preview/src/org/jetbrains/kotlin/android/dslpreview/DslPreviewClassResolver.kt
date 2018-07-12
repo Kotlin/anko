@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.caches.resolve.KotlinCacheService
 import org.jetbrains.kotlin.codegen.ClassBuilderMode
 import org.jetbrains.kotlin.codegen.state.IncompatibleClassTracker
 import org.jetbrains.kotlin.codegen.state.KotlinTypeMapper
+import org.jetbrains.kotlin.idea.util.application.runReadAction
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtConstructor
@@ -122,14 +123,26 @@ internal class DslPreviewClassResolver(private val project: Project) {
         val ANKO_COMPONENT_CLASS_NAME = "org.jetbrains.anko.AnkoComponent"
 
         private fun createTypeMapper(bindingContext: BindingContext): KotlinTypeMapper {
+            // TODO: Add stable constructor to KotlinTypeMapper
+            val typeMapperConstructor6 = KotlinTypeMapper::class.java.constructors.find { it.parameterCount == 6 }
+            if (typeMapperConstructor6 != null) {
+                return typeMapperConstructor6
+                        .newInstance(
+                                bindingContext,
+                                ClassBuilderMode.LIGHT_CLASSES,
+                                IncompatibleClassTracker.DoNothing,
+                                "main",
+                                false,
+                                false) as KotlinTypeMapper
+            }
+
             return KotlinTypeMapper(
                     bindingContext,
                     ClassBuilderMode.LIGHT_CLASSES,
                     IncompatibleClassTracker.DoNothing,
                     "main",
-                    false,
-                    false
-            )
+                    false)
         }
     }
+
 }

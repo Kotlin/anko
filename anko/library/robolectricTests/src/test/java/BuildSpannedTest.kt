@@ -1,8 +1,7 @@
-package test
+package com.example.android_test
 
 import android.graphics.Color
 import android.graphics.Typeface
-import android.text.SpannableStringBuilder
 import android.text.style.BackgroundColorSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.StrikethroughSpan
@@ -20,11 +19,12 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@RunWith(RobolectricGradleTestRunner::class)
-@Config(constants = BuildConfig::class) class BuildSpannedTest {
+@RunWith(RobolectricTestRunner::class)
+@Config(constants = BuildConfig::class)
+class BuildSpannedTest {
     @Test fun test() {
         val spannable = SpannableStringBuilder().apply {
             append("123")

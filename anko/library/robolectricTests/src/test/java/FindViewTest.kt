@@ -1,4 +1,4 @@
-package test
+package com.example.android_test
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -16,7 +16,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
-import org.robolectric.RobolectricGradleTestRunner
+import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 open class FindViewTestActivity : Activity() {
@@ -43,7 +43,7 @@ open class FindViewTestActivity : Activity() {
     }
 }
 
-@RunWith(RobolectricGradleTestRunner::class)
+@RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class) class FindViewTest {
 
     @Test fun test() {
