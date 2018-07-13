@@ -23,6 +23,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.database.Cursor
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -182,6 +183,24 @@ object AnkoInternals {
                 else -> throw AnkoException("Intent extra ${it.first} has wrong type ${value.javaClass.name}")
             }
             return@forEach
+        }
+    }
+
+    @JvmStatic
+    inline fun <T> useCursor(cursor: Cursor, f: (Cursor) -> T): T {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            // Closeable only added in API 16
+            cursor.use(f)
+        } else {
+            try {
+                return f(cursor)
+            } finally {
+                try {
+                    cursor.close()
+                } catch (e: Exception) {
+                    // Do nothing
+                }
+            }
         }
     }
 

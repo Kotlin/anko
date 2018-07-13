@@ -20,6 +20,7 @@ package org.jetbrains.anko.db
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import org.jetbrains.anko.AnkoException
+import org.jetbrains.anko.internals.AnkoInternals
 
 abstract class SelectQueryBuilder(val tableName: String) {
     private val columns = arrayListOf<String>()
@@ -39,32 +40,32 @@ abstract class SelectQueryBuilder(val tableName: String) {
 
     fun <T> exec(f: Cursor.() -> T): T {
         val cursor = doExec()
-        return cursor.use {
+        return AnkoInternals.useCursor(cursor) {
             cursor.f()
         }
     }
 
-    inline fun <T: Any> parseSingle(parser: RowParser<T>): T = doExec().use {
+    inline fun <T: Any> parseSingle(parser: RowParser<T>): T = AnkoInternals.useCursor(doExec()) {
         it.parseSingle(parser)
     }
 
-    inline fun <T: Any> parseOpt(parser: RowParser<T>): T? = doExec().use {
+    inline fun <T: Any> parseOpt(parser: RowParser<T>): T? = AnkoInternals.useCursor(doExec()) {
         it.parseOpt(parser)
     }
 
-    inline fun <T: Any> parseList(parser: RowParser<T>): List<T> = doExec().use {
+    inline fun <T: Any> parseList(parser: RowParser<T>): List<T> = AnkoInternals.useCursor(doExec()) {
         it.parseList(parser)
     }
 
-    inline fun <T: Any> parseSingle(parser: MapRowParser<T>): T = doExec().use {
+    inline fun <T: Any> parseSingle(parser: MapRowParser<T>): T = AnkoInternals.useCursor(doExec()) {
         it.parseSingle(parser)
     }
 
-    inline fun <T: Any> parseOpt(parser: MapRowParser<T>): T? = doExec().use {
+    inline fun <T: Any> parseOpt(parser: MapRowParser<T>): T? = AnkoInternals.useCursor(doExec()) {
         it.parseOpt(parser)
     }
 
-    inline fun <T: Any> parseList(parser: MapRowParser<T>): List<T> = doExec().use {
+    inline fun <T: Any> parseList(parser: MapRowParser<T>): List<T> = AnkoInternals.useCursor(doExec()) {
         it.parseList(parser)
     }
 
