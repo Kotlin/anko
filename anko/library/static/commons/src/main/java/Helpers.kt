@@ -195,7 +195,7 @@ inline fun <T: Any> AnkoContext<*>.configuration(
  * @param rightToLeft true, if the device locale should be a right-to-left one, false if should not.
  * @param smallestWidth the required smallest width of the screen.
  */
-@Deprecated(message = "Use support library fragments instead.")
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun <T: Any> Fragment.configuration(
         screenSize: ScreenSize? = null,
         density: ClosedRange<Int>? = null,

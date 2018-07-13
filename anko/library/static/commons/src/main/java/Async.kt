@@ -37,7 +37,7 @@ fun Context.runOnUiThread(f: Context.() -> Unit) {
 /**
  * Execute [f] on the application UI thread.
  */
-@Deprecated(message = "Use support library fragments instead.")
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun Fragment.runOnUiThread(crossinline f: () -> Unit) {
     activity?.runOnUiThread { f() }
 }
@@ -108,7 +108,7 @@ fun <T: Activity> AnkoAsyncContext<AnkoContext<T>>.activityUiThreadWithContext(f
     return true
 }
 
-@Deprecated(message = "Use support library fragments instead.")
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThread(f: (T) -> Unit): Boolean {
     val fragment = weakRef.get() ?: return false
     if (fragment.isDetached) return false
@@ -117,7 +117,7 @@ fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThread(f: (T) -> Unit): Boolean 
     return true
 }
 
-@Deprecated(message = "Use support library fragments instead.")
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T) -> Unit): Boolean {
     val fragment = weakRef.get() ?: return false
     if (fragment.isDetached) return false

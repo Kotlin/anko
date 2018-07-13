@@ -29,7 +29,7 @@ inline fun AnkoContext<*>.alert(
         noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ) = ctx.alert(message, title, init)
 
-@Deprecated(message = "Use support library fragments instead.")
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun Fragment.alert(
         message: CharSequence,
         title: CharSequence? = null,
@@ -56,7 +56,7 @@ inline fun AnkoContext<*>.alert(
         noinline init: (AlertBuilder<DialogInterface>.() -> Unit)? = null
 ) = ctx.alert(message, title, init)
 
-@Deprecated(message = "Use support library fragments instead.")
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun Fragment.alert(
         message: Int,
         title: Int? = null,
