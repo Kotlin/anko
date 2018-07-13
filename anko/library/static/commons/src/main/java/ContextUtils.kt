@@ -23,6 +23,7 @@ import android.app.Fragment
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.AssetManager
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Parcelable
@@ -135,20 +136,20 @@ fun bundleOf(vararg params: Pair<String, Any?>): Bundle {
 inline val Context.displayMetrics: android.util.DisplayMetrics
     get() = resources.displayMetrics
 
-inline val Context.configuration: android.content.res.Configuration
+inline val Context.configuration: Configuration
     get() = resources.configuration
 
 inline val AnkoContext<*>.displayMetrics: android.util.DisplayMetrics
     get() = ctx.resources.displayMetrics
 
-inline val AnkoContext<*>.configuration: android.content.res.Configuration
+inline val AnkoContext<*>.configuration: Configuration
     get() = ctx.resources.configuration
 
-inline val android.content.res.Configuration.portrait: Boolean
-    get() = orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT
+inline val Configuration.portrait: Boolean
+    get() = orientation == Configuration.ORIENTATION_PORTRAIT
 
-inline val android.content.res.Configuration.landscape: Boolean
-    get() = orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+inline val Configuration.landscape: Boolean
+    get() = orientation == Configuration.ORIENTATION_LANDSCAPE
 
-inline val android.content.res.Configuration.long: Boolean
-    get() = (screenLayout and android.content.res.Configuration.SCREENLAYOUT_LONG_YES) != 0
+inline val Configuration.long: Boolean
+    get() = (screenLayout and Configuration.SCREENLAYOUT_LONG_YES) != 0

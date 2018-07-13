@@ -53,7 +53,6 @@ inline fun <T> Array<T>.forEachWithIndex(f: (Int, T) -> Unit) {
  *
  * @f an action to invoke on each array element.
  */
-@Deprecated(message = "Use the native Kotlin version", replaceWith = ReplaceWith("reversed().forEach(f)"))
 inline fun <T> Array<T>.forEachReversedByIndex(f: (T) -> Unit) {
     var i = size - 1
     while (i >= 0) {
@@ -67,7 +66,6 @@ inline fun <T> Array<T>.forEachReversedByIndex(f: (T) -> Unit) {
  *
  * @f an action to invoke on each array element (index, element).
  */
-@Deprecated(message = "Use the native Kotlin version", replaceWith = ReplaceWith("reversed().forEachIndexed(f)"))
 inline fun <T> Array<T>.forEachReversedWithIndex(f: (Int, T) -> Unit) {
     var i = size - 1
     while (i >= 0) {

@@ -29,8 +29,6 @@ import android.text.style.URLSpan
 import android.text.style.UnderlineSpan
 import android.view.View
 
-@Deprecated(message = "Use apply instead", replaceWith = ReplaceWith(
-        "SpannableStringBuilder().apply(f)", "android.text.SpannableStringBuilder"))
 inline fun buildSpanned(f: SpannableStringBuilder.() -> Unit): Spanned =
         SpannableStringBuilder().apply(f)
 
