@@ -14,6 +14,7 @@ import org.jetbrains.anko.Underline
 import org.jetbrains.anko.append
 import org.jetbrains.anko.appendln
 import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.buildSpanned
 import org.jetbrains.anko.foregroundColor
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -26,7 +27,7 @@ import org.robolectric.annotation.Config
 @Config(constants = BuildConfig::class)
 class BuildSpannedTest {
     @Test fun test() {
-        val spannable = SpannableStringBuilder().apply {
+        val spannable = buildSpanned {
             append("123")
             appendln("456")
         }
@@ -34,7 +35,7 @@ class BuildSpannedTest {
         val lineSeparator = System.getProperty("line.separator")
         assertEquals("123456" + lineSeparator, spannable.toString())
 
-        val spannable2 = SpannableStringBuilder().apply {
+        val spannable2 = buildSpanned {
             append("123", Bold, Italic)
             append("456", Underline, Strikethrough)
             append("789", foregroundColor(Color.RED), backgroundColor(Color.BLUE))
