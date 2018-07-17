@@ -35,7 +35,6 @@ inline fun <T> List<T>.forEachByIndex(f: (T) -> Unit) {
  *
  * @f an action to invoke on each list element (index, element).
  */
-@Deprecated(message = "Use the native Kotlin version", replaceWith = ReplaceWith("forEachIndexed(f)"))
 inline fun <T> List<T>.forEachWithIndex(f: (Int, T) -> Unit) {
     val lastIndex = size - 1
     for (i in 0..lastIndex) {
