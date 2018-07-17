@@ -1,10 +1,15 @@
 @file:JvmName("Sdk19ViewsKt")
 package org.jetbrains.anko
 
-import android.app.Activity
-import android.content.Context
+import org.jetbrains.anko.custom.*
+import org.jetbrains.anko.AnkoViewDslMarker
 import android.view.ViewManager
-import org.jetbrains.anko.custom.ankoView
+import android.view.ViewGroup.LayoutParams
+import android.app.Activity
+import android.app.Fragment
+import android.content.Context
+import android.os.Build
+import android.widget.*
 
 @PublishedApi
 internal object `$$Anko$Factories$Sdk19View` {

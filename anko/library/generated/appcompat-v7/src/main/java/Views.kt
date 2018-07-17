@@ -1,25 +1,15 @@
 @file:JvmName("AppcompatV7ViewsKt")
 package org.jetbrains.anko.appcompat.v7
 
+import org.jetbrains.anko.custom.*
+import org.jetbrains.anko.AnkoViewDslMarker
+import android.view.ViewManager
+import android.view.ViewGroup.LayoutParams
 import android.app.Activity
+import android.app.Fragment
 import android.content.Context
 import android.os.Build
-import android.view.ViewManager
-import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.CheckedTextView
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.MultiAutoCompleteTextView
-import android.widget.RadioButton
-import android.widget.RatingBar
-import android.widget.SeekBar
-import android.widget.Spinner
-import android.widget.TextView
-import org.jetbrains.anko.AnkoViewDslMarker
-import org.jetbrains.anko.custom.ankoView
+import android.widget.*
 
 @PublishedApi
 internal object `$$Anko$Factories$AppcompatV7View` {

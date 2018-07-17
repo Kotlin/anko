@@ -1,11 +1,15 @@
 @file:JvmName("PercentViewsKt")
 package org.jetbrains.anko.percent
 
-import android.app.Activity
-import android.content.Context
-import android.view.ViewManager
+import org.jetbrains.anko.custom.*
 import org.jetbrains.anko.AnkoViewDslMarker
-import org.jetbrains.anko.custom.ankoView
+import android.view.ViewManager
+import android.view.ViewGroup.LayoutParams
+import android.app.Activity
+import android.app.Fragment
+import android.content.Context
+import android.os.Build
+import android.widget.*
 
 @PublishedApi
 internal object `$$Anko$Factories$PercentViewGroup` {
