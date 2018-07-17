@@ -20,16 +20,17 @@ package org.jetbrains.anko
 import android.app.Fragment
 import android.content.Context
 import android.support.annotation.DimenRes
+import android.util.DisplayMetrics
 import android.view.View
 
-const val LDPI: Int = android.util.DisplayMetrics.DENSITY_LOW
-const val MDPI: Int = android.util.DisplayMetrics.DENSITY_MEDIUM
-const val HDPI: Int = android.util.DisplayMetrics.DENSITY_HIGH
+const val LDPI: Int = DisplayMetrics.DENSITY_LOW
+const val MDPI: Int = DisplayMetrics.DENSITY_MEDIUM
+const val HDPI: Int = DisplayMetrics.DENSITY_HIGH
 
-const val TVDPI: Int = android.util.DisplayMetrics.DENSITY_TV
-const val XHDPI: Int = android.util.DisplayMetrics.DENSITY_XHIGH
-const val XXHDPI: Int = android.util.DisplayMetrics.DENSITY_XXHIGH
-const val XXXHDPI: Int = android.util.DisplayMetrics.DENSITY_XXXHIGH
+const val TVDPI: Int = DisplayMetrics.DENSITY_TV
+const val XHDPI: Int = DisplayMetrics.DENSITY_XHIGH
+const val XXHDPI: Int = DisplayMetrics.DENSITY_XXHIGH
+const val XXXHDPI: Int = DisplayMetrics.DENSITY_XXXHIGH
 
 const val MAXDPI: Int = 0xfffe
 
