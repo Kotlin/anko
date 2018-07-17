@@ -19,6 +19,7 @@ package org.jetbrains.anko.db
 
 import android.database.Cursor
 import android.database.sqlite.SQLiteException
+import org.jetbrains.anko.internals.AnkoInternals
 import java.util.ArrayList
 
 interface RowParser<out T> {
@@ -58,14 +59,14 @@ val DoubleParser: RowParser<Double> = SingleColumnParser()
 val StringParser: RowParser<String> = SingleColumnParser()
 val BlobParser: RowParser<ByteArray> = SingleColumnParser()
 
-fun <T: Any> Cursor.parseSingle(parser: RowParser<T>): T = use {
+fun <T: Any> Cursor.parseSingle(parser: RowParser<T>): T = AnkoInternals.useCursor(this) {
     if (count != 1)
         throw SQLiteException("parseSingle accepts only cursors with a single entry")
     moveToFirst()
     return parser.parseRow(readColumnsArray(this))
 }
 
-fun <T: Any> Cursor.parseOpt(parser: RowParser<T>): T? = use {
+fun <T: Any> Cursor.parseOpt(parser: RowParser<T>): T? = AnkoInternals.useCursor(this) {
     if (count > 1)
         throw SQLiteException("parseSingle accepts only cursors with a single entry or empty cursors")
     if (count == 0)
@@ -74,7 +75,7 @@ fun <T: Any> Cursor.parseOpt(parser: RowParser<T>): T? = use {
     return parser.parseRow(readColumnsArray(this))
 }
 
-fun <T: Any> Cursor.parseList(parser: RowParser<T>): List<T> = use {
+fun <T: Any> Cursor.parseList(parser: RowParser<T>): List<T> = AnkoInternals.useCursor(this) {
     val list = ArrayList<T>(count)
     moveToFirst()
     while (!isAfterLast) {
@@ -84,14 +85,14 @@ fun <T: Any> Cursor.parseList(parser: RowParser<T>): List<T> = use {
     return list
 }
 
-fun <T: Any> Cursor.parseSingle(parser: MapRowParser<T>): T = use { it: Cursor ->
+fun <T: Any> Cursor.parseSingle(parser: MapRowParser<T>): T = AnkoInternals.useCursor(this) {
     if (count != 1)
         throw SQLiteException("parseSingle accepts only cursors with getCount() == 1")
     moveToFirst()
     return parser.parseRow(readColumnsMap(this))
 }
 
-fun <T: Any> Cursor.parseOpt(parser: MapRowParser<T>): T? = use { it: Cursor ->
+fun <T: Any> Cursor.parseOpt(parser: MapRowParser<T>): T? = AnkoInternals.useCursor(this) {
     if (count > 1)
         throw SQLiteException("parseSingle accepts only cursors with getCount() == 1 or empty cursors")
     if (count == 0)
@@ -100,7 +101,7 @@ fun <T: Any> Cursor.parseOpt(parser: MapRowParser<T>): T? = use { it: Cursor ->
     return parser.parseRow(readColumnsMap(this))
 }
 
-fun <T: Any> Cursor.parseList(parser: MapRowParser<T>): List<T> = use { it: Cursor ->
+fun <T: Any> Cursor.parseList(parser: MapRowParser<T>): List<T> = AnkoInternals.useCursor(this) {
     val list = ArrayList<T>(count)
     moveToFirst()
     while (!isAfterLast) {
