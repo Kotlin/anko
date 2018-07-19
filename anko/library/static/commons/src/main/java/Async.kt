@@ -31,12 +31,13 @@ import java.util.concurrent.Future
  * Execute [f] on the application UI thread.
  */
 fun Context.runOnUiThread(f: Context.() -> Unit) {
-    if (ContextHelper.mainThread == Thread.currentThread()) f() else ContextHelper.handler.post { f() }
+    if (Looper.getMainLooper() === Looper.myLooper()) f() else ContextHelper.handler.post { f() }
 }
 
 /**
  * Execute [f] on the application UI thread.
  */
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun Fragment.runOnUiThread(crossinline f: () -> Unit) {
     activity?.runOnUiThread { f() }
 }
@@ -50,7 +51,7 @@ class AnkoAsyncContext<T>(val weakRef: WeakReference<T>)
  */
 fun <T> AnkoAsyncContext<T>.onComplete(f: (T?) -> Unit) {
     val ref = weakRef.get()
-    if (ContextHelper.mainThread == Thread.currentThread()) {
+    if (Looper.getMainLooper() === Looper.myLooper()) {
         f(ref)
     } else {
         ContextHelper.handler.post { f(ref) }
@@ -64,7 +65,7 @@ fun <T> AnkoAsyncContext<T>.onComplete(f: (T?) -> Unit) {
  */
 fun <T> AnkoAsyncContext<T>.uiThread(f: (T) -> Unit): Boolean {
     val ref = weakRef.get() ?: return false
-    if (ContextHelper.mainThread == Thread.currentThread()) {
+    if (Looper.getMainLooper() === Looper.myLooper()) {
         f(ref)
     } else {
         ContextHelper.handler.post { f(ref) }
@@ -74,7 +75,7 @@ fun <T> AnkoAsyncContext<T>.uiThread(f: (T) -> Unit): Boolean {
 
 /**
  * Execute [f] on the application UI thread if the underlying [Activity] still exists and is not finished.
- * The receiver [Activity] will be passed to [f]. 
+ * The receiver [Activity] will be passed to [f].
  *  If it is not exist anymore or if it was finished, [f] will not be called.
  */
 fun <T: Activity> AnkoAsyncContext<T>.activityUiThread(f: (T) -> Unit): Boolean {
@@ -107,6 +108,7 @@ fun <T: Activity> AnkoAsyncContext<AnkoContext<T>>.activityUiThreadWithContext(f
     return true
 }
 
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThread(f: (T) -> Unit): Boolean {
     val fragment = weakRef.get() ?: return false
     if (fragment.isDetached) return false
@@ -115,6 +117,7 @@ fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThread(f: (T) -> Unit): Boolean 
     return true
 }
 
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T) -> Unit): Boolean {
     val fragment = weakRef.get() ?: return false
     if (fragment.isDetached) return false
@@ -125,8 +128,8 @@ fun <T: Fragment> AnkoAsyncContext<T>.fragmentUiThreadWithContext(f: Context.(T)
 private val crashLogger = { throwable : Throwable -> throwable.printStackTrace() }
 /**
  * Execute [task] asynchronously.
- * 
- * @param exceptionHandler optional exception handler. 
+ *
+ * @param exceptionHandler optional exception handler.
  *  If defined, any exceptions thrown inside [task] will be passed to it. If not, exceptions will be ignored.
  * @param task the code to execute asynchronously.
  */
@@ -205,5 +208,4 @@ internal object BackgroundExecutor {
 
 private object ContextHelper {
     val handler = Handler(Looper.getMainLooper())
-    val mainThread: Thread = Looper.getMainLooper().thread
 }

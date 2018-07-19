@@ -56,20 +56,24 @@ inline fun Fragment.alert(
 
 inline fun Fragment.alert(noinline init: AlertBuilder<DialogInterface>.() -> Unit) = requireActivity().alert(init)
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 inline fun Fragment.progressDialog(
         message: String? = null,
         title: String? = null,
         noinline init: (ProgressDialog.() -> Unit)? = null
 ) = requireActivity().progressDialog(message, title, init)
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 inline fun Fragment.indeterminateProgressDialog(message: String? = null, title: String? = null, noinline init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return requireActivity().indeterminateProgressDialog(message, title, init)
 }
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 inline fun Fragment.progressDialog(message: Int? = null, title: Int? = null, noinline init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return requireActivity().progressDialog(message?.let { requireActivity().getString(it) }, title?.let { requireActivity().getString(it) }, init)
 }
 
+@Deprecated(message = "Android progress dialogs are deprecated")
 inline fun Fragment.indeterminateProgressDialog(message: Int? = null, title: Int? = null, noinline init: (ProgressDialog.() -> Unit)? = null): ProgressDialog {
     return requireActivity().indeterminateProgressDialog(message?.let { requireActivity().getString(it) }, title?.let { requireActivity().getString(it) }, init)
 }

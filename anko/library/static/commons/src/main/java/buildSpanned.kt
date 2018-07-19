@@ -17,11 +17,17 @@
 @file:Suppress("unused", "NOTHING_TO_INLINE")
 package org.jetbrains.anko
 
-import android.graphics.*
-import android.text.*
-import android.text.style.*
+import android.graphics.Typeface
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.BackgroundColorSpan
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.StrikethroughSpan
+import android.text.style.StyleSpan
+import android.text.style.URLSpan
+import android.text.style.UnderlineSpan
 import android.view.View
-import org.jetbrains.anko.collections.forEachByIndex
 
 inline fun buildSpanned(f: SpannableStringBuilder.() -> Unit): Spanned =
         SpannableStringBuilder().apply(f)
@@ -59,7 +65,7 @@ inline fun SpannableStringBuilder.link(url: String): URLSpan {
 fun SpannableStringBuilder.append(text: CharSequence, vararg spans: Any) {
     val textLength = text.length
     append(text)
-    spans.forEachByIndex { span ->
+    spans.forEach { span ->
         setSpan(span, this.length - textLength, length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
     }
 }

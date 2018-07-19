@@ -20,13 +20,14 @@ package org.jetbrains.anko.collections
 import android.util.SparseArray
 import android.util.SparseBooleanArray
 import android.util.SparseIntArray
-import java.util.*
+import java.util.ConcurrentModificationException
 
 /**
  * Iterate the receiver [Array] using an index.
  *
  * @f an action to invoke on each array element.
  */
+@Deprecated(message = "Use the native Kotlin version", replaceWith = ReplaceWith("forEach(f)"))
 inline fun <T> Array<T>.forEachByIndex(f: (T) -> Unit) {
     val lastIndex = size - 1
     for (i in 0..lastIndex) {
@@ -39,6 +40,7 @@ inline fun <T> Array<T>.forEachByIndex(f: (T) -> Unit) {
  *
  * @f an action to invoke on each array element (index, element).
  */
+@Deprecated(message = "Use the native Kotlin version", replaceWith = ReplaceWith("forEachIndexed(f)"))
 inline fun <T> Array<T>.forEachWithIndex(f: (Int, T) -> Unit) {
     val lastIndex = size - 1
     for (i in 0..lastIndex) {

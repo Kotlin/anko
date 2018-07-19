@@ -33,6 +33,11 @@ inline fun Fragment.uiThread(crossinline f: () -> Unit) {
     requireActivity().runOnUiThread { f() }
 }
 
+@Deprecated(message = "Use runOnUiThread() instead", replaceWith = ReplaceWith("runOnUiThread(f)"))
 inline fun Fragment.onUiThread(crossinline f: () -> Unit) {
+    requireActivity().runOnUiThread { f() }
+}
+
+inline fun Fragment.runOnUiThread(crossinline f: () -> Unit) {
     requireActivity().runOnUiThread { f() }
 }

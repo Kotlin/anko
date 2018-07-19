@@ -28,6 +28,7 @@ inline fun AnkoContext<*>.selector(
         noinline onClick: (DialogInterface, Int) -> Unit
 ) = ctx.selector(title, items, onClick)
 
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun Fragment.selector(
         title: CharSequence? = null,
         items: List<CharSequence>,

@@ -32,9 +32,15 @@ import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
-import org.jetbrains.anko.*
+import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.AnkoContextImpl
+import org.jetbrains.anko.AnkoException
+import org.jetbrains.anko.Orientation
+import org.jetbrains.anko.ScreenSize
+import org.jetbrains.anko.UI
+import org.jetbrains.anko.UiMode
 import java.io.Serializable
-import java.util.*
+import java.util.Locale
 
 object AnkoInternals {
     const val NO_GETTER: String = "Property does not have a getter"
@@ -42,7 +48,7 @@ object AnkoInternals {
     fun noGetter(): Nothing = throw AnkoException("Property does not have a getter")
 
     private class AnkoContextThemeWrapper(base: Context?, val theme: Int) : ContextThemeWrapper(base, theme)
-    
+
     fun <T : View> addView(manager: ViewManager, view: T) = when (manager) {
         is ViewGroup -> manager.addView(view)
         is AnkoContext<*> -> manager.addView(view, null)
@@ -180,16 +186,20 @@ object AnkoInternals {
         }
     }
 
-    // Cursor is not closeable in older versions of Android
     @JvmStatic
-    inline fun <T> useCursor(cursor: Cursor, f: (Cursor) -> T) : T {
-        try {
-            return f(cursor)
-        } finally {
+    inline fun <T> useCursor(cursor: Cursor, f: (Cursor) -> T): T {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            // Closeable only added in API 16
+            cursor.use(f)
+        } else {
             try {
-                cursor.close()
-            } catch (e: Exception) {
-                // Do nothing
+                return f(cursor)
+            } finally {
+                try {
+                    cursor.close()
+                } catch (e: Exception) {
+                    // Do nothing
+                }
             }
         }
     }

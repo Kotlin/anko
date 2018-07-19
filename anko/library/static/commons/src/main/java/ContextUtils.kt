@@ -23,6 +23,7 @@ import android.app.Fragment
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.AssetManager
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Parcelable
@@ -44,18 +45,23 @@ inline val AnkoContext<*>.defaultSharedPreferences: SharedPreferences
 inline val Context.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(this)
 
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline val Fragment.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(activity)
 
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline val Fragment.act: Activity
     get() = activity
 
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline val Fragment.ctx: Context
     get() = activity
 
+@Deprecated(message = "Inline", replaceWith = ReplaceWith("this"))
 inline val Context.ctx: Context
     get() = this
 
+@Deprecated(message = "Inline", replaceWith = ReplaceWith("this"))
 inline val Activity.act: Activity
     get() = this
 
@@ -65,21 +71,25 @@ inline val Activity.act: Activity
 inline val Activity.contentView: View?
     get() = findOptional<ViewGroup>(android.R.id.content)?.getChildAt(0)
 
-inline fun <reified T : View> View.find(@IdRes id: Int): T = findViewById(id) as T
-inline fun <reified T : View> Activity.find(@IdRes id: Int): T = findViewById(id) as T
+inline fun <reified T : View> View.find(@IdRes id: Int): T = findViewById(id)
+inline fun <reified T : View> Activity.find(@IdRes id: Int): T = findViewById(id)
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun <reified T : View> Fragment.find(@IdRes id: Int): T = view?.findViewById(id) as T
-inline fun <reified T : View> Dialog.find(@IdRes id: Int): T = findViewById(id) as T
+inline fun <reified T : View> Dialog.find(@IdRes id: Int): T = findViewById(id)
 
 inline fun <reified T : View> View.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 inline fun <reified T : View> Activity.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun <reified T : View> Fragment.findOptional(@IdRes id: Int): T? = view?.findViewById(id) as? T
 inline fun <reified T : View> Dialog.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any?>): T {
     arguments = bundleOf(*params)
     return this
 }
 
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("bundleOf(params)", "androidx.core.os.bundleOf"))
 fun bundleOf(vararg params: Pair<String, Any?>): Bundle {
     val b = Bundle()
     for (p in params) {
@@ -126,20 +136,20 @@ fun bundleOf(vararg params: Pair<String, Any?>): Bundle {
 inline val Context.displayMetrics: android.util.DisplayMetrics
     get() = resources.displayMetrics
 
-inline val Context.configuration: android.content.res.Configuration
+inline val Context.configuration: Configuration
     get() = resources.configuration
 
 inline val AnkoContext<*>.displayMetrics: android.util.DisplayMetrics
     get() = ctx.resources.displayMetrics
 
-inline val AnkoContext<*>.configuration: android.content.res.Configuration
+inline val AnkoContext<*>.configuration: Configuration
     get() = ctx.resources.configuration
 
-inline val android.content.res.Configuration.portrait: Boolean
-    get() = orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT
+inline val Configuration.portrait: Boolean
+    get() = orientation == Configuration.ORIENTATION_PORTRAIT
 
-inline val android.content.res.Configuration.landscape: Boolean
-    get() = orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+inline val Configuration.landscape: Boolean
+    get() = orientation == Configuration.ORIENTATION_LANDSCAPE
 
-inline val android.content.res.Configuration.long: Boolean
-    get() = (screenLayout and android.content.res.Configuration.SCREENLAYOUT_LONG_YES) != 0
+inline val Configuration.long: Boolean
+    get() = (screenLayout and Configuration.SCREENLAYOUT_LONG_YES) != 0

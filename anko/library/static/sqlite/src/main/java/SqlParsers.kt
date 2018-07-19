@@ -19,10 +19,8 @@ package org.jetbrains.anko.db
 
 import android.database.Cursor
 import android.database.sqlite.SQLiteException
-import org.jetbrains.anko.AnkoException
 import org.jetbrains.anko.internals.AnkoInternals
-import java.lang.reflect.Modifier
-import java.util.*
+import java.util.ArrayList
 
 interface RowParser<out T> {
     fun parseRow(columns: Array<Any?>): T

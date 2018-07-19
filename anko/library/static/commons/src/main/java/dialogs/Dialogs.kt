@@ -30,6 +30,7 @@ inline fun <D : DialogInterface> AnkoContext<*>.alert(
         noinline init: (AlertBuilder<D>.() -> Unit)? = null
 ) = ctx.alert(factory, message, title, init)
 
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun <D : DialogInterface> Fragment.alert(
         noinline factory: AlertBuilderFactory<D>,
         message: String,
@@ -59,6 +60,7 @@ inline fun <D : DialogInterface> AnkoContext<*>.alert(
         noinline init: (AlertBuilder<D>.() -> Unit)? = null
 ) = ctx.alert(factory, message, title, init)
 
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun <D : DialogInterface> Fragment.alert(
         noinline factory: AlertBuilderFactory<D>,
         message: Int,
@@ -86,6 +88,7 @@ inline fun <D : DialogInterface> AnkoContext<*>.alert(
         noinline init: AlertBuilder<D>.() -> Unit
 ) = ctx.alert(factory, init)
 
+@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun <D : DialogInterface> Fragment.alert(
         noinline factory: AlertBuilderFactory<D>,
         noinline init: AlertBuilder<D>.() -> Unit

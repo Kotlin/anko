@@ -22,6 +22,7 @@ package org.jetbrains.anko.collections
  *
  * @f an action to invoke on each list element.
  */
+@Deprecated(message = "Use the native Kotlin version", replaceWith = ReplaceWith("forEach(f)"))
 inline fun <T> List<T>.forEachByIndex(f: (T) -> Unit) {
     val lastIndex = size - 1
     for (i in 0..lastIndex) {
@@ -72,6 +73,7 @@ inline fun <T> List<T>.forEachReversedWithIndex(f: (Int, T) -> Unit) {
  *
  * @see [toAndroidPair].
  */
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("toKotlinPair()", "androidx.core.util.toKotlinPair"))
 inline fun <F, S> android.util.Pair<F, S>.toKotlinPair(): Pair<F, S> = first to second
 
 /**
@@ -79,4 +81,5 @@ inline fun <F, S> android.util.Pair<F, S>.toKotlinPair(): Pair<F, S> = first to 
  *
  * @see [toKotlinPair].
  */
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("toAndroidPair()", "androidx.core.util.toAndroidPair"))
 inline fun <F, S> Pair<F, S>.toAndroidPair(): android.util.Pair<F, S> = android.util.Pair(first, second)
