@@ -22,7 +22,6 @@ package org.jetbrains.anko.collections
  *
  * @f an action to invoke on each list element.
  */
-@Deprecated(message = "Use the native Kotlin version", replaceWith = ReplaceWith("forEach(f)"))
 inline fun <T> List<T>.forEachByIndex(f: (T) -> Unit) {
     val lastIndex = size - 1
     for (i in 0..lastIndex) {
