@@ -25,6 +25,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.view.View
 import org.jetbrains.anko.internals.AnkoInternals
 
 inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<String, Any?>) =
@@ -36,6 +37,9 @@ inline fun <reified T: Activity> AnkoContext<*>.startActivity(vararg params: Pai
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStartActivity(activity, T::class.java, params)
+
+inline fun <reified T: Activity> View.startActivity(vararg params: Pair<String, Any?>) =
+        AnkoInternals.internalStartActivity(context, T::class.java, params)
 
 inline fun <reified T: Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStartActivityForResult(this, T::class.java, requestCode, params)
@@ -54,6 +58,9 @@ inline fun <reified T: Service> AnkoContext<*>.startService(vararg params: Pair<
 inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStartService(activity, T::class.java, params)
 
+inline fun <reified T: Service> View.startService(vararg params: Pair<String, Any?>) =
+        AnkoInternals.internalStartService(context, T::class.java, params)
+
 inline fun <reified T : Service> Context.stopService(vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStopService(this, T::class.java, params)
 
@@ -64,6 +71,9 @@ inline fun <reified T : Service> AnkoContext<*>.stopService(vararg params: Pair<
 inline fun <reified T : Service> Fragment.stopService(vararg params: Pair<String, Any?>) =
         AnkoInternals.internalStopService(activity, T::class.java, params)
 
+inline fun <reified T : Service> View.stopService(vararg params: Pair<String, Any?>) =
+        AnkoInternals.internalStopService(context, T::class.java, params)
+
 inline fun <reified T: Any> Context.intentFor(vararg params: Pair<String, Any?>): Intent =
         AnkoInternals.createIntent(this, T::class.java, params)
 
@@ -73,6 +83,9 @@ inline fun <reified T: Any> AnkoContext<*>.intentFor(vararg params: Pair<String,
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun <reified T: Any> Fragment.intentFor(vararg params: Pair<String, Any?>): Intent =
         AnkoInternals.createIntent(activity, T::class.java, params)
+
+inline fun <reified T: Any> View.intentFor(vararg params: Pair<String, Any?>): Intent =
+        AnkoInternals.createIntent(context, T::class.java, params)
 
 /**
  * Add the [Intent.FLAG_ACTIVITY_CLEAR_TASK] flag to the [Intent].
