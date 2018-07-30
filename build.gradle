@@ -9,9 +9,9 @@ buildscript {
     ext.ANKO_VERSION = '0.10.6'
     ext.ANKO_VERSION_CODE = 105
 
-    ext.COMPILE_SDK_VERSION = 27
+    ext.COMPILE_SDK_VERSION = 28
     ext.MIN_SDK_VERSION = 15
-    ext.TARGET_SDK_VERSION = 27
+    ext.TARGET_SDK_VERSION = 28
     ext.SUPPORT_ARTIFACT_VERSION = "27.1.1"
     ext.CONSTRAINT_LAYOUT_ARTIFACT_VERSION = "1.1.2"
 
@@ -112,6 +112,9 @@ def publishedArtifacts = [
     ':generated:anko-sdk27',
     ':generated:anko-sdk27-listeners',
     ':generated:anko-sdk27-coroutines',
+    ':generated:anko-sdk28',
+    ':generated:anko-sdk28-listeners',
+    ':generated:anko-sdk28-coroutines',
     ':generated:anko-sqlite',
     ':generated:anko-support-v4',
     ':generated:anko-support-v4-commons',

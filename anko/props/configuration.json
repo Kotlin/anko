@@ -9,13 +9,13 @@
     {
       "name" : "commons",
       "type": "commons",
-      "platform": [ "%platforms%/android-27/android.jar" ],
+      "platform": [ "%platforms%/android-28/android.jar" ],
       "target": []
     },
     {
       "name": "sqlite",
       "type": "sqlite",
-      "platform": [ "%platforms%/android-27/android.jar" ],
+      "platform": [ "%platforms%/android-28/android.jar" ],
       "target": []
     },
     {
@@ -107,6 +107,21 @@
       "name": "sdk27-coroutines",
       "type": "coroutineListeners",
       "platform": [ "%platforms%/android-27/android.jar" ]
+    },
+    {
+      "name": "sdk28",
+      "type": "platform",
+      "platform": [ "%platforms%/android-28/android.jar" ]
+    },
+    {
+      "name": "sdk28-listeners",
+      "type": "simpleListeners",
+      "platform": [ "%platforms%/android-28/android.jar" ]
+    },
+    {
+      "name": "sdk28-coroutines",
+      "type": "coroutineListeners",
+      "platform": [ "%platforms%/android-28/android.jar" ]
     },
     {
       "name": "support-v4",
