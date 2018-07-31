@@ -902,21 +902,21 @@ open class _ScrollingTabContainerView(ctx: Context): ScrollingTabContainerView(c
 open class _Toolbar(ctx: Context): Toolbar(ctx) {
 
     inline fun <T: View> T.lparams(
-            c: Context?,
+            c: Context,
             attrs: AttributeSet?,
             init: Toolbar.LayoutParams.() -> Unit
     ): T {
-        val layoutParams = Toolbar.LayoutParams(c!!, attrs!!)
+        val layoutParams = Toolbar.LayoutParams(c, attrs!!)
         layoutParams.init()
         this@lparams.layoutParams = layoutParams
         return this
     }
 
     inline fun <T: View> T.lparams(
-            c: Context?,
+            c: Context,
             attrs: AttributeSet?
     ): T {
-        val layoutParams = Toolbar.LayoutParams(c!!, attrs!!)
+        val layoutParams = Toolbar.LayoutParams(c, attrs!!)
         this@lparams.layoutParams = layoutParams
         return this
     }

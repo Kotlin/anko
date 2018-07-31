@@ -264,11 +264,11 @@ class __AbsListView_OnScrollListener : android.widget.AbsListView.OnScrollListen
 
 }
 
-inline fun android.widget.AdapterView<out android.widget.Adapter>.onItemClick(noinline l: (p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) -> Unit) {
+inline fun android.widget.AdapterView<out android.widget.Adapter>.onItemClick(noinline l: (p0: android.widget.AdapterView<*>, p1: android.view.View, p2: Int, p3: Long) -> Unit) {
     setOnItemClickListener(l)
 }
 
-inline fun android.widget.AdapterView<out android.widget.Adapter>.onItemLongClick(noinline l: (p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) -> Boolean) {
+inline fun android.widget.AdapterView<out android.widget.Adapter>.onItemLongClick(noinline l: (p0: android.widget.AdapterView<*>, p1: android.view.View, p2: Int, p3: Long) -> Boolean) {
     setOnItemLongClickListener(l)
 }
 
@@ -280,23 +280,23 @@ fun android.widget.AdapterView<out android.widget.Adapter>.onItemSelectedListene
 
 class __AdapterView_OnItemSelectedListener : android.widget.AdapterView.OnItemSelectedListener {
 
-    private var _onItemSelected: ((android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit)? = null
+    private var _onItemSelected: ((android.widget.AdapterView<*>, android.view.View, Int, Long) -> Unit)? = null
 
-    override fun onItemSelected(p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) {
+    override fun onItemSelected(p0: android.widget.AdapterView<*>, p1: android.view.View, p2: Int, p3: Long) {
         _onItemSelected?.invoke(p0, p1, p2, p3)
     }
 
-    fun onItemSelected(listener: (android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit) {
+    fun onItemSelected(listener: (android.widget.AdapterView<*>, android.view.View, Int, Long) -> Unit) {
         _onItemSelected = listener
     }
 
-    private var _onNothingSelected: ((android.widget.AdapterView<*>?) -> Unit)? = null
+    private var _onNothingSelected: ((android.widget.AdapterView<*>) -> Unit)? = null
 
-    override fun onNothingSelected(p0: android.widget.AdapterView<*>?) {
+    override fun onNothingSelected(p0: android.widget.AdapterView<*>) {
         _onNothingSelected?.invoke(p0)
     }
 
-    fun onNothingSelected(listener: (android.widget.AdapterView<*>?) -> Unit) {
+    fun onNothingSelected(listener: (android.widget.AdapterView<*>) -> Unit) {
         _onNothingSelected = listener
     }
 

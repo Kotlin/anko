@@ -46,7 +46,7 @@ class __TabLayout_OnTabSelectedListener : android.support.design.widget.TabLayou
 
 }
 
-inline fun android.support.design.widget.BottomNavigationView.onNavigationItemSelected(noinline l: (item: android.view.MenuItem?) -> Boolean) {
+inline fun android.support.design.widget.BottomNavigationView.onNavigationItemSelected(noinline l: (item: android.view.MenuItem) -> Boolean) {
     setOnNavigationItemSelectedListener(l)
 }
 

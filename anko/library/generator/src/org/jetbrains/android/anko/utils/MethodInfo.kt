@@ -21,6 +21,7 @@ import org.jetbrains.android.anko.config.GeneratorContext
 import org.jetbrains.android.anko.utils.*
 import org.objectweb.asm.Opcodes
 import org.objectweb.asm.Type
+import org.objectweb.asm.tree.AnnotationNode
 import org.objectweb.asm.tree.MethodNode
 
 private val specialLayoutParamsArguments = mapOf(
@@ -34,12 +35,24 @@ private val specialLayoutParamsNames = mapOf(
         "w" to "width", "h" to "height"
 )
 
+private val androidNonNullAnnotations = arrayOf(
+        "Landroidx/annotation/NonNull;",
+        "Landroid/support/annotation/NonNull;"
+)
+
 internal val MethodNode.parameterRawTypes: Array<Type>
     get() = Type.getArgumentTypes(desc)
 
+internal fun AnnotationNode.isNonNullAnnotation() = desc in androidNonNullAnnotations
+
 internal fun getParameterKTypes(node: MethodNode): List<KType> {
     if (node.signature == null) {
-        return node.parameterRawTypes.map { KType(it.asString(false), isNullable = false) }
+        return node.parameterRawTypes.mapIndexed { index, type ->
+            val nullable = node.invisibleParameterAnnotations?.get(index)
+                    ?.none { it.isNonNullAnnotation() } ?: true
+
+            KType(type.asString(false), isNullable = nullable)
+        }
     }
 
     val parsed = parseGenericMethodSignature(node.signature)
@@ -60,7 +73,8 @@ internal fun MethodNodeWithClass.toKMethod(context: GeneratorContext): KMethod {
     val parameters = parameterTypes.mapIndexed { index, type ->
         val parameterAnnotationSignature = "$methodAnnotationSignature $index"
         val isSimpleType = parameterRawTypes[index].isSimpleType
-        val isNullable = !isSimpleType && !context.annotationManager.hasAnnotation(parameterAnnotationSignature, NotNull)
+        val isNullable = !isSimpleType && type.isNullable &&
+                !context.annotationManager.hasAnnotation(parameterAnnotationSignature, NotNull)
 
         val parameterName = parameterNames?.get(index) ?: localVariables[nameIndex]?.name ?: "p$index"
         nameIndex += parameterRawTypes[index].size

@@ -470,7 +470,7 @@ class __AbsListView_OnScrollListener(private val context: CoroutineContext) : an
 
 }fun android.widget.AdapterView<out android.widget.Adapter>.onItemClick(
         context: CoroutineContext = UI,
-        handler: suspend CoroutineScope.(p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) -> Unit
+        handler: suspend CoroutineScope.(p0: android.widget.AdapterView<*>, p1: android.view.View, p2: Int, p3: Long) -> Unit
 ) {
     setOnItemClickListener { p0, p1, p2, p3 ->
         launch(context) {
@@ -482,7 +482,7 @@ class __AbsListView_OnScrollListener(private val context: CoroutineContext) : an
 fun android.widget.AdapterView<out android.widget.Adapter>.onItemLongClick(
         context: CoroutineContext = UI,
         returnValue: Boolean = false,
-        handler: suspend CoroutineScope.(p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) -> Unit
+        handler: suspend CoroutineScope.(p0: android.widget.AdapterView<*>, p1: android.view.View, p2: Int, p3: Long) -> Unit
 ) {
     setOnItemLongClickListener { p0, p1, p2, p3 ->
         launch(context) {
@@ -503,10 +503,10 @@ fun android.widget.AdapterView<out android.widget.Adapter>.onItemSelectedListene
 
 class __AdapterView_OnItemSelectedListener(private val context: CoroutineContext) : android.widget.AdapterView.OnItemSelectedListener {
 
-    private var _onItemSelected: (suspend CoroutineScope.(android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit)? = null
+    private var _onItemSelected: (suspend CoroutineScope.(android.widget.AdapterView<*>, android.view.View, Int, Long) -> Unit)? = null
     
 
-    override fun onItemSelected(p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) {
+    override fun onItemSelected(p0: android.widget.AdapterView<*>, p1: android.view.View, p2: Int, p3: Long) {
         val handler = _onItemSelected ?: return
         launch(context) {
             handler(p0, p1, p2, p3)
@@ -514,15 +514,15 @@ class __AdapterView_OnItemSelectedListener(private val context: CoroutineContext
     }
 
     fun onItemSelected(
-            listener: suspend CoroutineScope.(android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit
+            listener: suspend CoroutineScope.(android.widget.AdapterView<*>, android.view.View, Int, Long) -> Unit
     ) {
         _onItemSelected = listener
     }
 
-    private var _onNothingSelected: (suspend CoroutineScope.(android.widget.AdapterView<*>?) -> Unit)? = null
+    private var _onNothingSelected: (suspend CoroutineScope.(android.widget.AdapterView<*>) -> Unit)? = null
     
 
-    override fun onNothingSelected(p0: android.widget.AdapterView<*>?) {
+    override fun onNothingSelected(p0: android.widget.AdapterView<*>) {
         val handler = _onNothingSelected ?: return
         launch(context) {
             handler(p0)
@@ -530,7 +530,7 @@ class __AdapterView_OnItemSelectedListener(private val context: CoroutineContext
     }
 
     fun onNothingSelected(
-            listener: suspend CoroutineScope.(android.widget.AdapterView<*>?) -> Unit
+            listener: suspend CoroutineScope.(android.widget.AdapterView<*>) -> Unit
     ) {
         _onNothingSelected = listener
     }

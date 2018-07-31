@@ -80,7 +80,7 @@ class __TabLayout_OnTabSelectedListener(private val context: CoroutineContext) :
 }fun android.support.design.widget.BottomNavigationView.onNavigationItemSelected(
         context: CoroutineContext = UI,
         returnValue: Boolean = false,
-        handler: suspend CoroutineScope.(item: android.view.MenuItem?) -> Unit
+        handler: suspend CoroutineScope.(item: android.view.MenuItem) -> Unit
 ) {
     setOnNavigationItemSelectedListener { item ->
         launch(context) {
