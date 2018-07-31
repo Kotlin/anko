@@ -2,7 +2,8 @@
   "templates": {
     "support": "dependencies/android-sdk/extras/android/m2repository/com/android/support",
     "platforms": "dependencies/android-sdk/platforms",
-    "supportVer": "25.1.1"
+    "supportVer": "25.1.1",
+    "androidxVer": "1.0.0-beta01"
   },
 
   "artifacts": [
@@ -240,6 +241,24 @@
       "type": "coroutineListeners",
       "platform": [ "%platforms%/android-27/android.jar" ],
       "target": [ "%support%/recyclerview-v7/%supportVer%/recyclerview-v7-%supportVer%.aar" ]
+    },
+    {
+      "name": "recyclerview-androidx",
+      "type": "toolkit",
+      "platform": [ "%platforms%/android-28/android.jar" ],
+      "target": [ "dependencies/androidx/recyclerview-%androidxVer%.aar" ]
+    },
+    {
+      "name": "recyclerview-androidx-listeners",
+      "type": "simpleListeners",
+      "platform": [ "%platforms%/android-28/android.jar" ],
+      "target": [ "dependencies/androidx/recyclerview-%androidxVer%.aar" ]
+    },
+    {
+      "name": "recyclerview-androidx-coroutines",
+      "type": "coroutineListeners",
+      "platform": [ "%platforms%/android-28/android.jar" ],
+      "target": [ "dependencies/androidx/recyclerview-%androidxVer%.aar" ]
     }
   ],
 

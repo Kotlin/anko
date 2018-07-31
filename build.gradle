@@ -5,7 +5,8 @@ buildscript {
     ext.kotlin_version = '1.2.51'
     ext.kotlinx_dom_version = '0.0.10'
     ext.kotlinx_coroutines_version = '0.23.4'
-    ext.constraint_layout_version = "1.1.2"
+    ext.androidx_version = '1.0.0-beta01'
+    ext.constraint_layout_version = '1.1.2'
 
     ext.ANKO_VERSION = '0.10.6'
     ext.ANKO_VERSION_CODE = 105
@@ -94,6 +95,9 @@ def publishedArtifacts = [
     ':generated:anko-recyclerview-v7',
     ':generated:anko-recyclerview-v7-listeners',
     ':generated:anko-recyclerview-v7-coroutines',
+    ':generated:anko-recyclerview-androidx',
+    ':generated:anko-recyclerview-androidx-listeners',
+    ':generated:anko-recyclerview-androidx-coroutines',
     ':generated:anko-sdk15',
     ':generated:anko-sdk15-listeners',
     ':generated:anko-sdk15-coroutines',
