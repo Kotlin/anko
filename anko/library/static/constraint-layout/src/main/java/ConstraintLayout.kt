@@ -17,9 +17,6 @@
 
 package org.jetbrains.anko.constraint.layout
 
-import android.support.annotation.IdRes
-import android.support.constraint.ConstraintLayout
-import android.support.constraint.ConstraintSet
 import android.view.View
 import org.jetbrains.anko.constraint.layout.ConstraintSetBuilder.Connection.BasicConnection
 import org.jetbrains.anko.constraint.layout.ConstraintSetBuilder.Side
@@ -27,7 +24,7 @@ import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.internals.AnkoInternals.noGetter
 
 val ConstraintLayout.matchConstraint
-    get() = ConstraintLayout.LayoutParams.MATCH_CONSTRAINT
+    get() = ConstraintLayout_LayoutParams.MATCH_CONSTRAINT
 
 fun ConstraintLayout.applyConstraintSet(init: ConstraintSetBuilder.() -> Unit): ConstraintSet =
         constraintSet(init).also { it.applyTo(this) }

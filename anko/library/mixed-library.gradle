@@ -22,6 +22,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_6
         targetCompatibility JavaVersion.VERSION_1_6
     }
+
+    flavorDimensions 'targetLibrary'
+
+    productFlavors {
+        androidx {
+            dimension 'targetLibrary'
+        }
+
+        support {
+            dimension 'targetLibrary'
+        }
+    }
 }
 
 task sourcesJar(type: Jar) {
@@ -31,13 +43,23 @@ task sourcesJar(type: Jar) {
 
 publishing {
     publications {
-        anko(MavenPublication) {
+        support(MavenPublication) {
             groupId POM_ARTIFACT_GROUP
             artifactId project.name
             version ANKO_VERSION
 
             artifact sourcesJar
-            artifact bundleRelease
+            artifact bundleSupportRelease
+
+            configureLibraryPomXml(project, pom)
+        }
+        androidx(MavenPublication) {
+            groupId POM_ARTIFACT_GROUP
+            artifactId project.name + '-androidx'
+            version ANKO_VERSION
+
+            artifact sourcesJar
+            artifact bundleAndroidxRelease
 
             configureLibraryPomXml(project, pom)
         }
@@ -48,4 +70,4 @@ publishing {
     }
 }
 
-configureBintrayPublishing(project, ['anko'])
+configureBintrayPublishing(project, ['support', 'androidx'])

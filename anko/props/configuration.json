@@ -225,6 +225,12 @@
       "target": [ "dependencies/constraint-layout.aar" ]
     },
     {
+      "name": "constraintlayout-androidx",
+      "type": "toolkit",
+      "platform": [ "%platforms%/android-28/android.jar" ],
+      "target": [ "dependencies/androidx/constraintlayout-1.1.2.aar" ]
+    },
+    {
       "name": "recyclerview-v7",
       "type": "toolkit",
       "platform": [ "%platforms%/android-27/android.jar" ],

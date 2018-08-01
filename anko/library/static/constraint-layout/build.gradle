@@ -1,7 +1,11 @@
-apply from: '../../library.gradle'
+apply from: '../../mixed-library.gradle'
 
 dependencies {
-    api "com.android.support:support-annotations:$SUPPORT_ARTIFACT_VERSION"
-    api "com.android.support.constraint:constraint-layout:$constraint_layout_version"
+    supportApi "com.android.support:support-annotations:$SUPPORT_ARTIFACT_VERSION"
+    androidxApi "androidx.annotation:annotation:$androidx_version"
+
+    androidxApi "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    supportApi "com.android.support.constraint:constraint-layout:$constraint_layout_version"
+
     api project(':static:commons-base')
 }

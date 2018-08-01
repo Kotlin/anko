@@ -31,6 +31,7 @@ dependencies {
     compile project(":testUtils")
 
     androidx "androidx.recyclerview:recyclerview:$androidx_version"
+    androidx "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 }
 
 task downloadAndroidx(type: Copy) {
