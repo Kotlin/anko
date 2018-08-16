@@ -47,7 +47,7 @@ publishing {
             artifact sourcesJar
             artifact bundleAndroidxRelease
 
-            configureLibraryPomXml(project, pom)
+            configureLibraryPomXml(project, pom, 'androidx')
         }
     }
 

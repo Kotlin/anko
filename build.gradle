@@ -180,7 +180,7 @@ ext.configureBintrayPublishing = { project, publicationNames ->
     }
 }
 
-ext.configureLibraryPomXml = { project, pom ->
+ext.configureLibraryPomXml = { project, pom, flavor ->
     pom.withXml {
         asNode().children().last() + {
             resolveStrategy = Closure.DELEGATE_FIRST
@@ -232,14 +232,10 @@ ext.configureLibraryPomXml = { project, pom ->
         }
 
 
-        def dependencyConfigurations = [
-                'api',
-                'supportApi',
-                'androidxApi',
-                'implementation',
-                'supportImplementation',
-                'androidxImplementation'
-        ]
+        def dependencyConfigurations = ['api', 'implementation']
+        if (flavor != null) {
+            dependencyConfigurations += ['api', 'implementation'].collect { "$flavor${it.capitalize()}" }
+        }
 
         def dependenciesNode = asNode().appendNode('dependencies')
         dependencyConfigurations.each { configurationName ->

@@ -47,7 +47,7 @@ publishing {
             artifact sourcesJar
             artifact bundleSupportRelease
 
-            configureLibraryPomXml(project, pom)
+            configureLibraryPomXml(project, pom, 'support')
         }
     }
 

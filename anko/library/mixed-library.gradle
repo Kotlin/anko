@@ -51,7 +51,7 @@ publishing {
             artifact sourcesJar
             artifact bundleSupportRelease
 
-            configureLibraryPomXml(project, pom)
+            configureLibraryPomXml(project, pom, 'support')
         }
         androidx(MavenPublication) {
             groupId POM_ARTIFACT_GROUP
@@ -61,7 +61,7 @@ publishing {
             artifact sourcesJar
             artifact bundleAndroidxRelease
 
-            configureLibraryPomXml(project, pom)
+            configureLibraryPomXml(project, pom, 'androidx')
         }
     }
 
