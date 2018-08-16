@@ -3,5 +3,5 @@ apply from: '../../androidx-library.gradle'
 dependencies {
     androidxApi "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     api project(':generated:anko-commons')
-    androidxApi project(':static:constraint-layout-base')
+    androidxApi project(':static:constraintlayout-base')
 }

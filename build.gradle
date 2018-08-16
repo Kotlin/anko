@@ -132,7 +132,7 @@ def publishedArtifacts = [
     ':static:design-base',
     ':static:supportV4-base',
     ':static:appcompatV7-base',
-    ':static:constraint-layout-base'
+    ':static:constraintlayout-base'
 ]
 
 task dist()

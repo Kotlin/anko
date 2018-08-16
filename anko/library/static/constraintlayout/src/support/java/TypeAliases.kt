@@ -1,4 +1,4 @@
-package org.jetbrains.anko.constraint.layout
+package org.jetbrains.anko.constraintlayout
 
 typealias ConstraintSet = android.support.constraint.ConstraintSet
 typealias ConstraintLayout = android.support.constraint.ConstraintLayout

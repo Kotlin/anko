@@ -15,11 +15,11 @@
  */
 @file:Suppress("unused")
 
-package org.jetbrains.anko.constraint.layout
+package org.jetbrains.anko.constraintlayout
 
 import android.view.View
-import org.jetbrains.anko.constraint.layout.ConstraintSetBuilder.Connection.BasicConnection
-import org.jetbrains.anko.constraint.layout.ConstraintSetBuilder.Side
+import org.jetbrains.anko.constraintlayout.ConstraintSetBuilder.Connection.BasicConnection
+import org.jetbrains.anko.constraintlayout.ConstraintSetBuilder.Side
 import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.internals.AnkoInternals.noGetter
 
