@@ -91,7 +91,7 @@ def publishedArtifacts = [
     ':generated:anko-design-coroutines',
     ':generated:anko-gridlayout-v7',
     ':generated:anko-percent',
-    ':generated:anko-constraint-layout',
+    ':generated:anko-constraintlayout',
     ':generated:anko-constraintlayout-androidx',
     ':generated:anko-recyclerview-v7',
     ':generated:anko-recyclerview-v7-listeners',

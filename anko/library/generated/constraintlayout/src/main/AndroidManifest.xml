@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="org.jetbrains.anko.generated.constraint.layout">
+<manifest package="org.jetbrains.anko.generated.constraintlayout">
     <application/>
 </manifest>

@@ -219,7 +219,7 @@
       "target": [ "%support%/percent/%supportVer%/percent-%supportVer%.aar" ]
     },
     {
-      "name": "constraint-layout",
+      "name": "constraintlayout",
       "type": "toolkit",
       "platform": [ "%platforms%/android-27/android.jar" ],
       "target": [ "dependencies/constraint-layout.aar" ]
