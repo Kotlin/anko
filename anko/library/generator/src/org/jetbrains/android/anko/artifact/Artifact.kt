@@ -4,7 +4,13 @@ import com.google.gson.Gson
 import org.jetbrains.android.anko.config.ArtifactType
 import java.io.File
 
-class Artifact(val name: String, val type: ArtifactType, val platformJars: List<File>, val targetJars: List<File>) {
+class Artifact(
+        val name: String,
+        val type: ArtifactType,
+        val platformJars: List<File>,
+        val targetJars: List<File>,
+        val packageName: String? = null
+) {
     override fun toString(): String {
         return "$name: { platformJars = \"${platformJars.joinToString()}\", targetJars = \"${targetJars.joinToString()}\" }"
     }
@@ -22,7 +28,7 @@ class Artifact(val name: String, val type: ArtifactType, val platformJars: List<
                 val targetJars = artifactData.target?.map { File(substituteTemplates(it, templates)) } ?: platformJars
                 val type = ArtifactType.values().firstOrNull { it.nameInConfiguration == artifactData.type }
                         ?: error("Type invalid or not specified for artifact ${artifactData.name}")
-                artifacts += Artifact(artifactData.name, type, platformJars, targetJars)
+                artifacts += Artifact(artifactData.name, type, platformJars, targetJars, artifactData.packageName)
             }
 
             return ExecutionConfiguration(artifacts, tunes)
@@ -47,5 +53,11 @@ private class ExecutionConfigurationData(
         val artifacts: List<ArtifactData>,
         val tunes: Tunes
 ) {
-    class ArtifactData(val name: String, val type: String, val platform: List<String>, val target: List<String>?)
+    class ArtifactData(
+            val name: String,
+            val type: String,
+            val platform: List<String>,
+            val target: List<String>?,
+            val packageName: String?
+    )
 }

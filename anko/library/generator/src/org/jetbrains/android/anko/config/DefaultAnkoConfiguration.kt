@@ -37,10 +37,12 @@ class DefaultAnkoConfiguration(
 
     init {
         val artifactType = artifact.type
-        outputPackage = "org.jetbrains.anko" + when (artifactType) {
+        val dotPackageName = artifact.packageName?.let { ".$it" } ?: when (artifactType) {
             ArtifactType.COMMONS, ArtifactType.PLATFORM -> ""
             else -> "." + artifact.name.replace('-', '.').toLowerCase()
         }
+
+        outputPackage = "org.jetbrains.anko$dotPackageName"
 
         for (line in propertiesWithoutGetters) {
             if (!line.matches("[A-Za-z0-9]+(\\.((?!set)[A-Za-z0-9]+))*".toRegex())) {
