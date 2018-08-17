@@ -1,5 +1,5 @@
 @file:JvmName("RecyclerviewAndroidxCoroutinesListenersWithCoroutinesKt")
-package org.jetbrains.anko.recyclerview.androidx.coroutines
+package org.jetbrains.anko.recyclerview.coroutines
 
 
 import kotlin.coroutines.experimental.CoroutineContext

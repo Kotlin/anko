@@ -1,5 +1,5 @@
 @file:JvmName("RecyclerviewAndroidxLayoutsKt")
-package org.jetbrains.anko.recyclerview.androidx
+package org.jetbrains.anko.recyclerview
 
 
 import android.content.Context

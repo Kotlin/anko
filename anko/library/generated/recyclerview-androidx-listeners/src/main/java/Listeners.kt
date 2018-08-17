@@ -1,5 +1,5 @@
 @file:JvmName("RecyclerviewAndroidxListenersListenersKt")
-package org.jetbrains.anko.recyclerview.androidx.listeners
+package org.jetbrains.anko.recyclerview.listeners
 
 
 fun androidx.recyclerview.widget.RecyclerView.onChildAttachStateChangeListener(init: __RecyclerView_OnChildAttachStateChangeListener.() -> Unit) {

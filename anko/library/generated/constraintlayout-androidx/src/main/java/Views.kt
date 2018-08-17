@@ -1,5 +1,5 @@
 @file:JvmName("ConstraintlayoutAndroidxViewsKt")
-package org.jetbrains.anko.constraintlayout.androidx
+package org.jetbrains.anko.constraintlayout
 
 import org.jetbrains.anko.custom.*
 import org.jetbrains.anko.AnkoViewDslMarker

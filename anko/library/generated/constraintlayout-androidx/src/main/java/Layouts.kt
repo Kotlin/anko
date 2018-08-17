@@ -1,5 +1,5 @@
 @file:JvmName("ConstraintlayoutAndroidxLayoutsKt")
-package org.jetbrains.anko.constraintlayout.androidx
+package org.jetbrains.anko.constraintlayout
 
 
 import androidx.constraintlayout.widget.ConstraintLayout

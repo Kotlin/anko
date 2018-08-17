@@ -226,6 +226,7 @@
     },
     {
       "name": "constraintlayout-androidx",
+      "packageName": "constraintlayout",
       "type": "toolkit",
       "platform": [ "%platforms%/android-28/android.jar" ],
       "target": [ "dependencies/androidx/constraintlayout-1.1.2.aar" ]
@@ -250,18 +251,21 @@
     },
     {
       "name": "recyclerview-androidx",
+      "packageName": "recyclerview",
       "type": "toolkit",
       "platform": [ "%platforms%/android-28/android.jar" ],
       "target": [ "dependencies/androidx/recyclerview-%androidxVer%.aar" ]
     },
     {
       "name": "recyclerview-androidx-listeners",
+      "packageName": "recyclerview.listeners",
       "type": "simpleListeners",
       "platform": [ "%platforms%/android-28/android.jar" ],
       "target": [ "dependencies/androidx/recyclerview-%androidxVer%.aar" ]
     },
     {
       "name": "recyclerview-androidx-coroutines",
+      "packageName": "recyclerview.coroutines",
       "type": "coroutineListeners",
       "platform": [ "%platforms%/android-28/android.jar" ],
       "target": [ "dependencies/androidx/recyclerview-%androidxVer%.aar" ]

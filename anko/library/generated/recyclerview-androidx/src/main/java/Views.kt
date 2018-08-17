@@ -1,5 +1,5 @@
 @file:JvmName("RecyclerviewAndroidxViewsKt")
-package org.jetbrains.anko.recyclerview.androidx
+package org.jetbrains.anko.recyclerview
 
 import org.jetbrains.anko.custom.*
 import org.jetbrains.anko.AnkoViewDslMarker
