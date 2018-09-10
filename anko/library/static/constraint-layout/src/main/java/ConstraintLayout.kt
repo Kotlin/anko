@@ -72,7 +72,7 @@ class ViewConstraintBuilder(
             constraintSetBuilder.setVerticalBias(viewId, value)
         }
 
-    var dimensionRation: String
+    var dimensionRatio: String
         @Deprecated(AnkoInternals.NO_GETTER, level = DeprecationLevel.ERROR) get() = noGetter()
         set(value) {
             constraintSetBuilder.setDimensionRatio(viewId, value)
