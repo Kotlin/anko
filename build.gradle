@@ -2,9 +2,9 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 buildscript {
-    ext.kotlin_version = '1.3-M1'
+    ext.kotlin_version = '1.3-M2'
     ext.kotlinx_dom_version = '0.0.10'
-    ext.kotlinx_coroutines_version = '0.23.4-eap13-1'
+    ext.kotlinx_coroutines_version = '0.26.0-eap13'
 
     ext.ANKO_VERSION = '0.10.6'
     ext.ANKO_VERSION_CODE = 105
@@ -32,7 +32,7 @@ buildscript {
         google()
         jcenter()
         maven {
-            url "https://teamcity.jetbrains.com/guestAuth/app/rest/builds/buildType:(id:Kotlin_13M1_CompilerAllPlugins),status:SUCCESS,branch:(default:any)/artifacts/content/maven/"
+            url "https://dl.bintray.com/kotlin/kotlin-eap"
         }
     }
 
@@ -50,7 +50,7 @@ allprojects {
         google()
         jcenter()
         maven {
-            url "https://teamcity.jetbrains.com/guestAuth/app/rest/builds/buildType:(id:Kotlin_13M1_CompilerAllPlugins),status:SUCCESS,branch:(default:any)/artifacts/content/maven/"
+            url "https://dl.bintray.com/kotlin/kotlin-eap"
         }
     }
 }
