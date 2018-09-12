@@ -2,10 +2,10 @@
 package org.jetbrains.anko.recyclerview.v7.coroutines
 
 
-import kotlin.coroutines.experimental.CoroutineContext
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.launch
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.android.UI
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 fun android.support.v7.widget.RecyclerView.onChildAttachStateChangeListener(
         context: CoroutineContext = UI,

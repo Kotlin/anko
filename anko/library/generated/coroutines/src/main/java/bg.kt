@@ -19,15 +19,15 @@
 
 package org.jetbrains.anko.coroutines.experimental
 
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.newFixedThreadPoolContext
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.newFixedThreadPoolContext
 
 @PublishedApi
 @Deprecated(message = "Use the default pool")
 internal var POOL = newFixedThreadPoolContext(2 * Runtime.getRuntime().availableProcessors(), "bg")
 
-@Deprecated(message = "Use the default pool", replaceWith = ReplaceWith("async(block)", "kotlinx.coroutines.experimental.async"))
+@Deprecated(message = "Use the default pool", replaceWith = ReplaceWith("async(block)", "kotlinx.coroutines.async"))
 inline fun <T> bg(crossinline block: () -> T): Deferred<T> = async(POOL) {
     block()
 }

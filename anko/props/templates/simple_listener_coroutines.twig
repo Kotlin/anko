@@ -1,15 +1,15 @@
 fun {{ receiver }}.{{ name }}(
-        context: {{ imported("kotlin.coroutines.experimental.CoroutineContext") }} = {{ imported("kotlinx.coroutines.experimental.android.UI") }},
+        context: {{ imported("kotlin.coroutines.CoroutineContext") }} = {{ imported("kotlinx.coroutines.android.UI") }},
         {% if (returnType != "Unit") %}returnValue: {{ imported(returnType) }}{% if (returnDefaultValue != "") %} = {{ returnDefaultValue }}{% endif %},
-        {% endif %}handler: suspend {{ imported("kotlinx.coroutines.experimental.CoroutineScope") }}.({{ args }}) -> Unit
+        {% endif %}handler: suspend {{ imported("kotlinx.coroutines.CoroutineScope") }}.({{ args }}) -> Unit
 ) {
     {{setter}} { {{ argNames }} ->
         {% if (hasArgs == true) -%}
-        {{ imported("kotlinx.coroutines.experimental.launch") }}(context) {
+        {{ imported("kotlinx.coroutines.launch") }}(context) {
             handler({{ argNames }})
         }
         {%- else -%}
-        {{ imported("kotlinx.coroutines.experimental.launch") }}(context, block = handler)
+        {{ imported("kotlinx.coroutines.launch") }}(context, block = handler)
         {%- endif %}{% if (returnType != "Unit") %}
         returnValue{% endif %}
     }
