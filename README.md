@@ -7,6 +7,8 @@
 
 Anko is a [Kotlin](http://www.kotlinlang.org/) library which makes Android application development faster and easier. It makes your code clean and easy to read, and lets you forget about rough edges of the Android SDK for Java.
 
+The release `0.10.6` has satellite `0.10.6-eap-13` which is meant to be used with Kotlin 1.3 and release kotlinx.coroutines. Feel free to try it and provide any feedback.
+
 Anko consists of several parts:
 
 * *Anko Commons*: a lightweight library full of helpers for intents, dialogs, logging and so on;
@@ -82,7 +84,7 @@ dependencies {
 Make sure that you have the ```$anko_version``` settled in your gradle file at the project level:
 
 ```
-ext.anko_version='0.10.5'
+ext.anko_version='0.10.6'
 ```
 
 If you only need some of the features, you can reference any of Anko's parts:
