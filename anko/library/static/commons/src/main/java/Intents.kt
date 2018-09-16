@@ -171,21 +171,21 @@ fun Context.browse(url: String, newTask: Boolean = false): Boolean {
     }
 }
 
-inline fun AnkoContext<*>.share(text: String, subject: String = "") = ctx.share(text, subject)
+inline fun AnkoContext<*>.share(text: String, subject: String = "", title: String = "") = ctx.share(text, subject, title)
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
-inline fun Fragment.share(text: String, subject: String = "") = activity.share(text, subject)
+inline fun Fragment.share(text: String, subject: String = "", title: String = "") = activity.share(text, subject, title)
 
-fun Context.share(text: String, subject: String = ""): Boolean {
-    try {
+fun Context.share(text: String, subject: String = "", title: String = ""): Boolean {
+    return try {
         val intent = Intent(android.content.Intent.ACTION_SEND)
         intent.type = "text/plain"
         intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)
         intent.putExtra(android.content.Intent.EXTRA_TEXT, text)
-        startActivity(Intent.createChooser(intent, null))
-        return true
+        startActivity(Intent.createChooser(intent, if (title.isEmpty()) null else title))
+        true
     } catch (e: ActivityNotFoundException) {
         e.printStackTrace()
-        return false
+        false
     }
 }
 
