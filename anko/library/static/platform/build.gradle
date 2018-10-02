@@ -2,4 +2,5 @@ apply from: '../../library.gradle'
 
 dependencies {
     api project(':static:commons-base')
+    implementation project(':stubs') // needed to resolve dependency cycle
 }

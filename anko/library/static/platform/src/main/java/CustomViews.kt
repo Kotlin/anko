@@ -30,7 +30,7 @@ import org.jetbrains.anko.custom.ankoView
 @PublishedApi
 internal object `$$Anko$Factories$CustomViews` {
     val VERTICAL_LAYOUT_FACTORY = { ctx: Context ->
-        val view = LinearLayout(ctx)
+        val view = _LinearLayout(ctx)
         view.orientation = LinearLayout.VERTICAL
         view
     }
@@ -43,17 +43,17 @@ internal object `$$Anko$Factories$CustomViews` {
 }
 
 inline fun ViewManager.verticalLayout(theme: Int = 0): LinearLayout = verticalLayout(theme) {}
-inline fun ViewManager.verticalLayout(theme: Int = 0, init: (@AnkoViewDslMarker LinearLayout).() -> Unit): LinearLayout {
+inline fun ViewManager.verticalLayout(theme: Int = 0, init: (@AnkoViewDslMarker _LinearLayout).() -> Unit): LinearLayout {
     return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, theme, init)
 }
 
 inline fun Context.verticalLayout(theme: Int = 0): LinearLayout = verticalLayout(theme) {}
-inline fun Context.verticalLayout(theme: Int = 0, init: (@AnkoViewDslMarker LinearLayout).() -> Unit): LinearLayout {
+inline fun Context.verticalLayout(theme: Int = 0, init: (@AnkoViewDslMarker _LinearLayout).() -> Unit): LinearLayout {
     return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, theme, init)
 }
 
 inline fun Activity.verticalLayout(theme: Int = 0): LinearLayout = verticalLayout(theme) {}
-inline fun Activity.verticalLayout(theme: Int = 0, init: (@AnkoViewDslMarker LinearLayout).() -> Unit): LinearLayout {
+inline fun Activity.verticalLayout(theme: Int = 0, init: (@AnkoViewDslMarker _LinearLayout).() -> Unit): LinearLayout {
     return ankoView(`$$Anko$Factories$CustomViews`.VERTICAL_LAYOUT_FACTORY, theme, init)
 }
 
