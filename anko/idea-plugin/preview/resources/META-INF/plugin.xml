@@ -2,10 +2,10 @@
     <id>org.jetbrains.kotlin.android.dsl</id>
     <name>Anko Support</name>
     <description>Anko Android library support.</description>
-    <version>0.10.6</version>
+    <version>0.10.7</version>
     <vendor url="http://www.jetbrains.com">JetBrains s.r.o.</vendor>
 
-    <idea-version since-build="171.1" until-build="181.*"/>
+    <idea-version since-build="171.1" until-build="183.*"/>
 
     <depends>org.jetbrains.kotlin</depends>
     <depends>org.jetbrains.android</depends>
