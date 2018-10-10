@@ -89,7 +89,7 @@ inline fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any?>): T {
     return this
 }
 
-@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("bundleOf(params)", "androidx.core.os.bundleOf"))
+@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("bundleOf(*params)", "androidx.core.os.bundleOf"))
 fun bundleOf(vararg params: Pair<String, Any?>): Bundle {
     val b = Bundle()
     for (p in params) {
