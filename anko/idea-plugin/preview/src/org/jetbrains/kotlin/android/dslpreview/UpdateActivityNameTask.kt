@@ -21,7 +21,9 @@ class UpdateActivityNameTask(
         if (location.editor == null) return null
 
         val file = location.kFile
-        if (file == null || !ProjectRootsUtil.isInProjectSource(file)) return null
+        if (file == null ||
+                !ProjectRootsUtil.isInProjectSource(file))
+            return null
 
         val psiElement = file.findElementAt(location.startOffset) ?: return null
         return psiElement
