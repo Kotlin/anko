@@ -126,15 +126,26 @@ internal class DslPreviewClassResolver(private val project: Project) {
             // TODO: Add stable constructor to KotlinTypeMapper
             val typeMapperConstructor7 = KotlinTypeMapper::class.java.constructors.find { it.parameterCount == 7 }
             if (typeMapperConstructor7 != null) {
-                return typeMapperConstructor7
-                        .newInstance(
-                                bindingContext,
-                                ClassBuilderMode.LIGHT_CLASSES,
-                                IncompatibleClassTracker.DoNothing,
-                                "main",
-                                JvmTarget.DEFAULT,
-                                false,
-                                false) as KotlinTypeMapper
+                if (typeMapperConstructor7.parameterTypes[4].isAssignableFrom(JvmTarget::class.java))
+                    return typeMapperConstructor7
+                            .newInstance(
+                                    bindingContext,
+                                    ClassBuilderMode.LIGHT_CLASSES,
+                                    IncompatibleClassTracker.DoNothing,
+                                    "main",
+                                    JvmTarget.DEFAULT,
+                                    false,
+                                    false) as KotlinTypeMapper
+                else
+                    return typeMapperConstructor7
+                            .newInstance(
+                                    bindingContext,
+                                    ClassBuilderMode.LIGHT_CLASSES,
+                                    IncompatibleClassTracker.DoNothing,
+                                    "main",
+                                    false,
+                                    false,
+                                    false) as KotlinTypeMapper
             }
 
             val typeMapperConstructor6 = KotlinTypeMapper::class.java.constructors.find { it.parameterCount == 6 }
