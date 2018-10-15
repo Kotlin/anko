@@ -1,5 +1,11 @@
 apply from: '../../library.gradle'
 
+configurations {
+    stubs // to avoid stubs dependency in pom
+    implementation.extendsFrom stubs
+}
+
 dependencies {
     api project(':static:commons-base')
+    stubs project(':stubs') // needed to resolve dependency cycle
 }
