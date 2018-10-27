@@ -11,7 +11,7 @@ The `0.10.7` release has two satellites `0.10.7-eap13` and `0.10.7-rc13` which a
 
 Anko consists of several parts:
 
-* *Anko Commons*: a lightweight library full of helpers for intents, dialogs, logging and so on;
+* *Anko Commons*: a lightweight library full of helpers for intents, dialogues, logging and so on;
 * *Anko Layouts*: a fast and type-safe way to write dynamic Android layouts;
 * *Anko SQLite*: a query DSL and parser collection for Android SQLite;
 * *Anko Coroutines*: utilities based on the [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines) library.
@@ -27,7 +27,7 @@ Anko consists of several parts:
 
 ## Anko Layouts ([wiki](https://github.com/Kotlin/anko/wiki/Anko-Layouts))
 
-*Anko Layouts* is a DSL for writing dynamic Android layouts. Here is a simple UI written with Anko DSL:
+*Anko Layouts* is a DSL for writing dynamic Android layouts. Here is a simple UI has written with Anko DSL:
 
 ```kotlin
 verticalLayout {
@@ -68,7 +68,7 @@ fun getUsers(db: ManagedSQLiteOpenHelper): List<User> = db.use {
 *Anko Coroutines* is based on the [`kotlinx.coroutines`](https://github.com/kotlin/kotlinx.coroutines) library and provides:
 
 * [`bg()`](https://github.com/Kotlin/anko/wiki/Anko-Coroutines#bg) function that executes your code in a common pool.
-* [`asReference()`](https://github.com/Kotlin/anko/wiki/Anko-Coroutines#asreference) function which creates a weak reference wrapper. By default, a coroutine holds references to captured objects until it is finished or canceled. If your asynchronous framework does not support cancellation, the values you use inside the asynchonous block can be leaked. `asReference()` protects you from this.
+* [`asReference()`](https://github.com/Kotlin/anko/wiki/Anko-Coroutines#asreference) function which creates a weak reference wrapper. By default, a coroutine holds references to captured objects until it is finished or cancelled. If your asynchronous framework does not support cancellation, the values you use inside the asynchronous block can be leaked. `asReference()` protects you from this.
 
 ## Using Anko
 
