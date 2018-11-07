@@ -19,15 +19,13 @@
 
 package org.jetbrains.anko.coroutines.experimental
 
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.newFixedThreadPoolContext
+import kotlinx.coroutines.*
 
 @PublishedApi
 @Deprecated(message = "Use the default pool")
 internal var POOL = newFixedThreadPoolContext(2 * Runtime.getRuntime().availableProcessors(), "bg")
 
 @Deprecated(message = "Use the default pool", replaceWith = ReplaceWith("async(block)", "kotlinx.coroutines.async"))
-inline fun <T> bg(crossinline block: () -> T): Deferred<T> = async(POOL) {
+inline fun <T> bg(crossinline block: () -> T): Deferred<T> = GlobalScope.async(POOL, CoroutineStart.DEFAULT) {
     block()
 }
