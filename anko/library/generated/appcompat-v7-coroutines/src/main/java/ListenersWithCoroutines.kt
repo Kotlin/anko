@@ -3,17 +3,19 @@ package org.jetbrains.anko.appcompat.v7.coroutines
 
 
 import kotlin.coroutines.CoroutineContext
-import kotlinx.coroutines.android.UI
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineStart
 
 fun android.support.v7.widget.ActionMenuView.onMenuItemClick(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         returnValue: Boolean = false,
         handler: suspend CoroutineScope.(item: android.view.MenuItem?) -> Unit
 ) {
     setOnMenuItemClickListener { item ->
-        launch(context) {
+        GlobalScope.launch(context, CoroutineStart.DEFAULT) {
             handler(item)
         }
         returnValue
@@ -21,49 +23,49 @@ fun android.support.v7.widget.ActionMenuView.onMenuItemClick(
 }
 
 fun android.support.v7.widget.ActivityChooserView.onDismiss(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         handler: suspend CoroutineScope.() -> Unit
 ) {
     setOnDismissListener {  ->
-        launch(context, block = handler)
+        GlobalScope.launch(context, CoroutineStart.DEFAULT, block = handler)
     }
 }
 
 fun android.support.v7.widget.FitWindowsFrameLayout.onFitSystemWindows(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         handler: suspend CoroutineScope.(insets: android.graphics.Rect?) -> Unit
 ) {
     setOnFitSystemWindowsListener { insets ->
-        launch(context) {
+        GlobalScope.launch(context, CoroutineStart.DEFAULT) {
             handler(insets)
         }
     }
 }
 
 fun android.support.v7.widget.SearchView.onClose(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         returnValue: Boolean = false,
         handler: suspend CoroutineScope.() -> Unit
 ) {
     setOnCloseListener {  ->
-        launch(context, block = handler)
+        GlobalScope.launch(context, CoroutineStart.DEFAULT, block = handler)
         returnValue
     }
 }
 
 fun android.support.v7.widget.SearchView.onQueryTextFocusChange(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         handler: suspend CoroutineScope.(v: android.view.View, hasFocus: Boolean) -> Unit
 ) {
     setOnQueryTextFocusChangeListener { v, hasFocus ->
-        launch(context) {
+        GlobalScope.launch(context, CoroutineStart.DEFAULT) {
             handler(v, hasFocus)
         }
     }
 }
 
 fun android.support.v7.widget.SearchView.onQueryTextListener(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         init: __SearchView_OnQueryTextListener.() -> Unit
 ) {
     val listener = __SearchView_OnQueryTextListener(context)
@@ -79,7 +81,7 @@ class __SearchView_OnQueryTextListener(private val context: CoroutineContext) : 
     override fun onQueryTextSubmit(query: String?) : Boolean {
         val returnValue = _onQueryTextSubmit_returnValue
         val handler = _onQueryTextSubmit ?: return returnValue
-        launch(context) {
+        GlobalScope.launch(context) {
             handler(query)
         }
         return returnValue
@@ -99,7 +101,7 @@ class __SearchView_OnQueryTextListener(private val context: CoroutineContext) : 
     override fun onQueryTextChange(newText: String?) : Boolean {
         val returnValue = _onQueryTextChange_returnValue
         val handler = _onQueryTextChange ?: return returnValue
-        launch(context) {
+        GlobalScope.launch(context) {
             handler(newText)
         }
         return returnValue
@@ -114,18 +116,18 @@ class __SearchView_OnQueryTextListener(private val context: CoroutineContext) : 
     }
 
 }fun android.support.v7.widget.SearchView.onSearchClick(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         handler: suspend CoroutineScope.(v: android.view.View?) -> Unit
 ) {
     setOnSearchClickListener { v ->
-        launch(context) {
+        GlobalScope.launch(context, CoroutineStart.DEFAULT) {
             handler(v)
         }
     }
 }
 
 fun android.support.v7.widget.SearchView.onSuggestionListener(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         init: __SearchView_OnSuggestionListener.() -> Unit
 ) {
     val listener = __SearchView_OnSuggestionListener(context)
@@ -141,7 +143,7 @@ class __SearchView_OnSuggestionListener(private val context: CoroutineContext) :
     override fun onSuggestionSelect(position: Int) : Boolean {
         val returnValue = _onSuggestionSelect_returnValue
         val handler = _onSuggestionSelect ?: return returnValue
-        launch(context) {
+        GlobalScope.launch(context) {
             handler(position)
         }
         return returnValue
@@ -161,7 +163,7 @@ class __SearchView_OnSuggestionListener(private val context: CoroutineContext) :
     override fun onSuggestionClick(position: Int) : Boolean {
         val returnValue = _onSuggestionClick_returnValue
         val handler = _onSuggestionClick ?: return returnValue
-        launch(context) {
+        GlobalScope.launch(context) {
             handler(position)
         }
         return returnValue
@@ -176,12 +178,12 @@ class __SearchView_OnSuggestionListener(private val context: CoroutineContext) :
     }
 
 }fun android.support.v7.widget.Toolbar.onMenuItemClick(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         returnValue: Boolean = false,
         handler: suspend CoroutineScope.(item: android.view.MenuItem?) -> Unit
 ) {
     setOnMenuItemClickListener { item ->
-        launch(context) {
+        GlobalScope.launch(context, CoroutineStart.DEFAULT) {
             handler(item)
         }
         returnValue
@@ -189,11 +191,11 @@ class __SearchView_OnSuggestionListener(private val context: CoroutineContext) :
 }
 
 fun android.support.v7.widget.ViewStubCompat.onInflate(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         handler: suspend CoroutineScope.(stub: android.support.v7.widget.ViewStubCompat?, inflated: android.view.View?) -> Unit
 ) {
     setOnInflateListener { stub, inflated ->
-        launch(context) {
+        GlobalScope.launch(context, CoroutineStart.DEFAULT) {
             handler(stub, inflated)
         }
     }

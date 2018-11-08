@@ -1,5 +1,5 @@
 fun {{ setter.receiver }}.{{ setter.methodName }}Listener(
-        context: {{ imported("kotlin.coroutines.CoroutineContext") }} = {{ imported("kotlinx.coroutines.android.UI") }},
+        context: {{ imported("kotlin.coroutines.CoroutineContext") }} = {{ imported("kotlinx.coroutines.Dispatchers.Main") }},
         init: {{ setter.listener }}.() -> Unit
 ) {
     val listener = {{ setter.listener }}(context)
@@ -16,11 +16,11 @@ class {{ helperClassName }}(private val context: {{ imported("kotlin.coroutines.
         {% if (method.returnType != "Unit") %}val returnValue = _{{ method.varName }}_returnValue
         {% endif %}val handler = _{{ method.varName }} ?: return{% if (method.returnType != "Unit") %} returnValue{% endif %}
         {% if (method.hasArgs == true) -%}
-        {{ imported("kotlinx.coroutines.launch") }}(context) {
+        {{ imported("kotlinx.coroutines.GlobalScope") }}.{{ imported("kotlinx.coroutines.launch") }}(context) {
             handler({{ method.argNames }})
         }
         {%- else -%}
-        {{ imported("kotlinx.coroutines.launch") }}(context, block = handler)
+        {{ imported("kotlinx.coroutines.GlobalScope") }}.{{ imported("kotlinx.coroutines.launch") }}(context, block = handler)
         {%- endif %}{% if (method.returnType != "Unit") %}
         return returnValue{% endif %}
     }
