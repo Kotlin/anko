@@ -18,13 +18,15 @@ package org.jetbrains.anko.coroutines.experimental
 
 import java.lang.ref.WeakReference
 import java.util.concurrent.CancellationException
-import kotlin.coroutines.experimental.intrinsics.suspendCoroutineOrReturn
+import kotlin.coroutines.intrinsics.intercepted
+import kotlin.coroutines.intrinsics.suspendCoroutineUninterceptedOrReturn
 
 class Ref<out T : Any> internal constructor(obj: T) {
     private val weakRef = WeakReference(obj)
 
     suspend operator fun invoke(): T {
-        return suspendCoroutineOrReturn {
+        return suspendCoroutineUninterceptedOrReturn {
+            it.intercepted()
             weakRef.get() ?: throw CancellationException()
         }
     }

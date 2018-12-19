@@ -2,24 +2,26 @@
 package org.jetbrains.anko.design.coroutines
 
 
-import kotlin.coroutines.experimental.CoroutineContext
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.launch
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineStart
 
 fun android.support.design.widget.AppBarLayout.onOffsetChanged(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         handler: suspend CoroutineScope.(appBarLayout: android.support.design.widget.AppBarLayout?, verticalOffset: Int) -> Unit
 ) {
     addOnOffsetChangedListener { appBarLayout, verticalOffset ->
-        launch(context) {
+        GlobalScope.launch(context, CoroutineStart.DEFAULT) {
             handler(appBarLayout, verticalOffset)
         }
     }
 }
 
 fun android.support.design.widget.TabLayout.onTabSelectedListener(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         init: __TabLayout_OnTabSelectedListener.() -> Unit
 ) {
     val listener = __TabLayout_OnTabSelectedListener(context)
@@ -34,7 +36,7 @@ class __TabLayout_OnTabSelectedListener(private val context: CoroutineContext) :
 
     override fun onTabSelected(tab: android.support.design.widget.TabLayout.Tab?) {
         val handler = _onTabSelected ?: return
-        launch(context) {
+        GlobalScope.launch(context) {
             handler(tab)
         }
     }
@@ -50,7 +52,7 @@ class __TabLayout_OnTabSelectedListener(private val context: CoroutineContext) :
 
     override fun onTabUnselected(tab: android.support.design.widget.TabLayout.Tab?) {
         val handler = _onTabUnselected ?: return
-        launch(context) {
+        GlobalScope.launch(context) {
             handler(tab)
         }
     }
@@ -66,7 +68,7 @@ class __TabLayout_OnTabSelectedListener(private val context: CoroutineContext) :
 
     override fun onTabReselected(tab: android.support.design.widget.TabLayout.Tab?) {
         val handler = _onTabReselected ?: return
-        launch(context) {
+        GlobalScope.launch(context) {
             handler(tab)
         }
     }
@@ -78,12 +80,12 @@ class __TabLayout_OnTabSelectedListener(private val context: CoroutineContext) :
     }
 
 }fun android.support.design.widget.BottomNavigationView.onNavigationItemSelected(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         returnValue: Boolean = false,
         handler: suspend CoroutineScope.(item: android.view.MenuItem?) -> Unit
 ) {
     setOnNavigationItemSelectedListener { item ->
-        launch(context) {
+        GlobalScope.launch(context, CoroutineStart.DEFAULT) {
             handler(item)
         }
         returnValue
@@ -91,7 +93,7 @@ class __TabLayout_OnTabSelectedListener(private val context: CoroutineContext) :
 }
 
 fun android.support.design.widget.CoordinatorLayout.onHierarchyChangeListener(
-        context: CoroutineContext = UI,
+        context: CoroutineContext = Dispatchers.Main,
         init: __ViewGroup_OnHierarchyChangeListener.() -> Unit
 ) {
     val listener = __ViewGroup_OnHierarchyChangeListener(context)
@@ -106,7 +108,7 @@ class __ViewGroup_OnHierarchyChangeListener(private val context: CoroutineContex
 
     override fun onChildViewAdded(parent: android.view.View?, child: android.view.View?) {
         val handler = _onChildViewAdded ?: return
-        launch(context) {
+        GlobalScope.launch(context) {
             handler(parent, child)
         }
     }
@@ -122,7 +124,7 @@ class __ViewGroup_OnHierarchyChangeListener(private val context: CoroutineContex
 
     override fun onChildViewRemoved(parent: android.view.View?, child: android.view.View?) {
         val handler = _onChildViewRemoved ?: return
-        launch(context) {
+        GlobalScope.launch(context) {
             handler(parent, child)
         }
     }
