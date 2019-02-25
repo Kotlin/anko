@@ -49,7 +49,7 @@
 
     <property name="dependencies.info.file" value="dependencies/dependencies.properties"/>
 
-    <property name="gradle.libs.repo" value="http://repo.gradle.org/gradle/libs-releases-local"/>
+    <property name="gradle.libs.repo" value="https://repo.gradle.org/gradle/libs-releases-local"/>
 
     <property name="native-platform-lib-version" value="0.10"/>
 
@@ -65,7 +65,7 @@
 
     <target name="jb_update" depends="fetch-third-party,fetch-annotations" description="Update dependencies for JB local network">
         <execute_update_with_idea_maven_artifacts
-                base.url="http://jetbrains-com-mirror.labs.intellij.net/intellij-repository/releases/com/jetbrains/intellij/idea"
+                base.url="https://jetbrains-com-mirror.labs.intellij.net/intellij-repository/releases/com/jetbrains/intellij/idea"
                 idea.maven.version="${ideaVersion}"/>
     </target>
 
@@ -203,8 +203,8 @@
         <get-maven-library prefix="org/mozilla" lib="rhino" version="1.7.6"/>
 
         <!-- Closure Compiler -->
-        <!-- A download url taken from http://code.google.com/p/closure-compiler/wiki/BinaryDownloads -->
-        <get src="http://dl.google.com/closure-compiler/compiler-20131014.zip"
+        <!-- A download url taken from https://code.google.com/p/closure-compiler/wiki/BinaryDownloads -->
+        <get src="https://dl.google.com/closure-compiler/compiler-20131014.zip"
              dest="dependencies/download/closure-compiler.zip" usetimestamp="true"/>
 
         <delete file="dependencies/closure-compiler.jar" failonerror="false"/>
@@ -216,7 +216,7 @@
         </unzip>
 
         <delete file="dependencies/android.jar" failonerror="false"/>
-        <get src="http://dl-ssl.google.com/android/repository/android-19_r02.zip"
+        <get src="https://dl-ssl.google.com/android/repository/android-19_r02.zip"
              dest="dependencies/download/android-sdk.zip" usetimestamp="true"/>
         <unzip src="dependencies/download/android-sdk.zip" dest="dependencies">
             <patternset>
@@ -754,7 +754,7 @@
 
         <property name="android.file.name" value="android-studio-ide-${android.build.version}-${android.os.tag}.zip"/>
         <property name="android.studio.url"
-                  value="http://dl.google.com/dl/android/studio/ide-zips/${android.version}/${android.file.name}"/>
+                  value="https://dl.google.com/dl/android/studio/ide-zips/${android.version}/${android.file.name}"/>
         <property name="android.download.dir" value="${dependencies}/android-studio"/>
         <property name="android.destination.dir" value="ideaSDK"/>
 

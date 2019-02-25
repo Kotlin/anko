@@ -3,7 +3,7 @@
     <name>Anko Support</name>
     <description>Anko Android library support.</description>
     <version>0.10.8</version>
-    <vendor url="http://www.jetbrains.com">JetBrains s.r.o.</vendor>
+    <vendor url="https://www.jetbrains.com">JetBrains s.r.o.</vendor>
 
     <idea-version since-build="171.1" until-build="183.*"/>
 

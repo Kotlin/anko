@@ -64,7 +64,7 @@ publishing {
                             id 'JetBrains'
                             name 'JetBrains Team'
                             organization 'JetBrains'
-                            organizationUrl 'http://www.jetbrains.com'
+                            organizationUrl 'https://www.jetbrains.com'
                         }
                     }
                 }

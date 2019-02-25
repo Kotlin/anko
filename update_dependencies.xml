@@ -5,19 +5,19 @@
     <target name="update">
         <mkdir dir="dependencies/download"/>
 
-        <get src="http://repo1.maven.org/maven2/org/ow2/asm/asm-debug-all/4.2/asm-debug-all-4.2.jar"
+        <get src="https://repo1.maven.org/maven2/org/ow2/asm/asm-debug-all/4.2/asm-debug-all-4.2.jar"
              dest="dependencies/asm-4.2.jar" usetimestamp="true"/>
 
-        <get src="http://search.maven.org/remotecontent?filepath=junit/junit/4.11/junit-4.11.jar"
+        <get src="https://search.maven.org/remotecontent?filepath=junit/junit/4.11/junit-4.11.jar"
              dest="dependencies/junit-4.11.jar" usetimestamp="true"/>
 
-        <get src="http://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-all/1.3/hamcrest-all-1.3.jar"
+        <get src="https://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-all/1.3/hamcrest-all-1.3.jar"
              dest="dependencies/hamcrest-all-1.3.jar" usetimestamp="true"/>
 
-        <get src="http://search.maven.org/remotecontent?filepath=org/json/json/20080701/json-20080701.jar"
+        <get src="https://search.maven.org/remotecontent?filepath=org/json/json/20080701/json-20080701.jar"
              dest="dependencies/json-20080701.jar" usetimestamp="true"/>
 
-	    <get src="http://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar"
+	    <get src="https://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar"
              dest="dependencies/ant-contrib.jar" usetimestamp="true"/>
 
         <get src="https://dl.google.com/dl/android/maven2/com/android/support/constraint/constraint-layout/${constraint.layout.version}/constraint-layout-${constraint.layout.version}.aar"
@@ -30,7 +30,7 @@
 
         <!-- Uncomment this to build against custom version of Kotlin plugin instead of bundled into AS -->
         <!--
-        <get src="http://download.plugins.jetbrains.com/6954/38245/kotlin-plugin-1.1.4-release-Studio3.0-3.zip"
+        <get src="https://download.plugins.jetbrains.com/6954/38245/kotlin-plugin-1.1.4-release-Studio3.0-3.zip"
              dest="dependencies/kotlin-plugin.zip" usetimestamp="true"/>
 
         <delete dir="dependencies/kotlin-plugin" failonerror="false"/>

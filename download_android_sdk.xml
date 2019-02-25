@@ -50,7 +50,7 @@
         <attribute name="android.full.version" />
 
         <sequential>
-            <get src="http://dl-ssl.google.com/android/repository/android-@{android.versioncode}.zip"
+            <get src="https://dl-ssl.google.com/android/repository/android-@{android.versioncode}.zip"
                  dest="${download.dir}/android-platform-@{android.versioncode}.zip" usetimestamp="true"/>
 
             <unzip src="${download.dir}/android-platform-@{android.versioncode}.zip" dest="${android.sdk.dir}/platforms"/>
@@ -66,7 +66,7 @@
         <attribute name="android.full.version" />
 
         <sequential>
-            <get src="http://dl-ssl.google.com/android/repository/platform-@{android.versioncode}.zip"
+            <get src="https://dl-ssl.google.com/android/repository/platform-@{android.versioncode}.zip"
                  dest="${download.dir}/android-platform-@{android.versioncode}.zip" usetimestamp="true"/>
 
             <unzip src="${download.dir}/android-platform-@{android.versioncode}.zip" dest="${android.sdk.dir}/platforms"/>
@@ -81,7 +81,7 @@
         <attribute name="android.platform.tools.version" />
 
         <sequential>
-            <get src="http://dl-ssl.google.com/android/repository/platform-tools_r@{android.platform.tools.version}-${tools.os}.zip"
+            <get src="https://dl-ssl.google.com/android/repository/platform-tools_r@{android.platform.tools.version}-${tools.os}.zip"
                  dest="${download.dir}/android-platform-tools_r@{android.platform.tools.version}.zip" usetimestamp="true"/>
 
             <unzip src="${download.dir}/android-platform-tools_r@{android.platform.tools.version}.zip" dest="${android.sdk.dir}"/>
@@ -92,7 +92,7 @@
         <attribute name="android.tools.version" />
 
         <sequential>
-            <get src="http://dl.google.com/android/repository/tools_r@{android.tools.version}-${tools.os}.zip"
+            <get src="https://dl.google.com/android/repository/tools_r@{android.tools.version}-${tools.os}.zip"
                  dest="${download.dir}/android-tools_r@{android.tools.version}.zip" usetimestamp="true"/>
 
             <unzip src="${download.dir}/android-tools_r@{android.tools.version}.zip" dest="${android.sdk.dir}"/>
@@ -106,7 +106,7 @@
         <sequential>
             <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="dependencies/ant-contrib.jar"/>
 
-            <get src="http://dl.google.com/android/repository/build-tools_r@{android.build.tools.version}-${tools.os}.zip"
+            <get src="https://dl.google.com/android/repository/build-tools_r@{android.build.tools.version}-${tools.os}.zip"
                  dest="${download.dir}/android-build-tools_r@{android.build.tools.version}.zip" usetimestamp="true"/>
 
             <unzip src="${download.dir}/android-build-tools_r@{android.build.tools.version}.zip" dest="${android.sdk.dir}/build-tools"/>
@@ -135,7 +135,7 @@
         <attribute name="android.repo.last" />
 
         <sequential>
-            <get src="http://dl-ssl.google.com/android/repository/android_m2repository_r@{android.repo.version}.zip"
+            <get src="https://dl-ssl.google.com/android/repository/android_m2repository_r@{android.repo.version}.zip"
                  dest="${download.dir}/android_m2repository_r@{android.repo.version}.zip" usetimestamp="true"/>
 
             <mkdir dir="${android.sdk.dir}/extras/android" />
@@ -157,7 +157,7 @@
         <attribute name="android.sources.version" />
 
         <sequential>
-            <get src="http://dl-ssl.google.com/android/repository/sources-@{android.sources.versioncode}.zip"
+            <get src="https://dl-ssl.google.com/android/repository/sources-@{android.sources.versioncode}.zip"
                  dest="${download.dir}/android_sources_@{android.sources.versioncode}.zip" usetimestamp="true"/>
 
             <mkdir dir="${android.sdk.dir}/sources/android-@{android.sources.version}" />
