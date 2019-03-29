@@ -28,9 +28,9 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.os.Parcelable
 import android.preference.PreferenceManager
-import android.support.annotation.IdRes
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
 import java.io.Serializable
 
 inline val AnkoContext<*>.resources: Resources

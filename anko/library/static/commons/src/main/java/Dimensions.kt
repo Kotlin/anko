@@ -19,9 +19,9 @@ package org.jetbrains.anko
 
 import android.app.Fragment
 import android.content.Context
-import android.support.annotation.DimenRes
 import android.util.DisplayMetrics
 import android.view.View
+import androidx.annotation.DimenRes
 
 const val LDPI: Int = DisplayMetrics.DENSITY_LOW
 const val MDPI: Int = DisplayMetrics.DENSITY_MEDIUM

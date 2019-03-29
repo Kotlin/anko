@@ -18,10 +18,10 @@
 package org.jetbrains.anko
 
 import android.os.Build
-import android.support.annotation.IdRes
-import android.support.annotation.RequiresApi
 import android.view.View
 import android.widget.RelativeLayout.*
+import androidx.annotation.IdRes
+import androidx.annotation.RequiresApi
 
 /**
  * Place the current View above [view].
