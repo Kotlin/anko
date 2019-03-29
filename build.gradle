@@ -2,9 +2,15 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 buildscript {
-    ext.kotlin_version = '1.3.0'
+    ext.kotlin_version = '1.3.21'
     ext.kotlinx_dom_version = '0.0.10'
     ext.kotlinx_coroutines_version = '1.0.0'
+
+    ext.androidx_legacy_version = '1.0.0'
+    ext.androidx_appcompat_version = "1.0.2"
+    ext.androidx_constrainlayout_version = "1.1.3"
+
+    ext.material_version = "1.0.0"
 
     ext.ANKO_VERSION = '0.10.8'
     ext.ANKO_VERSION_CODE = 106
@@ -34,7 +40,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:3.1.2"
+        classpath "com.android.tools.build:gradle:3.3.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
