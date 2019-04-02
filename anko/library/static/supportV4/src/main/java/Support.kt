@@ -17,13 +17,9 @@
 @file:Suppress("unused")
 package org.jetbrains.anko.support.v4
 
-import android.support.v4.app.Fragment
 import android.view.View
-import org.jetbrains.anko.AnkoContext
-import org.jetbrains.anko.Orientation
-import org.jetbrains.anko.ScreenSize
-import org.jetbrains.anko.UiMode
-import org.jetbrains.anko.bundleOf
+import androidx.fragment.app.Fragment
+import org.jetbrains.anko.*
 import org.jetbrains.anko.internals.AnkoInternals
 import org.jetbrains.anko.internals.AnkoInternals.createAnkoContext
 

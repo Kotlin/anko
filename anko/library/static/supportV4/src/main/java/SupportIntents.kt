@@ -20,13 +20,9 @@ package org.jetbrains.anko.support.v4
 import android.app.Activity
 import android.app.Service
 import android.content.Intent
-import android.support.v4.app.Fragment
-import org.jetbrains.anko.browse
-import org.jetbrains.anko.email
+import androidx.fragment.app.Fragment
+import org.jetbrains.anko.*
 import org.jetbrains.anko.internals.AnkoInternals
-import org.jetbrains.anko.makeCall
-import org.jetbrains.anko.sendSMS
-import org.jetbrains.anko.share
 
 fun Fragment.browse(url: String, newTask: Boolean = false): Boolean = requireActivity().browse(url, newTask)
 
