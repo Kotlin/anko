@@ -1,0 +1,6 @@
+apply from: '../../library.gradle'
+
+dependencies {
+    api "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    api project(':static:commons-base')
+}
