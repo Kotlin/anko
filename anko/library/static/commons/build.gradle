@@ -1,5 +1,5 @@
 apply from: '../../library.gradle'
 
 dependencies {
-    api "androidx.annotation:annotation:$androidx_appcompat_version"
+    api "androidx.annotation:annotation:$androidx_annotation_version"
 }

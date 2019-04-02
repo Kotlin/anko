@@ -17,7 +17,7 @@
 @file:Suppress("NOTHING_TO_INLINE", "unused")
 package org.jetbrains.anko.support.v4
 
-import androidx.fragment.app.Fragment
+import android.support.v4.app.Fragment
 import org.jetbrains.anko.*
 
 inline fun Fragment.dip(value: Int): Int = requireActivity().dip(value)

@@ -19,14 +19,8 @@ package org.jetbrains.anko.support.v4
 
 import android.app.ProgressDialog
 import android.content.DialogInterface
-import android.support.v4.app.Fragment
-import org.jetbrains.anko.AlertBuilder
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.indeterminateProgressDialog
-import org.jetbrains.anko.longToast
-import org.jetbrains.anko.progressDialog
-import org.jetbrains.anko.selector
-import org.jetbrains.anko.toast
+import androidx.fragment.app.Fragment
+import org.jetbrains.anko.*
 
 inline fun Fragment.toast(textResource: Int) = requireActivity().toast(textResource)
 
