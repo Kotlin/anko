@@ -8,6 +8,7 @@ buildscript {
 
     ext.androidx_legacy_version = '1.0.0'
     ext.androidx_appcompat_version = "1.0.2"
+    ext.androidx_annotation_version = '1.0.2'
     ext.androidx_constrainlayout_version = "1.1.3"
 
     ext.material_version = "1.0.0"
@@ -133,7 +134,9 @@ def publishedArtifacts = [
     ':static:design-base',
     ':static:supportV4-base',
     ':static:appcompatV7-base',
-    ':static:constraint-layout-base'
+    ':static:constraint-layout-base',
+    ':static:androidxLegacySupportV4-base',
+    ':static:androidxAppcompat-base'
 ]
 
 task dist()
