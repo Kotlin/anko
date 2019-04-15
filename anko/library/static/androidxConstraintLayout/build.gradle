@@ -1,0 +1,7 @@
+apply from: '../../library.gradle'
+
+dependencies {
+    api "androidx.annotation:annotation:$androidx_annotation_version"
+    api "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
+    api project(':static:commons-base')
+}
