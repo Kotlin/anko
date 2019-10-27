@@ -43,10 +43,14 @@ abstract class AbstractListenerRenderer(context: GeneratorContext) : Renderer(co
 
     override fun processElements(state: GenerationState) = generatedFile { importList ->
         for (listener in state[ListenerGenerator::class.java]) {
-            when (listener) {
-                is SimpleListenerElement -> append(listener.render(importList))
-                is ComplexListenerElement -> append(listener.render(importList))
-                else -> throw RuntimeException("Invalid listener type: ${listener.javaClass.name}")
+            try {
+                when (listener) {
+                    is SimpleListenerElement -> append(listener.render(importList))
+                    is ComplexListenerElement -> append(listener.render(importList))
+                    else -> throw RuntimeException("Invalid listener type: ${listener.javaClass.name}")
+                }
+            } catch (e: IllegalStateException) {
+                state.context.logger.i("Skip ${listener.clazz.name} listener")
             }
         }
     }
