@@ -4,7 +4,7 @@
 
 <img src="doc/logo.png" alt="Anko logo" height="101" width="220" />
 
-:warning: Anko is deprecated. Please see [this page](/GOODBYE.md) page for more information.
+:warning: Anko is deprecated. Please see [this page](/GOODBYE.md) for more information.
 
 * * *
 
