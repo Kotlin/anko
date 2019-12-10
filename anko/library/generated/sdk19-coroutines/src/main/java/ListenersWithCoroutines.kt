@@ -1027,3 +1027,127 @@ fun android.widget.ZoomControls.onZoomOutClick(
     }
 }
 
+fun android.view.View.setGestureListener(
+    context: CoroutineContext = Dispatchers.Main,
+    init: __View_OnGestureListener.() -> Unit
+) {
+    val listener = __View_OnGestureListener(context)
+    listener.init()
+    val detector = android.view.GestureDetector(this.context, listener)
+    onTouch { _, event -> detector.onTouchEvent(event) }
+}
+
+class __View_OnGestureListener(private val context: CoroutineContext) : android.view.GestureDetector.OnGestureListener {
+
+    private var _onShowPress: (suspend CoroutineScope.(android.view.MotionEvent?) -> Unit)? = null
+
+    fun onShowPress(listener: suspend CoroutineScope.(android.view.MotionEvent?) -> Unit) {
+        _onShowPress = listener
+    }
+
+    override fun onShowPress(e: android.view.MotionEvent?) {
+        val handler = _onShowPress ?: return
+        GlobalScope.launch(context) {
+            handler(e)
+        }
+    }
+
+
+    private var _onSingleTapUp: (suspend CoroutineScope.(android.view.MotionEvent?) -> Boolean)? = null
+    private var _onSingleTapUp_returnValue: Boolean = false
+
+    fun onSingleTapUp(
+        returnValue: Boolean = false,
+        listener: suspend CoroutineScope.(android.view.MotionEvent?) -> Boolean
+    ) {
+        _onSingleTapUp = listener
+        _onSingleTapUp_returnValue = returnValue
+    }
+
+    override fun onSingleTapUp(e: android.view.MotionEvent?): Boolean {
+        val returnValue = _onSingleTapUp_returnValue
+        val handler = _onSingleTapUp ?: return returnValue
+        GlobalScope.launch(context) {
+            handler(e)
+        }
+        return returnValue
+    }
+
+
+    private var _onDown: (suspend CoroutineScope.(android.view.MotionEvent?) -> Boolean)? = null
+    private var _onDown_returnValue: Boolean = false
+
+    fun onDown(
+        returnValue: Boolean = false,
+        listener: suspend CoroutineScope.(android.view.MotionEvent?) -> Boolean
+    ) {
+        _onDown = listener
+        _onDown_returnValue = returnValue
+    }
+
+    override fun onDown(e: android.view.MotionEvent?): Boolean {
+        val returnValue = _onDown_returnValue
+        val handler = _onDown ?: return returnValue
+        GlobalScope.launch(context) {
+            handler(e)
+        }
+        return returnValue
+    }
+
+
+    private var _onLongPress: (suspend CoroutineScope.(android.view.MotionEvent?) -> Unit)? = null
+
+    fun onLongPress(listener: suspend CoroutineScope.(android.view.MotionEvent?) -> Unit) {
+        _onLongPress = listener
+    }
+
+    override fun onLongPress(e: android.view.MotionEvent?) {
+        val handler = _onLongPress ?: return
+        GlobalScope.launch(context) {
+            handler(e)
+        }
+    }
+
+
+    private var _onFling: (suspend CoroutineScope.(android.view.MotionEvent?, android.view.MotionEvent?, Float, Float) -> Boolean)? = null
+    private var _onFling_returnValue: Boolean = false
+
+    fun onFling(
+        returnValue: Boolean = false,
+        listener: suspend CoroutineScope.(android.view.MotionEvent?, android.view.MotionEvent?, Float, Float) -> Boolean
+    ) {
+        _onFling = listener
+        _onFling_returnValue = returnValue
+    }
+
+    override fun onFling(e1: android.view.MotionEvent?, e2: android.view.MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
+        val returnValue = _onFling_returnValue
+        val handler = _onFling ?: return returnValue
+        GlobalScope.launch(context) {
+            handler(e1, e2, velocityX, velocityY)
+        }
+        return returnValue
+    }
+
+
+    private var _onScroll: (CoroutineScope.(android.view.MotionEvent?, android.view.MotionEvent?, Float, Float) -> Boolean)? = null
+    private var _onScroll_returnValue: Boolean = false
+
+    fun onScroll(
+        returnValue: Boolean = false,
+        listener: CoroutineScope.(android.view.MotionEvent?, android.view.MotionEvent?, Float, Float) -> Boolean
+    ) {
+        _onScroll = listener
+        _onScroll_returnValue = returnValue
+    }
+
+    override fun onScroll(e1: android.view.MotionEvent?, e2: android.view.MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+        val returnValue = _onScroll_returnValue
+        val handler = _onScroll?: return returnValue
+        GlobalScope.launch(context) {
+            handler(e1, e2, distanceX, distanceY)
+        }
+        return returnValue
+    }
+}
+

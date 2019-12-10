@@ -32,7 +32,7 @@ fun android.view.View.onAttachStateChangeListener(
 class __View_OnAttachStateChangeListener(private val context: CoroutineContext) : android.view.View.OnAttachStateChangeListener {
 
     private var _onViewAttachedToWindow: (suspend CoroutineScope.(android.view.View) -> Unit)? = null
-    
+
 
     override fun onViewAttachedToWindow(v: android.view.View) {
         val handler = _onViewAttachedToWindow ?: return
@@ -48,7 +48,7 @@ class __View_OnAttachStateChangeListener(private val context: CoroutineContext) 
     }
 
     private var _onViewDetachedFromWindow: (suspend CoroutineScope.(android.view.View) -> Unit)? = null
-    
+
 
     override fun onViewDetachedFromWindow(v: android.view.View) {
         val handler = _onViewDetachedFromWindow ?: return
@@ -75,7 +75,7 @@ class __View_OnAttachStateChangeListener(private val context: CoroutineContext) 
 class __TextWatcher(private val context: CoroutineContext) : android.text.TextWatcher {
 
     private var _beforeTextChanged: (suspend CoroutineScope.(CharSequence?, Int, Int, Int) -> Unit)? = null
-    
+
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         val handler = _beforeTextChanged ?: return
@@ -91,7 +91,7 @@ class __TextWatcher(private val context: CoroutineContext) : android.text.TextWa
     }
 
     private var _onTextChanged: (suspend CoroutineScope.(CharSequence?, Int, Int, Int) -> Unit)? = null
-    
+
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         val handler = _onTextChanged ?: return
@@ -107,7 +107,7 @@ class __TextWatcher(private val context: CoroutineContext) : android.text.TextWa
     }
 
     private var _afterTextChanged: (suspend CoroutineScope.(android.text.Editable?) -> Unit)? = null
-    
+
 
     override fun afterTextChanged(s: android.text.Editable?) {
         val handler = _afterTextChanged ?: return
@@ -134,7 +134,7 @@ class __TextWatcher(private val context: CoroutineContext) : android.text.TextWa
 class __GestureOverlayView_OnGestureListener(private val context: CoroutineContext) : android.gesture.GestureOverlayView.OnGestureListener {
 
     private var _onGestureStarted: (suspend CoroutineScope.(android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit)? = null
-    
+
 
     override fun onGestureStarted(overlay: android.gesture.GestureOverlayView?, event: android.view.MotionEvent?) {
         val handler = _onGestureStarted ?: return
@@ -150,7 +150,7 @@ class __GestureOverlayView_OnGestureListener(private val context: CoroutineConte
     }
 
     private var _onGesture: (suspend CoroutineScope.(android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit)? = null
-    
+
 
     override fun onGesture(overlay: android.gesture.GestureOverlayView?, event: android.view.MotionEvent?) {
         val handler = _onGesture ?: return
@@ -166,7 +166,7 @@ class __GestureOverlayView_OnGestureListener(private val context: CoroutineConte
     }
 
     private var _onGestureEnded: (suspend CoroutineScope.(android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit)? = null
-    
+
 
     override fun onGestureEnded(overlay: android.gesture.GestureOverlayView?, event: android.view.MotionEvent?) {
         val handler = _onGestureEnded ?: return
@@ -182,7 +182,7 @@ class __GestureOverlayView_OnGestureListener(private val context: CoroutineConte
     }
 
     private var _onGestureCancelled: (suspend CoroutineScope.(android.gesture.GestureOverlayView?, android.view.MotionEvent?) -> Unit)? = null
-    
+
 
     override fun onGestureCancelled(overlay: android.gesture.GestureOverlayView?, event: android.view.MotionEvent?) {
         val handler = _onGestureCancelled ?: return
@@ -220,7 +220,7 @@ fun android.gesture.GestureOverlayView.onGesturingListener(
 class __GestureOverlayView_OnGesturingListener(private val context: CoroutineContext) : android.gesture.GestureOverlayView.OnGesturingListener {
 
     private var _onGesturingStarted: (suspend CoroutineScope.(android.gesture.GestureOverlayView?) -> Unit)? = null
-    
+
 
     override fun onGesturingStarted(overlay: android.gesture.GestureOverlayView?) {
         val handler = _onGesturingStarted ?: return
@@ -236,7 +236,7 @@ class __GestureOverlayView_OnGesturingListener(private val context: CoroutineCon
     }
 
     private var _onGesturingEnded: (suspend CoroutineScope.(android.gesture.GestureOverlayView?) -> Unit)? = null
-    
+
 
     override fun onGesturingEnded(overlay: android.gesture.GestureOverlayView?) {
         val handler = _onGesturingEnded ?: return
@@ -385,7 +385,7 @@ fun android.view.ViewGroup.onHierarchyChangeListener(
 class __ViewGroup_OnHierarchyChangeListener(private val context: CoroutineContext) : android.view.ViewGroup.OnHierarchyChangeListener {
 
     private var _onChildViewAdded: (suspend CoroutineScope.(android.view.View?, android.view.View?) -> Unit)? = null
-    
+
 
     override fun onChildViewAdded(parent: android.view.View?, child: android.view.View?) {
         val handler = _onChildViewAdded ?: return
@@ -401,7 +401,7 @@ class __ViewGroup_OnHierarchyChangeListener(private val context: CoroutineContex
     }
 
     private var _onChildViewRemoved: (suspend CoroutineScope.(android.view.View?, android.view.View?) -> Unit)? = null
-    
+
 
     override fun onChildViewRemoved(parent: android.view.View?, child: android.view.View?) {
         val handler = _onChildViewRemoved ?: return
@@ -439,7 +439,7 @@ fun android.widget.AbsListView.onScrollListener(
 class __AbsListView_OnScrollListener(private val context: CoroutineContext) : android.widget.AbsListView.OnScrollListener {
 
     private var _onScrollStateChanged: (suspend CoroutineScope.(android.widget.AbsListView?, Int) -> Unit)? = null
-    
+
 
     override fun onScrollStateChanged(view: android.widget.AbsListView?, scrollState: Int) {
         val handler = _onScrollStateChanged ?: return
@@ -455,7 +455,7 @@ class __AbsListView_OnScrollListener(private val context: CoroutineContext) : an
     }
 
     private var _onScroll: (suspend CoroutineScope.(android.widget.AbsListView?, Int, Int, Int) -> Unit)? = null
-    
+
 
     override fun onScroll(view: android.widget.AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
         val handler = _onScroll ?: return
@@ -506,7 +506,7 @@ fun android.widget.AdapterView<out android.widget.Adapter>.onItemSelectedListene
 class __AdapterView_OnItemSelectedListener(private val context: CoroutineContext) : android.widget.AdapterView.OnItemSelectedListener {
 
     private var _onItemSelected: (suspend CoroutineScope.(android.widget.AdapterView<*>?, android.view.View?, Int, Long) -> Unit)? = null
-    
+
 
     override fun onItemSelected(p0: android.widget.AdapterView<*>?, p1: android.view.View?, p2: Int, p3: Long) {
         val handler = _onItemSelected ?: return
@@ -522,7 +522,7 @@ class __AdapterView_OnItemSelectedListener(private val context: CoroutineContext
     }
 
     private var _onNothingSelected: (suspend CoroutineScope.(android.widget.AdapterView<*>?) -> Unit)? = null
-    
+
 
     override fun onNothingSelected(p0: android.widget.AdapterView<*>?) {
         val handler = _onNothingSelected ?: return
@@ -809,7 +809,7 @@ class __SearchView_OnSuggestionListener(private val context: CoroutineContext) :
 class __SeekBar_OnSeekBarChangeListener(private val context: CoroutineContext) : android.widget.SeekBar.OnSeekBarChangeListener {
 
     private var _onProgressChanged: (suspend CoroutineScope.(android.widget.SeekBar?, Int, Boolean) -> Unit)? = null
-    
+
 
     override fun onProgressChanged(seekBar: android.widget.SeekBar?, progress: Int, fromUser: Boolean) {
         val handler = _onProgressChanged ?: return
@@ -825,7 +825,7 @@ class __SeekBar_OnSeekBarChangeListener(private val context: CoroutineContext) :
     }
 
     private var _onStartTrackingTouch: (suspend CoroutineScope.(android.widget.SeekBar?) -> Unit)? = null
-    
+
 
     override fun onStartTrackingTouch(seekBar: android.widget.SeekBar?) {
         val handler = _onStartTrackingTouch ?: return
@@ -841,7 +841,7 @@ class __SeekBar_OnSeekBarChangeListener(private val context: CoroutineContext) :
     }
 
     private var _onStopTrackingTouch: (suspend CoroutineScope.(android.widget.SeekBar?) -> Unit)? = null
-    
+
 
     override fun onStopTrackingTouch(seekBar: android.widget.SeekBar?) {
         val handler = _onStopTrackingTouch ?: return
@@ -886,7 +886,7 @@ fun android.widget.SlidingDrawer.onDrawerScrollListener(
 class __SlidingDrawer_OnDrawerScrollListener(private val context: CoroutineContext) : android.widget.SlidingDrawer.OnDrawerScrollListener {
 
     private var _onScrollStarted: (suspend CoroutineScope.() -> Unit)? = null
-    
+
 
     override fun onScrollStarted() {
         val handler = _onScrollStarted ?: return
@@ -900,7 +900,7 @@ class __SlidingDrawer_OnDrawerScrollListener(private val context: CoroutineConte
     }
 
     private var _onScrollEnded: (suspend CoroutineScope.() -> Unit)? = null
-    
+
 
     override fun onScrollEnded() {
         val handler = _onScrollEnded ?: return
@@ -1002,6 +1002,130 @@ fun android.widget.ZoomControls.onZoomOutClick(
         GlobalScope.launch(context, CoroutineStart.DEFAULT) {
             handler(v)
         }
+    }
+}
+
+fun android.view.View.setGestureListener(
+        context: CoroutineContext = Dispatchers.Main,
+        init: __View_OnGestureListener.() -> Unit
+) {
+    val listener = __View_OnGestureListener(context)
+    listener.init()
+    val detector = android.view.GestureDetector(this.context, listener)
+    onTouch { _, event -> detector.onTouchEvent(event) }
+}
+
+class __View_OnGestureListener(private val context: CoroutineContext) : android.view.GestureDetector.OnGestureListener {
+
+    private var _onShowPress: (suspend CoroutineScope.(android.view.MotionEvent?) -> Unit)? = null
+
+    fun onShowPress(listener: suspend CoroutineScope.(android.view.MotionEvent?) -> Unit) {
+        _onShowPress = listener
+    }
+
+    override fun onShowPress(e: android.view.MotionEvent?) {
+        val handler = _onShowPress ?: return
+        GlobalScope.launch(context) {
+            handler(e)
+        }
+    }
+
+
+    private var _onSingleTapUp: (suspend CoroutineScope.(android.view.MotionEvent?) -> Boolean)? = null
+    private var _onSingleTapUp_returnValue: Boolean = false
+
+    fun onSingleTapUp(
+            returnValue: Boolean = false,
+            listener: suspend CoroutineScope.(android.view.MotionEvent?) -> Boolean
+    ) {
+        _onSingleTapUp = listener
+        _onSingleTapUp_returnValue = returnValue
+    }
+
+    override fun onSingleTapUp(e: android.view.MotionEvent?): Boolean {
+        val returnValue = _onSingleTapUp_returnValue
+        val handler = _onSingleTapUp ?: return returnValue
+        GlobalScope.launch(context) {
+            handler(e)
+        }
+        return returnValue
+    }
+
+
+    private var _onDown: (suspend CoroutineScope.(android.view.MotionEvent?) -> Boolean)? = null
+    private var _onDown_returnValue: Boolean = false
+
+    fun onDown(
+            returnValue: Boolean = false,
+            listener: suspend CoroutineScope.(android.view.MotionEvent?) -> Boolean
+    ) {
+        _onDown = listener
+        _onDown_returnValue = returnValue
+    }
+
+    override fun onDown(e: android.view.MotionEvent?): Boolean {
+        val returnValue = _onDown_returnValue
+        val handler = _onDown ?: return returnValue
+        GlobalScope.launch(context) {
+            handler(e)
+        }
+        return returnValue
+    }
+
+
+    private var _onLongPress: (suspend CoroutineScope.(android.view.MotionEvent?) -> Unit)? = null
+
+    fun onLongPress(listener: suspend CoroutineScope.(android.view.MotionEvent?) -> Unit) {
+        _onLongPress = listener
+    }
+
+    override fun onLongPress(e: android.view.MotionEvent?) {
+        val handler = _onLongPress ?: return
+        GlobalScope.launch(context) {
+            handler(e)
+        }
+    }
+
+
+    private var _onFling: (suspend CoroutineScope.(android.view.MotionEvent?, android.view.MotionEvent?, Float, Float) -> Boolean)? = null
+    private var _onFling_returnValue: Boolean = false
+
+    fun onFling(
+            returnValue: Boolean = false,
+            listener: suspend CoroutineScope.(android.view.MotionEvent?, android.view.MotionEvent?, Float, Float) -> Boolean
+    ) {
+        _onFling = listener
+        _onFling_returnValue = returnValue
+    }
+
+    override fun onFling(e1: android.view.MotionEvent?, e2: android.view.MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
+        val returnValue = _onFling_returnValue
+        val handler = _onFling ?: return returnValue
+        GlobalScope.launch(context) {
+            handler(e1, e2, velocityX, velocityY)
+        }
+        return returnValue
+    }
+
+
+    private var _onScroll: (CoroutineScope.(android.view.MotionEvent?, android.view.MotionEvent?, Float, Float) -> Boolean)? = null
+    private var _onScroll_returnValue: Boolean = false
+
+    fun onScroll(
+            returnValue: Boolean = false,
+            listener: CoroutineScope.(android.view.MotionEvent?, android.view.MotionEvent?, Float, Float) -> Boolean
+    ) {
+        _onScroll = listener
+        _onScroll_returnValue = returnValue
+    }
+
+    override fun onScroll(e1: android.view.MotionEvent?, e2: android.view.MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+        val returnValue = _onScroll_returnValue
+        val handler = _onScroll?: return returnValue
+        GlobalScope.launch(context) {
+            handler(e1, e2, distanceX, distanceY)
+        }
+        return returnValue
     }
 }
 

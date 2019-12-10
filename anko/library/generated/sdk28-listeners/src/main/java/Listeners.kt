@@ -564,3 +564,77 @@ inline fun android.widget.ZoomControls.onZoomOutClick(noinline l: (v: android.vi
     setOnZoomOutClickListener(l)
 }
 
+fun android.view.View.setGestureListener(init: __View_OnGestureListener.() -> Unit) {
+    val listener = __View_OnGestureListener()
+    listener.init()
+    val detector = android.view.GestureDetector(context, listener)
+    onTouch { _, event -> detector.onTouchEvent(event) }
+}
+
+class __View_OnGestureListener : android.view.GestureDetector.OnGestureListener {
+
+    private var onShowPress: ((android.view.MotionEvent?) -> Unit)? = null
+
+    fun onShowPress(listener: (android.view.MotionEvent?) -> Unit) {
+        onShowPress = listener
+    }
+
+    override fun onShowPress(e: android.view.MotionEvent?) {
+        onShowPress?.invoke(e)
+    }
+
+
+    private var onSingleTapUp: ((android.view.MotionEvent?) -> Boolean)? = null
+
+    fun onSingleTapUp(listener: (android.view.MotionEvent?) -> Boolean) {
+        onSingleTapUp = listener
+    }
+
+    override fun onSingleTapUp(e: android.view.MotionEvent?): Boolean {
+        return onSingleTapUp?.invoke(e) ?: false
+    }
+
+
+    private var onDown: ((android.view.MotionEvent?) -> Boolean)? = null
+
+    fun onDown(listener: (android.view.MotionEvent?) -> Boolean) {
+        onDown = listener
+    }
+
+    override fun onDown(e: android.view.MotionEvent?): Boolean {
+        return onDown?.invoke(e) ?: false
+    }
+
+
+    private var onLongPress: ((android.view.MotionEvent?) -> Unit)? = null
+
+    fun onLongPress(listener: (android.view.MotionEvent?) -> Unit) {
+        onLongPress = listener
+    }
+
+    override fun onLongPress(e: android.view.MotionEvent?) {
+        onLongPress?.invoke(e)
+    }
+
+
+    private var onFling: ((android.view.MotionEvent?, android.view.MotionEvent?, Float, Float) -> Boolean)? = null
+
+    fun onFling(listener: (android.view.MotionEvent?, android.view.MotionEvent?, Float, Float) -> Boolean) {
+        onFling = listener
+    }
+
+    override fun onFling(e1: android.view.MotionEvent?, e2: android.view.MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
+        return onFling?.invoke(e1, e2, velocityX, velocityY) ?: false
+    }
+
+
+    private var onScroll: ((android.view.MotionEvent?, android.view.MotionEvent?, Float, Float) -> Boolean)? = null
+
+    fun onScroll(listener: (android.view.MotionEvent?, android.view.MotionEvent?, Float, Float) -> Boolean) {
+        onScroll = listener
+    }
+
+    override fun onScroll(e1: android.view.MotionEvent?, e2: android.view.MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+        return onScroll?.invoke(e1, e2, distanceX, distanceY) ?: false
+    }
+}
