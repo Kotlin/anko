@@ -1,0 +1,6 @@
+apply from: '../../library.gradle'
+
+dependencies {
+    api "androidx.legacy:legacy-support-v4:$androidx_legacy_version"
+    api project(':static:commons-base')
+}

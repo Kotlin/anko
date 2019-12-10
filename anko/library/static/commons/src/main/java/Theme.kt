@@ -4,11 +4,11 @@ package org.jetbrains.anko
 import android.app.Fragment
 import android.content.Context
 import android.content.res.Resources
-import android.support.annotation.AttrRes
-import android.support.annotation.ColorInt
-import android.support.annotation.Dimension
 import android.util.TypedValue
 import android.view.View
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import androidx.annotation.Dimension
 
 fun Resources.Theme.attr(@AttrRes attribute: Int): TypedValue {
     val typedValue = TypedValue()

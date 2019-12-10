@@ -37,7 +37,7 @@ publishing {
             version ANKO_VERSION
 
             artifact sourcesJar
-            artifact bundleRelease
+            artifact bundleReleaseAar
 
             pom.withXml {
                 asNode().children().last() + {
